@@ -9,14 +9,29 @@ public enum ELightState
     ON
 }
 
-public class TempLightScript : MonoBehaviour            // 임시 불빛 오브젝트
+public class PlayerLightScript : MonoBehaviour            // 임시 불빛 오브젝트
 {
-    private static TempLightScript Inst;
+    private static PlayerLightScript Inst;
+
+
+
+    private ParticleSystem m_effect;
 
     private const float MinSize = 0;                            // 최소 크기
     private const float MaxSize = 100;                          // 최대 크기
 
-    private Transform PlayerTransform { get; set; }             // 플레이어 위치
+
+
+    public void LightOn()
+    {
+
+    }
+    public void LightOff()
+    {
+
+    }
+
+
     public static ELightState CurState { get; private set; }    // 불빛의 현재 상태 (static)
     public static float CurSize { get; private set; }           // 현재 크기 (static)
     private float ChangeSpeed { get; set; }                     // 크기 변화 속도
@@ -26,16 +41,6 @@ public class TempLightScript : MonoBehaviour            // 임시 불빛 오브젝트
     {
         CurSize = _size;
         transform.localScale = new(_size, _size, _size);
-    }
-    public void SetPlayerTransform(Transform _transform)        // 플레이어 쫓아가기 설정
-    {
-        PlayerTransform = _transform;
-        TrackPos();
-    }
-
-    private void TrackPos()                                     // 위치 쫓아가기
-    {
-        transform.position = PlayerTransform.position;
     }
 
     private void StartLight()                                   // 빛 밝히기 시작
@@ -55,7 +60,6 @@ public class TempLightScript : MonoBehaviour            // 임시 불빛 오브젝트
     {
         while (CurSize < MaxSize)
         {
-            TrackPos();
             SetSize(CurSize + ChangeSpeed * Time.deltaTime);
             yield return null;
         }
@@ -67,7 +71,6 @@ public class TempLightScript : MonoBehaviour            // 임시 불빛 오브젝트
     {
         while (CurSize > MinSize)
         {
-            TrackPos();
             SetSize(CurSize - ChangeSpeed * Time.deltaTime);
             yield return null;
         }

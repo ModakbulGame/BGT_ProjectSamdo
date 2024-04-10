@@ -290,8 +290,8 @@ public partial class PlayerController : ObjectScript
 
     // 능력 관련
     [SerializeField]
-    private GameObject m_lightPrefab;                                           // 불빛 프리펍
-    private TempLightScript CurLight { get; set; }                              // 현재 켜져 있는 불빛
+    private PlayerLightScript m_light;                                              // 불빛 프리펍
+    private PlayerLightScript CurLight { get; set; }                                // 현재 켜져 있는 불빛
 
     private const float MAX_LIGHT_POWER = 5;        // 최대 능력 스테미나
     private float LightUseRate = 0.5f;              // 초당 능력 사용
@@ -300,18 +300,20 @@ public partial class PlayerController : ObjectScript
 
     private float CurLightRate { get; set; }        // 현재 능력 스테미나(?)
     private bool CanRestoreLight { get; set; } = true;      // 회복 가능
-    public bool IsLightOn { get; private set; }                                 // 불빛이 켜져 있는지
+    public bool IsLightOn { get { return m_light.gameObject.activeSelf; } }                                 // 불빛이 켜져 있는지
 
     public void LightOn()
     {
-        CurLight = Instantiate(m_lightPrefab, transform.position, Quaternion.identity).GetComponent<TempLightScript>();     // 능력 사용
-        CurLight.SetPlayerTransform(transform); IsLightOn = true;
+        m_light.LightOn();
     }
-    public void LightOff() { if (CurLight == null) { return; } CurLight.EndLight(); CurLight = null; IsLightOn = false; }                       // 능력 중단
-    private void InitLight() { LightOff(); CurLightRate = MAX_LIGHT_POWER; SetLightRate(); }    // 초기 설정
+    public void LightOff() 
+    {
+        m_light.LightOff();
+    }                       // 능력 중단
+    private void InitLight() { CurLightRate = MAX_LIGHT_POWER; SetLightRate(); }    // 초기 설정
     public void LightChange()                                   // T 눌렀을 시 실행
     {
-        if (TempLightScript.CurState == ELightState.CHANGE) { return; }
+        if (PlayerLightScript.CurState == ELightState.CHANGE) { return; }
 
         if (IsLightOn) { LightOff(); }
         else if (CurLightRate > 0) { LightOn(); }
@@ -394,7 +396,7 @@ public partial class PlayerController : ObjectScript
         ChangeState(EPlayerState.IDLE);     // Idle로 상태 전이
         PlayManager.SetPlayerMaxHP(MaxHP);  // 체력바 설정
         InitStamina();                      // 스테미나 설정
-        InitLight();                        // 능력 끈 상태
+        InitLight();                        // 능력 초기 설정
         InitWeapon();                       // 무기 설정
         HideSkillAim();                     // 스킬 에임 끄기
 

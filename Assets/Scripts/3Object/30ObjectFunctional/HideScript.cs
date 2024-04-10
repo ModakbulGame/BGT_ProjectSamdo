@@ -36,8 +36,8 @@ public class HideScript : MonoBehaviour             // ºÒºû°úÀÇ »óÈ£ÀÛ¿ëÀÌ °¡´ÉÇ
 
     private void CheckLight()                      // ÇÁ·¹ÀÓ¸¶´Ù ºû º¯È­ °¨Áö
     {
-        ELightState state = TempLightScript.CurState;
-        float size = TempLightScript.CurSize;
+        ELightState state = PlayerLightScript.CurState;
+        float size = PlayerLightScript.CurSize;
         if (IsHiding)
         {
             if (state == ELightState.ON || 
