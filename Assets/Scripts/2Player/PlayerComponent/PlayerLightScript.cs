@@ -1,6 +1,10 @@
+using Pathfinding.RVO;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 public enum ELightState
 {
@@ -13,80 +17,61 @@ public class PlayerLightScript : MonoBehaviour            // 임시 불빛 오브젝트
 {
     private static PlayerLightScript Inst;
 
-
-
     private ParticleSystem m_effect;
 
     private const float MinSize = 0;                            // 최소 크기
     private const float MaxSize = 100;                          // 최대 크기
 
+    private static Particle[] m_particles;
+
+    public static float CurSize { get { if (!Inst.gameObject.activeSelf) { return 0; }
+            Inst.m_effect.GetParticles(m_particles);
+            float max = 0;
+            for(int i = 0; i<m_particles.Length;i++) { float size = m_particles[i].GetCurrentSize(Inst.m_effect); if (size > max) max = size; }
+            return max;
+        } }
+
+    public static ELightState CurState { get; private set; }    // 불빛의 현재 상태 (static)
 
 
     public void LightOn()
     {
-
+        m_effect.Play();
+        CurState = ELightState.CHANGE;
+        StartCoroutine(ChangeSize(true));
     }
     public void LightOff()
     {
-
-    }
-
-
-    public static ELightState CurState { get; private set; }    // 불빛의 현재 상태 (static)
-    public static float CurSize { get; private set; }           // 현재 크기 (static)
-    private float ChangeSpeed { get; set; }                     // 크기 변화 속도
-    private const float ChangeTime = 1;                         // 크기 변화 시간
-
-    private void SetSize(float _size)                           // 크기 설정
-    {
-        CurSize = _size;
-        transform.localScale = new(_size, _size, _size);
-    }
-
-    private void StartLight()                                   // 빛 밝히기 시작
-    {
         CurState = ELightState.CHANGE;
-        SetSize(MinSize);
-        ChangeSpeed = (MaxSize - MinSize) / ChangeTime;
-        StartCoroutine(LightExpand());
+        StartCoroutine(ChangeSize(true));
     }
-    public void EndLight()                                      // 빛 밝히기 종료
+
+    private IEnumerator ChangeSize(bool _on)
     {
-        gameObject.SetActive(true);
-        CurState = ELightState.CHANGE;
-        StartCoroutine(LightShrink());
-    }
-    private IEnumerator LightExpand()                           // 크기 증가 코루틴
-    {
-        while (CurSize < MaxSize)
+        while ((_on && CurSize < 90) || (!_on && CurSize > 20))
         {
-            SetSize(CurSize + ChangeSpeed * Time.deltaTime);
             yield return null;
         }
-        ;
-        CurState = ELightState.ON;
-        gameObject.SetActive(false);
-    }
-    private IEnumerator LightShrink()                           // 크기 감소 코루틴
-    {
-        while (CurSize > MinSize)
-        {
-            SetSize(CurSize - ChangeSpeed * Time.deltaTime);
-            yield return null;
-        }
-        CurState = ELightState.OFF;
-        Destroy(gameObject);
+        if (_on) { CurState = ELightState.ON; }
+        else { CurState = ELightState.OFF; }
     }
 
+
+
+    public void SetComps()
+    {
+        Inst = this;
+        m_effect = GetComponent<ParticleSystem>();
+        m_particles = new Particle[m_effect.main.maxParticles];
+    }
 
     private void Awake()
     {
-        if(Inst != null) { Destroy(Inst.gameObject); }
-        Inst = this;
+        SetComps();
     }
 
-    private void Start()
+    private void Update()
     {
-        StartLight();
+        Debug.Log(CurSize);
     }
 }

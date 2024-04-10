@@ -291,7 +291,6 @@ public partial class PlayerController : ObjectScript
     // 능력 관련
     [SerializeField]
     private PlayerLightScript m_light;                                              // 불빛 프리펍
-    private PlayerLightScript CurLight { get; set; }                                // 현재 켜져 있는 불빛
 
     private const float MAX_LIGHT_POWER = 5;        // 최대 능력 스테미나
     private float LightUseRate = 0.5f;              // 초당 능력 사용
@@ -300,15 +299,17 @@ public partial class PlayerController : ObjectScript
 
     private float CurLightRate { get; set; }        // 현재 능력 스테미나(?)
     private bool CanRestoreLight { get; set; } = true;      // 회복 가능
-    public bool IsLightOn { get { return m_light.gameObject.activeSelf; } }                                 // 불빛이 켜져 있는지
+    public bool IsLightOn { get; private set; }                                 // 불빛이 켜져 있는지
 
     public void LightOn()
     {
         m_light.LightOn();
+        IsLightOn = true;
     }
     public void LightOff() 
     {
         m_light.LightOff();
+        IsLightOn = false;
     }                       // 능력 중단
     private void InitLight() { CurLightRate = MAX_LIGHT_POWER; SetLightRate(); }    // 초기 설정
     public void LightChange()                                   // T 눌렀을 시 실행
