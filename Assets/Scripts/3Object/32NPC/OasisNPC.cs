@@ -1,0 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class OasisNPC : NPCScript
+{
+    public override void StartInteract()
+    {
+        base.StartInteract();
+        PlayManager.OpenOasisUI(this);
+        GameManager.SetControlMode(EControlMode.UI_CONTROL);
+    }
+
+    public override void StopInteract()
+    {
+        base.StopInteract();
+        GameManager.SetControlMode(EControlMode.THIRD_PERSON);
+    }
+}
