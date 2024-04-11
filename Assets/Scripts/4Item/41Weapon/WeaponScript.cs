@@ -100,23 +100,24 @@ public class WeaponScript : ObjectAttackScript
         {
             IHittable hittable = collider.GetComponentInParent<IHittable>();
             if (hittable == null) { Debug.LogError("���� ��ũ��Ʈ ����"); continue; }
-            if (CheckHit(hittable)) { return; }
-            Vector3 pos = collider.ClosestPoint(transform.position);
-            HitData hit = new(Player, ResultDamage, pos, CurCC);
-            hittable.GetHit(hit);
+            Vector3 pos = CheckNHit(hittable);
             AddHitObject(hittable);
-            EEffectName effectName = HitType == EHitType.SLASH ? EEffectName.HIT_SLASH : EEffectName.HIT_BLOW;
-            GameObject effect = GameManager.GetEffect(effectName);
-            effect.transform.position = pos;
+            if (hittable.IsMonster && pos != Vector3.zero)
+            {
+                EEffectName effectName = HitType == EHitType.SLASH ? EEffectName.HIT_SLASH : EEffectName.HIT_BLOW;
+                GameObject effect = GameManager.GetEffect(effectName);
+                effect.transform.position = pos;
+            }
         }
     }
-    protected void CheckNHit(IHittable _hittable, Vector3 _point)
+    protected Vector3 CheckNHit(IHittable _hittable)
     {
-        if (CheckHit(_hittable)) { return; }
+        if (CheckHit(_hittable)) { return Vector3.zero; }
         Vector3 pos = GetComponent<Collider>().ClosestPoint(transform.position);
         HitData hit = new(Player, ResultDamage, pos, CurCC);
         _hittable.GetHit(hit);
         AddHitObject(_hittable);
+        return pos;
     }
 
     private LinkedList<BufferObject> FillTrail(BufferObject _from, BufferObject _to)

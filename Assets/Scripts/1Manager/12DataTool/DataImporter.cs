@@ -98,14 +98,12 @@ public static class DataImporter
                 ??ScriptableObject.CreateInstance<MonsterScriptable>();
             scriptable.SetMonsterScriptable(idx, splitMonsterData, dropInfos[id]);
 
-            AssetDatabase.CreateAsset(scriptable, $"{MonsterScriptablePath + id}.asset");
             monsters.Add(scriptable);
 
             GameObject prefab = AssetDatabase.LoadMainAssetAtPath($"{MonsterPrefabPath + id}.prefab") as GameObject;
             if (prefab == null) { continue; }
             if (!prefab.TryGetComponent<MonsterScript>(out var script)) { Debug.Log(id + " 스크립트 없음"); continue; }
 
-            if(script.IsScriptableSet) { continue; }
             script.SetScriptable(scriptable);
         }
 
@@ -160,12 +158,9 @@ public static class DataImporter
                     break;
                 default: Debug.LogError("맞는 ID 없음"); return;
             }
-            string scriptablePath = ItemScriptablePaths[type];
             uint idx = itemCnt[type]++;
 
             scriptable.SetItemScriptable(idx, splitItemData);
-
-            AssetDatabase.CreateAsset(scriptable, $"{scriptablePath + id}.asset");
             items[type].Add(scriptable);
 
             string prefabPath = ItemPrefabPaths[type];
@@ -228,7 +223,6 @@ public static class DataImporter
             if (prefab == null) { continue; }
             if (!prefab.TryGetComponent<PlayerSkillScript>(out var script)) { Debug.Log(id + " 스크립트 없음"); continue; }
 
-            if(script.IsScriptableSet) { continue; }
             script.SetScriptable(scriptable);
         }
 
