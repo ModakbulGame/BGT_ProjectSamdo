@@ -198,17 +198,17 @@ public abstract partial class MonsterScript : ObjectScript, IHidable
     private const float m_refreshRate = 0.025f;
     public void StartDissolve()             // dissolve vfx 효과 재생
     {
-        GameObject effect = PlayManager.GetEffect(EEffectName.MONSTER_DISSOLVE);
-        GameObject dissolve = Instantiate(effect, transform);
-        VisualEffect vfx = dissolve.GetComponent<VisualEffect>();
+        GameObject effect = GameManager.GetEffect(EEffectName.MONSTER_DISSOLVE);
+        effect.transform.position = Position;
+        VisualEffect vfx = effect.GetComponent<VisualEffect>();
         foreach (SkinnedMeshRenderer smr in m_skinneds)
         {
-            vfx.SetSkinnedMeshRenderer("SkinnedMeshRenderer", smr);
-            StartCoroutine(DissolveCoroutine(smr.materials));
+            /*vfx.SetSkinnedMeshRenderer("SkinnedMeshRenderer", smr);*/
+            StartCoroutine(DissolveCoroutine(effect, smr.materials));
         }
         vfx.Play();
     }
-    private IEnumerator DissolveCoroutine(Material[] _mats)
+    private IEnumerator DissolveCoroutine(GameObject _effect, Material[] _mats)
     {
         float counter = 0;
 

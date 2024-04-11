@@ -35,6 +35,22 @@ public class GameManager : SingleTon<GameManager>
     public static void SetControlMode(EControlMode _mode) { InputManager.SetControlMode(_mode); }                               // 조작 모드 변경
     public static void SetMouseSensitive(float _sensitive) { InputManager.SetMouseSensitive(_sensitive); }                      // 마우스 민감도 설정
 
+
+    // 몬스터
+    private MonsterManager m_monsterManager;
+    private static MonsterManager MonsterManager { get { return Inst.m_monsterManager; } }
+    public static MonsterInfo GetMonsterInfo(EMonsterName _monster) { return MonsterManager.GetMonsterInfo(_monster); }                     // 몬스터 정보
+    public static GameObject GetMonsterPrefab(EMonsterName _monster) { return MonsterManager.GetMonsterPrefab(_monster); }                  // 몬스터 프리펍
+
+
+
+    // 이펙트
+    private EffectManager m_effectManager;
+    private static EffectManager EffectManager { get { return Inst.m_effectManager; } }
+    private static GameObject[] EffectArray { get { return EffectManager.EffectArray; } }
+    public static GameObject GetEffect(EEffectName _effect) { return EffectManager.GetEffect(_effect); }
+
+
     // UI
     private UIManager m_uiManager;
     public static UIManager UIManager { get { return Inst.m_uiManager; } }
@@ -43,6 +59,10 @@ public class GameManager : SingleTon<GameManager>
     public static Sprite GetMonsterSprite(EMonsterName _monster) { return UIManager.GetMonsterSprite(_monster); }               // 몬스터 이미지
     public static Sprite GetItemSprite(SItem _item) { return UIManager.GetItemSprite(_item); }                                  // 아이템 이미지
     public static Sprite GetSkillSprite(ESkillName _skill) { return UIManager.GetSkillSprite(_skill); }                         // 스킬 이미지
+
+
+    private PoolManager m_poolManager;
+    private static PoolManager PoolManager { get { return Inst.m_poolManager; } }
 
 
 
@@ -54,7 +74,13 @@ public class GameManager : SingleTon<GameManager>
         m_soundManager = GetComponent<SoundManager>();
         m_inputManager = GetComponent<InputManager>();
         m_inputManager.SetSubManager();
+        m_monsterManager = GetComponent<MonsterManager>();
+        m_monsterManager.SetManager();
+        m_effectManager = GetComponent<EffectManager>();
+        m_effectManager.SetManager();
         m_uiManager = GetComponent<UIManager>();
+        m_poolManager = GetComponent<PoolManager>();
+        m_poolManager.SetManager(EffectArray);
     }
 
     public override void Awake()

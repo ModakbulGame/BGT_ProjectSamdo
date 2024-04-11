@@ -105,7 +105,6 @@ public partial class PlayerController
     {
         base.AttackTriggerOn();
         CurWeapon.AttackOn();
-        CreateWeaponEffect();
         AttackCreated = true;
         UseStamina(AttackStaminaUse);
     }

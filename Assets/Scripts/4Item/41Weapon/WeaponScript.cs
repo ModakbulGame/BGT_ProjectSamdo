@@ -7,6 +7,7 @@ using UnityEngine;
 public class WeaponInfo
 {
     public EWeaponType WeaponType;
+    public EHitType HitType;
     public string WeaponName;
     public FRange Attack;
     public FRange Magic;
@@ -14,6 +15,8 @@ public class WeaponInfo
     public void SetInfo(WeaponScriptable _scriptable)
     {
         WeaponType = DataManager.IDToWeaponType(_scriptable.ID);
+        if(WeaponType == EWeaponType.SCEPTER) { HitType = EHitType.BLOW; }
+        else { HitType = EHitType.SLASH; }
         WeaponName = _scriptable.ItemName;
         Attack = _scriptable.Attack;
         Magic = _scriptable.Magic;
@@ -27,6 +30,7 @@ public class WeaponScript : ObjectAttackScript
     [SerializeField]
     private WeaponInfo m_weaponInfo = new();
     public EWeaponType WeaponType { get { return m_weaponInfo.WeaponType; } }
+    public EHitType HitType { get { return m_weaponInfo.HitType; } }
     public string WeaponName { get { return m_weaponInfo.WeaponName; } }
     public FRange WeaponAttack { get { return m_weaponInfo.Attack; } }
     public FRange WeaponMagic { get { return m_weaponInfo.Magic; } }
@@ -45,7 +49,6 @@ public class WeaponScript : ObjectAttackScript
     public EWeaponName WeaponEnum { get { return (EWeaponName)m_scriptable.Idx; } }
 
     private PlayerController Player { get { return (PlayerController)m_attacker; } }
-
 
     private float ResultDamage { get { return Player.Attack; } }
 
@@ -102,6 +105,9 @@ public class WeaponScript : ObjectAttackScript
             HitData hit = new(Player, ResultDamage, pos, CurCC);
             hittable.GetHit(hit);
             AddHitObject(hittable);
+            EEffectName effectName = HitType == EHitType.SLASH ? EEffectName.HIT_SLASH : EEffectName.HIT_BLOW;
+            GameObject effect = GameManager.GetEffect(effectName);
+            effect.transform.position = pos;
         }
     }
     protected void CheckNHit(IHittable _hittable, Vector3 _point)

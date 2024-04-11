@@ -71,15 +71,6 @@ public partial class PlayerController
 
 
     #region ¿Ã∆Â∆Æ
-    [SerializeField]
-    private GameObject m_tempWeaponEffect;
-    private void CreateWeaponEffect()
-    {
-        if (AttackStack == 1)
-        {
-            Instantiate(m_tempWeaponEffect, transform);
-        }
-    }
 
 
 

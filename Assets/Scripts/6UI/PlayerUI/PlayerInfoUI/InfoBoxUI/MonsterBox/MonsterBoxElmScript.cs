@@ -14,7 +14,7 @@ public class MonsterBoxElmScript : MonoBehaviour
     public void SetMonsterInfo(EMonsterName _monster)
     {
         Sprite img = GameManager.GetMonsterSprite(_monster);
-        MonsterInfo info = PlayManager.GetMonsterInfo(_monster);
+        MonsterInfo info = GameManager.GetMonsterInfo(_monster);
 
         m_monsterImg.sprite = img;
         m_monsterNameTxt.text = info.MonsterName;

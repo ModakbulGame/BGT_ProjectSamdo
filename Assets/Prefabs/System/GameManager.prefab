@@ -132,6 +132,37 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a400b1f4ea6e23c4e95e229e16d2059a, type: 2}
   - {fileID: 11400000, guid: 666cf1c6570612d4e99eadea1a515221, type: 2}
   - {fileID: 11400000, guid: 1656ec8e8b850e542a9a886c14ceda9c, type: 2}
+--- !u!1 &4884464470811879014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4825439214700207885}
+  m_Layer: 0
+  m_Name: PoolList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4825439214700207885
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4884464470811879014}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4716110201911788374}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5834018618347257457
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,7 +177,10 @@ GameObject:
   - component: {fileID: 8400081682949457947}
   - component: {fileID: 5622592824013423862}
   - component: {fileID: 6569180192934156026}
+  - component: {fileID: 1934271378401599205}
+  - component: {fileID: 8562998623639283357}
   - component: {fileID: 7826860143562056196}
+  - component: {fileID: 257620743969395730}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -169,6 +203,7 @@ Transform:
   m_Children:
   - {fileID: 653634828763706501}
   - {fileID: 3726632724252902473}
+  - {fileID: 4825439214700207885}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4492014842451021822
@@ -232,6 +267,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51686f6e12c665c4caddb869dfe9d145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1934271378401599205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5834018618347257457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4004ce7fd7729f47886b13334fcb1d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_monsterPrefabs:
+  - {fileID: 8554318959270187412, guid: 955d0c15704caf04d88c5eb3d8ae6b5d, type: 3}
+  - {fileID: 4541665183999511425, guid: bbcb3fd9c3e714c46aeea237b6a0b9b1, type: 3}
+  - {fileID: 8064397588928492606, guid: d0df797641e84ad4cb535e56a12332a3, type: 3}
+  - {fileID: 0}
+  - {fileID: 456069480037878767, guid: 74a39811dacd8dc4ba55220216829a57, type: 3}
+  - {fileID: 2582631076381108952, guid: 155607e554e147f4fa97a6e161f0741c, type: 3}
+  - {fileID: 7586319830417130399, guid: c84b910a94b96884a98685a7d9d41907, type: 3}
+  - {fileID: 0}
+  - {fileID: 4930112960067386354, guid: a8578695eb65e9a49bbe9699defad4e0, type: 3}
+  - {fileID: 728221464552640846, guid: 990c5aa792498f44b91e4ddb48be9567, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 4113875238200415537, guid: 4c37827638c089a48b0150454cfe1e18, type: 3}
+  - {fileID: 4113875238200415537, guid: 3bd9ca7319a04a449bca706f2a3d7023, type: 3}
+  - {fileID: 4113875238200415537, guid: 04e93535084973c489b32877257cd4a9, type: 3}
+  - {fileID: 5654021519466999818, guid: 5cd105874a7138645be26cd75203f3d2, type: 3}
+  - {fileID: 5654021519466999818, guid: 26eb16c66d09c754b80efa8ee3002076, type: 3}
+  - {fileID: 5654021519466999818, guid: be360b599e317184a944de552b038464, type: 3}
+  - {fileID: 4113875238200415537, guid: 66ce6bf2385e11d4eb27b1a0bae0f71f, type: 3}
+  - {fileID: 4113875238200415537, guid: 32184e06fbe25e84c9fb15ea7571035d, type: 3}
+  - {fileID: 4113875238200415537, guid: edfe2f38a8cd10d41a004e51687e55f7, type: 3}
+  - {fileID: 161959898818446324, guid: fc6af3e3f260d7b4c86dbaf7a1f37ce6, type: 3}
+  - {fileID: 3773447244429977721, guid: aac6b07fd279f99458087c9338e1c98a, type: 3}
+  - {fileID: 3385169924980312856, guid: a1ddc1803729de340be83d0027c38da1, type: 3}
+  - {fileID: 3677812087295266640, guid: 86656840a70b31f4f991f310d7a79724, type: 3}
+  - {fileID: 2991958722824295464, guid: a6c52e913fcf01f44a8911f51d82ec13, type: 3}
+  - {fileID: 8233725914544634446, guid: 97e261a2bcc24d643aa4067c86e1eabd, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 2347901332963119387, guid: 5dc7d2df149b6dd43ac94830fb938f5a, type: 3}
+  - {fileID: 0}
+--- !u!114 &8562998623639283357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5834018618347257457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a41cf46f54ed62a4db34ee111e46ce13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_effects:
+  - {fileID: 6822055355961687692, guid: 815792c0f7552484a9993c46f1829fe4, type: 3}
+  - {fileID: 8620685564096528849, guid: d4843ba6dca4f3046b0dce054e537718, type: 3}
+  - {fileID: 5815350206548334149, guid: ba52712315dc6d147850e2112ee80f8f, type: 3}
 --- !u!114 &7826860143562056196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,6 +432,19 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9f781d72f1ab60b458cdd31b42ba3a4d, type: 3}
   - {fileID: 21300000, guid: 9f781d72f1ab60b458cdd31b42ba3a4d, type: 3}
   - {fileID: 21300000, guid: 9f781d72f1ab60b458cdd31b42ba3a4d, type: 3}
+--- !u!114 &257620743969395730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5834018618347257457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d9f2212f3f1064c92a8fd0a4ab8e4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_poolListTransform: {fileID: 4825439214700207885}
 --- !u!1 &8563703369676033437
 GameObject:
   m_ObjectHideFlags: 0

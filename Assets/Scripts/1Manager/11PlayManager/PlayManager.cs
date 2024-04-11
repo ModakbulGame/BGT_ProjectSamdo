@@ -92,13 +92,6 @@ public class PlayManager : MonoBehaviour
     public static void ObtainSkill(ESkillName _skill) { SkillManager.ObtainSkill(_skill); }                                                 // 스킬 획득
 
 
-    // 몬스터
-    private MonsterManager m_monsterManager;
-    private static MonsterManager MonsterManager { get { return Inst.m_monsterManager; } }
-    public static MonsterInfo GetMonsterInfo(EMonsterName _monster) { return MonsterManager.GetMonsterInfo(_monster); }                     // 몬스터 정보
-    public static GameObject GetMonsterPrefab(EMonsterName _monster) { return MonsterManager.GetMonsterPrefab(_monster); }                  // 몬스터 프리펍
-
-
     // 스토리
     private StoryManager m_storyManager;
     private static StoryManager StoryManager { get { return Inst.m_storyManager; } }
@@ -142,12 +135,6 @@ public class PlayManager : MonoBehaviour
     public static void HideThrowLine() { PlayUIManager.HideThrowLine(); }                                                                   // 던지기 궤적 off
 
 
-    // 이펙트
-    private EffectManager m_effectManager;
-    private static EffectManager EffectManager { get { return Inst.m_effectManager; } }
-    public static GameObject GetEffect(EEffectName _effect) { return EffectManager.GetEffect(_effect); }
-    public static VisualEffect GetVFX(EVFXName _vfx) { return EffectManager.GetVFX(_vfx); }
-
 
     private void SetSubManagers()
     {
@@ -155,14 +142,11 @@ public class PlayManager : MonoBehaviour
         m_itemManager.SetManager();
         m_skillManager = GetComponent<SkillManager>();
         m_skillManager.SetManager();
-        m_monsterManager = GetComponent<MonsterManager>();
-        m_monsterManager.SetManager();
         m_storyManager = GetComponent<StoryManager>();
         m_environmentManager = GetComponent<EnvironmentManager>();
         m_upgradeManager = GetComponent<UpgradeManager>();
         m_playUIManager = GetComponent<PlayUIManager>();
         m_playUIManager.SetManager();
-        m_effectManager = GetComponent<EffectManager>();
     }
 
     private void Awake()

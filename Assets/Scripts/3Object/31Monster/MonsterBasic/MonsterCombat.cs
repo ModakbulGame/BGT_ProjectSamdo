@@ -75,11 +75,6 @@ public abstract partial class MonsterScript
     public override bool IsUnstoppable { get { return InCombat && !HitGuarding; } }                     // 공격 모션 캔슬 불가인지
 
 
-    [SerializeField]
-    private GameObject m_tempHitEffect;
-    [SerializeField]
-    private GameObject m_bloodEffect;
-
     public virtual void ApproachTarget()            // 타겟에게 접근
     {
         if(!HasTarget) { return; }
@@ -128,12 +123,11 @@ public abstract partial class MonsterScript
 
     private void CreateBloodEffect(Vector3 _pos)
     {
-        Instantiate(m_tempHitEffect, _pos, Quaternion.identity);
-        Vector2 bloodDir = Position2 - new Vector2(_pos.x, _pos.z);
+/*        Vector2 bloodDir = Position2 - new Vector2(_pos.x, _pos.z);
         float bloodAngle = FunctionDefine.VecToDeg(bloodDir);
         GameObject blood = Instantiate(m_bloodEffect, transform);
         blood.transform.eulerAngles = new(0, bloodAngle, 0);
-        blood.transform.parent = null;
+        blood.transform.parent = null;*/
     }
 
 
@@ -142,7 +136,7 @@ public abstract partial class MonsterScript
         base.GetHit(_hit);
         if (IsDead) { SetDeathType(_hit.Attacker); }
         else if (CurTarget == null) { CurTarget = _hit.Attacker; }
-        if(PlayManager.CheckIsPlayer(_hit.Attacker)) { CreateBloodEffect(_hit.Point); }
+        if(PlayManager.CheckIsPlayer(_hit.Attacker)) { /*CreateBloodEffect(_hit.Point);*/ }
         m_hpBar.SetCurHP(CurHP);
     }
     public override void PlayHitAnim()

@@ -1,0 +1,35 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Pool;
+using UnityEngine.VFX;
+
+public enum EEffectName
+{
+    MONSTER_DISSOLVE,
+    HIT_SLASH,
+    HIT_BLOW,
+
+    LAST
+}
+
+public class EffectManager : MonoBehaviour
+{
+    [SerializeField]
+    private GameObject[] m_effects = new GameObject[(int)EEffectName.LAST];
+    public GameObject[] EffectArray { get { return m_effects; } }
+
+
+    public GameObject GetEffect(EEffectName _effect) 
+    {
+        return PoolManager.GetObject(m_effects[(int)_effect]);
+    }
+
+
+
+
+    public void SetManager()
+    {
+
+    }
+}

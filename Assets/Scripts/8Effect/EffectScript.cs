@@ -1,14 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
-public class EffectScript : MonoBehaviour
+public class EffectScript : MonoBehaviour, IPoolable
 {
-    [SerializeField]
-    private float m_destroyTime = 1;
+    public ObjectPool<GameObject> m_originPool { get; set; }
 
-    public virtual void Awake()
+    public void SetDestroyTime(float _time)
     {
-        Destroy(gameObject, m_destroyTime);
+        StartCoroutine(ReturnEffect(_time));
     }
+    private IEnumerator ReturnEffect(float _time)
+    {
+        yield return new WaitForSeconds(_time);
+        ReleaseEffect();
+    }
+
+    public void ReleaseEffect() { m_originPool.Release(gameObject); }
 }

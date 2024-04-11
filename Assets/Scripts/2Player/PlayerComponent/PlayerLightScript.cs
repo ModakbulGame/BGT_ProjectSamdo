@@ -19,18 +19,12 @@ public class PlayerLightScript : MonoBehaviour            // 임시 불빛 오브젝트
 
     private ParticleSystem m_effect;
 
-    private const float MinSize = 0;                            // 최소 크기
-    private const float MaxSize = 100;                          // 최대 크기
+    private const float MIN_SIZE = 0;                            // 최소 크기
+    private const float MAX_SIZE = 100;                          // 최대 크기
+    private const float CHANGE_TIME = 5;
 
-    private static Particle[] m_particles;
-
-    public static float CurSize { get { if (!Inst.gameObject.activeSelf) { return 0; }
-            Inst.m_effect.GetParticles(m_particles);
-            float max = 0;
-            for(int i = 0; i<m_particles.Length;i++) { float size = m_particles[i].GetCurrentSize(Inst.m_effect); if (size > max) max = size; }
-            return max;
-        } }
-
+    
+    public static float CurSize { get; private set; }
     public static ELightState CurState { get; private set; }    // 불빛의 현재 상태 (static)
 
 
@@ -38,6 +32,7 @@ public class PlayerLightScript : MonoBehaviour            // 임시 불빛 오브젝트
     {
         m_effect.Play();
         CurState = ELightState.CHANGE;
+        CurSize = MIN_SIZE;
         StartCoroutine(ChangeSize(true));
     }
     public void LightOff()
@@ -48,30 +43,28 @@ public class PlayerLightScript : MonoBehaviour            // 임시 불빛 오브젝트
 
     private IEnumerator ChangeSize(bool _on)
     {
-        while ((_on && CurSize < 90) || (!_on && CurSize > 20))
+        float change = (MAX_SIZE - MIN_SIZE) / CHANGE_TIME;
+        if (!_on) { change *= -1; }
+        while ((_on && CurSize < MAX_SIZE) || (!_on && CurSize > MIN_SIZE))
         {
+            CurSize += change * Time.deltaTime;
             yield return null;
         }
-        if (_on) { CurState = ELightState.ON; }
-        else { CurState = ELightState.OFF; }
+        if (_on) { CurSize = MAX_SIZE; CurState = ELightState.ON; }
+        else { CurSize = MIN_SIZE; CurState = ELightState.OFF; }
     }
 
 
 
     public void SetComps()
     {
+        if(Inst != null) { Destroy(Inst.gameObject); }
         Inst = this;
         m_effect = GetComponent<ParticleSystem>();
-        m_particles = new Particle[m_effect.main.maxParticles];
     }
 
     private void Awake()
     {
         SetComps();
-    }
-
-    private void Update()
-    {
-        Debug.Log(CurSize);
     }
 }
