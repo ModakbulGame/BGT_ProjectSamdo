@@ -14,8 +14,7 @@ public class MonsterProjectileScript : ObjectAttackScript
 
     private Vector3 MoveDir { get; set; }
 
-    public void SetAttack(ObjectScript _attacker, Vector3 _dir, float _damage) { SetAttack(_attacker, _damage, ECCType.NONE); MoveDir = new(_dir.x, 0, _dir.z); }
-
+    public void SetAttack(ObjectScript _attacker, Vector3 _dir, float _damage) { SetAttack(_attacker, _damage); MoveDir = new(_dir.x, 0, _dir.z); }
 
 
     private void OnTriggerEnter(Collider _other)

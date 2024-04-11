@@ -12,11 +12,17 @@ public class ObjectAttackScript : MonoBehaviour
     protected readonly List<IHittable> m_hitObjects = new();
     public bool CheckHit(IHittable _object) { return m_hitObjects.Contains(_object); }
 
-    public float Damage { get; private set; } = 5;
-    public virtual ECCType CCType { get; private set; } = ECCType.NONE;
+    [SerializeField]
+    protected ECCType m_ccType = ECCType.NONE;
 
-    public void SetAttack(ObjectScript _attacker, float _damage) { SetAttack(_attacker, _damage, ECCType.NONE); }
-    public void SetAttack(ObjectScript _attacker, float _damage, ECCType _cc) { m_attacker = _attacker; Damage = _damage; CCType = _cc; }
+    public float Damage { get; private set; } = 5;
+    public virtual ECCType CCType
+    {
+        get { return m_ccType; }
+    }
+
+
+    public void SetAttack(ObjectScript _attacker, float _damage) { m_attacker = _attacker; Damage = _damage; }
 
     public virtual void AttackOn()                       // 공격 시작
     {
