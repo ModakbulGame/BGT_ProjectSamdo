@@ -30,7 +30,11 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
 
     public ObjectPool<GameObject> m_originPool { get; set; }
 
-    public void ReleaseSkill() { m_originPool.Release(gameObject); }
+    public void ReleaseSkill()
+    {
+        AttackOff();
+        m_originPool.Release(gameObject);
+    }
 
     private void OnTriggerEnter(Collider _other)
     {
@@ -55,14 +59,22 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
     }
 
 
+    private IEnumerator ReleaseDelay()
+    {
+        yield return new WaitForSeconds(m_lastTime);
+        if (!gameObject.activeSelf) { ReleaseSkill(); }
+    }
+
+    private void OnEnable()
+    {
+        AttackOn();
+        StartCoroutine(ReleaseDelay());
+    }
+
     private void SetInfo()
     {
 
     }
 
-    public override void Start()
-    {
-        AttackOn();
-        Destroy(gameObject, m_lastTime);
-    }
+    public override void Start() { }
 }
