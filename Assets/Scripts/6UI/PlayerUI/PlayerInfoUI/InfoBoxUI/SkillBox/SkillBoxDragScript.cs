@@ -34,7 +34,7 @@ public class SkillBoxDragScript : DragDropUIScript
     public override void DropAction()
     {
         if (DropIdx == -1) { return; }
-        PlayManager.RegisterSkilSlot(Skill, DropIdx);
+        GameManager.RegisterSkilSlot(Skill, DropIdx);
         Box.UpdateUI();
     }
 

@@ -34,6 +34,8 @@ public class SkillManager : MonoBehaviour
     [SerializeField]
     private GameObject[] m_skillPrefabs = new GameObject[(int)ESkillName.LAST];
 
+    public GameObject[] SkillArrays { get { return m_skillPrefabs; } }
+
 
     public GameObject GetSkillPrefab(ESkillName _skill)
     {

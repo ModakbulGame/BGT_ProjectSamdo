@@ -41,14 +41,14 @@ public class SkillBoxUIScript : PlayerInfoBoxScript
 
     public override void UpdateUI()
     {
-        ESkillName[] slot = PlayManager.SkillSlot;
+        ESkillName[] slot = GameManager.SkillSlot;
         m_slot.UpdateSlot(slot);
 
         m_obtainedList.Clear();
         for (int i = 0; i<(int)ESkillName.LAST; i++)
         {
             ESkillName skill = (ESkillName)i;
-            if (PlayManager.GetSkillInfo(skill).Obtained) { m_obtainedList.Add(skill); }
+            if (GameManager.GetSkillInfo(skill).Obtained) { m_obtainedList.Add(skill); }
         }
         int start = CurPage * ElmPerPage;
         for (int i = 0; i<ElmPerPage; i++)

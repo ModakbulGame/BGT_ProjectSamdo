@@ -136,14 +136,14 @@ public partial class PlayerController
 
 
     // 스킬 관련
-    private ESkillName[] SkillSlot { get { return PlayManager.SkillSlot; } }                // 스킬 슬롯
+    private ESkillName[] SkillSlot { get { return GameManager.SkillSlot; } }                // 스킬 슬롯
     public int SkillIdx { get { for (int i = 0; i<ValueDefine.MAX_SKILL_SLOT; i++) { if (SkillTriggers[i]) return i; } return -1; } }       // 눌린 스킬
     public bool CanUseSkill { get { return SkillIdx != -1 && SkillSlot[SkillIdx] != ESkillName.LAST && SkillCooltime[SkillIdx] <= 0; } }    // 스킬 사용 확인
 
     private readonly float[] SkillCooltime = new float[ValueDefine.MAX_SKILL_SLOT];         // 스킬 쿨타임
     public ESkillName SkillInHand { get; private set; } = ESkillName.LAST;                  // 사용 중인 스킬
     private SkillInfo SkillInfoInHand { get { if (SkillInHand == ESkillName.LAST) return null;
-            return PlayManager.GetSkillInfo(SkillInHand); } }                               // 의 정보
+            return GameManager.GetSkillInfo(SkillInHand); } }                               // 의 정보
     public int UsingSkillIdx { get; private set; } = -1;                                    // 의 슬롯 번호
     public void ReadySkill()    // 스킬 준비
     {
@@ -166,7 +166,7 @@ public partial class PlayerController
     }
     public void CreateSkill()           // 스킬 오브젝트 생성
     {
-        GameObject prefab = PlayManager.GetSkillPrefab(SkillInHand);
+        GameObject prefab = GameManager.GetSkillPrefab(SkillInHand);
         GameObject skill = Instantiate(prefab, transform);
         ESkillType type = SkillInfoInHand.SkillType;
         if(type == ESkillType.RANGED || type == ESkillType.RANGED_CC || type == ESkillType.SUMMON) { skill.transform.parent = null; }

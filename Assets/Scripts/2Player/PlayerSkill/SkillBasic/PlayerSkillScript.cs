@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.Utilities;
+using UnityEngine.Pool;
 
-public class PlayerSkillScript : ObjectAttackScript
+public class PlayerSkillScript : ObjectAttackScript, IPoolable
 {
     [SerializeField]
     protected SkillScriptable m_scriptable;
@@ -27,7 +28,9 @@ public class PlayerSkillScript : ObjectAttackScript
     }
     public float ResultDamage { get { return m_scriptable.Attack * Damages[0] + m_scriptable.Magic * Damages[1]; } }
 
+    public ObjectPool<GameObject> m_originPool { get; set; }
 
+    public void ReleaseSkill() { m_originPool.Release(gameObject); }
 
     private void OnTriggerEnter(Collider _other)
     {
@@ -48,8 +51,7 @@ public class PlayerSkillScript : ObjectAttackScript
 
     public virtual void CollideTaret()
     {
-        // 물체와 충돌
-        Destroy(gameObject);
+        ReleaseSkill();
     }
 
 

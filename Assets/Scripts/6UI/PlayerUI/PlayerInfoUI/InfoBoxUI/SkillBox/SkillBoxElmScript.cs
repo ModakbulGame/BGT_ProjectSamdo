@@ -22,7 +22,7 @@ public class SkillBoxElmScript : MonoBehaviour
     {
         CurSkill = _skill;
         Sprite img = GameManager.GetSkillSprite(_skill);
-        SkillInfo info = PlayManager.GetSkillInfo(_skill);
+        SkillInfo info = GameManager.GetSkillInfo(_skill);
 
         m_skillImg.sprite = img;
         m_skillName.text = info.SkillName;

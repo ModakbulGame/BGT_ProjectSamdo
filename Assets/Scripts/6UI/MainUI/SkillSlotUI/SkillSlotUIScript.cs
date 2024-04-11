@@ -9,7 +9,7 @@ public class SkillSlotUIScript : MonoBehaviour
 
     public void UpdateUI()
     {
-        ESkillName[] slot = PlayManager.SkillSlot;
+        ESkillName[] slot = GameManager.SkillSlot;
         for (int i = 0; i<ValueDefine.MAX_SKILL_SLOT; i++)
         {
             m_elms[i].SetSkill(slot[i]);

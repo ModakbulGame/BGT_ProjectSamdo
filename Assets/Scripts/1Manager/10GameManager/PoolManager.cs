@@ -21,8 +21,13 @@ public class PoolManager : MonoBehaviour
         return m_pools[hash].Get();
     }
 
-    private void CreatePools(GameObject[] _effects)
+    private void CreatePools(GameObject[] _skills, GameObject[] _effects)
     {
+        // ½ºÅ³
+        for(int i=28;i<(int)ESkillName.LAST;i++)
+        {
+            CreatePool(_skills[i]);
+        }
         // ÀÌÆåÆ®
         for (int i = 0; i<(int)EEffectName.LAST; i++)
         {
@@ -55,8 +60,8 @@ public class PoolManager : MonoBehaviour
     private void DestroyItem(GameObject _item) { Destroy(_item); }
 
 
-    public void SetManager(GameObject[] _effects)
+    public void SetManager(GameObject[] _skills, GameObject[] _effects)
     {
-        CreatePools(_effects);
+        CreatePools(_skills, _effects);
     }
 }

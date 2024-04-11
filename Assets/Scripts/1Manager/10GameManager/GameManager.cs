@@ -35,6 +35,16 @@ public class GameManager : SingleTon<GameManager>
     public static void SetControlMode(EControlMode _mode) { InputManager.SetControlMode(_mode); }                               // 조작 모드 변경
     public static void SetMouseSensitive(float _sensitive) { InputManager.SetMouseSensitive(_sensitive); }                      // 마우스 민감도 설정
 
+    // 스킬
+    private SkillManager m_skillManager;
+    private static SkillManager SkillManager { get { return Inst.m_skillManager; } }
+    private static GameObject[] SkillArray { get { return SkillManager.SkillArrays; } }
+    
+    public static SkillInfo GetSkillInfo(ESkillName _skill) { return SkillManager.GetSkillInfo(_skill); }                                   // 스킬 정보
+    public static GameObject GetSkillPrefab(ESkillName _skill) { return SkillManager.GetSkillPrefab(_skill); }                              // 스킬 프리펍
+    public static ESkillName[] SkillSlot { get { return SkillManager.SkillSlot; } }                                                         // 스킬 슬롯
+    public static void RegisterSkilSlot(ESkillName _skill, int _idx) { SkillManager.RegisterSkillSlot(_skill, _idx); PlayManager.UpdateSkillSlot(); }   // 스킬 슬롯 설정
+    public static void ObtainSkill(ESkillName _skill) { SkillManager.ObtainSkill(_skill); }
 
     // 몬스터
     private MonsterManager m_monsterManager;
@@ -74,13 +84,15 @@ public class GameManager : SingleTon<GameManager>
         m_soundManager = GetComponent<SoundManager>();
         m_inputManager = GetComponent<InputManager>();
         m_inputManager.SetSubManager();
+        m_skillManager = GetComponent<SkillManager>();
+        m_skillManager.SetManager();
         m_monsterManager = GetComponent<MonsterManager>();
         m_monsterManager.SetManager();
         m_effectManager = GetComponent<EffectManager>();
         m_effectManager.SetManager();
         m_uiManager = GetComponent<UIManager>();
         m_poolManager = GetComponent<PoolManager>();
-        m_poolManager.SetManager(EffectArray);
+        m_poolManager.SetManager(SkillArray, EffectArray);
     }
 
     public override void Awake()

@@ -81,17 +81,6 @@ public class PlayManager : MonoBehaviour
     public static void UsePurified(int _num) { ItemManager.UsePurified(_num); }                                                             // 성불 영혼 사용
     public static void UsePattern(EProperty _type, int _num) { ItemManager.UsePattern(_type, _num); }                                       // 문양 사용
 
-
-    // 스킬
-    private SkillManager m_skillManager;
-    private static SkillManager SkillManager { get { return Inst.m_skillManager; } }
-    public static SkillInfo GetSkillInfo(ESkillName _skill) { return SkillManager.GetSkillInfo(_skill); }                                   // 스킬 정보
-    public static GameObject GetSkillPrefab(ESkillName _skill) { return SkillManager.GetSkillPrefab(_skill); }                              // 스킬 프리펍
-    public static ESkillName[] SkillSlot { get { return SkillManager.SkillSlot; } }                                                         // 스킬 슬롯
-    public static void RegisterSkilSlot(ESkillName _skill, int _idx) { SkillManager.RegisterSkillSlot(_skill, _idx); UpdateSkillSlot(); }   // 스킬 슬롯 설정
-    public static void ObtainSkill(ESkillName _skill) { SkillManager.ObtainSkill(_skill); }                                                 // 스킬 획득
-
-
     // 스토리
     private StoryManager m_storyManager;
     private static StoryManager StoryManager { get { return Inst.m_storyManager; } }
@@ -140,8 +129,6 @@ public class PlayManager : MonoBehaviour
     {
         m_itemManager = GetComponent<ItemManager>();
         m_itemManager.SetManager();
-        m_skillManager = GetComponent<SkillManager>();
-        m_skillManager.SetManager();
         m_storyManager = GetComponent<StoryManager>();
         m_environmentManager = GetComponent<EnvironmentManager>();
         m_upgradeManager = GetComponent<UpgradeManager>();
