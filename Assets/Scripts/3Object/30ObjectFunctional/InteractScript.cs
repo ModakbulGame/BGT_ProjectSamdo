@@ -15,7 +15,8 @@ public class InteractScript : MonoBehaviour                 // 상호작용이 가능한
     public bool CanInteract { get { return DistToPlayer <= m_canInteractDist; } }  // 상호작용 가능한지
 
     public float DistToPlayer { get { return PlayManager.GetDistToPlayer(transform.position); } }           // 플레이어와의 거리
- 
+    public Transform InteractTransform { get { return this.transform; } }                                   // 상호작용 대상의 위치
+
 
     public void AbleInteract()                 // 조작 허용
     {

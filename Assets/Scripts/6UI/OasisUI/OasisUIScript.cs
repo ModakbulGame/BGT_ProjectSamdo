@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +24,12 @@ public interface IOasisUI
 public class OasisUIScript : MonoBehaviour
 {
     private OasisNPC m_npc;
-    public void SetNPC(OasisNPC _npc) { m_npc = _npc; }
+    public Transform OasisTransform { get; private set; }   // 화톳불 간 이동을 위해 구현
+    public void SetNPC(OasisNPC _npc) 
+    { 
+        m_npc = _npc; 
+        OasisTransform = _npc.transform;
+    }
 
     [SerializeField]
     private GameObject[] m_uiPrefabs = new GameObject[(int)EOasisFunctionName.LAST];

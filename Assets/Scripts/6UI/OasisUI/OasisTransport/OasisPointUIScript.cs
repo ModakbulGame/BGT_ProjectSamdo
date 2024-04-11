@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class OasisPointUIScript : MonoBehaviour
 {
+    private OasisNPC m_root;
     private OasisTransportUIScript m_parent;
     public void SetParent(OasisTransportUIScript _parent, EMapPointName _point) { m_parent = _parent; PointName = _point; SetComps(); }
 

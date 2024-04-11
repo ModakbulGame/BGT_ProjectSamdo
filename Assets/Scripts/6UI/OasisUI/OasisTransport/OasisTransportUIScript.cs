@@ -10,6 +10,7 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
 
     private Button m_transportBtn;
     private OasisPointUIScript[] m_oasisPoints;
+    private Transform[] m_oasisTransforms;
 
     private EMapPointName CurDestination { get; set; } = EMapPointName.LAST;
 
@@ -26,29 +27,31 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
         }
         CurDestination = _point;
     }
-
+    
     private void TransportTo()
     {
         if(CurDestination == EMapPointName.LAST) { return; }
         Debug.Log(CurDestination + "로 이동!");
         CloseUI();
-        //FadeOut
+        // FadeOut
         MoveToOasis(CurDestination);
-        //FadeIn
+        // FadeIn
     }
 
     public void MoveToOasis(EMapPointName _point)
     {
-        Transform oasisTransform = transform.root;
+        Transform destOasis = m_parent.OasisTransform;  // 맵과 화톳불의 위치가 동기화 되면 바꿀 예정
 
-        if (PlayManager.GetDistToPlayer(oasisTransform.position) <= 2.5f)  // 상호 작용 거리 내 화톳불이 있으면 그 곳으로는 이동 불가, 없을 시 이동 가능; 임시 조건식이라 더 정확하게 수정할 필요가 있음...
+        if (PlayManager.GetDistToPlayer(destOasis.position) <= 2.5f)  // 상호 작용 거리 내 화톳불이 있으면 그 곳으로는 이동 불가, 없을 시 이동 가능; 임시 조건식이라 더 정확하게 수정할 필요가 있음...
         {
             Debug.Log("현재 위치한 화톳불입니다!");
             return;
         }
         else
         {
-            PlayManager.TeleportPlayer(m_oasisPoints[(int)_point].transform.position);
+            Debug.Log(destOasis.position);
+            PlayManager.TeleportPlayer(destOasis.position);
+            CloseUI();
         }
     }
 
