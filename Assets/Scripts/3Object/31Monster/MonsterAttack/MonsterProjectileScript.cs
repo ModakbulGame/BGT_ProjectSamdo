@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class MonsterProjectileScript : ObjectAttackScript
+public class MonsterProjectileScript : ObjectAttackScript, IHittable
 {
     protected Rigidbody m_rigid;
 
@@ -14,8 +14,18 @@ public class MonsterProjectileScript : ObjectAttackScript
 
     private Vector3 MoveDir { get; set; }
 
+    public bool IsPlayer => false;
+    public bool IsMonster => false;
+
     public void SetAttack(ObjectScript _attacker, Vector3 _dir, float _damage) { SetAttack(_attacker, _damage); MoveDir = new(_dir.x, 0, _dir.z); }
 
+
+
+    public void GetHit(HitData _hit)
+    {
+        Debug.Log("ÆÐ¸µ!");
+        DestroyAttack();
+    }
 
     private void OnTriggerEnter(Collider _other)
     {

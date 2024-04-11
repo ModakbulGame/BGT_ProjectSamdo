@@ -29,6 +29,6 @@ public class PlayerHitState : MonoBehaviour, IPlayerState
 
     public void FixedProceed()
     {
-        m_player.StopMove();
+
     }
 }

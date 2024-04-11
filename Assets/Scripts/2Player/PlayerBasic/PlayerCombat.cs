@@ -62,6 +62,7 @@ public partial class PlayerController
     {
         if (!IsGuarding) 
         {
+            StopMove();
             ChangeState(EPlayerState.HIT);
         }
     }
