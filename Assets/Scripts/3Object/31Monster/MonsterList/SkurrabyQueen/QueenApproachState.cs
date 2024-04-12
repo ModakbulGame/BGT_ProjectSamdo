@@ -21,9 +21,17 @@ public class QueenApproachState : MonoBehaviour, IMonsterState
         AttackCount = QueenAttackDelay;
     }
 
-    private void EvadeQueen()
+    private void ControlDistance()
     {
-        Queen.EvadeQueen();
+        if (Queen.TargetDistance > Queen.ReturnRange)
+        {
+            Queen.ApproachTarget();
+        }
+        else if (Queen.TargetDistance < Queen.EvadeRange)
+        {
+            Queen.EvadeQueen();
+        }
+        else Queen.LookTarget();
     }
 
     public void Proceed()
@@ -36,18 +44,17 @@ public class QueenApproachState : MonoBehaviour, IMonsterState
         }
         else { MissCount = m_monster.MissTargetDelay; }
 
-        AttackCount -= Time.deltaTime;
         if (!m_monster.HasTarget)
         {
             m_monster.ChangeState(EMonsterState.ROAMING);
             return;
         }
-        if (AttackCount <= 0 && Queen.CanUseSkill)
+        if (m_monster.CanAttack)
         {
-            Queen.ChangeState(EMonsterState.ATTACK);
+            m_monster.ChangeState(EMonsterState.ATTACK);
             return;
         }
 
-        EvadeQueen();
+        ControlDistance();
     }
 }

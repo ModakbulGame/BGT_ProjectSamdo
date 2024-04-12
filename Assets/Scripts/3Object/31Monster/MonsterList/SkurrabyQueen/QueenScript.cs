@@ -20,7 +20,7 @@ public class QueenScript : MonsterScript
 
     private const int MAX_SKURRABY = 3;
     private const float SPIT_ROTATION = 120;
-
+    public readonly float EvadeRange = 3;
 
     private int CurSkurraby { get; set; } = 0;
     private Vector3 SkurrabyOffset = new(0, 1.5f, 2.75f);
@@ -34,10 +34,6 @@ public class QueenScript : MonsterScript
     private bool CanCreateSkurraby { get { return SkillCoolCount[(int)EQueenSkillName.CREATE_SKURRABY] <= 0 && CurSkurraby < MAX_SKURRABY; } }
     private bool CanSpitPoison { get { return SkillCoolCount[(int)EQueenSkillName.SPIT_POISON] < 0; } }
 
-    public override void StartApproach()
-    {
-        base.StartApproach();
-    }
     public override void StartAttack()
     {
         StopMove();
@@ -58,12 +54,10 @@ public class QueenScript : MonsterScript
     }
     public void EvadeQueen()
     {
+        StopMove();
         LookTarget();
-        if (TargetDistance < 3)
-        {
-            Vector3 dir = (Position - CurTarget.Position).normalized;
-            m_rigid.velocity = dir;
-        }
+        Vector3 dir = (Position - CurTarget.Position).normalized;
+        m_rigid.velocity = dir;
     }
 
     public void CreateSkurraby()
