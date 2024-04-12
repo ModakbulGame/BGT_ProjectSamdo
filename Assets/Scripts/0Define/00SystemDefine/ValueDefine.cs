@@ -8,11 +8,12 @@ public static class ValueDefine
     public const int HIDING_LAYER = 1 << HIDING_LAYER_IDX;          // 숨기기 레이어
     public const int GROUND_LAYER = 1 << 6;                         // 땅 레이어
     public const int INTERACT_LAYER = 1 << 7;                       // 상호작용 레이어
-    public const int HITTABLE_LAYER = 1 << 9;                       // 타격 가능 레이어
+    public const int HITTABLE_LAYER = 1 << HITTABLE_LAYER_IDX;      // 타격 가능 레이어
 
     // 레이어 인덱스
     public const int UI_LAYER_IDX = 5;                              // UI 레이어 순서
     public const int HIDING_LAYER_IDX = 3;                          // 숨기기 레이어의 순서
+    public const int HITTABLE_LAYER_IDX = 9;
 
     // 태그
     public const string PLAYER_TAG = "Player";                      // 플레이어
@@ -26,6 +27,7 @@ public static class ValueDefine
     public const string MONSTER_ATTACK_TAG = "MonsterAttack";       // 몬스터 공격
     public const string TERRAIN_TAG = "Terrain";                    // 터레인
     public const string MONSTER_HIT_TAG = "MonsterHit";             // 몬스터 히트 부위
+    public const string PLAYER_HIT_TAG = "PlayerHit";               // 플레이어 히트 부위
 
 
     // 값

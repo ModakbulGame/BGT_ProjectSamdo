@@ -99,7 +99,8 @@ public class WeaponScript : ObjectAttackScript
         foreach (Collider collider in _hits)
         {
             IHittable hittable = collider.GetComponentInParent<IHittable>();
-            if (hittable == null) { Debug.LogError("���� ��ũ��Ʈ ����"); continue; }
+            if (hittable == null) { Debug.LogError("히터블 스크립트 없음"); continue; }
+            if (collider.CompareTag(ValueDefine.PLAYER_HIT_TAG)) { continue; }
             Vector3 pos = CheckNHit(hittable);
             AddHitObject(hittable);
             if (hittable.IsMonster && pos != Vector3.zero)

@@ -64,7 +64,7 @@ public class SkurrabyScript : MonsterScript
     private void OnTriggerEnter(Collider _other)
     {
         if(!Flying) { return; }
-        if (_other.CompareTag("Player"))
+        if (_other.gameObject.layer == ValueDefine.HITTABLE_LAYER_IDX)
         {
             ExplodeSkurraby();
         }

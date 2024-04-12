@@ -16,7 +16,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     public ObjectPool<GameObject> OriginalPool { get; set; }
     public void SetPool(ObjectPool<GameObject> _pool) { OriginalPool = _pool; }
     public virtual void OnPoolGet() { IsSpawned = true; }
-    public void OnPoolRelease() { m_aiPath.enabled = false; IsSpawned = false; OriginalPool.Release(gameObject); }
+    public void ReleaseTopool() { m_aiPath.enabled = false; IsSpawned = false; OriginalPool.Release(gameObject); }
 
 
     [SerializeField]
@@ -117,6 +117,17 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         StopMove();
         AttackAnimation();
     }
+    private void DestroyMonster()
+    {
+        if(OriginalPool == null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            ReleaseTopool();
+        }
+    }
 
 
     // 감지 관련
@@ -213,11 +224,11 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         foreach (SkinnedMeshRenderer smr in m_skinneds)
         {
             /*vfx.SetSkinnedMeshRenderer("SkinnedMeshRenderer", smr);*/
-            StartCoroutine(DissolveCoroutine(effect, smr.materials));
+            StartCoroutine(DissolveCoroutine(smr.materials));
         }
         vfx.Play();
     }
-    private IEnumerator DissolveCoroutine(GameObject _effect, Material[] _mats)
+    private IEnumerator DissolveCoroutine(Material[] _mats)
     {
         float counter = 0;
 
@@ -230,7 +241,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
             }
             yield return new WaitForSeconds(m_refreshRate);
         }
-        Destroy(gameObject);
+        DestroyMonster();
     }
 
 

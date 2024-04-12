@@ -106,7 +106,7 @@ public class QueenScript : MonsterScript
     private void InitPool()
     {
         m_skurrabyPool = new(OnPoolCreate, OnPoolGet, OnPoolRelease, OnPoolDestroy, true, MAX_SKURRABY, MAX_SKURRABY);
-        for(int i = 0; i<MAX_SKURRABY; i++) { GameObject skurraby = OnPoolCreate(); skurraby.GetComponent<SkurrabyScript>().OnPoolRelease(); }
+        for(int i = 0; i<MAX_SKURRABY; i++) { GameObject skurraby = OnPoolCreate(); skurraby.GetComponent<SkurrabyScript>().ReleaseTopool(); }
     }
     private GameObject OnPoolCreate()
     {

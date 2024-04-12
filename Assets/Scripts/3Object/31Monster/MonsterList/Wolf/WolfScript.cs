@@ -8,9 +8,9 @@ public class WolfScript : MonsterScript
     private WolfPeckScript m_peck;
     public void SetPeck(WolfPeckScript _peck) { m_peck = _peck; }
 
-    public EWolfRole CurRole { get; private set; } = EWolfRole.LAST;
+    public EWolfRole CurRole { get; private set; } = EWolfRole.MAIN;
     public void SetRole(EWolfRole _role) { CurRole = _role; }
-    public void ResetRole() { m_peck.ResetRole(); }
+    public void ResetRole() { if (m_peck == null) { return; } m_peck.ResetRole(); }
 
     // 늑대 스테이트
     private IMonsterState m_positionState, m_jabState;
@@ -87,7 +87,7 @@ public class WolfScript : MonsterScript
         CurSpeed = ApproachSpeed;
         m_anim.SetTrigger("MOVE");
         ApproachOffset = Random.Range(0.25f, 0.5f);
-        if (!m_peck.Engaging)
+        if (m_peck != null && !m_peck.Engaging)
         {
             m_peck.EngageWolfs(this, CurTarget);
         }

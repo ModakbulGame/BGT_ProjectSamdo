@@ -31,7 +31,7 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
     public ObjectPool<GameObject> OriginalPool { get; set; }
     public void SetPool(ObjectPool<GameObject> _pool) { OriginalPool = _pool; }
     public void OnPoolGet() { }
-    public void OnPoolRelease()
+    public void ReleaseTopool()
     {
         AttackOff();
         OriginalPool.Release(gameObject);
@@ -56,14 +56,14 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
 
     public virtual void CollideTaret()
     {
-        OnPoolRelease();
+        ReleaseTopool();
     }
 
 
     private IEnumerator ReleaseDelay()
     {
         yield return new WaitForSeconds(m_lastTime);
-        if (!gameObject.activeSelf) { OnPoolRelease(); }
+        if (!gameObject.activeSelf) { ReleaseTopool(); }
     }
 
     private void OnEnable()
