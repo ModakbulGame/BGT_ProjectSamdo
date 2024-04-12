@@ -6,23 +6,20 @@ using UnityEngine.UI;
 
 public class MapUIScript : MonoBehaviour
 {
-    [SerializeField]                            // 맵 위치 정규화를 위한 빈 GameObject
-    private Transform m_left;
+    public Transform m_left;
+    public Transform m_right;
+    public Transform m_top;
+    public Transform m_bottom;
+
+    [SerializeField]                            // 맵 UI에 표시되는 오브젝트와 이미지들
+    private GameObject[] m_mapOasis;
     [SerializeField]
-    private Transform m_right;
-    [SerializeField]
-    private Transform m_top;
-    [SerializeField]
-    private Transform m_bottom;
-                                              // 맵 UI에 표시되는 오브젝트와 이미지들
+    private GameObject m_mapOasisImage;             
+    
     [SerializeField]
     private Image m_mapPlayerImage;
     [SerializeField]
     private Transform m_targetPlayer;
-    [SerializeField]
-    private GameObject[] m_mapOasis;
-    [SerializeField]
-    private GameObject m_mapOasisImage;
     [SerializeField]
     private Image m_mapImage;
     [SerializeField]
@@ -35,7 +32,6 @@ public class MapUIScript : MonoBehaviour
     private float m_maxIncrement = 2.0f;
     private float m_minIncrement = 0.4f;
 
-    private OasisPointUIScript m_oasisScript;
 
     public void ToggleMapUI()
     {
