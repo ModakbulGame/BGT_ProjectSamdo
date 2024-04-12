@@ -89,6 +89,7 @@ public class PlayManager : MonoBehaviour
     // 환경
     private EnvironmentManager m_environmentManager;
     private static EnvironmentManager EnvironmentManager { get { return Inst.m_environmentManager; } }
+    public static Transform[] NormalizeObjects { get { return EnvironmentManager.m_normalizeObjects; } }
 
 
     // 업그레이드
