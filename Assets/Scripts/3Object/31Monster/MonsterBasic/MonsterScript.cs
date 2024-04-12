@@ -4,12 +4,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.VFX;
 
-public abstract partial class MonsterScript : ObjectScript, IHidable
+public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 {
     protected SkinnedMeshRenderer[] m_skinneds;           // 매쉬
+
+    // 풀
+    public ObjectPool<GameObject> OriginalPool { get; set; }
+    public void SetPool(ObjectPool<GameObject> _pool) { OriginalPool = _pool; }
+    public virtual void OnPoolGet() { IsSpawned = true; }
+    public void OnPoolRelease() { m_aiPath.enabled = false; IsSpawned = false; OriginalPool.Release(gameObject); }
+
 
     [SerializeField]
     private MonsterScriptable m_scriptable;             // 스크립터블로 정보를 저장합니다. 모든 정보는 여기에..
@@ -31,12 +39,13 @@ public abstract partial class MonsterScript : ObjectScript, IHidable
     public void ChangeState(EMonsterState _state) { m_stateManager.ChangeState(m_monsterStates[(int)_state]); }
 
     // 몬스터 상태
+    public virtual bool IsSpawned { get; protected set; } = true;
     public override float CurSpeed { get { return m_aiPath.maxSpeed; } protected set { m_aiPath.maxSpeed = value; } }
-
-    public bool IsIdle { get { return CurState.CurMonsterState == EMonsterState.IDLE; } }
-    public bool IsRoaming { get { return CurState.CurMonsterState == EMonsterState.ROAMING; } }
-    public bool IsApproaching { get { return CurState.CurMonsterState == EMonsterState.APPROACH; } }
-    public bool IsAttacking { get { return CurState.CurMonsterState == EMonsterState.ATTACK; } }
+    public bool IsIdle { get { return CurState.StateEnum == EMonsterState.IDLE; } }
+    public bool IsRoaming { get { return CurState.StateEnum == EMonsterState.ROAMING; } }
+    public bool IsApproaching { get { return CurState.StateEnum == EMonsterState.APPROACH; } }
+    public bool IsAttacking { get { return CurState.StateEnum == EMonsterState.ATTACK; } }
+    public bool IsHit { get { return CurState.StateEnum == EMonsterState.HIT; } }
 
 
     // 상태 관련 프로퍼티
@@ -234,6 +243,9 @@ public abstract partial class MonsterScript : ObjectScript, IHidable
     }
 
 
+
+
+
     // 초기 설정
     public override void SetComps()
     {
@@ -241,6 +253,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable
         m_skinneds = GetComponentsInChildren<SkinnedMeshRenderer>();
         m_hideScript = GetComponent<HideScript>();
         m_aiPath = GetComponent<AIPath>();
+        m_cameraShake = GetComponent<CameraShake>();  // 몬스터 프리팹에 cinemachine impulse source와 CameraShake 컴포넌트를 달아야 함
     }
 
     public virtual void SetStates()
@@ -261,23 +274,33 @@ public abstract partial class MonsterScript : ObjectScript, IHidable
         m_combatInfo.SetInfo(m_scriptable);
     }
 
+    public virtual void OnEnable()
+    {
+        base.Start();
+        SetUI();
+        if (m_spawnPoint != null) { m_spawnPoint.AddMonster(this); }
+        m_aiPath.enabled = true;
+        StartCoroutine(WaitSpawned());
+    }
+    public virtual IEnumerator WaitSpawned()
+    {
+        while (!IsSpawned)
+        {
+            yield return null;
+        }
+        ChangeState(EMonsterState.ROAMING);
+    }
+
     public override void Awake()
     {
         base.Awake();
         SetStates();
     }
-    public override void Start()
+    public virtual void Update()
     {
-        base.Start();
-        m_cameraShake = GetComponent<CameraShake>();  // 몬스터 프리팹에 cinemachine impulse source와 CameraShake 컴포넌트를 달아야 함
-        SetUI();
-        if (m_spawnPoint != null) { m_spawnPoint.AddMonster(this); }
-        ChangeState(EMonsterState.ROAMING);
-    }
-    private void Update()
-    {
+        if(!IsSpawned) { return; }
+
         CurState.Proceed();
-        //m_aiPath.SearchPath();
 
         ProceedCooltime();
     }

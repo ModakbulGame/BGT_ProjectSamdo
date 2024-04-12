@@ -49,6 +49,7 @@ public class GameManager : SingleTon<GameManager>
     // 몬스터
     private MonsterManager m_monsterManager;
     private static MonsterManager MonsterManager { get { return Inst.m_monsterManager; } }
+    private static GameObject[] MonsterArray { get { return MonsterManager.MonsterArray; } }
     public static MonsterInfo GetMonsterInfo(EMonsterName _monster) { return MonsterManager.GetMonsterInfo(_monster); }                     // 몬스터 정보
     public static GameObject GetMonsterPrefab(EMonsterName _monster) { return MonsterManager.GetMonsterPrefab(_monster); }                  // 몬스터 프리펍
 
@@ -92,7 +93,7 @@ public class GameManager : SingleTon<GameManager>
         m_effectManager.SetManager();
         m_uiManager = GetComponent<UIManager>();
         m_poolManager = GetComponent<PoolManager>();
-        m_poolManager.SetManager(SkillArray, EffectArray);
+        m_poolManager.SetManager(SkillArray, MonsterArray, EffectArray);
     }
 
     public override void Awake()

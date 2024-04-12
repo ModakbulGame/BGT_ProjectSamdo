@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class MonsterIdleState : MonoBehaviour, IMonsterState
 {
     private MonsterScript m_monster;
-    public EMonsterState CurMonsterState { get { return EMonsterState.IDLE; } }
+    public EMonsterState StateEnum { get { return EMonsterState.IDLE; } }
 
     public void ChangeTo(MonsterScript _monster)
     {

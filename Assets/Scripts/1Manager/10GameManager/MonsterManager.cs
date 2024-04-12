@@ -38,7 +38,7 @@ public class MonsterManager : MonoBehaviour
 
     [SerializeField]
     private GameObject[] m_monsterPrefabs = new GameObject[(int)EMonsterName.LAST];
-
+    public GameObject[] MonsterArray { get { return m_monsterPrefabs; } }
 
     public GameObject GetMonsterPrefab(EMonsterName _monster)
     {

@@ -1,0 +1,124 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Pool;
+
+public enum EQueenSkillName
+{
+    CREATE_SKURRABY,
+    SPIT_POISON,
+    LAST
+}
+
+public class QueenScript : MonsterScript
+{
+    [SerializeField]
+    private GameObject m_skurrabyPrefab;
+
+    private ObjectPool<GameObject> m_skurrabyPool;
+    private List<SkurrabyScript> m_createdSkurraby = new();
+
+    private const int MAX_SKURRABY = 3;
+    private const float SPIT_ROTATION = 120;
+
+
+    private int CurSkurraby { get; set; } = 0;
+    private Vector3 SkurrabyOffset = new(0, 1.5f, 2.75f);
+
+    public EQueenSkillName SkillIdx { get; private set; }
+
+    private readonly float[] m_skillCooltime = new float[] { 30, 20 };
+
+    private readonly float[] SkillCoolCount = new float[(int)EQueenSkillName.LAST];
+    public bool CanUseSkill { get { return CanCreateSkurraby || CanSpitPoison; } }
+    private bool CanCreateSkurraby { get { return SkillCoolCount[(int)EQueenSkillName.CREATE_SKURRABY] <= 0 && CurSkurraby < MAX_SKURRABY; } }
+    private bool CanSpitPoison { get { return SkillCoolCount[(int)EQueenSkillName.SPIT_POISON] < 0; } }
+
+    public override void StartApproach()
+    {
+        base.StartApproach();
+    }
+    public override void StartAttack()
+    {
+        StopMove();
+        if (CanCreateSkurraby)
+        {
+            SkillIdx = EQueenSkillName.CREATE_SKURRABY;
+            m_anim.SetTrigger("SKILL1");
+        }
+        else if (CanSpitPoison)
+        {
+            SkillIdx = EQueenSkillName.SPIT_POISON;
+            m_anim.SetTrigger("SKILL2");
+        }
+        else return;
+        int skill = (int)SkillIdx;
+        SkillCoolCount[skill] = m_skillCooltime[skill];
+        if (SkillCoolCount[1-skill] <= 5) { SkillCoolCount[1-skill] = 5; }
+    }
+    public void EvadeQueen()
+    {
+        LookTarget();
+        if (TargetDistance < 3)
+        {
+            Vector3 dir = (Position - CurTarget.Position).normalized;
+            m_rigid.velocity = dir;
+        }
+    }
+
+    public void CreateSkurraby()
+    {
+        if(CurSkurraby >= MAX_SKURRABY) { return; }
+        GameObject skurraby = m_skurrabyPool.Get();
+        skurraby.transform.localPosition = SkurrabyOffset;
+        Vector2 dir = FunctionDefine.DegToVec(Rotation);
+        SkurrabyScript script = skurraby.GetComponent<SkurrabyScript>();
+        script.SkurrabySpawned(dir);
+        m_createdSkurraby.Add(script);
+        skurraby.transform.SetParent(null);
+    }
+    public void SkillSpinQueen()
+    {
+        float rot = Rotation + SPIT_ROTATION / 3;
+        RotateTo(rot);
+    }
+
+
+    // 초기 설정
+    private void InitPool()
+    {
+        m_skurrabyPool = new(OnPoolCreate, OnPoolGet, OnPoolRelease, OnPoolDestroy, true, MAX_SKURRABY, MAX_SKURRABY);
+        for(int i = 0; i<MAX_SKURRABY; i++) { GameObject skurraby = OnPoolCreate(); skurraby.GetComponent<SkurrabyScript>().OnPoolRelease(); }
+    }
+    private GameObject OnPoolCreate()
+    {
+        GameObject skurraby = Instantiate(m_skurrabyPrefab, transform);
+        skurraby.GetComponent<SkurrabyScript>().SetPool(m_skurrabyPool);
+        return skurraby;
+    }
+    private void OnPoolGet(GameObject _skurraby) { _skurraby.SetActive(true); }
+    private void OnPoolRelease(GameObject _skurraby) { _skurraby.transform.SetParent(transform); _skurraby.SetActive(false); }
+    private void OnPoolDestroy(GameObject _skurraby) { Destroy(_skurraby); }
+
+    public override void SetStates()
+    {
+        base.SetStates();
+        ReplaceState(EMonsterState.APPROACH, gameObject.AddComponent<QueenApproachState>());
+        ReplaceState(EMonsterState.ATTACK, gameObject.AddComponent<QueenAttackState>());
+    }
+    public override void Awake()
+    {
+        base.Awake();
+        InitPool();
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        for (int i = 0; i<(int)EQueenSkillName.LAST; i++)
+        {
+            if (SkillCoolCount[i] > 0) { SkillCoolCount[i] -= Time.deltaTime; }
+            if (SkillCoolCount[i] < 0) { SkillCoolCount[i] = 0; }
+        }
+    }
+}

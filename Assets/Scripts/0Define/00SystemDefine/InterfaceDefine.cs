@@ -33,5 +33,8 @@ public interface IInteractable          // 상호작용이 가능한 오브젝트에 필수 부�
 
 public interface IPoolable
 {
-    public ObjectPool<GameObject> m_originPool { get; set; }
+    public ObjectPool<GameObject> OriginalPool { get; }
+    public void SetPool(ObjectPool<GameObject> _pool);
+    public void OnPoolGet();
+    public void OnPoolRelease();
 }

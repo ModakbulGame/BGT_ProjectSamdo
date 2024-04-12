@@ -6,7 +6,7 @@ using UnityEngine.InputSystem.XR.Haptics;
 public class SkurrabyAttackState : MonoBehaviour, IMonsterState
 {
     private MonsterScript m_monster;
-    public EMonsterState CurMonsterState { get { return EMonsterState.ATTACK; } }
+    public EMonsterState StateEnum { get { return EMonsterState.ATTACK; } }
 
     private SkurrabyScript Skurraby { get { return (SkurrabyScript)m_monster; } }
 

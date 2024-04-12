@@ -7,9 +7,11 @@ public class ObjectHPBarScript : IngameTrackUIScript                // 오브젝트 
 {
     private Slider m_hpSlider;
 
+    private bool IsCompsSet { get; set; }
 
     public void SetMaxHP(float _max)
     {
+        if(!IsCompsSet) { SetComps(); }
         m_hpSlider.maxValue = (int)_max;
         SetCurHP(_max);
     }
@@ -23,9 +25,13 @@ public class ObjectHPBarScript : IngameTrackUIScript                // 오브젝트 
     private void SetComps()
     {
         m_hpSlider = GetComponentInChildren<Slider>();
+        IsCompsSet = true;
     }
     private void Awake()
     {
-        SetComps();
+        if (!IsCompsSet)
+        {
+            SetComps();
+        }
     }
 }

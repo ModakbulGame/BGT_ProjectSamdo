@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class MonsterHitState : MonoBehaviour, IMonsterState
 {
     private MonsterScript m_monster;
-    public EMonsterState CurMonsterState { get { return EMonsterState.HIT; } }
+    public EMonsterState StateEnum { get { return EMonsterState.HIT; } }
 
     private float DelayCount { get; set; }
 

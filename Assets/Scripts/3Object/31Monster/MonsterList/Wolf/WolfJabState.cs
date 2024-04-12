@@ -5,7 +5,7 @@ using UnityEngine;
 public class WolfJabState : MonoBehaviour, IMonsterState
 {
     private MonsterScript m_monster;
-    public EMonsterState CurMonsterState { get { return EMonsterState.APPROACH; } }
+    public EMonsterState StateEnum { get { return EMonsterState.APPROACH; } }
 
     private WolfScript Wolf { get { return (WolfScript)m_monster; } }
 

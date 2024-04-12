@@ -15,7 +15,7 @@ public enum EMonsterState
 }
 public interface IMonsterState
 {
-    public EMonsterState CurMonsterState { get; }
+    public EMonsterState StateEnum { get; }
     public void ChangeTo(MonsterScript _monster);
     public void Proceed();
 

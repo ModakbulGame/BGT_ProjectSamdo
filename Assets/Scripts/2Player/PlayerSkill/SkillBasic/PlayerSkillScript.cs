@@ -28,12 +28,13 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
     }
     public float ResultDamage { get { return m_scriptable.Attack * Damages[0] + m_scriptable.Magic * Damages[1]; } }
 
-    public ObjectPool<GameObject> m_originPool { get; set; }
-
-    public void ReleaseSkill()
+    public ObjectPool<GameObject> OriginalPool { get; set; }
+    public void SetPool(ObjectPool<GameObject> _pool) { OriginalPool = _pool; }
+    public void OnPoolGet() { }
+    public void OnPoolRelease()
     {
         AttackOff();
-        m_originPool.Release(gameObject);
+        OriginalPool.Release(gameObject);
     }
 
     private void OnTriggerEnter(Collider _other)
@@ -55,14 +56,14 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
 
     public virtual void CollideTaret()
     {
-        ReleaseSkill();
+        OnPoolRelease();
     }
 
 
     private IEnumerator ReleaseDelay()
     {
         yield return new WaitForSeconds(m_lastTime);
-        if (!gameObject.activeSelf) { ReleaseSkill(); }
+        if (!gameObject.activeSelf) { OnPoolRelease(); }
     }
 
     private void OnEnable()

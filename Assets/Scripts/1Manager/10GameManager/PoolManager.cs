@@ -8,6 +8,11 @@ public class PoolManager : MonoBehaviour
     private static readonly Dictionary<int, ObjectPool<GameObject>> m_pools = new();
     private readonly Dictionary<int, GameObject> m_objectList = new();
 
+    private const int DEFAULT_SKILL_NUM = 10;
+    private const int DEFAULT_MONSTER_NUM = 10;
+    private const int DEFAULT_EFFECT_NUM = 10;
+
+
     [SerializeField]
     private Transform m_poolListTransform;
 
@@ -21,47 +26,63 @@ public class PoolManager : MonoBehaviour
         return m_pools[hash].Get();
     }
 
-    private void CreatePools(GameObject[] _skills, GameObject[] _effects)
+    private void CreatePools(GameObject[] _skills, GameObject[] _monsters, GameObject[] _effects)
     {
         // ½ºÅ³
-        for(int i=28;i<(int)ESkillName.LAST;i++)
+        for(int i = 0; i<(int)ESkillName.LAST; i++)
         {
-            CreatePool(_skills[i]);
+            if (_skills[i] == null) { continue; }
+            InitPool(_skills[i], DEFAULT_SKILL_NUM);
+        }
+        for (int i = 0; i<(int)EMonsterName.LAST; i++)
+        {
+            if (_monsters[i] == null) { continue; }
+            InitPool(_monsters[i], DEFAULT_MONSTER_NUM);
         }
         // ÀÌÆåÆ®
         for (int i = 0; i<(int)EEffectName.LAST; i++)
         {
-            CreatePool(_effects[i]);
+            if (_effects[i] == null) { continue; }
+            InitPool(_effects[i], DEFAULT_EFFECT_NUM);
         }
     }
 
-    private void CreatePool(GameObject _obj)
+    private void InitPool(GameObject _obj, int _num)
     {
         int hash = _obj.GetHashCode();
         CurHash = hash;
-        m_pools[CurHash] = new(CreateItem, GetItem, ReturnItem, DestroyItem, true, 10, 64);
+        m_pools[CurHash] = new(OnPoolCreate, OnPoolGet, OnPoolRelease, OnPoolDestroy, true, _num, _num);
         m_objectList[CurHash] = _obj;
-        for (int i = 0; i<10; i++)
+        for (int i = 0; i<_num; i++)
         {
-            GameObject newItem = CreateItem();
-            newItem.GetComponent<IPoolable>().m_originPool.Release(newItem);
+            GameObject newItem = OnPoolCreate();
+            newItem.GetComponent<IPoolable>().OriginalPool.Release(newItem);
         }
     }
 
 
-    private GameObject CreateItem()
+    private GameObject OnPoolCreate()
     {
         GameObject item = Instantiate(m_objectList[CurHash]);
-        item.GetComponent<IPoolable>().m_originPool = m_pools[CurHash];
+        item.GetComponent<IPoolable>().SetPool(m_pools[CurHash]);
         return item;
     }
-    private void GetItem(GameObject _item) { _item.SetActive(true); _item.transform.SetParent(null); }
-    private void ReturnItem(GameObject _item) { _item.transform.SetParent(m_poolListTransform); _item.SetActive(false); }
-    private void DestroyItem(GameObject _item) { Destroy(_item); }
+    private void OnPoolGet(GameObject _item)
+    { 
+        _item.SetActive(true);
+        _item.transform.SetParent(null); 
+        _item.GetComponent<IPoolable>().OnPoolGet();
+    }
+    private void OnPoolRelease(GameObject _item) 
+    { 
+        _item.transform.SetParent(m_poolListTransform);
+        _item.SetActive(false); 
+    }
+    private void OnPoolDestroy(GameObject _item) { Destroy(_item); }
 
 
-    public void SetManager(GameObject[] _skills, GameObject[] _effects)
+    public void SetManager(GameObject[] _skills, GameObject[] _monsters, GameObject[] _effects)
     {
-        CreatePools(_skills, _effects);
+        CreatePools(_skills, _monsters, _effects);
     }
 }

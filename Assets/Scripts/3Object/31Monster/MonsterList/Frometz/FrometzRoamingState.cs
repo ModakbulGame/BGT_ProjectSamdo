@@ -5,7 +5,7 @@ using UnityEngine;
 public class FrometzRoamingState : MonoBehaviour, IMonsterState
 {
     private MonsterScript m_monster;
-    public EMonsterState CurMonsterState { get { return EMonsterState.ROAMING; } }
+    public EMonsterState StateEnum { get { return EMonsterState.ROAMING; } }
 
     private FrometzScript Frometz { get { return (FrometzScript)m_monster; } }
 

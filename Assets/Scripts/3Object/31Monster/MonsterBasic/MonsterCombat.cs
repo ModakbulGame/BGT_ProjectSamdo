@@ -133,10 +133,10 @@ public abstract partial class MonsterScript
 
     public override void GetHit(HitData _hit)    // ¸ÂÀ½
     {
+        if (CurTarget == null) { CurTarget = _hit.Attacker; }
         base.GetHit(_hit);
         if (IsDead) { SetDeathType(_hit.Attacker); }
-        else if (CurTarget == null) { CurTarget = _hit.Attacker; }
-        if(PlayManager.CheckIsPlayer(_hit.Attacker)) { /*CreateBloodEffect(_hit.Point);*/ }
+        if (PlayManager.CheckIsPlayer(_hit.Attacker)) { /*CreateBloodEffect(_hit.Point);*/ }
         m_hpBar.SetCurHP(CurHP);
     }
     public override void PlayHitAnim()

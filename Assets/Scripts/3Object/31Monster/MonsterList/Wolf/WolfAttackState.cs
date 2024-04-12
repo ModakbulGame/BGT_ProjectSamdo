@@ -6,7 +6,7 @@ public class WolfAttackState : MonoBehaviour, IMonsterState
 {
     private MonsterScript m_monster;
 
-    public EMonsterState CurMonsterState { get { return EMonsterState.ATTACK; } }
+    public EMonsterState StateEnum { get { return EMonsterState.ATTACK; } }
 
     private WolfScript Wolf { get { return (WolfScript)m_monster; } }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class MonsterRoamingState : MonoBehaviour, IMonsterState
 {
     private MonsterScript m_monster;
-    public EMonsterState CurMonsterState { get { return EMonsterState.ROAMING; } }
+    public EMonsterState StateEnum { get { return EMonsterState.ROAMING; } }
 
     private bool IsMoving { get; set; }
     private bool IsRotating { get; set; }

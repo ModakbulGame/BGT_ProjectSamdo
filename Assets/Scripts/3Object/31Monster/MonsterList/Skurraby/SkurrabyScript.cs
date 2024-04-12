@@ -14,6 +14,19 @@ public class SkurrabyScript : MonsterScript
     private Vector2 FlyDirection { get { if (!HasTarget) { return Vector2.zero; }
             return ((CurTarget.Position2 + CurTarget.Velocity2 / 2) - Position2).normalized; } }
 
+
+    public void SkurrabySpawned(Vector2 _dir)
+    {
+        IsSpawned = false;
+        m_rigid.velocity = new(_dir.x, 5, _dir.y);
+        StartCoroutine(SpawnDelay());
+    }
+    private IEnumerator SpawnDelay() { yield return new WaitForSeconds(1.5f); IsSpawned = true; }
+
+
+
+
+
     public void FireSkurraby()
     {
         if(!HasTarget) { ChangeState(EMonsterState.IDLE); return; }

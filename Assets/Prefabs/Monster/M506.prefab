@@ -63,20 +63,18 @@ MonoBehaviour:
     ViewRange: 0
     EngageRange: 2
     ReturnRange: 2
-    AttackRange: 1.5
+    AttackRange: 5
     ApproachDelay: 1
     FenceRange: 20
   m_normalAttackPrefab: {fileID: 0}
   PathingAngle: 0
   PathingTime: 0
   AttackDuration: 0
-  m_tempHitEffect: {fileID: 1833374577287500248, guid: b63bfd181df691345832bd8705571227,
-    type: 3}
-  m_bloodEffect: {fileID: 4486044071714435250, guid: be1269b71c9e1294caf5043359d763bf,
-    type: 3}
   m_spawnPoint: {fileID: 0}
   m_scriptable: {fileID: 11400000, guid: b70ae7846b4eb1c4fa31e682a2a1503b, type: 2}
   m_magnitude: 0.3
+  m_skurrabyPrefab: {fileID: 4113875238200415537, guid: 04e93535084973c489b32877257cd4a9,
+    type: 3}
 --- !u!54 &7224037512376593863
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -139,7 +137,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5654021519466999818}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
   m_Name: 

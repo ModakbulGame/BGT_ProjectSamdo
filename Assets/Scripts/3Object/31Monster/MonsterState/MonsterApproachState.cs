@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class MonsterApproachState : MonoBehaviour, IMonsterState
 {
     private MonsterScript m_monster;
-    public EMonsterState CurMonsterState { get { return EMonsterState.APPROACH; } }
+    public EMonsterState StateEnum { get { return EMonsterState.APPROACH; } }
 
     private float DelayCount { get; set; }
     private float MissCount { get; set; }

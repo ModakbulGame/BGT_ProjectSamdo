@@ -5,7 +5,7 @@ using UnityEngine;
 public class HellcatAttackState : MonoBehaviour, IMonsterState
 {
     private MonsterScript m_monster;
-    public EMonsterState CurMonsterState { get { return EMonsterState.ATTACK; } }
+    public EMonsterState StateEnum { get { return EMonsterState.ATTACK; } }
 
     private HellcatScript Hellcat { get { return (HellcatScript)m_monster; } }
 

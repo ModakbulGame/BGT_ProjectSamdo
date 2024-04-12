@@ -5,7 +5,7 @@ using UnityEngine;
 public class FrometzApproachState : MonoBehaviour, IMonsterState
 {
     private MonsterScript m_monster;
-    public EMonsterState CurMonsterState { get { return EMonsterState.APPROACH; } }
+    public EMonsterState StateEnum { get { return EMonsterState.APPROACH; } }
 
     private FrometzScript Frometz { get { return (FrometzScript)m_monster; } }
 

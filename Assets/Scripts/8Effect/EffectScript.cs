@@ -5,7 +5,11 @@ using UnityEngine.Pool;
 
 public class EffectScript : MonoBehaviour, IPoolable
 {
-    public ObjectPool<GameObject> m_originPool { get; set; }
+    public ObjectPool<GameObject> OriginalPool { get; set; }
+    public void SetPool(ObjectPool<GameObject> _pool) { OriginalPool = _pool; }
+    public void OnPoolGet() { }
+    public void OnPoolRelease() { OriginalPool.Release(gameObject); }
+
 
     public void SetDestroyTime(float _time)
     {
@@ -14,8 +18,6 @@ public class EffectScript : MonoBehaviour, IPoolable
     private IEnumerator ReturnEffect(float _time)
     {
         yield return new WaitForSeconds(_time);
-        ReleaseEffect();
+        OnPoolRelease();
     }
-
-    public void ReleaseEffect() { m_originPool.Release(gameObject); }
 }
