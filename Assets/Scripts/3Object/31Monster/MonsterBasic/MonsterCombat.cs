@@ -83,7 +83,7 @@ public abstract partial class MonsterScript
         m_aiPath.destination = CurTarget.Position;
     }
 
-    public override void CreateAttack() 
+    public override void CreateAttack()     // ?
     {
         if (!PlayManager.IsPlayerGuarding) m_cameraShake.CameraShaking(m_magnitude);
     }

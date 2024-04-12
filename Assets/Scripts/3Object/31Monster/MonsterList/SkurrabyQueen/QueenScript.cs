@@ -34,6 +34,14 @@ public class QueenScript : MonsterScript
     private bool CanCreateSkurraby { get { return SkillCoolCount[(int)EQueenSkillName.CREATE_SKURRABY] <= 0 && CurSkurraby < MAX_SKURRABY; } }
     private bool CanSpitPoison { get { return SkillCoolCount[(int)EQueenSkillName.SPIT_POISON] < 0; } }
 
+    public void EvadeQueen()
+    {
+        StopMove();
+        LookTarget();
+        Vector3 dir = (Position - CurTarget.Position).normalized * 3;
+        m_rigid.velocity = dir;
+    }
+
     public override void StartAttack()
     {
         StopMove();
@@ -52,14 +60,17 @@ public class QueenScript : MonsterScript
         SkillCoolCount[skill] = m_skillCooltime[skill];
         if (SkillCoolCount[1-skill] <= 5) { SkillCoolCount[1-skill] = 5; }
     }
-    public void EvadeQueen()
+    public override void CreateAttack()
     {
-        StopMove();
-        LookTarget();
-        Vector3 dir = (Position - CurTarget.Position).normalized;
-        m_rigid.velocity = dir;
-    }
+        if (SkillIdx == EQueenSkillName.CREATE_SKURRABY)
+        {
+            CreateSkurraby();
+        }
+        else if (SkillIdx == EQueenSkillName.SPIT_POISON)
+        {
 
+        }
+    }
     public void CreateSkurraby()
     {
         if(CurSkurraby >= MAX_SKURRABY) { return; }
@@ -67,7 +78,7 @@ public class QueenScript : MonsterScript
         skurraby.transform.localPosition = SkurrabyOffset;
         Vector2 dir = FunctionDefine.DegToVec(Rotation);
         SkurrabyScript script = skurraby.GetComponent<SkurrabyScript>();
-        script.SkurrabySpawned(dir);
+        script.SkurrabySpawned(dir, CurTarget);
         m_createdSkurraby.Add(script);
         skurraby.transform.SetParent(null);
     }

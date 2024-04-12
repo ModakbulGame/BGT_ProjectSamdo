@@ -279,7 +279,6 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         base.Start();
         SetUI();
         if (m_spawnPoint != null) { m_spawnPoint.AddMonster(this); }
-        m_aiPath.enabled = true;
         StartCoroutine(WaitSpawned());
     }
     public virtual IEnumerator WaitSpawned()
@@ -288,6 +287,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         {
             yield return null;
         }
+        m_aiPath.enabled = true;
         ChangeState(EMonsterState.ROAMING);
     }
 

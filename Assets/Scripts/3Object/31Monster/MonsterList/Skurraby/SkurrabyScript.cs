@@ -1,3 +1,4 @@
+using MalbersAnimations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,11 +16,19 @@ public class SkurrabyScript : MonsterScript
             return ((CurTarget.Position2 + CurTarget.Velocity2 / 2) - Position2).normalized; } }
 
 
-    public void SkurrabySpawned(Vector2 _dir)
+    public void SkurrabySpawned(Vector2 _dir, ObjectScript _obj)
     {
         IsSpawned = false;
+        CurTarget = _obj;
         m_rigid.velocity = new(_dir.x, 5, _dir.y);
         StartCoroutine(SpawnDelay());
+    }
+    public override IEnumerator WaitSpawned()
+    {
+        while (!IsSpawned) { yield return null; }
+        m_aiPath.enabled = true;
+        if (CurTarget != null) { ChangeState(EMonsterState.APPROACH); }
+        else { ChangeState(EMonsterState.ROAMING); }
     }
     private IEnumerator SpawnDelay() { yield return new WaitForSeconds(1.5f); IsSpawned = true; }
 
