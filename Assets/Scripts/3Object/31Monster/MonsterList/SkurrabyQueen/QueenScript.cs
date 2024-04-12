@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.VFX;
 
 public enum EQueenSkillName
 {
@@ -18,8 +19,12 @@ public class QueenScript : MonsterScript
     private ObjectPool<GameObject> m_skurrabyPool;
     private List<SkurrabyScript> m_createdSkurraby = new();
 
+    [SerializeField]
+    private VisualEffect m_poisonVFX;
+
     private const int MAX_SKURRABY = 3;
     private const float SPIT_ROTATION = 120;
+    private float SKILL_DELAY = 10;
     public readonly float EvadeRange = 3;
 
     private int CurSkurraby { get; set; } = 0;
@@ -32,7 +37,9 @@ public class QueenScript : MonsterScript
     private readonly float[] SkillCoolCount = new float[(int)EQueenSkillName.LAST];
     public bool CanUseSkill { get { return CanCreateSkurraby || CanSpitPoison; } }
     private bool CanCreateSkurraby { get { return SkillCoolCount[(int)EQueenSkillName.CREATE_SKURRABY] <= 0 && CurSkurraby < MAX_SKURRABY; } }
-    private bool CanSpitPoison { get { return SkillCoolCount[(int)EQueenSkillName.SPIT_POISON] < 0; } }
+    private bool CanSpitPoison { get { return SkillCoolCount[(int)EQueenSkillName.SPIT_POISON] <= 0; } }
+
+    public bool IsSpitting { get; private set; }
 
     public void EvadeQueen()
     {
@@ -58,18 +65,21 @@ public class QueenScript : MonsterScript
         else return;
         int skill = (int)SkillIdx;
         SkillCoolCount[skill] = m_skillCooltime[skill];
-        if (SkillCoolCount[1-skill] <= 5) { SkillCoolCount[1-skill] = 5; }
+        if (SkillCoolCount[1-skill] <= SKILL_DELAY / 2) { SkillCoolCount[1-skill] = SKILL_DELAY; }
     }
     public override void CreateAttack()
     {
-        if (SkillIdx == EQueenSkillName.CREATE_SKURRABY)
-        {
-            CreateSkurraby();
-        }
-        else if (SkillIdx == EQueenSkillName.SPIT_POISON)
-        {
-
-        }
+        CreateSkurraby();
+    }
+    public override void AttackTriggerOn() 
+    {
+        IsSpitting = true;
+        m_poisonVFX.Play();
+    }
+    public override void AttackTriggerOff() 
+    {
+        IsSpitting = false;
+        m_poisonVFX.Stop();
     }
     public void CreateSkurraby()
     {
@@ -84,10 +94,13 @@ public class QueenScript : MonsterScript
     }
     public void SkillSpinQueen()
     {
-        float rot = Rotation + SPIT_ROTATION / 3;
+        float rot = Rotation + Time.deltaTime * SPIT_ROTATION / 3;
         RotateTo(rot);
     }
-
+    public override void AttackDone()
+    {
+        base.AttackDone();
+    }
 
     // 초기 설정
     private void InitPool()

@@ -20,7 +20,7 @@ public class SkurrabyScript : MonsterScript
     {
         IsSpawned = false;
         CurTarget = _obj;
-        m_rigid.velocity = new(_dir.x, 5, _dir.y);
+        m_rigid.velocity = 5 * new Vector3(_dir.x, 1, _dir.y);
         StartCoroutine(SpawnDelay());
     }
     public override IEnumerator WaitSpawned()
@@ -61,10 +61,10 @@ public class SkurrabyScript : MonsterScript
     }
 
 
-    private void OnCollisionEnter(Collision _collision)
+    private void OnTriggerEnter(Collider _other)
     {
         if(!Flying) { return; }
-        if (_collision.gameObject.CompareTag("Player"))
+        if (_other.CompareTag("Player"))
         {
             ExplodeSkurraby();
         }

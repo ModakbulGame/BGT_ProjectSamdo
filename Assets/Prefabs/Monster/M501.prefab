@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 7229214969447431716}
   - component: {fileID: 4602168716442109495}
   - component: {fileID: 5296837395338050109}
-  m_Layer: 9
+  - component: {fileID: 1485836771912264970}
+  m_Layer: 0
   m_Name: M501
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -172,6 +173,27 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
+--- !u!135 &1485836771912264970
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4113875238200415537}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.75
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &1514275345446734127
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1504,7 +1526,7 @@ MonoBehaviour:
   baseTransform: {fileID: 0}
   Hips: {fileID: 2103027750461673588}
   ScaleReferenceMode: 3
-  finalScaleReference: 0.3682765
+  finalScaleReference: 0.36827654
   finalScaleReferenceSqrt: 0.1
   customScaleReferenceValue: 0.5
   DelayedInitialization: 0

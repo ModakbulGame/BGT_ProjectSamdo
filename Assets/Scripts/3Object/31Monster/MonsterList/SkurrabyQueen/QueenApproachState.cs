@@ -49,7 +49,7 @@ public class QueenApproachState : MonoBehaviour, IMonsterState
             m_monster.ChangeState(EMonsterState.ROAMING);
             return;
         }
-        if (m_monster.CanAttack)
+        if (Queen.CanUseSkill)
         {
             m_monster.ChangeState(EMonsterState.ATTACK);
             return;
