@@ -57,7 +57,7 @@ public class OasisPointUIScript : MonoBehaviour
     {
         m_img = GetComponent<Image>();
         m_btn = GetComponent<Button>();
-        m_mapImg = GetComponentInParent<Image>();
+        m_mapImg = transform.parent.GetComponent<Image>();
         SetBtns();
         NormalizeOasisLocation();
         ResetDestination();

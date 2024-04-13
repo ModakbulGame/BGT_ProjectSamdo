@@ -6,11 +6,6 @@ using UnityEngine.UI;
 
 public class MapUIScript : MonoBehaviour
 {
-    public Transform m_left;
-    public Transform m_right;
-    public Transform m_top;
-    public Transform m_bottom;
-
     [SerializeField]                            // 맵 UI에 표시되는 오브젝트와 이미지들
     private GameObject[] m_mapOasis;
     [SerializeField]
@@ -22,9 +17,8 @@ public class MapUIScript : MonoBehaviour
     private Transform m_targetPlayer;
     [SerializeField]
     private Image m_mapImage;
-    [SerializeField]
-    private CanvasRenderer m_mapCanvas;
 
+    private Vector2 m_mapArea;
     private bool m_isMapUIToggle = false;
                       
     private float m_zoomIncrement = 0.1f;       // 확대 축소를 위한 변수
@@ -73,32 +67,43 @@ public class MapUIScript : MonoBehaviour
 
     private void SynchronizePlayerLocation()
     {
-        Vector2 mapArea = new Vector2(Vector3.Distance(m_left.position, m_right.position), Vector3.Distance(m_bottom.position, m_top.position));
-
         // 플레이어 위치 정규화
-        Vector2 charPos = new Vector2(Vector3.Distance(m_left.position, new Vector3(m_targetPlayer.transform.position.x, 0f, 0f)),
-            Vector3.Distance(m_bottom.position, new Vector3(0f, 0f, m_targetPlayer.transform.position.z)));
-        Vector2 normalPos = new Vector2(charPos.x / mapArea.x, charPos.y / mapArea.y);
+        Vector2 charPos = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, new Vector3(m_targetPlayer.transform.position.x, 0f, 0f)),
+            Vector3.Distance(PlayManager.NormalizeObjects[2].position, new Vector3(0f, 0f, m_targetPlayer.transform.position.z)));
+        Vector2 normalPos = new Vector2(charPos.x / m_mapArea.x, charPos.y / m_mapArea.y);
 
         m_mapPlayerImage.rectTransform.anchoredPosition = new Vector2(m_mapImage.rectTransform.sizeDelta.x * normalPos.x, m_mapImage.rectTransform.sizeDelta.y * normalPos.y);
     }
 
     private void SynchronizeOasisLocation()
     {
-        Vector2 mapArea = new Vector2(Vector3.Distance(m_left.position, m_right.position), Vector3.Distance(m_bottom.position, m_top.position));
-
         for (uint i = 0; i < m_mapOasis.Length; i++)
         {
-            GameObject OasisImage = Instantiate(m_mapOasisImage, Vector3.zero, Quaternion.identity, m_mapCanvas.transform);
+            // 화톳불 위치 정규화
+            Vector2 oasisPos = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[1].position, new Vector3(m_mapOasis[i].transform.position.x, 0f, 0f)),
+                Vector3.Distance(PlayManager.NormalizeObjects[3].position, new Vector3(0f, 0f, m_mapOasis[i].transform.position.z)));
+            Vector2 oasisNormalPos = new Vector2(oasisPos.x / m_mapArea.x, oasisPos.y / m_mapArea.y);
+
+            GameObject OasisImage = Instantiate(m_mapOasisImage, Vector3.zero, Quaternion.identity, m_mapImage.transform);
             Image mapOasisImage = OasisImage.GetComponent<Image>();
 
-            // 화톳불 위치 정규화
-            Vector2 oasisPos = new Vector2(Vector3.Distance(m_left.position, new Vector3(m_mapOasis[i].transform.position.x, 0f, 0f)),
-                Vector3.Distance(m_bottom.position, new Vector3(0f, 0f, m_mapOasis[i].transform.position.z)));
-            Vector2 oasisNormalPos = new Vector2(oasisPos.x / mapArea.x, oasisPos.y / mapArea.y);
-
             mapOasisImage.rectTransform.anchoredPosition = new Vector2(m_mapImage.rectTransform.sizeDelta.x * oasisNormalPos.x, m_mapImage.rectTransform.sizeDelta.y * oasisNormalPos.y);
+
+            // Debug.Log(oasisPos.x.ToString() + " " + oasisPos.y.ToString());
         }
+    }
+
+    private void SetComps()
+    {
+        m_mapOasis = GameObject.FindGameObjectsWithTag(ValueDefine.OASIS_TAG);
+
+        // m_mapPlayerImage.transform.SetAsFirstSibling();
+        // m_mapImage.transform.SetAsLastSibling();
+
+        // index -> 0 : left, 1 : right, 2 : bottom, 3 : top
+        m_mapArea = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, PlayManager.NormalizeObjects[1].position),
+            Vector3.Distance(PlayManager.NormalizeObjects[2].position, PlayManager.NormalizeObjects[3].position));
+        SynchronizeOasisLocation();
     }
 
     private void Update()
@@ -108,10 +113,6 @@ public class MapUIScript : MonoBehaviour
 
     private void Start()
     {
-        m_mapOasis = GameObject.FindGameObjectsWithTag(ValueDefine.OASIS_TAG);
-        SynchronizeOasisLocation();
-
-        m_mapPlayerImage.transform.SetAsFirstSibling();
-        m_mapImage.transform.SetAsLastSibling();
+        SetComps();
     }
 }
