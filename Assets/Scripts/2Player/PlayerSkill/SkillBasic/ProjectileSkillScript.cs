@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootingSkillScript : PlayerSkillScript
+public class ProjectileSkillScript : PlayerSkillScript
 {
     private float MoveSpeed { get { return 5;/*m_scriptable.MoveSpeed;*/ } }
 
@@ -16,9 +16,14 @@ public class ShootingSkillScript : PlayerSkillScript
 
 
 
-
-    private void Update()
+    /*
+    public virtual void FixedUpdate()
     {
-        transform.position += Time.deltaTime * MoveSpeed * transform.forward;
+        Vector3 vel = m_rigid.velocity;
+        Vector3 dir = m_moveSpeed * MoveDir;
+        vel.x = dir.x; vel.z = dir.z;
+        m_rigid.velocity = vel;
     }
+    */
 }
+
