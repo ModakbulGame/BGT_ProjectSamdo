@@ -12,15 +12,15 @@ public class MonsterParabolaScript : MonsterProjectileScript
 
 
 
-    public override void Start()
+    public override void OnEnable()
     {
-        base.Start();
+        base.OnEnable();
         m_rigid.velocity = Vector3.up * m_upperForce;
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        m_rigid.AddForce(Vector3.down * 20);
+        m_rigid.AddForce(Vector3.down * ValueDefine.PARABOLA_GRAVITY);
     }
 }

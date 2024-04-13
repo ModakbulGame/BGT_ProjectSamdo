@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class YumScript : MonsterScript
 {
+    [SerializeField]
+    private GameObject m_normalAttackPrefab;
 
     public override void CreateAttack()
     {

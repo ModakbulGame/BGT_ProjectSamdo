@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class MiserableScript : MonsterScript
 {
-    private readonly Vector3 NormalAttackOffset = new(0, 1.78f, 1.795f);
-
-
-
-
-
-    public override void CreateAttack()
+    public override void AttackTriggerOn()
     {
-        CreateNormalAttack(NormalAttackOffset);
+        base.AttackTriggerOn();
+        AttackObject.SetDamage(Attack);
     }
 }

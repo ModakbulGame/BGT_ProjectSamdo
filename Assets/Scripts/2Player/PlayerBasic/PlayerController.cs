@@ -241,11 +241,25 @@ public partial class PlayerController : ObjectScript
     }
     public void SetCurWeapon(EWeaponName _weapon)
     {
-        if (CurWeapon != null) { Destroy(CurWeapon.gameObject); }
-        GameObject weapon = Instantiate(PlayManager.GetWeaponPrefab(_weapon), m_weaponTransform);
-        CurWeapon = weapon.GetComponent<WeaponScript>();
-        SetAttackObject();
+        if (CurWeapon == null)
+        {
+            GameObject weapon = Instantiate(PlayManager.GetWeaponPrefab(_weapon), m_weaponTransform);
+            CurWeapon = weapon.GetComponent<WeaponScript>();
+        }
         SetWeaponAnimationLayer(CurWeapon.WeaponType);
+        SetWeaponName();
+    }
+    private void SetWeaponName()
+    {
+        string name;
+        switch (CurWeapon.WeaponType)
+        {
+            case EWeaponType.BLADE: name = "Blade"; break;
+            case EWeaponType.SWORD: name = "Sword"; break;
+            case EWeaponType.SCEPTER: name = "Scepter"; break;
+            default: name = "Weapon"; break;
+        }
+        CurWeapon.gameObject.name = name;
     }
 
     // 스테미나 관련
@@ -379,8 +393,6 @@ public partial class PlayerController : ObjectScript
         m_combatInfo = new PlayerCombatInfo(m_statInfo);
         ApplyStat();
     }
-
-    public override void SetAttackObject() { }
 
     public override void Awake()
     {

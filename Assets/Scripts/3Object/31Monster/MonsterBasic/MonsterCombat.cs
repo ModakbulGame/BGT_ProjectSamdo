@@ -53,7 +53,7 @@ public abstract partial class MonsterScript
 
 
     [SerializeField]
-    protected GameObject m_normalAttackPrefab;                                      // 기본 공격 프리펍
+    protected GameObject m_normalAttacks;                                      // 기본 공격 프리펍
 
 
     // 전투 관련 변수 (추후 값 연결 필요)
@@ -82,10 +82,25 @@ public abstract partial class MonsterScript
         if (AttackTimeCount > 0 && TargetInAttackRange) { RotateTo(dir); return; }
         m_aiPath.destination = CurTarget.Position;
     }
-
-    public override void CreateAttack()     // ?
+    public override void AttackTriggerOn()
     {
-        if (!PlayManager.IsPlayerGuarding) m_cameraShake.CameraShaking(m_magnitude);
+        m_normalAttacks.SetActive(true);
+        if(AttackObject == null)
+        {
+            AttackObject = m_normalAttacks.GetComponent<ObjectAttackScript>(); 
+            AttackObject.SetAttack(this, Attack);
+        }
+        AttackObject.SetDamage(Attack);
+        base.AttackTriggerOn();
+    }
+    public override void AttackTriggerOff()
+    {
+        base.AttackTriggerOff();
+        m_normalAttacks.SetActive(false);
+    }
+    public override void CreateAttack()
+    {
+        AttackTriggerOn();
     }
     public virtual void CreateNormalAttack(Vector3 _offset)
     {
@@ -93,10 +108,10 @@ public abstract partial class MonsterScript
     }
     public virtual void CreateNormalAttack(Vector3 _offset, float _damage)
     {
-        GameObject attack = Instantiate(m_normalAttackPrefab, transform);
+        /*GameObject attack = Instantiate(m_normalAttacks, transform);
         attack.transform.localPosition = _offset;
         ObjectAttackScript script = attack.GetComponent<ObjectAttackScript>();
-        script.SetAttack(this, _damage);
+        script.SetAttack(this, _damage);*/
     }
 
     public override void AttackDone()

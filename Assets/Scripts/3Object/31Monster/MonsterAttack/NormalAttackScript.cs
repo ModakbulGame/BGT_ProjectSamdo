@@ -4,14 +4,31 @@ using UnityEngine;
 
 public class NormalAttackScript : ObjectAttackScript
 {
-    private const float DestoryTime = 0.33f;
+    private const float NORMAL_ATTACK_TIME = 0.1f;
 
-
-    private void Awake()
+    public void AttackOn(float _time)
     {
-        IsAttacking = true;
-        Destroy(gameObject, DestoryTime);
+        base.AttackOn();
+        gameObject.SetActive(true);
+        StartCoroutine(OffDelay(_time));
+    }
+    public override void AttackOn()
+    {
+        AttackOn(NORMAL_ATTACK_TIME);
+    }
+    private IEnumerator OffDelay(float _time)
+    {
+        yield return new WaitForSeconds(_time);
+        m_attacker.AttackTriggerOff();
+    }
+    public override void AttackOff()
+    {
+        base.AttackOff();
+        gameObject.SetActive(false);
     }
 
-    public override void Start() { }
+    public override void Start()
+    {
+        m_attacker = GetComponentInParent<ObjectScript>();
+    }
 }

@@ -25,7 +25,6 @@ public class WolfScript : MonsterScript
 
 
     // ´Á´ë ¼öÄ¡
-    private readonly Vector3 NormalAttackOffset = new(-0.09f, 1f, 1.35f);
     public readonly float JabDistance = 5;
     public float ApproachOffset { get; private set; } = 0.5f;
     public readonly float MaxJabOffset = 1;
@@ -95,7 +94,7 @@ public class WolfScript : MonsterScript
 
     public override void CreateAttack()
     {
-        CreateNormalAttack(NormalAttackOffset);
+        base.CreateAttack();
         StopMove();
     }
 

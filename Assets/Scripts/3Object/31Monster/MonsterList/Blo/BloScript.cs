@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BloScript : MonsterScript
 {
-    private readonly Vector3 NormalAttackOffset = new(0, 0.5f, 0.75f);
-
     [SerializeField]
     private float m_rushSpeed = 6;
     [SerializeField]
@@ -50,12 +48,6 @@ public class BloScript : MonsterScript
         Vector3 dir3 = new Vector3(dir.x, 0, dir.y) * m_rushSpeed;
         LookTarget();
         m_rigid.velocity = dir3;
-    }
-
-
-    public override void CreateAttack()
-    {
-        CreateNormalAttack(NormalAttackOffset);
     }
 
 

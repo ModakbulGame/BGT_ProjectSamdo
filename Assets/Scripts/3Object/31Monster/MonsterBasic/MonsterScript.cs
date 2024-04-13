@@ -254,9 +254,6 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     }
 
 
-
-
-
     // 초기 설정
     public override void SetComps()
     {
@@ -290,6 +287,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         base.Start();
         SetUI();
         if (m_spawnPoint != null) { m_spawnPoint.AddMonster(this); }
+        if (AttackObject == null) { SetAttackObject(); }
         StartCoroutine(WaitSpawned());
     }
     public virtual IEnumerator WaitSpawned()

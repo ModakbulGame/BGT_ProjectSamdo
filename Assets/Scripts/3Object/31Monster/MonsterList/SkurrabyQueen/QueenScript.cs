@@ -17,7 +17,6 @@ public class QueenScript : MonsterScript
     private GameObject m_skurrabyPrefab;
 
     private ObjectPool<GameObject> m_skurrabyPool;
-    private List<SkurrabyScript> m_createdSkurraby = new();
 
     [SerializeField]
     private VisualEffect m_poisonVFX;
@@ -89,7 +88,6 @@ public class QueenScript : MonsterScript
         Vector2 dir = FunctionDefine.DegToVec(Rotation);
         SkurrabyScript script = skurraby.GetComponent<SkurrabyScript>();
         script.SkurrabySpawned(dir, CurTarget);
-        m_createdSkurraby.Add(script);
         skurraby.transform.SetParent(null);
     }
     public void SkillSpinQueen()

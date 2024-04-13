@@ -31,6 +31,7 @@ public static class ValueDefine
 
 
     // 값
+    public const float PARABOLA_GRAVITY = 20;                       // 포물선 계산 시 중력
     public readonly static Vector3 NullVector = Vector3.up * 100;   // 아무것도 아닌 벡터
     public const int MAX_SKILL_SLOT = 3;                            // 장착 가능 스킬 수
     public const int MAX_INVENTORY = 64;                            // 인벤토리 최대 크기
