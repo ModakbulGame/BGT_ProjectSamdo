@@ -53,7 +53,7 @@ public abstract partial class MonsterScript
 
 
     [SerializeField]
-    protected GameObject m_normalAttacks;                                      // 기본 공격 프리펍
+    protected GameObject[] m_normalAttacks;                                      // 기본 공격 프리펍
 
 
     // 전투 관련 변수 (추후 값 연결 필요)
@@ -84,10 +84,14 @@ public abstract partial class MonsterScript
     }
     public override void AttackTriggerOn()
     {
-        m_normalAttacks.SetActive(true);
-        if(AttackObject == null)
+        AttackTriggerOn(0);
+    }
+    public virtual void AttackTriggerOn(int _idx)
+    {
+        m_normalAttacks[_idx].SetActive(true);
+        if (AttackObject == null)
         {
-            AttackObject = m_normalAttacks.GetComponent<ObjectAttackScript>(); 
+            AttackObject = m_normalAttacks[_idx].GetComponent<ObjectAttackScript>();
             AttackObject.SetAttack(this, Attack);
         }
         AttackObject.SetDamage(Attack);
@@ -96,7 +100,7 @@ public abstract partial class MonsterScript
     public override void AttackTriggerOff()
     {
         base.AttackTriggerOff();
-        m_normalAttacks.SetActive(false);
+        m_normalAttacks[0].SetActive(false);
     }
     public override void CreateAttack()
     {

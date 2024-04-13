@@ -18,7 +18,7 @@ public class RangedAttackMonster : MonsterScript
     }
     private GameObject OnPoolCreate()
     {
-        GameObject skurraby = Instantiate(m_normalAttacks, transform);
+        GameObject skurraby = Instantiate(m_normalAttacks[0], transform);
         skurraby.GetComponent<MonsterProjectileScript>().SetPool(m_attackPool);
         return skurraby;
     }

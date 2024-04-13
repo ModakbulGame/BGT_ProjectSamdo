@@ -7,13 +7,6 @@ public class HellcatScript : MonsterScript
     private const float JumpAttackDist = 1.75f;
     private const float JumpMoveSpeed = 3.5f;
 
-    [SerializeField]
-    private GameObject m_jumpAttackPrefab;
-
-    private readonly Vector3 Attack1Offset = new(0.016f, 0.835f, 0.881f);
-    private readonly Vector3 Attack2Offset = new(-0.016f, 0.835f, 0.881f);
-    
-    private readonly Vector3 JumpAttackOffset = new(0, 0, 1.8f);
 
     public bool IsJumpAttack { get; private set; }
     public bool IsJumping { get; private set; }
@@ -61,21 +54,32 @@ public class HellcatScript : MonsterScript
         {
             if (AttackStack == 0)
             {
-                CreateNormalAttack(Attack1Offset, Attack / 2);
+                AttackTriggerOn(0);
                 AttackStack = 1;
             }
             else
             {
-                CreateNormalAttack(Attack2Offset, Attack / 2);
+                AttackTriggerOn(1);
             }
         }
     }
+    public override void AttackTriggerOn(int _idx)
+    {
+        m_normalAttacks[_idx].SetActive(true);
+        AttackObject = m_normalAttacks[_idx].GetComponent<NormalAttackScript>();
+        AttackObject.SetAttack(this, Attack);
+        AttackObject.SetDamage(Attack);
+        AttackObject.AttackOn();
+    }
+    public override void AttackTriggerOff()
+    {
+        if (!AttackObject) return;
+        AttackObject.AttackOff();
+        AttackObject.gameObject.SetActive(false);
+    }
     private void CreateJumpAttack()
     {
-        GameObject attack = Instantiate(m_jumpAttackPrefab, transform);
-        attack.transform.localPosition = JumpAttackOffset;
-        NormalAttackScript script = attack.GetComponent<NormalAttackScript>();
-        script.SetAttack(this, Attack);
+        AttackTriggerOn(2);
     }
 
 

@@ -117,7 +117,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         StopMove();
         AttackAnimation();
     }
-    private void DestroyMonster()
+    protected void DestroyMonster()
     {
         if(OriginalPool == null)
         {

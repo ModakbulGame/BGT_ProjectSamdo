@@ -19,6 +19,6 @@ public class BlokanScript : BloScript
     public override void CreateAttack()
     {
         base.CreateAttack();
-        m_normalAttacks.transform.localPosition = NormalAttackOffsets[AttackIdx];
+        m_normalAttacks[0].transform.localPosition = NormalAttackOffsets[AttackIdx];
     }
 }

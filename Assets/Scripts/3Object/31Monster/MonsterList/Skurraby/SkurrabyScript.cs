@@ -53,17 +53,19 @@ public class SkurrabyScript : MonsterScript
 
     public void ExplodeSkurraby()
     {
-        GameObject explode = Instantiate(m_skurrabyExplode, transform.position, Quaternion.identity);
-        MonsterSkillScript attack = explode.GetComponent<MonsterSkillScript>();
+        m_skurrabyExplode.SetActive(true);
+        m_skurrabyExplode.transform.SetParent(null);
+        MonsterSkillScript attack = m_skurrabyExplode.GetComponent<MonsterSkillScript>();
         attack.SetDamage(this, 10, 1);
+        attack.SetReturnTransform(transform);
         IsDead = true;
-        Destroy(gameObject);
+        DestroyMonster();
     }
 
 
     private void OnTriggerEnter(Collider _other)
     {
-        if(!Flying) { return; }
+        if(!Flying || IsDead) { return; }
         if (_other.gameObject.layer == ValueDefine.HITTABLE_LAYER_IDX)
         {
             ExplodeSkurraby();

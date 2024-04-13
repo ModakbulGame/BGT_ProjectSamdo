@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class MonsterSkillScript : ObjectAttackScript
 {
+    private Transform ReturnTransform { get; set; }
+
     public void SetDamage(ObjectScript _attacker, float _damage, float _time)
     {
         SetAttack(_attacker, _damage);
         StartCoroutine(LoseDamage(_time));
+    }
+    public void SetReturnTransform(Transform _transform)
+    {
+        ReturnTransform = _transform;
     }
 
     private IEnumerator LoseDamage(float _time)
@@ -17,10 +23,21 @@ public class MonsterSkillScript : ObjectAttackScript
     }
 
 
-
-
-    public override void Start()
+    public override void AttackOff()
     {
-        AttackOn();
+        base.AttackOff();
+        if (ReturnTransform != null)
+        {
+            transform.SetParent(ReturnTransform);
+            ReturnTransform = null;
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
+
+    private void OnEnable() { AttackOn(); }
+    public override void Start() { }
 }
