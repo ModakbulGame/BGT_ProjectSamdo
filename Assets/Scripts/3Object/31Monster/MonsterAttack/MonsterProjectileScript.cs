@@ -64,7 +64,7 @@ public class MonsterProjectileScript : ObjectAttackScript, IHittable, IPoolable
     private IEnumerator ReleaseDelay()
     {
         yield return new WaitForSeconds(m_lastTime);
-        if (!gameObject.activeSelf) { ReleaseTopool(); }
+        if (gameObject.activeSelf) { ReleaseTopool(); }
     }
 
     public virtual void OnEnable()

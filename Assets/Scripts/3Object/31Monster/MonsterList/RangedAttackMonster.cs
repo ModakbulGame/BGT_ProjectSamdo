@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.Timeline;
 
 public class RangedAttackMonster : MonsterScript
 {
@@ -10,6 +11,20 @@ public class RangedAttackMonster : MonsterScript
     [SerializeField]
     private int m_attackMaxNum = 5;
 
+    public virtual Vector3 AttackOffset { get { return Vector3.zero; } }
+
+    public override void CreateAttack()
+    {
+        GameObject attack = m_attackPool.Get();
+        attack.transform.localPosition = AttackOffset;
+        attack.transform.parent = null;
+
+        Vector3 dir = (CurTarget.Position - Position).normalized;
+
+        MonsterProjectileScript script = attack.GetComponent<MonsterProjectileScript>();
+        script.SetAttack(this, dir, Attack);
+        script.AttackOn();
+    }
 
     private void InitPool()
     {

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -496874848832720641}
   m_Layer: 9
   m_Name: HungryNormal
-  m_TagString: Untagged
+  m_TagString: MonsterAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,8 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9d7213f94d07614485b89c2f34491d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ccType: 0
   m_moveSpeed: 10
   m_attackRange: 6
+  m_lastTime: 5
   m_upperForce: 5
 --- !u!33 &5736033191666608175
 MeshFilter:
@@ -116,7 +118,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

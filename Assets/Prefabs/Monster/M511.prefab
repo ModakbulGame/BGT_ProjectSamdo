@@ -67,14 +67,15 @@ MonoBehaviour:
     AttackRange: 4
     ApproachDelay: 1
     FenceRange: 20
-  m_normalAttackPrefab: {fileID: 1822149768709807570, guid: dfec3a2e62b58114181d8a293e21deca,
-    type: 3}
+  m_normalAttacks:
+  - {fileID: 1822149768709807570, guid: dfec3a2e62b58114181d8a293e21deca, type: 3}
   PathingAngle: 0
   PathingTime: 0
   AttackDuration: 0
   m_spawnPoint: {fileID: 0}
   m_scriptable: {fileID: 11400000, guid: 9922f0f6f74b0554e9248eb0cae816a9, type: 2}
   m_magnitude: 0.3
+  m_attackMaxNum: 5
 --- !u!54 &2687869571193664764
 Rigidbody:
   m_ObjectHideFlags: 0
