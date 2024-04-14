@@ -72,7 +72,8 @@ public class MapUIScript : MonoBehaviour
             Vector3.Distance(PlayManager.NormalizeObjects[2].position, new Vector3(0f, 0f, m_targetPlayer.transform.position.z)));
         Vector2 normalPos = new Vector2(charPos.x / m_mapArea.x, charPos.y / m_mapArea.y);
 
-        m_mapPlayerImage.rectTransform.anchoredPosition = new Vector2(m_mapImage.rectTransform.sizeDelta.x * normalPos.x, m_mapImage.rectTransform.sizeDelta.y * normalPos.y);
+        // 카메라처럼 따라다니는 것을 묘사하기 위해 맵 이미지를 플레이어 이동방향의 반대방향으로 움직이는 것으로 구현
+        m_mapImage.rectTransform.anchoredPosition = new Vector2(m_mapImage.rectTransform.sizeDelta.x * normalPos.x * -1 , m_mapImage.rectTransform.sizeDelta.y * normalPos.y * -1);
     }
 
     private void SynchronizeOasisLocation()
@@ -80,30 +81,36 @@ public class MapUIScript : MonoBehaviour
         for (uint i = 0; i < m_mapOasis.Length; i++)
         {
             // 화톳불 위치 정규화
-            Vector2 oasisPos = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[1].position, new Vector3(m_mapOasis[i].transform.position.x, 0f, 0f)),
-                Vector3.Distance(PlayManager.NormalizeObjects[3].position, new Vector3(0f, 0f, m_mapOasis[i].transform.position.z)));
+            Vector2 oasisPos = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, new Vector3(m_mapOasis[i].transform.position.x, 0f, 0f)),
+                Vector3.Distance(PlayManager.NormalizeObjects[2].position, new Vector3(0f, 0f, m_mapOasis[i].transform.position.z)));
             Vector2 oasisNormalPos = new Vector2(oasisPos.x / m_mapArea.x, oasisPos.y / m_mapArea.y);
 
             GameObject OasisImage = Instantiate(m_mapOasisImage, Vector3.zero, Quaternion.identity, m_mapImage.transform);
             Image mapOasisImage = OasisImage.GetComponent<Image>();
 
             mapOasisImage.rectTransform.anchoredPosition = new Vector2(m_mapImage.rectTransform.sizeDelta.x * oasisNormalPos.x, m_mapImage.rectTransform.sizeDelta.y * oasisNormalPos.y);
-
-            // Debug.Log(oasisPos.x.ToString() + " " + oasisPos.y.ToString());
         }
+    }
+
+    private void Transport()
+    {
+        Debug.Log("Transport!");
     }
 
     private void SetComps()
     {
         m_mapOasis = GameObject.FindGameObjectsWithTag(ValueDefine.OASIS_TAG);
 
-        // m_mapPlayerImage.transform.SetAsFirstSibling();
-        // m_mapImage.transform.SetAsLastSibling();
-
         // index -> 0 : left, 1 : right, 2 : bottom, 3 : top
         m_mapArea = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, PlayManager.NormalizeObjects[1].position),
             Vector3.Distance(PlayManager.NormalizeObjects[2].position, PlayManager.NormalizeObjects[3].position));
         SynchronizeOasisLocation();
+
+        Button[] btns = GetComponentsInChildren<Button>();
+        for(uint i = 0; i < btns.Length; i++)
+        {
+            btns[i].onClick.AddListener(Transport);
+        }
     }
 
     private void Update()

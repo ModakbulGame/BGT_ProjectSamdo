@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9130733114581770916}
   - component: {fileID: 3328569286724042314}
   - component: {fileID: 2246833421585656336}
+  - component: {fileID: 4343587770952819806}
   m_Layer: 9
   m_Name: M302
   m_TagString: Monster
@@ -68,13 +69,13 @@ MonoBehaviour:
     AttackRange: 1.5
     ApproachDelay: 1
     FenceRange: 20
-  m_normalAttacks: {fileID: 6694690354196101726}
+  m_normalAttacks:
+  - {fileID: 0}
   PathingAngle: 0
   PathingTime: 0
   AttackDuration: 0
   m_spawnPoint: {fileID: 0}
   m_scriptable: {fileID: 11400000, guid: 37c37d5a4ee637f46a1d46635791f5cf, type: 2}
-  m_magnitude: 0
 --- !u!54 &7819222220313550657
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -197,6 +198,59 @@ MonoBehaviour:
     m_ImpulseType: 0
     m_DissipationRate: 0.25
     m_RawSignal: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0.1, y: 0.1, z: 0.1}
+--- !u!114 &4343587770952819806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728221464552640846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 3
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.5
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
     m_AmplitudeGain: 1
     m_FrequencyGain: 1
     m_RepeatMode: 0
@@ -2054,12 +2108,6 @@ PrefabInstance:
 --- !u!4 &5214691043794678658 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7981885234634819387, guid: 4a4343b8beee74a4e8efd882593158c2,
-    type: 3}
-  m_PrefabInstance: {fileID: 2781843260695573689}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6694690354196101726 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8823474009237966567, guid: 4a4343b8beee74a4e8efd882593158c2,
     type: 3}
   m_PrefabInstance: {fileID: 2781843260695573689}
   m_PrefabAsset: {fileID: 0}

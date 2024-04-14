@@ -1,4 +1,3 @@
-using Cinemachine;
 using Pathfinding;
 using System;
 using System.Collections;
@@ -7,6 +6,8 @@ using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.VFX;
+using Cinemachine;
+using Unity.VisualScripting;
 
 public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 {
@@ -58,8 +59,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
     // 피격 효과 구현
     private CameraShake m_cameraShake;
-    [SerializeField]
-    private float m_magnitude = 0.3f;   // 피격 시 흔들림 정도
+    private CinemachineImpulseSource m_impulseSource;
 
     // 기본 메소드
     private void SetUI()                // UI 설정
@@ -261,6 +261,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         m_skinneds = GetComponentsInChildren<SkinnedMeshRenderer>();
         m_hideScript = GetComponent<HideScript>();
         m_aiPath = GetComponent<AIPath>();
+
         m_cameraShake = GetComponent<CameraShake>();  // 몬스터 프리팹에 cinemachine impulse source와 CameraShake 컴포넌트를 달아야 함
     }
 
