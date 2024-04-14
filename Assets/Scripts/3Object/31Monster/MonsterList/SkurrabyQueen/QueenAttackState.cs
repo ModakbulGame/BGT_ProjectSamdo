@@ -20,7 +20,7 @@ public class QueenAttackState : MonoBehaviour, IMonsterState
 
     private void SpinQueen()
     {
-        Queen.SkillSpinQueen();
+        Queen.LookTarget();
     }
 
     public void Proceed()

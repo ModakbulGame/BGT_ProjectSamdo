@@ -6,9 +6,8 @@ public class BloScript : MonsterScript
 {
     [SerializeField]
     private float m_rushSpeed = 6;
-    [SerializeField]
-    private float m_rushCooltime = 10;
-    private float RushCount { get; set; } = 0;
+
+    private bool RushDone { get; set; }
 
     private BloRushState m_rushState;
 
@@ -16,14 +15,12 @@ public class BloScript : MonsterScript
 
     public override void ApproachTarget()   // 공격 시작
     {
-        if (RushCount <= 0) { RushBlo(); return; }
+        if (!RushDone) { RushBlo(); return; }
         base.ApproachTarget();
     }
-
-
     public override void AttackDone()
     {
-        if (IsRushing) { RushCount = m_rushCooltime; IsRushing = false; ChangeState(EMonsterState.APPROACH); return; }
+        if (IsRushing) { RushDone = true; ChangeState(EMonsterState.APPROACH); return; }
         base.AttackDone();
     }
 
@@ -36,20 +33,22 @@ public class BloScript : MonsterScript
     {
         m_anim.SetTrigger("RUSH");
         IsRushing = true;
-        StartCoroutine(RushTimeCooldown());
-    }
-    private IEnumerator RushTimeCooldown()
-    {
-        while(RushCount > 0) { RushCount -= Time.deltaTime; yield return null; }
     }
     public void RushToTarget()
     {
-        Vector2 dir = (CurTarget.Position2 - Position2).normalized;
-        Vector3 dir3 = new Vector3(dir.x, 0, dir.y) * m_rushSpeed;
-        LookTarget();
-        m_rigid.velocity = dir3;
+        Vector3 dir = transform.forward * m_rushSpeed;
+        Vector2 adj = (CurTarget.Position2 - Position2).normalized;
+        Vector3 adj3 = new Vector3(adj.x, 0, adj.y) * 0.1f;
+        dir += adj3;
+        m_rigid.velocity = dir;
     }
 
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        RushDone = false;
+    }
 
     public override void SetStates()
     {

@@ -17,13 +17,8 @@ public class BloRushState : MonoBehaviour, IMonsterState
         Blo.StartRush();
     }
 
-    private void RushToTarget()
-    {
-        Blo.RushToTarget();
-    }
-
     public void Proceed()
     {
-        RushToTarget();
+        Blo.RushToTarget();
     }
 }

@@ -90,11 +90,6 @@ public class QueenScript : MonsterScript
         script.SkurrabySpawned(dir, CurTarget);
         skurraby.transform.SetParent(null);
     }
-    public void SkillSpinQueen()
-    {
-        float rot = Rotation + Time.deltaTime * SPIT_ROTATION / 3;
-        RotateTo(rot);
-    }
     public override void AttackDone()
     {
         base.AttackDone();
