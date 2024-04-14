@@ -73,7 +73,7 @@ public class MapUIScript : MonoBehaviour
         Vector2 normalPos = new Vector2(charPos.x / m_mapArea.x, charPos.y / m_mapArea.y);
 
         // 카메라처럼 따라다니는 것을 묘사하기 위해 맵 이미지를 플레이어 이동방향의 반대방향으로 움직이는 것으로 구현
-        m_mapImage.rectTransform.anchoredPosition = new Vector2(m_mapImage.rectTransform.sizeDelta.x * normalPos.x * -1 , m_mapImage.rectTransform.sizeDelta.y * normalPos.y * -1);
+        m_mapPlayerImage.rectTransform.anchoredPosition = new Vector2(m_mapImage.rectTransform.sizeDelta.x * normalPos.x, m_mapImage.rectTransform.sizeDelta.y * normalPos.y);
     }
 
     private void SynchronizeOasisLocation()
@@ -94,6 +94,7 @@ public class MapUIScript : MonoBehaviour
 
     private void Transport()
     {
+        // PlayManager.SetCameraMode(EControlMode.UI_CONTROL);
         Debug.Log("Transport!");
     }
 
@@ -118,7 +119,7 @@ public class MapUIScript : MonoBehaviour
         SynchronizePlayerLocation();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         SetComps();
     }
