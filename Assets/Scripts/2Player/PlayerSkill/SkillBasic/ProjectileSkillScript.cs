@@ -16,10 +16,10 @@ public class ProjectileSkillScript : PlayerSkillScript
         base.ReleaseTopool();
     }
 
-    public void SetSkill(PlayerController _player, float _attack, float _magic, Vector3 _dir)
+    public void SetSkill(PlayerController _player, float _attack, float _magic, Vector2 _dir)
     {
         SetSkill(_player, _attack, _magic);
-        MoveDir = new(_dir.x, 0, _dir.z);
+        MoveDir = new(_dir.x,0,_dir.y);
     }
 
     private void Awake()

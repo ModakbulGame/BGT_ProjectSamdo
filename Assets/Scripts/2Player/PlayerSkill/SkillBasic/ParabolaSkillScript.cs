@@ -14,7 +14,7 @@ public class ParabolaSkillScript : ProjectileSkillScript
 
     public override void FixedUpdate()
     {
-        base.FixedUpdate();
         m_rigid.AddForce(Vector3.down * ValueDefine.PARABOLA_GRAVITY);
+        base.FixedUpdate();
     }
 }

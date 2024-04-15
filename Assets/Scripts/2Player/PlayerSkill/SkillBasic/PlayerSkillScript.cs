@@ -42,6 +42,7 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
         IHittable hittable = _other.GetComponentInParent<IHittable>();
         hittable ??= _other.GetComponentInChildren<IHittable>();
         if(hittable == null) { return; }
+        if(hittable.IsPlayer) { return; }
         Vector3 point = _other.ClosestPoint(transform.position);
         GiveDamage(hittable, point);
         CollideTaret();

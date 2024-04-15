@@ -172,8 +172,17 @@ public partial class PlayerController
         ESkillType type = SkillInfoInHand.SkillType;
         if(type == ESkillType.RANGED || type == ESkillType.RANGED_CC || type == ESkillType.SUMMON) { skill.transform.parent = null; }
         if(type == ESkillType.SUMMON) { skill.transform.position = PlayManager.TraceSkillAim(Position, SkillInfoInHand.SkillCastRange); }
-        PlayerSkillScript script = skill.GetComponentInChildren<PlayerSkillScript>();
-        script.SetSkill(this, Attack, Magic);
+        switch (type) {
+            case ESkillType.RANGED:
+            case ESkillType.RANGED_CC:
+                ProjectileSkillScript projectile = skill.GetComponentInChildren<ProjectileSkillScript>();
+                projectile.SetSkill(this, Attack, Magic, PlayerAimDirection);
+                break;
+            default:
+                PlayerSkillScript script = skill.GetComponentInChildren<PlayerSkillScript>();
+                script.SetSkill(this, Attack, Magic);
+                break;
+        };
 
         SkillAnimDone();
     }
