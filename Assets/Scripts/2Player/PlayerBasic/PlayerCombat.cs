@@ -169,9 +169,7 @@ public partial class PlayerController
     {
         GameObject skill = GameManager.GetSkillObj(SkillInHand);
         ESkillType type = SkillInfoInHand.SkillType;
-
-        if (type == ESkillType.RANGED || type == ESkillType.RANGED_CC || type == ESkillType.SUMMON) { skill.transform.SetParent(null); }
-        else { skill.transform.SetParent(transform); }
+        skill.transform.SetParent(transform); 
         
         // 여기에 스킬별로 위치, 각도, 정보 설정 등 하셈.
         switch (type) {
@@ -186,6 +184,13 @@ public partial class PlayerController
                 break;
             case ESkillType.SUMMON:
                 skill.transform.position = PlayManager.TraceSkillAim(Position, SkillInfoInHand.SkillCastRange);
+                break;
+            case ESkillType.AROUND:
+            case ESkillType.AROUND_CC:
+                skill.transform.localPosition = Vector3.zero;
+                break;
+            case ESkillType.BUFF:
+                skill.transform.localPosition = Vector3.zero;
                 break;
             default:
                 PlayerSkillScript script = skill.GetComponentInChildren<PlayerSkillScript>();

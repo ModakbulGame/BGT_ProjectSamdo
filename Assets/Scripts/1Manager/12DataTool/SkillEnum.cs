@@ -28,6 +28,9 @@ public enum ESkillType
     RANGED,
     RANGED_CC,
     SUMMON,
+    AROUND,
+    AROUND_CC,
+    BUFF,
 
     LAST
 }
