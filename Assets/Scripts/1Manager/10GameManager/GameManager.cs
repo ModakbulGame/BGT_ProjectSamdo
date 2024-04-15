@@ -41,7 +41,7 @@ public class GameManager : SingleTon<GameManager>
     private static GameObject[] SkillArray { get { return SkillManager.SkillArrays; } }
     
     public static SkillInfo GetSkillInfo(ESkillName _skill) { return SkillManager.GetSkillInfo(_skill); }                                   // 스킬 정보
-    public static GameObject GetSkillPrefab(ESkillName _skill) { return SkillManager.GetSkillPrefab(_skill); }                              // 스킬 프리펍
+    public static GameObject GetSkillObj(ESkillName _skill) { return SkillManager.GetSkillObj(_skill); }                                    // 스킬 프리펍
     public static ESkillName[] SkillSlot { get { return SkillManager.SkillSlot; } }                                                         // 스킬 슬롯
     public static void RegisterSkilSlot(ESkillName _skill, int _idx) { SkillManager.RegisterSkillSlot(_skill, _idx); PlayManager.UpdateSkillSlot(); }   // 스킬 슬롯 설정
     public static void ObtainSkill(ESkillName _skill) { SkillManager.ObtainSkill(_skill); }
@@ -51,7 +51,7 @@ public class GameManager : SingleTon<GameManager>
     private static MonsterManager MonsterManager { get { return Inst.m_monsterManager; } }
     private static GameObject[] MonsterArray { get { return MonsterManager.MonsterArray; } }
     public static MonsterInfo GetMonsterInfo(EMonsterName _monster) { return MonsterManager.GetMonsterInfo(_monster); }                     // 몬스터 정보
-    public static GameObject GetMonsterPrefab(EMonsterName _monster) { return MonsterManager.GetMonsterPrefab(_monster); }                  // 몬스터 프리펍
+    public static GameObject GetMonsterObj(EMonsterName _monster) { return MonsterManager.GetMonsterObj(_monster); }                        // 몬스터 프리펍
 
 
 
@@ -59,7 +59,7 @@ public class GameManager : SingleTon<GameManager>
     private EffectManager m_effectManager;
     private static EffectManager EffectManager { get { return Inst.m_effectManager; } }
     private static GameObject[] EffectArray { get { return EffectManager.EffectArray; } }
-    public static GameObject GetEffect(EEffectName _effect) { return EffectManager.GetEffect(_effect); }
+    public static GameObject GetEffectObj(EEffectName _effect) { return EffectManager.GetEffectObj(_effect); }
 
 
     // UI

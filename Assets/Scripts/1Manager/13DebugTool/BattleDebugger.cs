@@ -88,7 +88,7 @@ public class BattleDebugger : MonoBehaviour
 
     private void CreateMonster(int _idx)
     {
-        GameObject prefab = GameManager.GetMonsterPrefab((EMonsterName)_idx);
+        GameObject prefab = GameManager.GetMonsterObj((EMonsterName)_idx);
         if(prefab == null) { Debug.Log("몬스터 미완성"); return; }
 
         Vector3 point;

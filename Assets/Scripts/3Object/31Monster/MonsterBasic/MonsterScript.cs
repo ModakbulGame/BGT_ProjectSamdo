@@ -218,7 +218,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     private const float m_refreshRate = 0.025f;
     public void StartDissolve()             // dissolve vfx 효과 재생
     {
-        GameObject effect = GameManager.GetEffect(EEffectName.MONSTER_DISSOLVE);
+        GameObject effect = GameManager.GetEffectObj(EEffectName.MONSTER_DISSOLVE);
         effect.transform.position = Position;
         VisualEffect vfx = effect.GetComponent<VisualEffect>();
         foreach (SkinnedMeshRenderer smr in m_skinneds)

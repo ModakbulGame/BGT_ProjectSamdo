@@ -167,16 +167,25 @@ public partial class PlayerController
     }
     public void CreateSkill()           // 스킬 오브젝트 생성
     {
-        GameObject prefab = GameManager.GetSkillPrefab(SkillInHand);
-        GameObject skill = Instantiate(prefab, transform);
+        GameObject skill = GameManager.GetSkillObj(SkillInHand);
         ESkillType type = SkillInfoInHand.SkillType;
-        if(type == ESkillType.RANGED || type == ESkillType.RANGED_CC || type == ESkillType.SUMMON) { skill.transform.parent = null; }
-        if(type == ESkillType.SUMMON) { skill.transform.position = PlayManager.TraceSkillAim(Position, SkillInfoInHand.SkillCastRange); }
+
+        if (type == ESkillType.RANGED || type == ESkillType.RANGED_CC || type == ESkillType.SUMMON) { skill.transform.SetParent(null); }
+        else { skill.transform.SetParent(transform); }
+        
+        // 여기에 스킬별로 위치, 각도, 정보 설정 등 하셈.
         switch (type) {
+            case ESkillType.MELEE:
+            case ESkillType.MELEE_CC:
+                skill.transform.localPosition = Vector3.zero;
+                break;
             case ESkillType.RANGED:
             case ESkillType.RANGED_CC:
                 ProjectileSkillScript projectile = skill.GetComponentInChildren<ProjectileSkillScript>();
                 projectile.SetSkill(this, Attack, Magic, PlayerAimDirection);
+                break;
+            case ESkillType.SUMMON:
+                skill.transform.position = PlayManager.TraceSkillAim(Position, SkillInfoInHand.SkillCastRange);
                 break;
             default:
                 PlayerSkillScript script = skill.GetComponentInChildren<PlayerSkillScript>();

@@ -52,7 +52,7 @@ public class WeaponScript : AnimateAttackScript
         if (_hittable.IsMonster && _pos != Vector3.zero)
         {
             EEffectName effectName = HitType == EHitType.SLASH ? EEffectName.HIT_SLASH : EEffectName.HIT_BLOW;
-            GameObject effect = GameManager.GetEffect(effectName);
+            GameObject effect = GameManager.GetEffectObj(effectName);
             effect.transform.position = _pos;
         }
     }

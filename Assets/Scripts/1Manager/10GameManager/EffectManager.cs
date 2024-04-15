@@ -20,7 +20,7 @@ public class EffectManager : MonoBehaviour
     public GameObject[] EffectArray { get { return m_effects; } }
 
 
-    public GameObject GetEffect(EEffectName _effect) 
+    public GameObject GetEffectObj(EEffectName _effect) 
     {
         return PoolManager.GetObject(m_effects[(int)_effect]);
     }

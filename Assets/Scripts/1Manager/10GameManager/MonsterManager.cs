@@ -40,9 +40,9 @@ public class MonsterManager : MonoBehaviour
     private GameObject[] m_monsterPrefabs = new GameObject[(int)EMonsterName.LAST];
     public GameObject[] MonsterArray { get { return m_monsterPrefabs; } }
 
-    public GameObject GetMonsterPrefab(EMonsterName _monster)
+    public GameObject GetMonsterObj(EMonsterName _monster)
     {
-        return m_monsterPrefabs[(int)_monster];
+        return PoolManager.GetObject(m_monsterPrefabs[(int)_monster]);
     }
 
 

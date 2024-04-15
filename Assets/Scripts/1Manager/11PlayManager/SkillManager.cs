@@ -37,9 +37,9 @@ public class SkillManager : MonoBehaviour
     public GameObject[] SkillArrays { get { return m_skillPrefabs; } }
 
 
-    public GameObject GetSkillPrefab(ESkillName _skill)
+    public GameObject GetSkillObj(ESkillName _skill)
     {
-        return m_skillPrefabs[(int)_skill];
+        return PoolManager.GetObject(m_skillPrefabs[(int)_skill]);
     }
 
 
