@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.ProBuilder;
 using UnityEngine.UI;
+using TMPro;
 
 public class MapUIScript : MonoBehaviour
 {
     [SerializeField]                            // 맵 UI에 표시되는 오브젝트와 이미지들
     private GameObject[] m_mapOasis;
     [SerializeField]
-    private GameObject m_mapOasisImage;             
-    
+    private GameObject m_mapOasisImage;
+
     [SerializeField]
     private Image m_mapPlayerImage;
     [SerializeField]
@@ -21,8 +22,9 @@ public class MapUIScript : MonoBehaviour
     private Image m_transportUI;
 
     private Vector2 m_mapArea;
+    private Transform[] m_oasisPosition;
     private bool m_isMapUIToggle = false;
-                      
+
     private float m_zoomIncrement = 0.1f;       // 확대 축소를 위한 변수
     private float m_currentZoom = 1f;
     private float m_maxIncrement = 2.0f;
@@ -75,7 +77,7 @@ public class MapUIScript : MonoBehaviour
         Vector2 normalPos = new Vector2(charPos.x / m_mapArea.x, charPos.y / m_mapArea.y);
 
         // 카메라처럼 따라다니는 것을 묘사하기 위해 맵 이미지를 플레이어 이동방향의 반대방향으로 움직이는 것으로 구현
-        m_mapPlayerImage.rectTransform.anchoredPosition = new Vector2(m_mapImage.rectTransform.sizeDelta.x * normalPos.x, m_mapImage.rectTransform.sizeDelta.y * normalPos.y);
+        m_mapImage.rectTransform.anchoredPosition = new Vector2(m_mapImage.rectTransform.sizeDelta.x * normalPos.x * -1, m_mapImage.rectTransform.sizeDelta.y * normalPos.y * -1);
     }
 
     private void SynchronizeOasisLocation()
@@ -94,19 +96,19 @@ public class MapUIScript : MonoBehaviour
         }
     }
 
-    private void Transport(Transform _oasisPos)
+    private void Transport(Transform _oasisPos, int index)
     {
         // PlayManager.SetCameraMode(EControlMode.UI_CONTROL);
         m_transportUI.gameObject.SetActive(true);
-        Debug.Log("Transport!");
-
-        Vector3 oasisOriginPos = new Vector3(_oasisPos.position.x * m_mapArea.x, 0, _oasisPos.position.y * m_mapArea.y);
 
         Button[] btns = m_transportUI.GetComponentsInChildren<Button>();
         // 예 버튼
         btns[0].onClick.AddListener(() =>
         {
-            // PlayManager.TeleportPlayer(oasisOriginPos);
+            // Debug.Log(oasisOriginPos);
+            Debug.Log("Transport!");
+            m_transportUI.gameObject.SetActive(false);
+            // PlayManager.TeleportPlayer(m_oasisPosition[index].position);
         });
         // 아니오 버튼
         btns[1].onClick.AddListener(() =>
@@ -119,6 +121,8 @@ public class MapUIScript : MonoBehaviour
     private void SetComps()
     {
         m_mapOasis = GameObject.FindGameObjectsWithTag(ValueDefine.OASIS_TAG);
+        m_oasisPosition = new Transform[m_mapOasis.Length];
+        Button[] oasisBtns = GetComponentsInChildren<Button>();
 
         // index -> 0 : left, 1 : right, 2 : bottom, 3 : top
         m_mapArea = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, PlayManager.NormalizeObjects[1].position),
@@ -126,12 +130,14 @@ public class MapUIScript : MonoBehaviour
         SynchronizeOasisLocation();
         m_transportUI.gameObject.SetActive(false);
 
-        Button[] oasisBtns = GetComponentsInChildren<Button>();
-        for(uint i = 0; i < oasisBtns.Length; i++)
+        for (int i = 0; i < m_mapOasis.Length; i++)    // +, - 버튼 제외
         {
+            m_oasisPosition[i] = m_mapOasis[i].transform;
+            int index = i;
+
             oasisBtns[i].onClick.AddListener(() =>
             {
-                Transport(oasisBtns[i].gameObject.transform);
+                Transport(oasisBtns[index].gameObject.transform, index);
             });
         }
     }
@@ -141,7 +147,7 @@ public class MapUIScript : MonoBehaviour
         SynchronizePlayerLocation();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         SetComps();
     }
