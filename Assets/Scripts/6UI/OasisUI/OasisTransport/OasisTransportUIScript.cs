@@ -50,7 +50,7 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
         }
         else
         {
-            PlayManager.TeleportPlayer(destOasis.position);
+            // PlayManager.TeleportPlayer(destOasis.position);
             CloseUI();
         }
     }

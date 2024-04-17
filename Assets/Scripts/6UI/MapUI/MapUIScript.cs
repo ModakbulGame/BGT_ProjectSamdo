@@ -18,11 +18,8 @@ public class MapUIScript : MonoBehaviour
     private Transform m_targetPlayer;
     [SerializeField]
     private Image m_mapImage;
-    [SerializeField]
-    private Image m_transportUI;
 
     private Vector2 m_mapArea;
-    private Transform[] m_oasisPosition;
     private bool m_isMapUIToggle = false;
 
     private float m_zoomIncrement = 0.1f;       // 확대 축소를 위한 변수
@@ -96,50 +93,14 @@ public class MapUIScript : MonoBehaviour
         }
     }
 
-    private void Transport(Transform _oasisPos, int index)
-    {
-        // PlayManager.SetCameraMode(EControlMode.UI_CONTROL);
-        m_transportUI.gameObject.SetActive(true);
-
-        Button[] btns = m_transportUI.GetComponentsInChildren<Button>();
-        // 예 버튼
-        btns[0].onClick.AddListener(() =>
-        {
-            // Debug.Log(oasisOriginPos);
-            Debug.Log("Transport!");
-            m_transportUI.gameObject.SetActive(false);
-            // PlayManager.TeleportPlayer(m_oasisPosition[index].position);
-        });
-        // 아니오 버튼
-        btns[1].onClick.AddListener(() =>
-        {
-            m_transportUI.gameObject.SetActive(false);
-        }
-        );
-    }
-
     private void SetComps()
     {
         m_mapOasis = GameObject.FindGameObjectsWithTag(ValueDefine.OASIS_TAG);
-        m_oasisPosition = new Transform[m_mapOasis.Length];
-        Button[] oasisBtns = GetComponentsInChildren<Button>();
 
         // index -> 0 : left, 1 : right, 2 : bottom, 3 : top
         m_mapArea = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, PlayManager.NormalizeObjects[1].position),
             Vector3.Distance(PlayManager.NormalizeObjects[2].position, PlayManager.NormalizeObjects[3].position));
         SynchronizeOasisLocation();
-        m_transportUI.gameObject.SetActive(false);
-
-        for (int i = 0; i < m_mapOasis.Length; i++)    // +, - 버튼 제외
-        {
-            m_oasisPosition[i] = m_mapOasis[i].transform;
-            int index = i;
-
-            oasisBtns[i].onClick.AddListener(() =>
-            {
-                Transport(oasisBtns[index].gameObject.transform, index);
-            });
-        }
     }
 
     private void Update()
