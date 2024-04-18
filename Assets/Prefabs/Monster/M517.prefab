@@ -68,13 +68,12 @@ MonoBehaviour:
     AttackRange: 1.5
     ApproachDelay: 1
     FenceRange: 20
-  m_normalAttackPrefab: {fileID: 0}
+  m_normalAttacks: []
   PathingAngle: 0
   PathingTime: 0
   AttackDuration: 0
   m_spawnPoint: {fileID: 0}
   m_scriptable: {fileID: 11400000, guid: da0f1a9a09de1db4f9e4858e681858c7, type: 2}
-  m_magnitude: 0.3
 --- !u!54 &2910072855049774924
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -291,7 +290,39 @@ VisualEffect:
     m_AnimationCurve:
       m_Array: []
     m_Gradient:
-      m_Array: []
+      m_Array:
+      - m_Value:
+          serializedVersion: 2
+          key0: {r: 0, g: 9.327242, b: 100.437706, a: 1}
+          key1: {r: 0.5344808, g: 0.6846642, b: 3.7859058, a: 0.8}
+          key2: {r: 1.923309, g: 0.8325803, b: 3.602184, a: 0}
+          key3: {r: 0, g: 0, b: 0, a: 0}
+          key4: {r: 0, g: 0, b: 0, a: 0}
+          key5: {r: 0, g: 0, b: 0, a: 0}
+          key6: {r: 0, g: 0, b: 0, a: 0}
+          key7: {r: 0, g: 0, b: 0, a: 0}
+          ctime0: 0
+          ctime1: 18311
+          ctime2: 53199
+          ctime3: 0
+          ctime4: 0
+          ctime5: 0
+          ctime6: 0
+          ctime7: 0
+          atime0: 15420
+          atime1: 21588
+          atime2: 65535
+          atime3: 65535
+          atime4: 0
+          atime5: 0
+          atime6: 0
+          atime7: 0
+          m_Mode: 0
+          m_ColorSpace: -1
+          m_NumColorKeys: 3
+          m_NumAlphaKeys: 3
+        m_Name: New Gradient
+        m_Overridden: 1
     m_NamedObject:
       m_Array: []
     m_Bool:
