@@ -9,8 +9,10 @@ using UnityEngine.VFX;
 using Cinemachine;
 using Unity.VisualScripting;
 
+[RequireComponent(typeof(MonsterLighter))]
 public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 {
+    // 컴포넌트
     protected SkinnedMeshRenderer[] m_skinneds;           // 매쉬
 
     // 풀
@@ -20,6 +22,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     public void ReleaseTopool() { m_aiPath.enabled = false; IsSpawned = false; OriginalPool.Release(gameObject); }
 
 
+    // 기본 정보
     [SerializeField]
     private MonsterScriptable m_scriptable;             // 스크립터블로 정보를 저장합니다. 모든 정보는 여기에..
     public bool IsScriptableSet { get { return m_scriptable != null; } }
@@ -27,10 +30,60 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
     public override bool IsMonster { get { return true; } }
 
+
     // 능력 관련
-    protected HideScript m_hideScript;
+    protected MonsterLighter m_lightReciever;
     private ObjectHPBarScript m_hpBar;
-    private bool IsHiding { get { if (m_hideScript == null) return false; return m_hideScript.IsHiding; } }
+    private bool IsGettingLight { get { if (m_lightReciever == null) return false; return m_lightReciever.GettingLight; } }
+    private bool IsPurifyGlowing { get; set; }                  // 빛나고 있어
+    public void HideMonster() { m_lightReciever.HideMonster(); }
+    private void CheckPurify()
+    {
+        if (IsGettingLight && CanPurify && !IsPurifyGlowing) 
+        {
+            ActivePurify();
+        }
+        else if ((!IsGettingLight || CanPurify) && IsPurifyGlowing) 
+        {
+            InactivePurify();
+        }
+    }
+    public virtual void ActivePurify()
+    {
+        foreach (SkinnedMeshRenderer smr in m_skinneds)
+        {
+            StartCoroutine(PurifyEffect(smr.materials, 1));
+        }
+        IsPurifyGlowing = true;
+    }
+    private IEnumerator PurifyEffect(Material[] _mats, int _on)
+    {
+        float counter = 0;
+        int on = _on == 1 ? 1 : 0;
+        for (int i = 0; i<_mats.Length; i++)
+        {
+            _mats[i].SetInt("_FresnelOnOff", on);
+        }
+
+        static bool CheckDone(int __on, float _rate) { if (__on == 1) { return _rate < 1; } else { return _rate > 0; } }
+        while (CheckDone(_on, _mats[0].GetFloat("_Fresnelpower")))
+        {
+            counter += m_dissolveRate * _on;
+            for (int i = 0; i<_mats.Length; i++)
+            {
+                _mats[i].SetFloat("_Fresnelpower", counter);
+            }
+            yield return new WaitForSeconds(m_refreshRate);
+        }
+    }
+    public virtual void InactivePurify()
+    {
+        foreach (SkinnedMeshRenderer smr in m_skinneds)
+        {
+            StartCoroutine(PurifyEffect(smr.materials, -1));
+        }
+        IsPurifyGlowing = false;
+    }
 
 
     // 상태 관리
@@ -38,6 +91,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     private IMonsterState CurState { get { return m_stateManager.CurMonsterState; } }
     protected readonly IMonsterState[] m_monsterStates = new IMonsterState[(int)EMonsterState.LAST];
     public void ChangeState(EMonsterState _state) { m_stateManager.ChangeState(m_monsterStates[(int)_state]); }
+
 
     // 몬스터 상태
     public virtual bool IsSpawned { get; protected set; } = true;
@@ -54,7 +108,8 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     public bool CanAttack { get { return HasTarget && TargetInAttackRange && AttackTimeCount <= 0; } }  // 공격 가능 여부
     public int NearRomaingMonsterNum { get; protected set; }                                            // 주변에 로밍중인 몬스터 수
     public bool ShouldRoam { get { return NearRomaingMonsterNum > 2; } }                                // 로밍 해야 함
-    public bool Purified { get; protected set; }                                                        // 성불 조건 완료
+    public virtual bool CanPurify { get; }                                                              // 성불 조건 완료
+    public bool IsPurified { get; protected set; }                                                      // 성불 가능 상태에서 사망
     public EMonsterDeathType DeathType { get; protected set; }                                          // 사망 타입
 
     // 피격 효과 구현
@@ -75,7 +130,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         if (m_hpBar)
             m_hpBar.gameObject.SetActive(true);
     }
-    public void LooseLight()            // 빛을 그만 받을 때 실행
+    public void LoseLight()            // 빛을 그만 받을 때 실행
     {
         if (m_hpBar)
             m_hpBar.gameObject.SetActive(false);
@@ -169,7 +224,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
         if (PlayManager.CheckIsPlayer(_object))
         {
-            if(Purified) { DeathType = EMonsterDeathType.PURIFY; }
+            if(IsPurified) { DeathType = EMonsterDeathType.PURIFY; }
             else { DeathType = EMonsterDeathType.BY_PLAYER; }
         }
         else
@@ -259,7 +314,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     {
         base.SetComps();
         m_skinneds = GetComponentsInChildren<SkinnedMeshRenderer>();
-        m_hideScript = GetComponent<HideScript>();
+        m_lightReciever = GetComponent<MonsterLighter>();
         m_aiPath = GetComponent<AIPath>();
 
         m_cameraShake = GetComponent<CameraShake>();  // 몬스터 프리팹에 cinemachine impulse source와 CameraShake 컴포넌트를 달아야 함
@@ -312,6 +367,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
         CurState.Proceed();
 
+        CheckPurify();
         ProceedCooltime();
     }
 }

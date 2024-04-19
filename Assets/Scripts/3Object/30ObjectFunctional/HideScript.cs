@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(IHidable))]
-public class HideScript : MonoBehaviour             // ºÒºû°úÀÇ »óÈ£ÀÛ¿ëÀÌ °¡´ÉÇÑ ¿ÀºêÁ§Æ®¿£ ÀÌ ½ºÅ©¸³Æ®¸¦ ³Ö¾î¾ß ÇÑ´Ù. (IHidable)À» »ó¼ÓÇÑ ½ºÅ©¸³Æ® ÇÊ¼ö
+public class HideScript : GetLightScript        // ºÒºû°úÀÇ »óÈ£ÀÛ¿ëÀÌ °¡´ÉÇÑ ¿ÀºêÁ§Æ®¿£ ÀÌ ½ºÅ©¸³Æ®¸¦ ³Ö¾î¾ß ÇÑ´Ù. (IHidable)À» »ó¼ÓÇÑ ½ºÅ©¸³Æ® ÇÊ¼ö
 {
     private IHidable m_hidable;             // ¿ÀºêÁ§Æ® ³» IHidableÀ» »ó¼ÓÇÑ ½ºÅ©¸³Æ®
 
     private int m_layerIdx;                 // ¿ÀºêÁ§Æ®ÀÇ ¿ø·¡ layer
-
-    private float DistToPlayer { get { return (PlayManager.PlayerPos-transform.position).magnitude; } }     // ÇÃ·¹ÀÌ¾î¿Í °Å¸®
-    public bool IsHiding { get; private set; }                                                                // ¼û¾îÀÖ´Â »óÅÂÀÎÁö
 
 
     private void ChangeLayer(int _layer)            // ¿ÀºêÁ§Æ®(ÀÚ½Ä Æ÷ÇÔ) ÀüÃ¼ ·¹ÀÌ¾î ¹Ù²Ù±â
@@ -21,55 +18,25 @@ public class HideScript : MonoBehaviour             // ºÒºû°úÀÇ »óÈ£ÀÛ¿ëÀÌ °¡´ÉÇ
         }
     }
 
-    private void GetLight()                         // ºûÀ» ¹Þ¾ÒÀ» ¶§
+    public override void GetLight()                         // ºûÀ» ¹Þ¾ÒÀ» ¶§
     {
+        base.GetLight();
         ChangeLayer(m_layerIdx);
         m_hidable.GetLight();
-        IsHiding = false;
     }
-    private void LooseLight()                       // ºûÀ» ±×¸¸ ¹ÞÀ» ¶§
+    public override void LoseLight()                       // ºûÀ» ±×¸¸ ¹ÞÀ» ¶§
     {
+        base.LoseLight();
         ChangeLayer(ValueDefine.HIDING_LAYER_IDX);
-        m_hidable.LooseLight();
-        IsHiding = true;
-    }
-
-    private void CheckLight()                      // ÇÁ·¹ÀÓ¸¶´Ù ºû º¯È­ °¨Áö
-    {
-        ELightState state = PlayerLightScript.CurState;
-        float size = PlayerLightScript.CurSize;
-        if (IsHiding)
-        {
-            if (state == ELightState.ON || 
-                (state == ELightState.CHANGE && size >= DistToPlayer))
-            {
-                GetLight();
-            }
-        }
-        else
-        {
-            if (state == ELightState.OFF ||
-                state == ELightState.CHANGE && size <= DistToPlayer)
-            {
-                LooseLight();
-            }
-        }
+        m_hidable.LoseLight();
     }
 
 
-    private void Awake()
+
+    public override void SetComps()
     {
+        base.SetComps();
         m_hidable = GetComponent<IHidable>();
         m_layerIdx = gameObject.layer;
-    }
-
-    private void Start()
-    {
-        LooseLight();
-    }
-
-    private void Update()
-    {
-        CheckLight();
     }
 }

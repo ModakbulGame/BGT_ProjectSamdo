@@ -12,7 +12,7 @@ public class HideGimicScript : MonoBehaviour, IHidable
         SetObjectHide(false);
     }
 
-    public virtual void LooseLight()
+    public virtual void LoseLight()
     {
         SetObjectHide(true);
     }

@@ -19,7 +19,7 @@ public interface IHittable          // 데미지를 입을 수 있는 오브젝트들이 공통적
 public interface IHidable               // 빛 비춰서 변화가 생길 수 있는 오브젝트에 필수 부착
 {
     public void GetLight();                 // 빛을 받았을 때
-    public void LooseLight();               // 빛을 그만 받을 때
+    public void LoseLight();               // 빛을 그만 받을 때
 }
 
 public interface IInteractable          // 상호작용이 가능한 오브젝트에 필수 부착

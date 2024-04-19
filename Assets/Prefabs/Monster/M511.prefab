@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7372054003772386961}
   - component: {fileID: 7245514337101791022}
+  - component: {fileID: 6394583573786939997}
   - component: {fileID: 2687869571193664764}
   - component: {fileID: 6697723615687857755}
   - component: {fileID: 4037872653007636385}
@@ -74,8 +75,20 @@ MonoBehaviour:
   AttackDuration: 0
   m_spawnPoint: {fileID: 0}
   m_scriptable: {fileID: 11400000, guid: 9922f0f6f74b0554e9248eb0cae816a9, type: 2}
-  m_magnitude: 0.3
   m_attackMaxNum: 5
+--- !u!114 &6394583573786939997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3773447244429977721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aaa794688dde2e4c8dc888d525b3bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isHiding: 0
 --- !u!54 &2687869571193664764
 Rigidbody:
   m_ObjectHideFlags: 0
