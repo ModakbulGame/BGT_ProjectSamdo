@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.ProBuilder;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class MapUIScript : MonoBehaviour
 {
@@ -20,7 +19,6 @@ public class MapUIScript : MonoBehaviour
     [SerializeField]
     private Image m_mapImage;
 
-    private TextMeshProUGUI m_mapName;
     private Vector2 m_mapArea;
     private bool m_isMapUIToggle = false;
 
@@ -103,10 +101,6 @@ public class MapUIScript : MonoBehaviour
         m_mapArea = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, PlayManager.NormalizeObjects[1].position),
             Vector3.Distance(PlayManager.NormalizeObjects[2].position, PlayManager.NormalizeObjects[3].position));
         SynchronizeOasisLocation();
-
-        m_mapName = GetComponentInChildren<TextMeshProUGUI>();
-        if (m_mapName != null) m_mapName.text = SceneManager.GetActiveScene().name;
-        else return;
     }
 
     private void Update()
