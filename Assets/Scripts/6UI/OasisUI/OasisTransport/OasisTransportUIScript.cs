@@ -6,9 +6,14 @@ using UnityEngine.UI;
 public class OasisTransportUIScript : MonoBehaviour, IOasisUI
 {
     private OasisUIScript m_parent;
-    public OasisUIScript Parent { get { return m_parent; } }
-    public void OpenUI(OasisUIScript _parent) { m_parent = _parent; SetComps(); }
+    public void OpenUI(OasisUIScript _parent) 
+    { 
+        m_parent = _parent; 
+        SetComps(); 
+    }
 
+    private Transform m_parentTransform;
+    public Transform ParentTransform { get { return m_parentTransform; } }
     private Button m_transportBtn;
     private OasisPointUIScript[] m_oasisPoints;
 
@@ -40,7 +45,7 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
 
     public void MoveToOasis(EMapPointName _point)
     {
-        Transform destOasis = m_oasisPoints[(int)_point].Parent.Parent.transform;
+        Transform destOasis = PlayManager.MapOasis[(int)_point].transform;
         Debug.Log(destOasis.position);
 
         if (PlayManager.GetDistToPlayer(destOasis.position) <= 2.5f)  // 상호 작용 거리 내 화톳불이 있으면 그 곳으로는 이동 불가, 없을 시 이동 가능
@@ -50,7 +55,7 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
         }
         else
         {
-            // PlayManager.TeleportPlayer(destOasis.position);
+            PlayManager.TeleportPlayer(destOasis.position);
             CloseUI();
         }
     }

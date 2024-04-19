@@ -24,11 +24,9 @@ public interface IOasisUI
 public class OasisUIScript : MonoBehaviour
 {
     private OasisNPC m_npc;
-    public Transform OasisTransform { get; private set; }   // 화톳불 간 이동을 위해 구현
     public void SetNPC(OasisNPC _npc) 
     { 
         m_npc = _npc; 
-        OasisTransform = _npc.transform;
     }
 
     [SerializeField]

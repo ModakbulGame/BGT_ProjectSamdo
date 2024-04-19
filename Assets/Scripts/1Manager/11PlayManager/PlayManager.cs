@@ -90,6 +90,7 @@ public class PlayManager : MonoBehaviour
     private EnvironmentManager m_environmentManager;
     private static EnvironmentManager EnvironmentManager { get { return Inst.m_environmentManager; } }
     public static Transform[] NormalizeObjects { get { return EnvironmentManager.m_normalizeObjects; } }
+    public static GameObject[] MapOasis { get { return EnvironmentManager.m_mapOasis; } }
 
 
     // 업그레이드
@@ -132,6 +133,7 @@ public class PlayManager : MonoBehaviour
         m_itemManager.SetManager();
         m_storyManager = GetComponent<StoryManager>();
         m_environmentManager = GetComponent<EnvironmentManager>();
+        m_environmentManager.setManager();
         m_upgradeManager = GetComponent<UpgradeManager>();
         m_playUIManager = GetComponent<PlayUIManager>();
         m_playUIManager.SetManager();

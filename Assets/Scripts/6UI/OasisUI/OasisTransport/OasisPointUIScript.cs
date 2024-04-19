@@ -6,8 +6,7 @@ using UnityEngine.UI;
 
 public class OasisPointUIScript : MonoBehaviour
 {
-    private OasisTransportUIScript m_parent;
-    public OasisTransportUIScript Parent { get { return m_parent; } }
+    public OasisTransportUIScript m_parent;
     public void SetParent(OasisTransportUIScript _parent, EMapPointName _point) { m_parent = _parent; PointName = _point; SetComps(); }
 
     private Image m_mapImg;
@@ -38,12 +37,13 @@ public class OasisPointUIScript : MonoBehaviour
         Vector2 mapArea = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, PlayManager.NormalizeObjects[1].position), 
             Vector3.Distance(PlayManager.NormalizeObjects[2].position, PlayManager.NormalizeObjects[3].position));
 
-        Vector2 oasisBtnPos = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, new Vector3(m_parent.Parent.OasisTransform.position.x, 0f, 0f)),
-            Vector3.Distance(PlayManager.NormalizeObjects[2].position, new Vector3(0f, 0f, m_parent.Parent.OasisTransform.position.z)));
-
+        Vector2 oasisBtnPos = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, new Vector3(PlayManager.MapOasis[(int)PointName].transform.position.x, 0f, 0f)),
+            Vector3.Distance(PlayManager.NormalizeObjects[2].position, new Vector3(0f, 0f, PlayManager.MapOasis[(int)PointName].transform.position.z)));
         Vector2 normalBtnPos = new Vector2(oasisBtnPos.x / mapArea.x, oasisBtnPos.y / mapArea.y);
+        Vector2 normalImgPos = normalBtnPos;
 
         btnRectTransform.anchoredPosition = new Vector2(m_mapImg.rectTransform.sizeDelta.x * normalBtnPos.x, m_mapImg.rectTransform.sizeDelta.y * normalBtnPos.y);
+        m_img.rectTransform.anchoredPosition = new Vector2(m_mapImg.rectTransform.sizeDelta.x * normalImgPos.x, m_mapImg.rectTransform.sizeDelta.y * normalImgPos.y);
     }
     
     private void SetBtns()

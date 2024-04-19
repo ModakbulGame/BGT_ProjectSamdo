@@ -5,6 +5,7 @@ using UnityEngine;
 public class NPCScript : ObjectScript, IInteractable
 {
     [SerializeField] private string m_NPCName;      // npc 이름 ( 인게임 표시용 )  ->  ObjectScript ObjectInfo에 포함
+    protected Transform m_NPCTransform;
 
     public EInteractType InteractType { get { return EInteractType.NPC; } }
     public bool Interactions { get { return gameObject.CompareTag(ValueDefine.NPC_TAG); } }
@@ -21,5 +22,8 @@ public class NPCScript : ObjectScript, IInteractable
         PlayManager.StopPlayerInteract();
     }
 
-    public override void Start() { }
+    public override void Start() 
+    {
+        m_NPCTransform = this.transform;
+    }
 }
