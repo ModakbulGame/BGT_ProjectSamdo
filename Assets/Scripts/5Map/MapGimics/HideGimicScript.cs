@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class HideGimicScript : MonoBehaviour, IHidable
 {
+    [SerializeField]
     private Collider[] m_colliders;
-
 
     public virtual void GetLight()
     {
-        SetColliderState(true);
+        SetObjectHide(false);
     }
 
     public virtual void LooseLight()
     {
-        SetColliderState(false);
+        SetObjectHide(true);
     }
 
-    private void SetColliderState(bool _active)
+    private void SetObjectHide(bool _hide)
     {
         foreach (Collider col in m_colliders)
         {
-            col.enabled = _active;
+            col.enabled = !_hide;
         }
     }
 
