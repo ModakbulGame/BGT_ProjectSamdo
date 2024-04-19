@@ -9,11 +9,11 @@ public class GetLightScript : MonoBehaviour
 
     public virtual void GetLight()                         // 빛을 받았을 때
     {
-        GettingLight = false;
+        GettingLight = true;
     }
     public virtual void LoseLight()                       // 빛을 그만 받을 때
     {
-        GettingLight = true;
+        GettingLight = false;
     }
 
     private void CheckLight()                      // 프레임마다 빛 변화 감지

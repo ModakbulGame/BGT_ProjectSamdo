@@ -43,7 +43,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         {
             ActivePurify();
         }
-        else if ((!IsGettingLight || CanPurify) && IsPurifyGlowing) 
+        else if ((!IsGettingLight || !CanPurify) && IsPurifyGlowing) 
         {
             InactivePurify();
         }
@@ -52,21 +52,19 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     {
         foreach (SkinnedMeshRenderer smr in m_skinneds)
         {
-            StartCoroutine(PurifyEffect(smr.materials, 1));
+            Material[] mats = smr.materials;
+            StartCoroutine(PurifyEffect(mats, 1));
+            for (int i = 0; i<mats.Length; i++)
+            {
+                mats[i].SetInt("_FresnelOnOff", 1);
+            }
         }
         IsPurifyGlowing = true;
     }
     private IEnumerator PurifyEffect(Material[] _mats, int _on)
     {
         float counter = 0;
-        int on = _on == 1 ? 1 : 0;
-        for (int i = 0; i<_mats.Length; i++)
-        {
-            _mats[i].SetInt("_FresnelOnOff", on);
-        }
-
-        static bool CheckDone(int __on, float _rate) { if (__on == 1) { return _rate < 1; } else { return _rate > 0; } }
-        while (CheckDone(_on, _mats[0].GetFloat("_Fresnelpower")))
+        while (_mats[0].GetFloat("_Fresnelpower") < 1 && 0 < _mats[0].GetFloat("_Fresnelpower"))
         {
             counter += m_dissolveRate * _on;
             for (int i = 0; i<_mats.Length; i++)
@@ -80,7 +78,12 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     {
         foreach (SkinnedMeshRenderer smr in m_skinneds)
         {
-            StartCoroutine(PurifyEffect(smr.materials, -1));
+            Material[] mats = smr.materials;
+            StartCoroutine(PurifyEffect(mats, -1));
+            for (int i = 0; i<mats.Length; i++)
+            {
+                mats[i].SetInt("_FresnelOnOff", 0);
+            }
         }
         IsPurifyGlowing = false;
     }

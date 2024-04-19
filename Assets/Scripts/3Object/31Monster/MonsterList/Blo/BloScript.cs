@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BloScript : MonsterScript
 {
+    public override bool CanPurify => true;
+
+
     [SerializeField]
     private float m_rushSpeed = 6;
 
