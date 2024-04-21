@@ -39,12 +39,16 @@ public class GameManager : SingleTon<GameManager>
     private SkillManager m_skillManager;
     private static SkillManager SkillManager { get { return Inst.m_skillManager; } }
     private static GameObject[] SkillArray { get { return SkillManager.SkillArrays; } }
-    
     public static SkillInfo GetSkillInfo(ESkillName _skill) { return SkillManager.GetSkillInfo(_skill); }                                   // 스킬 정보
     public static GameObject GetSkillObj(ESkillName _skill) { return SkillManager.GetSkillObj(_skill); }                                    // 스킬 프리펍
     public static ESkillName[] SkillSlot { get { return SkillManager.SkillSlot; } }                                                         // 스킬 슬롯
     public static void RegisterSkilSlot(ESkillName _skill, int _idx) { SkillManager.RegisterSkillSlot(_skill, _idx); PlayManager.UpdateSkillSlot(); }   // 스킬 슬롯 설정
     public static void ObtainSkill(ESkillName _skill) { SkillManager.ObtainSkill(_skill); }
+
+    // 아이템
+    //public static EItemName[] ItemSlot { get { return SkillManager.SkillSlot; } }                                                         // 아이템 슬롯
+    //public static void RegisterItemSlot(EItemName _item, int _idx) { SkillManager.RegisterItemSlot(_item, _idx); PlayManager.UpdateItemSlot(); }   // 아이템 슬롯 설정
+
 
     // 몬스터
     private MonsterManager m_monsterManager;

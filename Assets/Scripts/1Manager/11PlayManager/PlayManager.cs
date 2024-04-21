@@ -103,6 +103,7 @@ public class PlayManager : MonoBehaviour
     // GUI
     private PlayUIManager m_playUIManager;
     private static PlayUIManager PlayUIManager { get { return Inst.m_playUIManager; } }
+    public static Vector2 NormalizeLocation(GameObject _obj) { return PlayUIManager.NormalizeLocation(_obj); }       // 위치 정규화(3D -> 2D)
     public static Canvas GetCanvas(ECanvasType _canvas) { return PlayUIManager.GetCanvas(_canvas); }                                        // 캔버스
     public static void OpenPlayerUI() { PlayUIManager.OpenPlayerUI(); }                                                                     // Player UI 열기
     public static void ClosePlayerUI() { PlayUIManager.ClosePlayerUI(); }                                                                   // Player UI 닫기
