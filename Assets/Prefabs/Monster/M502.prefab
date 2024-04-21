@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5296837395338050109}
   - component: {fileID: 464084384613844574}
   - component: {fileID: 5591834191449544894}
+  - component: {fileID: 8845934459699198658}
   m_Layer: 0
   m_Name: M502
   m_TagString: Monster
@@ -63,12 +64,12 @@ MonoBehaviour:
     Attack: 5
     ApproachSpeed: 5
     ViewAngle: 120
-    ViewRange: 10
-    EngageRange: 2
-    ReturnRange: 25
+    ViewRange: 12
+    EngageRange: 15
+    ReturnRange: 15
     AttackRange: 4.5
     ApproachDelay: 1
-    FenceRange: 20
+    FenceRange: 25
   m_normalAttacks:
   - {fileID: 0}
   PathingAngle: 0
@@ -248,6 +249,19 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0.1, y: 0.1, z: 0.1}
+--- !u!114 &8845934459699198658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4113875238200415537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aaa794688dde2e4c8dc888d525b3bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isHiding: 0
 --- !u!1001 &1514275345446734127
 PrefabInstance:
   m_ObjectHideFlags: 0

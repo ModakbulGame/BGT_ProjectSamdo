@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1294762983584231436}
   - component: {fileID: 1937354084249809277}
   - component: {fileID: -4982258113327907988}
+  - component: {fileID: 6183044221730000857}
   m_Layer: 0
   m_Name: M103
   m_TagString: Monster
@@ -61,12 +62,12 @@ MonoBehaviour:
     Attack: 5
     ApproachSpeed: 5
     ViewAngle: 120
-    ViewRange: 10
-    EngageRange: 2
-    ReturnRange: 25
+    ViewRange: 15
+    EngageRange: 15
+    ReturnRange: 15
     AttackRange: 1.5
     ApproachDelay: 1
-    FenceRange: 20
+    FenceRange: 25
   m_normalAttacks:
   - {fileID: 8823474009237966567, guid: 462a0e2a6831073469fc5a0575ecd634, type: 3}
   PathingAngle: 0
@@ -225,6 +226,19 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0.1, y: 0.1, z: 0.1}
+--- !u!114 &6183044221730000857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8064397588928492606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aaa794688dde2e4c8dc888d525b3bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isHiding: 0
 --- !u!1001 &1327357655800216806
 PrefabInstance:
   m_ObjectHideFlags: 0

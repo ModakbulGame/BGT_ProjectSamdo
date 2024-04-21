@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2200756399401006509}
   - component: {fileID: 5610814737781861936}
   - component: {fileID: 2123962823503251547}
+  - component: {fileID: 2090501870184702522}
   m_Layer: 9
   m_Name: M301
   m_TagString: Monster
@@ -60,20 +61,20 @@ MonoBehaviour:
     Defense: 5
     Attack: 5
     ApproachSpeed: 5
-    ViewAngle: 0
-    ViewRange: 0
-    EngageRange: 2
-    ReturnRange: 2
+    ViewAngle: 120
+    ViewRange: 15
+    EngageRange: 15
+    ReturnRange: 15
     AttackRange: 2.5
     ApproachDelay: 1
-    FenceRange: 20
+    FenceRange: 25
   m_normalAttacks:
   - {fileID: 0}
   PathingAngle: 0
   PathingTime: 0
   AttackDuration: 0
   m_spawnPoint: {fileID: 0}
-  m_scriptable: {fileID: 11400000, guid: cb2716906735ada4b944a004a364575f, type: 2}
+  m_scriptable: {fileID: 11400000, guid: a3bb57d5b38a97143b62834462e2185f, type: 2}
 --- !u!54 &6213347851301481447
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -224,6 +225,19 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0.1, y: 0.1, z: 0.1}
+--- !u!114 &2090501870184702522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4930112960067386354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aaa794688dde2e4c8dc888d525b3bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isHiding: 0
 --- !u!1001 &513346990931770113
 PrefabInstance:
   m_ObjectHideFlags: 0

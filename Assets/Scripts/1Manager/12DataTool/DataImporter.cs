@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public static class DataImporter
 {
@@ -105,10 +104,13 @@ public static class DataImporter
             if (!prefab.TryGetComponent<MonsterScript>(out var script)) { Debug.Log(id + " 스크립트 없음"); continue; }
 
             script.SetScriptable(scriptable);
-        }
 
-        AssetDatabase.SaveAssets();
+            AssetDatabase.SaveAssets();
+            EditorUtility.SetDirty(scriptable);
+            EditorUtility.SetDirty(prefab);
+        }
     }
+
     [MenuItem("Utilities/GenerateItems")]
     private static void GenerateItemData()
     {
@@ -185,9 +187,11 @@ public static class DataImporter
                     break;
                 default: Debug.LogError("맞는 ID 없음"); return;
             }
-        }
 
-        AssetDatabase.SaveAssets();
+            AssetDatabase.SaveAssets();
+            EditorUtility.SetDirty(scriptable);
+            EditorUtility.SetDirty(prefab);
+        }
     }
 
     [MenuItem("Utilities/GenerateSkills")]
@@ -224,8 +228,10 @@ public static class DataImporter
             if (!prefab.TryGetComponent<PlayerSkillScript>(out var script)) { Debug.Log(id + " 스크립트 없음"); continue; }
 
             script.SetScriptable(scriptable);
-        }
 
-        AssetDatabase.SaveAssets();
+            AssetDatabase.SaveAssets();
+            EditorUtility.SetDirty(scriptable);
+            EditorUtility.SetDirty(prefab);
+        }
     }
 }
