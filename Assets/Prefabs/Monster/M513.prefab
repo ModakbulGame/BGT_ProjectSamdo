@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3677812087295266640}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 25, y: 0, z: 25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1124,7 +1124,7 @@ MonoBehaviour:
   _Editor_OnValidateTrigger: 1
   _EditorAllowAutoUpdateFeetParams: 1
   _EditorCategory: 0
-  _EditorSetupCategory: 1
+  _EditorSetupCategory: 0
   _EditorMotionCategory: 0
   _EditorExtraCategory: 0
   IKHintMode: 0
@@ -1132,9 +1132,9 @@ MonoBehaviour:
   FeetYOffset: 0
   FeetLengthAdjust: 0
   baseTransform: {fileID: 0}
-  Hips: {fileID: 9057840805774453184}
+  Hips: {fileID: 4794324304233994724}
   ScaleReferenceMode: 3
-  finalScaleReference: 0.09074414
+  finalScaleReference: 0.19856969
   finalScaleReferenceSqrt: 0.1
   customScaleReferenceValue: 0.5
   DelayedInitialization: 0
@@ -1166,6 +1166,12 @@ MonoBehaviour:
 --- !u!4 &2685880519156869407 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3953678429167286032, guid: 0fe956c004bbdec4daa6fb2c0def465b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1411987951090359823}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4794324304233994724 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5841378735638235115, guid: 0fe956c004bbdec4daa6fb2c0def465b,
     type: 3}
   m_PrefabInstance: {fileID: 1411987951090359823}
   m_PrefabAsset: {fileID: 0}
@@ -1225,12 +1231,6 @@ CapsuleCollider:
 --- !u!4 &5821070184093388781 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4372718217947360798, guid: 0fe956c004bbdec4daa6fb2c0def465b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1411987951090359823}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &9057840805774453184 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7938590189791098831, guid: 0fe956c004bbdec4daa6fb2c0def465b,
     type: 3}
   m_PrefabInstance: {fileID: 1411987951090359823}
   m_PrefabAsset: {fileID: 0}
