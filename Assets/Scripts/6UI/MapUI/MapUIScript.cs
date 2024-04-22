@@ -83,13 +83,13 @@ public class MapUIScript : MonoBehaviour
     {
         for (uint i = 0; i < m_mapOasis.Length; i++)
         {
+            GameObject OasisImage = Instantiate(m_mapOasisImage, Vector3.zero, Quaternion.identity, m_mapImage.transform);
+            Image mapOasisImage = OasisImage.GetComponent<Image>();
+
             // 화톳불 위치 정규화
             Vector2 oasisPos = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, new Vector3(m_mapOasis[i].transform.position.x, 0f, 0f)),
                 Vector3.Distance(PlayManager.NormalizeObjects[2].position, new Vector3(0f, 0f, m_mapOasis[i].transform.position.z)));
             Vector2 oasisNormalPos = new Vector2(oasisPos.x / m_mapArea.x, oasisPos.y / m_mapArea.y);
-
-            GameObject OasisImage = Instantiate(m_mapOasisImage, Vector3.zero, Quaternion.identity, m_mapImage.transform);
-            Image mapOasisImage = OasisImage.GetComponent<Image>();
 
             mapOasisImage.rectTransform.anchoredPosition = new Vector2(m_mapImage.rectTransform.sizeDelta.x * oasisNormalPos.x, m_mapImage.rectTransform.sizeDelta.y * oasisNormalPos.y);
         }

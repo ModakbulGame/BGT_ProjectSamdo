@@ -36,7 +36,6 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
     private void TransportTo()
     {
         if(CurDestination == EMapPointName.LAST) { return; }
-        Debug.Log(CurDestination + "로 이동!");
         CloseUI();
         // FadeOut
         MoveToOasis(CurDestination);
@@ -46,7 +45,6 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
     public void MoveToOasis(EMapPointName _point)
     {
         Transform destOasis = PlayManager.MapOasis[(int)_point].transform;
-        Debug.Log(destOasis.position);
 
         if (PlayManager.GetDistToPlayer(destOasis.position) <= 2.5f)  // 상호 작용 거리 내 화톳불이 있으면 그 곳으로는 이동 불가, 없을 시 이동 가능
         {
@@ -55,6 +53,7 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
         }
         else
         {
+            Debug.Log(CurDestination + "로 이동!");
             PlayManager.TeleportPlayer(destOasis.position);
             CloseUI();
         }
