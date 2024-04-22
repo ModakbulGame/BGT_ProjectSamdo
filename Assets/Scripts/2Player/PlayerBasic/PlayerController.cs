@@ -76,7 +76,8 @@ public struct SPlayerWeaponInfo
 public partial class PlayerController : ObjectScript
 {
     // 플레이어 정보
-    public override float ObjectHeight { get { return 1.8f; } }
+    private CapsuleCollider m_collider;
+    public override float ObjectHeight { get { return m_collider.height; } }
 
     [SerializeField]
     protected PlayerStatInfo m_statInfo = new();    // 스탯 정보
@@ -127,7 +128,6 @@ public partial class PlayerController : ObjectScript
             return new(dir.x, sin, dir.y);
         }
     }                                                                              // 플레이어 에임 (3D 벡터)
-    public bool IsGrounded { get { return Physics.CheckSphere(transform.position, GroundCheckerThrashold, ValueDefine.GROUND_LAYER); } }    // 땅에 닿은 상태
 
     public float CurStamina { get; protected set; }                             // 현재 스테미나
 
@@ -148,7 +148,6 @@ public partial class PlayerController : ObjectScript
 
     // 카메라 관련
     private CameraChange m_cameraChange;
-    private GameObject m_cameraFocus;
 
     // 상태 관리
     private PlayerStateManager m_stateManager;                                                                      // 상태 관리자
@@ -171,50 +170,6 @@ public partial class PlayerController : ObjectScript
     public bool InteractTrigger { get { return PlayerInput.Interact.triggered; } }                                  // E 입력
     public bool ThrowItemTrigger { get { return PlayerInput.ThrowItem.triggered; } }                                // 숫자 입력
 
-
-    #region 물리 관련
-    private float GroundCheckerThrashold = 0.1f;                        // IsGrounded 확인 범위
-    private RaycastHit m_slopeHit;                                      // 경사 확인 ray
-    private const float SLOPE_RAY_DIST = 2;                             // ray 거리
-    [SerializeField]
-    private float m_maxSlopeAngle = 56;                                 // 최대 경사 각도
-    public bool IsOnSlope { get; private set; }                         // 경사 위에 있는지
-    private bool CantClimb { get; set; }                                // 오를 수 없는 경사
-
-    private void CheckOnSlope()                         // 경사 확인
-    {
-        Ray ray = new(transform.position + Vector3.up * (ObjectHeight / 2), Vector3.down);
-        if (Physics.Raycast(ray, out m_slopeHit, SLOPE_RAY_DIST, ValueDefine.GROUND_LAYER))
-        {
-            var angle = Vector3.Angle(Vector3.up, m_slopeHit.normal);
-            if (angle == 0f) { IsOnSlope = false; CantClimb = false; }
-            else if (angle < m_maxSlopeAngle) { IsOnSlope = true; CantClimb = false; }
-            else { IsOnSlope = true; CantClimb = true; }
-            return;
-        }
-        IsOnSlope = false;
-    }
-
-    private Vector3 AdjSlopeMoveDir(Vector3 _dir)       // 경사에 이동 벡터 투영
-    {
-        return Vector3.ProjectOnPlane(_dir, m_slopeHit.normal).normalized;
-    }
-
-    private void ApplyGravity()                           // 중력 적용
-    {
-        Vector3 gravity;
-        if (IsOnSlope)
-        {
-            if (CantClimb) { gravity = AdjSlopeMoveDir(Physics.gravity); }
-            else gravity = Vector3.zero;
-        }
-        else if (!Jumped) { gravity = Vector3.down * Mathf.Abs(m_rigid.velocity.y); }
-        else if (!IsGrounded && m_rigid.velocity.magnitude < 3) { gravity = Physics.gravity; }
-        else { gravity = Vector3.zero; }
-        m_rigid.velocity += gravity;
-    }
-
-    #endregion
 
     // 장비 관련
     public override ObjectAttackScript AttackObject { get { return CurWeapon; } }
@@ -369,6 +324,12 @@ public partial class PlayerController : ObjectScript
 
 
     // 기본 설정
+    public override void SetComps()
+    {
+        base.SetComps();
+        m_collider = GetComponentInChildren<CapsuleCollider>();
+        FunctionDefine.SetFriction(m_collider, FLOOR_FRICTION, true);
+    }
     private void SetStates()                // 상태들 추가
     {
         m_stateManager = new(this);
@@ -407,8 +368,6 @@ public partial class PlayerController : ObjectScript
         InitLight();                        // 능력 초기 설정
         InitWeapon();                       // 무기 설정
         HideSkillAim();                     // 스킬 에임 끄기
-
-        m_cameraFocus = transform.GetChild(1).gameObject;   // CameraFocus 가져오기
     }
 
     private void UpdateInputs()
@@ -434,10 +393,10 @@ public partial class PlayerController : ObjectScript
 
     private void FixedUpdate()
     {
-        CheckOnSlope();
+        PrePhysicsUpdate();
 
         CurState.FixedProceed();
 
-        ApplyGravity();
+        LatePhysicsUpdate();
     }
 }

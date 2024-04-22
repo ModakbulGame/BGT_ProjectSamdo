@@ -138,7 +138,7 @@ public abstract class ObjectScript : MonoBehaviour, IHittable
     }
     public virtual void SetHP(float _hp) { CurHP = _hp; }       // HP 설정
     public virtual void SetDead() { IsDead = true; }            // 죽음 설정
-    public void MoveTo(Vector3 _dir)                            // 방향으로 이동
+    public virtual void MoveTo(Vector3 _dir)                    // 방향으로 이동
     {
         float damp = _dir == Vector3.zero ? DampSpeedDown : DampSpeedUp;
         m_rigid.velocity = Vector3.SmoothDamp(m_rigid.velocity, _dir * CurSpeed, ref velocityRef, damp);

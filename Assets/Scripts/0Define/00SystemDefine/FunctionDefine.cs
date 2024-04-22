@@ -1,3 +1,4 @@
+using MalbersAnimations.Conditions;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -64,6 +65,15 @@ public static class FunctionDefine
         float x = _vec.x;
         float y = _vec.y;
         return new(x * Cos(deg) - y * Sin(deg), x * Sin(deg) + y * Cos(deg));
+    }
+
+    public static void SetFriction(Collider _collider, float _frictionWall, bool _isMinimum)
+    {
+        _collider.material.dynamicFriction = 0.6f * _frictionWall;
+        _collider.material.staticFriction = 0.6f * _frictionWall;
+
+        if (_isMinimum) _collider.material.frictionCombine = PhysicMaterialCombine.Minimum;
+        else _collider.material.frictionCombine = PhysicMaterialCombine.Maximum;
     }
 
 

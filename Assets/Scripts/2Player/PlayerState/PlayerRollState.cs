@@ -29,7 +29,7 @@ public class PlayerRollState : MonoBehaviour, IPlayerState
 
     public void FixedProceed()
     {
-        m_player.RollMovement(RollDirection);
+        m_player.GroundMove(RollDirection, PlayerController.ROLL_MULTIPLIER);
         m_player.RotateDirection(RollDirection);
     }
 }

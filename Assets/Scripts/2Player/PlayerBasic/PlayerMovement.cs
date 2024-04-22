@@ -4,54 +4,76 @@ using UnityEngine;
 
 public partial class PlayerController
 {
-    // ¿òÁ÷ÀÓ °ü·Ã ¼öÄ¡
-    private const float JUMP_POWER = 8;                 // Á¡ÇÁ ÆÄ¿ö
-    private const float JUMP_DELAY = 0.15f;             // Á¡ÇÁ °£°İ
-    private const float ROLL_SPEED = 12;                // ±¸¸£±â ÀÌµ¿ ¼Óµµ
-    public const float TIME_TO_ROLL = 0.1f;             // Á¡ÇÁ -> ±¸¸£±â·Î ¹Ù²î±â À§ÇØ ½ºÆäÀÌ½º À¯Áö ½Ã°£
-    public const float ROLLING_TIME = 0.85f;            // ±¸¸£±â ÁøÇà ½Ã°£
+    // ì›€ì§ì„ ê´€ë ¨ ìˆ˜ì¹˜
+    private const float JUMP_POWER = 10;                // ì í”„ íŒŒì›Œ
+    private const float JUMP_DELAY = 0.15f;             // ì í”„ ê°„ê²©
+    public const float ROLL_MULTIPLIER = 10/7f;         // êµ¬ë¥´ê¸° / ê±·ê¸° ì†ë„ ë°°ìœ¨
+    public const float TIME_TO_ROLL = 0.1f;             // ì í”„ -> êµ¬ë¥´ê¸°ë¡œ ë°”ë€Œê¸° ìœ„í•´ ìŠ¤í˜ì´ìŠ¤ ìœ ì§€ ì‹œê°„
+    public const float ROLLING_TIME = 0.85f;            // êµ¬ë¥´ê¸° ì§„í–‰ ì‹œê°„
 
 
-    // ¿òÁ÷ÀÓ ÇÔ¼ö
-    private Vector2 GetMoveVector(Vector2 _dir) { return FunctionDefine.RotateVector2(_dir, PlayManager.CameraRotation); }      // ¿¡ÀÓ¿¡ ¸ÂÃç º¤ÅÍ È¸Àü
-    public void MoveDirection(Vector2 _dir)                     // ¹æÇâÀ¸·Î ÀÌµ¿
+    // ì›€ì§ì„ í•¨ìˆ˜
+    private Vector2 GetMoveVector(Vector2 _dir) { return FunctionDefine.RotateVector2(_dir, PlayManager.CameraRotation); }      // ì—ì„ì— ë§ì¶° ë²¡í„° íšŒì „
+    public void MoveDirection(Vector2 _dir)                     // ë°©í–¥ìœ¼ë¡œ ì´ë™
     {
         MoveDirection(_dir, 1);
     }
-    public void MoveDirection(Vector2 _dir, float _mul)         // ¹æÇâÀ¸·Î ÀÌµ¿ + ¼Óµµ ¹èÀ²
+    public void GroundMove(Vector2 _dir, float _mul)
+    {
+        if (_dir != Vector2.zero)
+        {
+            Vector2 adjDir = GetMoveVector(_dir);
+            TargetAngle = FunctionDefine.VecToDeg(adjDir);
+            Vector3 move = new(adjDir.x, PlayerForward.y, adjDir.y);
+            MoveDirection(move, _mul);
+        }
+    }
+    public void MoveDirection(Vector2 _dir, float _mul)         // ë°©í–¥ìœ¼ë¡œ ì´ë™ + ì†ë„ ë°°ìœ¨
     {
         Vector2 move = GetMoveVector(_dir) * _mul;
         Vector3 move3 = new(move.x, 0, move.y);
-        //transform.position += CurSpeed * Time.deltaTime * new Vector3(move.x, 0, move.y);
-        if (IsOnSlope) { move3 = AdjSlopeMoveDir(move3); }
         MoveTo(move3);
     }
-    public override void StopMove()                                      // ÀÌµ¿ ÁßÁö
+    public void MoveDirection(Vector3 _dir, float _mul)
+    {
+        Vector3 move3 = _mul * _dir;
+        if(!IsGrounded) { move3.y = 0; }
+        MoveTo(move3);
+    }
+    public override void StopMove()                                      // ì´ë™ ì¤‘ì§€
     {
         MoveTo(Vector3.zero);
     }
-    public void RotateDirection(Vector2 _dir)                   // ¹æÇâÀ¸·Î È¸Àü
+    public void RotateDirection(Vector2 _dir)                   // ë°©í–¥ìœ¼ë¡œ íšŒì „
     {
         Vector2 move = GetMoveVector(_dir);
         RotateTo(move);
     }
+    public override void MoveTo(Vector3 _dir)
+    {
+        Vector3 vel = m_rigid.velocity;
+        base.MoveTo(_dir);
+        Vector3 vel2 = m_rigid.velocity;
+        if(!IsGrounded) { vel2.y = vel.y; m_rigid.velocity = vel2; }
+    }
+
 
     public const float JumpStaminaUse = 1.5f;
     public const float RollStaminaUse = 2.5f;
-    public Vector2 JumpRollDirection { get; set; }              // Á¡ÇÁ or ±¸¸£±â ¹æÇâ
-    public bool CanJump { get { return (IsGrounded || IsOnSlope) && JumpCoolTime <= 0 && JumpPressing && CurStamina >= JumpStaminaUse; } }  // Á¡ÇÁ °¡´É ¿©ºÎ
+    public Vector2 JumpRollDirection { get; set; }              // ì í”„ or êµ¬ë¥´ê¸° ë°©í–¥
+    public bool CanJump { get { return (IsGrounded || IsOnSlope) && JumpCoolTime <= 0 && JumpPressing && CurStamina >= JumpStaminaUse; } }  // ì í”„ ê°€ëŠ¥ ì—¬ë¶€
     public bool CanRoll { get { return CurStamina >= RollStaminaUse; } }
     public bool CanThrow { get { return IsUpperIdleAnim; } }
-    public bool Jumped { get; private set; }                    // Á¡ÇÁ ÁßÀÎÁö
-    public void JumpStarted()                                   // Á¡ÇÁ »óÅÂ ½ÃÀÛ
+    public bool Jumped { get; private set; }                    // ì í”„ ì¤‘ì¸ì§€
+    public void JumpStarted()                                   // ì í”„ ìƒíƒœ ì‹œì‘
     {
         Jumped = false;
         ResetAnim();
         JumpAnim();
     }
-    public void JumpAction()                                    // ±¸¸£Áö ¾ÊÀº °ÍÀ¸·Î ÆÇÁ¤ ½Ã Á¡ÇÁ Çàµ¿
+    public void JumpAction()                                    // êµ¬ë¥´ì§€ ì•Šì€ ê²ƒìœ¼ë¡œ íŒì • ì‹œ ì í”„ í–‰ë™
     {
-        m_rigid.velocity = Vector3.up * JUMP_POWER;
+        m_rigid.velocity += JUMP_POWER * Vector3.up;
         Jumped = true;
         UseStamina(JumpStaminaUse);
     }
@@ -60,16 +82,8 @@ public partial class PlayerController
         RollAnim();
         UseStamina(RollStaminaUse);
     }
-    public void RollMovement(Vector2 _dir)                      // ±¸¸£±â ¿òÁ÷ÀÓ
-    {
-        Vector2 move = GetMoveVector(_dir);
-        Vector3 rollMove = new Vector3(move.x, 0, move.y);
-        if (IsOnSlope) { rollMove = AdjSlopeMoveDir(rollMove); }
-        m_rigid.velocity = Vector3.SmoothDamp(m_rigid.velocity, ROLL_SPEED * rollMove, ref velocityRef, 0.5f);
-        //transform.position += RollSpeed * Time.deltaTime * new Vector3(move.x, 0, move.y);
-    }
 
-    public void JumpRollDone()                                  // Á¡ÇÁ or ±¸¸£±â Áß´Ü
+    public void JumpRollDone()                                  // ì í”„ or êµ¬ë¥´ê¸° ì¤‘ë‹¨
     {
         if (InputVector != Vector2.zero)
         {
