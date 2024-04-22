@@ -33,6 +33,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Roll",
+                    "type": "Button",
+                    "id": "9021d024-ffe9-4f0e-bd8e-7bee2e67a35c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Attack",
                     "type": "Button",
                     "id": "d4df06e5-b471-477a-b7a0-b300abbb923c",
@@ -328,6 +337,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "OpenMapUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "074c1435-814a-42a0-a5e4-55e37e8ba69c",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Roll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

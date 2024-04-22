@@ -55,6 +55,15 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Roll"",
+                    ""type"": ""Button"",
+                    ""id"": ""9021d024-ffe9-4f0e-bd8e-7bee2e67a35c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""d4df06e5-b471-477a-b7a0-b300abbb923c"",
@@ -352,6 +361,17 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""OpenMapUI"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""074c1435-814a-42a0-a5e4-55e37e8ba69c"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Roll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -428,6 +448,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_MouseLook = m_Player.FindAction("MouseLook", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Guard = m_Player.FindAction("Guard", throwIfNotFound: true);
         m_Player_Light = m_Player.FindAction("Light", throwIfNotFound: true);
@@ -507,6 +528,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_MouseLook;
     private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_Roll;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Guard;
     private readonly InputAction m_Player_Light;
@@ -525,6 +547,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @MouseLook => m_Wrapper.m_Player_MouseLook;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @Roll => m_Wrapper.m_Player_Roll;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Guard => m_Wrapper.m_Player_Guard;
         public InputAction @Light => m_Wrapper.m_Player_Light;
@@ -554,6 +577,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Roll.started += instance.OnRoll;
+            @Roll.performed += instance.OnRoll;
+            @Roll.canceled += instance.OnRoll;
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
@@ -600,6 +626,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Roll.started -= instance.OnRoll;
+            @Roll.performed -= instance.OnRoll;
+            @Roll.canceled -= instance.OnRoll;
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
@@ -718,6 +747,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnMouseLook(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnRoll(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnGuard(InputAction.CallbackContext context);
         void OnLight(InputAction.CallbackContext context);

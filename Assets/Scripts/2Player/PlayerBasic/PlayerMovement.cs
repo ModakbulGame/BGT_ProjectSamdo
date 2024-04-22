@@ -5,10 +5,10 @@ using UnityEngine;
 public partial class PlayerController
 {
     // 움직임 관련 수치
-    private const float JUMP_POWER = 10;                // 점프 파워
+    private const float JUMP_POWER = 11;                // 점프 파워
     private const float JUMP_DELAY = 0.15f;             // 점프 간격
+    private const float ROLL_DELAY = 0.25f;             // 구르기 간격
     public const float ROLL_MULTIPLIER = 10/7f;         // 구르기 / 걷기 속도 배율
-    public const float TIME_TO_ROLL = 0.1f;             // 점프 -> 구르기로 바뀌기 위해 스페이스 유지 시간
     public const float ROLLING_TIME = 0.85f;            // 구르기 진행 시간
 
 
@@ -62,28 +62,33 @@ public partial class PlayerController
     public const float RollStaminaUse = 2.5f;
     public Vector2 JumpRollDirection { get; set; }              // 점프 or 구르기 방향
     public bool CanJump { get { return (IsGrounded || IsOnSlope) && JumpCoolTime <= 0 && JumpPressing && CurStamina >= JumpStaminaUse; } }  // 점프 가능 여부
-    public bool CanRoll { get { return CurStamina >= RollStaminaUse; } }
+    public bool CanRoll { get { return (IsGrounded || IsOnSlope) && RollCoolTime <= 0 && RollPressing && CurStamina >= RollStaminaUse; } }
     public bool CanThrow { get { return IsUpperIdleAnim; } }
-    public bool Jumped { get; private set; }                    // 점프 중인지
-    public void JumpStarted()                                   // 점프 상태 시작
+    public void JumpAction()                                   // 점프 상태 시작
     {
-        Jumped = false;
         ResetAnim();
         JumpAnim();
-    }
-    public void JumpAction()                                    // 구르지 않은 것으로 판정 시 점프 행동
-    {
         m_rigid.velocity += JUMP_POWER * Vector3.up;
-        Jumped = true;
         UseStamina(JumpStaminaUse);
+    }
+    public void JumpDone()
+    {
+        JumpRollDone();
+        JumpCoolTime = JUMP_DELAY;
     }
     public void RollAction()
     {
+        ResetAnim();
         RollAnim();
         UseStamina(RollStaminaUse);
     }
+    public void RollDone()
+    {
+        JumpRollDone();
+        RollCoolTime = ROLL_DELAY;
+    }
 
-    public void JumpRollDone()                                  // 점프 or 구르기 중단
+    private void JumpRollDone()                                  // 점프 or 구르기 중단
     {
         if (InputVector != Vector2.zero)
         {
@@ -93,7 +98,6 @@ public partial class PlayerController
         {
             ChangeState(EPlayerState.IDLE);
         }
-        JumpCoolTime = JUMP_DELAY;
     }
 
 

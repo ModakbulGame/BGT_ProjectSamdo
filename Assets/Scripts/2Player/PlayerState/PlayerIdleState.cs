@@ -11,6 +11,7 @@ public class PlayerIdleState : MonoBehaviour, IPlayerState
     {
         if (m_player == null) { m_player = _player; }
 
+        m_player.StopMove();
         m_player.SetIdleAnimator();
     }
 
@@ -21,6 +22,11 @@ public class PlayerIdleState : MonoBehaviour, IPlayerState
             m_player.LightChange();
         }
 
+        if (m_player.CanRoll)
+        {
+            m_player.ChangeState(EPlayerState.ROLL);
+            return;
+        }
         if (m_player.CanJump)
         {
             m_player.ChangeState(EPlayerState.JUMP);
@@ -50,6 +56,6 @@ public class PlayerIdleState : MonoBehaviour, IPlayerState
 
     public void FixedProceed()
     {
-        m_player.StopMove();
+
     }
 }

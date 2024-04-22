@@ -140,6 +140,7 @@ public partial class PlayerController : ObjectScript
     public bool IsThrowing { get { return CurState.StateEnum == EPlayerState.THROW; } }                             // 구르기 중
     public bool IsGuarding { get; private set; }                                                                    // 가드 중
     public float JumpCoolTime { get; private set; }                                                                 // 점프 쿨타임
+    public float RollCoolTime { get; private set; }                                                                 // 점프 쿨타임
 
     private bool[] m_fieldDebuff = new bool[(int)EProperty.LAST];
     public void SetFieldDebuff(EProperty _property) { m_fieldDebuff[(int)_property] = true; }
@@ -160,6 +161,7 @@ public partial class PlayerController : ObjectScript
     private InputSystem.PlayerActions PlayerInput { get { return GameManager.PlayerInputs; } }                      // Input System Player 입력
     public Vector2 InputVector { get { return PlayerInput.Move.ReadValue<Vector2>(); } }                            // WASD 방향
     public bool JumpPressing { get; private set; }                                                                  // 스페이스바 입력 중
+    public bool RollPressing { get; private set; }
     public bool AttackTrigger { get { return PlayerInput.Attack.triggered; } }                                      // 좌클릭
     public bool[] SkillTriggers
     { get { return new bool[ValueDefine.MAX_SKILL_SLOT]                                                             // 키보드 123
@@ -315,6 +317,7 @@ public partial class PlayerController : ObjectScript
     private void UpdateCooltime()
     {
         if (JumpCoolTime > 0) { JumpCoolTime -= Time.deltaTime; }   // 점프 쿨타임
+        if (RollCoolTime > 0) { RollCoolTime -= Time.deltaTime; }
         for (int i = 0; i<ValueDefine.MAX_SKILL_SLOT; i++)              // 스킬 쿨타임
         {
             if (SkillCooltime[i] > 0) { SkillCooltime[i] -= Time.deltaTime; }
@@ -373,6 +376,7 @@ public partial class PlayerController : ObjectScript
     private void UpdateInputs()
     {
         JumpPressing = PlayerInput.Jump.IsPressed();
+        RollPressing = PlayerInput.Roll.IsPressed();
         GuardPressing = PlayerInput.Guard.IsPressed();
     }
 

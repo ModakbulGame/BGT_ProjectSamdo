@@ -10,16 +10,13 @@ public class PlayerJumpState : MonoBehaviour, IPlayerState
     private Vector2 JumpDirection { get { return m_player.JumpRollDirection; } set { m_player.JumpRollDirection = value; } }         // 점프 방향
     private const float MoveAdjustRate = 0.33f;         // 방향 조정 비율
 
-    private float RollCount { get; set; }
-
     public void ChangeTo(PlayerController _player)
     {
         if (m_player == null) { m_player = _player; }
 
-        m_player.JumpStarted();
+        m_player.JumpAction();
         if (m_player.IsGuarding) { m_player.GuardStop(); }
         JumpDirection = m_player.InputVector;       // 점프 방향 설정
-        RollCount = PlayerController.TIME_TO_ROLL;
     }
 
     private void JumpMove()                         // 기존 점프 방향 + 이후 방향키 입력에 따른 공중 이동
@@ -36,18 +33,9 @@ public class PlayerJumpState : MonoBehaviour, IPlayerState
 
     public void Proceed()
     {
-        if (RollCount > 0) { RollCount -= Time.deltaTime; return; }
-        if (RollCount <= 0)
-        {
-            if (m_player.JumpPressing && m_player.CanRoll)
-                { m_player.ChangeState(EPlayerState.ROLL); return; }
-            else if(!m_player.Jumped)
-                m_player.JumpAction();
-        }
-
         if (m_player.IsGrounded)
         {
-            m_player.JumpRollDone();
+            m_player.JumpDone();
             return;
         }
     }

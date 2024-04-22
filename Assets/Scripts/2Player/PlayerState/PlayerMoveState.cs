@@ -31,7 +31,11 @@ public class PlayerMoveState : MonoBehaviour, IPlayerState
             m_player.LightChange();
         }
 
-        Vector2 inputDir = m_player.InputVector;
+        if (m_player.CanRoll)
+        {
+            m_player.ChangeState(EPlayerState.ROLL);
+            return;
+        }
         if (m_player.CanJump)
         {
             m_player.ChangeState(EPlayerState.JUMP);
@@ -47,6 +51,7 @@ public class PlayerMoveState : MonoBehaviour, IPlayerState
             m_player.ChangeState(EPlayerState.SKILL);
             return;
         }
+        Vector2 inputDir = m_player.InputVector;
         if (inputDir == Vector2.zero)
         {
             m_player.ChangeState(EPlayerState.IDLE);

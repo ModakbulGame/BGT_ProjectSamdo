@@ -14,6 +14,7 @@ public class PlayerHitState : MonoBehaviour, IPlayerState
     {
         if(m_player == null) { m_player = _player; }
 
+        m_player.StopMove();
         m_player.HitAnimation();
         TimeCount = HitDelay;
     }

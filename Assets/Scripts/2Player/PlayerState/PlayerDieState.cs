@@ -11,6 +11,7 @@ public class PlayerDieState : MonoBehaviour, IPlayerState
     {
         if(m_player == null) { m_player = _player; }
 
+        m_player.StopMove();
         m_player.DieAnimation();
     }
 
@@ -21,6 +22,6 @@ public class PlayerDieState : MonoBehaviour, IPlayerState
 
     public void FixedProceed()
     {
-        m_player.StopMove();
+
     }
 }
