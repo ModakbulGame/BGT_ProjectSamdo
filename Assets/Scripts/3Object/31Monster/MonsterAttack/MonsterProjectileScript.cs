@@ -27,7 +27,6 @@ public class MonsterProjectileScript : ObjectAttackScript, IHittable, IPoolable
     public void ReleaseTopool()
     {
         m_rigid.velocity = Vector3.zero;
-        AttackOff();
         OriginalPool.Release(gameObject);
     }
 
@@ -69,6 +68,7 @@ public class MonsterProjectileScript : ObjectAttackScript, IHittable, IPoolable
 
     public virtual void OnEnable()
     {
+        m_hitObjects.Clear();
         AttackOn();
         StartCoroutine(ReleaseDelay());
     }

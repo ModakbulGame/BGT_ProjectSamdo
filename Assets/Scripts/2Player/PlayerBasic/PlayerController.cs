@@ -163,13 +163,8 @@ public partial class PlayerController : ObjectScript
     public bool JumpPressing { get; private set; }                                                                  // 스페이스바 입력 중
     public bool AttackTrigger { get { return PlayerInput.Attack.triggered; } }                                      // 좌클릭
     public bool[] SkillTriggers
-    {
-        get
-        {
-            return new bool[ValueDefine.MAX_SKILL_SLOT]                                 // 키보드 123
-    { PlayerInput.Skill1.triggered, PlayerInput.Skill2.triggered, PlayerInput.Skill3.triggered };
-        }
-    }
+    { get { return new bool[ValueDefine.MAX_SKILL_SLOT]                                                             // 키보드 123
+    { PlayerInput.Skill1.triggered, PlayerInput.Skill2.triggered, PlayerInput.Skill3.triggered }; } }
     public bool GuardTrigger { get { return PlayerInput.Guard.triggered; } }                                        // 우클릭
     public bool GuardPressing { get; private set; }                                                                 // 우클릭 입력 중
     public bool LightTrigger { get { return PlayerInput.Light.triggered; } }                                        // T 입력
