@@ -89,8 +89,10 @@ public class PlayManager : MonoBehaviour
     // È¯°æ
     private EnvironmentManager m_environmentManager;
     private static EnvironmentManager EnvironmentManager { get { return Inst.m_environmentManager; } }
-    public static Transform[] NormalizeObjects { get { return EnvironmentManager.m_normalizeObjects; } }
-    public static GameObject[] MapOasis { get { return EnvironmentManager.m_mapOasis; } }
+    public static float MapHeight { get { return EnvironmentManager.MapHeight; } }
+
+    public static Transform[] NormalizeObjects { get { return null; } }
+    public static GameObject[] MapOasis { get { return null; } }
 
 
     // ¾÷±×·¹ÀÌµå
@@ -107,6 +109,7 @@ public class PlayManager : MonoBehaviour
     public static Canvas GetCanvas(ECanvasType _canvas) { return PlayUIManager.GetCanvas(_canvas); }                                        // Äµ¹ö½º
     public static void OpenPlayerUI() { PlayUIManager.OpenPlayerUI(); }                                                                     // Player UI ¿­±â
     public static void ClosePlayerUI() { PlayUIManager.ClosePlayerUI(); }                                                                   // Player UI ´Ý±â
+    public static void SetMinimapScale(float _scale) { PlayUIManager.SetMinimapScale(_scale); }                                             // ¹Ì´Ï¸Ê ÃàÃ´
     public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                       // ¸Ê UI ¿©´Ý±â
     public static void OpenOasisUI(OasisNPC _npc) { PlayUIManager.OpenOasisUI(_npc); }                                                      // È­ÅêºÒ UI ¿­±â
     public static void CloseOasisUI() { PlayUIManager.CloseOasisUI(); }                                                                     // È­ÅêºÒ UI ´Ý±â

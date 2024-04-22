@@ -106,17 +106,6 @@ public abstract partial class MonsterScript
     {
         AttackTriggerOn();
     }
-    public virtual void CreateNormalAttack(Vector3 _offset)
-    {
-        CreateNormalAttack(_offset, Attack);
-    }
-    public virtual void CreateNormalAttack(Vector3 _offset, float _damage)
-    {
-        /*GameObject attack = Instantiate(m_normalAttacks, transform);
-        attack.transform.localPosition = _offset;
-        ObjectAttackScript script = attack.GetComponent<ObjectAttackScript>();
-        script.SetAttack(this, _damage);*/
-    }
 
     public override void AttackDone()
     {

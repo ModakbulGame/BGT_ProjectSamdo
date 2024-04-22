@@ -18,13 +18,13 @@ public class PlayUIManager : MonoBehaviour
     public void UpdateMaterials() { if (m_playerUI.gameObject.activeSelf) m_playerUI.UpdateMaterials(); }   // 재료 업데이트
     public void UpdateInfoUI() { if (m_playerUI.gameObject.activeSelf) m_playerUI.UpdateInfoUI(); }         // 정보 업데이트
 
-    private Vector2 m_mapArea = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, PlayManager.NormalizeObjects[1].position),    //UI 사용을 위한 좌표 변환
-             Vector3.Distance(PlayManager.NormalizeObjects[2].position, PlayManager.NormalizeObjects[3].position));                                                       
+    private Vector2 m_mapArea = new Vector2(/*Vector3.Distance(PlayManager.NormalizeObjects[0].position, PlayManager.NormalizeObjects[1].position),    //UI 사용을 위한 좌표 변환
+             Vector3.Distance(PlayManager.NormalizeObjects[2].position, PlayManager.NormalizeObjects[3].position)*/);                                                       
     public Vector2 NormalizeLocation(GameObject _obj)
     {
-        Vector2 originalPos = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, new Vector3(_obj.transform.position.x, 0f, 0f)),
-            Vector3.Distance(PlayManager.NormalizeObjects[2].position, new Vector3(0f, 0f, _obj.transform.position.z)));
-        Vector2 normalPos = new Vector2(originalPos.x / m_mapArea.x, originalPos.y / m_mapArea.y);
+       /* Vector2 originalPos = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, new Vector3(_obj.transform.position.x, 0f, 0f)),
+            Vector3.Distance(PlayManager.NormalizeObjects[2].position, new Vector3(0f, 0f, _obj.transform.position.z)));*/
+        Vector2 normalPos = new Vector2(/*originalPos.x / m_mapArea.x, originalPos.y / m_mapArea.y*/);
 
         return normalPos;
     }
@@ -33,6 +33,11 @@ public class PlayUIManager : MonoBehaviour
     private OasisUIScript m_oasisUI;                        // 오아시스 UI
     public void OpenOasisUI(OasisNPC _npc) { m_oasisUI.OpenUI(_npc); }
     public void CloseOasisUI() { m_oasisUI.CloseUI(); }
+
+    [SerializeField]
+    private MinimapScript m_miniMap;
+    public void SetMinimapScale(float _scale) { m_miniMap.SetScale(_scale); }
+
 
     [SerializeField]
     private MapUIScript m_mapUI;                            // 맵 UI

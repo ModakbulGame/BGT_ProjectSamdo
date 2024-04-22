@@ -99,11 +99,11 @@ MonoBehaviour:
     Magic: 0
     Overdrive: 0
     Tolerance: 0
-  m_maxSlopeAngle: 50
   m_weaponTransform: {fileID: 6938737448901695023}
   m_throwItemTransform: {fileID: 2788296521267597985}
   m_light: {fileID: 4261319230143301077}
   m_interactableObject: {fileID: 0}
+  m_maxSlopeAngle: 50
 --- !u!54 &3046454149390476600
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -344,10 +344,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 57.99
       objectReference: {fileID: 0}
+    - target: {fileID: 4720293398186643567, guid: 3c720ef347b79da46b4d85b7cf7089bf,
+        type: 3}
+      propertyPath: m_weaponInfo.Attack.Max
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720293398186643567, guid: 3c720ef347b79da46b4d85b7cf7089bf,
+        type: 3}
+      propertyPath: m_weaponInfo.Attack.Min
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8515343302348563187, guid: 3c720ef347b79da46b4d85b7cf7089bf,
         type: 3}
       propertyPath: m_Name
-      value: W101
+      value: Blade
       objectReference: {fileID: 0}
     - target: {fileID: 8515343302348563187, guid: 3c720ef347b79da46b4d85b7cf7089bf,
         type: 3}
@@ -4117,9 +4127,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.25
-  m_Height: 1.7
+  m_Height: 1.8
   m_Direction: 1
-  m_Center: {x: 0, y: 0.85, z: 0}
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!114 &8663929279246505357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4672,7 +4682,7 @@ MonoBehaviour:
   baseTransform: {fileID: 6720910220696461347}
   Hips: {fileID: 7748041723895719967}
   ScaleReferenceMode: 0
-  finalScaleReference: 0.95502824
+  finalScaleReference: 0.9550283
   finalScaleReferenceSqrt: 0.88208586
   customScaleReferenceValue: 0.5
   DelayedInitialization: 0

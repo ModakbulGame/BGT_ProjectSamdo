@@ -32,7 +32,7 @@ public partial class PlayerController
     private bool IsTouchingWall { get; set; }
     private Vector3 WallNormal { get; set; }
     private float WallCheckerDistance = 0.5f;
-    public float WallCheckerThrashold = 0.8f;
+    private float WallCheckerThrashold = 0.8f;
     private void CheckWall()
     {
         bool tmpWall = false;
@@ -60,9 +60,9 @@ public partial class PlayerController
     [SerializeField]
     private float m_maxSlopeAngle = 56;                                 // 최대 오를 수 있는 각도
 
-    public AnimationCurve SpeedMultiplierOnAngle = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
-    public float CanSlideMultiplierCurve = 0.061f;
-    public float CantSlideMultiplierCurve = 0.039f;
+    private AnimationCurve SpeedMultiplierOnAngle = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+    private float CanSlideMultiplierCurve = 0.061f;
+    private float CantSlideMultiplierCurve = 0.039f;
 
     private Vector3 GroundNormal { get; set; }
     private Vector3 PrevGroundNormal { get; set; }
@@ -142,7 +142,6 @@ public partial class PlayerController
             FunctionDefine.SetFriction(m_collider, FLOOR_FRICTION, true);
             CurLockOnSlope = LockOnSlope;
         }
-        Debug.Log(PlayerForward.x + ", " + PlayerForward.z);
     }
 
 
