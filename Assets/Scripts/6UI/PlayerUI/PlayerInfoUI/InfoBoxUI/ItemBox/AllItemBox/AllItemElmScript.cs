@@ -7,11 +7,15 @@ using UnityEngine.UI;
 
 public class AllItemElmScript : MonoBehaviour
 {
+    private ItemBoxUIScript m_parent;
+    public void SetParent(ItemBoxUIScript _parent) { m_parent = _parent; }
+    public ItemBoxUIScript Box { get { return m_parent; } }
+
     private EventTrigger m_trigger;
     private Image m_itemImg;
     private TextMeshProUGUI m_itemNumTxt;
 
-    private SItem CurItem { get; set; }
+    public SItem CurItem { get; set; }
 
     public void SetItem(InventoryElm _item)
     {

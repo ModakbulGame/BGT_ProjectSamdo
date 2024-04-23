@@ -18,13 +18,18 @@ public class PlayUIManager : MonoBehaviour
     public void UpdateMaterials() { if (m_playerUI.gameObject.activeSelf) m_playerUI.UpdateMaterials(); }   // 재료 업데이트
     public void UpdateInfoUI() { if (m_playerUI.gameObject.activeSelf) m_playerUI.UpdateInfoUI(); }         // 정보 업데이트
 
-    private Vector2 m_mapArea = new Vector2(/*Vector3.Distance(PlayManager.NormalizeObjects[0].position, PlayManager.NormalizeObjects[1].position),    //UI 사용을 위한 좌표 변환
-             Vector3.Distance(PlayManager.NormalizeObjects[2].position, PlayManager.NormalizeObjects[3].position)*/);                                                       
-    public Vector2 NormalizeLocation(GameObject _obj)
+    private Vector3 MapLB { get { return PlayManager.MapLB; } }
+    private Vector3 MapRT { get { return PlayManager.MapRT; } }
+    private float MapWidth { get { return PlayManager.MapWidth; } }
+    private float MapHeight { get { return PlayManager.MapHeight; } }
+
+    private Vector2 m_mapArea;
+
+    public Vector2 NormalizeLocation(Transform _obj)
     {
-       /* Vector2 originalPos = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, new Vector3(_obj.transform.position.x, 0f, 0f)),
-            Vector3.Distance(PlayManager.NormalizeObjects[2].position, new Vector3(0f, 0f, _obj.transform.position.z)));*/
-        Vector2 normalPos = new Vector2(/*originalPos.x / m_mapArea.x, originalPos.y / m_mapArea.y*/);
+        Vector2 originalPos = new Vector2(Vector3.Distance(new Vector3(MapLB.x, 0f, 0f), new Vector3(_obj.position.x, 0f, 0f)),
+                Vector3.Distance(new Vector3(0f, 0f, MapRT.z), new Vector3(0f, 0f, _obj.position.z)));
+        Vector2 normalPos = new Vector2(originalPos.x / m_mapArea.x, originalPos.y / m_mapArea.y);
 
         return normalPos;
     }
@@ -116,8 +121,10 @@ public class PlayUIManager : MonoBehaviour
         m_skillSlot.SetComps();
         m_aimUI = m_mainCanvas.GetComponentInChildren<AimUIScript>();
         m_equipSlot = m_mainCanvas.GetComponentInChildren<EquipSlotUIScript>();
+        m_mapArea = new Vector2(MapWidth, MapHeight);
 
         UpdateSkillSlot();
         UpdateEquipSlot();
+
     }
 }

@@ -289,6 +289,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1081801758164479016, guid: 13be6f9c9906cea41a03585a50b6839e,
+        type: 3}
+      propertyPath: m_Name
+      value: LB
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960987311971028207, guid: 13be6f9c9906cea41a03585a50b6839e,
+        type: 3}
+      propertyPath: m_Name
+      value: RT
+      objectReference: {fileID: 0}
     - target: {fileID: 3328311021062695666, guid: 13be6f9c9906cea41a03585a50b6839e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -344,8 +354,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: MapTool
       objectReference: {fileID: 0}
+    - target: {fileID: 8078672968162671575, guid: 13be6f9c9906cea41a03585a50b6839e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8078672968162671575, guid: 13be6f9c9906cea41a03585a50b6839e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8558579028762001814, guid: 13be6f9c9906cea41a03585a50b6839e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8091434530588462187, guid: 13be6f9c9906cea41a03585a50b6839e, type: 3}
+    - {fileID: 1352990169162927935, guid: 13be6f9c9906cea41a03585a50b6839e, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13be6f9c9906cea41a03585a50b6839e, type: 3}
@@ -355,21 +382,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 390261746}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &390261748 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3926728929259214656, guid: 13be6f9c9906cea41a03585a50b6839e,
-    type: 3}
-  m_PrefabInstance: {fileID: 390261746}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &390261749 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8558579028762001814, guid: 13be6f9c9906cea41a03585a50b6839e,
-    type: 3}
-  m_PrefabInstance: {fileID: 390261746}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &390261750 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7865113433653074279, guid: 13be6f9c9906cea41a03585a50b6839e,
     type: 3}
   m_PrefabInstance: {fileID: 390261746}
   m_PrefabAsset: {fileID: 0}
@@ -785,7 +800,7 @@ PrefabInstance:
     - target: {fileID: 5836242486090899793, guid: 1342480c73fede74db5e65e2eb006464,
         type: 3}
       propertyPath: m_Name
-      value: Oasis
+      value: Oasis1
       objectReference: {fileID: 0}
     - target: {fileID: 5836242486090899793, guid: 1342480c73fede74db5e65e2eb006464,
         type: 3}
@@ -2083,6 +2098,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489907280240462172, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
+      propertyPath: m_mapPositioner.Array.data[0]
+      value: 
+      objectReference: {fileID: 390261749}
+    - target: {fileID: 489907280240462172, guid: b29b36f50235e9e41a36baba88ef0140,
+        type: 3}
+      propertyPath: m_mapPositioner.Array.data[1]
+      value: 
+      objectReference: {fileID: 390261747}
+    - target: {fileID: 489907280240462172, guid: b29b36f50235e9e41a36baba88ef0140,
+        type: 3}
       propertyPath: m_normalizeObjects.Array.data[0]
       value: 
       objectReference: {fileID: 390261749}
@@ -2090,7 +2115,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_normalizeObjects.Array.data[1]
       value: 
-      objectReference: {fileID: 390261750}
+      objectReference: {fileID: 0}
     - target: {fileID: 489907280240462172, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_normalizeObjects.Array.data[2]
@@ -2100,7 +2125,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_normalizeObjects.Array.data[3]
       value: 
-      objectReference: {fileID: 390261748}
+      objectReference: {fileID: 0}
     - target: {fileID: 630871994851333158, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_AnchorMax.y

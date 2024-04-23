@@ -1,3 +1,4 @@
+using MalbersAnimations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 public class OasisTransportUIScript : MonoBehaviour, IOasisUI
 {
     private OasisUIScript m_parent;
+    private FadeInOutGraphic m_fadeInOutGraphic;
     public void OpenUI(OasisUIScript _parent) 
     { 
         m_parent = _parent; 
@@ -37,9 +39,9 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
     {
         if(CurDestination == EMapPointName.LAST) { return; }
         CloseUI();
-        // FadeOut
+        m_fadeInOutGraphic.Fade_Out();
         MoveToOasis(CurDestination);
-        // FadeIn
+        m_fadeInOutGraphic.Fade_In();
     }
 
     public void MoveToOasis(EMapPointName _point)
