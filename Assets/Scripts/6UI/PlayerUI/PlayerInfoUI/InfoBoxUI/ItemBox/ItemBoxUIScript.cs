@@ -7,8 +7,6 @@ public class ItemBoxUIScript : PlayerInfoBoxScript
     private ThrowItemSlotScript m_throwItemSlot;
     private AllItemBoxScript m_allItemBox;
 
-    // public RectTransform[] SlotTrans { get { return m_slot.ElmTrans; } }
-
     public override void InitUI()
     {
         UpdateUI();

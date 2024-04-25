@@ -7,13 +7,15 @@ using UnityEngine.UI;
 
 public class AllItemElmScript : MonoBehaviour
 {
-    private ItemBoxUIScript m_parent;
-    public void SetParent(ItemBoxUIScript _parent) { m_parent = _parent; }
-    public ItemBoxUIScript Box { get { return m_parent; } }
+    private AllItemBoxScript m_parent;
+    public AllItemBoxScript Box { get { return m_parent; } }
+    public void SetParent(AllItemBoxScript _parent) { m_parent = _parent; }
 
     private EventTrigger m_trigger;
     private Image m_itemImg;
     private TextMeshProUGUI m_itemNumTxt;
+
+    private ItemBoxDragScript m_drag;
 
     public SItem CurItem { get; set; }
 
@@ -58,6 +60,8 @@ public class AllItemElmScript : MonoBehaviour
         m_trigger = gameObject.AddComponent<EventTrigger>();
         m_itemImg = GetComponentsInChildren<Image>()[1];
         m_itemNumTxt = GetComponentInChildren<TextMeshProUGUI>();
+        m_drag = GetComponent<ItemBoxDragScript>();
+        m_drag.SetParent(this);
         SetEvents();
     }
 }
