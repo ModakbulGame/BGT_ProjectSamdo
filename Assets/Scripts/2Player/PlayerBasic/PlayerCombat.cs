@@ -1,6 +1,7 @@
 using System;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [Serializable]
 public class PlayerCombatInfo : ObjectCombatInfo
@@ -176,9 +177,12 @@ public partial class PlayerController
             case ESkillType.MELEE:
             case ESkillType.MELEE_CC:
                 skill.transform.localPosition = Vector3.zero;
+                skill.transform.localEulerAngles = Vector3.zero;
                 break;
             case ESkillType.RANGED:
             case ESkillType.RANGED_CC:
+                skill.transform.localPosition = new Vector3(m_collider.transform.localPosition.x, m_collider.transform.localPosition.y + 1f, m_collider.transform.localPosition.z); // ÄÚµå°¡ ±ò²ûÇÏÁö ¾ÊÀ½
+                skill.transform.SetParent(null);
                 ProjectileSkillScript projectile = skill.GetComponentInChildren<ProjectileSkillScript>();
                 projectile.SetSkill(this, Attack, Magic, PlayerAimDirection);
                 break;
