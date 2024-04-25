@@ -27,23 +27,17 @@ public class OasisPointUIScript : MonoBehaviour
     public void ResetDestination()
     {
         m_img.color = IdleColor;
-    }
+    } 
 
     private void NormalizeOasisLocation()
     {
         RectTransform btnRectTransform = m_btn.transform.parent.GetComponent<RectTransform>();
 
-        // index -> 0 : left, 1 : right, 2 : bottom, 3 : top
-        Vector2 mapArea = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, PlayManager.NormalizeObjects[1].position), 
-            Vector3.Distance(PlayManager.NormalizeObjects[2].position, PlayManager.NormalizeObjects[3].position));
+        Vector2 normalImgPos = PlayManager.NormalizeLocation(PlayManager.MapOasis[(int)PointName].transform);
+        Vector2 normalBtnPos = normalImgPos; 
 
-        Vector2 oasisBtnPos = new Vector2(Vector3.Distance(PlayManager.NormalizeObjects[0].position, new Vector3(PlayManager.MapOasis[(int)PointName].transform.position.x, 0f, 0f)),
-            Vector3.Distance(PlayManager.NormalizeObjects[2].position, new Vector3(0f, 0f, PlayManager.MapOasis[(int)PointName].transform.position.z)));
-        Vector2 normalBtnPos = new Vector2(oasisBtnPos.x / mapArea.x, oasisBtnPos.y / mapArea.y);
-        Vector2 normalImgPos = normalBtnPos;
-
-        btnRectTransform.anchoredPosition = new Vector2(m_mapImg.rectTransform.sizeDelta.x * normalBtnPos.x, m_mapImg.rectTransform.sizeDelta.y * normalBtnPos.y);
         m_img.rectTransform.anchoredPosition = new Vector2(m_mapImg.rectTransform.sizeDelta.x * normalImgPos.x, m_mapImg.rectTransform.sizeDelta.y * normalImgPos.y);
+        btnRectTransform.anchoredPosition = new Vector2(m_mapImg.rectTransform.sizeDelta.x * normalBtnPos.x, m_mapImg.rectTransform.sizeDelta.y * normalBtnPos.y);
     }
     
     private void SetBtns()

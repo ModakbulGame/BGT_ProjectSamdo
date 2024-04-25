@@ -46,8 +46,8 @@ public class GameManager : SingleTon<GameManager>
     public static void ObtainSkill(ESkillName _skill) { SkillManager.ObtainSkill(_skill); }
 
     // 아이템
-    //public static EItemName[] ItemSlot { get { return SkillManager.SkillSlot; } }                                                         // 아이템 슬롯
-    //public static void RegisterItemSlot(EItemName _item, int _idx) { SkillManager.RegisterItemSlot(_item, _idx); PlayManager.UpdateItemSlot(); }   // 아이템 슬롯 설정
+    public static EItemName[] ItemSlot { get { return null; } }                                                         // 아이템 슬롯
+    public static void RegisterItemSlot(EItemName _item, int _idx) { }   // 아이템 슬롯 설정
 
 
     // 몬스터

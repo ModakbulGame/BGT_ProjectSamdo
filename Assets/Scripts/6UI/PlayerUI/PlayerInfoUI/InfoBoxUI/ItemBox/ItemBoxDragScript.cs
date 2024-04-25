@@ -7,7 +7,7 @@
 //    private AllItemElmScript m_parent;
 //    public void SetParent(AllItemElmScript _parent) { m_parent = _parent; }
 
-//    private EItemName Item { get { return m_parent.Cur; } }
+//    private EItemName Item { get { return m_parent.CurItem; } }
 //    private ItemBoxUIScript Box { get { return m_parent.Box; } }
 //    public override Transform MoveTrans => Box.transform;
 
@@ -34,9 +34,7 @@
 //    public override void DropAction()
 //    {
 //        if (DropIdx == -1) { return; }
-//        GameManager.RegisterSkilSlot(Skill, DropIdx);
+//        GameManager.RegisterItemSlot(Item, DropIdx);
 //        Box.UpdateUI();
 //    }
-
-
 //}
