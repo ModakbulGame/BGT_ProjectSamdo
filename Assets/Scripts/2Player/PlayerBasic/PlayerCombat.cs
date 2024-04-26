@@ -136,6 +136,20 @@ public partial class PlayerController
         ResetAnim();
     }
 
+    private readonly float[,] ForwardDist = new float[3, 3]
+    {
+        { 1.5f, 1.5f, 2 },
+        { 3, 1, 3 },
+        { 1.5f, 1.5f, 2 }
+    };
+    private float CurForwardDist { get { return ForwardDist[(int)CurWeapon.WeaponType, AttackStack-1];} }
+    public void AttackForward()
+    {
+        Vector3 forward = transform.forward * CurForwardDist;
+        Vector2 forward2 = new(forward.x, forward.z);
+        ForceMove(forward2);
+    }
+
 
     // 스킬 관련
     private ESkillName[] SkillSlot { get { return GameManager.SkillSlot; } }                // 스킬 슬롯
