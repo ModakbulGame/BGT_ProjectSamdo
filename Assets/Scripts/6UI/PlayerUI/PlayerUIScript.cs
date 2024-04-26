@@ -34,7 +34,7 @@ public class PlayerUIScript : MonoBehaviour
 
     public void UpdatePlayerModelWeapon()
     {
-        m_imgUI.updatePlayerWeapon(PlayManager.CurWeapon);
+        m_imgUI.UpdatePlayerWeapon(PlayManager.CurWeapon);
     }
 
     public void CloseUI() { GameManager.SetControlMode(EControlMode.THIRD_PERSON); gameObject.SetActive(false); }      // ´Ý±â
