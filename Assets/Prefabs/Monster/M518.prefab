@@ -153,11 +153,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1590797464171261563}
   - component: {fileID: 3847305781818689355}
+  - component: {fileID: 8073783444168342124}
   - component: {fileID: 624425470149293616}
   - component: {fileID: 3893291233531023467}
   - component: {fileID: 1049051038638164043}
   - component: {fileID: 448640441470922174}
-  - component: {fileID: 8073783444168342124}
   m_Layer: 9
   m_Name: M518
   m_TagString: Monster
@@ -217,6 +217,19 @@ MonoBehaviour:
   AttackDuration: 0
   m_spawnPoint: {fileID: 0}
   m_scriptable: {fileID: 11400000, guid: be4ede4a8fc206c48a0d9e5a5e97c659, type: 2}
+--- !u!114 &8073783444168342124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7406807276498302817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aaa794688dde2e4c8dc888d525b3bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isHiding: 0
 --- !u!54 &624425470149293616
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -367,19 +380,6 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0.1, y: 0.1, z: 0.1}
---- !u!114 &8073783444168342124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7406807276498302817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9aaa794688dde2e4c8dc888d525b3bdd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_isHiding: 0
 --- !u!1001 &3010182443045042576
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1300,7 +1300,7 @@ MonoBehaviour:
   AnimationFloorLevel: 0.001
   _Editor_Foldout_Setup_LegsList: 1
   _Editor_EnsureCount: 0
-  _Editor_OnValidateTrigger: 0
+  _Editor_OnValidateTrigger: 1
   _EditorAllowAutoUpdateFeetParams: 1
   _EditorCategory: 0
   _EditorSetupCategory: 0
