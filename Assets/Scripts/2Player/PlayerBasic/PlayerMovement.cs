@@ -40,9 +40,9 @@ public partial class PlayerController
         if(!IsGrounded) { move3.y = 0; }
         MoveTo(move3);
     }
-    public override void StopMove()                                      // 이동 중지
+    public override void StopMove()                             // 이동 중지
     {
-        MoveTo(Vector3.zero);
+        m_rigid.velocity = Vector3.zero;
     }
     public void RotateDirection(Vector2 _dir)                   // 방향으로 회전
     {
@@ -54,14 +54,19 @@ public partial class PlayerController
         Vector3 vel = m_rigid.velocity;
         base.MoveTo(_dir);
         Vector3 vel2 = m_rigid.velocity;
-        if(!IsGrounded) { vel2.y = vel.y; m_rigid.velocity = vel2; }
+        if(!IsGrounded && !IsOnSlope) { vel2.y = vel.y; m_rigid.velocity = vel2; }
+    }
+    public void ForceMove(Vector2 _dir)
+    {
+        transform.position += Time.deltaTime * new Vector3(_dir.x, 0, _dir.y);
     }
 
 
     public const float JumpStaminaUse = 1.5f;
     public const float RollStaminaUse = 2.5f;
     public Vector2 JumpRollDirection { get; set; }              // 점프 or 구르기 방향
-    public bool CanJump { get { return (IsGrounded || IsOnSlope) && JumpCoolTime <= 0 && JumpPressing && CurStamina >= JumpStaminaUse; } }  // 점프 가능 여부
+    public bool CanJump { get { return IsGrounded && ((IsOnSlope && CurSurfaceAngle <= m_maxSlopeAngle) || !IsOnSlope) && !IsTouchingWall &&
+                JumpCoolTime <= 0 && JumpPressing && CurStamina >= JumpStaminaUse; } }  // 점프 가능 여부
     public bool CanRoll { get { return (IsGrounded || IsOnSlope) && RollCoolTime <= 0 && RollPressing && CurStamina >= RollStaminaUse; } }
     public bool CanThrow { get { return IsUpperIdleAnim; } }
     public void JumpAction()                                   // 점프 상태 시작

@@ -10,6 +10,9 @@ public class PlayerJumpState : MonoBehaviour, IPlayerState
     private Vector2 JumpDirection { get { return m_player.JumpRollDirection; } set { m_player.JumpRollDirection = value; } }         // 점프 방향
     private const float MoveAdjustRate = 0.33f;         // 방향 조정 비율
 
+    private float GroundDelay = 0.05f;
+    private float TimeCount { get; set; }
+
     public void ChangeTo(PlayerController _player)
     {
         if (m_player == null) { m_player = _player; }
@@ -17,6 +20,7 @@ public class PlayerJumpState : MonoBehaviour, IPlayerState
         m_player.JumpAction();
         if (m_player.IsGuarding) { m_player.GuardStop(); }
         JumpDirection = m_player.InputVector;       // 점프 방향 설정
+        TimeCount = GroundDelay;
     }
 
     private void JumpMove()                         // 기존 점프 방향 + 이후 방향키 입력에 따른 공중 이동
@@ -28,12 +32,13 @@ public class PlayerJumpState : MonoBehaviour, IPlayerState
             if (move.magnitude > JumpDirection.magnitude)
                 move = JumpDirection;
         }
-        m_player.MoveDirection(move);
+        m_player.ForceMove(move);
     }
 
     public void Proceed()
     {
-        if (m_player.IsGrounded)
+        TimeCount -= Time.deltaTime;
+        if (TimeCount < 0 && m_player.IsGrounded)
         {
             m_player.JumpDone();
             return;

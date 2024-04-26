@@ -28,6 +28,58 @@ public partial class PlayerController
     }
 
 
+    // 계단
+    private bool IsTouchingStep = false;
+    private float MaxStepHeight = 0.5f;
+    private float StepCheckerThrashold = 0.6f;
+    private void CheckStep()
+    {
+        bool tmpStep = false;
+        Vector3 bottomStepPos = transform.position + new Vector3(0f, 0.05f, 0f);
+
+        RaycastHit stepLowerHit;
+        if (Physics.Raycast(bottomStepPos, GlobalForward, out stepLowerHit, StepCheckerThrashold, ValueDefine.GROUND_LAYER))
+        {
+            RaycastHit stepUpperHit;
+            if (RoundValue(stepLowerHit.normal.y) == 0 && !Physics.Raycast(bottomStepPos + new Vector3(0f, MaxStepHeight, 0f), GlobalForward, out stepUpperHit, StepCheckerThrashold + 0.05f, ValueDefine.GROUND_LAYER))
+            {
+                //m_rigid.position -= new Vector3(0f, -stepSmooth, 0f);
+                tmpStep = true;
+            }
+        }
+
+        RaycastHit stepLowerHit45;
+        if (Physics.Raycast(bottomStepPos, Quaternion.AngleAxis(45, transform.up) * GlobalForward, out stepLowerHit45, StepCheckerThrashold, ValueDefine.GROUND_LAYER))
+        {
+            RaycastHit stepUpperHit45;
+            if (RoundValue(stepLowerHit45.normal.y) == 0 && !Physics.Raycast(bottomStepPos + new Vector3(0f, MaxStepHeight, 0f), Quaternion.AngleAxis(45, Vector3.up) * GlobalForward, out stepUpperHit45, StepCheckerThrashold + 0.05f, ValueDefine.GROUND_LAYER))
+            {
+                //m_rigid.position -= new Vector3(0f, -stepSmooth, 0f);
+                tmpStep = true;
+            }
+        }
+
+        RaycastHit stepLowerHitMinus45;
+        if (Physics.Raycast(bottomStepPos, Quaternion.AngleAxis(-45, transform.up) * GlobalForward, out stepLowerHitMinus45, StepCheckerThrashold, ValueDefine.GROUND_LAYER))
+        {
+            RaycastHit stepUpperHitMinus45;
+            if (RoundValue(stepLowerHitMinus45.normal.y) == 0 && !Physics.Raycast(bottomStepPos + new Vector3(0f, MaxStepHeight, 0f), Quaternion.AngleAxis(-45, Vector3.up) * GlobalForward, out stepUpperHitMinus45, StepCheckerThrashold + 0.05f, ValueDefine.GROUND_LAYER))
+            {
+                //m_rigid.position -= new Vector3(0f, -stepSmooth, 0f);
+                tmpStep = true;
+            }
+        }
+
+        IsTouchingStep = tmpStep;
+    }
+    private float RoundValue(float _value)
+    {
+        float unit = (float)Mathf.Round(_value);
+
+        if (_value - unit < 0.000001f && _value - unit > -0.000001f) return unit;
+        else return _value;
+    }
+
     // 벽
     private bool IsTouchingWall { get; set; }
     private Vector3 WallNormal { get; set; }
@@ -63,10 +115,11 @@ public partial class PlayerController
     private AnimationCurve SpeedMultiplierOnAngle = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
     private float CanSlideMultiplierCurve = 0.061f;
     private float CantSlideMultiplierCurve = 0.039f;
+    private float ClimbingStairsMultiplierCurve = 0.637f;
 
     private Vector3 GroundNormal { get; set; }
     private Vector3 PrevGroundNormal { get; set; }
-    private bool LockOnSlope { get; set; }
+    private bool m_lockOnSlope = true;
     private bool CurLockOnSlope { get; set; }
     private float CurSurfaceAngle { get; set; }
     public bool IsOnSlope { get; private set; }                         // 경사 위
@@ -88,7 +141,7 @@ public partial class PlayerController
                 ReactionForward = PlayerForward;
 
                 FunctionDefine.SetFriction(m_collider, FLOOR_FRICTION, true);
-                CurLockOnSlope = LockOnSlope;
+                CurLockOnSlope = m_lockOnSlope;
 
                 CurSurfaceAngle = 0f;
                 IsOnSlope = false;
@@ -107,7 +160,17 @@ public partial class PlayerController
                     ReactionForward = tmpReactionForward * ((SpeedMultiplierOnAngle.Evaluate(CurSurfaceAngle / 90f) * CanSlideMultiplierCurve) + 1f);
 
                     FunctionDefine.SetFriction(m_collider, FLOOR_FRICTION, true);
-                    CurLockOnSlope = LockOnSlope;
+                    CurLockOnSlope = m_lockOnSlope;
+                }
+                else if (IsTouchingStep)
+                {
+                    //set forward
+                    PlayerForward = tmpForward * ((SpeedMultiplierOnAngle.Evaluate(CurSurfaceAngle / 90f) * ClimbingStairsMultiplierCurve) + 1f);
+                    GlobalForward = tmpGlobalForward * ((SpeedMultiplierOnAngle.Evaluate(CurSurfaceAngle / 90f) * ClimbingStairsMultiplierCurve) + 1f);
+                    ReactionForward = tmpReactionForward * ((SpeedMultiplierOnAngle.Evaluate(CurSurfaceAngle / 90f) * ClimbingStairsMultiplierCurve) + 1f);
+
+                    FunctionDefine.SetFriction(m_collider, FLOOR_FRICTION, true);
+                    CurLockOnSlope = true;
                 }
                 else
                 {
@@ -116,7 +179,7 @@ public partial class PlayerController
                     ReactionForward = tmpReactionForward * ((SpeedMultiplierOnAngle.Evaluate(CurSurfaceAngle / 90f) * CantSlideMultiplierCurve) + 1f);
 
                     FunctionDefine.SetFriction(m_collider, 0f, true);
-                    CurLockOnSlope = LockOnSlope;
+                    CurLockOnSlope = m_lockOnSlope;
                 }
 
                 CurSurfaceAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
@@ -140,7 +203,7 @@ public partial class PlayerController
             ReactionDown = Vector3.up.normalized;
 
             FunctionDefine.SetFriction(m_collider, FLOOR_FRICTION, true);
-            CurLockOnSlope = LockOnSlope;
+            CurLockOnSlope = m_lockOnSlope;
         }
     }
 
@@ -149,23 +212,28 @@ public partial class PlayerController
     private readonly float GravityMultiplier = 3f;
     private readonly float GravityMultiplyerOnSlideChange = 1.5f;
     private readonly float GravityMultiplierIfUnclimbableSlope = 15f;
+    private float CoyoteJumpMultiplier = 1f;
     private void ApplyGravity()                           // 중력 적용
     {
-        Vector3 gravity;
+        Vector3 gravity; 
+        
+        if (m_rigid.velocity.y < 0 && !IsGrounded) CoyoteJumpMultiplier = 1.7f;
+        else CoyoteJumpMultiplier = 1f;
 
-        if (CurLockOnSlope) gravity = GravityMultiplier*-Physics.gravity.y*PlayerDown;
-        else gravity = GravityMultiplier*-Physics.gravity.y*GlobalDown;
+        if (CurLockOnSlope || IsTouchingStep) gravity = GravityMultiplier*-Physics.gravity.y*PlayerDown * CoyoteJumpMultiplier;
+        else gravity = GravityMultiplier*-Physics.gravity.y*GlobalDown * CoyoteJumpMultiplier;
 
         if (GroundNormal.y != 1 && GroundNormal.y != 0 && IsOnSlope && PrevGroundNormal != GroundNormal)
         {
             gravity *= GravityMultiplyerOnSlideChange;
         }
 
-        if (GroundNormal.y != 1 && GroundNormal.y != 0 && (CurSurfaceAngle > m_maxSlopeAngle))
+        if (GroundNormal.y != 1 && GroundNormal.y != 0 && (CurSurfaceAngle > m_maxSlopeAngle) && !IsTouchingStep)
         {
             if (CurSurfaceAngle > 0f && CurSurfaceAngle <= 30f) gravity = GlobalDown * GravityMultiplierIfUnclimbableSlope * -Physics.gravity.y;
             else if (CurSurfaceAngle > 30f && CurSurfaceAngle <= 89f) gravity = GlobalDown * GravityMultiplierIfUnclimbableSlope / 2f * -Physics.gravity.y;
         }
+
 
         m_rigid.AddForce(gravity);
     }
@@ -174,6 +242,7 @@ public partial class PlayerController
     private void PrePhysicsUpdate()
     {
         CheckGrounded();
+        CheckStep();
         CheckWall();
         CheckSlopeAndDirections();
     }
