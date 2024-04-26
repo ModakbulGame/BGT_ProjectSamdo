@@ -195,17 +195,19 @@ public partial class PlayerController
                 break;
             case ESkillType.RANGED:
             case ESkillType.RANGED_CC:
-                skill.transform.localPosition = new Vector3(m_collider.transform.localPosition.x, m_collider.transform.localPosition.y + 1f, m_collider.transform.localPosition.z); // ÄÚµå°¡ ±ò²ûÇÏÁö ¾ÊÀ½
+                skill.transform.localPosition = Vector3.up;
                 skill.transform.SetParent(null);
                 ProjectileSkillScript projectile = skill.GetComponentInChildren<ProjectileSkillScript>();
                 projectile.SetSkill(this, Attack, Magic, PlayerAimDirection);
                 break;
             case ESkillType.SUMMON:
+                skill.transform.SetParent(null);
                 skill.transform.position = PlayManager.TraceSkillAim(Position, SkillInfoInHand.SkillCastRange);
                 break;
             case ESkillType.AROUND:
             case ESkillType.AROUND_CC:
-                skill.transform.localPosition = Vector3.zero;
+                skill.transform.localPosition = Vector3.down;
+                skill.transform.SetParent(null);
                 break;
             case ESkillType.BUFF:
                 skill.transform.localPosition = Vector3.zero;
