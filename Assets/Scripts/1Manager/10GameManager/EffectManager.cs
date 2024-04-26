@@ -9,6 +9,7 @@ public enum EEffectName
     MONSTER_DISSOLVE,
     HIT_SLASH,
     HIT_BLOW,
+    HIT_POWER,
 
     LAST
 }

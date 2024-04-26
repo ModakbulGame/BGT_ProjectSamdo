@@ -5,7 +5,8 @@ using UnityEngine;
 public enum EHitType
 {
     SLASH,      // º£±â
-    BLOW,     // µÐ±â
+    BLOW,       // µÐ±â
+    POWER,      // ÁÖ¼ú
     LAST
 }
 

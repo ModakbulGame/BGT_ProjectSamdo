@@ -17,7 +17,7 @@ public class PlayerLightScript : MonoBehaviour            // 임시 불빛 오브젝트
 {
     private static PlayerLightScript Inst;
 
-    private ParticleSystem m_effect;
+    private ParticleSystem[] m_effects;
 
     private const float MIN_SIZE = 0;                            // 최소 크기
     private const float MAX_SIZE = 100;                          // 최대 크기
@@ -30,21 +30,23 @@ public class PlayerLightScript : MonoBehaviour            // 임시 불빛 오브젝트
 
     public void LightOn()
     {
-        m_effect.Play();
+        m_effects[0].Play();
         CurState = ELightState.CHANGE;
         CurSize = MIN_SIZE;
         StartCoroutine(ChangeSize(true));
     }
     public void LightOff()
     {
+        m_effects[1].Play();
         CurState = ELightState.CHANGE;
-        StartCoroutine(ChangeSize(true));
+        CurSize = MAX_SIZE;
+        StartCoroutine(ChangeSize(false));
     }
 
     private IEnumerator ChangeSize(bool _on)
     {
         float change = (MAX_SIZE - MIN_SIZE) / CHANGE_TIME;
-        if (!_on) { change *= -1; }
+        if (!_on) { change *= -1.5f; }
         while ((_on && CurSize < MAX_SIZE) || (!_on && CurSize > MIN_SIZE))
         {
             CurSize += change * Time.deltaTime;
@@ -60,7 +62,7 @@ public class PlayerLightScript : MonoBehaviour            // 임시 불빛 오브젝트
     {
         if(Inst != null) { Destroy(Inst.gameObject); }
         Inst = this;
-        m_effect = GetComponent<ParticleSystem>();
+        m_effects = GetComponentsInChildren<ParticleSystem>();
     }
 
     private void Awake()

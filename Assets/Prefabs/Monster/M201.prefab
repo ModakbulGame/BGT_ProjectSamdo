@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5765409264110288087}
   - component: {fileID: 8306262958011583872}
+  - component: {fileID: 8359739378198325964}
   - component: {fileID: 6919374207153339005}
   - component: {fileID: 6504596172016087782}
   - component: {fileID: 3692620670678780498}
   - component: {fileID: 5787246666945030430}
-  - component: {fileID: 8359739378198325964}
   m_Layer: 9
   m_Name: M201
   m_TagString: Monster
@@ -75,6 +75,19 @@ MonoBehaviour:
   AttackDuration: 0
   m_spawnPoint: {fileID: 0}
   m_scriptable: {fileID: 11400000, guid: 37c37d5a4ee637f46a1d46635791f5cf, type: 2}
+--- !u!114 &8359739378198325964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456069480037878767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aaa794688dde2e4c8dc888d525b3bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isHiding: 1
 --- !u!54 &6919374207153339005
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -225,19 +238,6 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0.1, y: 0.1, z: 0.1}
---- !u!114 &8359739378198325964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 456069480037878767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9aaa794688dde2e4c8dc888d525b3bdd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_isHiding: 0
 --- !u!1001 &639423036399413432
 PrefabInstance:
   m_ObjectHideFlags: 0
