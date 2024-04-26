@@ -178,25 +178,25 @@ public partial class PlayerController : ObjectScript
     private WeaponScript CurWeapon { get; set; }
     public SPlayerWeaponInfo CurWeaponInfo { get { return new(CurWeapon); } }
     [SerializeField]
-    private Transform m_weaponTransform;
+    private WeaponScript[] m_weapons;
     [SerializeField]
     private Transform m_throwItemTransform;
     private void InitWeapon()
     {
-        CurWeapon = m_weaponTransform.GetComponentInChildren<WeaponScript>();
+        foreach(WeaponScript weapon in m_weapons) { if (weapon.gameObject.activeSelf) { CurWeapon = weapon; } }
         if (CurWeapon != null)
         {
             PlayManager.SetCurWeapon(CurWeapon.WeaponEnum);
         }
-        EWeaponName weapon = PlayManager.CurWeapon;
-        SetCurWeapon(weapon);
+        EWeaponName name = PlayManager.CurWeapon;
+        SetCurWeapon(name);
     }
     public void SetCurWeapon(EWeaponName _weapon)
     {
-        if (CurWeapon == null)
+        foreach (WeaponScript weapon in m_weapons)
         {
-            GameObject weapon = Instantiate(PlayManager.GetWeaponPrefab(_weapon), m_weaponTransform);
-            CurWeapon = weapon.GetComponent<WeaponScript>();
+            if(weapon.WeaponEnum == _weapon) { CurWeapon = weapon; weapon.gameObject.SetActive(true); }
+            else if(weapon.gameObject.activeSelf) { weapon.gameObject.SetActive(false); }
         }
         SetWeaponAnimationLayer(CurWeapon.WeaponType);
         SetWeaponName();
