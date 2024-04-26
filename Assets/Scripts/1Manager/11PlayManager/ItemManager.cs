@@ -34,6 +34,7 @@ public class ItemInfo
 {
     public string ItemID { get; private set; }
     public string ItemName { get; private set; }
+    public string ItemDescription { get; private set; }
     public SItem Item { get; private set; }
     public bool Obtained { get; private set; }
 
@@ -43,6 +44,7 @@ public class ItemInfo
         Item = _item;
         ItemID = _scriptable.ID;
         ItemName = _scriptable.ItemName;
+        ItemDescription = _scriptable.Description;
         Obtained = false;
     }
 }
