@@ -39,11 +39,11 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     public void HideMonster() { m_lightReciever.HideMonster(); }
     private void CheckPurify()
     {
-        if (IsGettingLight && CanPurify && !IsPurifyGlowing) 
+        if (IsPurified && !IsPurifyGlowing) 
         {
             ActivePurify();
         }
-        else if ((!IsGettingLight || !CanPurify) && IsPurifyGlowing) 
+        else if (!IsPurified && IsPurifyGlowing) 
         {
             InactivePurify();
         }
@@ -112,7 +112,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     public int NearRomaingMonsterNum { get; protected set; }                                            // 주변에 로밍중인 몬스터 수
     public bool ShouldRoam { get { return NearRomaingMonsterNum > 2; } }                                // 로밍 해야 함
     public virtual bool CanPurify { get; }                                                              // 성불 조건 완료
-    public bool IsPurified { get; protected set; }                                                      // 성불 가능 상태에서 사망
+    public bool IsPurified { get { return IsGettingLight && CanPurify; } }                              // 성불 가능 상태에서 사망
     public EMonsterDeathType DeathType { get; protected set; }                                          // 사망 타입
 
     // 피격 효과 구현
@@ -227,7 +227,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
         if (PlayManager.CheckIsPlayer(_object))
         {
-            if(IsPurified) { DeathType = EMonsterDeathType.PURIFY; }
+            if (IsPurified) { DeathType = EMonsterDeathType.PURIFY; }
             else { DeathType = EMonsterDeathType.BY_PLAYER; }
         }
         else

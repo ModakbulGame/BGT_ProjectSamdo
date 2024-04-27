@@ -129,22 +129,11 @@ public abstract partial class MonsterScript
     }
 
 
-    private void CreateBloodEffect(Vector3 _pos)
-    {
-/*        Vector2 bloodDir = Position2 - new Vector2(_pos.x, _pos.z);
-        float bloodAngle = FunctionDefine.VecToDeg(bloodDir);
-        GameObject blood = Instantiate(m_bloodEffect, transform);
-        blood.transform.eulerAngles = new(0, bloodAngle, 0);
-        blood.transform.parent = null;*/
-    }
-
-
     public override void GetHit(HitData _hit)    // ¸ÂÀ½
     {
         if (CurTarget == null) { CurTarget = _hit.Attacker; }
+        SetDeathType(_hit.Attacker);
         base.GetHit(_hit);
-        if (IsDead) { SetDeathType(_hit.Attacker); }
-        if (PlayManager.CheckIsPlayer(_hit.Attacker)) { /*CreateBloodEffect(_hit.Point);*/ }
         m_hpBar.SetCurHP(CurHP);
     }
     public override void PlayHitAnim()
