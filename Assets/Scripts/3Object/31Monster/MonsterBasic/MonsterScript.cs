@@ -66,12 +66,12 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         float counter = 0;
         while (_mats[0].GetFloat("_Fresnelpower") < 1 && 0 < _mats[0].GetFloat("_Fresnelpower"))
         {
-            counter += m_dissolveRate * _on;
+            counter += Time.deltaTime * _on;
             for (int i = 0; i<_mats.Length; i++)
             {
                 _mats[i].SetFloat("_Fresnelpower", counter);
             }
-            yield return new WaitForSeconds(m_refreshRate);
+            yield return null;
         }
     }
     public virtual void InactivePurify()
@@ -272,8 +272,9 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         }
     }
 
-    private const float m_dissolveRate = 0.0125f;
-    private const float m_refreshRate = 0.025f;
+    private float m_dissolveTime = 2;
+    [SerializeField]
+    private float m_dissolveDelay = 2;
     public void StartDissolve()             // dissolve vfx 효과 재생
     {
         GameObject effect = GameManager.GetEffectObj(EEffectName.MONSTER_DISSOLVE);
@@ -288,16 +289,18 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     }
     private IEnumerator DissolveCoroutine(Material[] _mats)
     {
+        yield return new WaitForSeconds(m_dissolveDelay);
         float counter = 0;
 
+        float change = 1 / m_dissolveTime;
         while (_mats[0].GetFloat("_DissolveAmount") < 1)
         {
-            counter += m_dissolveRate;
+            counter += Time.deltaTime * change;
             for (int i = 0; i<_mats.Length; i++)
             {
                 _mats[i].SetFloat("_DissolveAmount", counter);
             }
-            yield return new WaitForSeconds(m_refreshRate);
+            yield return null;
         }
         DestroyMonster();
     }
