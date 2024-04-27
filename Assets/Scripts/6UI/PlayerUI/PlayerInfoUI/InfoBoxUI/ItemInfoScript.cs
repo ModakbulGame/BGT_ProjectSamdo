@@ -4,24 +4,29 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using MalbersAnimations.Utilities;
+using System;
 
 public class ItemInfoScript : MouserOverScript
 {
     // 일단은 무기로만 하는 거로
     private Image m_infoUI;
-    [SerializeField]
-    private Image m_rootUI;
+    private Vector2 m_originalPos;
+    private Transform m_weaponElm;
 
-    private TextMeshPro m_itemNameTxt;
-    private TextMeshPro m_descriptionTxt;
+    private TextMeshProUGUI m_weaponNameTxt;          // 무기 이름
+    private FRange m_attack;                          // 물리 공격력
+    private FRange m_magic;                           // 마법 공격력
+    private TextMeshProUGUI m_weaponDescriptionTxt;   // 설명
 
-    private WeaponBoxElmScript[] m_elms;
-    private EWeaponName ElmWeapon { get; set; }     // 할당된 무기
+    private WeaponBoxElmScript m_parent;
+    public void SetParent(WeaponBoxElmScript _parent) { m_parent = _parent; }
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
         base.OnPointerEnter(eventData);
         m_infoUI.gameObject.SetActive(true);
+        SetInfo();
     }
 
     public override void OnPointerExit(PointerEventData eventData)
@@ -30,23 +35,19 @@ public class ItemInfoScript : MouserOverScript
         m_infoUI.gameObject.SetActive(false);
     }
 
-    public void PlaceToFront()  
+    public void SetInfo()
     {
-        m_infoUI.transform.SetParent(m_rootUI.transform, false);
-        m_infoUI.transform.SetAsLastSibling();
+        m_weaponNameTxt = GetComponentInChildren<TextMeshProUGUI>();
+
+        m_weaponNameTxt.text = m_parent.WeaponNameTxt.text;
+        Debug.Log(m_weaponNameTxt.text);
     }
 
-    public void SetItemInfo(int _weapon)          // 정보 설정
+    public void PlaceToFront()  
     {
-        EWeaponName weapon = (EWeaponName)_weapon;
-        ElmWeapon = weapon;
-
-        SItem item = new(EItemType.WEAPON, _weapon);
-
-        ItemInfo info = PlayManager.GetWeaponInfo(weapon);
-
-        m_itemNameTxt.text = info.ItemName;
-        m_descriptionTxt.text = info.ItemDescription;
+        m_infoUI.transform.SetParent(m_weaponElm.parent, false);
+        m_infoUI.transform.SetAsLastSibling();
+        m_infoUI.transform.localPosition = m_originalPos;
     }
 
     private void Update()
@@ -56,13 +57,14 @@ public class ItemInfoScript : MouserOverScript
 
     public override void SetComps()
     {
-        m_infoUI = GetComponentInChildren<Image>();
-        Debug.Log(m_infoUI.name);
+        m_infoUI = transform.GetChild(0).GetComponent<Image>();
+        m_originalPos = m_infoUI.transform.localPosition;
+        m_weaponElm = transform.parent.parent;
     }
 
     public override void Awake()
     {
         SetComps();
-        PlaceToFront();
+        // PlaceToFront();
     }
 }

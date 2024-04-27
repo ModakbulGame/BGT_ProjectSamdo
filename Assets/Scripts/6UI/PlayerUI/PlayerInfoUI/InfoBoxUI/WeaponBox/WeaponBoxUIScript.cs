@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -67,7 +68,8 @@ public class WeaponBoxUIScript : PlayerInfoBoxScript
     {
         m_elms = GetComponentsInChildren<WeaponBoxElmScript>();
         if (m_elms.Length != ElmPerPage) { Debug.LogError("UI 개수 틀림"); }
-        foreach(WeaponBoxElmScript elm in m_elms) { elm.SetParent(this); }
+        foreach (WeaponBoxElmScript elm in m_elms) { elm.SetParent(this); }
         SetBtns();
+
     }
 }
