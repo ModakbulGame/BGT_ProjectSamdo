@@ -176,7 +176,7 @@ public partial class PlayerController
     {
         float coolTime = SkillInfoInHand.SkillCooltime;
         SkillCooltime[UsingSkillIdx] = coolTime;
-        PlayManager.UseSkillSlot(UsingSkillIdx, coolTime);
+        PlayManager.UseSkillSlot(UsingSkillIdx, coolTime); // 수정 사항
         SkillFireAnim();
         HideSkillAim();
     }
@@ -206,8 +206,10 @@ public partial class PlayerController
                 break;
             case ESkillType.AROUND:
             case ESkillType.AROUND_CC:
-                skill.transform.localPosition = Vector3.down;
+                skill.transform.localPosition = Vector3.zero;
                 skill.transform.SetParent(null);
+                PlayerSkillScript around=skill.GetComponentInChildren<PlayerSkillScript>();
+                around.SetSkill(this, Attack, Magic);
                 break;
             case ESkillType.BUFF:
                 skill.transform.localPosition = Vector3.zero;

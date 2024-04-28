@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class MeleeSkillScript : PlayerSkillScript
 {
-    // 추가적인 기능이 필요할 때 작성
+    public override void SetSkill(PlayerController _player, float _attack, float _magic)
+    {
+        base.SetSkill(_player, _attack, _magic);
+    }
 }

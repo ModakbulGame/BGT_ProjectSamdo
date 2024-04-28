@@ -12,12 +12,13 @@ public class SkillInfo
     public float SkillRadius { get; private set; }
     public float SkillCastRange { get; private set; } = 0;
     public bool Obtained { get; private set; }
-    public ESkillType SkillType { get { return DataManager.IDToSkillType(SkillID); } }
+    public ESkillType SkillType { get; private set; }
 
     public void ObtainSkill() { Obtained = true; }
     public SkillInfo(SkillScriptable _scriptable)
     {
         SkillID = _scriptable.ID;
+        SkillType = _scriptable.SkillType;
         SkillName = _scriptable.SkillName;
         SkillDescription = _scriptable.Description;
         SkillCooltime = _scriptable.Cooltime;

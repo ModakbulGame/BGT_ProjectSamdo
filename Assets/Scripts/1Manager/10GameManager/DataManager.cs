@@ -54,23 +54,6 @@ public class DataManager : MonoBehaviour
         };
     }
 
-    public static ESkillType IDToSkillType(string _id)
-    {
-        if(_id == "S991") { return ESkillType.MELEE; }
-        else if(_id == "S992") { return ESkillType.RANGED; }
-        else if(_id == "S993") { return ESkillType.SUMMON; }
-
-        return _id[0] switch
-        {
-            ValueDefine.MELEE_CODE => ESkillType.MELEE,
-            ValueDefine.MELEE_CC_CODE => ESkillType.MELEE_CC,
-            ValueDefine.RANGED_CODE => ESkillType.RANGED,
-            ValueDefine.RANGED_CC_CODE => ESkillType.RANGED_CC,
-            ValueDefine.SUMMON_CODE => ESkillType.SUMMON,
-            _ => ESkillType.LAST
-        };
-    }
-
     public void SetManager()
     {
 

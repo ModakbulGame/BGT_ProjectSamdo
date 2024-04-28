@@ -23,15 +23,15 @@ public class SkillScriptable : ScriptableObject
 
     private ESkillType Name2Type(ESkillName _skillName)
     {
-        if (_skillName <= ESkillName.SWORD_BASIC)
+        if (_skillName <= ESkillName.SWORD_BASIC || _skillName == ESkillName.SAMPLE1)
             return ESkillType.MELEE;
         else if (_skillName <= ESkillName.MELEE_KNOCKBACK)
             return ESkillType.MELEE_CC;
-        else if (_skillName == ESkillName.SCEPTER_BASIC)
+        else if (_skillName == ESkillName.SCEPTER_BASIC || _skillName == ESkillName.SAMPLE2)
             return ESkillType.RANGED;
         else if (_skillName <= ESkillName.RANGED_KNOCKBACk)
             return ESkillType.RANGED_CC;
-        else if (_skillName == ESkillName.CREATION)
+        else if (_skillName == ESkillName.CREATION || _skillName == ESkillName.SAMPLE3)
             return ESkillType.SUMMON;
         else if (_skillName == ESkillName.AROUND)
             return ESkillType.AROUND;
