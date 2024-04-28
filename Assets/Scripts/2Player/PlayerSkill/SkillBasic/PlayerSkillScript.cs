@@ -45,7 +45,7 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
         if(hittable.IsPlayer) { return; }
         Vector3 point = _other.ClosestPoint(transform.position);
         GiveDamage(hittable, point);
-        CollideTaret();
+        CollideTarget();
     }
     public override void GiveDamage(IHittable _hittable, Vector3 _point)
     {
@@ -55,10 +55,7 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
         AddHitObject(_hittable);
     }
 
-    public virtual void CollideTaret()
-    {
-        ReleaseTopool();
-    }
+    public virtual void CollideTarget() { }
 
 
     private IEnumerator ReleaseDelay()

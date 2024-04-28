@@ -22,6 +22,12 @@ public class ProjectileSkillScript : PlayerSkillScript
         MoveDir = new(_dir.x,0,_dir.y);
     }
 
+    public override void CollideTarget()
+    {
+        ReleaseTopool();
+    }
+
+
     private void Awake()
     {
         m_rigid = GetComponent<Rigidbody>();

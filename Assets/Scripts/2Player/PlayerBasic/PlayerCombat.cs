@@ -208,7 +208,7 @@ public partial class PlayerController
             case ESkillType.AROUND_CC:
                 skill.transform.localPosition = Vector3.zero;
                 skill.transform.SetParent(null);
-                PlayerSkillScript around=skill.GetComponentInChildren<PlayerSkillScript>();
+                AroundSkillScript around=skill.GetComponentInChildren<AroundSkillScript>();
                 around.SetSkill(this, Attack, Magic);
                 break;
             case ESkillType.BUFF:

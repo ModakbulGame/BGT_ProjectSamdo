@@ -12,6 +12,7 @@ public class ParabolaSkillScript : ProjectileSkillScript
         m_rigid.velocity = Vector3.up * m_upperForce;
     }
 
+
     public override void FixedUpdate()
     {
         m_rigid.AddForce(Vector3.down * ValueDefine.PARABOLA_GRAVITY);
