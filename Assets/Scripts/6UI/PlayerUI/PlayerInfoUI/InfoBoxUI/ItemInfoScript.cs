@@ -10,14 +10,14 @@ using System;
 public class ItemInfoScript : MouserOverScript
 {
     // 일단은 무기로만 하는 거로
-    private Image m_infoUI;
-    private Vector2 m_originalPos;
-    private Transform m_weaponElm;
+    [SerializeField]
+    private GameObject m_infoUIPrefab;
+    private GameObject m_infoUI;
 
-    private TextMeshProUGUI m_weaponNameTxt;          // 무기 이름
-    private FRange m_attack;                          // 물리 공격력
-    private FRange m_magic;                           // 마법 공격력
-    private TextMeshProUGUI m_weaponDescriptionTxt;   // 설명
+    private Transform m_weaponElm;
+    private GridLayoutGroup m_layoutGroup;
+
+    private TextMeshProUGUI[] m_weaponInfo;
 
     private WeaponBoxElmScript m_parent;
     public void SetParent(WeaponBoxElmScript _parent) { m_parent = _parent; }
@@ -25,46 +25,45 @@ public class ItemInfoScript : MouserOverScript
     public override void OnPointerEnter(PointerEventData eventData)
     {
         base.OnPointerEnter(eventData);
-        m_infoUI.gameObject.SetActive(true);
+        m_infoUI = Instantiate(m_infoUIPrefab, Vector3.zero, Quaternion.identity, m_weaponElm.parent);
+        // PlaceToFront();
         SetInfo();
     }
 
     public override void OnPointerExit(PointerEventData eventData)
     {
         base.OnPointerExit(eventData);
-        m_infoUI.gameObject.SetActive(false);
+        // Destroy(m_infoUI);
     }
 
     public void SetInfo()
     {
-        m_weaponNameTxt = GetComponentInChildren<TextMeshProUGUI>();
+        m_weaponInfo = m_infoUI.GetComponentsInChildren<TextMeshProUGUI>();
 
-        m_weaponNameTxt.text = m_parent.WeaponNameTxt.text;
-        Debug.Log(m_weaponNameTxt.text);
+        m_weaponInfo[0].text = m_parent.WeaponNameTxt.text;
+
+        Debug.Log(m_weaponInfo[0].text);
     }
 
     public void PlaceToFront()  
     {
-        m_infoUI.transform.SetParent(m_weaponElm.parent, false);
         m_infoUI.transform.SetAsLastSibling();
-        m_infoUI.transform.localPosition = m_originalPos;
+        m_infoUI.transform.SetParent(m_weaponElm.parent, false);
     }
 
     private void Update()
     {
-
+    
     }
 
     public override void SetComps()
     {
-        m_infoUI = transform.GetChild(0).GetComponent<Image>();
-        m_originalPos = m_infoUI.transform.localPosition;
         m_weaponElm = transform.parent.parent;
+        m_layoutGroup = m_weaponElm.GetComponent<GridLayoutGroup>();
     }
 
     public override void Awake()
     {
         SetComps();
-        // PlaceToFront();
     }
 }

@@ -8,6 +8,7 @@ public class WeaponScriptable : ItemScriptable
     public FRange Attack;
     public FRange Magic;
     public float AttackSpeed;
+    public string DerivedDescription;
 
     public override void SetItemScriptable(uint _idx, string[] _data)
     {
@@ -21,5 +22,6 @@ public class WeaponScriptable : ItemScriptable
         float.TryParse(_data[(int)EItemAttribute.MAX_MAGIC],        out max);
         Magic = new(min, max);
         float.TryParse( _data[(int)EItemAttribute.ATTACK_SPEED],    out AttackSpeed);
+        Description = base.Description;
     }
 }

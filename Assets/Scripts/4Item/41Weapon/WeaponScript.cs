@@ -12,6 +12,7 @@ public class WeaponInfo
     public FRange Attack;
     public FRange Magic;
     public float AttackSpeed;
+    public string Description;
     public void SetInfo(WeaponScriptable _scriptable)
     {
         WeaponType = DataManager.IDToWeaponType(_scriptable.ID);
@@ -21,6 +22,7 @@ public class WeaponInfo
         Attack = _scriptable.Attack;
         Magic = _scriptable.Magic;
         AttackSpeed = _scriptable.AttackSpeed;
+        Description = _scriptable.DerivedDescription;
     }
 }
 
@@ -34,6 +36,7 @@ public class WeaponScript : AnimateAttackScript
     public FRange WeaponAttack { get { return m_weaponInfo.Attack; } }
     public FRange WeaponMagic { get { return m_weaponInfo.Magic; } }
     public float WeaponAttackSpeed { get { return m_weaponInfo.AttackSpeed; } }
+    public string WeaponDescription { get { return m_weaponInfo.Description; } }
     public void SetWeaponInfo(WeaponScriptable _scriptable) { m_weaponInfo.SetInfo(_scriptable); }
 
 

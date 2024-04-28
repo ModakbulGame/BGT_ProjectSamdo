@@ -18,7 +18,8 @@ public class WeaponBoxElmScript : MonoBehaviour
     private Image m_weaponImg;                      // 무기 이미지      
     private Button m_equipBtn;                      // 장착 버튼
 
-    public TextMeshProUGUI WeaponNameTxt { get; private set; } // 무기 이름
+    public TextMeshProUGUI WeaponNameTxt { get; private set; }          // 무기 이름
+    public TextMeshProUGUI WeaponDescriptionTxt { get; private set; }   // 무기 설명
 
     public void SetWeaponInfo(int _weapon)          // 정보 설정
     {
@@ -32,7 +33,7 @@ public class WeaponBoxElmScript : MonoBehaviour
 
         m_weaponImg.sprite = img;
         WeaponNameTxt.text = info.ItemName;
-        // m_weaponDescriptionTxt.text = info.ItemDescription;
+        // WeaponDescriptionTxt.text = info.ItemDescription;
         bool obtained = info.Obtained;
         IsCurWeapon = weapon == PlayManager.CurWeapon;
         SetBtnState(obtained);
