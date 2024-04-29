@@ -113,7 +113,7 @@ public partial class PlayerController
 
 
     private const float LAND_VELOCITY = -15;
-    private const float FALL_DAMAGE_VELOCITY = -20;
+    private const float FALL_DAMAGE_VELOCITY = -21.6f;
     private const float FALL_DEATH_VELOCITY = -44;
     public void PlayerLand(float _velocity)
     {
@@ -121,8 +121,9 @@ public partial class PlayerController
         else if (_velocity <= FALL_DAMAGE_VELOCITY) 
         {
             LandAnim();
-            float ratio = 0.125f + Mathf.Round(7 * (FALL_DAMAGE_VELOCITY - _velocity) * 0.125f / 24);
-            GetDamage(MaxHP * ratio);
+            float ratio = 0.125f + ((FALL_DAMAGE_VELOCITY - _velocity) / (FALL_DAMAGE_VELOCITY - FALL_DEATH_VELOCITY)) * 7 / 8f;
+            float damage = MaxHP * Mathf.Round(ratio * 1000) * 0.001f;
+            GetDamage(damage);
         }
         else if (_velocity <= LAND_VELOCITY) { LandAnim(); }
     }
