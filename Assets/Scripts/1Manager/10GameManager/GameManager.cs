@@ -56,6 +56,7 @@ public class GameManager : SingleTon<GameManager>
     private static GameObject[] MonsterArray { get { return MonsterManager.MonsterArray; } }
     public static MonsterInfo GetMonsterInfo(EMonsterName _monster) { return MonsterManager.GetMonsterInfo(_monster); }                     // 몬스터 정보
     public static GameObject GetMonsterObj(EMonsterName _monster) { return MonsterManager.GetMonsterObj(_monster); }                        // 몬스터 프리펍
+    public static bool CheckNClearMonster(EMonsterName _monster) { return MonsterManager.CheckNClearMonster(_monster); }                    // 최초 처치 확인
 
 
 

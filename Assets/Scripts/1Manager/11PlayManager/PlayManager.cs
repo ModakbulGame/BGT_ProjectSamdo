@@ -102,7 +102,9 @@ public class PlayManager : MonoBehaviour
     private UpgradeManager m_upgradeManager;
     private static UpgradeManager UpgradeManager { get { return Inst.m_upgradeManager; } }
     public static int LeftStatPoint { get { return UpgradeManager.LeftStatPoint; } }
+    public static void AddStatPoint(int _add) { UpgradeManager.AddStatPoint(_add); }
     public static void UpgradeStat(int[] _point) { UpgradeManager.UpgradeStat(_point); }
+
 
 
     // GUI

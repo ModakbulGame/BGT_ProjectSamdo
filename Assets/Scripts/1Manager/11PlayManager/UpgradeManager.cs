@@ -9,6 +9,13 @@ public class UpgradeManager : MonoBehaviour
     public int LeftStatPoint { get; private set; } = 2;
 
 
+    public void AddStatPoint(int _add)
+    {
+        LeftStatPoint += _add;
+        PlayManager.UpdateInfoUI();
+    }
+
+
     public void UpgradeStat(int[] _point)
     {
         for (int i = 0; i<(int)EStatInfoName.LAST; i++)

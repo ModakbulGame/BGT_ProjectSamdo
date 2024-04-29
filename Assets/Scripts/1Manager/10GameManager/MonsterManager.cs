@@ -33,6 +33,14 @@ public class MonsterManager : MonoBehaviour
         return PoolManager.GetObject(m_monsterPrefabs[(int)_monster]);
     }
 
+    public bool CheckNClearMonster(EMonsterName _monster)
+    {
+        int idx = (int)_monster;
+        bool cleared = m_monsterInfo[idx].Cleared;
+        if(!cleared) { m_monsterInfo[idx].ClearMonster(); }
+        return cleared;
+    }
+
 
     public void SetManager()
     {

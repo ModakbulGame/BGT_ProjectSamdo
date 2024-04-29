@@ -27,6 +27,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     private MonsterScriptable m_scriptable;             // 스크립터블로 정보를 저장합니다. 모든 정보는 여기에..
     public bool IsScriptableSet { get { return m_scriptable != null; } }
     public void SetScriptable(MonsterScriptable _scriptable) { m_scriptable = _scriptable; SetInfo(); }
+    public EMonsterName MonsterEnum { get { return m_scriptable.MonsterEnum; } }
 
     public override bool IsMonster { get { return true; } }
 
@@ -160,7 +161,6 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         StopMove();
         DieAnimation();                     // 애니메이션
         StartDissolve();                    // 디졸브
-        DropItems();                        // 아이템 드랍
         m_hpBar.DestroyUI();                // HP바
         m_rigid.useGravity = false;         // 중력
         GetComponentInChildren<CapsuleCollider>().isTrigger = true;         // 트리거
@@ -238,6 +238,16 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
     public void DeathResult()           // 사망 원인에 따른 결과
     {
+        if(DeathType == EMonsterDeathType.PURIFY || DeathType == EMonsterDeathType.BY_PLAYER)
+        {
+            DropItems();                        // 아이템 드랍
+            if (!GameManager.CheckNClearMonster(MonsterEnum))
+            {
+                int stat = m_scriptable.DropInfo.StatPoint;
+                PlayManager.AddStatPoint(stat);
+            }
+        }
+
         switch (DeathType)
         {
             case EMonsterDeathType.PURIFY:      // 성불
@@ -273,7 +283,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
     private float m_dissolveTime = 2;
     [SerializeField]
-    private float m_dissolveDelay = 2;
+    private float m_dissolveDelay = 1;
     public void StartDissolve()             // dissolve vfx 효과 재생
     {
         GameObject effect = GameManager.GetEffectObj(EEffectName.MONSTER_DISSOLVE);

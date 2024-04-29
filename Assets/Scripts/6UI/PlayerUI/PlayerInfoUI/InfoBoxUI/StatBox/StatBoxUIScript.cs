@@ -10,14 +10,14 @@ public class StatBoxUIScript : PlayerInfoBoxScript
 
     public override void InitUI()
     {
-        PlayerStatInfo statInfo = PlayManager.PlayerStatInfo;
-        m_statInfoUI.InitStats(statInfo);
-        m_combatInfoUI.InitStats(statInfo);
+        UpdateUI();
     }
 
     public override void UpdateUI()
     {
-
+        PlayerStatInfo statInfo = PlayManager.PlayerStatInfo;
+        m_statInfoUI.InitStats(statInfo);
+        m_combatInfoUI.InitStats(statInfo);
     }
 
     public void UpdateStatUse(int[] _points)
