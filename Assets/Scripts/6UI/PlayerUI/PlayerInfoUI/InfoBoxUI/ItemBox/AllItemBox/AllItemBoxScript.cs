@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AllItemBoxScript : MonoBehaviour
 {
+    private ItemBoxUIScript m_parent;
+    public void SetParent(ItemBoxUIScript _parent) { m_parent = _parent; }
+
     private const int ElmCount = 24;
     public int ElmNum { get { return ElmCount; } }
 
@@ -19,6 +22,19 @@ public class AllItemBoxScript : MonoBehaviour
             if (inven[i].IsEmpty) { m_elms[i].HideItem(); continue; }
             m_elms[i].SetItem(inven[i]);
         }
+    }
+
+    public void ShowInfo(SItem _item)
+    {
+        m_parent.ShowItemInfoUI(_item);
+    }
+    public void HideInfo()
+    {
+        m_parent.HideItemInfoUI();
+    }
+    public void SetInfoPos(Vector2 _pos)
+    {
+        m_parent.SetItemInfoUIPos(_pos);
     }
 
 

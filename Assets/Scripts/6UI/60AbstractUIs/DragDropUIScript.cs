@@ -15,6 +15,8 @@ public class DragDropUIScript : MonoBehaviour
     protected Vector2 MouseStart { get; set; }
     protected Transform ParentTrans { get; set; }
 
+    public bool Dragging { get; private set; }
+
 
     public virtual void StartDrag(PointerEventData _data)
     {
@@ -22,6 +24,7 @@ public class DragDropUIScript : MonoBehaviour
         m_rect.SetParent(MoveTrans);
         StartPos = m_rect.anchoredPosition;
         MouseStart = Mouse.current.position.ReadValue();
+        Dragging = true;
     }
 
     public virtual void OnDrag(PointerEventData _data)
@@ -41,6 +44,7 @@ public class DragDropUIScript : MonoBehaviour
         }
         m_rect.anchoredPosition = StartPos;
         m_rect.SetParent(ParentTrans);
+        Dragging = false;
     }
 
     public virtual bool CheckPos()

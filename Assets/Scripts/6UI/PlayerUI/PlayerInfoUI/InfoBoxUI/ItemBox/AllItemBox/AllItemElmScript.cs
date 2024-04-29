@@ -11,11 +11,11 @@ public class AllItemElmScript : MonoBehaviour
     public AllItemBoxScript Box { get { return m_parent; } }
     public void SetParent(AllItemBoxScript _parent) { m_parent = _parent; }
 
-    private EventTrigger m_trigger;
-    private Image m_itemImg;
-    private TextMeshProUGUI m_itemNumTxt;
+    private AllItemImgScript m_itemImg;
 
-    private ItemBoxDragScript m_drag;
+
+    private EventTrigger m_trigger;
+    private TextMeshProUGUI m_itemNumTxt;
 
     public SItem CurItem { get; set; }
 
@@ -25,7 +25,7 @@ public class AllItemElmScript : MonoBehaviour
 
         CurItem = _item.m_item;
         Sprite itemSprite = GameManager.GetItemSprite(CurItem);
-        m_itemImg.sprite = itemSprite;
+        m_itemImg.SetItemImage(itemSprite);
 
         m_itemNumTxt.text = _item.m_num.ToString();
     }
@@ -49,6 +49,21 @@ public class AllItemElmScript : MonoBehaviour
     }
 
 
+    public void ShowInfo()
+    {
+        if (CurItem.IsEmpty) { return; }
+        m_parent.ShowInfo(CurItem);
+    }
+    public void HideInfo()
+    {
+        m_parent.HideInfo();
+    }
+    public void SetInfoPos(Vector2 _pos)
+    {
+        m_parent.SetInfoPos(_pos);
+    }
+
+
 
     private void SetEvents()
     {
@@ -58,10 +73,10 @@ public class AllItemElmScript : MonoBehaviour
     public void SetComps()
     {
         m_trigger = gameObject.AddComponent<EventTrigger>();
-        m_itemImg = GetComponentsInChildren<Image>()[1];
         m_itemNumTxt = GetComponentInChildren<TextMeshProUGUI>();
-        m_drag = GetComponent<ItemBoxDragScript>();
-        m_drag.SetParent(this);
+        m_itemImg = GetComponentInChildren<AllItemImgScript>();
+        m_itemImg.SetParent(this);
+        m_itemImg.SetComps();
         SetEvents();
     }
 }

@@ -7,10 +7,9 @@ using UnityEngine.UI;
 public class WeaponBoxElmScript : MonoBehaviour
 {
     private WeaponBoxUIScript m_parent;
-    private ItemInfoScript m_item;
-
     public void SetParent(WeaponBoxUIScript _parent) { m_parent = _parent; }
 
+    private WeaponImgScript m_img;
 
     private EWeaponName ElmWeapon { get; set; }     // 할당된 무기
     private bool IsCurWeapon { get; set; }          // 플레이어가 장착 중인 무기인지
@@ -18,8 +17,7 @@ public class WeaponBoxElmScript : MonoBehaviour
     private Image m_weaponImg;                      // 무기 이미지      
     private Button m_equipBtn;                      // 장착 버튼
 
-    public TextMeshProUGUI WeaponNameTxt { get; private set; }          // 무기 이름
-    public TextMeshProUGUI WeaponDescriptionTxt { get; private set; }   // 무기 설명
+    private TextMeshProUGUI m_weaponNameTxt;         // 무기 이름
 
     public void SetWeaponInfo(int _weapon)          // 정보 설정
     {
@@ -32,8 +30,7 @@ public class WeaponBoxElmScript : MonoBehaviour
         ItemInfo info = PlayManager.GetWeaponInfo(weapon);
 
         m_weaponImg.sprite = img;
-        WeaponNameTxt.text = info.ItemName;
-        // WeaponDescriptionTxt.text = info.ItemDescription;
+        m_weaponNameTxt.text = info.ItemName;
         bool obtained = info.Obtained;
         IsCurWeapon = weapon == PlayManager.CurWeapon;
         SetBtnState(obtained);
@@ -58,6 +55,20 @@ public class WeaponBoxElmScript : MonoBehaviour
     }
 
 
+    public void ShowInfo()
+    {
+        m_parent.ShowInfoUI(ElmWeapon);
+    }
+    public void SetInfoPos(Vector2 _pos)
+    {
+        m_parent.SetInfoUIPos(_pos);
+    }
+    public void HideInfo()
+    {
+        m_parent.HideInfoUI();
+    }
+
+
     private void EquipWeapon()                      // 할당된 무기 장착
     {
         if(IsCurWeapon) { return; }
@@ -73,10 +84,11 @@ public class WeaponBoxElmScript : MonoBehaviour
     private void SetComps()
     {
         m_weaponImg = GetComponentsInChildren<Image>()[1];
-        WeaponNameTxt = GetComponentsInChildren<TextMeshProUGUI>()[0];
+        m_weaponNameTxt = GetComponentsInChildren<TextMeshProUGUI>()[0];
         m_equipBtn = GetComponentInChildren<Button>();
-        m_item = GetComponentInChildren<ItemInfoScript>();
-        m_item.SetParent(this);
+        m_img = GetComponentInChildren<WeaponImgScript>();
+        m_img.SetParent(this);
+        m_img.SetComps();
         SetBtn();
     }
 

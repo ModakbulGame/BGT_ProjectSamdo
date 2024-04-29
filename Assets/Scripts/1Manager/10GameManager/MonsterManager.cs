@@ -7,29 +7,17 @@ using UnityEngine;
 
 public class MonsterInfo
 {
-    public string MonsterID { get; private set; }
-    public string MonsterName { get; private set; }
-    public string MonsterDescription { get; private set; }
+    public MonsterScriptable MonsterData { get; private set; }
+    public string MonsterName { get { return MonsterData.MonsterName; } }
+    public string MonsterDescription { get { return MonsterData.Description; } }
     public bool Cleared { get; private set; }
+    public void ClearMonster() { Cleared = true; }
     public MonsterInfo(MonsterScriptable _scriptable)
     {
-        MonsterID = _scriptable.ID;
-        MonsterName = _scriptable.MonsterName;
-        MonsterDescription = _scriptable.Description;
+        MonsterData = _scriptable;
+        Cleared = false;
     }
 }
-
-public class MonsterDropItemInfo
-{
-    private readonly List<SDropItem> m_dropItems;
-    public string GetDropItem() { return m_dropItems[0].ID; }
-
-    public MonsterDropItemInfo(string _id)
-    {
-
-    }
-}
-
 
 public class MonsterManager : MonoBehaviour
 {

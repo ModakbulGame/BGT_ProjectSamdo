@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +7,8 @@ public class WeaponBoxUIScript : PlayerInfoBoxScript
 {
     private WeaponBoxElmScript[] m_elms;
 
+    [SerializeField]
+    private WeaponInfoUIScript m_infoUI;
     [SerializeField]
     private Button[] m_pageBtns = new Button[2];
 
@@ -55,6 +56,20 @@ public class WeaponBoxUIScript : PlayerInfoBoxScript
             m_elms[i].SetWeaponInfo(idx);
         }
         SetPageBtn();
+    }
+
+    public void ShowInfoUI(EWeaponName _weapon)
+    {
+        SItem weapon = new(EItemType.WEAPON, (int)_weapon);
+        m_parent.ShowItemInfoUI(weapon);
+    }
+    public void SetInfoUIPos(Vector2 _pos)
+    {
+        m_parent.SetItemInfoUIPos(_pos);
+    }
+    public void HideInfoUI()
+    {
+        m_parent.HideItemInfoUI();
     }
 
 

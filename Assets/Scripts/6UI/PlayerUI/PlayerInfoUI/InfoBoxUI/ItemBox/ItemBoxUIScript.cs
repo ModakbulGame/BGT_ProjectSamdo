@@ -18,12 +18,27 @@ public class ItemBoxUIScript : PlayerInfoBoxScript
         m_allItemBox.UpdateUI();
     }
 
+    public void ShowItemInfoUI(SItem _item)
+    {
+        m_parent.ShowItemInfoUI(_item);
+    }
+    public void HideItemInfoUI()
+    {
+        m_parent.HideItemInfoUI();
+    }
+    public void SetItemInfoUIPos(Vector2 _pos)
+    {
+        m_parent.SetItemInfoUIPos(_pos);
+    }
+
 
     public override void SetComps()
     {
         m_throwItemSlot = GetComponentInChildren<ThrowItemSlotScript>();
+        m_throwItemSlot.SetParent(this);
         m_throwItemSlot.SetComps();
         m_allItemBox = GetComponentInChildren<AllItemBoxScript>();
+        m_allItemBox.SetParent(this);
         m_allItemBox.SetComps();
     }
 }

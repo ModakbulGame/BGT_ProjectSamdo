@@ -110,6 +110,7 @@ public class PlayManager : MonoBehaviour
     private static PlayUIManager PlayUIManager { get { return Inst.m_playUIManager; } }
     public static Vector2 NormalizeLocation(Transform _obj) { return PlayUIManager.NormalizeLocation(_obj); }                              // À§Ä¡ Á¤±ÔÈ­(3D -> 2D)
     public static Canvas GetCanvas(ECanvasType _canvas) { return PlayUIManager.GetCanvas(_canvas); }                                        // Äµ¹ö½º
+    public static RectTransform CanvasTrans(ECanvasType _canvas) { return GetCanvas(_canvas).GetComponent<RectTransform>(); }               
     public static void OpenPlayerUI() { PlayUIManager.OpenPlayerUI(); }                                                                     // Player UI ¿­±â
     public static void ClosePlayerUI() { PlayUIManager.ClosePlayerUI(); }                                                                   // Player UI ´Ý±â
     public static void SetMinimapScale(float _scale) { PlayUIManager.SetMinimapScale(_scale); }                                             // ¹Ì´Ï¸Ê ÃàÃ´

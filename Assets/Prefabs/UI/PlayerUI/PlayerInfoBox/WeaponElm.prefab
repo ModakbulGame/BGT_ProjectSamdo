@@ -171,8 +171,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 60, y: 48}
-  m_SizeDelta: {x: 120, y: 42}
+  m_AnchoredPosition: {x: 0, y: 48}
+  m_SizeDelta: {x: 110, y: 42}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2826260943047133245
 CanvasRenderer:
@@ -491,10 +491,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3554190508881004243}
+  - component: {fileID: 6310100354858883999}
   - component: {fileID: 4307641917611933655}
   - component: {fileID: 7459776413673323874}
   - component: {fileID: 5697069397464295801}
-  - component: {fileID: 3341102669675831770}
   m_Layer: 5
   m_Name: WeaponImg
   m_TagString: Untagged
@@ -521,6 +521,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 56}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6310100354858883999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8616137798304584931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7be13403d70a34ab71a82e359e3b81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &4307641917611933655
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -572,17 +584,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []
---- !u!114 &3341102669675831770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8616137798304584931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68bfb4e25842a0544a4de5cc026e886a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_infoUIPrefab: {fileID: 1262491714977314416, guid: ae98501c7a3f7df489334d028860f5c2,
-    type: 3}

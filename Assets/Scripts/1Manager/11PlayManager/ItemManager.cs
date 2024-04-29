@@ -32,19 +32,18 @@ public struct SDropItem         // 드랍 아이템 구조체
 
 public class ItemInfo
 {
-    public string ItemID { get; private set; }
-    public string ItemName { get; private set; }
-    public string ItemDescription { get; private set; }
+    public ItemScriptable ItemData { get; private set; }
+    public string ItemID { get { return ItemData.ID; } }
+    public string ItemName { get { return ItemData.ItemName; } }
+    public string ItemDescription { get { return ItemData.Description; } }
     public SItem Item { get; private set; }
     public bool Obtained { get; private set; }
 
     public void ObtainItem() { Obtained = true; }
     public ItemInfo(ItemScriptable _scriptable, SItem _item)
     {
+        ItemData = _scriptable;
         Item = _item;
-        ItemID = _scriptable.ID;
-        ItemName = _scriptable.ItemName;
-        ItemDescription = _scriptable.Description;
         Obtained = false;
     }
 }

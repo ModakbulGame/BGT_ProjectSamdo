@@ -54,6 +54,20 @@ public class PlayerInfoUIScript : MonoBehaviour
         m_infoUIs[(int)CurType].UpdateUI();
     }
 
+    public void ShowItemInfoUI(SItem _item)
+    {
+        m_parent.ShowItemInfoUI(_item);
+    }
+    public void SetItemInfoUIPos(Vector2 _pos)
+    {
+        m_parent.SetItemInfoUIPos(_pos);
+    }
+    public void HideItemInfoUI()
+    {
+        m_parent.HideItemInfoUI();
+    }
+
+
 
     private void SetBtns()
     {

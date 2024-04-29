@@ -5,25 +5,20 @@ using UnityEngine;
 
 public class SkillInfo
 {
-    public string SkillID { get; private set; }
-    public string SkillName { get; private set; }
-    public string SkillDescription { get; private set; }
-    public float SkillCooltime { get; private set; }
-    public float SkillRadius { get; private set; }
-    public float SkillCastRange { get; private set; } = 0;
+    public SkillScriptable SkillData { get; private set; }
+    public string SkillName { get { return SkillData.SkillName; } }
+    public string SkillDescription { get { return SkillData.Description; } }
+    public ESkillType SkillType { get { return SkillData.SkillType; } }
+    public float SkillCooltime { get { return SkillData.Cooltime; } }
+    public float SkillRadius { get { return SkillData.HitRadius; } }
+    public float SkillCastRange { get{ return SkillData.CastingRange; } } 
     public bool Obtained { get; private set; }
-    public ESkillType SkillType { get; private set; }
 
     public void ObtainSkill() { Obtained = true; }
     public SkillInfo(SkillScriptable _scriptable)
     {
-        SkillID = _scriptable.ID;
-        SkillType = _scriptable.SkillType;
-        SkillName = _scriptable.SkillName;
-        SkillDescription = _scriptable.Description;
-        SkillCooltime = _scriptable.Cooltime;
-        SkillRadius = 5;
-        SkillCastRange = 15;
+        SkillData = _scriptable;
+        Obtained = false;
     }
 }
 

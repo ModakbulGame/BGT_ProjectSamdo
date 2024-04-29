@@ -5,9 +5,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerUIScript : MonoBehaviour
 {
+    private RectTransform m_rect;
+    private Canvas m_uiCanvas;
+
     private PlayerImgUIScript m_imgUI;                      // 플레이어 이미지 UI
     private PlayerInfoUIScript m_infoUI;                    // 플레이어 정보(아이템, 특성 등) UI
     private PlayerMaterialUIScript m_materialUI;            // 플레이어 재료 UI
+    [SerializeField]
+    private ItemInfoUIScript m_itemInfoUI;                  // 아이템 정보 팝업 UI
 
     private bool Opened { get; set; }                       // 열린 적 있는지 (처음 열리는지 확인용)
 
@@ -37,15 +42,36 @@ public class PlayerUIScript : MonoBehaviour
         m_imgUI.UpdatePlayerWeapon(PlayManager.CurWeapon);
     }
 
+
+    public void ShowItemInfoUI(SItem _item)
+    {
+        m_itemInfoUI.ShowUI(_item);
+    }
+    public void SetItemInfoUIPos(Vector2 _pos)
+    {
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(m_rect, _pos, m_uiCanvas.worldCamera, out Vector2 pos);
+        m_itemInfoUI.SetPos(pos);
+    }
+    public void HideItemInfoUI()
+    {
+        m_itemInfoUI.HideUI();
+    }
+
+
+
     public void CloseUI() { GameManager.SetControlMode(EControlMode.THIRD_PERSON); gameObject.SetActive(false); }      // 닫기
 
 
     private void SetComps()
     {
+        m_rect = GetComponent<RectTransform>();
+        m_uiCanvas = GetComponentInParent<Canvas>();
+
         m_imgUI = GetComponentInChildren<PlayerImgUIScript>();
         m_infoUI = GetComponentInChildren<PlayerInfoUIScript>();
         m_materialUI = GetComponentInChildren<PlayerMaterialUIScript>();
 
+        m_imgUI.SetParent(this);
         m_imgUI.SetComps();
         m_infoUI.SetParent(this);
         m_infoUI.SetComps();
