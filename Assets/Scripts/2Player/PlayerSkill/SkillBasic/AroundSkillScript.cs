@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class AroundSkillScript:PlayerSkillScript
+public class AroundSkillScript: PlayerSkillScript
 {
     [SerializeField]
     private float m_damgeTimeGet = 0.5f;
@@ -16,6 +16,11 @@ public class AroundSkillScript:PlayerSkillScript
         if (m_hitTimeCount.ContainsKey(_hittable)) 
             return;
         m_hitTimeCount[_hittable] = m_damgeTimeGet;
+    }
+
+    private void OnTriggerStay(Collider _other)
+    {
+        CheckSkillTrigger(_other);
     }
 
     private void CheckTime()
@@ -31,12 +36,12 @@ public class AroundSkillScript:PlayerSkillScript
                 removeList.Add(key);
             }
         }
-        for(int i=0;i<removeList.Count;i++)
+        for (int i = 0; i<removeList.Count; i++)
         {
             m_hitObjects.Remove(removeList[i]);
             m_hitTimeCount.Remove(removeList[i]);
+            Debug.Log(removeList[i]);
         }
-        
     }
 
     public override void ReleaseTopool()
@@ -45,7 +50,7 @@ public class AroundSkillScript:PlayerSkillScript
         m_hitTimeCount.Clear();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         CheckTime();
     }

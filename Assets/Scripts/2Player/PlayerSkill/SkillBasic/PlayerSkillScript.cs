@@ -39,10 +39,14 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
 
     private void OnTriggerEnter(Collider _other)
     {
+        CheckSkillTrigger(_other);
+    }
+    public virtual void CheckSkillTrigger(Collider _other)
+    {
         IHittable hittable = _other.GetComponentInParent<IHittable>();
         hittable ??= _other.GetComponentInChildren<IHittable>();
-        if(hittable == null) { return; }
-        if(hittable.IsPlayer) { return; }
+        if (hittable == null) { return; }
+        if (hittable.IsPlayer) { return; }
         Vector3 point = _other.ClosestPoint(transform.position);
         GiveDamage(hittable, point);
         CollideTarget();

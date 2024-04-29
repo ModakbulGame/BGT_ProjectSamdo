@@ -40,7 +40,7 @@ public class SkillManager : MonoBehaviour
 
 
     private readonly ESkillName[] m_skillSlot = new ESkillName[ValueDefine.MAX_SKILL_SLOT]
-    { ESkillName.SAMPLE1,ESkillName.SAMPLE2,ESkillName.SAMPLE3};              // 임시 설정
+    { ESkillName.SAMPLE1,ESkillName.AROUND,ESkillName.SAMPLE3};              // 임시 설정
     public ESkillName[] SkillSlot { get { return m_skillSlot; } }
 
     public void RegisterSkillSlot(ESkillName _skill, int _idx) { m_skillSlot[_idx] = _skill; }
