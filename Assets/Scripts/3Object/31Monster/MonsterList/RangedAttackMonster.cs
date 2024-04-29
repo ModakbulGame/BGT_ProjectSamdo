@@ -29,17 +29,17 @@ public class RangedAttackMonster : MonsterScript
     private void InitPool()
     {
         m_attackPool = new(OnPoolCreate, OnPoolGet, OnPoolRelease, OnPoolDestroy, true, m_attackMaxNum, m_attackMaxNum);
-        for (int i = 0; i<m_attackMaxNum; i++) { GameObject skurraby = OnPoolCreate(); skurraby.GetComponent<MonsterProjectileScript>().ReleaseTopool(); }
+        for (int i = 0; i<m_attackMaxNum; i++) { GameObject obj = OnPoolCreate(); obj.GetComponent<MonsterProjectileScript>().ReleaseTopool(); }
     }
     private GameObject OnPoolCreate()
     {
-        GameObject skurraby = Instantiate(m_normalAttacks[0], transform);
-        skurraby.GetComponent<MonsterProjectileScript>().SetPool(m_attackPool);
-        return skurraby;
+        GameObject obj = Instantiate(m_normalAttacks[0], transform);
+        obj.GetComponent<MonsterProjectileScript>().SetPool(m_attackPool);
+        return obj;
     }
-    private void OnPoolGet(GameObject _skurraby) { _skurraby.SetActive(true); }
-    private void OnPoolRelease(GameObject _skurraby) { _skurraby.transform.SetParent(transform); _skurraby.SetActive(false); }
-    private void OnPoolDestroy(GameObject _skurraby) { Destroy(_skurraby); }
+    private void OnPoolGet(GameObject _obj) { _obj.SetActive(true); }
+    private void OnPoolRelease(GameObject _obj) { _obj.transform.SetParent(transform); _obj.SetActive(false); }
+    private void OnPoolDestroy(GameObject _obj) { Destroy(_obj); }
 
 
     public override void Awake()

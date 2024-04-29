@@ -75,9 +75,40 @@ public enum EThrowItemName
 
 public enum EOtherItemName
 {
-    GREEN_FORCE,
-    GOBLIN_FENG,
-    BOMBCRAB_CORE,
+    O101,
+    O102,
+    O103,
+    O104,
+    O201,
+    O202,
+    O203,
+    O204,
+    O301,
+    O302,
+    O303,
+    O304,
+    O305,
+    O501,
+    O502,
+    O503,
+    O504,
+    O505,
+    O506,
+    O507,
+    O508,
+    O509,
+    O510,
+    O511,
+    O512,
+    O513,
+    O514,
+    O515,
+    O516,
+    O517,
+    O518,
+    O519,
+    O520,
+
     LAST
 }
 
