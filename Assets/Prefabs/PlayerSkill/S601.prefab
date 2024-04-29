@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3453449034480871378}
-  - component: {fileID: -9083002836307382876}
+  - component: {fileID: 3139223302160957592}
   - component: {fileID: 543610410100139677}
   - component: {fileID: -2832660617897266681}
   m_Layer: 0
-  m_Name: S771
+  m_Name: S601
   m_TagString: PlayerSkill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 2326989600653863936}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-9083002836307382876
+--- !u!114 &3139223302160957592
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,10 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bfe5192c7b76464792017160e6aef59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ccType: 7
-  m_scriptable: {fileID: 11400000, guid: 04d9e878524ff9d47884dfa25a28ce5d, type: 2}
+  m_ccType: 0
+  m_scriptable: {fileID: 11400000, guid: 7182a15dc297b144bb16377d80e07122, type: 2}
   m_lastTime: 3
-  m_delay: 1
+  m_damgeTimeGet: 0.5
 --- !u!135 &543610410100139677
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -70,7 +70,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 3
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &-2832660617897266681
 Rigidbody:
