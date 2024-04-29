@@ -60,6 +60,7 @@ public partial class PlayerController
     public void RollAnim() { m_anim.SetTrigger("ROLL"); }
     public void ThrowAnim() { m_anim.SetTrigger("THROW"); }
     public void FallAnim() { m_anim.SetTrigger("FALL"); }
+    public void LandAnim() { m_anim.SetTrigger("LAND"); }
     public void ResetAnim() { m_anim.SetTrigger("RESET"); }
     public override void HitAnimation()
     {

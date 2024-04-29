@@ -112,6 +112,24 @@ public partial class PlayerController
     }
 
 
+    private const float LAND_VELOCITY = -15;
+    private const float FALL_DAMAGE_VELOCITY = -20;
+    private const float FALL_DEATH_VELOCITY = -44;
+    public void PlayerLand(float _velocity)
+    {
+        if (_velocity <= FALL_DEATH_VELOCITY) { GetDamage(MaxHP); }
+        else if (_velocity <= FALL_DAMAGE_VELOCITY) 
+        {
+            LandAnim();
+            float ratio = 0.125f + Mathf.Round(7 * (FALL_DAMAGE_VELOCITY - _velocity) * 0.125f / 24);
+            GetDamage(MaxHP * ratio);
+        }
+        else if (_velocity <= LAND_VELOCITY) { LandAnim(); }
+    }
+
+
+
+
     public void TeleportPlayer(Vector3 _pos)
     {
         transform.position = _pos;

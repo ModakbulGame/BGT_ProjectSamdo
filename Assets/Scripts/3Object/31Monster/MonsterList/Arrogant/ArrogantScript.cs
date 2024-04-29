@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class ArrogantScript : MonsterScript
 {
-
+    public override void AttackTriggerOn()
+    {
+        base.AttackTriggerOn();
+        AttackObject.SetDamage(Attack);
+    }
 }

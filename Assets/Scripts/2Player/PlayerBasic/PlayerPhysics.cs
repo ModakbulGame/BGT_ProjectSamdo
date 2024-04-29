@@ -19,12 +19,18 @@ public partial class PlayerController
 
     // 바닥
     private bool PrevGrounded { get; set; }
+    private float MaxFallPower { get; set; } = 0;
     public bool IsGrounded { get; private set; }
-    private float GroundCheckerThrashold = 0.1f;                        // IsGrounded Ȯ�� ����
+    private float GroundCheckerThrashold = 0.1f;                        // IsGrounded 확인 범위
     private void CheckGrounded()
     {
         PrevGrounded = IsGrounded;
+        MaxFallPower = m_rigid.velocity.y < 0 ? m_rigid.velocity.y : MaxFallPower;
         IsGrounded = Physics.CheckSphere(Position, GroundCheckerThrashold, ValueDefine.GROUND_LAYER);
+        if (IsGrounded && !PrevGrounded)
+        {
+            PlayerLand(MaxFallPower);
+        }
     }
 
 
