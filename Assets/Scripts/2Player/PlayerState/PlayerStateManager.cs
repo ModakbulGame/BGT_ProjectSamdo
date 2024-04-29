@@ -7,6 +7,7 @@ public enum EPlayerState
     IDLE,
     MOVE,
     JUMP,
+    FALL,
     ATTACK,
     SKILL,
     ROLL,

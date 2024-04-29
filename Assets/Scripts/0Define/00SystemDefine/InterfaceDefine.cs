@@ -13,6 +13,7 @@ public interface IHittable          // 데미지를 입을 수 있는 오브젝트들이 공통적
 {
     public bool IsPlayer { get; }
     public bool IsMonster { get; }
+    public GameObject HittableObj { get; }
     public void GetHit(HitData _hit);   // 데미지 받기 => 타격 지점이나 방향은 추후 필요 시 추가
 }
 
