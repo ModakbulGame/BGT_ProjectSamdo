@@ -26,7 +26,7 @@ public partial class PlayerController
             if (script == null || !script.CanInteract) { continue; }                    // 스크립트가 없거나 상호작용 불가능인 경우
             interact = script;
         }
-        if (interact != m_interactableObject)                                       // 대상이 바뀐 경우
+        if (interact != null && interact != m_interactableObject)                                       // 대상이 바뀐 경우
         {
             if(m_interactableObject != null)
                 m_interactableObject.DisableInteract();

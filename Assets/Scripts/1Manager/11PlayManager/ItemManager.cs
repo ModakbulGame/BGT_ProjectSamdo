@@ -21,6 +21,22 @@ public struct SItem             // 아이템 구조체
     public readonly override int GetHashCode() { return HashCode.Combine(Type, Idx); }
 }
 
+
+[Serializable]
+public struct DropInfo
+{
+    public List<SDropItem> Items;
+    public int StatPoint;
+    public int Soul;
+    public int Purified;
+    public DropInfo(List<SDropItem> _items, int _stat, int _soul, int _purified) 
+    {
+        Items = new();
+        foreach (SDropItem item in _items) { Items.Add(item); }
+        StatPoint = _stat; Soul = _soul; Purified = _purified;
+    }
+}
+
 [Serializable]
 public struct SDropItem         // 드랍 아이템 구조체
 {
@@ -83,7 +99,7 @@ public class ItemManager : MonoBehaviour
 
     // 드랍 아이템
     [SerializeField]
-    private GameObject[] m_dropItemPrefab = new GameObject[3];
+    private GameObject[] m_dropItemPrefab = new GameObject[(int)EItemType.LAST];
     public GameObject GetDropItemPrefab(EItemType _item) { return m_dropItemPrefab[(int)_item]; }
 
 

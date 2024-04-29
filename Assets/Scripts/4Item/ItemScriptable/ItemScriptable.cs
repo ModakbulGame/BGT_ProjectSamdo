@@ -6,7 +6,6 @@ public class ItemScriptable : ScriptableObject
 {
     public uint     Idx;
     public string   ID;
-    public string   ItemType;
     public string   ItemName;
     public string   Description;
     public float    DropRate;
@@ -17,7 +16,6 @@ public class ItemScriptable : ScriptableObject
     {
         Idx =           _idx;
         ID =            _data[(int)EItemAttribute.ID];
-        ItemType =      _data[(int)EItemAttribute.TYPE];
         ItemName =      _data[(int)EItemAttribute.NAME];
         Description =   _data[(int)EItemAttribute.DESCRIPTION];
         float.TryParse( _data[(int)EItemAttribute.DROP_RATE],   out DropRate);

@@ -24,13 +24,10 @@ public static class DataImporter
         ItemScriptablePath + "ThrowItem/",
         ItemScriptablePath + "Others/"          };
 
-    private const string DropInfoScriptablePath = ScriptablePath + "DropInfoScriptable/";
-
     private const string SkillScriptablePath = ScriptablePath + "SkillScriptable/";
 
     // 프리펍 경로
     private const string PrefabPath = "Assets/Prefabs/";
-    private const string ManagerPrefabPath = PrefabPath + "System/";
     private const string MonsterPrefabPath = PrefabPath + "Monster/";
     private const string ItemPrefabPath = PrefabPath + "Item/";
     private readonly static string[] ItemPrefabPaths = new string[(int)EItemType.LAST] {
@@ -48,28 +45,28 @@ public static class DataImporter
         // 드랍 정보
         string[] allDropLines = File.ReadAllLines(CSVPath + DropCSVName);
 
-        Dictionary<string, List<SDropItem>> dropInfos = new();
+        Dictionary<string, DropInfo> dropInfos = new();
 
         for (uint i = 1; i < allDropLines.Length; i++)
         {
             string si = allDropLines[i];
             string[] splitDropData = si.Split(',');
 
-            string id = splitDropData[0];
-            List<SDropItem> dropInfo = new()            // 임시 설정
+            string id = splitDropData[(int)EDropAttribute.MONSTER];
+            int.TryParse(splitDropData[(int)EDropAttribute.STAT], out int stat);
+            int.TryParse(splitDropData[(int)EDropAttribute.SOUL], out int soul);
+            int.TryParse(splitDropData[(int)EDropAttribute.PURIFIED], out int purified);
+            List<SDropItem> items = new();
+            for (int j = 0; j<4; j++)
             {
+                string item = splitDropData[(int)EDropAttribute.ITEM1 + j * 2];
+                if(item == "") { continue; }
+                float.TryParse(splitDropData[(int)EDropAttribute.RATE1 + j * 2], out float rate);
+                SDropItem drop = new(item, rate);
+                items.Add(drop);
+            }
 
-                new("P101", 0.1f),
-                new("P201", 0.1f),
-                new("P301", 0.1f)
-
-                //new(splitDropData[1], float.TryParse(splitDropData[6])),
-                //new(splitDropData[2], float.TryParse(splitDropData[7])),
-                //new(splitDropData[3], float.TryParse(splitDropData[8])),
-                //new(splitDropData[4], float.TryParse(splitDropData[9])),
-                //new(splitDropData[5], float.TryParse(splitDropData[10]))      // 이게 맞나...
-
-            };
+            DropInfo dropInfo = new(items, stat, soul, purified);
             dropInfos[id] = dropInfo;
         }
 

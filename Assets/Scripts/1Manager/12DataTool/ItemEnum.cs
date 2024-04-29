@@ -90,3 +90,21 @@ public enum EItemName       // 무기 제외 아이템 이름
 
     LAST
 }
+
+public enum EDropAttribute
+{
+    MONSTER,
+    ITEM1,
+    RATE1,
+    ITEM2,
+    RATE2,
+    ITEM3,
+    RATE3,
+    ITEM4,
+    RATE4,
+    STAT,
+    SOUL,
+    PURIFIED,
+
+    LAST
+}

@@ -245,7 +245,6 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
                 break;
             case EMonsterDeathType.BY_PLAYER:   // 플레이어
                 PlayManager.AddSoul(1);
-                DropItems();
                 break;
             case EMonsterDeathType.BY_MONSTER:  // 몬스터
 
@@ -258,7 +257,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
     public void DropItems()             // 아이템 드랍
     {
-        List<SDropItem> drops = m_scriptable.DropItemInfo;
+        List<SDropItem> drops = m_scriptable.DropInfo.Items;
         foreach(SDropItem drop in drops)
         {
             if (UnityEngine.Random.Range(0f, 1f) <= drop.Prob)

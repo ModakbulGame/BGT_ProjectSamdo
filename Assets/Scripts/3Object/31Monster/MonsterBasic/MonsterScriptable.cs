@@ -22,9 +22,9 @@ public class MonsterScriptable : ScriptableObject
     public float            ApproachDelay;
     public float            FenceRange;
     public string           Description;
-    public List<SDropItem>  DropItemInfo;
+    public DropInfo         DropInfo;
 
-    public void SetMonsterScriptable(uint _idx, string[] _data, List<SDropItem> _dropItem)
+    public void SetMonsterScriptable(uint _idx, string[] _data, DropInfo _drop)
     {
         Idx =           _idx;
         MonsterEnum =   (EMonsterName)_idx;
@@ -45,7 +45,6 @@ public class MonsterScriptable : ScriptableObject
         float.TryParse( _data[(int)EMonsterAttribue.FENCE_RANGE],       out FenceRange);
         Description =   _data[(int)EMonsterAttribue.DESCRIPTION];
 
-        DropItemInfo = new();
-        foreach (SDropItem item in _dropItem) { DropItemInfo.Add(item); }
+        DropInfo =      _drop;
     }
 }

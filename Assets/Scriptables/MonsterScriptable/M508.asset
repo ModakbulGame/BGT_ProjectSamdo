@@ -30,10 +30,12 @@ MonoBehaviour:
   ApproachDelay: 1
   FenceRange: 25
   Description: "\uBB3C \uB545\uACE0\uC591\uC774"
-  DropItemInfo:
-  - ID: P101
-    Prob: 0.1
-  - ID: P201
-    Prob: 0.1
-  - ID: P301
-    Prob: 0.1
+  DropInfo:
+    Items:
+    - ID: O508
+      Prob: 0.5
+    - ID: P201
+      Prob: 0.2
+    StatPoint: 2
+    Soul: 10
+    Purified: 10
