@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -19,7 +20,23 @@ public class ItemInfoUIScript : MonoBehaviour
         gameObject.SetActive(true);
         m_nameTxt.text = info.ItemName;
         m_descTxt.text = info.ItemDescription;
-        m_elseTxt.text = "어쩌구 저쩌구";
+        m_elseTxt.text = SetItemInfo(info);
+    }
+    public string SetItemInfo(ItemInfo _info)
+    {
+        string itemTxt = "";
+
+        if (_info.WeaponData != null)
+        {
+            itemTxt = "공격력 : " + _info.Attack.Min.ToString() + " ~ " + _info.Attack.Max.ToString() + '\n' + "마법 공격력 : " + _info.Magic.Min.ToString() + " ~ " + _info.Magic.Max.ToString() + '\n'
+                + "공격속도 : " + _info.AttackSpeed.ToString(); 
+        }
+        else if (_info.ThrowItemData != null)
+        {
+            itemTxt = "데미지 : " + _info.ThrowDamage.ToString() + '\n' + "투척속도 : " + _info.ThrowSpeed.ToString() + '\n' + "대기시간 : " + _info.ExplodeTime.ToString();
+        }
+
+        return itemTxt;
     }
     public void SetPos(Vector2 _pos)
     {
@@ -29,7 +46,6 @@ public class ItemInfoUIScript : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-
 
     public void SetComps()
     {
