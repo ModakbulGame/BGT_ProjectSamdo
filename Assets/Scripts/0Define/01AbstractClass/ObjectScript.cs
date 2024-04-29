@@ -53,8 +53,6 @@ public abstract class ObjectScript : MonoBehaviour, IHittable
 
     public virtual ObjectAttackScript AttackObject { get; set; }    // 부속 공격 판정
 
-    public GameObject HittableObj { get { return gameObject; } }
-
     // 정보
     [SerializeField]
     protected ObjectBaseInfo m_baseInfo = new();                // 기본 정보

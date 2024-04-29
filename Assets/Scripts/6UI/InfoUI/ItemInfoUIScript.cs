@@ -26,14 +26,24 @@ public class ItemInfoUIScript : MonoBehaviour
     {
         string itemTxt = "";
 
-        if (_info.WeaponData != null)
+        switch (_info.ItemType)
         {
-            itemTxt = "공격력 : " + _info.Attack.Min.ToString() + " ~ " + _info.Attack.Max.ToString() + '\n' + "마법 공격력 : " + _info.Magic.Min.ToString() + " ~ " + _info.Magic.Max.ToString() + '\n'
-                + "공격속도 : " + _info.AttackSpeed.ToString(); 
-        }
-        else if (_info.ThrowItemData != null)
-        {
-            itemTxt = "데미지 : " + _info.ThrowDamage.ToString() + '\n' + "투척속도 : " + _info.ThrowSpeed.ToString() + '\n' + "대기시간 : " + _info.ExplodeTime.ToString();
+            case EItemType.WEAPON:
+                WeaponScriptable weapon = _info.ItemData as WeaponScriptable;
+                itemTxt = $"공격력 : {weapon.Attack.Min} ~ {weapon.Attack.Max}\n마법 공격력 : {weapon.Magic.Min} ~ {weapon.Magic.Max}\n공격속도 : {weapon.AttackSpeed}";
+                break;
+            case EItemType.THROW:
+                ThrowItemScriptable throwItem = _info.ItemData as ThrowItemScriptable;
+                itemTxt = $"데미지 : {throwItem.ThrowDamage}\n비행속도 : {throwItem.ThrowSpeed}\n폭발 딜레이 : {throwItem.ExplodeTime}";
+                break;
+            case EItemType.PATTERN:
+                PatternScriptable pattern = _info.ItemData as PatternScriptable;
+
+                break;
+            case EItemType.OTHERS:
+                OtherItemScriptable other = _info.ItemData as OtherItemScriptable;
+
+                break;
         }
 
         return itemTxt;

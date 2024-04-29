@@ -49,21 +49,12 @@ public struct SDropItem         // 드랍 아이템 구조체
 public class ItemInfo
 {
     public ItemScriptable ItemData { get; private set; }
-    public WeaponScriptable WeaponData { get; private set; }
-    public ThrowItemScriptable ThrowItemData { get; private set; }
     public string ItemID { get { return ItemData.ID; } }                    // 공통 필드
     public string ItemName { get { return ItemData.ItemName; } }
+    public EItemType ItemType { get; private set; }
     public string ItemDescription { get { return ItemData.Description; } }
     public SItem Item { get; private set; }
     public bool Obtained { get; private set; }
-
-    public FRange Attack { get { return WeaponData.Attack; } }              // 무기 필드
-    public FRange Magic { get { return WeaponData.Magic; } }
-    public float AttackSpeed { get { return WeaponData.AttackSpeed; } }
-
-    public float ThrowDamage { get { return ThrowItemData.ThrowDamage; } }  // 투척 아이템 필드
-    public float ThrowSpeed { get { return ThrowItemData.ThrowSpeed; } }
-    public float ExplodeTime { get { return ThrowItemData.ExplodeTime; } }
 
     public void ObtainItem() { Obtained = true; }
 
@@ -71,15 +62,8 @@ public class ItemInfo
     {
         ItemData = _scriptable;
         Item = _item;
+        ItemType = _item.Type;
         Obtained = false;
-    }
-    public ItemInfo(WeaponScriptable _scriptable, SItem _item) : this(_scriptable as ItemScriptable, _item)
-    {
-        WeaponData = _scriptable;
-    }
-    public ItemInfo(ThrowItemScriptable _scriptable, SItem _item) : this(_scriptable as ItemScriptable, _item)
-    {
-        ThrowItemData = _scriptable;
     }
 }
 
@@ -268,25 +252,7 @@ public class ItemManager : MonoBehaviour
             {
                 SItem item = new(type, j);
                 ItemScriptable scriptable = GameManager.GetItemRawData(item);
-                //m_itemInfo[item] = new(scriptable, item);
-                switch (scriptable)
-                {
-                    case WeaponScriptable weaponScriptable:
-                        m_itemInfo[item] = new ItemInfo(weaponScriptable, item);
-                        break;
-                    case PatternScriptable patternScriptable:
-                        m_itemInfo[item] = new ItemInfo(patternScriptable, item);
-                        break;
-                    case ThrowItemScriptable throwItemScriptable:
-                        m_itemInfo[item] = new ItemInfo(throwItemScriptable, item);
-                        break;
-                    case OtherItemScriptable otherItemScriptable:
-                        m_itemInfo[item] = new ItemInfo(otherItemScriptable, item);
-                        break;
-                    default:
-                        m_itemInfo[item] = new(scriptable, item);
-                        break;
-                }
+                m_itemInfo[item] = new(scriptable, item);
             }
         }
 

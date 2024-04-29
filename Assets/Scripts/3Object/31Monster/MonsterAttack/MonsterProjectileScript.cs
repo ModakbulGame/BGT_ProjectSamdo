@@ -8,8 +8,6 @@ public class MonsterProjectileScript : ObjectAttackScript, IHittable, IPoolable
 {
     protected Rigidbody m_rigid;
 
-    public GameObject HittableObj { get { return gameObject; } }
-
     [SerializeField]
     private float m_moveSpeed = 6;
     [SerializeField]
