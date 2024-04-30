@@ -35,16 +35,19 @@ public class BuffNDebuff
     public EAdjType AdjType { get { return m_adjInfo.Type; } }
     public float Amount { get { return m_adjInfo.Amount; } }
     public bool IsBuff { get { return m_adjInfo.Amount > 0; } }
+    [SerializeField]
     private float m_timeCount;
     public float TimeCount { get { return m_timeCount; } private set { m_timeCount = value; } }
     public void SetTimeCount(float _time) { TimeCount = _time; }
+    public void SetAmount(float _amount) { m_adjInfo.Amount = _amount; }
     public void SetReset(FPointer _reset) { m_resetFunction = _reset; }
     public bool ProcTime()
     {
         TimeCount -= Time.deltaTime;
         if (TimeCount <= 0)
         {
-            m_resetFunction();
+            if(m_resetFunction != null)
+                m_resetFunction();
             return true;
         }
         return false;
@@ -52,7 +55,7 @@ public class BuffNDebuff
     private FPointer m_resetFunction;
     public BuffNDebuff(StatAdjust _adj, FPointer _reset)
     {
-        m_adjInfo = _adj; m_resetFunction = _reset;
+        m_adjInfo = _adj; m_resetFunction = _reset; SetTimeCount(_adj.Time);
     }
 }
 
@@ -121,7 +124,9 @@ public abstract partial class ObjectScript
     public float Defense { get { return CombatInfo.Defense; } }                     // 방어력
 
 
-    public float DamageMultiplier { get; protected set; } = 1;
+    [SerializeField]
+    private float m_dm = 1;
+    public float DamageMultiplier { get { return m_dm; } protected set { m_dm = value; } }
     public float AttackMultiplier { get; protected set; } = 1;
     public float MagicMultiplier { get; protected set; } = 1;
 
@@ -132,13 +137,13 @@ public abstract partial class ObjectScript
 
     // 버프 디버프 정보
     [SerializeField]
-    private readonly List<BuffNDebuff> m_buffNDebuff = new();
+    private List<BuffNDebuff> m_buffNDebuff = new();
     public virtual void GetStatAdjust(StatAdjust _adjust)
     {
         BuffNDebuff info = null;
         float replace;
         replace = GetBuffed(_adjust);
-        if (replace != 0) info = new(_adjust, delegate { SetMultiplier(_adjust.Type, replace); });
+        if (replace != 0) info = new(_adjust, delegate { ResetMultiplier(_adjust.Type, _adjust.Amount > 0); });
 
         if (info != null) m_buffNDebuff.Add(info);
     }
@@ -149,11 +154,13 @@ public abstract partial class ObjectScript
         float amount = _adj.Amount;
         bool isBuff = amount > 0;
         float time = _adj.Time;
+        bool exist = false;
         for (int i = 0; i<m_buffNDebuff.Count; i++)
         {
             BuffNDebuff buff = m_buffNDebuff[i];
             if (buff.IsBuff != isBuff) { continue; }
             if (buff.AdjType != type) { continue; }
+            exist = true;
 
             if (buff.Amount == amount)
             {
@@ -164,16 +171,30 @@ public abstract partial class ObjectScript
             {
                 SetMultiplier(type, amount);
                 if (buff.TimeCount > time) { return amount; }
-                else if (buff.TimeCount < time) { buff.SetTimeCount(time); }
+                else if (buff.TimeCount < time) { buff.SetAmount(amount); buff.SetTimeCount(time); return 0; }
+                else { buff.SetAmount(amount); return 0; }
             }
             else
             {
                 if (buff.TimeCount >= time) { return 0; }
             }
         }
+        if (!exist) { SetMultiplier(type, amount); }
         return 1;
     }
 
+    private void ResetMultiplier(EAdjType _type, bool _isBuff)
+    {
+        float max = 1;
+        for (int i = 0; i<m_buffNDebuff.Count; i++)
+        {
+            if (m_buffNDebuff[i].AdjType != _type || m_buffNDebuff[i].IsBuff != _isBuff || m_buffNDebuff[i].TimeCount <= 0)
+                continue;
+            float amount = m_buffNDebuff[i].Amount;
+            if ((_isBuff && max < amount) || (!_isBuff && max > amount)) { max = m_buffNDebuff[i].Amount; }
+        }
+        SetMultiplier(_type, max);
+    }
     private void SetMultiplier(EAdjType _type, float _multiplier)
     {
         switch (_type)

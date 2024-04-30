@@ -72,8 +72,10 @@ public class BattleDebugger : MonoBehaviour
     private bool ShowingCreateMonster { get; set; }
     private void ShowCreateMonster()
     {
-        int height = 32 * (MonsterCount / 2 + 2) + 8;
-        GUI.Box(new Rect(20, 100, 280, height), "몬스터 생성");
+        if(GUI.Button(new Rect(20, 50, 280, 50), "취소"))
+        {
+            ShowingCreateMonster = false;
+        }
 
         for (int i = 0; i<MonsterCount; i++)
         {
@@ -85,6 +87,25 @@ public class BattleDebugger : MonoBehaviour
             }
         }
     }
+
+    private float[] m_buffAmount = new float[3] { 1.2f, 1.5f, 2f };
+    private float[] m_buffTime = new float[3] { 5, 10, 20 };
+    private void ShowGetBuff()
+    {
+
+        for (int i = 0; i<3; i++)
+        {
+            for (int j = 0; j<3; j++)
+            {
+                float amount = m_buffAmount[i]; float time = m_buffTime[j];
+                if (GUI.Button(new Rect(20+100*i, 210+60*j, 96, 50), $"데미지 x{amount} {time}초"))
+                {
+                    PlayManager.TempGetBuff(amount, time);
+                }
+            }
+        }
+    }
+
 
     private void CreateMonster(int _idx)
     {
@@ -137,9 +158,13 @@ public class BattleDebugger : MonoBehaviour
         {
             ShowCreateMonster();
         }
-        else if(GUI.Button(new Rect(20, 100, 150, 50), "몬스터 생성"))
+        else
         {
-            ShowingCreateMonster = !ShowingCreateMonster;
+            if (GUI.Button(new Rect(20, 50, 150, 50), "몬스터 생성"))
+            {
+                ShowingCreateMonster = true;
+            }
+            ShowGetBuff();
         }
     }
 }
