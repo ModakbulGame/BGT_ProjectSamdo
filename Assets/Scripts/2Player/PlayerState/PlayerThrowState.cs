@@ -45,10 +45,6 @@ public class PlayerThrowState : MonoBehaviour, IPlayerState
             Vector3 force = m_player.PlayerAimVector * m_player.ThrowPower;
             PlayManager.DrawThrowLine(force, 0.1f, m_player.ThrowOffset);
         }
-        else                    // 던지는 중일 때
-        {
-            m_player.CheckThrowDone();
-        }
     }
 
     public void FixedProceed()

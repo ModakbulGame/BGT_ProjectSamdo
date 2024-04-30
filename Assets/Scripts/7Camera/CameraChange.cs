@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraChange : PlayerCameraScript
+public class CameraChange : MonoBehaviour
 {
     private CinemachineFreeLook m_primaryCamera;
     private CinemachineFreeLook m_currentCamera;

@@ -9,7 +9,7 @@ public partial class PlayerController
     {
         switch (_other.tag)
         {
-            case ValueDefine.MONSTER_ATTACK_TAG:
+            case ValueDefine.MONSTER_ATTACK_TAG:            // 몬스터 공격 맞음
                 ObjectAttackScript attack = _other.GetComponent<ObjectAttackScript>();
                 if(attack == null) { Debug.LogError("공격 스크립트 없음"); return; }
                 if(!attack.IsAttacking) { return; }

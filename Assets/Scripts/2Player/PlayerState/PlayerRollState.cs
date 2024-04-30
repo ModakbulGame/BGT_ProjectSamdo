@@ -18,8 +18,8 @@ public class PlayerRollState : MonoBehaviour, IPlayerState
         RollDirection = m_player.InputVector;
         if(RollDirection == Vector2.zero) { RollDirection = Vector2.up; }
 
-        m_player.RollAction();
-        TimeCount = PlayerController.ROLLING_TIME;
+        m_player.StartRoll();
+        TimeCount = m_player.RollingTime;
     }
 
     public void Proceed()
@@ -30,7 +30,7 @@ public class PlayerRollState : MonoBehaviour, IPlayerState
 
     public void FixedProceed()
     {
-        m_player.GroundMove(RollDirection, PlayerController.ROLL_MULTIPLIER);
+        m_player.GroundMove(RollDirection, m_player.RollMultiplier);
         m_player.RotateDirection(RollDirection);
     }
 }

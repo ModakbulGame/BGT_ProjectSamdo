@@ -4,9 +4,7 @@ using UnityEngine;
 
 public partial class PlayerController
 {
-    private const float FLOOR_FRICTION = 0.3f;
-
-
+    // 물리 방향
     private Vector3 PlayerForward { get; set; }
     private Vector3 GlobalForward { get; set; }
     private Vector3 ReactionForward { get; set; }
@@ -14,29 +12,30 @@ public partial class PlayerController
     private Vector3 GlobalDown { get; set; }
     private Vector3 ReactionDown { get; set; }
     private float TargetAngle { get; set; }
-    private float HalfHeight { get { return ObjectHeight / 2; } }
 
 
     // 바닥
+    private readonly float FloorFriction = 0.3f;
+
     private bool PrevGrounded { get; set; }
     private float MaxFallPower { get; set; } = 0;
-    public bool IsGrounded { get; private set; }
-    private float GroundCheckerThrashold = 0.1f;                        // IsGrounded 확인 범위
-    private void CheckGrounded()
+
+    public override void CheckGrounded()
     {
         PrevGrounded = IsGrounded;
         MaxFallPower = m_rigid.velocity.y < 0 ? m_rigid.velocity.y : MaxFallPower;
-        IsGrounded = Physics.CheckSphere(Position, GroundCheckerThrashold, ValueDefine.GROUND_LAYER);
+
+        base.CheckGrounded();
 
         if (IsGrounded && !PrevGrounded)
         {
             PlayerLand(MaxFallPower);
         }
-        else if (!IsGrounded && PrevGrounded)
+        else if (!IsGrounded && PrevGrounded && m_rigid.velocity.y < FallVelocity)
         {
-            PlayerFall();
+            ChangeState(EPlayerState.FALL);
         }
-        else if (!IsGrounded && !PrevGrounded && MaxFallPower < LAND_VELOCITY && !IsLandAnimReady)
+        else if (!IsGrounded && !PrevGrounded && MaxFallPower < LandVelocity && !IsLandAnimReady)
         {
             ReadyLandAnim();
         }
@@ -44,9 +43,11 @@ public partial class PlayerController
 
 
     // 계단
-    private bool IsTouchingStep = false;
-    private float MaxStepHeight = 0.5f;
-    private float StepCheckerThrashold = 0.6f;
+    private readonly float MaxStepHeight = 0.5f;
+    private readonly float StepCheckerThrashold = 0.6f;
+
+    private bool IsTouchingStep { get; set; } = false;
+
     private void CheckStep()
     {
         bool tmpStep = false;
@@ -58,7 +59,6 @@ public partial class PlayerController
             RaycastHit stepUpperHit;
             if (RoundValue(stepLowerHit.normal.y) == 0 && !Physics.Raycast(bottomStepPos + new Vector3(0f, MaxStepHeight, 0f), GlobalForward, out stepUpperHit, StepCheckerThrashold + 0.05f, ValueDefine.GROUND_LAYER))
             {
-                //m_rigid.position -= new Vector3(0f, -stepSmooth, 0f);
                 tmpStep = true;
             }
         }
@@ -69,7 +69,6 @@ public partial class PlayerController
             RaycastHit stepUpperHit45;
             if (RoundValue(stepLowerHit45.normal.y) == 0 && !Physics.Raycast(bottomStepPos + new Vector3(0f, MaxStepHeight, 0f), Quaternion.AngleAxis(45, Vector3.up) * GlobalForward, out stepUpperHit45, StepCheckerThrashold + 0.05f, ValueDefine.GROUND_LAYER))
             {
-                //m_rigid.position -= new Vector3(0f, -stepSmooth, 0f);
                 tmpStep = true;
             }
         }
@@ -80,7 +79,6 @@ public partial class PlayerController
             RaycastHit stepUpperHitMinus45;
             if (RoundValue(stepLowerHitMinus45.normal.y) == 0 && !Physics.Raycast(bottomStepPos + new Vector3(0f, MaxStepHeight, 0f), Quaternion.AngleAxis(-45, Vector3.up) * GlobalForward, out stepUpperHitMinus45, StepCheckerThrashold + 0.05f, ValueDefine.GROUND_LAYER))
             {
-                //m_rigid.position -= new Vector3(0f, -stepSmooth, 0f);
                 tmpStep = true;
             }
         }
@@ -95,11 +93,14 @@ public partial class PlayerController
         else return _value;
     }
 
+
     // 벽
+    private readonly float WallCheckerDistance = 0.5f;
+    private readonly float WallCheckerThrashold = 0.8f;
+
     private bool IsTouchingWall { get; set; }
     private Vector3 WallNormal { get; set; }
-    private float WallCheckerDistance = 0.5f;
-    private float WallCheckerThrashold = 0.8f;
+
     private void CheckWall()
     {
         bool tmpWall = false;
@@ -123,9 +124,10 @@ public partial class PlayerController
 
 
     // 경사 / 방향
-    private const float SLOPE_RAY_DIST = 0.1f;                          // 경사 탐지 거리
     [SerializeField]
     private float m_maxSlopeAngle = 56;                                 // 최대 오를 수 있는 각도
+    private bool m_lockOnSlope = true;
+    private readonly float SlopeRayDist = 0.1f;                          // 경사 탐지 거리
 
     private AnimationCurve SpeedMultiplierOnAngle = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
     private float CanSlideMultiplierCurve = 0.061f;
@@ -134,7 +136,6 @@ public partial class PlayerController
 
     private Vector3 GroundNormal { get; set; }
     private Vector3 PrevGroundNormal { get; set; }
-    private bool m_lockOnSlope = true;
     private bool CurLockOnSlope { get; set; }
     private float CurSurfaceAngle { get; set; }
     public bool IsOnSlope { get; private set; }                         // 경사 위
@@ -144,7 +145,7 @@ public partial class PlayerController
         PrevGroundNormal = GroundNormal;
 
         RaycastHit slopeHit;
-        if (Physics.SphereCast(transform.position + Vector3.up * HalfHeight, SLOPE_RAY_DIST, Vector3.down, out slopeHit, HalfHeight + 0.5f, ValueDefine.GROUND_LAYER))
+        if (Physics.SphereCast(transform.position + Vector3.up * HalfHeight, SlopeRayDist, Vector3.down, out slopeHit, HalfHeight + 0.5f, ValueDefine.GROUND_LAYER))
         {
             GroundNormal = slopeHit.normal;
 
@@ -155,7 +156,7 @@ public partial class PlayerController
                 GlobalForward = PlayerForward;
                 ReactionForward = PlayerForward;
 
-                FunctionDefine.SetFriction(m_collider, FLOOR_FRICTION, true);
+                FunctionDefine.SetFriction(m_collider, FloorFriction, true);
                 CurLockOnSlope = m_lockOnSlope;
 
                 CurSurfaceAngle = 0f;
@@ -173,17 +174,16 @@ public partial class PlayerController
                     GlobalForward = tmpGlobalForward * ((SpeedMultiplierOnAngle.Evaluate(CurSurfaceAngle / 90f) * CanSlideMultiplierCurve) + 1f);
                     ReactionForward = tmpReactionForward * ((SpeedMultiplierOnAngle.Evaluate(CurSurfaceAngle / 90f) * CanSlideMultiplierCurve) + 1f);
 
-                    FunctionDefine.SetFriction(m_collider, FLOOR_FRICTION, true);
+                    FunctionDefine.SetFriction(m_collider, FloorFriction, true);
                     CurLockOnSlope = m_lockOnSlope;
                 }
                 else if (IsTouchingStep)
                 {
-                    //set forward
                     PlayerForward = tmpForward * ((SpeedMultiplierOnAngle.Evaluate(CurSurfaceAngle / 90f) * ClimbingStairsMultiplierCurve) + 1f);
                     GlobalForward = tmpGlobalForward * ((SpeedMultiplierOnAngle.Evaluate(CurSurfaceAngle / 90f) * ClimbingStairsMultiplierCurve) + 1f);
                     ReactionForward = tmpReactionForward * ((SpeedMultiplierOnAngle.Evaluate(CurSurfaceAngle / 90f) * ClimbingStairsMultiplierCurve) + 1f);
 
-                    FunctionDefine.SetFriction(m_collider, FLOOR_FRICTION, true);
+                    FunctionDefine.SetFriction(m_collider, FloorFriction, true);
                     CurLockOnSlope = true;
                 }
                 else
@@ -216,17 +216,19 @@ public partial class PlayerController
             GlobalDown = Vector3.down.normalized;
             ReactionDown = Vector3.up.normalized;
 
-            FunctionDefine.SetFriction(m_collider, FLOOR_FRICTION, true);
+            FunctionDefine.SetFriction(m_collider, FloorFriction, true);
             CurLockOnSlope = m_lockOnSlope;
         }
     }
 
 
     // 중력 관련
-    private readonly float GravityMultiplier = 3f;
+    private readonly float GravityMultiplier = 2f;
     private readonly float GravityMultiplyerOnSlideChange = 1.5f;
     private readonly float GravityMultiplierIfUnclimbableSlope = 15f;
-    private float CoyoteJumpMultiplier = 1f;
+
+    private float CoyoteJumpMultiplier { get; set; } = 1f;
+
     private void ApplyGravity()                           // 중력 적용
     {
         Vector3 gravity; 

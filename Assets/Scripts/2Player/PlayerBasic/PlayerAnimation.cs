@@ -4,16 +4,11 @@ using UnityEngine;
 
 public partial class PlayerController
 {
-    #region 애니메이션
-    public float UpperAnimState { get { return m_anim.GetCurrentAnimatorStateInfo(UpperLayerIdx).normalizedTime; } }
-
     // 레이어 인덱스
-    private const int BaseLayerIdx = 0;
-    private const int UpperLayerIdx = 1;
+    private const int UpperLayerIdx = 1;                                            // 상체 레이어 번호
 
     // 애니메이션 이름
-    private const string UpperIdleAnimName = "PlayerUpperIdle";
-    private const string ThrowAnimName = "PlayerUpperThrow";
+    private const string UpperIdleAnimName = "PlayerUpperIdle";                     // 상체 기본 애니메이션
 
     // 해쉬 값
     private int MoveXHash;          // MoveTree X 값
@@ -24,80 +19,72 @@ public partial class PlayerController
     private int ThrowReadyHash;     // 던지기 준비 값
     private int SkillHash;          // 스킬 값
 
-    public bool IsUpperAnimOn { get { return m_anim.GetLayerWeight(UpperLayerIdx) == 1; } }
-    private bool IsUpperIdleAnim { get { return FunctionDefine.CheckCurAnimation(m_anim, UpperLayerIdx, UpperIdleAnimName); } }         // 현재 Guard Stop 애니메이션인지
-    private bool IsThrowAnim { get { return FunctionDefine.CheckCurAnimation(m_anim, UpperLayerIdx, ThrowAnimName); } }
-    private bool IsLandAnimReady { get { return m_anim.GetBool(LandHash); } }
+
+    // 애니메이션 상태
+    public bool IsUpperAnimOn { get { return m_anim.GetLayerWeight(UpperLayerIdx) == 1; } }             //  상체 레이어 on
+    private bool IsUpperIdleAnim { get {                                                                // 현재 Guard Stop 애니메이션인지
+            return FunctionDefine.CheckCurAnimation(m_anim, UpperLayerIdx, UpperIdleAnimName); } }
+    private bool IsLandAnimReady { get { return m_anim.GetBool(LandHash); } }                           // 착지 애니메이션 준비 상태
 
 
-    // MoveTree X, Z 설정
-    public void SetMoveAnimation(Vector2 _move) { SetMoveXAnimation(_move.x); SetMoveZAnimation(_move.y); } 
-    private void SetMoveXAnimation(float _x) { m_anim.SetFloat(MoveXHash, _x); }
-    private void SetMoveZAnimation(float _z) { m_anim.SetFloat(MoveZHash, _z); }
-
-
-    // Base Layer 애니메이션
+    // 기본 애니메이션
     public void SetIdleAnimator() { SetMoveXAnimation(0); SetMoveZAnimation(0); AttackProcing = false; AttackStack = 0; }          // IDLE
-    public void StartFallAnim() { m_anim.SetBool(FallHash, true); m_anim.SetBool(LandHash, false); }
-    public void StopFallAnim() { m_anim.SetBool(FallHash, false); }
-    public void ReadyLandAnim() { m_anim.SetBool(LandHash, true); }
-    public void SkillStartAnim() { m_anim.SetBool(SkillHash, true); HideWeapon(); }
-    public void SkillAnimDone() { m_anim.SetBool(SkillHash, false); }
-
-
-
-    // Upper Layer 애니메이션
-    public void UpperAnimStart() { m_anim.SetLayerWeight(UpperLayerIdx, 1); }
-    public void UpperAnimDone() { m_anim.SetLayerWeight(UpperLayerIdx, 0); }
-
-    public void GuardAnimStart() { UpperAnimStart(); m_anim.SetBool(GuardHash, true); }         // 가드 상태로 전환
-    public void GuardAnimStop() { m_anim.SetBool(GuardHash, false); }                           // 가드 해제로 전환
-    public void QuitGuardAnim() { UpperAnimDone(); m_anim.SetBool(GuardHash, false); }          // 가드 서킷브레이크
-
-    public void ReadyThrowAnim() { UpperAnimStart(); m_anim.SetBool(ThrowReadyHash, true); }    // 던지기 준비
-    public void CancelThrowAnim() { UpperAnimDone(); m_anim.SetBool(ThrowReadyHash, false); }   // 던지기 취소
-
-
-    // 트리거 애니메이션
-    public void AttackAnim() { m_anim.SetBool("ATTACK", true); }
-    public void SetAttackAnim(int _idx) { m_anim.SetInteger("ATTACK_COUNT", _idx); }
-    public void AttackOffAnim() { SetAttackAnim(0); }
-    public void SkillFireAnim() { m_anim.SetTrigger("SKILL_FIRE"); }
-    public void JumpAnim() { m_anim.SetTrigger("JUMP"); }
-    public void RollAnim() { m_anim.SetTrigger("ROLL"); }
-    public void ThrowAnim() { m_anim.SetTrigger("THROW"); }
-    public void ResetAnim() { m_anim.SetTrigger("RESET"); }
-    public override void HitAnimation()
+    public void UpperAnimStart() { m_anim.SetLayerWeight(UpperLayerIdx, 1); }                   // 상체 애니메이션 시작
+    public void UpperAnimDone() { m_anim.SetLayerWeight(UpperLayerIdx, 0); }                    // 상체 애니메이션 중단
+    public override void HitAnimation()                                                         // 피격
     {
         AttackOffAnim();
         SkillAnimDone();
         base.HitAnimation();
     }
 
-    #endregion
+
+    // 이동 관련
+    public void SetMoveAnimation(Vector2 _move) { SetMoveXAnimation(_move.x); SetMoveZAnimation(_move.y); }     // 이동 벡터
+    private void SetMoveXAnimation(float _x) { m_anim.SetFloat(MoveXHash, _x); }                                // X축 이동
+    private void SetMoveZAnimation(float _z) { m_anim.SetFloat(MoveZHash, _z); }                                // z축 이동
+
+    // 그 외 움직임 관련
+    public void JumpAnim() { m_anim.SetTrigger("JUMP"); }                                       // 점프
+    public void RollAnim() { m_anim.SetTrigger("ROLL"); }                                       // 구르기
+    public void StartFallAnim() { m_anim.SetBool(FallHash, true); m_anim.SetBool(LandHash, false); }        // 낙하 시작
+    public void StopFallAnim() { m_anim.SetBool(FallHash, false); }                             // 낙하 중단
+    public void ReadyLandAnim() { m_anim.SetBool(LandHash, true); }                             // 착지
 
 
-    #region 이펙트
+    // 공격 관련
+    public void AttackAnim() { m_anim.SetBool("ATTACK", true); }                                // 공격 시작
+    public void SetAttackAnim(int _idx) { m_anim.SetInteger("ATTACK_COUNT", _idx); }            // 공격 순서
+    public void ResetAnim() { m_anim.SetTrigger("RESET"); }                                     // 공격 중단
+    public void AttackOffAnim() { SetAttackAnim(0); }                                           // 공격 종료
 
+    // 스킬 관련
+    public void SkillStartAnim() { m_anim.SetBool(SkillHash, true); HideWeapon(); }             // 스킬 준비
+    public void SkillFireAnim() { m_anim.SetTrigger("SKILL_FIRE"); }                            // 스킬 발사
+    public void SkillAnimDone() { m_anim.SetBool(SkillHash, false); }                           // 스킬 종료
 
+    // 가드 관련
+    public void GuardAnimStart() { UpperAnimStart(); m_anim.SetBool(GuardHash, true); }         // 가드 상태로 전환
+    public void GuardAnimStop() { m_anim.SetBool(GuardHash, false); }                           // 가드 해제로 전환
+    public void QuitGuardAnim() { UpperAnimDone(); m_anim.SetBool(GuardHash, false); }          // 가드 서킷브레이크
 
-
-
-    #endregion
-
-
+    // 던지기 관련
+    public void ReadyThrowAnim() { UpperAnimStart(); m_anim.SetBool(ThrowReadyHash, true); }    // 던지기 준비
+    public void ThrowAnim() { m_anim.SetTrigger("THROW"); }                                     // 던지기
+    public void CancelThrowAnim() { UpperAnimDone(); m_anim.SetBool(ThrowReadyHash, false); }   // 던지기 취소
 
 
     // 장비 관련
-    private void HideWeapon() { CurWeapon.gameObject.SetActive(false); }
-    private void ShowWeapon() { CurWeapon.gameObject.SetActive(true); }
-
-    private void SetWeaponAnimationLayer(EWeaponType _type)
+    private void SetWeaponAnimationLayer(EWeaponType _type)                                     // 무기별 레이어 설정
     {
         m_anim.SetInteger("WEAPON_IDX", (int)_type);
     }
+    private void HideWeapon() { CurWeapon.gameObject.SetActive(false); }                        // 무기 숨기기
+    private void ShowWeapon() { CurWeapon.gameObject.SetActive(true); }                         // 무기 보이기
 
 
+
+    // 초기 설정
     private void SetAnimator()          // 애니메이터 해시 설정
     {
         MoveXHash = Animator.StringToHash("MOVE_X");

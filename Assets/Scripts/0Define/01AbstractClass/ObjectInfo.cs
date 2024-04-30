@@ -104,17 +104,22 @@ public class ObjectCombatInfo     // 전투 정보
 
 public abstract partial class ObjectScript
 {
+    // 기본 컴포넌트
+    protected Rigidbody m_rigid;            // Rigidbody
+    protected Animator m_anim;              // Animator
+
+
     // 기본 정보
     [SerializeField]
     protected ObjectBaseInfo m_baseInfo = new();                // 기본 정보
     public string ObjectName { get { return m_baseInfo.ObjectName; } }                      // 이름
     public virtual float AttackSpeed { get { return m_baseInfo.AttackSpeed; } }             // 공격 속도
     public float MoveSpeed { get { return m_baseInfo.MoveSpeed * MoveSpeedMultiplier; } }   // 이동 속도
-    public virtual float ObjectHeight { get { return 2; } }
+    public virtual float ObjectHeight { get { return 2; } }                                 // 오브젝트 높이
 
-    public float MoveSpeedMultiplier { get; protected set; } = 1;
+    public float MoveSpeedMultiplier { get; protected set; } = 1;                           // 이동 배율
 
-    public virtual void SetMoveMultiplier(float _multiplier) { MoveSpeedMultiplier = _multiplier; }
+    public virtual void SetMoveMultiplier(float _multiplier) { MoveSpeedMultiplier = _multiplier; }     // 이동 배율 설정
 
 
     // 전투 정보
@@ -125,20 +130,25 @@ public abstract partial class ObjectScript
 
 
     [SerializeField]
-    private float m_dm = 1;
+    private float m_dm = 1;     // 데미지 배율 (임시)
+
     public float DamageMultiplier { get { return m_dm; } protected set { m_dm = value; } }
     public float AttackMultiplier { get; protected set; } = 1;
     public float MagicMultiplier { get; protected set; } = 1;
 
+    public virtual ObjectAttackScript AttackObject { get; set; }    // 부속 공격 판정
 
+
+    // 상속 정보
     public virtual bool IsPlayer { get { return false; } }
     public virtual bool IsMonster { get { return false; } }
 
 
     // 버프 디버프 정보
     [SerializeField]
-    private List<BuffNDebuff> m_buffNDebuff = new();
-    public virtual void GetStatAdjust(StatAdjust _adjust)
+    private List<BuffNDebuff> m_buffNDebuff = new();                // 버프, 디버프 리스트
+
+    public virtual void GetStatAdjust(StatAdjust _adjust)           // 능력치 조정
     {
         BuffNDebuff info = null;
         float replace;
@@ -148,7 +158,7 @@ public abstract partial class ObjectScript
         if (info != null) m_buffNDebuff.Add(info);
     }
 
-    private float GetBuffed(StatAdjust _adj)
+    private float GetBuffed(StatAdjust _adj)            // 버프, 디버프 받기
     {
         EAdjType type = _adj.Type;
         float amount = _adj.Amount;
@@ -183,7 +193,7 @@ public abstract partial class ObjectScript
         return 1;
     }
 
-    private void ResetMultiplier(EAdjType _type, bool _isBuff)
+    private void ResetMultiplier(EAdjType _type, bool _isBuff)          // 버프, 디버프 종료
     {
         float max = 1;
         for (int i = 0; i<m_buffNDebuff.Count; i++)
@@ -195,7 +205,7 @@ public abstract partial class ObjectScript
         }
         SetMultiplier(_type, max);
     }
-    private void SetMultiplier(EAdjType _type, float _multiplier)
+    private void SetMultiplier(EAdjType _type, float _multiplier)       // 배율 설정
     {
         switch (_type)
         {
@@ -214,8 +224,7 @@ public abstract partial class ObjectScript
         }
     }
 
-
-    private void BuffNDebuffProc()
+    private void BuffNDebuffProc()                                      // 버프 디버프 쿨타임 적용
     {
         Queue<BuffNDebuff> removeQue = new();
         for (int i = 0; i < m_buffNDebuff.Count; i++)
@@ -225,4 +234,21 @@ public abstract partial class ObjectScript
         }
         while (removeQue.Count > 0) { BuffNDebuff buff = removeQue.Dequeue(); m_buffNDebuff.Remove(buff); }
     }
+
+
+    // 초기 설정
+    public virtual void SetComps()
+    {
+        m_rigid = GetComponent<Rigidbody>();
+        m_anim = GetComponentInChildren<Animator>();
+        SetAttackObject();
+    }
+    public virtual void SetInfo() { }
+    public virtual void SetAttackObject()
+    {
+        AttackObject = GetComponentInChildren<ObjectAttackScript>();
+    }
+
+    public virtual void Awake() { SetComps(); }
+    public virtual void Start() { SetHP(MaxHP); CurSpeed = MoveSpeed; }
 }
