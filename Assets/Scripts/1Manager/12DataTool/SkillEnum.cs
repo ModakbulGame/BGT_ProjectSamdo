@@ -15,6 +15,9 @@ public enum ESkillAttribute
     TOTAL_DELAY,                // 총 딜레이
     COOLTIME,                   // 쿨타임
     STAMINA_COST,               // 스테미나 사용량
+    ADJ_TYPE,                   // 스탯 변동 (버프 or 디버프)
+    ADJ_AMOUNT,                 // ㄴ변동량
+    ADJ_TIME,                   // ㄴ지속 시간
     DESCRIPTION,                // 설명
     PRICE,                      // 가격
 

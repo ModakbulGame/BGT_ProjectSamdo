@@ -212,6 +212,8 @@ public partial class PlayerController
                 around.SetSkill(this, Attack, Magic);
                 break;
             case ESkillType.BUFF:
+                StatAdjust adjust = SkillInfoInHand.SkillData.StatAdjust;
+                // GetStatAdjust(adjust);
                 skill.transform.localPosition = Vector3.zero;
                 break;
             default:

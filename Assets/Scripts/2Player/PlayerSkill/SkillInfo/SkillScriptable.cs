@@ -18,6 +18,7 @@ public class SkillScriptable : ScriptableObject
     public float TotalDelay;
     public float Cooltime;
     public int StaminaCost;
+    public StatAdjust StatAdjust;
     public string Description;
     public int Price;
 
@@ -61,6 +62,10 @@ public class SkillScriptable : ScriptableObject
         float.TryParse(     _data[(int)ESkillAttribute.TOTAL_DELAY],      out TotalDelay);
         float.TryParse(     _data[(int)ESkillAttribute.COOLTIME],         out Cooltime);
         int.TryParse(       _data[(int)ESkillAttribute.STAMINA_COST],     out StaminaCost);
+        EAdjType type =     DataManager.String2Adj(_data[(int)ESkillAttribute.ADJ_TYPE]);
+        float.TryParse(     _data[(int)ESkillAttribute.ADJ_AMOUNT], out float amount);
+        float.TryParse(     _data[(int)ESkillAttribute.ADJ_TIME], out float time);
+        StatAdjust =        new(type, amount, time);
         Description =       _data[(int)ESkillAttribute.DESCRIPTION];
         int.TryParse(       _data[(int)ESkillAttribute.PRICE],            out Price);
     }

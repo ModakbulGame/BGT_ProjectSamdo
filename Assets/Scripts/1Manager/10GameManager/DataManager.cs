@@ -54,6 +54,20 @@ public class DataManager : MonoBehaviour
         };
     }
 
+    public static EAdjType String2Adj(string _data)
+    {
+        return _data switch
+        {
+            "DAMAGE" => EAdjType.DAMAGE,
+            "ATTACK" => EAdjType.ATTACK,
+            "MAGIC" => EAdjType.MAGIC,
+
+            _ => EAdjType.LAST
+        };
+    }
+
+
+
     public void SetManager()
     {
 
