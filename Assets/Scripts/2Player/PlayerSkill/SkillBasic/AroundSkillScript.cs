@@ -40,7 +40,6 @@ public class AroundSkillScript: PlayerSkillScript
         {
             m_hitObjects.Remove(removeList[i]);
             m_hitTimeCount.Remove(removeList[i]);
-            Debug.Log(removeList[i]);
         }
     }
 
