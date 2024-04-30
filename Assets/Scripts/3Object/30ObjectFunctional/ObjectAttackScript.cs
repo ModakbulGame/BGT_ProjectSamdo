@@ -19,7 +19,7 @@ public class ObjectAttackScript : MonoBehaviour
     public virtual ECCType CCType { get { return m_ccType; } }
 
 
-    public void SetDamage(float _damage) { Damage = _damage; }
+    public void SetDamage(float _damage) { Damage = _damage * Attacker.DamageMultiplier * Attacker.AttackMultiplier; }
     public void SetAttack(ObjectScript _attacker, float _damage) { m_attacker = _attacker; SetDamage(_damage); }
 
     public virtual void AttackOn()                       // 공격 시작

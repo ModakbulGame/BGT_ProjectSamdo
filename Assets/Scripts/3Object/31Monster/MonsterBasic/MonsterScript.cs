@@ -31,6 +31,12 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
     public override bool IsMonster { get { return true; } }
 
+    public override void SetMoveMultiplier(float _multiplier)
+    {
+        base.SetMoveMultiplier(_multiplier);
+        m_aiPath.maxSpeed = MoveSpeed;
+    }
+
 
     // 능력 관련
     protected MonsterLighter m_lightReciever;
@@ -376,9 +382,10 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         base.Awake();
         SetStates();
     }
-    public virtual void Update()
+    public override void Update()
     {
         if(!IsSpawned) { return; }
+        base.Update();
 
         CurState.Proceed();
 

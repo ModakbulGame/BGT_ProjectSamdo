@@ -217,4 +217,6 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
 
     public virtual void Awake() { SetComps(); }
     public virtual void Start() { SetHP(MaxHP); CurSpeed = MoveSpeed; }
+
+    public virtual void Update() { BuffNDebuffProc(); }
 }

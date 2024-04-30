@@ -61,6 +61,7 @@ public class DataManager : MonoBehaviour
             "DAMAGE" => EAdjType.DAMAGE,
             "ATTACK" => EAdjType.ATTACK,
             "MAGIC" => EAdjType.MAGIC,
+            "MOVE_SPEED" => EAdjType.MOVE_SPEED,
 
             _ => EAdjType.LAST
         };

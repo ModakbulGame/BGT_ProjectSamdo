@@ -213,7 +213,7 @@ public partial class PlayerController
                 break;
             case ESkillType.BUFF:
                 StatAdjust adjust = SkillInfoInHand.SkillData.StatAdjust;
-                // GetStatAdjust(adjust);
+                GetStatAdjust(adjust);
                 skill.transform.localPosition = Vector3.zero;
                 break;
             default:

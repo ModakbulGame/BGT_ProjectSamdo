@@ -381,8 +381,9 @@ public partial class PlayerController : ObjectScript
         GuardPressing = PlayerInput.Guard.IsPressed();
     }
 
-    private void Update()
+    public override void Update()
     {
+        base.Update();
         UpdateInputs();                     // InputSystem 상태 반영
 
         CurState.Proceed();                 // 현재 상태 Update

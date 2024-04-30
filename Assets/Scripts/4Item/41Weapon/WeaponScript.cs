@@ -47,7 +47,7 @@ public class WeaponScript : AnimateAttackScript
 
     private PlayerController Player { get { return (PlayerController)m_attacker; } }
 
-    public override float Damage => Player.Attack;
+    public override float Damage => Player.Attack * Player.AttackMultiplier * Player.DamageMultiplier;
 
 
     public override void CreateHitEffect(IHittable _hittable, Vector3 _pos)
