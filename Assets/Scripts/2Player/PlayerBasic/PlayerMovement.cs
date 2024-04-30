@@ -6,7 +6,7 @@ public partial class PlayerController
 {
     // 움직임 관련 수치
     private const float JUMP_POWER = 11;                // 점프 파워
-    private const float JUMP_DELAY = 0.15f;             // 점프 간격
+    private const float JUMP_DELAY = 0.25f;             // 점프 간격
     private const float ROLL_DELAY = 0.25f;             // 구르기 간격
     public const float ROLL_MULTIPLIER = 10/7f;         // 구르기 / 걷기 속도 배율
     public const float ROLLING_TIME = 0.85f;            // 구르기 진행 시간
@@ -73,13 +73,13 @@ public partial class PlayerController
     {
         ResetAnim();
         JumpAnim();
+        JumpCoolTime = -1;
         m_rigid.velocity += JUMP_POWER * Vector3.up;
         UseStamina(JumpStaminaUse);
     }
     public void JumpDone()
     {
         JumpRollDone();
-        JumpCoolTime = JUMP_DELAY;
     }
     public void RollAction()
     {
@@ -122,6 +122,7 @@ public partial class PlayerController
     public void PlayerLand(float _velocity)
     {
         StopFallAnim();
+        JumpCoolTime = JUMP_DELAY;
         if (_velocity <= FALL_DEATH_VELOCITY) { GetDamage(MaxHP); }
         else if (_velocity <= FALL_DAMAGE_VELOCITY) 
         {
