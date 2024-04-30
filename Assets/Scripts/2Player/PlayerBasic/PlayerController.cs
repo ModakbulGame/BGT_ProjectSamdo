@@ -339,6 +339,7 @@ public partial class PlayerController : ObjectScript
         m_playerStates[(int)EPlayerState.IDLE] = gameObject.AddComponent<PlayerIdleState>();
         m_playerStates[(int)EPlayerState.MOVE] = gameObject.AddComponent<PlayerMoveState>();
         m_playerStates[(int)EPlayerState.JUMP] = gameObject.AddComponent<PlayerJumpState>();
+        m_playerStates[(int)EPlayerState.FALL] = gameObject.AddComponent<PlayerFallState>();
         m_playerStates[(int)EPlayerState.ATTACK] = gameObject.AddComponent<PlayerAttackState>();
         m_playerStates[(int)EPlayerState.SKILL] = gameObject.AddComponent<PlayerSkillState>();
         m_playerStates[(int)EPlayerState.ROLL] = gameObject.AddComponent<PlayerRollState>();

@@ -27,9 +27,18 @@ public partial class PlayerController
         PrevGrounded = IsGrounded;
         MaxFallPower = m_rigid.velocity.y < 0 ? m_rigid.velocity.y : MaxFallPower;
         IsGrounded = Physics.CheckSphere(Position, GroundCheckerThrashold, ValueDefine.GROUND_LAYER);
+
         if (IsGrounded && !PrevGrounded)
         {
             PlayerLand(MaxFallPower);
+        }
+        else if (!IsGrounded && PrevGrounded)
+        {
+            PlayerFall();
+        }
+        else if (!IsGrounded && !PrevGrounded && MaxFallPower < LAND_VELOCITY && !IsLandAnimReady)
+        {
+            ReadyLandAnim();
         }
     }
 
@@ -151,7 +160,6 @@ public partial class PlayerController
 
                 CurSurfaceAngle = 0f;
                 IsOnSlope = false;
-
             }
             else
             {

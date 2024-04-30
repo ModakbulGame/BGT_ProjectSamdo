@@ -19,6 +19,11 @@ public class PlayerAnimationLink : MonoBehaviour
         m_player.CreateThrowItem();
     }
 
+    public void LandingDone()
+    {
+        m_player.ChangeState(EPlayerState.IDLE);
+    }
+
     public void CreateSkill()
     {
         m_player.CreateSkill();

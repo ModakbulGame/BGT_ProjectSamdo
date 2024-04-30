@@ -106,9 +106,13 @@ public partial class PlayerController
     }
 
 
+    public void PlayerFall()
+    {
+        ChangeState(EPlayerState.FALL);
+    }
     public void StartFall()
     {
-        FallAnim();
+        StartFallAnim();
     }
 
 
@@ -117,15 +121,22 @@ public partial class PlayerController
     private const float FALL_DEATH_VELOCITY = -44;
     public void PlayerLand(float _velocity)
     {
+        StopFallAnim();
         if (_velocity <= FALL_DEATH_VELOCITY) { GetDamage(MaxHP); }
         else if (_velocity <= FALL_DAMAGE_VELOCITY) 
         {
-            LandAnim();
             float ratio = 0.125f + ((FALL_DAMAGE_VELOCITY - _velocity) / (FALL_DAMAGE_VELOCITY - FALL_DEATH_VELOCITY)) * 7 / 8f;
             float damage = MaxHP * Mathf.Round(ratio * 1000) * 0.001f;
             GetDamage(damage);
         }
-        else if (_velocity <= LAND_VELOCITY) { LandAnim(); }
+        else if (_velocity <= LAND_VELOCITY)
+        {
+
+        }
+        else
+        {
+            ChangeState(EPlayerState.IDLE);
+        }
     }
 
 

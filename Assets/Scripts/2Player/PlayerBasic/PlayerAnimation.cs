@@ -18,6 +18,8 @@ public partial class PlayerController
     // 해쉬 값
     private int MoveXHash;          // MoveTree X 값
     private int MoveZHash;          // MoveTree Z 값
+    private int FallHash;           // 낙하 값
+    private int LandHash;           // 착지 값
     private int GuardHash;          // 가드 값
     private int ThrowReadyHash;     // 던지기 준비 값
     private int SkillHash;          // 스킬 값
@@ -25,6 +27,7 @@ public partial class PlayerController
     public bool IsUpperAnimOn { get { return m_anim.GetLayerWeight(UpperLayerIdx) == 1; } }
     private bool IsUpperIdleAnim { get { return FunctionDefine.CheckCurAnimation(m_anim, UpperLayerIdx, UpperIdleAnimName); } }         // 현재 Guard Stop 애니메이션인지
     private bool IsThrowAnim { get { return FunctionDefine.CheckCurAnimation(m_anim, UpperLayerIdx, ThrowAnimName); } }
+    private bool IsLandAnimReady { get { return m_anim.GetBool(LandHash); } }
 
 
     // MoveTree X, Z 설정
@@ -35,8 +38,12 @@ public partial class PlayerController
 
     // Base Layer 애니메이션
     public void SetIdleAnimator() { SetMoveXAnimation(0); SetMoveZAnimation(0); AttackProcing = false; AttackStack = 0; }          // IDLE
+    public void StartFallAnim() { m_anim.SetBool(FallHash, true); m_anim.SetBool(LandHash, false); }
+    public void StopFallAnim() { m_anim.SetBool(FallHash, false); }
+    public void ReadyLandAnim() { m_anim.SetBool(LandHash, true); }
     public void SkillStartAnim() { m_anim.SetBool(SkillHash, true); HideWeapon(); }
     public void SkillAnimDone() { m_anim.SetBool(SkillHash, false); }
+
 
 
     // Upper Layer 애니메이션
@@ -59,12 +66,11 @@ public partial class PlayerController
     public void JumpAnim() { m_anim.SetTrigger("JUMP"); }
     public void RollAnim() { m_anim.SetTrigger("ROLL"); }
     public void ThrowAnim() { m_anim.SetTrigger("THROW"); }
-    public void FallAnim() { m_anim.SetTrigger("FALL"); }
-    public void LandAnim() { m_anim.SetTrigger("LAND"); }
     public void ResetAnim() { m_anim.SetTrigger("RESET"); }
     public override void HitAnimation()
     {
         AttackOffAnim();
+        SkillAnimDone();
         base.HitAnimation();
     }
 
@@ -96,6 +102,8 @@ public partial class PlayerController
     {
         MoveXHash = Animator.StringToHash("MOVE_X");
         MoveZHash = Animator.StringToHash("MOVE_Z");
+        FallHash = Animator.StringToHash("IS_FALLING");
+        LandHash = Animator.StringToHash("IS_LANDING");
         GuardHash = Animator.StringToHash("IS_GUARDING");
         ThrowReadyHash = Animator.StringToHash("IS_THROW_READY");
         SkillHash = Animator.StringToHash("SKILL_ON");
