@@ -21,6 +21,8 @@ public abstract partial class MonsterScript
 
 
     // 기본 움직임
+    public override float CurSpeed { get { return m_aiPath.maxSpeed; } protected set { m_aiPath.maxSpeed = value; } }
+
     public void SetDestination(Vector3 _destination)
     {
         m_aiPath.destination = _destination;

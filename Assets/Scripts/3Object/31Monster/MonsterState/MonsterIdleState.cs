@@ -1,17 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class MonsterIdleState : MonoBehaviour, IMonsterState
 {
     private MonsterScript m_monster;
     public EMonsterState StateEnum { get { return EMonsterState.IDLE; } }
 
+    private bool IsMoving { get; set; }
+    private bool IsRotating { get; set; }
+    private float TargetRotation { get; set; }
+    private float ResetCount { get; set; }
+
+
     public void ChangeTo(MonsterScript _monster)
     {
         if (m_monster == null) { m_monster = _monster; }
+
         m_monster.StartIdle();
+        StartMove();
+    }
+
+    private void StartMove()
+    {
+        Vector3 destination;
+        do
+        {
+            Vector3 offset = new(Random.Range(-5f, 5f), 0, Random.Range(-5f, 5f));
+            destination = transform.position + offset;
+        } while (m_monster.OutOfRange(destination));
+        m_monster.SetDestination(destination);
+        IsMoving = true;
+        IsRotating = false;
+    }
+
+    private void RandomRotate()
+    {
+        IsRotating = true;
+        float rot = m_monster.Rotation;
+        TargetRotation = rot + Random.Range(-60f, 60f);
+        RotateTo();
+    }
+
+    private void RotateTo()
+    {
+        m_monster.SlowRotate(TargetRotation);
+    }
+
+    private void PauseRoaming()
+    {
+        IsMoving = false;
+        IsRotating = false;
+        ResetCount = Random.Range(3f, 10f);
     }
 
     public void Proceed()
@@ -23,10 +63,21 @@ public class MonsterIdleState : MonoBehaviour, IMonsterState
             m_monster.ChangeState(EMonsterState.APPROACH);
             return;
         }
-        if (m_monster.ShouldRoam)
+
+        if(!IsMoving) 
+        { 
+            ResetCount -= Time.deltaTime;
+            if(IsRotating) { RotateTo(); }
+            if(!IsRotating && ResetCount > 1 && Random.Range(0,1f) < 0.001f) { RandomRotate(); }
+        }
+
+        if (IsMoving && m_monster.Arrived)
         {
-            m_monster.ChangeState(EMonsterState.ROAMING);
-            return;
+            PauseRoaming();
+        }
+        else if (!IsMoving && ResetCount <= 0)
+        {
+            StartMove();
         }
     }
 }

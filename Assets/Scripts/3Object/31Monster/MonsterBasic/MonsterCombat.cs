@@ -3,85 +3,35 @@ using System.Collections;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public enum EMonsterDeathType
-{
-    PURIFY,
-    BY_PLAYER,
-    BY_MONSTER,
-    ETC
-}
-
-[Serializable]
-public class MonsterCombatInfo : ObjectCombatInfo
-{
-    public float ApproachSpeed;     // 접근 속도
-    public float ViewAngle;         // 시야각
-    public float ViewRange;         // 시야 범위
-    public float EngageRange;       // 시야 제외 감지 범위
-    public float ReturnRange;       // 접근 종료 범위
-    public float AttackRange;       // 공격 범위
-    public float ApproachDelay;     // 감지 후 접근 딜레이
-    public float FenceRange;        // 활동 범위
-    public override void SetInfo(MonsterScriptable _monster)
-    {
-        base.SetInfo(_monster);
-        ApproachSpeed = _monster.ApproachSpeed;
-        ViewAngle = _monster.ViewAngle;
-        ViewRange = _monster.ViewRange;
-        EngageRange = _monster.EngageRange;
-        ReturnRange = _monster.ReturnRange;
-        AttackRange = _monster.AttackRange;
-        ApproachDelay = _monster.ApproachDelay;
-        FenceRange = _monster.FenceRange;
-    }
-}
-
 public abstract partial class MonsterScript
 {
-    // 몬스터 전투 정보
-    [SerializeField]
-    private MonsterCombatInfo m_combatInfo;
-    public override ObjectCombatInfo CombatInfo { get { return m_combatInfo; } }    // 전투 관련 정보
-    public float ApproachSpeed { get { return m_combatInfo.ApproachSpeed; } }           // 접근 속도
-    public float ViewAngle { get { return m_combatInfo.ViewAngle; } }                   // 시야각
-    public float ViewRange { get { return m_combatInfo.ViewRange; } }                   // 시야 범위
-    public float EngageRange {get { return m_combatInfo.EngageRange; } }                // 시야 제외 감지 범위
-    public float ReturnRange {get { return m_combatInfo.ReturnRange; } }                // 접근 종료 범위
-    public float AttackRange {get { return m_combatInfo.AttackRange; } }                // 공격 범위
-    public float ApproachDelay {get { return m_combatInfo.ApproachDelay; } }            // 감지 후 접근 딜레이
-    public float FenceRange {get { return m_combatInfo.FenceRange; } }                  // 활동 범위
+    // 기본 전투
+    public override void GetHit(HitData _hit)    // 맞음
+    {
+        if (CurTarget == null) { CurTarget = _hit.Attacker; }
+        SetDeathType(_hit.Attacker);
+        base.GetHit(_hit);
+        m_hpBar.SetCurHP(CurHP);
+    }
+    public override void PlayHitAnim()
+    {
+        base.PlayHitAnim();
+        ChangeState(EMonsterState.HIT);
+    }
+    public override void SetDead()
+    {
+        base.SetDead();
+        ChangeState(EMonsterState.DIE);
+    }
 
 
+    // 공격 관련
     [SerializeField]
     protected GameObject[] m_normalAttacks;                                      // 기본 공격 프리펍
 
-
-    // 전투 관련 변수 (추후 값 연결 필요)
-    public float PathingAngle;
-    public float PathingTime;
-    public float AttackDuration;                // 공격 지속 시간
-    public readonly float MissTargetDelay = 5f;
-    public readonly float StunDelay = 1f;
-    private float HitGuardEndTime = 3;
-
-
-    // 전투 관련 프로퍼티
-    public ObjectScript CurTarget { get; protected set; }                                               // 현재 타겟
-    public bool HasTarget { get { return (CurTarget != null && !CurTarget.IsDead); } }                  // 타겟을 가지고 있는지
-    public float TargetDistance { get { if (HasTarget) return Vector3.Distance(Position, CurTarget.Position); return -1; } }    // 목표와의 거리
-    public bool TargetInAttackRange { get { return TargetDistance <= AttackRange; } }                   // 공격범위 내인지
+    public bool CanAttack { get { return HasTarget && TargetInAttackRange && AttackTimeCount <= 0; } }  // 공격 가능 여부
     public float AttackTimeCount { get; set; } = 0;                                                     // 공격 쿨타임
-    private bool HitGuarding { get; set; }                                                              // 플레이어 가드 중 때림
-    public override bool IsUnstoppable { get { return InCombat && !HitGuarding; } }                     // 공격 모션 캔슬 불가인지
 
-
-    public virtual void ApproachTarget()            // 타겟에게 접근
-    {
-        if(!HasTarget) { return; }
-        Vector2 dir = (CurTarget.Position2 - Position2);
-        if (AttackTimeCount > 0 && TargetInAttackRange) { RotateTo(dir); return; }
-        m_aiPath.destination = CurTarget.Position;
-    }
     public override void AttackTriggerOn()
     {
         AttackTriggerOn(0);
@@ -117,6 +67,59 @@ public abstract partial class MonsterScript
     }
 
 
+    // 전투 대상 관련
+    public readonly float MissTargetDelay = 5f;
+
+    public ObjectScript CurTarget { get; protected set; }                                               // 현재 타겟
+    public bool HasTarget { get { return (CurTarget != null && !CurTarget.IsDead); } }                  // 타겟을 가지고 있는지
+    public float TargetDistance { get { if (HasTarget) return Vector3.Distance(Position, CurTarget.Position); return -1; } }    // 목표와의 거리
+    public bool TargetInAttackRange { get { return TargetDistance <= AttackRange; } }                   // 공격범위 내인지
+
+    public void FindTarget()            // 타겟 탐색 (타겟 X)
+    {
+        Collider[] targets = Physics.OverlapSphere(transform.position, ViewRange);
+
+        if (targets.Length == 0) return;
+        foreach (Collider col in targets)
+        {
+            PlayerController player = col.GetComponentInParent<PlayerController>();         // 일단 플레이어만 체크
+            if (player == null) { continue; }
+            Vector3 targetPos = col.transform.position;
+            Vector3 targetDir = (targetPos - transform.position).normalized;
+            Vector3 look = FunctionDefine.AngleToDir(Rotation);
+            float targetAngle = Mathf.Acos(Vector3.Dot(look, targetDir)) * Mathf.Rad2Deg;
+            if (targetAngle <= ViewAngle * 0.5f && !Physics.Raycast(transform.position, targetDir, ViewRange))
+            {
+                CurTarget = player;
+            }
+        }
+    }
+    public bool CheckTarget()           // 타겟 확인 (타겟 O)
+    {
+        if (CurTarget == null) { return false; }
+        if (Vector3.Distance(CurTarget.Position, Position) > ReturnRange) { return false; }
+        return true;
+    }
+    public void MissTarget()            // 타겟 잃기
+    {
+        CurTarget = null;
+    }
+    public virtual void ApproachTarget()            // 타겟에게 접근
+    {
+        if (!HasTarget) { return; }
+        Vector2 dir = (CurTarget.Position2 - Position2);
+        if (AttackTimeCount > 0 && TargetInAttackRange) { RotateTo(dir); return; }
+        m_aiPath.destination = CurTarget.Position;
+    }
+
+
+    // 피격 관련
+    public readonly float StunDelay = 1f;                       // 피격 시 경직
+    private readonly float HitGuardEndTime = 3;                 // 가드 중인 플레이어 타격 후 피격 애니메이션 재생 기간
+
+    private bool HitGuarding { get; set; }                                                              // 플레이어 가드 중 때림
+    public override bool IsUnstoppable { get { return InCombat && !HitGuarding; } }                     // 공격 모션 캔슬 불가인지
+
     public void HitGuardingPlayer()
     {
         HitGuarding = true;
@@ -128,27 +131,4 @@ public abstract partial class MonsterScript
         HitGuarding = false;
     }
 
-
-    public override void GetHit(HitData _hit)    // 맞음
-    {
-        if (CurTarget == null) { CurTarget = _hit.Attacker; }
-        SetDeathType(_hit.Attacker);
-        base.GetHit(_hit);
-        m_hpBar.SetCurHP(CurHP);
-    }
-    public override void PlayHitAnim()
-    {
-        base.PlayHitAnim();
-        ChangeState(EMonsterState.HIT);
-    }
-    public override void SetDead()
-    {
-        base.SetDead();
-        ChangeState(EMonsterState.DIE);
-    }
-
-    private void ProceedCooltime()
-    {
-        if(AttackTimeCount > 0) { AttackTimeCount -= Time.deltaTime; }
-    }
 }

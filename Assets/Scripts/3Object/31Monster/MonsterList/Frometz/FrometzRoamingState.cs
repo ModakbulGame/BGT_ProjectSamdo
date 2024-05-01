@@ -5,7 +5,7 @@ using UnityEngine;
 public class FrometzRoamingState : MonoBehaviour, IMonsterState
 {
     private MonsterScript m_monster;
-    public EMonsterState StateEnum { get { return EMonsterState.ROAMING; } }
+    public EMonsterState StateEnum { get { return EMonsterState.IDLE; } }
 
     private FrometzScript Frometz { get { return (FrometzScript)m_monster; } }
 
@@ -14,7 +14,7 @@ public class FrometzRoamingState : MonoBehaviour, IMonsterState
     {
         if(m_monster == null) { m_monster = _monster; }
 
-        Frometz.StartRoaming();
+        Frometz.StartIdle();
     }
 
     public void Proceed()

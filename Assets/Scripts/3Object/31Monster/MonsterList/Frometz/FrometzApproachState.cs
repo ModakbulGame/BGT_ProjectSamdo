@@ -36,7 +36,7 @@ public class FrometzApproachState : MonoBehaviour, IMonsterState
 
         if (!Frometz.HasTarget)
         {
-            Frometz.ChangeState(EMonsterState.ROAMING);
+            Frometz.ChangeState(EMonsterState.IDLE);
             return;
         }
         if (Frometz.CanAttack)

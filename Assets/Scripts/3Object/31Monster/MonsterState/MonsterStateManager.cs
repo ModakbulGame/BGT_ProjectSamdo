@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public enum EMonsterState
 {
     IDLE,
-    ROAMING,
     APPROACH,
     ATTACK,
     HIT,

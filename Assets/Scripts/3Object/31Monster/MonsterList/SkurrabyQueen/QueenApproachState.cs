@@ -46,7 +46,7 @@ public class QueenApproachState : MonoBehaviour, IMonsterState
 
         if (!m_monster.HasTarget)
         {
-            m_monster.ChangeState(EMonsterState.ROAMING);
+            m_monster.ChangeState(EMonsterState.IDLE);
             return;
         }
         if (Queen.CanUseSkill)

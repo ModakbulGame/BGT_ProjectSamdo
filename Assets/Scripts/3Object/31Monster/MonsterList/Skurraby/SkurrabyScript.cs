@@ -31,7 +31,7 @@ public class SkurrabyScript : MonsterScript
         while (!IsSpawned) { yield return null; }
         m_aiPath.enabled = true;
         if (CurTarget != null) { ChangeState(EMonsterState.APPROACH); }
-        else { ChangeState(EMonsterState.ROAMING); }
+        else { ChangeState(EMonsterState.IDLE); }
     }
     private IEnumerator SpawnDelay() { yield return new WaitForSeconds(1.5f); IsSpawned = true; }
 
