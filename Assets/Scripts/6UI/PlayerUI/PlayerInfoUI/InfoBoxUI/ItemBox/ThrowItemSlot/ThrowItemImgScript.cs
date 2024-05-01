@@ -15,10 +15,6 @@ public class ThrowItemImgScript : MouseOverInfoUI
     {
         m_parent.HideInfo();
     }
-    public override void ActiveItem()
-    {
-        m_parent.ActiveItem();
-    }
     public override void SetInfoPos(Vector2 _pos)
     {
         m_parent.SetInfoPos(_pos);

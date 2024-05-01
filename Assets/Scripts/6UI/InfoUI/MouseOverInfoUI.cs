@@ -15,11 +15,9 @@ public class MouseOverInfoUI : MonoBehaviour            // 마우스 올리면 정보 뜨
 
     private void PointerOn(PointerEventData _data) { IsMouseOn = true; ShowInfo(); StartCoroutine(ShowingUI()); }
     private void PointerOff(PointerEventData _data) { IsMouseOn = false; HideInfo(); }
-    private void ClickImage(PointerEventData _data) { if (_data.button == PointerEventData.InputButton.Left) ActiveItem(); }
 
     public virtual void ShowInfo() { }
     public virtual void HideInfo() { }
-    public virtual void ActiveItem() { }
     public virtual void SetInfoPos(Vector2 _pos) { }
     private IEnumerator ShowingUI()
     {
@@ -37,7 +35,6 @@ public class MouseOverInfoUI : MonoBehaviour            // 마우스 올리면 정보 뜨
     {
         FunctionDefine.AddEvent(m_trigger, EventTriggerType.PointerEnter, PointerOn);
         FunctionDefine.AddEvent(m_trigger, EventTriggerType.PointerExit, PointerOff);
-        FunctionDefine.AddEvent(m_trigger, EventTriggerType.PointerClick, ClickImage);
     }
     public virtual void SetComps()
     {

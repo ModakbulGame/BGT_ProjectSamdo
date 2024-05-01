@@ -11,7 +11,7 @@ public class ThrowItemElmScript : MonoBehaviour
 
     private Image m_itemImg;
     private ThrowItemImgScript m_img;
-    private RectTransform m_rect;
+    private Button m_btn;
 
     private SItem CurItem { get; set; }
 
@@ -38,9 +38,10 @@ public class ThrowItemElmScript : MonoBehaviour
     {
         m_parent.HideInfo();
     }
-    public void ActiveItem()
+    public void ActivateMark()
     {
-        m_parent.ActiveItem();
+        Debug.Log(0);
+        m_parent.ActivateMark();
     }
     public void SetInfoPos(Vector2 _pos)
     {
@@ -53,6 +54,8 @@ public class ThrowItemElmScript : MonoBehaviour
         m_img = GetComponentInChildren<ThrowItemImgScript>();
         m_img.SetParent(this);
         m_img.SetComps();
-        m_rect = GetComponent<RectTransform>();
+        m_btn = GetComponent<Button>();
+        if (m_btn != null) Debug.Log(1);
+        m_btn.onClick.AddListener(ActivateMark);
     }
 }

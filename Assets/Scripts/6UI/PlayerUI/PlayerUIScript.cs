@@ -16,7 +16,6 @@ public class PlayerUIScript : MonoBehaviour
 
     private bool Opened { get; set; }                       // 열린 적 있는지 (처음 열리는지 확인용)
 
-
     public void OpenUI()                                    // UI 열기
     {
         gameObject.SetActive(true);

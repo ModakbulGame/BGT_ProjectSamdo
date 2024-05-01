@@ -10,7 +10,6 @@ public class ThrowItemSlotScript : MonoBehaviour
 
     private ThrowItemElmScript[] m_elms;
 
-
     public void UpdateUI()
     {
         List<EThrowItemName> throwItemList = PlayManager.ThrowItemList;
@@ -29,9 +28,9 @@ public class ThrowItemSlotScript : MonoBehaviour
     {
         m_parent.HideItemInfoUI();
     }
-    public void ActiveItem()
+    public void ActivateMark()
     {
-        m_parent.ActiveItem();
+        m_parent.ActivateMark();
     }
     public void SetInfoPos(Vector2 _pos)
     {

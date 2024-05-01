@@ -29,8 +29,9 @@ public class ItemBoxUIScript : PlayerInfoBoxScript
     {
         m_parent.HideItemInfoUI();
     }
-    public void ActiveItem()
+    public void ActivateMark()
     {
+        m_curItemMark.rectTransform.anchoredPosition = Vector2.zero; 
         m_curItemMark.gameObject.SetActive(true);
     }
     public void SetItemInfoUIPos(Vector2 _pos)
@@ -47,6 +48,7 @@ public class ItemBoxUIScript : PlayerInfoBoxScript
         m_allItemBox = GetComponentInChildren<AllItemBoxScript>();
         m_allItemBox.SetParent(this);
         m_allItemBox.SetComps();
+        
         m_curItemMark.gameObject.SetActive(false);
     }
 }
