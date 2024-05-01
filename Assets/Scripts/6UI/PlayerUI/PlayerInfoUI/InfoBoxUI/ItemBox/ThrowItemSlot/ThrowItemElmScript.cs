@@ -55,7 +55,6 @@ public class ThrowItemElmScript : MonoBehaviour
         m_img.SetParent(this);
         m_img.SetComps();
         m_btn = GetComponent<Button>();
-        if (m_btn != null) Debug.Log(1);
         m_btn.onClick.AddListener(ActivateMark);
     }
 }

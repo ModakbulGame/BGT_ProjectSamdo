@@ -12,6 +12,7 @@ public class AllItemElmScript : MonoBehaviour
     public void SetParent(AllItemBoxScript _parent) { m_parent = _parent; }
 
     private AllItemImgScript m_itemImg;
+    private ItemBoxDragScript m_itemBoxDrag;
 
 
     private EventTrigger m_trigger;
@@ -78,6 +79,9 @@ public class AllItemElmScript : MonoBehaviour
         m_itemImg = GetComponentInChildren<AllItemImgScript>();
         m_itemImg.SetParent(this);
         m_itemImg.SetComps();
+        m_itemBoxDrag = GetComponentInChildren<ItemBoxDragScript>();
+        m_itemBoxDrag.SetParent(this);
+        m_itemBoxDrag.SetComps();
         SetEvents();
     }
 }
