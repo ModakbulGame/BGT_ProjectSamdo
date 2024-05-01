@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ThrowItemSlotScript : MonoBehaviour
 {
@@ -28,6 +29,10 @@ public class ThrowItemSlotScript : MonoBehaviour
     {
         m_parent.HideItemInfoUI();
     }
+    public void ActiveItem()
+    {
+        m_parent.ActiveItem();
+    }
     public void SetInfoPos(Vector2 _pos)
     {
         m_parent.SetItemInfoUIPos(_pos);
@@ -38,6 +43,6 @@ public class ThrowItemSlotScript : MonoBehaviour
     {
         m_elms = GetComponentsInChildren<ThrowItemElmScript>();
         if(m_elms.Length != ValueDefine.MAX_THROW_ITEM) { Debug.LogError("던지기 아이템 UI 개수 다름"); }
-        foreach(ThrowItemElmScript elm in m_elms) { elm.SetParent(this); elm.SetComps(); }
+        foreach (ThrowItemElmScript elm in m_elms) { elm.SetParent(this); elm.SetComps(); }
     }
 }

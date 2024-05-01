@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemBoxUIScript : PlayerInfoBoxScript
 {
     private ThrowItemSlotScript m_throwItemSlot;
     private AllItemBoxScript m_allItemBox;
+    [SerializeField]
+    private Image m_curItemMark;
 
     public override void InitUI()
     {
@@ -26,6 +29,10 @@ public class ItemBoxUIScript : PlayerInfoBoxScript
     {
         m_parent.HideItemInfoUI();
     }
+    public void ActiveItem()
+    {
+        m_curItemMark.gameObject.SetActive(true);
+    }
     public void SetItemInfoUIPos(Vector2 _pos)
     {
         m_parent.SetItemInfoUIPos(_pos);
@@ -40,5 +47,6 @@ public class ItemBoxUIScript : PlayerInfoBoxScript
         m_allItemBox = GetComponentInChildren<AllItemBoxScript>();
         m_allItemBox.SetParent(this);
         m_allItemBox.SetComps();
+        m_curItemMark.gameObject.SetActive(false);
     }
 }
