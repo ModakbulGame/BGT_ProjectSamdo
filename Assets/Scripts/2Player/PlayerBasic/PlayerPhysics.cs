@@ -31,11 +31,12 @@ public partial class PlayerController
         {
             PlayerLand(MaxFallPower);
         }
-        else if (!IsGrounded && PrevGrounded && m_rigid.velocity.y < FallVelocity)
+        else if (!IsGrounded && !PrevGrounded && m_rigid.velocity.y < FallVelocity)
         {
             ChangeState(EPlayerState.FALL);
         }
-        else if (!IsGrounded && !PrevGrounded && MaxFallPower < LandVelocity && !IsLandAnimReady)
+        
+        if (!IsGrounded && !PrevGrounded && MaxFallPower < LandVelocity && !IsLandAnimReady)
         {
             ReadyLandAnim();
         }

@@ -100,7 +100,7 @@ public partial class PlayerController
 
 
     // 낙하 관련
-    private readonly float FallVelocity = -5;                                               // 낙하 시작 기준
+    private readonly float FallVelocity = -1;                                               // 낙하 시작 기준
 
     public void StartFall()                                                                 // 낙하 상태 시작
     {
