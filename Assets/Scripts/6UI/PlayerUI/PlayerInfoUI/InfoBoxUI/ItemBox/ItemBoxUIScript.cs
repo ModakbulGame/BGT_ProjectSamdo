@@ -49,6 +49,6 @@ public class ItemBoxUIScript : PlayerInfoBoxScript
         m_allItemBox.SetParent(this);
         m_allItemBox.SetComps();
         
-        m_curItemMark.gameObject.SetActive(false);
+       // m_curItemMark.gameObject.SetActive(false);
     }
 }
