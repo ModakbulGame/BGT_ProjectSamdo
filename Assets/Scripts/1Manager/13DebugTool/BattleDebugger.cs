@@ -98,7 +98,7 @@ public class BattleDebugger : MonoBehaviour
             for (int j = 0; j<3; j++)
             {
                 float amount = m_buffAmount[i]; float time = m_buffTime[j];
-                if (GUI.Button(new Rect(20+100*i, 210+60*j, 96, 50), $"데미지 x{amount} {time}초"))
+                if (GUI.Button(new Rect(20+100*i, 210+60*j, 96, 50), $"최대 체력 x{amount} {time}초"))
                 {
                     PlayManager.TempGetBuff(amount, time);
                 }
