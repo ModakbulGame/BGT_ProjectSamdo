@@ -114,6 +114,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
         float hp = CurHP;
         hp -= _damage;
         if (hp <= 0) { hp = 0; SetDead(); }
+        if(ExtraHP > 0) { ExtraHP -= _damage; }
         SetHP(hp);
     }
     public virtual void PlayHitAnim()                                   // 피격 애니메이션 재생

@@ -7,21 +7,21 @@ using TMPro;
 public class PlayerHPBarScript : MonoBehaviour
 {
     private Slider m_slider;
-    private float m_curHP;
-    private float m_maxHP;
     private TextMeshProUGUI m_hpValue;
+
+    private float MaxHP { get; set; }
 
     public void SetMaxHP(float _hp)
     {
         m_slider.maxValue = _hp;
+        MaxHP = _hp;
         SetCurHP(_hp);
-        m_maxHP = _hp;
     }
 
     public void SetCurHP(float _hp)
     {
         m_slider.value = _hp;
-        m_curHP = _hp;
+        m_hpValue.text = $"{_hp} / {MaxHP}";
     }
 
 
@@ -29,6 +29,5 @@ public class PlayerHPBarScript : MonoBehaviour
     {
         m_slider = GetComponent<Slider>();
         m_hpValue = GetComponentInChildren<TextMeshProUGUI>();
-        m_hpValue.text = $"{m_curHP} / {m_maxHP}"; 
     }
 }

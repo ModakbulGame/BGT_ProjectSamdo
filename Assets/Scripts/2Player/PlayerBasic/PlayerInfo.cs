@@ -128,6 +128,12 @@ public partial class PlayerController
     public override float ObjectHeight { get { return m_collider.height; } }        // 오브젝트 높이
     private float HalfHeight { get { return ObjectHeight / 2; } }
 
+    public override void ApplyHPUI()
+    {
+        PlayManager.SetPlayerMaxHP(MaxHP);
+        PlayManager.SetPlayerCurHP(CurHP);
+    }
+
 
     // 스탯 정보
     [SerializeField]
@@ -201,6 +207,9 @@ public partial class PlayerController
         }
         CurWeapon.gameObject.name = name;
     }
+    private void SetWeaponCCType(ECCType _cc) { CurWeapon.SetCCType(_cc); }
+    private void ResetWeaponCCType() { CurWeapon.ResetCCType(); }
+
 
 
     // 상속 정보

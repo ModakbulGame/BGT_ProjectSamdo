@@ -9,6 +9,7 @@ public enum EAdjType
     ATTACK,
     MAGIC,
     MOVE_SPEED,
+    MAX_HP,
 
     LAST
 }
@@ -124,9 +125,32 @@ public abstract partial class ObjectScript
 
     // 전투 정보
     public virtual ObjectCombatInfo CombatInfo { get; }       // 전투 정보
-    public float MaxHP { get { return CombatInfo.MaxHP; } }                         // 최대 HP
+    public float MaxHP { get { return CombatInfo.MaxHP * MaxHPMultiplier; } }       // 최대 HP
     public virtual float Attack { get { return CombatInfo.Attack; } }               // 물리 공격력
     public float Defense { get { return CombatInfo.Defense; } }                     // 방어력
+
+    public float MaxHPMultiplier { get; protected set; } = 1;
+
+    private float ExtraHP { get; set; } = 0;
+    public virtual void SetMaxHPMultiplier(float _multiplier)
+    {
+        if(_multiplier == 1) { ResetMaxHP(); return; }
+
+        MaxHPMultiplier = _multiplier;
+        ExtraHP = MaxHP - CombatInfo.MaxHP;
+        CurHP += ExtraHP;
+
+        ApplyHPUI();
+    }
+    public virtual void ResetMaxHP()
+    {
+        MaxHPMultiplier = 1;
+        if(ExtraHP > 0) { CurHP -= ExtraHP; }
+
+        ExtraHP = 0;
+        ApplyHPUI();
+    }
+    public virtual void ApplyHPUI() { }
 
 
     [SerializeField]
@@ -153,7 +177,7 @@ public abstract partial class ObjectScript
         BuffNDebuff info = null;
         float replace;
         replace = GetBuffed(_adjust);
-        if (replace != 0) info = new(_adjust, delegate { ResetMultiplier(_adjust.Type, _adjust.Amount > 0); });
+        if (replace != 0) info = new(_adjust, delegate { ResetMultiplier(_adjust.Type, _adjust.Amount > 1); });
 
         if (info != null) m_buffNDebuff.Add(info);
     }
@@ -162,7 +186,7 @@ public abstract partial class ObjectScript
     {
         EAdjType type = _adj.Type;
         float amount = _adj.Amount;
-        bool isBuff = amount > 0;
+        bool isBuff = amount > 1;
         float time = _adj.Time;
         bool exist = false;
         for (int i = 0; i<m_buffNDebuff.Count; i++)
@@ -220,6 +244,9 @@ public abstract partial class ObjectScript
                 break;
             case EAdjType.MOVE_SPEED:
                 SetMoveMultiplier(_multiplier);
+                break;
+            case EAdjType.MAX_HP:
+                SetMaxHPMultiplier(_multiplier);
                 break;
         }
     }

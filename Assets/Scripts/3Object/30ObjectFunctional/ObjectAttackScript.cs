@@ -21,6 +21,9 @@ public class ObjectAttackScript : MonoBehaviour
 
     public void SetDamage(float _damage) { Damage = _damage * Attacker.DamageMultiplier * Attacker.AttackMultiplier; }
     public void SetAttack(ObjectScript _attacker, float _damage) { m_attacker = _attacker; SetDamage(_damage); }
+    public void SetCCType(ECCType _cc) { m_ccType = _cc; }
+    public void ResetCCType() { SetCCType(ECCType.NONE); }
+
 
     public virtual void AttackOn()                       // 공격 시작
     {

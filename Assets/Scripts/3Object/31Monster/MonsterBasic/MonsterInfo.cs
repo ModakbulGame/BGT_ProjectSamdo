@@ -50,6 +50,12 @@ public partial class MonsterScript
     public void SetScriptable(MonsterScriptable _scriptable) { m_scriptable = _scriptable; SetInfo(); }     // 스크립터블 입력
     public EMonsterName MonsterEnum { get { return m_scriptable.MonsterEnum; } }                            // enum
 
+    public override void ApplyHPUI()
+    {
+        m_hpBar.SetMaxHP(MaxHP);
+        m_hpBar.SetCurHP(CurHP);
+    }
+
     public override void SetMoveMultiplier(float _multiplier)           // 이동 속도 배율 설정
     {
         base.SetMoveMultiplier(_multiplier);
