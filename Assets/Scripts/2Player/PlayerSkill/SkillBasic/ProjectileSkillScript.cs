@@ -10,10 +10,10 @@ public class ProjectileSkillScript : PlayerSkillScript
 
     private Vector3 MoveDir;
 
-    public override void ReleaseTopool()
+    public override void ReleaseToPool()
     {
         m_rigid.velocity = Vector3.zero;
-        base.ReleaseTopool();
+        base.ReleaseToPool();
     }
 
     public void SetSkill(PlayerController _player, float _attack, float _magic, Vector2 _dir)
@@ -24,7 +24,7 @@ public class ProjectileSkillScript : PlayerSkillScript
 
     public override void CollideTarget()
     {
-        ReleaseTopool();
+        ReleaseToPool();
     }
 
 

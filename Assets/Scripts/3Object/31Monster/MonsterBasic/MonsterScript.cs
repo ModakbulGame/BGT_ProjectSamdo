@@ -14,7 +14,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     public ObjectPool<GameObject> OriginalPool { get; set; }
     public void SetPool(ObjectPool<GameObject> _pool) { OriginalPool = _pool; }
     public virtual void OnPoolGet() { IsSpawned = true; }
-    public void ReleaseTopool() { m_aiPath.enabled = false; IsSpawned = false; OriginalPool.Release(gameObject); }
+    public virtual void ReleaseToPool() { m_aiPath.enabled = false; IsSpawned = false; OriginalPool.Release(gameObject); }
 
 
     // 스테이트 매니저
@@ -169,7 +169,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         }
         else
         {
-            ReleaseTopool();
+            ReleaseToPool();
         }
     }
 

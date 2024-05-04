@@ -43,9 +43,9 @@ public class AroundSkillScript: PlayerSkillScript
         }
     }
 
-    public override void ReleaseTopool()
+    public override void ReleaseToPool()
     {
-        base.ReleaseTopool();
+        base.ReleaseToPool();
         m_hitTimeCount.Clear();
     }
 

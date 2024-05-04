@@ -8,7 +8,7 @@ public class EffectScript : MonoBehaviour, IPoolable
     public ObjectPool<GameObject> OriginalPool { get; set; }
     public void SetPool(ObjectPool<GameObject> _pool) { OriginalPool = _pool; }
     public void OnPoolGet() { }
-    public void ReleaseTopool() { OriginalPool.Release(gameObject); }
+    public void ReleaseToPool() { OriginalPool.Release(gameObject); }
 
 
     public void SetDestroyTime(float _time)
@@ -18,6 +18,6 @@ public class EffectScript : MonoBehaviour, IPoolable
     private IEnumerator ReturnEffect(float _time)
     {
         yield return new WaitForSeconds(_time);
-        ReleaseTopool();
+        ReleaseToPool();
     }
 }

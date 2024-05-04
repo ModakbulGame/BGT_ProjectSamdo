@@ -24,7 +24,7 @@ public class MonsterProjectileScript : ObjectAttackScript, IHittable, IPoolable
 
     public void SetPool(ObjectPool<GameObject> _pool) { OriginalPool = _pool; }
     public void OnPoolGet() { }
-    public void ReleaseTopool()
+    public void ReleaseToPool()
     {
         m_rigid.velocity = Vector3.zero;
         if(OriginalPool == null) { return; }
@@ -56,7 +56,7 @@ public class MonsterProjectileScript : ObjectAttackScript, IHittable, IPoolable
 
     public virtual void DestroyAttack()
     {
-        ReleaseTopool();
+        ReleaseToPool();
     }
 
 
@@ -64,7 +64,7 @@ public class MonsterProjectileScript : ObjectAttackScript, IHittable, IPoolable
     private IEnumerator ReleaseDelay()
     {
         yield return new WaitForSeconds(m_lastTime);
-        if (gameObject.activeSelf) { ReleaseTopool(); }
+        if (gameObject.activeSelf) { ReleaseToPool(); }
     }
 
     public virtual void OnEnable()

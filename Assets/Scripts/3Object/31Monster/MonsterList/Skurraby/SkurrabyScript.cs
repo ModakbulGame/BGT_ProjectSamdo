@@ -1,4 +1,3 @@
-using MalbersAnimations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +5,8 @@ using UnityEngine;
 public class SkurrabyScript : MonsterScript
 {
     private const float SkurrabyFirePower = 18;
+
+    public override float ObjectHeight => 1;
 
     [SerializeField]
     private GameObject m_skurrabyExplode;
@@ -18,6 +19,12 @@ public class SkurrabyScript : MonsterScript
     private Vector2 FlyDirection { get { if (!HasTarget) { return Vector2.zero; }
             return ((CurTarget.Position2 + CurTarget.Velocity2 / 2) - Position2).normalized; } }
 
+
+    public override void ReleaseToPool()
+    {
+        FlyDone();
+        base.ReleaseToPool();
+    }
 
     public void SkurrabySpawned(Vector2 _dir, ObjectScript _obj)
     {
@@ -35,9 +42,6 @@ public class SkurrabyScript : MonsterScript
     }
     private IEnumerator SpawnDelay() { yield return new WaitForSeconds(1.5f); IsSpawned = true; }
 
-
-
-
     public void ReadyFire()
     {
         Firing = true;
@@ -54,8 +58,13 @@ public class SkurrabyScript : MonsterScript
     public void CheckFlyDone()
     {
         if(!Flying) { return; }
-        if(m_rigid.velocity.magnitude < 8) { Flying = false; Firing = false; }
+        if(IsGrounded) { FlyDone(); }
     }
+    private void FlyDone()
+    {
+        Flying = false; Firing = false;
+    }
+
 
     public void ExplodeSkurraby()
     {
@@ -68,15 +77,22 @@ public class SkurrabyScript : MonsterScript
         DestroyMonster();
     }
 
+    private readonly float CollisionRadius = 0.75f;
 
-    private void OnTriggerEnter(Collider _other)
+    private void CheckFlyCollision()
     {
         if(!Flying || IsDead) { return; }
-        if (_other.gameObject.layer == ValueDefine.HITTABLE_LAYER_IDX)
+        Collider[] colliders = Physics.OverlapSphere(Position + Vector3.up * ObjectHeight / 2, CollisionRadius, ValueDefine.HITTABLE_LAYER);
+        foreach (Collider col in colliders)
         {
+            IHittable hit = col.GetComponentInParent<IHittable>();
+            hit ??= col.GetComponentInChildren<IHittable>();
+            if(hit == null || hit == this) { continue; }
             ExplodeSkurraby();
+            return;
         }
     }
+
     public override void GetHit(HitData _hit)    // ¸ÂÀ½
     {
         if (Flying) { _hit.Damage = CurHP; base.GetHit(_hit); }
@@ -87,5 +103,10 @@ public class SkurrabyScript : MonsterScript
     {
         base.SetStates();
         ReplaceState(EMonsterState.ATTACK, gameObject.AddComponent<SkurrabyAttackState>());
+    }
+
+    public override void FixedUpdate()
+    {
+        CheckFlyCollision();
     }
 }
