@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DropItemScript : MonoBehaviour, IInteractable
+public class DropItemScript : PooledItem, IInteractable
 {
     [SerializeField]
     private SItem m_dropItem;
@@ -12,7 +12,7 @@ public class DropItemScript : MonoBehaviour, IInteractable
     public SItem DropItem { get { return m_dropItem; } }
     public int ItemNum { get { return m_itemNum; } }
 
-    public void SetDropItem(string _id) { SItem item = PlayManager.GetItemInfo(_id).Item; SetDropItem(item); }
+    public void SetDropItem(string _id) { SItem item = GameManager.GetItemInfo(_id).Item; SetDropItem(item); }
     public void SetDropItem(SItem _item) { SetDropItem(_item, 1); }
     public void SetDropItem(SItem _item, int _num) { m_dropItem = _item; m_itemNum = _num; }
 
@@ -32,9 +32,17 @@ public class DropItemScript : MonoBehaviour, IInteractable
        
     }
 
+
+    public override void ReleaseToPool()
+    {
+        base.ReleaseToPool();
+        m_dropItem = SItem.Empty;
+    }
+
+
     public void GetItem()
     {
         PlayManager.AddInventoryItem(DropItem, 1);
-        Destroy(gameObject);
+        ReleaseToPool();
     }
 }

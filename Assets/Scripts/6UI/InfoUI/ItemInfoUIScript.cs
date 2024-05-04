@@ -16,7 +16,7 @@ public class ItemInfoUIScript : MonoBehaviour
     public void ShowUI(SItem _item)
     {
         if (!IsCompsSet) { SetComps(); }
-        ItemInfo info = PlayManager.GetItemInfo(_item);
+        ItemInfo info = GameManager.GetItemInfo(_item);
         gameObject.SetActive(true);
         m_nameTxt.text = info.ItemName;
         m_descTxt.text = info.ItemDescription;

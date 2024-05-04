@@ -128,7 +128,6 @@ public partial class PlayerController
             if (SkillInHand == ESkillName.LAST) return null;
             return GameManager.GetSkillInfo(SkillInHand); } }                               
     public int UsingSkillIdx { get; private set; } = -1;                                    // ㄴ의 슬롯 번호
-    private int UsingSkillCooltimeIdx { get { return (int)ECooltimeName.SKILL1 + UsingSkillIdx; } }
 
     public void ReadySkill()                                                                // 스킬 사용 준비
     {
@@ -146,7 +145,7 @@ public partial class PlayerController
     public void FireSkill()                                                                 // 스킬 사용
     {
         float coolTime = SkillInfoInHand.SkillCooltime;
-        SkillCooltime[UsingSkillCooltimeIdx] = coolTime;
+        SkillCooltime[UsingSkillIdx] = coolTime;
         PlayManager.UseSkillSlot(UsingSkillIdx, coolTime);
         SkillFireAnim();
         HideSkillAim();
@@ -216,7 +215,7 @@ public partial class PlayerController
     public bool IsHealing { get; private set; }                                                                     // 회복 중    
     private EPatternName HealInHand { get { return PlayManager.CurHealPattern; } }                                  // 장착된 회복 아이템
     private float HealAmountInHand { get { if (HealInHand == EPatternName.LAST) return -1;                          // ㄴ의 회복량
-            ItemInfo info = PlayManager.GetItemInfo(new SItem(EItemType.PATTERN, (int)HealInHand));
+            ItemInfo info = GameManager.GetItemInfo(new SItem(EItemType.PATTERN, (int)HealInHand));
             return ((PatternScriptable)info.ItemData).HealAmount; } }
 
     public void HealUpdate()                                                                                        // 회복 여부 확인
@@ -321,8 +320,11 @@ public partial class PlayerController
     {
         ItemInHand = _item;
 
-        GameObject item = PlayManager.GetThorwItemPrefab(_item);
-        InHandPrefab = Instantiate(item, m_throwItemTransform);
+        GameObject item = GameManager.GetThorwItemPrefab(_item);
+        item.transform.SetParent(transform);
+        item.transform.localPosition = ThrowOffset;
+        item.transform.localEulerAngles = TempThrowOffset;
+        InHandPrefab = item;
         Destroy(InHandPrefab.GetComponent<CapsuleCollider>());
         Destroy(InHandPrefab.GetComponent<Rigidbody>());
         Destroy(InHandPrefab.GetComponent<ThrowItemScript>());
@@ -346,7 +348,12 @@ public partial class PlayerController
     public void CreateThrowItem()                                                           // 던질 아이템 생성
     {
         Vector3 force = PlayerAimVector * ThrowPower;
-        GameObject item = Instantiate(PlayManager.GetThorwItemPrefab(ItemInHand), ThrowOffset, Quaternion.Euler(TempThrowRotation));
+        GameObject item = GameManager.GetThorwItemPrefab(ItemInHand);
+        item.transform.SetParent(transform);
+        item.transform.localPosition = ThrowOffset;
+        item.transform.localEulerAngles = TempThrowOffset;
+        item.transform.SetParent(null);
+
         ThrowItemScript script = item.GetComponent<ThrowItemScript>();
         script.SetFlying(force);
         DestroyInHand();

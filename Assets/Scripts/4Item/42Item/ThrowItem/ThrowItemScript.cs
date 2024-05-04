@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThrowItemScript : MonoBehaviour
+public class ThrowItemScript : PooledItem
 {
     [SerializeField]
     private ThrowItemScriptable m_scriptable;

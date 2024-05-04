@@ -27,7 +27,7 @@ public class WeaponBoxElmScript : MonoBehaviour
         SItem item = new(EItemType.WEAPON, _weapon);
 
         Sprite img = GameManager.GetItemSprite(item);
-        ItemInfo info = PlayManager.GetWeaponInfo(weapon);
+        ItemInfo info = GameManager.GetWeaponInfo(weapon);
 
         m_weaponImg.sprite = img;
         m_weaponNameTxt.text = info.ItemName;

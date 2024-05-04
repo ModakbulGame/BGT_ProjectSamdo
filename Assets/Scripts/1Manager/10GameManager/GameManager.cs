@@ -35,6 +35,20 @@ public class GameManager : SingleTon<GameManager>
     public static void SetControlMode(EControlMode _mode) { InputManager.SetControlMode(_mode); }                               // 조작 모드 변경
     public static void SetMouseSensitive(float _sensitive) { InputManager.SetMouseSensitive(_sensitive); }                      // 마우스 민감도 설정
 
+
+    // 아이템
+    private ItemManager m_itemManager;
+    private static ItemManager ItemManager { get { return Inst.m_itemManager; } }
+    private static GameObject[] ItemArray { get { return ItemManager.ItemArray; } }
+    public static ItemInfo GetItemInfo(SItem _item) { return ItemManager.GetItemInfo(_item); }                                              // 아이템 정보
+    public static ItemInfo GetItemInfo(string _id) { return ItemManager.GetItemInfo(_id); }                                                 // 아이템 정보
+    public static ItemInfo GetWeaponInfo(EWeaponName _weapon) { return GetItemInfo(new SItem(EItemType.WEAPON, (int)_weapon)); }            // 무기 정보
+    public static GameObject GetThorwItemPrefab(EThrowItemName _item) { return ItemManager.GetThrowItemPrefab(_item); }                     // 투척 아이템 프리펍
+    public static GameObject GetDropItemPrefab(EItemType _item) { return ItemManager.GetDropItemPrefab(_item); }                            // 드랍 아이템 프리펍
+    public static void ObtainWeapon(EWeaponName _weapon) { ItemManager.ObtainWeapon(_weapon); }
+
+
+
     // 스킬
     private SkillManager m_skillManager;
     private static SkillManager SkillManager { get { return Inst.m_skillManager; } }
@@ -44,10 +58,6 @@ public class GameManager : SingleTon<GameManager>
     public static ESkillName[] SkillSlot { get { return SkillManager.SkillSlot; } }                                                         // 스킬 슬롯
     public static void RegisterSkilSlot(ESkillName _skill, int _idx) { SkillManager.RegisterSkillSlot(_skill, _idx); PlayManager.UpdateSkillSlot(); }   // 스킬 슬롯 설정
     public static void ObtainSkill(ESkillName _skill) { SkillManager.ObtainSkill(_skill); }
-
-    // 아이템
-    public static EItemName[] ItemSlot { get { return null; } }                                                         // 아이템 슬롯
-    public static void RegisterItemSlot(EItemName _item, int _idx) { }   // 아이템 슬롯 설정
 
 
     // 몬스터
@@ -89,7 +99,9 @@ public class GameManager : SingleTon<GameManager>
         m_displayManager = GetComponent<DisplayManager>();
         m_soundManager = GetComponent<SoundManager>();
         m_inputManager = GetComponent<InputManager>();
-        m_inputManager.SetSubManager();
+        m_inputManager.SetManager();
+        m_itemManager = GetComponent<ItemManager>();
+        m_itemManager.SetManager();
         m_skillManager = GetComponent<SkillManager>();
         m_skillManager.SetManager();
         m_monsterManager = GetComponent<MonsterManager>();
@@ -98,7 +110,7 @@ public class GameManager : SingleTon<GameManager>
         m_effectManager.SetManager();
         m_uiManager = GetComponent<UIManager>();
         m_poolManager = GetComponent<PoolManager>();
-        m_poolManager.SetManager(SkillArray, MonsterArray, EffectArray);
+        m_poolManager.SetManager(ItemArray, SkillArray, MonsterArray, EffectArray);
     }
 
     public override void Awake()

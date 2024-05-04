@@ -125,8 +125,8 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
             if (UnityEngine.Random.Range(0f, 1f) <= drop.Prob)
             {
                 EItemType type = DataManager.IDToItemType(drop.ID);
-                GameObject prefab = PlayManager.GetDropItemPrefab(type);
-                GameObject item = Instantiate(prefab, transform.position, Quaternion.Euler(transform.eulerAngles));
+                GameObject item = GameManager.GetDropItemPrefab(type);
+                item.transform.position = Position;
                 DropItemScript script = item.GetComponent<DropItemScript>();
                 script.SetDropItem(drop.ID);
             }

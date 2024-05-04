@@ -8,7 +8,8 @@ public class PoolManager : MonoBehaviour
     private static readonly Dictionary<int, ObjectPool<GameObject>> m_pools = new();
     private readonly Dictionary<int, GameObject> m_objectList = new();
 
-    private const int DEFAULT_SKILL_NUM = 10;
+    private const int DEFAULT_ITEM_NUM = 3;
+    private const int DEFAULT_SKILL_NUM = 3;
     private const int DEFAULT_MONSTER_NUM = 10;
     private const int DEFAULT_EFFECT_NUM = 10;
 
@@ -26,14 +27,22 @@ public class PoolManager : MonoBehaviour
         return m_pools[hash].Get();
     }
 
-    private void CreatePools(GameObject[] _skills, GameObject[] _monsters, GameObject[] _effects)
+    private void CreatePools(GameObject[] _items, GameObject[] _skills, GameObject[] _monsters, GameObject[] _effects)
     {
+        // 아이템
+        int itemNum = (int)EItemType.LAST + (int)EThrowItemName.LAST;
+        for (int i = 0; i<itemNum; i++)
+        {
+            if (_items[i] == null) { continue; }
+            InitPool(_items[i], DEFAULT_ITEM_NUM);
+        }
         // 스킬
         for(int i = 0; i<(int)ESkillName.LAST; i++)
         {
             if (_skills[i] == null) { continue; }
             InitPool(_skills[i], DEFAULT_SKILL_NUM);
         }
+        // 몬스터
         for (int i = 0; i<(int)EMonsterName.LAST; i++)
         {
             if (_monsters[i] == null) { continue; }
@@ -81,8 +90,8 @@ public class PoolManager : MonoBehaviour
     private void OnPoolDestroy(GameObject _item) { Destroy(_item); }
 
 
-    public void SetManager(GameObject[] _skills, GameObject[] _monsters, GameObject[] _effects)
+    public void SetManager(GameObject[] _items, GameObject[] _skills, GameObject[] _monsters, GameObject[] _effects)
     {
-        CreatePools(_skills, _monsters, _effects);
+        CreatePools(_items, _skills, _monsters, _effects);
     }
 }

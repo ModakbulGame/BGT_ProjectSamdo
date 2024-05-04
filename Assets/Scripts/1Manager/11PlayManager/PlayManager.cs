@@ -50,43 +50,33 @@ public class PlayManager : MonoBehaviour
     public static void CameraSwitch(CinemachineFreeLook targetCamera) { CameraManager.SwitchToCamera(targetCamera); }                       // 카메라 변환
 
 
-    // 아이템
-    private ItemManager m_itemManager;
-    private static ItemManager ItemManager { get { return Inst.m_itemManager; } }
-    public static ItemInfo GetItemInfo(SItem _item) { return ItemManager.GetItemInfo(_item); }                                              // 아이템 정보
-    public static ItemInfo GetItemInfo(string _id) { return ItemManager.GetItemInfo(_id); }                                                 // 아이템 정보
-    public static ItemInfo GetWeaponInfo(EWeaponName _weapon) { return GetItemInfo(new SItem(EItemType.WEAPON, (int)_weapon)); }            // 무기 정보
-    public static GameObject GetWeaponPrefab(EWeaponName _weapon) { return ItemManager.GetWeaponPrefab(_weapon); }                          // 무기 프리펍
-    public static GameObject GetThorwItemPrefab(EThrowItemName _item) { return ItemManager.GetThrowItemPrefab(_item); }                     // 투척 아이템 프리펍
-    public static GameObject GetDropItemPrefab(EItemType _item) { return ItemManager.GetDropItemPrefab(_item); }                            // 드랍 아이템 프리펍
-    public static InventoryElm[] PlayerInventory { get { return ItemManager.Inventory; } }                                                  // 인벤토리 아이템 목록
-    public static void AddInventoryItem(SItem _item, int _num) { ItemManager.AddInventoryItem(_item, _num); }                               // 빈 인벤토리에 아이템 추가
-    public static void SetInventoryItem(int _idx, SItem _item, int _num) { ItemManager.SetInventoryItem(_idx, _item, _num); }               // 인벤토리 해당 Idx에 아이템 설정
-    public static void RemoveInventoryItem(int _idx) { ItemManager.RemoveInventoryItem(_idx); }                                             // 인벤토리 해당 Idx 아이템 제거
-        // 장비 관련
-    public static EWeaponName CurWeapon { get { return ItemManager.CurWeapon; } }                                                           // 장착 중인 무기
-    public static void SetCurWeapon(EWeaponName _weapon) { ItemManager.SetCurWeapon(_weapon); }                                             // 무기 설정
-    public static void EquipWeapon(EWeaponName _weapon) { ItemManager.EquipWeapon(_weapon); }                                               // 무기 장착
-    public static void ObtainWeapon(EWeaponName _weapon) { ItemManager.ObtainWeapon(_weapon); }                                             // 무기 획득
-        // 등록 아이템 관련
-    public static EPatternName CurHealPattern { get { return ItemManager.CurHealPattern; } }
-    public static EPatternName[] HealPatternList { get { return ItemManager.HealPatternList; } }
-    public static void UseHealPattern() { ItemManager.UseHealItem(); UpdateInfoUI(); UpdateHealItemSlot(); }
-    public static void RegisterHealPattern(EPatternName _pattern) { ItemManager.RegisterHealItem(_pattern); UpdateInfoUI(); UpdateHealItemSlot(); }
-    public static EThrowItemName CurThrowItem { get { return ItemManager.CurThrowItem; } }                                                  // 현재 던지기 아이템 (LAST == null)
-    public static List<EThrowItemName> ThrowItemList { get { return ItemManager.ThrowItemList; } }                                          // 등록된 던지기 아이템
-    public static void UseThrowItem() { ItemManager.UseThrowItem(); UpdateInfoUI(); UpdateThrowItemSlot(); }                                // 던지기 아이템 사용
-    public static void AddThrowItem(EThrowItemName _item) { ItemManager.AddThrowItem(_item); UpdateInfoUI(); UpdateThrowItemSlot(); }       // 던지기 아이템 추가
-        // 재화 관련
-    public static int SoulNum { get { return ItemManager.SoulNum; } }                                                                       // 영혼 개수
-    public static int PurifiedNum { get { return ItemManager.PurifiedNum; } }                                                               // 성불 영혼 개수
-    public static int[] PatternNum { get { return ItemManager.PatternNum; } }                                                               // 문양별 개수
-    public static void AddSoul(int _num) { ItemManager.AddSoul(_num); }                                                                     // 영혼 추가
-    public static void AddPurified(int _num) { ItemManager.AddPurified(_num); }                                                             // 성불 영혼 추가
-    public static void AddPattern(EProperty _type, int _num) { ItemManager.AddPattern(_type, _num); }                                       // 문양 추가
-    public static void UseSoul(int _num) { ItemManager.UseSoul(_num); }                                                                     // 영혼 사용
-    public static void UsePurified(int _num) { ItemManager.UsePurified(_num); }                                                             // 성불 영혼 사용
-    public static void UsePattern(EProperty _type, int _num) { ItemManager.UsePattern(_type, _num); }                                       // 문양 사용
+    // 인벤토리
+    private InventoryManager m_invenManager;
+    private static InventoryManager InvenManager { get { return Inst.m_invenManager; } }
+    public static InventoryElm[] PlayerInventory { get { return InvenManager.Inventory; } }                                                 // 인벤토리 아이템 목록
+    public static void AddInventoryItem(SItem _item, int _num) { InvenManager.AddInventoryItem(_item, _num); }                              // 빈 인벤토리에 아이템 추가
+    public static void SetInventoryItem(int _idx, SItem _item, int _num) { InvenManager.SetInventoryItem(_idx, _item, _num); }              // 인벤토리 해당 Idx에 아이템 설정
+    public static void RemoveInventoryItem(int _idx) { InvenManager.RemoveInventoryItem(_idx); }                                            // 인벤토리 해당 Idx 아이템 제거
+    public static EWeaponName CurWeapon { get { return InvenManager.CurWeapon; } }                                                          // 장착 중인 무기
+    public static void SetCurWeapon(EWeaponName _weapon) { InvenManager.SetCurWeapon(_weapon); }                                            // 무기 설정
+    public static void EquipWeapon(EWeaponName _weapon) { InvenManager.EquipWeapon(_weapon); }                                              // 무기 장착
+    public static EPatternName CurHealPattern { get { return InvenManager.CurHealPattern; } }                                               // 현재 회복 아이템
+    public static EPatternName[] HealPatternList { get { return InvenManager.HealPatternList; } }                                           // 등록된 회복 아이템
+    public static void UseHealPattern() { InvenManager.UseHealItem(); UpdateInfoUI(); UpdateHealItemSlot(); }                               // 회복 아이템 사용
+    public static void RegisterHealPattern(EPatternName _pattern) { InvenManager.RegisterHealItem(_pattern); UpdateInfoUI(); UpdateHealItemSlot(); }    // 등록
+    public static EThrowItemName CurThrowItem { get { return InvenManager.CurThrowItem; } }                                                  // 현재 던지기 아이템 (LAST == null)
+    public static List<EThrowItemName> ThrowItemList { get { return InvenManager.ThrowItemList; } }                                          // 등록된 던지기 아이템
+    public static void UseThrowItem() { InvenManager.UseThrowItem(); UpdateInfoUI(); UpdateThrowItemSlot(); }                                // 던지기 아이템 사용
+    public static void AddThrowItem(EThrowItemName _item) { InvenManager.AddThrowItem(_item); UpdateInfoUI(); UpdateThrowItemSlot(); }       // 던지기 아이템 추가
+    public static int SoulNum { get { return InvenManager.SoulNum; } }                                                                       // 영혼 개수
+    public static int PurifiedNum { get { return InvenManager.PurifiedNum; } }                                                               // 성불 영혼 개수
+    public static int[] PatternNum { get { return InvenManager.PatternNum; } }                                                               // 문양별 개수
+    public static void AddSoul(int _num) { InvenManager.AddSoul(_num); }                                                                     // 영혼 추가
+    public static void AddPurified(int _num) { InvenManager.AddPurified(_num); }                                                             // 성불 영혼 추가
+    public static void AddPattern(EProperty _type, int _num) { InvenManager.AddPattern(_type, _num); }                                       // 문양 추가
+    public static void UseSoul(int _num) { InvenManager.UseSoul(_num); }                                                                     // 영혼 사용
+    public static void UsePurified(int _num) { InvenManager.UsePurified(_num); }                                                             // 성불 영혼 사용
+    public static void UsePattern(EProperty _type, int _num) { InvenManager.UsePattern(_type, _num); }                                       // 문양 사용
 
     // 스토리
     private StoryManager m_storyManager;
@@ -146,8 +136,8 @@ public class PlayManager : MonoBehaviour
 
     private void SetSubManagers()
     {
-        m_itemManager = GetComponent<ItemManager>();
-        m_itemManager.SetManager();
+        m_invenManager = GetComponent<InventoryManager>();
+        m_invenManager.SetManager();
         m_storyManager = GetComponent<StoryManager>();
         m_environmentManager = GetComponent<EnvironmentManager>();
         m_environmentManager.setManager();

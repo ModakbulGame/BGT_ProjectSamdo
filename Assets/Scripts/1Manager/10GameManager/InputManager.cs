@@ -53,7 +53,7 @@ public class InputManager : MonoBehaviour
     }
 
 
-    public void SetSubManager()
+    public void SetManager()
     {
         SetInputActions();
     }
