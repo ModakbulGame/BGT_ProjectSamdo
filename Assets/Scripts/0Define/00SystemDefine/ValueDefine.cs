@@ -36,6 +36,7 @@ public static class ValueDefine
     public const int MAX_SKILL_SLOT = 3;                            // 장착 가능 스킬 수
     public const int MAX_INVENTORY = 64;                            // 인벤토리 최대 크기
     public const int MAX_ITEM_VARIETY = 128;                        // 아이템 종류별 개수
+    public const int MAX_HEAL_ITEM = 3;                             // 최대 등록 가능 회복 아이템
     public const int MAX_THROW_ITEM = 8;                            // 최대 등록 가능 투척 아이템
     public const int MAX_REGISTER_PATTERN = 5;                      // 최대 각인 가능 문양
 

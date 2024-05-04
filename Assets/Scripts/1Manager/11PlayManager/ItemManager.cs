@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 // 아이템 관련 enum -> ItemEnum에 있음
 
@@ -179,6 +180,27 @@ public class ItemManager : MonoBehaviour
     }
 
 
+    // 회복 아이템 (각인 문양?)
+    private readonly List<EPatternName> m_healPatternList = new();
+    public EPatternName CurHealPattern { get { if (m_healPatternList.Count > 0) return m_healPatternList[0]; return EPatternName.LAST; } }
+    public EPatternName[] HealPatternList { get { return m_healPatternList.ToArray(); } }
+    public void UseHealItem()
+    {
+        if(m_healPatternList.Count == 0) { Debug.LogError("회복 아이템 없음"); return; }
+        m_healPatternList.RemoveAt(0);
+    }
+    public void RegisterHealItem(EPatternName _pattern)
+    {
+        if (m_healPatternList.Count >= ValueDefine.MAX_HEAL_ITEM) { Debug.Log("리스트 꽉 참"); return; }
+
+        if (ChkNUseItem(new(EItemType.PATTERN, (int)_pattern), 1))
+        {
+            m_healPatternList.Add(_pattern);
+        }
+    }
+
+
+    // 투척 아이템
     private readonly List<EThrowItemName> m_throwItemList = new();
     public EThrowItemName CurThrowItem { get { if (m_throwItemList.Count > 0) return m_throwItemList[0]; return EThrowItemName.LAST; } }    // 현재 던지기 아이템
     public List<EThrowItemName> ThrowItemList { get { return m_throwItemList; } }       // 추가된 던지기 아이템들
@@ -232,8 +254,12 @@ public class ItemManager : MonoBehaviour
             AddInventoryItem(new(EItemType.OTHERS, i), 10);
         }
     }
-    private void TempSetThrowItem()
+    private void TempSetItemSlot()
     {
+        for (int i = 0; i<(int)EPatternName.LAST; i+=2)
+        {
+            m_healPatternList.Add((EPatternName)i);
+        }
         for (int i = 0; i<(int)EThrowItemName.LAST; i++)
         {
             m_throwItemList.Add((EThrowItemName)i);
@@ -257,6 +283,6 @@ public class ItemManager : MonoBehaviour
         }
 
         TempSetItem();              // 아이템 습득 임시 설정
-        TempSetThrowItem();         // 던지기 아이템 리스트 임시 설정
+        TempSetItemSlot();         // 던지기 아이템 리스트 임시 설정
     }
 }

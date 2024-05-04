@@ -21,7 +21,10 @@ public class EquipSlotUIScript : MonoBehaviour
 
     public void UpdateHealItemImg()
     {
-
+        EPatternName pattern = PlayManager.CurHealPattern;
+        if(pattern == EPatternName.LAST) { m_healItemImg.gameObject.SetActive(false); return; }
+        else if (!m_healItemImg.gameObject.activeSelf) { m_healItemImg.gameObject.SetActive(true); }
+        m_healItemImg.sprite = GameManager.GetItemSprite(new(EItemType.PATTERN, (int)pattern));
     }
 
 

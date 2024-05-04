@@ -68,6 +68,11 @@ public class PlayManager : MonoBehaviour
     public static void SetCurWeapon(EWeaponName _weapon) { ItemManager.SetCurWeapon(_weapon); }                                             // 무기 설정
     public static void EquipWeapon(EWeaponName _weapon) { ItemManager.EquipWeapon(_weapon); }                                               // 무기 장착
     public static void ObtainWeapon(EWeaponName _weapon) { ItemManager.ObtainWeapon(_weapon); }                                             // 무기 획득
+        // 등록 아이템 관련
+    public static EPatternName CurHealPattern { get { return ItemManager.CurHealPattern; } }
+    public static EPatternName[] HealPatternList { get { return ItemManager.HealPatternList; } }
+    public static void UseHealPattern() { ItemManager.UseHealItem(); UpdateInfoUI(); UpdateHealItemSlot(); }
+    public static void RegisterHealPattern(EPatternName _pattern) { ItemManager.RegisterHealItem(_pattern); UpdateInfoUI(); UpdateHealItemSlot(); }
     public static EThrowItemName CurThrowItem { get { return ItemManager.CurThrowItem; } }                                                  // 현재 던지기 아이템 (LAST == null)
     public static List<EThrowItemName> ThrowItemList { get { return ItemManager.ThrowItemList; } }                                          // 등록된 던지기 아이템
     public static void UseThrowItem() { ItemManager.UseThrowItem(); UpdateInfoUI(); UpdateThrowItemSlot(); }                                // 던지기 아이템 사용

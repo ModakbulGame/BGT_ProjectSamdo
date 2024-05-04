@@ -211,10 +211,13 @@ public partial class PlayerController
     // 회복 관련
     private readonly float HealDelay = 5;                                                                           // 회복 딜레이
 
-    private bool CanHeal { get { return HealInHand > 0 && HealItemTrigger && !IsHealing &&                          // 회복 가능
+    private bool CanHeal { get { return HealInHand != EPatternName.LAST && HealItemTrigger && !IsHealing &&         // 회복 가능
                 (IsIdle || IsMoving) && HealCooltime <= 0; } }
     public bool IsHealing { get; private set; }                                                                     // 회복 중    
-    private float HealInHand { get; set; } = 10;                                                                    // 장착된 회복 아이템 회복량
+    private EPatternName HealInHand { get { return PlayManager.CurHealPattern; } }                                  // 장착된 회복 아이템
+    private float HealAmountInHand { get { if (HealInHand == EPatternName.LAST) return -1;                          // ㄴ의 회복량
+            ItemInfo info = PlayManager.GetItemInfo(new SItem(EItemType.PATTERN, (int)HealInHand));
+            return ((PatternScriptable)info.ItemData).HealAmount; } }
 
     public void HealUpdate()                                                                                        // 회복 여부 확인
     {
@@ -228,8 +231,8 @@ public partial class PlayerController
     public void UseHealItem()
     {
         if(!IsHealing) { return; }
-        HealObj(HealInHand);
-        HealInHand = 10;
+        HealObj(HealAmountInHand);
+        PlayManager.UseHealPattern();
         CreateHealEffect();
     }
     private void CreateHealEffect()

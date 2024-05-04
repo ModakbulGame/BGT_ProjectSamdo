@@ -116,8 +116,10 @@ public class BattleDebugger : MonoBehaviour
         if (m_spawnPoint == null) { point = m_spawnPoint.SpawnPosition; }
         else { point = Vector3.zero; }
 
-        GameObject monster = Instantiate(prefab, point, Quaternion.Euler(0, Random.Range(-180f, 180f), 0));
-        MonsterScript script = monster.GetComponent<MonsterScript>();
+        prefab.transform.SetParent(null);
+        prefab.transform.position = point;
+        prefab.transform.localEulerAngles = new(0, Random.Range(-180f, 180f), 0);
+        MonsterScript script = prefab.GetComponent<MonsterScript>();
         m_monsterList.Add(script);
         Debug.Log($"{script.ObjectName} »ý¼ºµÊ");
     }

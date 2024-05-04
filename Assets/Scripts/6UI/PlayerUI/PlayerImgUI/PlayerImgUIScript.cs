@@ -12,6 +12,8 @@ public class PlayerImgUIScript : MonoBehaviour
     private GameObject[] m_weapons;
     private PlayerImgWeaponSlot m_weaponSlot;
 
+    private PlayerImgPatternSlot m_healSlot;
+
     private GameObject WeaponObject { get; set; }
 
     private SItem CurWeapon { get; set; }
@@ -19,8 +21,13 @@ public class PlayerImgUIScript : MonoBehaviour
     public void OpenUI()
     {
         UpdatePlayerWeapon(PlayManager.CurWeapon);
+        UpdateUI();
     }
 
+    public void UpdateUI()
+    {
+        m_healSlot.UpdateUI();
+    }
     public void UpdatePlayerWeapon(EWeaponName _weapon)
     {
         if (WeaponObject != null) { WeaponObject.SetActive(false); }
@@ -35,6 +42,10 @@ public class PlayerImgUIScript : MonoBehaviour
     public void ShowItemInfo()
     {
         m_parent.ShowItemInfoUI(CurWeapon);
+    }
+    public void ShowItemInfo(EPatternName _pattern)
+    {
+        m_parent.ShowItemInfoUI(new(EItemType.PATTERN, (int)_pattern));
     }
     public void HideItemInfo()
     {
@@ -51,5 +62,8 @@ public class PlayerImgUIScript : MonoBehaviour
         m_weaponSlot = GetComponentInChildren<PlayerImgWeaponSlot>();
         m_weaponSlot.SetParent(this);
         m_weaponSlot.SetComps();
+        m_healSlot = GetComponentInChildren<PlayerImgPatternSlot>();
+        m_healSlot.SetParent(this);
+        m_healSlot.SetComps();
     }
 }

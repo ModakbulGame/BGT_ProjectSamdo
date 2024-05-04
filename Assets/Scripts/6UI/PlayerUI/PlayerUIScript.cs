@@ -27,6 +27,7 @@ public class PlayerUIScript : MonoBehaviour
 
     public void UpdateInfoUI()
     {
+        m_imgUI.UpdateUI();
         m_infoUI.UpdateUI();
     }
 
