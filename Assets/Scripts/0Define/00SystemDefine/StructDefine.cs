@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -25,7 +26,15 @@ public struct HitData
     public ObjectScript Attacker;
     public float Damage;
     public Vector3 Point;
-    public ECCType CCType;
+    public ECCType[] CCList;
     public HitData(ObjectScript _attacker, float _damage, Vector3 _point) : this(_attacker, _damage, _point, ECCType.NONE) { }
-    public HitData(ObjectScript _attacker, float _damage, Vector3 _point, ECCType _cc) { Attacker = _attacker; Damage = _damage; Point = _point; CCType = _cc; }
+    public HitData(ObjectScript _attacker, float _damage, Vector3 _point, ECCType _cc) : this(_attacker, _damage, _point, new ECCType[] { _cc }) { }
+    public HitData(ObjectScript _attacker, float _damage, Vector3 _point, ECCType[] _cc)
+    {
+        Attacker = _attacker;
+        Damage = _damage;
+        Point = _point;
+        CCList = new ECCType[_cc.Length];
+        for(int i = 0; i<_cc.Length; i++) { CCList[i] = _cc[i]; }
+    }
 }

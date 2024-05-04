@@ -131,6 +131,8 @@ public class PlayManager : MonoBehaviour
     public static void HideSkillAim() { PlayUIManager.HideSkillAim(); }
     public static void DrawThrowLine(Vector3 _force, float _mass, Vector3 _start) { PlayUIManager.DrawThrowLine(_force, _mass, _start); }   // 던지기 궤적 그리기
     public static void HideThrowLine() { PlayUIManager.HideThrowLine(); }                                                                   // 던지기 궤적 off
+    public static void ShowBlindMark() { PlayUIManager.ShowBlindMark(); }
+    public static void HideBlindMark() { PlayUIManager.HideBlindMark(); }
 
 
 

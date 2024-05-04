@@ -96,7 +96,7 @@ public class AnimateAttackScript : ObjectAttackScript
     {
         if (CheckHit(_hittable)) { return Vector3.zero; }
         Vector3 pos = GetComponent<Collider>().ClosestPoint(transform.position);
-        HitData hit = new(m_attacker, Damage, pos, CCType);
+        HitData hit = new(m_attacker, Damage, pos, CCList);
         _hittable.GetHit(hit);
         AddHitObject(_hittable);
         return pos;

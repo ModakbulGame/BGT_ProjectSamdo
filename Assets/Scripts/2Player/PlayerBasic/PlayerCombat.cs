@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -365,5 +366,24 @@ public partial class PlayerController
         CancelThrowAnim();
         ItemInHand = EThrowItemName.LAST;
         ChangeState(EPlayerState.IDLE);
+    }
+
+
+    // CC ฐüทร
+    public override void GetBlind(HitData _hit)
+    {
+        if (IsBlind) { m_ccCount[(int)ECCType.BLIND] = 10; return; }
+        PlayManager.ShowBlindMark();
+        StartCoroutine(BlindCotouine());
+    }
+    private IEnumerator BlindCotouine()
+    {
+        while (!IsDead && m_ccCount[(int)ECCType.BLIND] > 0)
+        {
+            m_ccCount[(int)ECCType.BLIND] -= Time.deltaTime;
+            yield return null;
+        }
+        PlayManager.HideBlindMark();
+        m_ccCount[(int)ECCType.BLIND] = 0;
     }
 }

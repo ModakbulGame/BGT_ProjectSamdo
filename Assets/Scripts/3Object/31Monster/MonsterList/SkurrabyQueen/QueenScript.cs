@@ -19,28 +19,30 @@ public class QueenScript : MonsterScript
     private ObjectPool<GameObject> m_skurrabyPool;
 
     [SerializeField]
-    private VisualEffect m_poisonVFX;
+    private VisualEffect m_poisonVFX;                               // 독 VFX
 
-    private const int MAX_SKURRABY = 3;
-    private const float SPIT_ROTATION = 120;
-    private float SKILL_DELAY = 10;
-    public readonly float EvadeRange = 3;
+    private const int MAX_SKURRABY = 3;                             // 최대 소환 딱지
+    private readonly float SkillDelay = 6;                          // 스킬 한번 쓰고 다음 스킬까지
+    public readonly float EvadeRange = 3;                           // 회피 거리
 
-    private int CurSkurraby { get; set; } = 0;
+    private readonly float SpitAngle = 120;                         // 독 뿌리기 각도 범위
+    private readonly float SpitDelay = 0.5f;                        // 독 뿌리기 간격
+
+    private int CurSkurraby { get; set; } = 0;                      // 소환한 딱지 수
     private Vector3 SkurrabyOffset = new(0, 1.5f, 2.75f);
 
-    public EQueenSkillName SkillIdx { get; private set; }
+    public EQueenSkillName SkillIdx { get; private set; }           // 현재 스킬
 
-    private readonly float[] m_skillCooltime = new float[] { 30, 20 };
+    private readonly float[] m_skillCooltime = new float[] { 20, 12 };
 
     private readonly float[] SkillCoolCount = new float[(int)EQueenSkillName.LAST];
-    public bool CanUseSkill { get { return CanCreateSkurraby || CanSpitPoison; } }
+    public bool CanUseSkill { get { return CanCreateSkurraby || CanSpitPoison; } }  // 스킬 사용 가능
     private bool CanCreateSkurraby { get { return SkillCoolCount[(int)EQueenSkillName.CREATE_SKURRABY] <= 0 && CurSkurraby < MAX_SKURRABY; } }
     private bool CanSpitPoison { get { return SkillCoolCount[(int)EQueenSkillName.SPIT_POISON] <= 0; } }
 
-    public bool IsSpitting { get; private set; }
+    public bool IsSpitting { get; private set; }                    // 독 뿜는 중
 
-    public void EvadeQueen()
+    public void EvadeQueen()                                        // 회피 기동
     {
         StopMove();
         LookTarget();
@@ -48,7 +50,7 @@ public class QueenScript : MonsterScript
         m_rigid.velocity = dir;
     }
 
-    public override void StartAttack()
+    public override void StartAttack()                              // 공격 시작
     {
         StopMove();
         if (CanCreateSkurraby)
@@ -64,25 +66,26 @@ public class QueenScript : MonsterScript
         else return;
         int skill = (int)SkillIdx;
         SkillCoolCount[skill] = m_skillCooltime[skill];
-        if (SkillCoolCount[1-skill] <= SKILL_DELAY / 2) { SkillCoolCount[1-skill] = SKILL_DELAY; }
+        if (SkillCoolCount[1-skill] <= SkillDelay) { SkillCoolCount[1-skill] = SkillDelay; }
     }
-    public override void CreateAttack()
+    public override void CreateAttack()                             // 딱지 만들기
     {
         CreateSkurraby();
     }
-    public override void AttackTriggerOn() 
+    public override void AttackTriggerOn()                          // 독 뿜기 시작
     {
         IsSpitting = true;
         m_poisonVFX.Play();
+        StartCoroutine(SpittingCoroutine());
     }
-    public override void AttackTriggerOff() 
+    public override void AttackTriggerOff()                         // 독 뿜기 중단
     {
         IsSpitting = false;
         m_poisonVFX.Stop();
     }
-    public void CreateSkurraby()
+    public void CreateSkurraby()                                    // 딱지 리얼 만들기
     {
-        if(CurSkurraby >= MAX_SKURRABY) { return; }
+        if (CurSkurraby >= MAX_SKURRABY) { return; }
         GameObject skurraby = m_skurrabyPool.Get();
         skurraby.transform.localPosition = SkurrabyOffset;
         Vector2 dir = FunctionDefine.DegToVec(Rotation);
@@ -90,16 +93,29 @@ public class QueenScript : MonsterScript
         script.SkurrabySpawned(dir, CurTarget);
         skurraby.transform.SetParent(null);
     }
-    public override void AttackDone()
+    private IEnumerator SpittingCoroutine()                         // 독 뿜기 코루틴
+    {
+        while (IsSpitting)
+        {
+            SpitPoison();
+            yield return new WaitForSeconds(SpitDelay);
+        }
+    }
+    private void SpitPoison()                                       // 독 리얼 뿜기
+    {
+        // 여기 독 뿌리기 만드셈 (OverlapSphere 쓰셈)
+    }
+    public override void AttackDone()                               // 공격 완료
     {
         base.AttackDone();
     }
+
 
     // 초기 설정
     private void InitPool()
     {
         m_skurrabyPool = new(OnPoolCreate, OnPoolGet, OnPoolRelease, OnPoolDestroy, true, MAX_SKURRABY, MAX_SKURRABY);
-        for(int i = 0; i<MAX_SKURRABY; i++) { GameObject skurraby = OnPoolCreate(); skurraby.GetComponent<SkurrabyScript>().ReleaseToPool(); }
+        for (int i = 0; i<MAX_SKURRABY; i++) { GameObject skurraby = OnPoolCreate(); skurraby.GetComponent<SkurrabyScript>().ReleaseToPool(); }
     }
     private GameObject OnPoolCreate()
     {

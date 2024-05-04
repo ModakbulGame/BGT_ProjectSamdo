@@ -18,7 +18,7 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
 
     private PlayerController Player { get { return (PlayerController)m_attacker; } }
 
-    public override ECCType CCType { get { return SkillManager.IDToCC(m_scriptable.ID); } }
+    public override ECCType[] CCList { get { return new ECCType[1] { SkillManager.IDToCC(m_scriptable.ID) }; } }
 
     public virtual void SetSkill(PlayerController _player, float _attack, float _magic)
     {
@@ -56,7 +56,7 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
     public override void GiveDamage(IHittable _hittable, Vector3 _point)
     {
         if (CheckHit(_hittable)) { return; }
-        HitData hit = new(Player, ResultDamage, _point, CCType);
+        HitData hit = new(Player, ResultDamage, _point, CCList);
         _hittable.GetHit(hit);
         AddHitObject(_hittable);
     }

@@ -49,7 +49,9 @@ public enum ECCType
     POISON,             // 중독
     BLEED,              // 출혈
     STAGGER,            // 경직
-    AIRBORNE,          // 공중
+    AIRBORNE,           // 공중
     KNOCKBACK,          // 밀림
+    BLIND,
+
     LAST
 }

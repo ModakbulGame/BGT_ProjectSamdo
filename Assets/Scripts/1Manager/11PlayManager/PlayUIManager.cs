@@ -113,6 +113,21 @@ public class PlayUIManager : MonoBehaviour
 
 
 
+    public void ShowBlindMark()
+    {
+        // 실명 발동
+    }
+    public void HideBlindMark()
+    {
+        // 실명 해제
+    }
+
+
+
+
+
+
+
     public void SetManager()
     {
         m_hpBar = m_mainCanvas.GetComponentInChildren<PlayerHPBarScript>();

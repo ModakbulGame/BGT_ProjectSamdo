@@ -15,7 +15,7 @@ public partial class PlayerController
                 if(!attack.IsAttacking) { return; }
                 if(IsDead || attack.CheckHit(this)) { return; }
                 Vector3 point = _other.ClosestPoint(Position);
-                HitData hit = new(attack.Attacker, attack.Damage, point, attack.CCType);
+                HitData hit = new(attack.Attacker, attack.Damage, point, attack.CCList);
                 GetHit(hit);
                 attack.AddHitObject(this);
                 break;

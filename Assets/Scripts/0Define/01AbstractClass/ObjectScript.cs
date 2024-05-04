@@ -133,33 +133,39 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
 
     // CC기
     // HitData들은 나중에 적용. 둔화는 뺄 예정
-    private readonly float[] m_ccCount = new float[(int)ECCType.LAST];  // CC기 쿨타임
+    protected readonly float[] m_ccCount = new float[(int)ECCType.LAST];    // CC기 쿨타임
 
-    public virtual void GetCC(HitData _hit)                             // CC 받기
+    public virtual void GetCC(HitData _hit)                                 // CC 받기
     {
-        switch (_hit.CCType)
+        for (int i = 0; i<_hit.CCList.Length; i++)
         {
-            case ECCType.AIRBORNE:
-                GetAirborne(_hit);
-                break;
-            case ECCType.STUN:
-                GetStun(_hit);
-                break;
-            case ECCType.BLEED:
-                GetBleed(_hit);
-                break;
-            case ECCType.STAGGER:
-                GetStagger(_hit);
-                break;
-            case ECCType.POISON:
-                GetPoison(_hit);
-                break;
-            case ECCType.SLOW:
-                GetSlow(_hit);
-                break;
-            case ECCType.KNOCKBACK:
-                GetKnockBack(_hit);
-                break;
+            switch (_hit.CCList[i])
+            {
+                case ECCType.AIRBORNE:
+                    GetAirborne(_hit);
+                    break;
+                case ECCType.STUN:
+                    GetStun(_hit);
+                    break;
+                case ECCType.BLEED:
+                    GetBleed(_hit);
+                    break;
+                case ECCType.STAGGER:
+                    GetStagger(_hit);
+                    break;
+                case ECCType.POISON:
+                    GetPoison(_hit);
+                    break;
+                case ECCType.SLOW:
+                    GetSlow(_hit);
+                    break;
+                case ECCType.KNOCKBACK:
+                    GetKnockBack(_hit);
+                    break;
+                case ECCType.BLIND:
+                    GetBlind(_hit);
+                    break;
+            }
         }
     }
     #region CC기 세부
@@ -224,6 +230,8 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
         Vector3 dir = new(flatDir.x, 0, flatDir.y);
         m_rigid.velocity = dir * 8;
     }
+    public bool IsBlind { get { return m_ccCount[(int)ECCType.BLIND] > 0; } }
+    public virtual void GetBlind(HitData _hit) { }
     #endregion
 
 

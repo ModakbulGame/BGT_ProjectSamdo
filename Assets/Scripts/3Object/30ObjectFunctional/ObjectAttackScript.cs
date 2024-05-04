@@ -13,15 +13,16 @@ public class ObjectAttackScript : MonoBehaviour
     public bool CheckHit(IHittable _object) { return m_hitObjects.Contains(_object); }
 
     [SerializeField]
-    protected ECCType m_ccType = ECCType.NONE;
+    protected ECCType[] m_ccList = new ECCType[0];
 
     public virtual float Damage { get; private set; } = 5;
-    public virtual ECCType CCType { get { return m_ccType; } }
+    public virtual ECCType[] CCList { get { return m_ccList; } }
 
 
     public void SetDamage(float _damage) { Damage = _damage * Attacker.DamageMultiplier * Attacker.AttackMultiplier; }
     public void SetAttack(ObjectScript _attacker, float _damage) { m_attacker = _attacker; SetDamage(_damage); }
-    public void SetCCType(ECCType _cc) { m_ccType = _cc; }
+    public void SetCCType(ECCType _cc) { SetCCType(new ECCType[1] { _cc }); }
+    public void SetCCType(ECCType[] _ccs) { m_ccList = new ECCType[_ccs.Length]; for(int i = 0; i<_ccs.Length; i++) { m_ccList[i] = _ccs[i]; } }
     public void ResetCCType() { SetCCType(ECCType.NONE); }
 
 
@@ -44,7 +45,7 @@ public class ObjectAttackScript : MonoBehaviour
     public virtual void GiveDamage(IHittable _hittable, Vector3 _point)
     {
         if (CheckHit(_hittable)) { return; }
-        HitData hit = new(Attacker, Damage, _point, CCType);
+        HitData hit = new(Attacker, Damage, _point, CCList);
         _hittable.GetHit(hit);
         AddHitObject(_hittable);
     }
