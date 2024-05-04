@@ -10,12 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7029200938158750450}
   - component: {fileID: 7243422677586513237}
+  - component: {fileID: 8845934459699198658}
   - component: {fileID: 7229214969447431716}
   - component: {fileID: 4602168716442109495}
   - component: {fileID: 5296837395338050109}
-  - component: {fileID: 1485836771912264970}
   - component: {fileID: 7436274139221153247}
-  - component: {fileID: 8845934459699198658}
   m_Layer: 0
   m_Name: M501
   m_TagString: Monster
@@ -57,7 +56,14 @@ MonoBehaviour:
     ObjectName: "\uC0DD\uBA85 \uD574\uACE8\uB531\uC9C0"
     AttackSpeed: 1
     MoveSpeed: 3
+  m_dm: 1
+  m_buffNDebuff: []
+  m_curHP: 0
+  m_curSpeed: 0
   m_uiOffset: 2
+  m_normalAttacks:
+  - {fileID: 0}
+  m_scriptable: {fileID: 11400000, guid: 1bd0d9e51aec6584bbb8597d6dca989c, type: 2}
   m_combatInfo:
     MaxHP: 100
     Defense: 5
@@ -70,15 +76,22 @@ MonoBehaviour:
     AttackRange: 4.5
     ApproachDelay: 1
     FenceRange: 25
-  m_normalAttacks:
-  - {fileID: 0}
-  PathingAngle: 0
-  PathingTime: 0
-  AttackDuration: 0
   m_spawnPoint: {fileID: 0}
-  m_scriptable: {fileID: 11400000, guid: 1bd0d9e51aec6584bbb8597d6dca989c, type: 2}
   m_dissolveDelay: 2
   m_skurrabyExplode: {fileID: 1321009547393741243}
+--- !u!114 &8845934459699198658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4113875238200415537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aaa794688dde2e4c8dc888d525b3bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isHiding: 0
 --- !u!54 &7229214969447431716
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -176,27 +189,6 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
---- !u!135 &1485836771912264970
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4113875238200415537}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.75
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &7436274139221153247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,19 +242,6 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0.1, y: 0.1, z: 0.1}
---- !u!114 &8845934459699198658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4113875238200415537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9aaa794688dde2e4c8dc888d525b3bdd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_isHiding: 0
 --- !u!1001 &1514275345446734127
 PrefabInstance:
   m_ObjectHideFlags: 0

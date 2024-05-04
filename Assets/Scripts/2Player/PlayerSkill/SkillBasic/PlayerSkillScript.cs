@@ -33,7 +33,7 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
     public ObjectPool<GameObject> OriginalPool { get; set; }
     public void SetPool(ObjectPool<GameObject> _pool) { OriginalPool = _pool; }
     public void OnPoolGet() { }
-    public virtual void ReleaseTopool()
+    public virtual void ReleaseToPool()
     {
         AttackOff();
         OriginalPool.Release(gameObject);
@@ -67,7 +67,7 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
     private IEnumerator ReleaseDelay()
     {
         yield return new WaitForSeconds(m_lastTime);
-        if (gameObject.activeSelf) { ReleaseTopool(); }
+        if (gameObject.activeSelf) { ReleaseToPool(); }
     }
 
     public virtual void OnEnable()

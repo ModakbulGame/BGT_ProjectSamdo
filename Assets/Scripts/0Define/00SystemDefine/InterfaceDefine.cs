@@ -36,5 +36,5 @@ public interface IPoolable
     public ObjectPool<GameObject> OriginalPool { get; }
     public void SetPool(ObjectPool<GameObject> _pool);
     public void OnPoolGet();
-    public void ReleaseTopool();
+    public void ReleaseToPool();
 }

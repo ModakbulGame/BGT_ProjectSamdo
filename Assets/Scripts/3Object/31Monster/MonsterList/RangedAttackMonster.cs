@@ -29,7 +29,7 @@ public class RangedAttackMonster : MonsterScript
     private void InitPool()
     {
         m_attackPool = new(OnPoolCreate, OnPoolGet, OnPoolRelease, OnPoolDestroy, true, m_attackMaxNum, m_attackMaxNum);
-        for (int i = 0; i<m_attackMaxNum; i++) { GameObject obj = OnPoolCreate(); obj.GetComponent<MonsterProjectileScript>().ReleaseTopool(); }
+        for (int i = 0; i<m_attackMaxNum; i++) { GameObject obj = OnPoolCreate(); obj.GetComponent<MonsterProjectileScript>().ReleaseToPool(); }
     }
     private GameObject OnPoolCreate()
     {

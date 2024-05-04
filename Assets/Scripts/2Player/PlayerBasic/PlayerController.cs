@@ -140,7 +140,7 @@ public partial class PlayerController : ObjectScript
     private PlayerLightScript m_light;                                              // 불빛 프리펍
 
     private const float MAX_LIGHT_POWER = 5;        // 최대 능력 스테미나
-    private float LightUseRate = 0.5f;              // 초당 능력 사용
+    private float LightUseRate = 0/*.5f*/;              // 초당 능력 사용
     private float LightRestoreRate = 1;             // 초당 능력 회복
     private float LightRestoreDelay = 2;            // 능력 다 썼을 때 딜레이
 
