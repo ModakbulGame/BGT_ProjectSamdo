@@ -12,6 +12,9 @@ public class WolfScript : MonsterScript
     public void SetRole(EWolfRole _role) { CurRole = _role; }
     public void ResetRole() { if (m_peck == null) { return; } m_peck.ResetRole(); }
 
+
+    private void JabAnimation() { m_anim.SetTrigger("JAB"); }
+
     // 늑대 스테이트
     private IMonsterState m_positionState, m_jabState;
     public void JabWolf()
@@ -74,17 +77,17 @@ public class WolfScript : MonsterScript
     public void StartPosition()
     {
         m_aiPath.maxSpeed = ApproachSpeed;
-        m_anim.SetTrigger("MOVE");
+        MoveAnimation();
     }
     public void StartJab()
     {
-        m_anim.SetTrigger("JAB");
+        JabAnimation();
         StopMove();
     }
     public override void StartApproach()
     {
         CurSpeed = ApproachSpeed;
-        m_anim.SetTrigger("MOVE");
+        MoveAnimation();
         ApproachOffset = Random.Range(0.25f, 0.5f);
         if (m_peck != null && !m_peck.Engaging)
         {

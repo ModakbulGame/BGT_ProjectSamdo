@@ -43,7 +43,6 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     public virtual void StartApproach()
     {
         CurSpeed = ApproachSpeed;
-        MoveAnimation();
     }
     public virtual void StartAttack()   // 공격 시작
     {

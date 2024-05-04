@@ -103,6 +103,7 @@ public class QueenScript : MonsterScript
     }
     private void SpitPoison()                                       // µ¶ ¸®¾ó »Õ±â
     {
+        Debug.Log("»Õ»Õ");
         // ¿©±â µ¶ »Ñ¸®±â ¸¸µå¼À (OverlapSphere ¾²¼À)
     }
     public override void AttackDone()                               // °ø°Ý ¿Ï·á
