@@ -112,7 +112,8 @@ public class PlayUIManager : MonoBehaviour
     public void HideThrowLine() { m_throwLineUI.HideThrowLine(); }              // 던지기 궤적 숨기기
 
 
-
+    [SerializeField]
+    // private BlindUIScript m_blindUI;
     public void ShowBlindMark()
     {
         // 실명 발동
