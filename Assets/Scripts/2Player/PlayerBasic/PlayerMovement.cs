@@ -57,15 +57,16 @@ public partial class PlayerController
 
     public Vector2 JumpRollDirection { get; set; }                                          // 점프 or 구르기 방향
     public bool CanJump { get { return IsGrounded && ((IsOnSlope && CurSurfaceAngle <= m_maxSlopeAngle) || !IsOnSlope)      // 점프 가능 여부
-                 && !IsTouchingWall && JumpCoolTime <= 0 && JumpPressing && CurStamina >= JumpStaminaUse; } }
+                 && !IsTouchingWall && JumpCooltime <= 0 && JumpPressing && CurStamina >= JumpStaminaUse; } }
 
     public void StartJump()                                                                 // 점프 상태 시작
     {
         ResetAnim();
         JumpAnim();
-        JumpCoolTime = -1;
+        JumpCooltime = -1;
         m_rigid.velocity += JumpPower * Vector3.up;
         UseStamina(JumpStaminaUse);
+        if (IsHealing) { CancelHeal(); }
     }
 
 
@@ -76,7 +77,7 @@ public partial class PlayerController
     public readonly float RollStaminaUse = 2.5f;                                            // 구르기 스테미나 소모
 
     public bool CanRoll { get {                                                             // 구르기 가능 여부
-            return (IsGrounded || IsOnSlope) && RollCoolTime <= 0 && RollPressing
+            return (IsGrounded || IsOnSlope) && RollCooltime <= 0 && RollPressing
                 && CurStamina >= RollStaminaUse; } }
 
     public void StartRoll()                                                                 // 구르기 상태 시작
@@ -84,6 +85,7 @@ public partial class PlayerController
         ResetAnim();
         RollAnim();
         UseStamina(RollStaminaUse);
+        if (IsHealing) { CancelHeal(); }
     }
     public void RollDone()                                                                  // 구르기 종료
     {
@@ -95,7 +97,7 @@ public partial class PlayerController
         {
             ChangeState(EPlayerState.IDLE);
         }
-        RollCoolTime = RollDelay;
+        RollCooltime = RollDelay;
     }
 
 
@@ -116,7 +118,7 @@ public partial class PlayerController
     public void PlayerLand(float _velocity)                                                 // 착지
     {
         StopFallAnim();
-        JumpCoolTime = JumpDelay;
+        JumpCooltime = JumpDelay;
         if (_velocity <= FallDeathVelocity) { GetDamage(MaxHP); }
         else if (_velocity <= FallDamageVelocity) 
         {

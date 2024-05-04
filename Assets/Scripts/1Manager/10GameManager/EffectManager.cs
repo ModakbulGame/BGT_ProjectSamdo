@@ -7,6 +7,7 @@ using UnityEngine.VFX;
 public enum EEffectName
 {
     MONSTER_DISSOLVE,
+    HEAL,
     HIT_SLASH,
     HIT_BLOW,
     HIT_POWER,

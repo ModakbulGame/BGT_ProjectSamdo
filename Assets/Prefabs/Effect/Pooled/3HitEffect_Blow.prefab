@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6540424706168981067
+--- !u!1 &1139925206822915802
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8884313692251705778}
-  - component: {fileID: 2108165466489191185}
-  - component: {fileID: 1980779973321961374}
-  - component: {fileID: 43546241934763123}
+  - component: {fileID: 4591306253985217064}
+  - component: {fileID: -3732902697649757849}
+  - component: {fileID: 5953359680255985345}
+  - component: {fileID: 4772641765132072499}
   m_Layer: 0
-  m_Name: 1HitEffect_Slash
+  m_Name: 3HitEffect_Blow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8884313692251705778
+--- !u!4 &4591306253985217064
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6540424706168981067}
+  m_GameObject: {fileID: 1139925206822915802}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -34,28 +34,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2108165466489191185
+--- !u!114 &-3732902697649757849
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6540424706168981067}
+  m_GameObject: {fileID: 1139925206822915802}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b354ca765a122db4996eeb2a72f3afff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_destroyTime: 1
---- !u!2083052967 &1980779973321961374
+--- !u!2083052967 &5953359680255985345
 VisualEffect:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6540424706168981067}
+  m_GameObject: {fileID: 1139925206822915802}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 96a526fce7e194a41ac38e7568704c18, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: 4533d432afb69344c894dc4a962fc9c7, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -85,14 +85,14 @@ VisualEffect:
       m_Array: []
     m_Bool:
       m_Array: []
---- !u!73398921 &43546241934763123
+--- !u!73398921 &4772641765132072499
 VFXRenderer:
   serializedVersion: 1
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6540424706168981067}
+  m_GameObject: {fileID: 1139925206822915802}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

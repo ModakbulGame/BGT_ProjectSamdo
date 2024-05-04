@@ -19,6 +19,15 @@ public class PlayerAnimationLink : MonoBehaviour
         m_player.CreateThrowItem();
     }
 
+    public void HealTiming()
+    {
+        m_player.UseHealItem();
+    }
+    public void HealDone()
+    {
+        m_player.HealDone();
+    }
+
     public void LandingDone()
     {
         m_player.ChangeState(EPlayerState.IDLE);

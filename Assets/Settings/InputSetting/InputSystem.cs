@@ -161,6 +161,15 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HealItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""65a7252b-9314-46dc-a3d1-f0c811390b38"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -372,6 +381,17 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""Roll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""117f0f02-3a71-4c5f-b762-8e5169ad6704"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HealItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -460,6 +480,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         m_Player_Skill1 = m_Player.FindAction("Skill1", throwIfNotFound: true);
         m_Player_Skill2 = m_Player.FindAction("Skill2", throwIfNotFound: true);
         m_Player_Skill3 = m_Player.FindAction("Skill3", throwIfNotFound: true);
+        m_Player_HealItem = m_Player.FindAction("HealItem", throwIfNotFound: true);
         // UIControl
         m_UIControl = asset.FindActionMap("UIControl", throwIfNotFound: true);
         m_UIControl_CloseUI = m_UIControl.FindAction("CloseUI", throwIfNotFound: true);
@@ -540,6 +561,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Skill1;
     private readonly InputAction m_Player_Skill2;
     private readonly InputAction m_Player_Skill3;
+    private readonly InputAction m_Player_HealItem;
     public struct PlayerActions
     {
         private @InputSystem m_Wrapper;
@@ -559,6 +581,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         public InputAction @Skill1 => m_Wrapper.m_Player_Skill1;
         public InputAction @Skill2 => m_Wrapper.m_Player_Skill2;
         public InputAction @Skill3 => m_Wrapper.m_Player_Skill3;
+        public InputAction @HealItem => m_Wrapper.m_Player_HealItem;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -613,6 +636,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @Skill3.started += instance.OnSkill3;
             @Skill3.performed += instance.OnSkill3;
             @Skill3.canceled += instance.OnSkill3;
+            @HealItem.started += instance.OnHealItem;
+            @HealItem.performed += instance.OnHealItem;
+            @HealItem.canceled += instance.OnHealItem;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -662,6 +688,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @Skill3.started -= instance.OnSkill3;
             @Skill3.performed -= instance.OnSkill3;
             @Skill3.canceled -= instance.OnSkill3;
+            @HealItem.started -= instance.OnHealItem;
+            @HealItem.performed -= instance.OnHealItem;
+            @HealItem.canceled -= instance.OnHealItem;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -759,6 +788,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         void OnSkill1(InputAction.CallbackContext context);
         void OnSkill2(InputAction.CallbackContext context);
         void OnSkill3(InputAction.CallbackContext context);
+        void OnHealItem(InputAction.CallbackContext context);
     }
     public interface IUIControlActions
     {

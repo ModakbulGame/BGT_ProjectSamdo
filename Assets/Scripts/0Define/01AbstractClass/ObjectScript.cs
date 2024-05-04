@@ -11,7 +11,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     public Vector2 Position2 { get { return new(transform.position.x, transform.position.z); } }    // 평면 좌표
     public float Rotation                                               // y축 각도
     {
-        get { return transform.eulerAngles.y; } 
+        get { return transform.eulerAngles.y; }
         protected set { Vector3 rot = transform.eulerAngles; rot.y = value; transform.eulerAngles = rot; }
     }
     private readonly float RotationSpeed = 0.05f;                       // 회전 속도
@@ -114,7 +114,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
         float hp = CurHP;
         hp -= _damage;
         if (hp <= 0) { hp = 0; SetDead(); }
-        if(ExtraHP > 0) { ExtraHP -= _damage; }
+        if (ExtraHP > 0) { ExtraHP -= _damage; }
         SetHP(hp);
     }
     public virtual void PlayHitAnim()                                   // 피격 애니메이션 재생
@@ -123,6 +123,12 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     }
     public virtual void SetHP(float _hp) { CurHP = _hp; }               // HP 설정
     public virtual void SetDead() { IsDead = true; }                    // 죽음 설정
+    public virtual void HealObj(float _heal)                            // 회복
+    {
+        float hp = CurHP + _heal;
+        if (hp > MaxHP) { hp = MaxHP; }
+        SetHP(hp);
+    }
 
 
     // CC기

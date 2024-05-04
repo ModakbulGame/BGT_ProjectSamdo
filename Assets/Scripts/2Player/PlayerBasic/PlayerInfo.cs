@@ -7,6 +7,7 @@ public enum ECooltimeName                               // 쿨타임 종류
 {
     JUMP,
     ROLL,
+    HEAL,
     SKILL1,
 
     LAST = SKILL1 + ValueDefine.MAX_SKILL_SLOT

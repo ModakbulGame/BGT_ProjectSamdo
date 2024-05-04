@@ -63,6 +63,11 @@ public partial class PlayerController
     public void SkillFireAnim() { m_anim.SetTrigger("SKILL_FIRE"); }                            // 스킬 발사
     public void SkillAnimDone() { m_anim.SetBool(SkillHash, false); }                           // 스킬 종료
 
+    // 회복 관련
+    public void HealAnimStart() { UpperAnimStart(); m_anim.SetTrigger("HEAL"); }
+    public void HealAnimDone() { UpperAnimDone(); }
+    public void CancelHealAnim() { HealAnimDone(); }
+
     // 가드 관련
     public void GuardAnimStart() { UpperAnimStart(); m_anim.SetBool(GuardHash, true); }         // 가드 상태로 전환
     public void GuardAnimStop() { m_anim.SetBool(GuardHash, false); }                           // 가드 해제로 전환

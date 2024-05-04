@@ -22,6 +22,7 @@ public partial class PlayerController : ObjectScript
     public bool LightTrigger { get { return PlayerInput.Light.triggered; } }                                        // T
     public bool InteractTrigger { get { return PlayerInput.Interact.triggered; } }                                  // E
     public bool ThrowItemTrigger { get { return PlayerInput.ThrowItem.triggered; } }                                // Q
+    public bool HealItemTrigger { get { return PlayerInput.HealItem.triggered; } }                                  // R
 
     private void UpdateInputs()
     {
@@ -70,10 +71,6 @@ public partial class PlayerController : ObjectScript
         PlayManager.HideSkillAim();
     }
 
-
-    // 전투 상태
-    public bool IsGuarding { get; private set; }                                                                    // 가드 중
-        
     
     // 스테미나
     public float CurStamina { get; protected set; }                                                                 // 현재 스테미나
@@ -103,27 +100,32 @@ public partial class PlayerController : ObjectScript
 
 
     // 쿨타임
-    private float[] m_coolTimes = new float[(int)ECooltimeName.LAST];
-    public float JumpCoolTime
+    private float[] m_cooltimes = new float[(int)ECooltimeName.LAST];
+    public float JumpCooltime
     {
-        get { return m_coolTimes[(int)ECooltimeName.JUMP]; }    // 점프 쿨타임
-        private set { m_coolTimes[(int)ECooltimeName.JUMP] = value; }
+        get { return m_cooltimes[(int)ECooltimeName.JUMP]; }    // 점프 쿨타임
+        private set { m_cooltimes[(int)ECooltimeName.JUMP] = value; }
     }
-    public float RollCoolTime
+    public float RollCooltime
     {
-        get { return m_coolTimes[(int)ECooltimeName.ROLL]; }
-        private set { m_coolTimes[(int)ECooltimeName.ROLL] = value; }
+        get { return m_cooltimes[(int)ECooltimeName.ROLL]; }
+        private set { m_cooltimes[(int)ECooltimeName.ROLL] = value; }
+    }
+    public float HealCooltime
+    {
+        get { return m_cooltimes[(int)ECooltimeName.HEAL]; }
+        private set { m_cooltimes[(int)ECooltimeName.HEAL] = value; }
     }
     public float[] SkillCooltime
     {
-        get { return m_coolTimes[(int)ECooltimeName.SKILL1..(int)ECooltimeName.LAST]; }
-        private set { for (int i = 0; i<ValueDefine.MAX_SKILL_SLOT; i++) { m_coolTimes[(int)ECooltimeName.SKILL1 + i] = value[i]; } }
+        get { return m_cooltimes[(int)ECooltimeName.SKILL1..(int)ECooltimeName.LAST]; }
+        private set { for (int i = 0; i<ValueDefine.MAX_SKILL_SLOT; i++) { m_cooltimes[(int)ECooltimeName.SKILL1 + i] = value[i]; } }
     }
     public override void ProcCooltime()
     {
         for (int i = 0; i<(int)ECooltimeName.LAST; i++)
         {
-            if (m_coolTimes[i] > 0) { m_coolTimes[i] -= Time.deltaTime; if (m_coolTimes[i] < 0) { m_coolTimes[i] = 0; } }
+            if (m_cooltimes[i] > 0) { m_cooltimes[i] -= Time.deltaTime; if (m_cooltimes[i] < 0) { m_cooltimes[i] = 0; } }
         }
         base.ProcCooltime();
     }
@@ -204,6 +206,7 @@ public partial class PlayerController : ObjectScript
 
         StaminaUpdate();                    // 스테미나
 
+        HealUpdate();                       // 회복 상태
         GuardUpdate();                      // 가드 상태
         LightUpdate();                      // 능력 상태
 

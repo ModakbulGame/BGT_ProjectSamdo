@@ -17,6 +17,7 @@ public partial class PlayerController
     {
         if (!IsGuarding)
         {
+            if (IsHealing) { CancelHeal(); }
             StopMove();
             ChangeState(EPlayerState.HIT);
         }
@@ -29,6 +30,7 @@ public partial class PlayerController
     public override void SetDead()                                      // 죽음 설정
     {
         base.SetDead();
+        if (IsHealing) { CancelHeal(); }
         ChangeState(EPlayerState.DIE);
     }
 
@@ -67,6 +69,7 @@ public partial class PlayerController
         AttackFinished = false;
         AttackStack = 1;
         SetAttackAnim(AttackStack);
+        if (IsHealing) { CancelHeal(); }
     }
     public void ToNextAttack()                                          // 다음 공격으로 이행
     {
@@ -125,13 +128,16 @@ public partial class PlayerController
             if (SkillInHand == ESkillName.LAST) return null;
             return GameManager.GetSkillInfo(SkillInHand); } }                               
     public int UsingSkillIdx { get; private set; } = -1;                                    // ㄴ의 슬롯 번호
+    private int UsingSkillCooltimeIdx { get { return (int)ECooltimeName.SKILL1 + UsingSkillIdx; } }
 
     public void ReadySkill()                                                                // 스킬 사용 준비
     {
         UsingSkillIdx = SkillIdx;
         SkillInHand = SkillSlot[UsingSkillIdx];
         SkillStartAnim();
-        
+
+        if (IsHealing) { CancelHeal(); }
+
         if (SkillInfoInHand.SkillType == ESkillType.SUMMON)
         {
             ShowSkillAim(SkillInfoInHand.SkillRadius, SkillInfoInHand.SkillCastRange);
@@ -140,7 +146,7 @@ public partial class PlayerController
     public void FireSkill()                                                                 // 스킬 사용
     {
         float coolTime = SkillInfoInHand.SkillCooltime;
-        SkillCooltime[UsingSkillIdx] = coolTime;
+        SkillCooltime[UsingSkillCooltimeIdx] = coolTime;
         PlayManager.UseSkillSlot(UsingSkillIdx, coolTime);
         SkillFireAnim();
         HideSkillAim();
@@ -202,9 +208,50 @@ public partial class PlayerController
     }
 
 
+    // 회복 관련
+    private readonly float HealDelay = 5;                                                                           // 회복 딜레이
+
+    private bool CanHeal { get { return HealInHand > 0 && HealItemTrigger && !IsHealing &&                          // 회복 가능
+                (IsIdle || IsMoving) && HealCooltime <= 0; } }
+    public bool IsHealing { get; private set; }                                                                     // 회복 중    
+    private float HealInHand { get; set; } = 10;                                                                    // 장착된 회복 아이템 회복량
+
+    public void HealUpdate()                                                                                        // 회복 여부 확인
+    {
+        if (CanHeal)
+        {
+            HealAnimStart();
+            HealCooltime = HealDelay;
+            IsHealing = true;
+        }
+    }
+    public void UseHealItem()
+    {
+        if(!IsHealing) { return; }
+        HealObj(HealInHand);
+        HealInHand = 10;
+        CreateHealEffect();
+    }
+    private void CreateHealEffect()
+    {
+        GameObject heal = GameManager.GetEffectObj(EEffectName.HEAL);
+        heal.transform.SetParent(transform);
+        heal.transform.localPosition = Vector3.zero;
+    }
+    public void CancelHeal()
+    {
+        CancelHealAnim();
+        IsHealing = false;
+    }
+    public void HealDone()                                                                                          // 회복 완료(애니메이션)
+    {
+        HealAnimDone();
+        IsHealing = false;
+    }
 
 
     // 가드 관련
+    public bool IsGuarding { get; private set; }                                                                    // 가드 중
     public void GuardUpdate()                                                               // 가드 상태 업데이트
     {
         if (!IsIdle && !IsMoving && !IsThrowing)             // IDLE, MOVE, THROW가 아니면
