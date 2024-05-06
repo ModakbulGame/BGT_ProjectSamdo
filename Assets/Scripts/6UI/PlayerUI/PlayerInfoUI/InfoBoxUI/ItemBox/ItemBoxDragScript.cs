@@ -19,18 +19,21 @@ public class ItemBoxDragScript : DragDropUIScript
         RectTransform[] slots = Box.ElmTrans;
         for (int i = 0; i < ElmCount; i++)
         {
-            Vector3 slot = slots[i].position + Vector3.up * 0.48f;
+            Vector3 slot = slots[i].position + Vector3.right * 0.48f;
             float dist = Vector2.Distance(m_rect.position, slot);
             if (dist < 0.5f)
             {
                 DropIdx = i;
+                RectTransform swapElm = slots[DropIdx];
                 m_rect.position = slot;
+                // swapElm.position = StartPos;
                 return true;
             }
         }
         DropIdx = -1;
         return false;
     }
+
     public override void DropAction()
     {
         if (DropIdx == -1) { return; }

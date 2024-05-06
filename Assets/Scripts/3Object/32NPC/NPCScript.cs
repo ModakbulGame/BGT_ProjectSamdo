@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NPCScript : ObjectScript, IInteractable
 {
     [SerializeField] private string m_NPCName;      // npc 이름 ( 인게임 표시용 )  ->  ObjectScript ObjectInfo에 포함
+    [SerializeField] private Canvas m_NPCCanvas;    // npc 대화창
     protected Transform m_NPCTransform;
+    private Button m_exitBtn;
 
     public EInteractType InteractType { get { return EInteractType.NPC; } }
     public bool Interactions { get { return gameObject.CompareTag(ValueDefine.NPC_TAG); } }
@@ -14,16 +17,25 @@ public class NPCScript : ObjectScript, IInteractable
 
     public virtual void StartInteract() 
     {
-        
+        m_NPCCanvas.gameObject.SetActive(true);
+        GameManager.SetControlMode(EControlMode.UI_CONTROL);
     }
 
     public virtual void StopInteract() 
     {
         PlayManager.StopPlayerInteract();
+        GameManager.SetControlMode(EControlMode.THIRD_PERSON);
+    }
+
+    private void CancelInteract()
+    {
+        m_NPCCanvas.gameObject.SetActive(false);
+        StopInteract();
     }
 
     public override void Start() 
     {
-        m_NPCTransform = this.transform;
+       m_exitBtn = GetComponentInChildren<Button>();
+       // m_exitBtn.onClick.AddListener(CancelInteract);
     }
 }

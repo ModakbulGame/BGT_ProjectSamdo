@@ -17,7 +17,7 @@ public class SkillBoxDragScript : DragDropUIScript
     public override bool CheckPos()
     {
         RectTransform[] slots = Box.SlotTrans;
-        for (int i = 0; i<ValueDefine.MAX_SKILL_SLOT; i++)
+        for (int i = 0; i < ValueDefine.MAX_SKILL_SLOT; i++)
         {
             Vector3 slot = slots[i].position + Vector3.up * 0.48f;
             float dist = Vector2.Distance(m_rect.position, slot);
