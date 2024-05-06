@@ -60,6 +60,7 @@ public partial class PlayerController
 
     // 스킬 관련
     public void SkillStartAnim() { m_anim.SetBool(SkillHash, true); HideWeapon(); }             // 스킬 준비
+    public void BuffStartAnim() { m_anim.SetBool(SkillHash,true); }                             // 버프 준비
     public void SkillFireAnim() { m_anim.SetTrigger("SKILL_FIRE"); }                            // 스킬 발사
     public void SkillAnimDone() { m_anim.SetBool(SkillHash, false); }                           // 스킬 종료
 

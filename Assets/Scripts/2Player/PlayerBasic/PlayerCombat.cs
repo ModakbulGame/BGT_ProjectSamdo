@@ -134,7 +134,11 @@ public partial class PlayerController
     {
         UsingSkillIdx = SkillIdx;
         SkillInHand = SkillSlot[UsingSkillIdx];
-        SkillStartAnim();
+        if (SkillInHand != ESkillName.BUFF)
+            SkillStartAnim();
+        else if(SkillInHand == ESkillName.BUFF)
+            BuffStartAnim();
+
 
         if (IsHealing) { CancelHeal(); }
 
@@ -184,6 +188,8 @@ public partial class PlayerController
             case ESkillType.BUFF:
                 StatAdjust adjust = SkillInfoInHand.SkillData.StatAdjust;
                 GetStatAdjust(adjust);
+                BuffSkillScript buff=skill.GetComponentInChildren<BuffSkillScript>();
+                buff.SetSkill(this,Attack, Magic);
                 skill.transform.localPosition = Vector3.zero;
                 break;
             default:
