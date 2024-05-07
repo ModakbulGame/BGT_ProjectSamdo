@@ -33,7 +33,7 @@ public partial class PlayerController
     public void UpperAnimDone() { m_anim.SetLayerWeight(UpperLayerIdx, 0); }                                    // 상체 애니메이션 중단
     public override void HitAnimation()                                                                         // 피격
     {
-        if (IsGuarding) { GuardHitAnim(); return; }
+        if (IsGuarding) { GuardHitAnim(); return;  }
         AttackOffAnim();
         SkillAnimDone();
         base.HitAnimation();
@@ -69,7 +69,6 @@ public partial class PlayerController
     // 가드 관련
     public void GuardAnimStart() { m_anim.SetBool(GuardHash, true); }                                           // 가드 상태로 전환
     public void GuardAnimStop() { m_anim.SetBool(GuardHash, false); }                                           // 가드 해제로 전환
-    public void QuitGuardAnim() { m_anim.SetBool(GuardHash, false); }                                           // 가드 서킷브레이크
 
     // 회복 관련
     public void HealAnimStart() { UpperAnimStart(); m_anim.SetTrigger("HEAL"); }                                // 회복 시작

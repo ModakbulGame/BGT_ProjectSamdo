@@ -58,11 +58,6 @@ public class PlayerGaurdState : MonoBehaviour, IPlayerState
             m_player.ChangeState(EPlayerState.SKILL);
             return;
         }
-        if (m_player.CanThrow)
-        {
-            m_player.ReadyThrow();
-            return;
-        }
     }
 
     public void FixedProceed()

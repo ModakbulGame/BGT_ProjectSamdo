@@ -22,7 +22,7 @@ public class PlayerHPBarScript : MonoBehaviour
     public void SetCurHP(float _hp)
     {
         m_slider.value = _hp;
-        m_hpValue.text = $"{_hp:0.#}/{MaxHP:0.#}"; 
+        m_hpValue.text = $"{_hp:F0}/{MaxHP:F0}"; 
     }
 
 

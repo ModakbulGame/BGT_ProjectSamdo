@@ -22,6 +22,10 @@ public class PlayerAnimationLink : MonoBehaviour
     {
         m_player.CreateThrowItem();
     }
+    public void ThrowDoneTiming()
+    {
+        m_player.DoneThrow();
+    }
 
     public void HealTiming()
     {

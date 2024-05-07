@@ -25,6 +25,7 @@ public partial class PlayerController : ObjectScript
         JumpPressing = PlayerInput.Jump.IsPressed();
         RollPressing = PlayerInput.Roll.IsPressed();
         GuardPressing = PlayerInput.Guard.IsPressed();
+        if(GuardPressing != m_anim.GetBool(GuardHash)) { m_anim.SetBool(GuardHash, GuardPressing); }
     }
 
     public void ActionDone()

@@ -220,11 +220,11 @@ public partial class PlayerController
     public bool CanGaurd { get { return GuardPressing && GuardCooltime <= 0; } }
     public void GuardStart()                                                                // 가드 시작
     {
-        GuardAnimStart();
+
     }
     public void GuardStop()                                                                 // 가드 중단
     {
-        GuardAnimStop();
+
     }
     public void GuardDone()
     {
@@ -234,7 +234,6 @@ public partial class PlayerController
     public void GuardDelayStart()
     {
         GuardCooltime = GuardDelay;
-        Debug.Log(GuardCooltime);
     }
 
 
@@ -309,16 +308,15 @@ public partial class PlayerController
         HideWeapon();
         SetThrowItem(item);
         ChangeState(EPlayerState.THROW);
-        GuardDelayStart();
     }
     public void SetThrowItem(EThrowItemName _item)                                          // 아이템 들기
     {
         ItemInHand = _item;
 
         GameObject item = GameManager.GetThorwItemPrefab(_item);
-        item.transform.SetParent(transform);
-        item.transform.localPosition = ThrowOffset;
-        item.transform.localEulerAngles = TempThrowOffset;
+        item.transform.SetParent(m_throwItemTransform);
+        item.transform.localPosition = Vector3.zero;
+        item.transform.localEulerAngles = TempThrowRotation;
         InHandPrefab = item;
         Destroy(InHandPrefab.GetComponent<CapsuleCollider>());
         Destroy(InHandPrefab.GetComponent<Rigidbody>());
@@ -345,7 +343,7 @@ public partial class PlayerController
         Vector3 force = PlayerAimVector * ThrowPower;
         GameObject item = GameManager.GetThorwItemPrefab(ItemInHand);
         item.transform.SetParent(transform);
-        item.transform.localPosition = ThrowOffset;
+        item.transform.localPosition = TempThrowOffset;
         item.transform.localEulerAngles = TempThrowOffset;
         item.transform.SetParent(null);
 
@@ -359,7 +357,7 @@ public partial class PlayerController
         ShowWeapon();
         CancelThrowAnim();
         ItemInHand = EThrowItemName.LAST;
-        ChangeState(EPlayerState.IDLE);
+        ActionDone();
     }
 
 
