@@ -1,10 +1,6 @@
-using Cinemachine;
 using System;
 using System.Collections;
-using System.Linq;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public partial class PlayerController : ObjectScript
 {
@@ -31,6 +27,22 @@ public partial class PlayerController : ObjectScript
         GuardPressing = PlayerInput.Guard.IsPressed();
     }
 
+    public void ActionDone()
+    {
+        if (GuardPressing)
+        {
+            ChangeState(EPlayerState.GUARD);
+        }
+        else if (InputVector != Vector2.zero)
+        {
+            ChangeState(EPlayerState.MOVE);
+        }
+        else
+        {
+            ChangeState(EPlayerState.IDLE);
+        }
+    }
+
 
     // 상태 매니저 관련
     private PlayerStateManager m_stateManager;                                                                      // 상태 관리자
@@ -40,6 +52,8 @@ public partial class PlayerController : ObjectScript
     public bool IsIdle { get { return CurState.StateEnum == EPlayerState.IDLE; } }                                  // IDLE
     public bool IsMoving { get { return CurState.StateEnum == EPlayerState.MOVE; } }                                // 이동 중
     public bool IsAttacking { get { return CurState.StateEnum == EPlayerState.ATTACK; } }                           // 공격 중
+    public bool IsGuarding { get { return CurState.StateEnum == EPlayerState.GUARD; } }                             // 가드 중
+    public bool IsHit { get { return CurState.StateEnum == EPlayerState.HIT; } }                                    // 히트 중
     public bool IsSkilling { get { return CurState.StateEnum == EPlayerState.SKILL; } }                             // 스킬 중
     public bool IsJumping { get { return CurState.StateEnum == EPlayerState.JUMP; } }                               // 점프 중
     public bool IsRolling { get { return CurState.StateEnum == EPlayerState.ROLL; } }                               // 구르기 중
@@ -110,6 +124,11 @@ public partial class PlayerController : ObjectScript
     {
         get { return m_cooltimes[(int)ECooltimeName.ROLL]; }
         private set { m_cooltimes[(int)ECooltimeName.ROLL] = value; }
+    }
+    public float GuardCooltime
+    {
+        get { return m_cooltimes[(int)ECooltimeName.GUARD]; }
+        private set { m_cooltimes[(int)ECooltimeName.GUARD] = value; }
     }
     public float HealCooltime
     {
@@ -207,7 +226,6 @@ public partial class PlayerController : ObjectScript
         StaminaUpdate();                    // 스테미나
 
         HealUpdate();                       // 회복 상태
-        GuardUpdate();                      // 가드 상태
         LightUpdate();                      // 능력 상태
 
         PlayerDetactUpdate();               // 상호작용 물체들 관리

@@ -16,7 +16,7 @@ public class PlayerAttackState : MonoBehaviour, IPlayerState
 
     public void Proceed()
     {
-        if (m_player.AttackFinished && m_player.GuardPressing)
+        if (m_player.AttackFinished && m_player.CanGaurd)
         {
             m_player.BreakAttack();
         }

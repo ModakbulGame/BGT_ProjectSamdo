@@ -2,17 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerIdleState : MonoBehaviour, IPlayerState
+public class PlayerGaurdState : MonoBehaviour, IPlayerState
 {
     private PlayerController m_player;
-    public EPlayerState StateEnum { get { return EPlayerState.IDLE; } }
+
+    public EPlayerState StateEnum => EPlayerState.GUARD;
 
     public void ChangeTo(PlayerController _player)
     {
-        if (m_player == null) { m_player = _player; }
+        if(m_player == null) { m_player = _player; }
 
-        m_player.StopMove();
-        m_player.SetIdleAnimator();
+        m_player.GuardStart();
+    }
+
+    private void GuardMove()
+    {
+        Vector2 inputDir = m_player.InputVector;
+        Vector2 aimDir = m_player.PlayerAimDirection;
+
+        m_player.GroundMove(inputDir, 0.5f);            // 이동
+        m_player.SetMoveAnimation(inputDir);            // 애니
+        m_player.RotateTo(aimDir);                      // 회전
     }
 
     public void Proceed()
@@ -20,6 +30,12 @@ public class PlayerIdleState : MonoBehaviour, IPlayerState
         if (m_player.LightTrigger)
         {
             m_player.LightChange();
+        }
+
+        if (!m_player.GuardPressing)
+        {
+            m_player.GuardStop();
+            return;
         }
 
         if (m_player.CanRoll)
@@ -42,16 +58,6 @@ public class PlayerIdleState : MonoBehaviour, IPlayerState
             m_player.ChangeState(EPlayerState.SKILL);
             return;
         }
-        if (m_player.CanGaurd)
-        {
-            m_player.ChangeState(EPlayerState.GUARD);
-            return;
-        }
-        if (m_player.InputVector != Vector2.zero)
-        {
-            m_player.ChangeState(EPlayerState.MOVE);
-            return;
-        }
         if (m_player.CanThrow)
         {
             m_player.ReadyThrow();
@@ -61,6 +67,6 @@ public class PlayerIdleState : MonoBehaviour, IPlayerState
 
     public void FixedProceed()
     {
-
+        GuardMove();
     }
 }

@@ -51,13 +51,19 @@ public class PlayerMoveState : MonoBehaviour, IPlayerState
             m_player.ChangeState(EPlayerState.SKILL);
             return;
         }
+        if (m_player.CanGaurd)
+        {
+            m_player.ChangeState(EPlayerState.GUARD);
+            return;
+        }
+
         Vector2 inputDir = m_player.InputVector;
         if (inputDir == Vector2.zero)
         {
             m_player.ChangeState(EPlayerState.IDLE);
             return;
         }
-        if (m_player.CanThrow && m_player.ThrowItemTrigger)
+        if (m_player.CanThrow)
         {
             m_player.ReadyThrow();
             return;

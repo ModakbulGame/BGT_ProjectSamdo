@@ -67,6 +67,7 @@ public partial class PlayerController
         m_rigid.velocity += JumpPower * Vector3.up;
         UseStamina(JumpStaminaUse);
         if (IsHealing) { CancelHeal(); }
+        GuardDelayStart();
     }
 
 
@@ -86,17 +87,11 @@ public partial class PlayerController
         RollAnim();
         UseStamina(RollStaminaUse);
         if (IsHealing) { CancelHeal(); }
+        GuardDelayStart();
     }
     public void RollDone()                                                                  // 구르기 종료
     {
-        if (InputVector != Vector2.zero)
-        {
-            ChangeState(EPlayerState.MOVE);
-        }
-        else
-        {
-            ChangeState(EPlayerState.IDLE);
-        }
+        ActionDone();
         RollCooltime = RollDelay;
     }
 

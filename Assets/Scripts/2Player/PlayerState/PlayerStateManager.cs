@@ -9,6 +9,7 @@ public enum EPlayerState
     JUMP,
     FALL,
     ATTACK,
+    GUARD,
     SKILL,
     ROLL,
     THROW,

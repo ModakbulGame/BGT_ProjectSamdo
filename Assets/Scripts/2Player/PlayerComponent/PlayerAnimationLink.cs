@@ -14,6 +14,10 @@ public class PlayerAnimationLink : MonoBehaviour
     {
         m_player.UpperAnimDone();
     }
+    public void GuardDoneTiming()
+    {
+        m_player.GuardDone();
+    }
     public void CreateThrowItem()           // 아이템 던지기 타이밍
     {
         m_player.CreateThrowItem();

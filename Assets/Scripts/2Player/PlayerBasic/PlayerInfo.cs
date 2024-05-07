@@ -7,6 +7,7 @@ public enum ECooltimeName                               // ÄðÅ¸ÀÓ Á¾·ù
 {
     JUMP,
     ROLL,
+    GUARD,
     HEAL,
     SKILL1,
 
@@ -232,6 +233,7 @@ public partial class PlayerController
         m_playerStates[(int)EPlayerState.JUMP] = gameObject.AddComponent<PlayerJumpState>();
         m_playerStates[(int)EPlayerState.FALL] = gameObject.AddComponent<PlayerFallState>();
         m_playerStates[(int)EPlayerState.ATTACK] = gameObject.AddComponent<PlayerAttackState>();
+        m_playerStates[(int)EPlayerState.GUARD] = gameObject.AddComponent<PlayerGaurdState>();
         m_playerStates[(int)EPlayerState.SKILL] = gameObject.AddComponent<PlayerSkillState>();
         m_playerStates[(int)EPlayerState.ROLL] = gameObject.AddComponent<PlayerRollState>();
         m_playerStates[(int)EPlayerState.THROW] = gameObject.AddComponent<PlayerThrowState>();

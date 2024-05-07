@@ -16,12 +16,10 @@ public partial class PlayerController
     }
     public override void PlayHitAnim()                                  // 피격 애니메이션
     {
-        if (!IsGuarding)
-        {
-            if (IsHealing) { CancelHeal(); }
-            StopMove();
-            ChangeState(EPlayerState.HIT);
-        }
+        if (IsHealing) { CancelHeal(); }
+        StopMove();
+        HitAnimation();
+        ChangeState(EPlayerState.HIT);
     }
     public override void SetHP(float _hp)                               // HP 설정
     {
@@ -71,6 +69,7 @@ public partial class PlayerController
         AttackStack = 1;
         SetAttackAnim(AttackStack);
         if (IsHealing) { CancelHeal(); }
+        GuardDelayStart();
     }
     public void ToNextAttack()                                          // 다음 공격으로 이행
     {
@@ -78,6 +77,7 @@ public partial class PlayerController
         AttackStack++;
         SetAttackAnim(AttackStack);
         AttackProcing = true;
+        GuardDelayStart();
     }
     public override void AttackTriggerOn()                              // 무기 히트 판정 on
     {
@@ -102,7 +102,7 @@ public partial class PlayerController
         AttackOffAnim();
         ChangeState(EPlayerState.IDLE);
     }
-    public void BreakAttack()                                           // 공격 중단 (가드로 이행)
+    public void BreakAttack()                                           // 공격 중단
     {
         AttackCreated = false;
         AttackProcing = false;
@@ -146,6 +146,7 @@ public partial class PlayerController
         {
             ShowSkillAim(SkillInfoInHand.SkillRadius, SkillInfoInHand.SkillCastRange);
         }
+        GuardDelayStart();
     }
     public void FireSkill()                                                                 // 스킬 사용
     {
@@ -213,6 +214,29 @@ public partial class PlayerController
         ChangeState(EPlayerState.IDLE);
     }
 
+    // 가드 관련
+    private readonly float GuardDelay = 0.8f;
+
+    public bool CanGaurd { get { return GuardPressing && GuardCooltime <= 0; } }
+    public void GuardStart()                                                                // 가드 시작
+    {
+        GuardAnimStart();
+    }
+    public void GuardStop()                                                                 // 가드 중단
+    {
+        GuardAnimStop();
+    }
+    public void GuardDone()
+    {
+        ActionDone();
+        GuardDelayStart();
+    }
+    public void GuardDelayStart()
+    {
+        GuardCooltime = GuardDelay;
+        Debug.Log(GuardCooltime);
+    }
+
 
     // 회복 관련
     private readonly float HealDelay = 5;                                                                           // 회복 딜레이
@@ -259,43 +283,6 @@ public partial class PlayerController
     }
 
 
-    // 가드 관련
-    public bool IsGuarding { get; private set; }                                                                    // 가드 중
-    public void GuardUpdate()                                                               // 가드 상태 업데이트
-    {
-        if (!IsIdle && !IsMoving && !IsThrowing)             // IDLE, MOVE, THROW가 아니면
-        {
-            if (IsGuarding) IsGuarding = false;              // 가드 해제
-            if (!IsUpperIdleAnim) { QuitGuardAnim(); }       // 애니메이션 중단
-            if (!IsThrowing && m_anim.GetLayerWeight(UpperLayerIdx) == 1) { m_anim.SetLayerWeight(UpperLayerIdx, 0); }
-            return;
-        }
-        if (IsGuarding) { RotateTo(PlayerAimDirection); }   // 가드 동안 에임 조절
-        if (!IsGuarding && GuardPressing)
-        {
-            GuardStart();       // 가드 시작
-        }
-        else if (IsGuarding && !IsUpperAnimOn)
-        {
-            UpperAnimStart();
-        }
-        else if (IsGuarding && !GuardPressing)
-        {
-            GuardStop();        // 가드 중단
-        }
-    }
-    public void GuardStart()                                                                // 가드 시작
-    {
-        IsGuarding = true;
-        GuardAnimStart();
-    }
-    public void GuardStop()                                                                 // 가드 중단
-    {
-        IsGuarding = false;
-        GuardAnimStop();
-    }
-
-
     // 던지기 관련
     public readonly int ThrowPower = 60;                                                    // 던지기 힘
     private readonly float ThrowDelay = 1.5f;                                               // 던지기 딜레이
@@ -303,7 +290,7 @@ public partial class PlayerController
     private readonly Vector3 TempThrowOffset = new(0.371f, 1.628f, 0.664f);                 // 임시 던지기 생성 오프셋
     private readonly Vector3 TempThrowRotation = new(-64.449f, -30.487f, 40.266f);          // 임시 던지기 오브젝트 회전
 
-    public bool CanThrow { get { return IsUpperIdleAnim; } }                                // 투척 가능 여부
+    public bool CanThrow { get { return IsUpperIdleAnim && ThrowItemTrigger; } }            // 투척 가능 여부
     private EThrowItemName ItemInHand { get; set; } = EThrowItemName.LAST;                  // 던지기 준비 중인 아이템 Enum
     private GameObject InHandPrefab { get; set; }                                           // 손에 든 아이템 오브젝트
     public Vector3 ThrowOffset { get {
@@ -322,6 +309,7 @@ public partial class PlayerController
         HideWeapon();
         SetThrowItem(item);
         ChangeState(EPlayerState.THROW);
+        GuardDelayStart();
     }
     public void SetThrowItem(EThrowItemName _item)                                          // 아이템 들기
     {
