@@ -76,15 +76,14 @@ public class ItemManager : MonoBehaviour
     private GameObject[] m_dropItemPrefab = new GameObject[(int)EItemType.LAST];            // 드랍 아이템
     public GameObject GetDropItemPrefab(EItemType _item)
     {
-        return PoolManager.GetObject(m_throwItemPrefabs[(int)_item]);
+        return PoolManager.GetObject(m_dropItemPrefab[(int)_item]);
     }
 
     [SerializeField]
     private GameObject[] m_throwItemPrefabs = new GameObject[(int)EThrowItemName.LAST];     // 투척 아이템
     public GameObject GetThrowItemPrefab(EThrowItemName _item)
     {
-        int idx = (int)EItemType.LAST + (int)_item;
-        return PoolManager.GetObject(m_throwItemPrefabs[idx]);
+        return PoolManager.GetObject(m_throwItemPrefabs[(int)_item]);
     }
 
     public GameObject[] ItemArray { get {                                                   // 전체 아이템
