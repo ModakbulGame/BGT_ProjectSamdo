@@ -1,37 +1,72 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
-using UnityEngine.EventSystems;
 
-public class NPCDialogueScript : MonoBehaviour
+public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 OasisUIScript와 비슷해서 추후 통합 작업 진행할 듯
 {
     public TextMeshProUGUI m_TypingText;
-    public string m_Message;
+    private string tmpText;
     [SerializeField] 
     private float m_Speed = 0.2f;
+   
+    private Button m_btn;
+    private bool Opened { get; set; }                    
 
-    private EventTrigger m_trigger;
+    private bool ButtonClicked { get; set; }
 
-    IEnumerator Typing(TextMeshProUGUI _typingText, string _message, float _speed)
+    private NPCScript m_npc;
+    public void SetNPC(NPCScript _npc)
     {
-        for (int i = 0; i < _message.Length; i++)
+        m_npc = _npc;
+    }
+
+    public void OpenUI()
+    {
+        gameObject.SetActive(true);
+        if (!Opened) { SetComps(); }
+
+        ButtonClicked = false;
+    }
+
+    public void OpenUI(NPCScript _npc)
+    {
+        SetNPC(m_npc);
+        OpenUI();
+        StartCoroutine(Typing(tmpText));
+    }
+
+    public void CloseUI()
+    {
+        // m_npc.StopInteract();
+        PlayManager.StopPlayerInteract();                       // 이 두 줄은
+        GameManager.SetControlMode(EControlMode.THIRD_PERSON);  // m_npc의 nullexception 해결 이후 삭제 예정
+
+        gameObject.SetActive(false);
+    }
+
+
+    IEnumerator Typing(string _contents)
+    {
+        m_TypingText.text = null;
+        for(int i = 0; i < _contents.Length; i++)
         {
-            _typingText.text = _message.Substring(0, i + 1);
-            yield return new WaitForSeconds(_speed);
+            m_TypingText.text += _contents[i];
+            yield return new WaitForSeconds(m_Speed);
         }
     }
 
-    private void ShowContents()
+    private void SetComps()
     {
-        
+        tmpText = "도적이 되고싶은 자는 나에게로...";
+        m_btn = GetComponentInChildren<Button>();
+        m_btn.onClick.AddListener(CloseUI);
     }
 
     private void Start()
     {
-        m_Message = @"안녕 힘세고 강한 친구 나는 왈도.";
-
-        StartCoroutine(Typing(m_TypingText, m_Message, m_Speed));
-        m_trigger = GetComponent<EventTrigger>();
+        SetComps();
+        OpenUI();
     }
 }

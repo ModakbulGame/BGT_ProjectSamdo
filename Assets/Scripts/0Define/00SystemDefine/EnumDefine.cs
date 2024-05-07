@@ -37,6 +37,7 @@ public enum EProperty
 public enum EInteractType
 {
     NPC,
+    OASIS,
     ITEM,
     LAST
 } 

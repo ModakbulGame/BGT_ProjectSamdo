@@ -114,6 +114,8 @@ public class PlayManager : MonoBehaviour
     public static void ClosePlayerUI() { PlayUIManager.ClosePlayerUI(); }                                                                   // Player UI ¥›±‚
     public static void SetMinimapScale(float _scale) { PlayUIManager.SetMinimapScale(_scale); }                                             // πÃ¥œ∏  √‡√¥
     public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                       // ∏  UI ø©¥›±‚
+    public static void OpenNPCUI(NPCScript _npc) { PlayUIManager.OpenDialogueUI(_npc); }                                                    // NPC ¥Î»≠√¢ ø≠±‚
+    public static void CloseNPCUI() { PlayUIManager.CloseDialogueUI(); }                                                                    // NPC ¥Î»≠√¢ ¥›±‚
     public static void OpenOasisUI(OasisNPC _npc) { PlayUIManager.OpenOasisUI(_npc); }                                                      // »≠≈Í∫“ UI ø≠±‚
     public static void CloseOasisUI() { PlayUIManager.CloseOasisUI(); }                                                                     // »≠≈Í∫“ UI ¥›±‚
     public static void UpdateSkillSlot() { PlayUIManager.UpdateSkillSlot(); }                                                               // Ω∫≈≥ ΩΩ∑‘ UI
