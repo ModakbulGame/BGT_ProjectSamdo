@@ -44,7 +44,6 @@ public class AllItemElmScript : MonoBehaviour
         {
             case EItemType.THROW:
                 if (_data.button == PointerEventData.InputButton.Right)
-                    Debug.Log(0);
                     PlayManager.AddThrowItem((EThrowItemName)CurItem.Idx);
                 break;
         }
