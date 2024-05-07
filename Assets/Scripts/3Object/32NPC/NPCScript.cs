@@ -7,9 +7,8 @@ public class NPCScript : ObjectScript, IInteractable
 {
     [SerializeField] 
     private string m_NPCName;      // npc 이름 ( 인게임 표시용 )  ->  ObjectScript ObjectInfo에 포함
-    [SerializeField]
-    private string[] m_NPCDialogue;
     protected Transform m_NPCTransform;
+    public string[] m_NPCDialogue;
 
     public EInteractType InteractType { get { return EInteractType.NPC; } }
     public bool Interactions { get { return gameObject.CompareTag(ValueDefine.NPC_TAG); } }
@@ -24,7 +23,7 @@ public class NPCScript : ObjectScript, IInteractable
 
     public virtual void StopInteract() 
     {
-        PlayManager.CloseNPCUI();
+        PlayManager.StopPlayerInteract();
         GameManager.SetControlMode(EControlMode.THIRD_PERSON);
     }
 

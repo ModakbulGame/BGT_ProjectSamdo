@@ -13,17 +13,21 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
     private string m_tmpText;
     [SerializeField]
     private float m_Speed = 0.2f;
-   
-    private Button m_btn;
+
+    private Button[] m_btn;
     private EventTrigger m_trigger;
 
-    private bool Opened { get; set; }                    
+    private bool Opened { get; set; }
     private bool ButtonClicked { get; set; }
 
     private NPCScript m_npc;
+    private string[] m_dialogues;
+    private int m_dialogueCount;        
+
     public void SetNPC(NPCScript _npc)
     {
         m_npc = _npc;
+        m_dialogues = _npc.m_NPCDialogue;
     }
 
     public void OpenUI()
@@ -35,17 +39,14 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
 
     public void OpenUI(NPCScript _npc)
     {
-        SetNPC(m_npc);
+        SetNPC(_npc);
         OpenUI();
-        StartCoroutine(Typing(m_tmpText));
+        StartCoroutine(Typing(m_dialogues[m_dialogueCount]));
     }
 
     public void CloseUI()
     {
-        // m_npc.StopInteract();
-        PlayManager.StopPlayerInteract();                       // 이 두 줄은
-        GameManager.SetControlMode(EControlMode.THIRD_PERSON);  // m_npc의 nullexception 해결 이후 삭제 예정
-
+        m_npc.StopInteract();
         gameObject.SetActive(false);
     }
 
@@ -54,12 +55,13 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
     {
         m_TypingText.text = null;
 
-        for(int i = 0; i < _contents.Length; i++)
+        for (int i = 0; i < _contents.Length; i++)
         {
             m_TypingText.text += _contents[i];
             if (ButtonClicked)
             {
                 m_TypingText.text = _contents;
+                ButtonClicked = false;
                 break;
             }
             yield return new WaitForSeconds(m_Speed);
@@ -71,17 +73,30 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
         if (_data.button == PointerEventData.InputButton.Left)
         {
             ButtonClicked = true;
-            StopCoroutine(Typing(m_tmpText));
+            StopCoroutine(Typing(m_dialogues[m_dialogueCount]));
         }
+    }
+
+    private void NextDialogue()
+    {
+        StopCoroutine(m_dialogues[m_dialogueCount]);
+        m_TypingText.text = "";
+        if (m_dialogueCount < m_npc.m_NPCDialogue.Length)
+        {
+            m_dialogueCount++;
+            StartCoroutine(Typing(m_dialogues[m_dialogueCount]));
+        }
+
     }
 
     private void SetComps()
     {
-        m_tmpText = "도적이 되고싶은 자는 나에게로...";
+        m_dialogueCount = 0;
         m_trigger = GetComponent<EventTrigger>();
         FunctionDefine.AddEvent(m_trigger, EventTriggerType.PointerClick, ShowAllDialogue);
-        m_btn = GetComponentInChildren<Button>();
-        m_btn.onClick.AddListener(CloseUI);
+        m_btn = GetComponentsInChildren<Button>();
+        m_btn[0].onClick.AddListener(NextDialogue);
+        m_btn[1].onClick.AddListener(CloseUI);
     }
 
     private void Start()

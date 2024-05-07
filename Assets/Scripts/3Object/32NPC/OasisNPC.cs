@@ -8,14 +8,12 @@ public class OasisNPC : NPCScript
 
     public override void StartInteract()
     {
-        // base.StartInteract();
         PlayManager.OpenOasisUI(this);
         GameManager.SetControlMode(EControlMode.UI_CONTROL);
     }
 
     public override void StopInteract()
     {
-        // base.StopInteract();
         PlayManager.StopPlayerInteract();
         GameManager.SetControlMode(EControlMode.THIRD_PERSON);
     }

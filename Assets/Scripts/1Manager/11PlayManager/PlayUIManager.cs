@@ -35,7 +35,7 @@ public class PlayUIManager : MonoBehaviour
     }
 
     [SerializeField]
-    private NPCDialogueScript m_dialogueUI;                 // NPC
+    private NPCDialogueScript m_dialogueUI;                 // NPC UI
     public void OpenDialogueUI(NPCScript _npc) { m_dialogueUI.OpenUI(_npc); }
     public void CloseDialogueUI() { m_dialogueUI.CloseUI(); }
 
