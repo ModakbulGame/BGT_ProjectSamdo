@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class PlayerHPBarScript : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class PlayerHPBarScript : MonoBehaviour
     public void SetCurHP(float _hp)
     {
         m_slider.value = _hp;
-        m_hpValue.text = $"{_hp} / {MaxHP}";
+        m_hpValue.text = $"{_hp:0.#}/{MaxHP:0.#}"; 
     }
 
 
