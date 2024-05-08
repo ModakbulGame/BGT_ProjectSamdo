@@ -28,6 +28,12 @@ public class StateUIScript : MonoBehaviour
         m_lightRate.fillAmount = amount;
     }
 
+    public void SetLightState(bool _on)
+    {
+        if (_on) { m_lightRate.color = new(1f,1f,1f, 120/255f); }
+        else { m_lightRate.color = new(1f, 0f, 0f, 120/255f); }
+    }
+
 
     public void SetComps()
     {

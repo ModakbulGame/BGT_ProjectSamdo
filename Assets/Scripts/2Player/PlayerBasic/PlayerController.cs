@@ -115,10 +115,10 @@ public partial class PlayerController : ObjectScript
 
 
     // 쿨타임
-    private float[] m_cooltimes = new float[(int)ECooltimeName.LAST];
+    private readonly float[] m_cooltimes = new float[(int)ECooltimeName.LAST];
     public float JumpCooltime
     {
-        get { return m_cooltimes[(int)ECooltimeName.JUMP]; }    // 점프 쿨타임
+        get { return m_cooltimes[(int)ECooltimeName.JUMP]; }
         private set { m_cooltimes[(int)ECooltimeName.JUMP] = value; }
     }
     public float RollCooltime
@@ -161,58 +161,85 @@ public partial class PlayerController : ObjectScript
     [SerializeField]
     private PlayerLightScript m_light;                                              // 불빛 프리펍
 
-    private const float MAX_LIGHT_POWER = 5;        // 최대 능력 스테미나
-    private float LightUseRate = 0/*.5f*/;              // 초당 능력 사용
-    private float LightRestoreRate = 1;             // 초당 능력 회복
-    private float LightRestoreDelay = 2;            // 능력 다 썼을 때 딜레이
+    private readonly float MaxLightGage = 5;                                        // 최대 능력 게이지
+    private readonly float MinLightUse = 1.5f;                                      // 능력 사용 최소 게이지
+    private float LightUseRate = 0.5f;                                              // 초당 능력 사용
+    private float LightRestoreRate = 0.5f;                                          // 초당 능력 회복
+    private float LightRestoreDelay = 0.5f;                                         // 능력 off시 딜레이
+    private float OverloadLightRestoreRate = 1;                                     // 과열 히트 회복 게이지
 
-    private float CurLightRate { get; set; }        // 현재 능력 스테미나(?)
-    private bool CanRestoreLight { get; set; } = true;      // 회복 가능
-    public bool IsLightOn { get; private set; }                                 // 불빛이 켜져 있는지
+    private bool CanUseLight { get { return !IsOverload && CurLightGage >= MinLightUse; } }        // 능력 사용 가능
+    private float CurLightGage { get; set; }                                        // 현재 능력 게이지
+    private bool CanRestoreLight { get; set; } = true;                              // 회복 가능
+    public bool IsLightOn { get; private set; }                                     // 불빛이 켜져 있는지
+    public bool IsOverload { get; private set; }                                    // 과열 상태
 
-    public void LightOn()               // 능력 사용
+    public void LightOn()                                                           // 능력 사용
     {
         m_light.LightOn();
         IsLightOn = true;
     }
-    public void LightOff()              // 능력 중단
+    public void LightOff()                                                          // 능력 중단
     {
         m_light.LightOff();
+        CanRestoreLight = false;
+        StartCoroutine(LightRestoreCoolTime());
         IsLightOn = false;
     }
-    private void InitLight() { CurLightRate = MAX_LIGHT_POWER; SetLightRate(); }    // 초기 설정
-    public void LightChange()                                   // T 눌렀을 시 실행
+    private void InitLight() { CurLightGage = MaxLightGage; SetLightRate(); }       // 초기 설정
+    public void LightChange()                                                       // T 눌렀을 시 실행
     {
         if (PlayerLightScript.CurState == ELightState.CHANGE) { return; }
 
         if (IsLightOn) { LightOff(); }
-        else if (CurLightRate > 0) { LightOn(); }
+        else if (CanUseLight) { LightOn(); }
     }
-    private void LightUpdate()                      // 능력 업데이트
+    private void LightUpdate()                                                      // 능력 업데이트
     {
         if (IsLightOn)
         {
             if (Interacting) { return; }
-            CurLightRate -= LightUseRate * Time.deltaTime;
-            if (CurLightRate <= 0) { CurLightRate = 0; LightOff(); CanRestoreLight = false; StartCoroutine(LightRestoreCoolTime()); }
+            CurLightGage -= LightUseRate * Time.deltaTime;
+            if (CurLightGage <= 0) { CurLightGage = 0; OverloadStart(); }
         }
-        else if (CurLightRate < MAX_LIGHT_POWER)
+        else if (CurLightGage < MaxLightGage)
         {
-            if (!CanRestoreLight) { return; }
-            CurLightRate += LightRestoreRate * Time.deltaTime;
-            if (CurLightRate >= MAX_LIGHT_POWER) { CurLightRate = MAX_LIGHT_POWER; }
+            if (!CanRestoreLight || IsOverload) { return; }
+            CurLightGage += LightRestoreRate * Time.deltaTime;
+            if (CurLightGage >= MaxLightGage) { CurLightGage = MaxLightGage; }
         }
         SetLightRate();
     }
-    private void SetLightRate()                     // 능력 UI 설정
+    private void SetLightRate()                                                     // 능력 UI 설정
     {
-        float rate = CurLightRate / MAX_LIGHT_POWER;
+        float rate = CurLightGage / MaxLightGage;
         PlayManager.SetLightRate(rate);
     }
-    private IEnumerator LightRestoreCoolTime()      // 능력 탕진 후딜레이
+    private IEnumerator LightRestoreCoolTime()                                      // 능력 탕진 후딜레이
     {
         yield return new WaitForSeconds(LightRestoreDelay);
         CanRestoreLight = true;
+    }
+    private void OverloadStart()
+    {
+        LightOff();
+        IsOverload = true;
+        PlayManager.SetLightState(false);
+    }
+    private void OverloadRestoreLight()
+    {
+        CurLightGage += OverloadLightRestoreRate;
+        if (CurLightGage >= MaxLightGage)
+        {
+            CurLightGage = MaxLightGage;
+            OverloadDone();
+        }
+        SetLightRate();
+    }
+    private void OverloadDone()
+    {
+        IsOverload = false;
+        PlayManager.SetLightState(true);
     }
 
 

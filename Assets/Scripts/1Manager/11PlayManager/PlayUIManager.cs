@@ -76,6 +76,7 @@ public class PlayUIManager : MonoBehaviour
     private AimUIScript m_aimUI;                            // 플레이어 에임 UI
     public void SetStaminaRate(float _rate) { m_aimUI.SetStaminaRate(_rate); }
     public void SetLightRate(float _rate) { m_aimUI.SetLightRate(_rate); }
+    public void SetLightState(bool _on) { m_aimUI.SetLightState(_on); }
 
 
     [SerializeField]

@@ -38,12 +38,13 @@ public class AnimateAttackScript : ObjectAttackScript
         if (m_trailList.Count > 1) { m_trailFillerList = FillTrail(m_trailList.First.Value, m_trailList.Last.Value); }
 
         Collider[] hits = Physics.OverlapBox(col.Position, col.Size / 2, col.Rotation, ValueDefine.HITTABLE_LAYER, QueryTriggerInteraction.UseGlobal);
-        HitObject(hits);
+        bool hit = HitObject(hits);
         foreach (BufferObject co in m_trailFillerList)
         {
             hits = Physics.OverlapBox(co.Position, co.Size / 2, co.Rotation, ValueDefine.HITTABLE_LAYER, QueryTriggerInteraction.UseGlobal);
-            HitObject(hits);
+            hit |= HitObject(hits);
         }
+        if (Attacker.IsPlayer && hit) { ((PlayerController)Attacker).HitTarget(); }
     }
     private LinkedList<BufferObject> FillTrail(BufferObject _from, BufferObject _to)
     {
@@ -72,10 +73,11 @@ public class AnimateAttackScript : ObjectAttackScript
         }
         return fillerList;
     }
-    private void HitObject(Collider[] _hits)
+    private bool HitObject(Collider[] _hits)
     {
-        if (!IsAttacking) { return; }
+        if (!IsAttacking) { return false; }
 
+        bool hit = false;
         foreach (Collider collider in _hits)
         {
             IHittable hittable = collider.GetComponentInParent<IHittable>();
@@ -84,11 +86,14 @@ public class AnimateAttackScript : ObjectAttackScript
             Vector3 pos = CheckNHit(hittable);
             AddHitObject(hittable);
             CreateHitEffect(hittable, pos);
+            hit |= hittable.IsMonster;
         }
+        return hit;
     }
     public virtual bool CheckTarget(Collider _collider)
     {
-        if(_collider.GetComponentInParent<ObjectScript>() == m_attacker) { return false; }
+        ObjectScript obj = _collider.GetComponentInParent<ObjectScript>();
+        if (obj == m_attacker || CheckHit(obj)) { return false; }
         return true;
     }
     public virtual void CreateHitEffect(IHittable _hittable, Vector3 _pos) { }

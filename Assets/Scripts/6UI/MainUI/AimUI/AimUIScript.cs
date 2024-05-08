@@ -10,10 +10,13 @@ public class AimUIScript : MonoBehaviour
     {
         m_stateUI.SetStaminaRate(_rate);
     }
-
     public void SetLightRate(float _rate)
     {
         m_stateUI.SetLightRate(_rate);
+    }
+    public void SetLightState(bool _on)
+    {
+        m_stateUI.SetLightState(_on);
     }
 
 

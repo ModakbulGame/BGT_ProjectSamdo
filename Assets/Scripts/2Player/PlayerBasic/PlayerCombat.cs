@@ -117,12 +117,18 @@ public partial class PlayerController
         ForceMove(forward2);
     }
 
+    public void HitTarget()                                             // 몬스터 때림
+    {
+        if (!IsOverload) { return; }
+        OverloadRestoreLight();
+    }
+
 
     // 스킬 관련
     private ESkillName[] SkillSlot { get { return GameManager.SkillSlot; } }                // 스킬 슬롯
     public int SkillIdx { get { for (int i = 0; i<ValueDefine.MAX_SKILL_SLOT; i++)          // 눌린 스킬
             { if (SkillTriggers[i]) return i; } return -1; } }
-    public bool CanUseSkill { get { return SkillIdx != -1                                   // 스킬 사용 가능 여부
+    public bool CanUseSkill { get { return !IsOverload && SkillIdx != -1                    // 스킬 사용 가능 여부
                 && SkillSlot[SkillIdx] != ESkillName.LAST && SkillCooltime[SkillIdx] <= 0; } }
     public ESkillName SkillInHand { get; private set; } = ESkillName.LAST;                  // 사용 중인 스킬
     private SkillInfo SkillInfoInHand { get {                                               // ㄴ의 정보
