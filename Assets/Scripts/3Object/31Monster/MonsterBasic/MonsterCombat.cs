@@ -115,7 +115,7 @@ public abstract partial class MonsterScript
 
     // 피격 관련
     public readonly float StunDelay = 1f;                       // 피격 시 경직
-    private readonly float HitGuardEndTime = 1f;                // 가드 중인 플레이어 타격 후 피격 애니메이션 재생 기간
+    private readonly float HitGuardEndTime = 1.5f;              // 가드 중인 플레이어 타격 후 피격 애니메이션 재생 기간
 
     private float HitGuardCooltime { get; set; }
 
