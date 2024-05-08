@@ -33,14 +33,6 @@ public class ObjectAttackScript : MonoBehaviour
     public void AddHitObject(IHittable _object)         // 히트 판정 (중복 히트 방지)
     {
         m_hitObjects.Add(_object);
-        if (m_attacker.IsMonster && _object.IsPlayer)
-        {
-            if (PlayManager.IsPlayerGuarding)
-            {
-                ((MonsterScript)m_attacker).HitGuardingPlayer();
-                Debug.Log("지금이니!");
-            }
-        }
     }
     public virtual void GiveDamage(IHittable _hittable, Vector3 _point)
     {
