@@ -14,7 +14,7 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
     [SerializeField]
     private float m_Speed = 0.1f;
 
-    private Button[] m_btn;
+    private Button m_btn;
     private EventTrigger m_trigger;
     private IEnumerator m_coroutine;
 
@@ -58,10 +58,11 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
         for (int i = 0; i < _contents.Length; i++)
         {
             m_TypingText.text += _contents[i];
-            if (ButtonClicked)      // 좌클릭하면 전체 내용 한 번에 출력
+            if (ButtonClicked)                          // 좌클릭하면 전체 내용 한 번에 출력
             {
                 m_TypingText.text = _contents;
                 ButtonClicked = false;
+                NextDialogue();
                 break;
             }
             yield return new WaitForSeconds(m_Speed);
@@ -78,14 +79,13 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
         }
     }
 
-    private void NextDialogue()
+    private void NextDialogue()                     // 다음 대사 출력
     {
-        StopCoroutine(m_coroutine);
         m_TypingText.text = "";
-        if (m_dialogueCount < m_npc.m_NPCDialogue.Length)
+        if (m_dialogueCount < m_dialogues.Length)
         {
-            m_coroutine = Typing(m_dialogues[m_dialogueCount++]);
-            // Debug.Log(m_dialogueCount);
+            m_dialogueCount++;
+            m_coroutine = Typing(m_dialogues[m_dialogueCount]);
             StartCoroutine(m_coroutine);
         }
     }
@@ -96,9 +96,8 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
         m_coroutine = Typing(m_dialogues[0]);
         m_trigger = GetComponent<EventTrigger>();
         FunctionDefine.AddEvent(m_trigger, EventTriggerType.PointerClick, ShowAllDialogue);
-        m_btn = GetComponentsInChildren<Button>();
-        m_btn[0].onClick.AddListener(NextDialogue);
-        m_btn[1].onClick.AddListener(CloseUI);
+        m_btn = GetComponentInChildren<Button>();
+        m_btn.onClick.AddListener(CloseUI);
     }
 
     private void Start()
