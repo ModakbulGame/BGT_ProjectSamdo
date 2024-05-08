@@ -153,10 +153,7 @@ public abstract partial class ObjectScript
     public virtual void ApplyHPUI() { }
 
 
-    [SerializeField]
-    private float m_dm = 1;     // 데미지 배율 (임시)
-
-    public float DamageMultiplier { get { return m_dm; } protected set { m_dm = value; } }
+    public virtual float DamageMultiplier { get; protected set; } = 1;
     public float AttackMultiplier { get; protected set; } = 1;
     public float MagicMultiplier { get; protected set; } = 1;
 

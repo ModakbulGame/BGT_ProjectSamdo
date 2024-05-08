@@ -87,7 +87,7 @@ public class PlayerCombatInfo : ObjectCombatInfo        // 플레이어 전투 정보
 {
     public float MaxStamina;        // 최대 스테미나
     public float Magic;             // 마법 공격력
-    public float Overdrive;         // 치명타 (삭제 예정)
+    public float Overdrive;         // 과열 데미지
     public float Tolerance;         // 내성
 
     public void SetCombatInfo(PlayerStatInfo _stat)
@@ -162,6 +162,8 @@ public partial class PlayerController
     public float Defence { get { return m_combatInfo.Defense; } }                   // 방어력
     public float Overdrive { get { return m_combatInfo.Overdrive; } }               // 증폭
     private void ApplyStat() { m_combatInfo.SetCombatInfo(m_statInfo); }            // 스탯 적용
+
+    public override float DamageMultiplier => base.DamageMultiplier * Overdrive;
 
 
     // 장비 관련

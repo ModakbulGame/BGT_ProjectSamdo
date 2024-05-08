@@ -225,6 +225,7 @@ public partial class PlayerController : ObjectScript
         LightOff();
         IsOverload = true;
         PlayManager.SetLightState(false);
+        if (IsSkilling) { CancelSkill(); }
     }
     private void OverloadRestoreLight()
     {
