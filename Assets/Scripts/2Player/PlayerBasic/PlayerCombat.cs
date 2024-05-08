@@ -195,8 +195,8 @@ public partial class PlayerController
             case ESkillType.BUFF:
                 StatAdjust adjust = SkillInfoInHand.SkillData.StatAdjust;
                 GetStatAdjust(adjust);
-                BuffSkillScript buff=skill.GetComponentInChildren<BuffSkillScript>();
-                buff.SetSkill(this,Attack, Magic);
+                BuffSkillScript buff = skill.GetComponentInChildren<BuffSkillScript>();
+                SetWeaponCCType(buff.CCList[0]);
                 skill.transform.localPosition = Vector3.zero;
                 break;
             default:
