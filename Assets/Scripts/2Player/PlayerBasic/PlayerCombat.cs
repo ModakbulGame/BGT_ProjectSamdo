@@ -12,6 +12,7 @@ public partial class PlayerController
     public override void GetHit(HitData _hit)                           // 공격 맞음
     {
         if (IsInvincible) { return; }           // 무적일 경우
+        if (!IsDead && IsGuarding && _hit.Attacker.IsMonster) { ((MonsterScript)_hit.Attacker).HitGuardingPlayer(); }
         base.GetHit(_hit);
     }
     public override void PlayHitAnim()                                  // 피격 애니메이션

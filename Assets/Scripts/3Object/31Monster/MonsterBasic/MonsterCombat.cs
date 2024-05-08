@@ -115,7 +115,9 @@ public abstract partial class MonsterScript
 
     // 피격 관련
     public readonly float StunDelay = 1f;                       // 피격 시 경직
-    private readonly float HitGuardEndTime = 3;                 // 가드 중인 플레이어 타격 후 피격 애니메이션 재생 기간
+    private readonly float HitGuardEndTime = 1f;                // 가드 중인 플레이어 타격 후 피격 애니메이션 재생 기간
+
+    private float HitGuardCooltime { get; set; }
 
     private bool HitGuarding { get; set; }                                                              // 플레이어 가드 중 때림
     public override bool IsUnstoppable { get { return InCombat && !HitGuarding; } }                     // 공격 모션 캔슬 불가인지
@@ -123,11 +125,20 @@ public abstract partial class MonsterScript
     public void HitGuardingPlayer()
     {
         HitGuarding = true;
-        StartCoroutine(HitGuardEnd());
+        if (HitGuardCooltime > 0) { HitGuardCooltime = HitGuardEndTime; return; }
+        else
+        {
+            HitGuardCooltime = HitGuardEndTime;
+            StartCoroutine(HitGuardEnd());
+        }
     }
     private IEnumerator HitGuardEnd()
     {
-        yield return new WaitForSeconds(HitGuardEndTime);
+        while (HitGuardCooltime > 0)
+        {
+            HitGuardCooltime -= Time.deltaTime;
+            yield return null;
+        }
         HitGuarding = false;
     }
 
