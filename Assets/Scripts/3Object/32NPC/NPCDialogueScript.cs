@@ -75,6 +75,7 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
         if (_data.button == PointerEventData.InputButton.Left)
         {
             ButtonClicked = true;
+            Debug.Log(m_dialogueCount);
             StopCoroutine(m_coroutine);
         }
     }
@@ -85,8 +86,8 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
         if (m_dialogueCount < m_dialogues.Length)
         {
             m_dialogueCount++;
-            m_coroutine = Typing(m_dialogues[m_dialogueCount]);
-            StartCoroutine(m_coroutine);
+            Debug.Log(m_dialogueCount);
+            StartCoroutine(Typing(m_dialogues[m_dialogueCount]));
         }
     }
 
