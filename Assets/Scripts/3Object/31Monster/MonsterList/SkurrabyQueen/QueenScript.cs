@@ -25,7 +25,8 @@ public class QueenScript : MonsterScript
     private readonly float SkillDelay = 6;                          // 스킬 한번 쓰고 다음 스킬까지
     public readonly float EvadeRange = 3;                           // 회피 거리
 
-    private readonly float SpitAngle = 120;                         // 독 뿌리기 각도 범위
+    private readonly float SpitRange = 7.5f;                        // 독 뿌리기 거리 범위
+    private readonly float SpitAngle = 60;                          // 독 뿌리기 각도 범위
     private readonly float SpitDelay = 0.5f;                        // 독 뿌리기 간격
 
     private int CurSkurraby { get; set; } = 0;                      // 소환한 딱지 수
@@ -95,6 +96,7 @@ public class QueenScript : MonsterScript
     }
     private IEnumerator SpittingCoroutine()                         // 독 뿜기 코루틴
     {
+        yield return new WaitForSeconds(SpitDelay);
         while (IsSpitting)
         {
             SpitPoison();
@@ -103,8 +105,14 @@ public class QueenScript : MonsterScript
     }
     private void SpitPoison()                                       // 독 리얼 뿜기
     {
-        Debug.Log("뿜뿜");
-        // 여기 독 뿌리기 만드셈 (OverlapSphere 쓰셈)
+        Collider[] cols = Physics.OverlapSphere(Position, SpitRange, ValueDefine.HITTABLE_LAYER);
+        foreach (Collider col in cols)
+        {
+            PlayerController player = col.GetComponentInParent<PlayerController>();
+            if(player == null) { continue; }
+            player.GetBlind();
+            break;
+        }
     }
     public override void AttackDone()                               // 공격 완료
     {

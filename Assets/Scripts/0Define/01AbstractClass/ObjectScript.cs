@@ -162,7 +162,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
                     GetKnockBack(_hit);
                     break;
                 case ECCType.BLIND:
-                    GetBlind(_hit);
+                    GetBlind();
                     break;
             }
         }
@@ -230,7 +230,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
         m_rigid.velocity = dir * 8;
     }
     public bool IsBlind { get { return m_ccCount[(int)ECCType.BLIND] > 0; } }
-    public virtual void GetBlind(HitData _hit) { }
+    public virtual void GetBlind() { }
     #endregion
 
 

@@ -369,13 +369,14 @@ public partial class PlayerController
 
 
     // CC ฐüทร
-    public override void GetBlind(HitData _hit)
+    private IEnumerator BlindCoroutine;
+    public override void GetBlind()
     {
-        if (IsBlind) { m_ccCount[(int)ECCType.BLIND] = 10; return; }
+        m_ccCount[(int)ECCType.BLIND] = 10;
         PlayManager.ShowBlindMark();
-        StartCoroutine(BlindCotouine());
+        if (BlindCoroutine == null) { BlindCoroutine = ResetBlind(); StartCoroutine(BlindCoroutine); }
     }
-    private IEnumerator BlindCotouine()
+    private IEnumerator ResetBlind()
     {
         while (!IsDead && m_ccCount[(int)ECCType.BLIND] > 0)
         {

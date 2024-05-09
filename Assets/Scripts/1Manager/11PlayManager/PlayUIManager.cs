@@ -120,14 +120,14 @@ public class PlayUIManager : MonoBehaviour
 
 
     [SerializeField]
-    // private BlindUIScript m_blindUI;
+    private SpitPoisonUIScript m_spitUI;
     public void ShowBlindMark()
     {
-        // 실명 발동
+        m_spitUI.ShowBlind();
     }
     public void HideBlindMark()
     {
-        // 실명 해제
+        m_spitUI.HideBlind();
     }
 
 
