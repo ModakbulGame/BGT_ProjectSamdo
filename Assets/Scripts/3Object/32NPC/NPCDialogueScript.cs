@@ -15,7 +15,6 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
     private float m_Speed = 0.1f;
 
     private Button m_btn;
-    private EventTrigger m_trigger;
     private IEnumerator m_coroutine;
 
     private bool Opened { get; set; }
@@ -58,35 +57,30 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
         for (int i = 0; i < _contents.Length; i++)
         {
             m_TypingText.text += _contents[i];
+            yield return new WaitForSeconds(m_Speed);
+
             if (ButtonClicked)                          // 좌클릭하면 전체 내용 한 번에 출력
             {
                 m_TypingText.text = _contents;
                 ButtonClicked = false;
                 NextDialogue();
-                break;
+                yield break;
             }
-            yield return new WaitForSeconds(m_Speed);
         }
     }
 
-
-    private void ShowAllDialogue(PointerEventData _data)
+    public void ShowAllDialogue()
     {
-        if (_data.button == PointerEventData.InputButton.Left)
-        {
-            ButtonClicked = true;
-            Debug.Log(m_dialogueCount);
-            StopCoroutine(m_coroutine);
-        }
+        StopCoroutine(m_coroutine);
+        ButtonClicked = true;
     }
 
     private void NextDialogue()                     // 다음 대사 출력
     {
-        m_TypingText.text = "";
         if (m_dialogueCount < m_dialogues.Length)
         {
             m_dialogueCount++;
-            Debug.Log(m_dialogueCount);
+            m_TypingText.text = "";
             StartCoroutine(Typing(m_dialogues[m_dialogueCount]));
         }
     }
@@ -95,10 +89,8 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
     {
         m_dialogueCount = 0;
         m_coroutine = Typing(m_dialogues[0]);
-        m_trigger = GetComponent<EventTrigger>();
-        FunctionDefine.AddEvent(m_trigger, EventTriggerType.PointerClick, ShowAllDialogue);
-        m_btn = GetComponentInChildren<Button>();
-        m_btn.onClick.AddListener(CloseUI);
+        m_btn = transform.GetChild(0).GetChild(1).GetComponentInChildren<Button>(); // 닫기 버튼
+        m_btn.onClick.AddListener(CloseUI);      
     }
 
     private void Start()

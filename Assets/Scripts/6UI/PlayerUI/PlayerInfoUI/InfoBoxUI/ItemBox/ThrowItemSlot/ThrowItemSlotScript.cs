@@ -28,9 +28,9 @@ public class ThrowItemSlotScript : MonoBehaviour
     {
         m_parent.HideItemInfoUI();
     }
-    public void ActivateMark()
+    public void ActivateMark(Transform _imgTransform)
     {
-        m_parent.ActivateMark();
+        m_parent.ActivateMark(_imgTransform);
     }
     public void SetInfoPos(Vector2 _pos)
     {

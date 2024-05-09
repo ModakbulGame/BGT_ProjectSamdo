@@ -7,7 +7,6 @@ public class ItemBoxUIScript : PlayerInfoBoxScript
 {
     private ThrowItemSlotScript m_throwItemSlot;
     private AllItemBoxScript m_allItemBox;
-    [SerializeField]
     private Image m_curItemMark;
 
     public override void InitUI()
@@ -29,10 +28,10 @@ public class ItemBoxUIScript : PlayerInfoBoxScript
     {
         m_parent.HideItemInfoUI();
     }
-    public void ActivateMark()
+    public void ActivateMark(Transform _imgTransform)
     {
-        m_curItemMark.rectTransform.anchoredPosition = Vector2.zero; 
         m_curItemMark.gameObject.SetActive(true);
+        m_curItemMark.transform.SetParent(_imgTransform, false);
     }
     public void SetItemInfoUIPos(Vector2 _pos)
     {
@@ -48,7 +47,7 @@ public class ItemBoxUIScript : PlayerInfoBoxScript
         m_allItemBox = GetComponentInChildren<AllItemBoxScript>();
         m_allItemBox.SetParent(this);
         m_allItemBox.SetComps();
-        
-        // m_curItemMark.gameObject.SetActive(false);
+        m_curItemMark = transform.GetChild(2).GetComponent<Image>();
+        m_curItemMark.gameObject.SetActive(false);
     }
 }

@@ -63,7 +63,10 @@ public class AllItemElmScript : MonoBehaviour
     {
         m_parent.SetInfoPos(_pos);
     }
-
+    public void ActivateMark(Transform _imgTransform)
+    {
+        m_parent.ActivateMark(_imgTransform);
+    }
 
 
     private void SetEvents()

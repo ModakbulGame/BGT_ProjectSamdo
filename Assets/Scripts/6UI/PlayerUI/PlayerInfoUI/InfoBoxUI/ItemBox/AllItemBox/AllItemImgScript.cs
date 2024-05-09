@@ -9,6 +9,7 @@ public class AllItemImgScript : MouseOverInfoUI
     public void SetParent(AllItemElmScript _parent) { m_parent = _parent; }
 
     private Image m_itemImg;
+    private Transform m_imgTransform;
 
     public void SetItemImage(Sprite _img)
     {
@@ -27,10 +28,14 @@ public class AllItemImgScript : MouseOverInfoUI
     {
         m_parent.SetInfoPos(_pos);
     }
-
+    public void ActivateMark()
+    {
+        m_parent.ActivateMark(m_imgTransform);
+    }
     public override void SetComps()
     {
         base.SetComps();
         m_itemImg = GetComponent<Image>();
+        m_imgTransform = GetComponent<RectTransform>();
     }
 }

@@ -18,6 +18,7 @@ public class PlayerCameraScript : MonoBehaviour
     public void SetThirdPerson()                            // 3인칭 모드 설정
     {
         CurCameraMode = EControlMode.THIRD_PERSON;
+        m_cameraDetail.m_Lens.FieldOfView = 40;
         m_cameraDetail.m_YAxis.Value = 0.5f;
         m_cameraDetail.m_XAxis.Value = 180;
         SetCinemachineSpeed(MouseSensitive);
@@ -33,8 +34,9 @@ public class PlayerCameraScript : MonoBehaviour
     public void SetUIControl()                              // UI 조작 모드 설정
     {
         CurCameraMode = EControlMode.UI_CONTROL;
-        m_cameraDetail.m_YAxis.Value = 0.2f;
-        m_cameraDetail.m_XAxis.Value = 330;
+        m_cameraDetail.m_Lens.FieldOfView = 20;
+        m_cameraDetail.m_YAxis.Value = 0.3f;
+        m_cameraDetail.m_XAxis.Value = 20;
         SetCinemachineSpeed(0);
     }
 

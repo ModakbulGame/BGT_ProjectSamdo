@@ -37,6 +37,10 @@ public class AllItemBoxScript : MonoBehaviour
         m_parent.SetItemInfoUIPos(_pos);
     }
 
+    public void ActivateMark(Transform _imgTransform)
+    {
+        m_parent.ActivateMark(_imgTransform);
+    }
 
     public void SetComps()
     {

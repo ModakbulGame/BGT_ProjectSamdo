@@ -5,6 +5,7 @@ using UnityEngine;
 public class ThrowItemImgScript : MouseOverInfoUI
 {
     private ThrowItemElmScript m_parent;
+    private Transform m_imgTransform;
     public void SetParent(ThrowItemElmScript _parent) { m_parent = _parent; }
 
     public override void ShowInfo()
@@ -18,5 +19,15 @@ public class ThrowItemImgScript : MouseOverInfoUI
     public override void SetInfoPos(Vector2 _pos)
     {
         m_parent.SetInfoPos(_pos);
+    }
+    public void ActivateMark()
+    {
+        m_parent.ActivateMark(m_imgTransform);
+    }
+
+    public override void SetComps()
+    {
+        base.SetComps();
+        m_imgTransform = GetComponent<RectTransform>();
     }
 }
