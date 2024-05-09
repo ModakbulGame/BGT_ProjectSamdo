@@ -95,8 +95,8 @@ public class PlayerCombatInfo : ObjectCombatInfo        // 플레이어 전투 정보
         MaxHP = FunctionDefine.RoundF2(28.85f + 15 * Mathf.Sqrt(1.6f*_stat.m_health + 0.65f * _stat.m_strength));
         MaxStamina = FunctionDefine.RoundF2(64.6f + (1.5f * _stat.m_endure + _stat.m_health + 0.8f * _stat.m_intellect + 0.24f * _stat.m_rapid));
         Defense = FunctionDefine.RoundF2((0.5f * (_stat.m_endure + 0.3f * _stat.m_mental) - 6.5f)* 0.01f);
-        Attack = FunctionDefine.RoundF2(1.5f * _stat.m_strength);
-        Magic = FunctionDefine.RoundF2(1.5f * _stat.m_intellect);
+        Attack = FunctionDefine.RoundF2(6 * Mathf.Sqrt(_stat.m_strength) - 7);
+        Magic = FunctionDefine.RoundF2(6 * Mathf.Sqrt(_stat.m_intellect) - 7);
         Overdrive = FunctionDefine.RoundF2(0.73f + (15 * Mathf.Sqrt(_stat.m_rapid) * 0.01f));
         Tolerance = FunctionDefine.RoundF2(1.2f * _stat.m_mental * 0.01f - 0.12f);
     }

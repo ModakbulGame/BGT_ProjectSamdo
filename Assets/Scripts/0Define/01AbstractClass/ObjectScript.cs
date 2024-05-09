@@ -104,7 +104,9 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     public virtual void GetHit(HitData _hit)                            // 공격 맞음
     {
         if (IsDead) { return; }
-        GetDamage(_hit.Damage);
+        float damage = _hit.Damage * (1-Defense);
+        GetDamage(damage);
+        Debug.Log($"{_hit.Attacker.ObjectName} => {ObjectName} {damage} 데미지");
         if (!IsUnstoppable) { PlayHitAnim(); }
         if (!IsDead) { GetCC(_hit); }
     }
