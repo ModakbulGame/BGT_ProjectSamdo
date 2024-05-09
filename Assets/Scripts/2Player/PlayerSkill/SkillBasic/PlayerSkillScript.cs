@@ -19,6 +19,7 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
     private PlayerController Player { get { return (PlayerController)m_attacker; } }
 
     public override ECCType[] CCList { get { return new ECCType[1] { SkillManager.IDToCC(m_scriptable.ID) }; } }
+    public ESkillProperty[] SkillProps { get { return m_scriptable.SkillProps; } }
 
     public virtual void SetSkill(PlayerController _player, float _attack, float _magic)
     {

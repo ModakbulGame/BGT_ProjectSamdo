@@ -4,7 +4,8 @@ using UnityEngine;
 public enum ESkillAttribute
 {
     ID,                         // ID
-    TYPE,                       // 타입
+    CAST_TYPE,                  // 캐스팅 타입
+    PROPERTY,                   // 스킬 속성
     NAME,                       // 이름
     ATTACK,                     // 물리 공격 계수
     MAGIC,                      // 주술 공격 계수
@@ -24,7 +25,7 @@ public enum ESkillAttribute
     LAST
 }
 
-public enum ESkillType
+public enum ECastType
 {
     MELEE,
     MELEE_CC,
@@ -34,6 +35,20 @@ public enum ESkillType
     AROUND,
     AROUND_CC,
     BUFF,
+
+    LAST
+}
+
+public enum ESkillProperty
+{
+    SLASH,
+    HIT,
+    EXPLOSION,
+    SHOCKWAVE,
+    FOG,
+    TOTEM,
+    LIGHT,
+    SOUL,
 
     LAST
 }

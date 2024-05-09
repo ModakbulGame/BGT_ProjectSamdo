@@ -67,7 +67,32 @@ public class DataManager : MonoBehaviour
         };
     }
 
+    public static ESkillProperty[] String2Properties(string _data)
+    {
+        string[] datas = _data.Split('/');
+        ESkillProperty[] props = new ESkillProperty[datas.Length];
+        for (int i = 0; i<datas.Length; i++)
+        {
+            props[i] = String2Property(datas[i]);
+        }
+        return props;
+    }
+    private static ESkillProperty String2Property(string _data)
+    {
+        return _data switch
+        {
+            "SLASH" => ESkillProperty.SLASH,
+            "HIT" => ESkillProperty.HIT,
+            "EXPLOSION" => ESkillProperty.EXPLOSION,
+            "SHOCKWAVE" => ESkillProperty.SHOCKWAVE,
+            "FOG" => ESkillProperty.FOG,
+            "TOTEM" => ESkillProperty.TOTEM,
+            "LIGHT" => ESkillProperty.LIGHT,
+            "SOUL" => ESkillProperty.SOUL,
 
+            _ => ESkillProperty.LAST
+        };
+    }
 
     public void SetManager()
     {

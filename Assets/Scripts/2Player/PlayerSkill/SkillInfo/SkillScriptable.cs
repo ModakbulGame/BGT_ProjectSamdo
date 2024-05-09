@@ -7,7 +7,8 @@ public class SkillScriptable : ScriptableObject
     public uint Idx;
     public ESkillName SkillEnum;
     public string ID;
-    public ESkillType SkillType;
+    public ECastType CastType;
+    public ESkillProperty[] SkillProps;
     public string SkillName;
     public float Attack;
     public float Magic;
@@ -22,26 +23,26 @@ public class SkillScriptable : ScriptableObject
     public string Description;
     public int Price;
 
-    private ESkillType Name2Type(ESkillName _skillName)
+    private ECastType Name2Type(ESkillName _skillName)
     {
         if (_skillName <= ESkillName.SWORD_BASIC || _skillName == ESkillName.SAMPLE1)
-            return ESkillType.MELEE;
+            return ECastType.MELEE;
         else if (_skillName <= ESkillName.MELEE_KNOCKBACK)
-            return ESkillType.MELEE_CC;
+            return ECastType.MELEE_CC;
         else if (_skillName == ESkillName.SCEPTER_BASIC || _skillName == ESkillName.SAMPLE2)
-            return ESkillType.RANGED;
+            return ECastType.RANGED;
         else if (_skillName <= ESkillName.RANGED_KNOCKBACk)
-            return ESkillType.RANGED_CC;
+            return ECastType.RANGED_CC;
         else if (_skillName == ESkillName.CREATION || _skillName == ESkillName.SAMPLE3)
-            return ESkillType.SUMMON;
+            return ECastType.SUMMON;
         else if (_skillName == ESkillName.AROUND)
-            return ESkillType.AROUND;
+            return ECastType.AROUND;
         else if (_skillName <= ESkillName.AROUND_KNOCKBACK)
-            return ESkillType.AROUND_CC;
+            return ECastType.AROUND_CC;
         else if (_skillName == ESkillName.BUFF)
-            return ESkillType.BUFF;
+            return ECastType.BUFF;
         else
-            return ESkillType.LAST;
+            return ECastType.LAST;
 
     }
 
@@ -51,7 +52,8 @@ public class SkillScriptable : ScriptableObject
         Idx =               _idx;
         SkillEnum =         (ESkillName)_idx;
         ID =                _data[(int)ESkillAttribute.ID];
-        SkillType =         Name2Type(SkillEnum);
+        CastType =          Name2Type(SkillEnum);
+        SkillProps =        DataManager.String2Properties(_data[(int)ESkillAttribute.PROPERTY]);
         SkillName =         _data[(int)ESkillAttribute.NAME];
         float.TryParse(     _data[(int)ESkillAttribute.ATTACK],           out Attack);
         float.TryParse(     _data[(int)ESkillAttribute.MAGIC],            out Magic);

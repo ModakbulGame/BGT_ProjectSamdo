@@ -149,7 +149,7 @@ public partial class PlayerController
 
         if (IsHealing) { CancelHeal(); }
 
-        if (SkillInfoInHand.SkillType == ESkillType.SUMMON)
+        if (SkillInfoInHand.CastType == ECastType.SUMMON)
         {
             ShowSkillAim(SkillInfoInHand.SkillRadius, SkillInfoInHand.SkillCastRange);
         }
@@ -166,34 +166,34 @@ public partial class PlayerController
     public void CreateSkill()                                                               // 스킬 오브젝트 생성
     {
         GameObject skill = GameManager.GetSkillObj(SkillInHand);
-        ESkillType type = SkillInfoInHand.SkillType;
+        ECastType type = SkillInfoInHand.CastType;
         skill.transform.SetParent(transform); 
         
         switch (type) {
-            case ESkillType.MELEE:
-            case ESkillType.MELEE_CC:
+            case ECastType.MELEE:
+            case ECastType.MELEE_CC:
                 skill.transform.localPosition = Vector3.zero;
                 skill.transform.localEulerAngles = Vector3.zero;
                 break;
-            case ESkillType.RANGED:
-            case ESkillType.RANGED_CC:
+            case ECastType.RANGED:
+            case ECastType.RANGED_CC:
                 skill.transform.localPosition = Vector3.up;
                 skill.transform.SetParent(null);
                 ProjectileSkillScript projectile = skill.GetComponentInChildren<ProjectileSkillScript>();
                 projectile.SetSkill(this, Attack, Magic, PlayerAimDirection);
                 break;
-            case ESkillType.SUMMON:
+            case ECastType.SUMMON:
                 skill.transform.SetParent(null);
                 skill.transform.position = PlayManager.TraceSkillAim(Position, SkillInfoInHand.SkillCastRange);
                 break;
-            case ESkillType.AROUND:
-            case ESkillType.AROUND_CC:
+            case ECastType.AROUND:
+            case ECastType.AROUND_CC:
                 skill.transform.localPosition = Vector3.zero;
                 skill.transform.SetParent(null);
                 AroundSkillScript around=skill.GetComponentInChildren<AroundSkillScript>();
                 around.SetSkill(this, Attack, Magic);
                 break;
-            case ESkillType.BUFF:
+            case ECastType.BUFF:
                 StatAdjust adjust = SkillInfoInHand.SkillData.StatAdjust;
                 GetStatAdjust(adjust);
                 BuffSkillScript buff = skill.GetComponentInChildren<BuffSkillScript>();

@@ -8,7 +8,8 @@ public class SkillInfo
     public SkillScriptable SkillData { get; private set; }
     public string SkillName { get { return SkillData.SkillName; } }
     public string SkillDescription { get { return SkillData.Description; } }
-    public ESkillType SkillType { get { return SkillData.SkillType; } }
+    public ECastType CastType { get { return SkillData.CastType; } }
+    public ESkillProperty[] SkillProps { get { return SkillData.SkillProps; } }
     public float SkillCooltime { get { return SkillData.Cooltime; } }
     public float SkillRadius { get { return SkillData.HitRadius; } }
     public float SkillCastRange { get{ return SkillData.CastingRange; } } 
