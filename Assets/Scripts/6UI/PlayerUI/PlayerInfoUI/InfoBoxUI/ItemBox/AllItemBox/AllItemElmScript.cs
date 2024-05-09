@@ -9,7 +9,7 @@ public class AllItemElmScript : MonoBehaviour
 {
     private AllItemBoxScript m_parent;
     public AllItemBoxScript Box { get { return m_parent; } }
-    public void SetParent(AllItemBoxScript _parent) { m_parent = _parent; }
+    public void SetParent(AllItemBoxScript _parent) { m_parent = _parent; } 
 
     private AllItemImgScript m_itemImg;
     private ItemBoxDragScript m_itemBoxDrag;

@@ -39,4 +39,9 @@ public class ItemBoxDragScript : DragDropUIScript
         if (DropIdx == -1) { return; }
         Box.UpdateUI();
     }
+
+    public override void SetComps()
+    {
+        base.SetComps();
+    }
 }
