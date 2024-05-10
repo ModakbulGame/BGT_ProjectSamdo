@@ -12,15 +12,25 @@ public class ThrowItemSlotScript : MonoBehaviour
 
     private ThrowItemElmScript[] m_elms;
 
+
     public void UpdateUI()
     {
         List<EThrowItemName> throwItemList = PlayManager.ThrowItemList;
         for (int i = 0; i<ValueDefine.MAX_THROW_ITEM; i++)
         {
             if (throwItemList.Count <= i) { m_elms[i].HideItem(); continue; }
+
             m_elms[i].SetItem(i, throwItemList[i]);
         }
     }
+
+    public void SimulateChange(int _target, int _origin)
+    {
+        if (_target == -1) { ResetChanges(); return; }
+        PlayManager.SwapThrowItem(_target, _origin);
+    }
+    public void ResetChanges() { UpdateUI(); }
+
 
     public void ShowInfo(SItem _item)
     {
@@ -35,11 +45,33 @@ public class ThrowItemSlotScript : MonoBehaviour
         m_parent.SetItemInfoUIPos(_pos);
     }
 
+    public int CheckThrowItemPos(RectTransform _trans)
+    {
+        Vector2 compPos = _trans.anchoredPosition;
+        for (int i = 0; i<m_elms.Length; i++)
+        {
+            ThrowItemElmScript elm = m_elms[i];
+            Vector2 elmPos = MoveTrans.InverseTransformPoint(elm.transform.position);
+            float dist = Vector2.Distance(elmPos, compPos);
+            if(dist < ItemBoxUIScript.ElmCloseRange) { return i; }
+        }
+        return -1;
+    }
+    public int CheckAllItemPos(RectTransform _trans)
+    {
+        return m_parent.CheckAllItemPos(_trans);
+    }
+
 
     public void SetComps()
     {
         m_elms = GetComponentsInChildren<ThrowItemElmScript>();
         if(m_elms.Length != ValueDefine.MAX_THROW_ITEM) { Debug.LogError("던지기 아이템 UI 개수 다름"); }
-        foreach (ThrowItemElmScript elm in m_elms) { elm.SetParent(this); elm.SetComps(); }
+        for (int i=0;i<m_elms.Length;i++)
+        {
+            ThrowItemElmScript elm = m_elms[i];
+            elm.SetParent(this); 
+            elm.SetComps();
+        }
     }
 }

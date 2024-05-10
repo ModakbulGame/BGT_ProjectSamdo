@@ -115,6 +115,12 @@ public class InventoryManager : MonoBehaviour
         if(_idx >= m_throwItemList.Count) { AddThrowItem(_item); return; }
         m_throwItemList.Insert(_idx, _item);
     }
+    public void SwapThrowItem(int _idx1, int _idx2)
+    {
+        if(_idx2 >= m_throwItemList.Count || _idx1 >= m_throwItemList.Count) { return; }
+        EThrowItemName item1 = m_throwItemList[_idx1], item2 = m_throwItemList[_idx2];
+        m_throwItemList[_idx2] = item1; m_throwItemList[_idx1] = item2;
+    }
     public void RemoveThrowItem(int _idx)
     {
         if(_idx >= m_throwItemList.Count) { return; }

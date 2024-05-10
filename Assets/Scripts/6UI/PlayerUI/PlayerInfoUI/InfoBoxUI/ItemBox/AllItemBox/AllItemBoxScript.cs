@@ -14,7 +14,6 @@ public class AllItemBoxScript : MonoBehaviour
     public int ElmNum { get { return ElmCount; } }
 
     private AllItemElmScript[] m_elms;
-    public RectTransform[] ElmTrans { get; private set; } = new RectTransform[ElmCount];
 
 
     public void UpdateUI()
@@ -26,6 +25,25 @@ public class AllItemBoxScript : MonoBehaviour
             m_elms[i].SetItem(i, inven[i]);
         }
     }
+
+
+    public int CheckThrowItemPos(RectTransform _trans)
+    {
+        return m_parent.CheckThrowItemPos(_trans);
+    }
+    public int CheckAllItemPos(RectTransform _trans)
+    {
+        Vector2 compPos = _trans.anchoredPosition;
+        for (int i = 0; i<m_elms.Length; i++)
+        {
+            AllItemElmScript elm = m_elms[i];
+            Vector2 elmPos = MoveTrans.InverseTransformPoint(elm.transform.position);
+            float dist = Vector2.Distance(elmPos, compPos);
+            if (dist < ItemBoxUIScript.ElmCloseRange) { return i; }
+        }
+        return -1;
+    }
+
 
     public void ShowInfo(SItem _item)
     {
@@ -44,8 +62,12 @@ public class AllItemBoxScript : MonoBehaviour
     public void SetComps()
     {
         m_elms = GetComponentsInChildren<AllItemElmScript>();
-        if (m_elms.Length != ElmCount) { Debug.LogError("아이템 UI 개수 다름"); }
-        foreach (AllItemElmScript elm in m_elms) { elm.SetComps(); elm.SetParent(this); }
-        for(int i = 0; i < ElmCount; i++) { ElmTrans[i] = m_elms[i].GetComponent<RectTransform>(); }
+        if (m_elms.Length != ElmCount) { Debug.LogError("아이템 UI 개수 다름"); return; }
+        for (int i = 0; i < ElmCount; i++)
+        {
+            AllItemElmScript elm = m_elms[i];
+            elm.SetComps();
+            elm.SetParent(this);
+        }
     }
 }

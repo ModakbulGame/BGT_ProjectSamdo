@@ -9,7 +9,7 @@ public class DragDropUIScript : MonoBehaviour
     protected RectTransform m_rect;
     protected EventTrigger m_trigger;
 
-    public virtual Transform MoveTrans { get { return m_rect.parent; } }
+    public virtual Transform MoveTrans { get { return m_rect.parent; } private set { } }
 
     protected Vector2 StartPos { get; set; }
     protected Vector2 MouseStart { get; set; }

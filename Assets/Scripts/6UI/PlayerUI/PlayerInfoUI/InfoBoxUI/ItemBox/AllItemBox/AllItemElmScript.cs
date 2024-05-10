@@ -51,6 +51,16 @@ public class AllItemElmScript : MonoBehaviour
     }
 
 
+    public int CheckThrowItemPos(RectTransform _trans)
+    {
+        return m_parent.CheckThrowItemPos(_trans);
+    }
+    public int CheckAllItemPos(RectTransform _trans)
+    {
+        return m_parent.CheckAllItemPos(_trans);
+    }
+
+
     public void ShowInfo()
     {
         if (CurItem.IsEmpty) { return; }

@@ -8,6 +8,9 @@ public class ItemBoxUIScript : PlayerInfoBoxScript
     private ThrowItemSlotScript m_throwItemSlot;
     private AllItemBoxScript m_allItemBox;
 
+    public static readonly float ElmCritY = 100;
+    public static readonly float ElmCloseRange = 50;
+
     public override void InitUI()
     {
         UpdateUI();
@@ -32,6 +35,17 @@ public class ItemBoxUIScript : PlayerInfoBoxScript
     {
         m_parent.SetItemInfoUIPos(_pos);
     }
+
+
+    public int CheckThrowItemPos(RectTransform _trans)
+    {
+        return m_throwItemSlot.CheckThrowItemPos(_trans);
+    }
+    public int CheckAllItemPos(RectTransform _trans)
+    {
+        return m_allItemBox.CheckAllItemPos(_trans);
+    }
+
 
 
     public override void SetComps()

@@ -43,6 +43,32 @@ public class ThrowItemElmScript : MonoBehaviour
         HideInfo();
     }
 
+    public void SimulateChange(int _target)
+    {
+        m_parent.SimulateChange(_target, CurIdx);
+    }
+
+    public void ResetItem()
+    {
+        m_parent.ResetChanges();
+    }
+
+    public void ChangeItem(int _target)
+    {
+        if (_target == -1 || CurIdx == _target) { ResetItem(); return; }
+
+    }
+
+
+    public int CheckThrowItemPos(RectTransform _trans)
+    {
+        return m_parent.CheckThrowItemPos(_trans);
+    }
+    public int CheckAllItemPos(RectTransform _trans)
+    {
+        return m_parent.CheckAllItemPos(_trans);
+    }
+
 
     public void HideInfo()
     {

@@ -24,14 +24,36 @@ public class ThrowItemImgScript : DragMouseOverInfoUI
 
     public override bool CheckPos()
     {
+        int idx = GetIdx();
+        return idx != -1;
+    }
 
-
-        return false;
+    private int GetIdx()
+    {
+        int idx;
+        if (m_rect.anchoredPosition.y >= ItemBoxUIScript.ElmCritY)
+        {
+            if (PlayManager.ThrowItemList.Count >= ValueDefine.MAX_THROW_ITEM) { return -1; }
+            idx = m_parent.CheckThrowItemPos(m_rect);
+            Debug.Log(idx);
+            if (idx == -1) { return idx; }
+            m_parent.SimulateChange(idx);
+        }
+        else
+        {
+            idx = m_parent.CheckAllItemPos(m_rect);
+            if (idx == -1) { return idx; }
+        }
+        return -1;
     }
 
     public override void DropAction()
     {
-        base.DropAction();
+        bool isThrow = m_rect.anchoredPosition.y >= ItemBoxUIScript.ElmCritY;
+        int idx = GetIdx();
+        if (isThrow) { m_parent.ChangeItem(idx); }
+
+        m_parent.ItemElmClick();
     }
 
 

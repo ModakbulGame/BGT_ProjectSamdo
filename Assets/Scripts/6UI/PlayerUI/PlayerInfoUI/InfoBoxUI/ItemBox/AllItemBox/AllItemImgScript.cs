@@ -24,16 +24,17 @@ public class AllItemImgScript : DragMouseOverInfoUI
 
     public override bool CheckPos()
     {
-
-
+        int idx;
+        if (m_rect.anchoredPosition.y >= ItemBoxUIScript.ElmCritY)
+        {
+            idx = m_parent.CheckThrowItemPos(m_rect);
+        }
+        else
+        {
+            idx = m_parent.CheckAllItemPos(m_rect);
+        }
         return false;
     }
-
-    public override void DropAction()
-    {
-        base.DropAction();
-    }
-
 
     public override void ShowInfo()
     {
