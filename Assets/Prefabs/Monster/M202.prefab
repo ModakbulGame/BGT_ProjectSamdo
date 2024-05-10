@@ -55,7 +55,13 @@ MonoBehaviour:
     ObjectName: "\uD504\uB85C\uBA54\uCE20"
     AttackSpeed: 1
     MoveSpeed: 3
+  m_buffNDebuff: []
+  m_curHP: 0
+  m_curSpeed: 0
   m_uiOffset: 2
+  m_normalAttacks:
+  - {fileID: 4943876735633274443, guid: 185220f1d1b30854a8c1b46d8a81d3dd, type: 3}
+  m_scriptable: {fileID: 11400000, guid: 3ed3521961b389e4fa331812778f1e02, type: 2}
   m_combatInfo:
     MaxHP: 100
     Defense: 5
@@ -68,13 +74,7 @@ MonoBehaviour:
     AttackRange: 20
     ApproachDelay: 1
     FenceRange: 25
-  m_normalAttacks:
-  - {fileID: 4943876735633274443, guid: 185220f1d1b30854a8c1b46d8a81d3dd, type: 3}
-  PathingAngle: 0
-  PathingTime: 0
-  AttackDuration: 0
   m_spawnPoint: {fileID: 0}
-  m_scriptable: {fileID: 11400000, guid: 3ed3521961b389e4fa331812778f1e02, type: 2}
   m_dissolveDelay: 2
   m_attackMaxNum: 5
 --- !u!54 &1474919191121793743

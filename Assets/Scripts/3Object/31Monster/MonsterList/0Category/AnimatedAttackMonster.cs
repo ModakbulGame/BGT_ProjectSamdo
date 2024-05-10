@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrogantScript : MonsterScript
+public class AnimatedAttackMonster : MonsterScript
 {
     public override void AttackTriggerOn()
     {

@@ -55,7 +55,13 @@ MonoBehaviour:
     ObjectName: "\uAD76\uC8FC\uB9B0 \uD760"
     AttackSpeed: 1
     MoveSpeed: 3
+  m_buffNDebuff: []
+  m_curHP: 0
+  m_curSpeed: 0
   m_uiOffset: 2
+  m_normalAttacks:
+  - {fileID: 3296681704352414645}
+  m_scriptable: {fileID: 11400000, guid: a8926a156379e4f479c2ba668c517004, type: 2}
   m_combatInfo:
     MaxHP: 100
     Defense: 5
@@ -66,15 +72,9 @@ MonoBehaviour:
     EngageRange: 15
     ReturnRange: 15
     AttackRange: 1.5
-    ApproachDelay: 1
+    ApproachDelay: 2
     FenceRange: 25
-  m_normalAttacks:
-  - {fileID: 3296681704352414645}
-  PathingAngle: 0
-  PathingTime: 0
-  AttackDuration: 0
   m_spawnPoint: {fileID: 0}
-  m_scriptable: {fileID: 11400000, guid: a8926a156379e4f479c2ba668c517004, type: 2}
   m_dissolveDelay: 2
 --- !u!54 &4898147025627629075
 Rigidbody:
@@ -2035,7 +2035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 319c0a1a1bfc18347922db0302808a26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ccType: 0
+  m_ccList: 
   m_modelMultiplier: 100
 --- !u!65 &3089555824262538724
 BoxCollider:
