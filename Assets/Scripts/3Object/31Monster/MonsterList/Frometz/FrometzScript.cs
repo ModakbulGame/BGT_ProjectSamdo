@@ -15,7 +15,7 @@ public class FrometzScript : RangedAttackMonster
     public override void SetStates()
     {
         base.SetStates();
-        ReplaceState(EMonsterState.IDLE, gameObject.AddComponent<FrometzRoamingState>());
+        ReplaceState(EMonsterState.IDLE, gameObject.AddComponent<FrometzIdleState>());
         ReplaceState(EMonsterState.APPROACH, gameObject.AddComponent<FrometzApproachState>());
     }
 }
