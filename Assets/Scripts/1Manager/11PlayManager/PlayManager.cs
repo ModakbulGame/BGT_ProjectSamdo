@@ -53,30 +53,34 @@ public class PlayManager : MonoBehaviour
     // 인벤토리
     private InventoryManager m_invenManager;
     private static InventoryManager InvenManager { get { return Inst.m_invenManager; } }
-    public static InventoryElm[] PlayerInventory { get { return InvenManager.Inventory; } }                                                 // 인벤토리 아이템 목록
-    public static void AddInventoryItem(SItem _item, int _num) { InvenManager.AddInventoryItem(_item, _num); }                              // 빈 인벤토리에 아이템 추가
-    public static void SetInventoryItem(int _idx, SItem _item, int _num) { InvenManager.SetInventoryItem(_idx, _item, _num); }              // 인벤토리 해당 Idx에 아이템 설정
-    public static void RemoveInventoryItem(int _idx) { InvenManager.RemoveInventoryItem(_idx); }                                            // 인벤토리 해당 Idx 아이템 제거
-    public static EWeaponName CurWeapon { get { return InvenManager.CurWeapon; } }                                                          // 장착 중인 무기
-    public static void SetCurWeapon(EWeaponName _weapon) { InvenManager.SetCurWeapon(_weapon); }                                            // 무기 설정
-    public static void EquipWeapon(EWeaponName _weapon) { InvenManager.EquipWeapon(_weapon); }                                              // 무기 장착
-    public static EPatternName CurHealPattern { get { return InvenManager.CurHealPattern; } }                                               // 현재 회복 아이템
-    public static EPatternName[] HealPatternList { get { return InvenManager.HealPatternList; } }                                           // 등록된 회복 아이템
-    public static void UseHealPattern() { InvenManager.UseHealItem(); UpdateInfoUI(); UpdateHealItemSlot(); }                               // 회복 아이템 사용
-    public static void RegisterHealPattern(EPatternName _pattern) { InvenManager.RegisterHealItem(_pattern); UpdateInfoUI(); UpdateHealItemSlot(); }    // 등록
-    public static EThrowItemName CurThrowItem { get { return InvenManager.CurThrowItem; } }                                                  // 현재 던지기 아이템 (LAST == null)
-    public static List<EThrowItemName> ThrowItemList { get { return InvenManager.ThrowItemList; } }                                          // 등록된 던지기 아이템
-    public static void UseThrowItem() { InvenManager.UseThrowItem(); UpdateInfoUI(); UpdateThrowItemSlot(); }                                // 던지기 아이템 사용
-    public static void AddThrowItem(EThrowItemName _item) { InvenManager.AddThrowItem(_item); UpdateInfoUI(); UpdateThrowItemSlot(); }       // 던지기 아이템 추가
-    public static int SoulNum { get { return InvenManager.SoulNum; } }                                                                       // 영혼 개수
-    public static int PurifiedNum { get { return InvenManager.PurifiedNum; } }                                                               // 성불 영혼 개수
-    public static int[] PatternNum { get { return InvenManager.PatternNum; } }                                                               // 문양별 개수
-    public static void AddSoul(int _num) { InvenManager.AddSoul(_num); }                                                                     // 영혼 추가
-    public static void AddPurified(int _num) { InvenManager.AddPurified(_num); }                                                             // 성불 영혼 추가
-    public static void AddPattern(EProperty _type, int _num) { InvenManager.AddPattern(_type, _num); }                                       // 문양 추가
-    public static void UseSoul(int _num) { InvenManager.UseSoul(_num); }                                                                     // 영혼 사용
-    public static void UsePurified(int _num) { InvenManager.UsePurified(_num); }                                                             // 성불 영혼 사용
-    public static void UsePattern(EProperty _type, int _num) { InvenManager.UsePattern(_type, _num); }                                       // 문양 사용
+    public static InventoryElm[] PlayerInventory { get { return InvenManager.Inventory; } }                                                     // 인벤토리 아이템 목록
+    public static void AddInventoryItem(SItem _item, int _num) { InvenManager.AddInventoryItem(_item, _num); }                                  // 빈 인벤토리에 아이템 추가
+    public static void SetInventoryItem(int _idx, SItem _item, int _num) { InvenManager.SetInventoryItem(_idx, _item, _num); }                  // 인벤토리 해당 Idx에 아이템 설정
+    public static void RemoveInventoryItem(int _idx) { InvenManager.RemoveInventoryItem(_idx); }                                                // 인벤토리 해당 Idx 아이템 제거
+    public static EWeaponName CurWeapon { get { return InvenManager.CurWeapon; } }                                                              // 장착 중인 무기
+    public static void SetCurWeapon(EWeaponName _weapon) { InvenManager.SetCurWeapon(_weapon); }                                                // 무기 설정
+    public static void EquipWeapon(EWeaponName _weapon) { InvenManager.EquipWeapon(_weapon); }                                                  // 무기 장착
+    public static EPatternName CurHealPattern { get { return InvenManager.CurHealPattern; } }                                                   // 현재 회복 아이템
+    public static EPatternName[] HealPatternList { get { return InvenManager.HealPatternList; } }                                               // 등록된 회복 아이템
+    private static void HealPatternEditted() { UpdateInfoUI(); UpdateHealItemSlot(); }
+    public static void UseHealPattern() { InvenManager.UseHealItem(); HealPatternEditted(); }                                                   // 회복 아이템 사용
+    public static void RegisterHealPattern(EPatternName _pattern) { InvenManager.RegisterHealItem(_pattern); HealPatternEditted(); }            // 등록
+    public static EThrowItemName CurThrowItem { get { return InvenManager.CurThrowItem; } }                                                     // 현재 던지기 아이템 (LAST == null)
+    public static List<EThrowItemName> ThrowItemList { get { return InvenManager.ThrowItemList; } }                                             // 등록된 던지기 아이템
+    private static void ThrowItemEditted() { UpdateInfoUI(); UpdateThrowItemSlot(); }
+    public static void UseThrowItem() { InvenManager.UseThrowItem(); UpdateInfoUI(); UpdateThrowItemSlot(); }                                   // 던지기 아이템 사용
+    public static void AddThrowItem(EThrowItemName _item) { InvenManager.AddThrowItem(_item); ThrowItemEditted(); }                             // 던지기 아이템 추가
+    public static void SetThrowItem(int _idx, EThrowItemName _item) { InvenManager.SetThrowItem(_idx, _item); ThrowItemEditted(); }             // 위치 지정
+    public static void RemoveThrowItem(int _idx) { InvenManager.RemoveThrowItem(_idx); ThrowItemEditted(); }                                    // 제거
+    public static int SoulNum { get { return InvenManager.SoulNum; } }                                                                          // 영혼 개수
+    public static int PurifiedNum { get { return InvenManager.PurifiedNum; } }                                                                  // 성불 영혼 개수
+    public static int[] PatternNum { get { return InvenManager.PatternNum; } }                                                                  // 문양별 개수
+    public static void AddSoul(int _num) { InvenManager.AddSoul(_num); }                                                                        // 영혼 추가
+    public static void AddPurified(int _num) { InvenManager.AddPurified(_num); }                                                                // 성불 영혼 추가
+    public static void AddPattern(EProperty _type, int _num) { InvenManager.AddPattern(_type, _num); }                                          // 문양 추가
+    public static void UseSoul(int _num) { InvenManager.UseSoul(_num); }                                                                        // 영혼 사용
+    public static void UsePurified(int _num) { InvenManager.UsePurified(_num); }                                                                // 성불 영혼 사용
+    public static void UsePattern(EProperty _type, int _num) { InvenManager.UsePattern(_type, _num); }                                          // 문양 사용
 
     // 스토리
     private StoryManager m_storyManager;

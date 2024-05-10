@@ -88,24 +88,6 @@ public class BattleDebugger : MonoBehaviour
         }
     }
 
-    private float[] m_buffAmount = new float[3] { 1.2f, 1.5f, 2f };
-    private float[] m_buffTime = new float[3] { 5, 10, 20 };
-    private void ShowGetBuff()
-    {
-
-        for (int i = 0; i<3; i++)
-        {
-            for (int j = 0; j<3; j++)
-            {
-                float amount = m_buffAmount[i]; float time = m_buffTime[j];
-                if (GUI.Button(new Rect(20+100*i, 210+60*j, 96, 50), $"최대 체력 x{amount} {time}초"))
-                {
-                    PlayManager.TempGetBuff(amount, time);
-                }
-            }
-        }
-    }
-
 
     private void CreateMonster(int _idx)
     {
@@ -166,7 +148,6 @@ public class BattleDebugger : MonoBehaviour
             {
                 ShowingCreateMonster = true;
             }
-            ShowGetBuff();
         }
     }
 }

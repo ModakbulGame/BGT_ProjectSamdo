@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerImgWeaponSlot : MouseOverInfoUI
+public class PlayerImgWeaponSlot : DragMouseOverInfoUI
 {
     private PlayerImgUIScript m_parent;
     public void SetParent(PlayerImgUIScript _parent) { m_parent = _parent; }

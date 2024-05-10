@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponImgScript : MouseOverInfoUI
+public class WeaponImgScript : DragMouseOverInfoUI
 {
     private WeaponBoxElmScript m_parent;
     public void SetParent(WeaponBoxElmScript _parent) { m_parent = _parent; }

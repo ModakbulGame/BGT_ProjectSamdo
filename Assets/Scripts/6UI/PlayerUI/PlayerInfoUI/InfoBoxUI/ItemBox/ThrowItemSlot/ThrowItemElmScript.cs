@@ -9,17 +9,20 @@ public class ThrowItemElmScript : MonoBehaviour
     private ThrowItemSlotScript m_parent;
     public void SetParent(ThrowItemSlotScript _parent) { m_parent = _parent; }
 
-    private Image m_itemImg;
-    private ThrowItemImgScript m_img;
+    public Transform MoveTrans { get { return m_parent.MoveTrans; } }
 
+    private ThrowItemImgScript m_itemImg;
+
+    public int CurIdx { get; private set; }
     private SItem CurItem { get; set; }
 
-    public void SetItem(EThrowItemName _item)
+    public void SetItem(int _idx, EThrowItemName _item)
     {
+        CurIdx = _idx;
         if (!m_itemImg.gameObject.activeSelf) { m_itemImg.gameObject.SetActive(true); }
         CurItem = new(EItemType.THROW, (int)_item);
         Sprite itemSprite = GameManager.GetItemSprite(CurItem);
-        m_itemImg.sprite = itemSprite;
+        m_itemImg.SetImg(itemSprite);
     }
 
     public void HideItem()
@@ -29,17 +32,21 @@ public class ThrowItemElmScript : MonoBehaviour
 
     public void ShowInfo()
     {
-        if(CurItem.IsEmpty) { return; }
+        if (CurItem.IsEmpty) { return; }
         m_parent.ShowInfo(CurItem);
     }
+
+
+    public void ItemElmClick()
+    {
+        PlayManager.RemoveThrowItem(CurIdx);
+        HideInfo();
+    }
+
 
     public void HideInfo()
     {
         m_parent.HideInfo();
-    }
-    public void ActivateMark(Transform _imgTransform)
-    {
-        m_parent.ActivateMark(_imgTransform);
     }
     public void SetInfoPos(Vector2 _pos)
     {
@@ -48,9 +55,8 @@ public class ThrowItemElmScript : MonoBehaviour
 
     public void SetComps()
     {
-        m_itemImg = GetComponentsInChildren<Image>()[1];
-        m_img = GetComponentInChildren<ThrowItemImgScript>();
-        m_img.SetParent(this);
-        m_img.SetComps();
+        m_itemImg = GetComponentInChildren<ThrowItemImgScript>();
+        m_itemImg.SetParent(this);
+        m_itemImg.SetComps();
     }
 }

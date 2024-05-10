@@ -4,16 +4,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class MouseOverInfoUI : MonoBehaviour            // 마우스 올리면 정보 뜨는 애
+public class DragMouseOverInfoUI : DragDropUIScript            // 마우스 올리면 정보 뜨는 애
 {
-    private RectTransform m_rect;
-
-    private EventTrigger m_trigger;
-
     private bool IsMouseOn { get; set; }
 
 
-    private void PointerOn(PointerEventData _data) { IsMouseOn = true; ShowInfo(); StartCoroutine(ShowingUI()); }
+    public override void StartDrag(PointerEventData _data)
+    {
+        base.StartDrag(_data);
+        HideInfo();
+    }
+
+
+    private void PointerOn(PointerEventData _data) { if (Dragging) { return; } IsMouseOn = true; ShowInfo(); StartCoroutine(ShowingUI()); }
     private void PointerOff(PointerEventData _data) { IsMouseOn = false; HideInfo(); }
 
     public virtual void ShowInfo() { }
@@ -21,7 +24,7 @@ public class MouseOverInfoUI : MonoBehaviour            // 마우스 올리면 정보 뜨
     public virtual void SetInfoPos(Vector2 _pos) { }
     private IEnumerator ShowingUI()
     {
-        while (IsMouseOn)
+        while (!Dragging && IsMouseOn)
         {
             Vector2 mouse = Mouse.current.position.ReadValue();
             SetInfoPos(mouse);
@@ -30,16 +33,10 @@ public class MouseOverInfoUI : MonoBehaviour            // 마우스 올리면 정보 뜨
     }
 
 
-
-    private void SetEvents()
+    public override void SetEvents()
     {
+        base.SetEvents();
         FunctionDefine.AddEvent(m_trigger, EventTriggerType.PointerEnter, PointerOn);
         FunctionDefine.AddEvent(m_trigger, EventTriggerType.PointerExit, PointerOff);
-    }
-    public virtual void SetComps()
-    {
-        m_rect = GetComponent<RectTransform>();
-        m_trigger = gameObject.AddComponent<EventTrigger>();
-        SetEvents();
     }
 }

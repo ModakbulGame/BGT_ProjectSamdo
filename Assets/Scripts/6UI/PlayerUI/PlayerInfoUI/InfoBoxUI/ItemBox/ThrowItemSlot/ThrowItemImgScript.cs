@@ -1,12 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class ThrowItemImgScript : MouseOverInfoUI
+public class ThrowItemImgScript : DragMouseOverInfoUI
 {
     private ThrowItemElmScript m_parent;
-    private Transform m_imgTransform;
     public void SetParent(ThrowItemElmScript _parent) { m_parent = _parent; }
+
+    private Image m_itemImg;
+
+    public override Transform MoveTrans => m_parent.MoveTrans;
+
+
+    public void SetImg(Sprite _img) { m_itemImg.sprite = _img; }
+
+    public override void StartDrag(PointerEventData _data)
+    {
+        if (_data.button == PointerEventData.InputButton.Right) { m_parent.ItemElmClick(); return; }
+        base.StartDrag(_data);
+    }
+
+    public override bool CheckPos()
+    {
+
+
+        return false;
+    }
+
+    public override void DropAction()
+    {
+        base.DropAction();
+    }
+
 
     public override void ShowInfo()
     {
@@ -20,14 +47,10 @@ public class ThrowItemImgScript : MouseOverInfoUI
     {
         m_parent.SetInfoPos(_pos);
     }
-    public void ActivateMark()
-    {
-        m_parent.ActivateMark(m_imgTransform);
-    }
 
     public override void SetComps()
     {
         base.SetComps();
-        m_imgTransform = GetComponent<RectTransform>();
+        m_itemImg = GetComponent<Image>();
     }
 }

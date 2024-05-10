@@ -7,20 +7,23 @@ using UnityEngine.InputSystem;
 public class DragDropUIScript : MonoBehaviour
 {
     protected RectTransform m_rect;
-    private EventTrigger m_trigger;
+    protected EventTrigger m_trigger;
 
     public virtual Transform MoveTrans { get { return m_rect.parent; } }
 
     protected Vector2 StartPos { get; set; }
     protected Vector2 MouseStart { get; set; }
     protected Transform ParentTrans { get; set; }
+    protected int SiblingIdx { get; set; }
 
     public bool Dragging { get; private set; }
 
 
     public virtual void StartDrag(PointerEventData _data)
     {
+        if(_data.button == PointerEventData.InputButton.Right) { return; }
         ParentTrans = m_rect.parent;
+        SiblingIdx = transform.GetSiblingIndex();
         m_rect.SetParent(MoveTrans);
         StartPos = m_rect.anchoredPosition;
         MouseStart = Mouse.current.position.ReadValue();
@@ -29,6 +32,7 @@ public class DragDropUIScript : MonoBehaviour
 
     public virtual void OnDrag(PointerEventData _data)
     {
+        if (_data.button == PointerEventData.InputButton.Right) { return; }
         Vector2 mouse = Mouse.current.position.ReadValue();
         Vector2 move = mouse - MouseStart;
         move.x *= GameManager.WidthRatio; move.y *= GameManager.HeightRatio;
@@ -38,12 +42,14 @@ public class DragDropUIScript : MonoBehaviour
 
     public virtual void EndDrag(PointerEventData _data)
     {
+        if (_data.button == PointerEventData.InputButton.Right) { return; }
         if (CheckPos())
         {
             DropAction();
         }
         m_rect.anchoredPosition = StartPos;
         m_rect.SetParent(ParentTrans);
+        transform.SetSiblingIndex(SiblingIdx);
         Dragging = false;
     }
 
@@ -67,7 +73,7 @@ public class DragDropUIScript : MonoBehaviour
     public virtual void SetComps()
     {
         m_rect = GetComponent<RectTransform>();
-        m_trigger = GetComponentInChildren<EventTrigger>();
+        m_trigger = gameObject.AddComponent<EventTrigger>();
     }
 
     public virtual void Awake()

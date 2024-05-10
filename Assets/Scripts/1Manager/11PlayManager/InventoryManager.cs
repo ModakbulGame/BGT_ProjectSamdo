@@ -110,6 +110,19 @@ public class InventoryManager : MonoBehaviour
             m_throwItemList.Add(_item);
         }
     }
+    public void SetThrowItem(int _idx, EThrowItemName _item)
+    {
+        if(_idx >= m_throwItemList.Count) { AddThrowItem(_item); return; }
+        m_throwItemList.Insert(_idx, _item);
+    }
+    public void RemoveThrowItem(int _idx)
+    {
+        if(_idx >= m_throwItemList.Count) { return; }
+        EThrowItemName item = m_throwItemList[_idx];
+        m_throwItemList.RemoveAt(_idx);
+        AddInventoryItem(new(EItemType.THROW, (int)item), 1);
+    }
+
 
 
     // 아이템 인벤토리

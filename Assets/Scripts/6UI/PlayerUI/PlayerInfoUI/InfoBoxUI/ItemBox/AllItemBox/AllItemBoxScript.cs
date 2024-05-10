@@ -7,6 +7,9 @@ public class AllItemBoxScript : MonoBehaviour
     private ItemBoxUIScript m_parent;
     public void SetParent(ItemBoxUIScript _parent) { m_parent = _parent; }
 
+    public Transform MoveTrans { get { return m_parent.transform; } }
+
+
     private const int ElmCount = 24;
     public int ElmNum { get { return ElmCount; } }
 
@@ -20,7 +23,7 @@ public class AllItemBoxScript : MonoBehaviour
         for (int i = 0; i<ElmCount; i++)
         {
             if (inven[i].IsEmpty) { m_elms[i].HideItem(); continue; }
-            m_elms[i].SetItem(inven[i]);
+            m_elms[i].SetItem(i, inven[i]);
         }
     }
 
@@ -37,10 +40,6 @@ public class AllItemBoxScript : MonoBehaviour
         m_parent.SetItemInfoUIPos(_pos);
     }
 
-    public void ActivateMark(Transform _imgTransform)
-    {
-        m_parent.ActivateMark(_imgTransform);
-    }
 
     public void SetComps()
     {

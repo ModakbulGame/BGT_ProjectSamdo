@@ -8,6 +8,8 @@ public class ThrowItemSlotScript : MonoBehaviour
     private ItemBoxUIScript m_parent;
     public void SetParent(ItemBoxUIScript _parent) { m_parent = _parent; }
 
+    public Transform MoveTrans { get { return m_parent.transform; } }
+
     private ThrowItemElmScript[] m_elms;
 
     public void UpdateUI()
@@ -16,7 +18,7 @@ public class ThrowItemSlotScript : MonoBehaviour
         for (int i = 0; i<ValueDefine.MAX_THROW_ITEM; i++)
         {
             if (throwItemList.Count <= i) { m_elms[i].HideItem(); continue; }
-            m_elms[i].SetItem(throwItemList[i]);
+            m_elms[i].SetItem(i, throwItemList[i]);
         }
     }
 
@@ -27,10 +29,6 @@ public class ThrowItemSlotScript : MonoBehaviour
     public void HideInfo()
     {
         m_parent.HideItemInfoUI();
-    }
-    public void ActivateMark(Transform _imgTransform)
-    {
-        m_parent.ActivateMark(_imgTransform);
     }
     public void SetInfoPos(Vector2 _pos)
     {

@@ -37,6 +37,4 @@ public class SkillBoxDragScript : DragDropUIScript
         GameManager.RegisterSkilSlot(Skill, DropIdx);
         Box.UpdateUI();
     }
-
-
 }

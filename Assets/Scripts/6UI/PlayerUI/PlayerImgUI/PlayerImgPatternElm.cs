@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerImgPatternElm : MouseOverInfoUI
+public class PlayerImgPatternElm : DragMouseOverInfoUI
 {
     private PlayerImgPatternSlot m_parent;
     public void SetParent(PlayerImgPatternSlot _parent) { m_parent = _parent; }
