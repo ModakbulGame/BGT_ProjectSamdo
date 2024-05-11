@@ -15,6 +15,7 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
 
     private Button m_btn;
 
+    public bool IsDialogueOpened { get; private set; }
     private bool IsOpened { get; set; }
     private bool ButtonClicked { get; set; }
 
@@ -31,6 +32,7 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
     public void OpenUI()
     {
         gameObject.SetActive(true);
+        IsDialogueOpened = true;
         if (!IsOpened) { SetComps(); }
         ButtonClicked = false;
         DialogueCount = 0;
@@ -57,7 +59,7 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
         {
             m_typingText.text += _contents[i];
             yield return new WaitForSeconds(m_textSpeed);
-
+            
             if (ButtonClicked)                          // 좌클릭하면 전체 내용 한 번에 출력
             {
                 m_typingText.text = _contents;
@@ -74,7 +76,7 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
         ButtonClicked = true;
     }
 
-    private void NextDialogue()                     // 다음 대사 출력
+    public void NextDialogue()                     // 다음 대사 출력
     {
         DialogueCount++;
         if (DialogueCount < CurDialogue.Length)
@@ -84,6 +86,14 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
             return;
         }
         CloseUI();
+    }
+
+    private void Update()                       // InputManager에서 해결해보려 했으나 오작동해서 일단 여기서 진행
+    { 
+        if (GameManager.UIControlInputs.UIInteract.triggered)
+        {
+            ButtonClicked = true;
+        }
     }
 
     private void SetComps()

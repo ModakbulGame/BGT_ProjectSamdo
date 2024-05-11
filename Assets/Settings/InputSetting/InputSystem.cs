@@ -416,6 +416,15 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UIInteract"",
+                    ""type"": ""Button"",
+                    ""id"": ""e16a5c3c-ed05-40f8-bb92-302fe12162d7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -438,6 +447,17 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ClosePlayerUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f0f3bbe3-4bc1-43ac-a122-4d66501474d2"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UIInteract"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -485,6 +505,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         m_UIControl = asset.FindActionMap("UIControl", throwIfNotFound: true);
         m_UIControl_CloseUI = m_UIControl.FindAction("CloseUI", throwIfNotFound: true);
         m_UIControl_ClosePlayerUI = m_UIControl.FindAction("ClosePlayerUI", throwIfNotFound: true);
+        m_UIControl_UIInteract = m_UIControl.FindAction("UIInteract", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -714,12 +735,14 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     private List<IUIControlActions> m_UIControlActionsCallbackInterfaces = new List<IUIControlActions>();
     private readonly InputAction m_UIControl_CloseUI;
     private readonly InputAction m_UIControl_ClosePlayerUI;
+    private readonly InputAction m_UIControl_UIInteract;
     public struct UIControlActions
     {
         private @InputSystem m_Wrapper;
         public UIControlActions(@InputSystem wrapper) { m_Wrapper = wrapper; }
         public InputAction @CloseUI => m_Wrapper.m_UIControl_CloseUI;
         public InputAction @ClosePlayerUI => m_Wrapper.m_UIControl_ClosePlayerUI;
+        public InputAction @UIInteract => m_Wrapper.m_UIControl_UIInteract;
         public InputActionMap Get() { return m_Wrapper.m_UIControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -735,6 +758,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @ClosePlayerUI.started += instance.OnClosePlayerUI;
             @ClosePlayerUI.performed += instance.OnClosePlayerUI;
             @ClosePlayerUI.canceled += instance.OnClosePlayerUI;
+            @UIInteract.started += instance.OnUIInteract;
+            @UIInteract.performed += instance.OnUIInteract;
+            @UIInteract.canceled += instance.OnUIInteract;
         }
 
         private void UnregisterCallbacks(IUIControlActions instance)
@@ -745,6 +771,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @ClosePlayerUI.started -= instance.OnClosePlayerUI;
             @ClosePlayerUI.performed -= instance.OnClosePlayerUI;
             @ClosePlayerUI.canceled -= instance.OnClosePlayerUI;
+            @UIInteract.started -= instance.OnUIInteract;
+            @UIInteract.performed -= instance.OnUIInteract;
+            @UIInteract.canceled -= instance.OnUIInteract;
         }
 
         public void RemoveCallbacks(IUIControlActions instance)
@@ -794,5 +823,6 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     {
         void OnCloseUI(InputAction.CallbackContext context);
         void OnClosePlayerUI(InputAction.CallbackContext context);
+        void OnUIInteract(InputAction.CallbackContext context);
     }
 }

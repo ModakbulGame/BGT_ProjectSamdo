@@ -39,7 +39,7 @@ public class PlayManager : MonoBehaviour
     
     // 다른 오브젝트
     private static ObjectScript Object { get; set; }
-    public static float ObjectRotation { get { return Object.Rotation; } }
+    public static float ObjectRotation { get { return 0; } }    // 현재 null이라서 급하게 0으로 땜빵
 
 
     // 카메라
@@ -126,6 +126,8 @@ public class PlayManager : MonoBehaviour
     public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                       // 맵 UI 여닫기
     public static void OpenNPCUI(NPCScript _npc) { PlayUIManager.OpenDialogueUI(_npc); }                                                    // NPC 대화창 열기
     public static void CloseNPCUI() { PlayUIManager.CloseDialogueUI(); }                                                                    // NPC 대화창 닫기
+    public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                  // NPC 대화창 열렸는지 확인
+    public static void NextDialogue() { PlayUIManager.NextDialogue(); }                                                                     // 다음 대화 출력
     public static void OpenOasisUI(OasisNPC _npc) { PlayUIManager.OpenOasisUI(_npc); }                                                      // 화톳불 UI 열기
     public static void CloseOasisUI() { PlayUIManager.CloseOasisUI(); }                                                                     // 화톳불 UI 닫기
     public static void UpdateSkillSlot() { PlayUIManager.UpdateSkillSlot(); }                                                               // 스킬 슬롯 UI

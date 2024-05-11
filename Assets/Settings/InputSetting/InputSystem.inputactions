@@ -394,6 +394,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "UIInteract",
+                    "type": "Button",
+                    "id": "e16a5c3c-ed05-40f8-bb92-302fe12162d7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -416,6 +425,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ClosePlayerUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f0f3bbe3-4bc1-43ac-a122-4d66501474d2",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UIInteract",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
