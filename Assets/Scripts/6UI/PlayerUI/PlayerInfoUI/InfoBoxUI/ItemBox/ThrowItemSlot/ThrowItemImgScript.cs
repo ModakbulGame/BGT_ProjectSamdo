@@ -36,12 +36,12 @@ public class ThrowItemImgScript : DragMouseOverInfoUI
             idx = m_parent.CheckThrowItemPos(m_rect);
             if (idx == -1) { return idx; }
             m_parent.SimulateChange(idx);
+            return idx;
         }
         else
         {
             return 0;
         }
-        return -1;
     }
 
     public override void DropAction()

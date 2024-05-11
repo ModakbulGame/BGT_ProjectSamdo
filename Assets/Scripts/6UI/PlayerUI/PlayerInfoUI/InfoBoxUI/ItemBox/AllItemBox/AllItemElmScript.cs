@@ -61,9 +61,17 @@ public class AllItemElmScript : MonoBehaviour
         HideInfo();
     }
 
-    public void SimulateChange(int _target)
+    public void SimulateChange(int _target, int _origin)
     {
-        m_parent.SimulateChange(_target, CurIdx);
+        m_parent.SimulateChange(_target, _origin);
+    }
+    public void DeliverReset(int _idx)
+    {
+        m_parent.DeliverReset(_idx);
+    }
+    public void ResetImgPos()
+    {
+        ItemImg.ResetPos();
     }
 
     public int CheckThrowItemPos(RectTransform _trans)
@@ -84,7 +92,8 @@ public class AllItemElmScript : MonoBehaviour
     public void ChangeItem(int _target)
     {
         if (_target == -1 || CurIdx == _target) { ResetItem(); return; }
-
+        PlayManager.SwapItemInven(CurIdx, _target);
+        ItemImg.ResetPos();
     }
 
 
