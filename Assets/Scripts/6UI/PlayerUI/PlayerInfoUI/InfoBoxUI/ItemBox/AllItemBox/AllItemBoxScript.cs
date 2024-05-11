@@ -26,6 +26,22 @@ public class AllItemBoxScript : MonoBehaviour
         }
     }
 
+    public void SimulateChange(int _target, int _origin)
+    {
+        if (_target == -1 || _target == _origin) { ResetChanges(); return; }
+        if (!m_elms[_target].HasItem) { return; }
+        AllItemImgScript img1 = m_elms[_target].ItemImg, img2 = m_elms[_origin].ItemImg;
+        m_elms[_origin].SetChild(img1); m_elms[_target].SetChild(img2);
+        img1.SetParent(m_elms[_origin]); img2.SetParent(m_elms[_target]);
+        img1.transform.SetParent(m_elms[_origin].ImgParent);
+        img1.transform.SetSiblingIndex(0);
+        img1.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        img2.ChangeParentTrans(m_elms[_target].ImgParent);
+        PlayManager.SwapItemInven(_target, _origin);
+    }
+
+    public void ResetChanges() { UpdateUI(); }
+
 
     public int CheckThrowItemPos(RectTransform _trans)
     {

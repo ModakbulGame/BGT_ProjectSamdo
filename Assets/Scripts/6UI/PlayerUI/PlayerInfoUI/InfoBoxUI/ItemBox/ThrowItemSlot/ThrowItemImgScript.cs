@@ -33,15 +33,13 @@ public class ThrowItemImgScript : DragMouseOverInfoUI
         int idx;
         if (m_rect.anchoredPosition.y >= ItemBoxUIScript.ElmCritY)
         {
-            if (PlayManager.ThrowItemList.Count >= ValueDefine.MAX_THROW_ITEM) { return -1; }
             idx = m_parent.CheckThrowItemPos(m_rect);
             if (idx == -1) { return idx; }
             m_parent.SimulateChange(idx);
         }
         else
         {
-            idx = m_parent.CheckAllItemPos(m_rect);
-            if (idx == -1) { return idx; }
+            return 0;
         }
         return -1;
     }
@@ -51,8 +49,7 @@ public class ThrowItemImgScript : DragMouseOverInfoUI
         bool isThrow = m_rect.anchoredPosition.y >= ItemBoxUIScript.ElmCritY;
         int idx = GetIdx();
         if (isThrow) { m_parent.ChangeItem(idx); }
-
-        m_parent.ItemElmClick();
+        else { m_parent.ItemElmClick(); }
     }
 
 

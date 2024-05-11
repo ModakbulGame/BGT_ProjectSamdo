@@ -57,6 +57,7 @@ public class PlayManager : MonoBehaviour
     public static void AddInventoryItem(SItem _item, int _num) { InvenManager.AddInventoryItem(_item, _num); }                                  // 빈 인벤토리에 아이템 추가
     public static void SetInventoryItem(int _idx, SItem _item, int _num) { InvenManager.SetInventoryItem(_idx, _item, _num); }                  // 인벤토리 해당 Idx에 아이템 설정
     public static void RemoveInventoryItem(int _idx) { InvenManager.RemoveInventoryItem(_idx); }                                                // 인벤토리 해당 Idx 아이템 제거
+    public static void SwapItemInven(int _idx1, int _idx2) { InvenManager.SwapItemInven(_idx1, _idx2); }
     public static EWeaponName CurWeapon { get { return InvenManager.CurWeapon; } }                                                              // 장착 중인 무기
     public static void SetCurWeapon(EWeaponName _weapon) { InvenManager.SetCurWeapon(_weapon); }                                                // 무기 설정
     public static void EquipWeapon(EWeaponName _weapon) { InvenManager.EquipWeapon(_weapon); }                                                  // 무기 장착

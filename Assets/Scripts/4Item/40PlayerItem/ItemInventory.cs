@@ -33,6 +33,12 @@ public class ItemInventory
     {
         m_inventory[_idx].SetItem(_item, _num);
     }
+    public void SwapItem(int _idx1, int _idx2)
+    {
+        if (_idx2 >= m_inventory.Length || _idx1 >= m_inventory.Length) { return; }
+        InventoryElm item1 = m_inventory[_idx1], item2 = m_inventory[_idx2];
+        m_inventory[_idx2] = item1; m_inventory[_idx1] = item2;
+    }
     public bool ChkNUseItem(SItem _item, int _num)              // 아이템 확인 후 사용
     {
         for (int i = 0; i<Inventory.Length; i++)

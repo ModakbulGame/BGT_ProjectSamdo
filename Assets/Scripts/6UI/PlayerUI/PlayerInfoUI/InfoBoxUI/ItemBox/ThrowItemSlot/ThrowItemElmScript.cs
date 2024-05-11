@@ -22,7 +22,7 @@ public class ThrowItemElmScript : MonoBehaviour
     public void SetItem(int _idx, EThrowItemName _item)
     {
         CurIdx = _idx;
-        if (!ItemImg.gameObject.activeSelf) { ItemImg.gameObject.SetActive(true); HasItem = false; }
+        if (!ItemImg.gameObject.activeSelf) { ItemImg.gameObject.SetActive(true); }
         CurItem = new(EItemType.THROW, (int)_item);
         Sprite itemSprite = GameManager.GetItemSprite(CurItem);
         ItemImg.SetImg(itemSprite);
@@ -31,6 +31,7 @@ public class ThrowItemElmScript : MonoBehaviour
 
     public void HideItem()
     {
+        HasItem = false;
         ItemImg.gameObject.SetActive(false);
     }
 
