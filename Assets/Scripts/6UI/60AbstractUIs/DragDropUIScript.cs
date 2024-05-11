@@ -14,6 +14,8 @@ public class DragDropUIScript : MonoBehaviour
     protected Vector2 StartPos { get; set; }
     protected Vector2 MouseStart { get; set; }
     protected Transform ParentTrans { get; set; }
+    public void ChangeParentTrans(Transform _trans) { ParentTrans = _trans; ParentChanged = true; }
+    private bool ParentChanged { get; set; }
     protected int SiblingIdx { get; set; }
 
     public bool Dragging { get; private set; }
@@ -49,6 +51,7 @@ public class DragDropUIScript : MonoBehaviour
         }
         m_rect.anchoredPosition = StartPos;
         m_rect.SetParent(ParentTrans);
+        if (ParentChanged) { m_rect.anchoredPosition = Vector2.zero; ParentChanged = false; }
         transform.SetSiblingIndex(SiblingIdx);
         Dragging = false;
     }

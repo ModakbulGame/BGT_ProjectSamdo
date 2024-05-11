@@ -35,7 +35,6 @@ public class ThrowItemImgScript : DragMouseOverInfoUI
         {
             if (PlayManager.ThrowItemList.Count >= ValueDefine.MAX_THROW_ITEM) { return -1; }
             idx = m_parent.CheckThrowItemPos(m_rect);
-            Debug.Log(idx);
             if (idx == -1) { return idx; }
             m_parent.SimulateChange(idx);
         }

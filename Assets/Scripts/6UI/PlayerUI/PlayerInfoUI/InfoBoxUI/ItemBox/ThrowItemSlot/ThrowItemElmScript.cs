@@ -11,23 +11,27 @@ public class ThrowItemElmScript : MonoBehaviour
 
     public Transform MoveTrans { get { return m_parent.MoveTrans; } }
 
-    private ThrowItemImgScript m_itemImg;
+    public ThrowItemImgScript ItemImg { get; private set; }
+    public void SetChild(ThrowItemImgScript _child) { ItemImg = _child; }
+
 
     public int CurIdx { get; private set; }
     private SItem CurItem { get; set; }
+    public bool HasItem { get; private set; }
 
     public void SetItem(int _idx, EThrowItemName _item)
     {
         CurIdx = _idx;
-        if (!m_itemImg.gameObject.activeSelf) { m_itemImg.gameObject.SetActive(true); }
+        if (!ItemImg.gameObject.activeSelf) { ItemImg.gameObject.SetActive(true); HasItem = false; }
         CurItem = new(EItemType.THROW, (int)_item);
         Sprite itemSprite = GameManager.GetItemSprite(CurItem);
-        m_itemImg.SetImg(itemSprite);
+        ItemImg.SetImg(itemSprite);
+        HasItem = true;
     }
 
     public void HideItem()
     {
-        m_itemImg.gameObject.SetActive(false);
+        ItemImg.gameObject.SetActive(false);
     }
 
     public void ShowInfo()
@@ -81,8 +85,8 @@ public class ThrowItemElmScript : MonoBehaviour
 
     public void SetComps()
     {
-        m_itemImg = GetComponentInChildren<ThrowItemImgScript>();
-        m_itemImg.SetParent(this);
-        m_itemImg.SetComps();
+        ItemImg = GetComponentInChildren<ThrowItemImgScript>();
+        ItemImg.SetParent(this);
+        ItemImg.SetComps();
     }
 }
