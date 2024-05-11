@@ -18,10 +18,15 @@ public static class FunctionDefine
         if (_num - unit < 0.000001f && _num - unit > -0.000001f) return unit;
         else return _num;
     }
-    public static float RoundF2(float _num)
+    public static float RoundF1(float _num)
     {
-        int n2 = Mathf.RoundToInt(_num * 100);
-        return n2 * 0.01f;
+        int n1 = Mathf.RoundToInt(_num * 10);
+        return n1 * 0.1f;
+    }
+    public static float RoundF3(float _num)
+    {
+        int n3 = Mathf.RoundToInt(_num * 1000);
+        return n3 * 0.001f;
     }
 
     public static void AddEvent(EventTrigger _trigger, EventTriggerType _type, EventPointer _function)  // 이벤트 트리거에 이벤트 추가

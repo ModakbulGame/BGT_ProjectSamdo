@@ -62,7 +62,7 @@ public class CombatInfoUIScript : MonoBehaviour
         {
             ECombatInfoName name = (ECombatInfoName)i;
             float stat = use.GetStat(name);
-            float gap = use.GetStat(name) - ori.GetStat(name);
+            float gap = FunctionDefine.RoundF3(use.GetStat(name) - ori.GetStat(name));
 
             string statInfo = stat.ToString();
             if(name == ECombatInfoName.ATTACK) 

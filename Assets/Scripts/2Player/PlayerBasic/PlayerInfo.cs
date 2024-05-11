@@ -92,13 +92,13 @@ public class PlayerCombatInfo : ObjectCombatInfo        // 플레이어 전투 정보
 
     public void SetCombatInfo(PlayerStatInfo _stat)
     {
-        MaxHP = FunctionDefine.RoundF2(28.85f + 15 * Mathf.Sqrt(1.6f*_stat.m_health + 0.65f * _stat.m_strength));
-        MaxStamina = FunctionDefine.RoundF2(64.6f + (1.5f * _stat.m_endure + _stat.m_health + 0.8f * _stat.m_intellect + 0.24f * _stat.m_rapid));
-        Defense = FunctionDefine.RoundF2((0.5f * (_stat.m_endure + 0.3f * _stat.m_mental) - 6.5f)* 0.01f);
-        Attack = FunctionDefine.RoundF2(6 * Mathf.Sqrt(_stat.m_strength) - 7);
-        Magic = FunctionDefine.RoundF2(6 * Mathf.Sqrt(_stat.m_intellect) - 7);
-        Overdrive = FunctionDefine.RoundF2(0.73f + (15 * Mathf.Sqrt(_stat.m_rapid) * 0.01f));
-        Tolerance = FunctionDefine.RoundF2(1.2f * _stat.m_mental * 0.01f - 0.12f);
+        MaxHP = FunctionDefine.RoundF1(28.85f + 15 * Mathf.Sqrt(1.6f*_stat.m_health + 0.65f * _stat.m_strength));
+        MaxStamina = FunctionDefine.RoundF1(64.6f + (1.5f * _stat.m_endure + _stat.m_health + 0.8f * _stat.m_intellect + 0.24f * _stat.m_rapid));
+        Defense = FunctionDefine.RoundF3((0.5f * (_stat.m_endure + 0.3f * _stat.m_mental) - 6.5f)* 0.01f);
+        Attack = FunctionDefine.RoundF1(6 * Mathf.Sqrt(_stat.m_strength) - 7);
+        Magic = FunctionDefine.RoundF1(6 * Mathf.Sqrt(_stat.m_intellect) - 7);
+        Overdrive = FunctionDefine.RoundF3(0.73f + (15 * Mathf.Sqrt(_stat.m_rapid) * 0.01f));
+        Tolerance = FunctionDefine.RoundF3(1.2f * _stat.m_mental * 0.01f - 0.12f);
     }
     public override float GetStat(ECombatInfoName _name)
     {
@@ -161,7 +161,7 @@ public partial class PlayerController
     public float Tolerance { get { return m_combatInfo.Tolerance; } }               // 내성
     public float Defence { get { return m_combatInfo.Defense; } }                   // 방어력
     public float Overdrive { get { return m_combatInfo.Overdrive; } }               // 증폭
-    private void ApplyStat() { m_combatInfo.SetCombatInfo(m_statInfo); }            // 스탯 적용
+    public void ApplyStat() { m_combatInfo.SetCombatInfo(m_statInfo); }            // 스탯 적용
 
     public override float DamageMultiplier => base.DamageMultiplier * Overdrive;
 

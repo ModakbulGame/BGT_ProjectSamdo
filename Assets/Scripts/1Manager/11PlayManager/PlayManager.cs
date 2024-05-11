@@ -29,6 +29,7 @@ public class PlayManager : MonoBehaviour
     public static Vector2 PlayerAimDirection { get { return Player.PlayerAimDirection; } }                                                  // 카메라 조준 벡터
     public static Transform PlayerTransform { get { if (IsPlayerSet) return Player.transform; return null; } }
     public static PlayerStatInfo PlayerStatInfo { get { return Player.GetStatInfo(); } }
+    public static void ApplyPlayerStat() { Player.ApplyStat(); }
     public static SPlayerWeaponInfo PlayerWeaponInfo { get { return Player.CurWeaponInfo; } }
     public static float GetDistToPlayer(Vector3 _pos) { if (!IsPlayerSet) return -1; return (PlayerPos-_pos).magnitude; }                   // 플레이어와의 거리
     public static void SetPlayerWeapon(EWeaponName _weapon) { Player.SetCurWeapon(_weapon); }                                               // 무기 설정

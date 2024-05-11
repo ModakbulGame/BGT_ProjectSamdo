@@ -26,6 +26,7 @@ public class UpgradeManager : MonoBehaviour
                 LeftStatPoint -= _point[i];
             }
         }
+        PlayManager.ApplyPlayerStat();
         if (LeftStatPoint < 0)
             Debug.LogError("스탯 오버 사용");
     }
