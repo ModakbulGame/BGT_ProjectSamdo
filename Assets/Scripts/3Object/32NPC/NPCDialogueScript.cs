@@ -9,93 +9,86 @@ using UnityEngine.InputSystem;
 public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 OasisUIScript와 비슷해서 추후 통합 작업 진행할 듯
 {
     [SerializeField]
-    private TextMeshProUGUI m_TypingText;
-    private string m_tmpText;
+    private TextMeshProUGUI m_typingText;
     [SerializeField]
-    private float m_Speed = 0.1f;
+    private float m_textSpeed = 0.1f;
 
     private Button m_btn;
-    private IEnumerator m_coroutine;
 
-    private bool Opened { get; set; }
+    private bool IsOpened { get; set; }
     private bool ButtonClicked { get; set; }
 
-    private NPCScript m_npc;
-    private string[] m_dialogues;
-    private int m_dialogueCount;
+    private NPCScript CurNPC { get; set; }
+    private string[] CurDialogue { get; set; }
+    private int DialogueCount { get; set; } = 0;
 
     public void SetNPC(NPCScript _npc)
     {
-        m_npc = _npc;
-        m_dialogues = _npc.m_NPCDialogue;
+        CurNPC = _npc;
+        CurDialogue = _npc.m_npcDialogue;
     }
 
     public void OpenUI()
     {
         gameObject.SetActive(true);
-        if (!Opened) { SetComps(); }
+        if (!IsOpened) { SetComps(); }
         ButtonClicked = false;
+        DialogueCount = 0;
     }
 
     public void OpenUI(NPCScript _npc)
     {
-        SetNPC(_npc);
         OpenUI();
-        StartCoroutine(Typing(m_dialogues[m_dialogueCount]));
+        SetNPC(_npc);
+        StartCoroutine(Typing(CurDialogue[DialogueCount]));
     }
 
     public void CloseUI()
     {
-        m_npc.StopInteract();
+        CurNPC.StopInteract();
         gameObject.SetActive(false);
     }
 
     IEnumerator Typing(string _contents)
     {
-        m_TypingText.text = "";
+        m_typingText.text = "";
 
         for (int i = 0; i < _contents.Length; i++)
         {
-            m_TypingText.text += _contents[i];
-            yield return new WaitForSeconds(m_Speed);
+            m_typingText.text += _contents[i];
+            yield return new WaitForSeconds(m_textSpeed);
 
             if (ButtonClicked)                          // 좌클릭하면 전체 내용 한 번에 출력
             {
-                m_TypingText.text = _contents;
+                m_typingText.text = _contents;
                 ButtonClicked = false;
-                NextDialogue();
-                yield break;
+                break;
             }
         }
+        while (!ButtonClicked) { yield return null; }
+        NextDialogue();
     }
 
     public void ShowAllDialogue()
     {
-        StopCoroutine(m_coroutine);
         ButtonClicked = true;
     }
 
     private void NextDialogue()                     // 다음 대사 출력
     {
-        if (m_dialogueCount < m_dialogues.Length)
+        DialogueCount++;
+        if (DialogueCount < CurDialogue.Length)
         {
-            m_dialogueCount++;
-            m_TypingText.text = "";
-            StartCoroutine(Typing(m_dialogues[m_dialogueCount]));
+            ButtonClicked = false;
+            StartCoroutine(Typing(CurDialogue[DialogueCount]));
+            return;
         }
+        CloseUI();
     }
 
     private void SetComps()
     {
-        m_dialogueCount = 0;
-        m_coroutine = Typing(m_dialogues[0]);
-        m_btn = transform.GetChild(0).GetChild(1).GetComponentInChildren<Button>(); // 닫기 버튼
-        m_btn.onClick.AddListener(CloseUI);      
-    }
-
-    private void Start()
-    {
-        SetComps();
-        OpenUI();
+        m_btn = GetComponentInChildren<Button>(); // 닫기 버튼\
+        m_btn.onClick.AddListener(ShowAllDialogue);
     }
 }

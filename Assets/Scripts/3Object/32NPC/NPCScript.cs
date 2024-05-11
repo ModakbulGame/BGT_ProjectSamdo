@@ -5,10 +5,9 @@ using UnityEngine.UI;
 
 public class NPCScript : ObjectScript, IInteractable
 {
-    [SerializeField] 
-    private string m_NPCName;      // npc 이름 ( 인게임 표시용 )  ->  ObjectScript ObjectInfo에 포함
-    protected Transform m_NPCTransform;
-    public string[] m_NPCDialogue;
+    public string NPCName { get { return m_baseInfo.ObjectName; } }
+    protected Transform m_npcTransform;
+    public string[] m_npcDialogue;
 
     public EInteractType InteractType { get { return EInteractType.NPC; } }
     public bool Interactions { get { return gameObject.CompareTag(ValueDefine.NPC_TAG); } }

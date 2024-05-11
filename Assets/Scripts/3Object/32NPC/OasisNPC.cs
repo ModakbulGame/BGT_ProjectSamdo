@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OasisNPC : NPCScript
 {
-    public Transform OasisTransform { get { return m_NPCTransform; }  }
+    public Transform OasisTransform { get { return m_npcTransform; }  }
 
     public override void StartInteract()
     {
