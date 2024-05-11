@@ -110,6 +110,13 @@ public class InputManager : MonoBehaviour
                     SetControlMode(EControlMode.THIRD_PERSON);  // 플레이어 조작 모드로
                 }
             }
+            else if(UIControlInputs.UIInteract.triggered)       // NPCDialogueScript의 Update를 여기서 진행시키고자 했음   
+            {
+                //if (PlayManager.IsPlaying && PlayManager.IsDialogueOpend)                  
+                //{
+                //    PlayManager.NextDialogue();
+                //}
+            }
         }
     }
 }

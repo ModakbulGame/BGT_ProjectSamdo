@@ -36,7 +36,7 @@ public class PlayerCameraScript : MonoBehaviour
         CurCameraMode = EControlMode.UI_CONTROL;
         m_cameraDetail.m_Lens.FieldOfView = 20;
         m_cameraDetail.m_YAxis.Value = 0.3f;
-        m_cameraDetail.m_XAxis.Value = 20;
+        m_cameraDetail.m_XAxis.Value = PlayManager.ObjectRotation;
         SetCinemachineSpeed(0);
     }
 
