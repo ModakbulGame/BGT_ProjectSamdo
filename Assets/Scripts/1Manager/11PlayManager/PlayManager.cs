@@ -36,7 +36,7 @@ public class PlayManager : MonoBehaviour
     public static void StopPlayerInteract() { Player.StopInteract(); }                                                                      // 상호작용 종료
     public static void TeleportPlayer(Vector3 _pos) { Player.TeleportPlayer(_pos); }
     
-    public static void TempGetBuff(float _amount, float _time) { Player.GetStatAdjust(new(EAdjType.MAX_HP, _amount, _time)); }
+    public static void TempGetBuff(float _amount, float _time) { Player.GetAdj(new(EAdjType.MAX_HP, _amount, _time)); }
     
     // 다른 오브젝트
     private static ObjectScript Object { get; set; }

@@ -19,27 +19,27 @@ public class SkillScriptable : ScriptableObject
     public float TotalDelay;
     public float Cooltime;
     public int StaminaCost;
-    public StatAdjust StatAdjust;
+    public TempAdjust StatAdjust;
     public string Description;
     public int Price;
 
     private ECastType Name2Type(ESkillName _skillName)
     {
-        if (_skillName <= ESkillName.SWORD_BASIC || _skillName == ESkillName.SAMPLE1)
+        if (_skillName < ESkillName.MELEE_SLOW)
             return ECastType.MELEE;
-        else if (_skillName <= ESkillName.MELEE_KNOCKBACK)
+        else if (_skillName < ESkillName.SCEPTER_BASIC)
             return ECastType.MELEE_CC;
-        else if (_skillName == ESkillName.SCEPTER_BASIC || _skillName == ESkillName.SAMPLE2)
+        else if (_skillName < ESkillName.RANGED_SLOW)
             return ECastType.RANGED;
-        else if (_skillName <= ESkillName.RANGED_KNOCKBACk)
+        else if (_skillName < ESkillName.CREATION)
             return ECastType.RANGED_CC;
-        else if (_skillName == ESkillName.CREATION || _skillName == ESkillName.SAMPLE3)
+        else if (_skillName < ESkillName.AROUND)
             return ECastType.SUMMON;
-        else if (_skillName == ESkillName.AROUND)
+        else if (_skillName < ESkillName.AROUND_SLOW)
             return ECastType.AROUND;
-        else if (_skillName <= ESkillName.AROUND_KNOCKBACK)
+        else if (_skillName < ESkillName.BUFF)
             return ECastType.AROUND_CC;
-        else if (_skillName == ESkillName.BUFF)
+        else if (_skillName < ESkillName.LAST)
             return ECastType.BUFF;
         else
             return ECastType.LAST;
@@ -67,6 +67,7 @@ public class SkillScriptable : ScriptableObject
         EAdjType type =     DataManager.String2Adj(_data[(int)ESkillAttribute.ADJ_TYPE]);
         float.TryParse(     _data[(int)ESkillAttribute.ADJ_AMOUNT], out float amount);
         float.TryParse(     _data[(int)ESkillAttribute.ADJ_TIME], out float time);
+        if(amount == 0)     { amount = (float)DataManager.String2CC(_data[(int)ESkillAttribute.ADJ_AMOUNT]); }
         StatAdjust =        new(type, amount, time);
         Description =       _data[(int)ESkillAttribute.DESCRIPTION];
         int.TryParse(       _data[(int)ESkillAttribute.PRICE],            out Price);

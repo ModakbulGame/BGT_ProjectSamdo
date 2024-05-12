@@ -62,8 +62,26 @@ public class DataManager : MonoBehaviour
             "ATTACK" => EAdjType.ATTACK,
             "MAGIC" => EAdjType.MAGIC,
             "MOVE_SPEED" => EAdjType.MOVE_SPEED,
+            "WEAPON_CC" => EAdjType.WEAPON_CC,
 
             _ => EAdjType.LAST
+        };
+    }
+
+    public static ECCType String2CC(string _data)
+    {
+        return _data switch
+        {
+            "SLOW" => ECCType.SLOW,
+            "STUN" => ECCType.STUN,
+            "POISON" => ECCType.POISON,
+            "BLEED" => ECCType.BLEED,
+            "STAGGER" => ECCType.STAGGER,
+            "AIRBORNE" => ECCType.AIRBORNE,
+            "KNOCKBACK" => ECCType.KNOCKBACK,
+            "BLIND" => ECCType.BLIND,
+
+            _ => ECCType.LAST
         };
     }
 

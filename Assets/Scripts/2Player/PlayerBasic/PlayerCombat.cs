@@ -194,10 +194,8 @@ public partial class PlayerController
                 around.SetSkill(this, Attack, Magic);
                 break;
             case ECastType.BUFF:
-                StatAdjust adjust = SkillInfoInHand.SkillData.StatAdjust;
-                GetStatAdjust(adjust);
-                BuffSkillScript buff = skill.GetComponentInChildren<BuffSkillScript>();
-                SetWeaponCCType(buff.CCList[0]);
+                TempAdjust adjust = SkillInfoInHand.SkillData.StatAdjust;
+                GetAdj(adjust);
                 skill.transform.localPosition = Vector3.zero;
                 break;
             default:
@@ -220,6 +218,37 @@ public partial class PlayerController
         ShowWeapon();
         ChangeState(EPlayerState.IDLE);
     }
+
+
+    // 무기 CC
+    public override void GetAdj(TempAdjust _adjust)
+    {
+        if (_adjust.Type == EAdjType.WEAPON_CC)
+        {
+            GetWeaponAdj(_adjust);
+            return;
+        }
+
+        base.GetAdj(_adjust);
+    }
+
+    private void GetWeaponAdj(TempAdjust _adjust)
+    {
+        SetWeaponCCType((ECCType)_adjust.Amount);
+        for (int i=0;i< m_buffNDebuff.Count; i++) 
+        {
+            if (m_buffNDebuff[i].AdjType == EAdjType.WEAPON_CC) 
+            {
+                m_buffNDebuff[i].SetAmount(_adjust.Amount);
+                m_buffNDebuff[i].SetTimeCount(_adjust.Time);
+                return;
+            }
+        }
+        BuffNDebuff info = new(_adjust, ResetWeaponCC);
+        m_buffNDebuff.Add(info);
+    }
+    private void ResetWeaponCC() { SetWeaponCCType(ECCType.NONE); }
+
 
     // 가드 관련
     private readonly float GuardDelay = 0.8f;

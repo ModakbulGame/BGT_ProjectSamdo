@@ -90,11 +90,17 @@ public static class DataImporter
 
             string id = splitMonsterData[(int)EMonsterAttribue.ID];
 
-            MonsterScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{MonsterScriptablePath + id}.asset")as MonsterScriptable
-                ??ScriptableObject.CreateInstance<MonsterScriptable>();
+            MonsterScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{MonsterScriptablePath + id}.asset")as MonsterScriptable;
+
+            bool IsExist = scriptable != null;
+            if (!IsExist) { scriptable = ScriptableObject.CreateInstance<MonsterScriptable>(); }
+
             scriptable.SetMonsterScriptable(idx, splitMonsterData, dropInfos[id]);
 
-            monsters.Add(scriptable);
+            if (!IsExist)
+            {
+                AssetDatabase.CreateAsset(scriptable, $"{SkillScriptablePath + id}.asset");
+            }
 
             GameObject prefab = AssetDatabase.LoadMainAssetAtPath($"{MonsterPrefabPath + id}.prefab") as GameObject;
             if (prefab == null) { continue; }
@@ -116,8 +122,6 @@ public static class DataImporter
 
         uint[] itemCnt = new uint[(int)EItemType.LAST];
 
-        List<ItemScriptable>[] items = new List<ItemScriptable>[(int)EItemType.LAST] { new(), new(), new(), new() };
-
         for (uint i = 1; i<allItemLines.Length; i++)
         {
             string si = allItemLines[i];
@@ -137,30 +141,33 @@ public static class DataImporter
             {
                 case ValueDefine.WEAPON_CODE:
                     type = (uint)EItemType.WEAPON;
-                    scriptable = AssetDatabase.LoadMainAssetAtPath($"{ItemScriptablePaths[type] + id}.asset")as WeaponScriptable
-                        ??ScriptableObject.CreateInstance<WeaponScriptable>();
+                    scriptable = AssetDatabase.LoadMainAssetAtPath($"{ItemScriptablePaths[type] + id}.asset")as WeaponScriptable;
                     break;
                 case ValueDefine.PATTERN_CODE:
                     type = (uint)EItemType.PATTERN;
-                    scriptable = AssetDatabase.LoadMainAssetAtPath($"{ItemScriptablePaths[type] + id}.asset")as PatternScriptable
-                        ??ScriptableObject.CreateInstance<PatternScriptable>();
+                    scriptable = AssetDatabase.LoadMainAssetAtPath($"{ItemScriptablePaths[type] + id}.asset")as PatternScriptable;
                     break;
                 case ValueDefine.THROW_ITEM_CODE:
                     type = (uint)EItemType.THROW;
-                    scriptable = AssetDatabase.LoadMainAssetAtPath($"{ItemScriptablePaths[type] + id}.asset")as ThrowItemScriptable
-                        ??ScriptableObject.CreateInstance<ThrowItemScriptable>();
+                    scriptable = AssetDatabase.LoadMainAssetAtPath($"{ItemScriptablePaths[type] + id}.asset")as ThrowItemScriptable;
                     break;
                 case ValueDefine.OTHER_ITEM_CODE:
                     type = (uint)EItemType.OTHERS;
-                    scriptable = AssetDatabase.LoadMainAssetAtPath($"{ItemScriptablePaths[type] + id}.asset")as OtherItemScriptable
-                        ??ScriptableObject.CreateInstance<OtherItemScriptable>();
+                    scriptable = AssetDatabase.LoadMainAssetAtPath($"{ItemScriptablePaths[type] + id}.asset")as OtherItemScriptable;
                     break;
                 default: Debug.LogError("맞는 ID 없음"); return;
             }
             uint idx = itemCnt[type]++;
 
+            bool IsExist = scriptable != null;
+            if (!IsExist) { scriptable = ScriptableObject.CreateInstance<ItemScriptable>(); }
+
             scriptable.SetItemScriptable(idx, splitItemData);
-            items[type].Add(scriptable);
+
+            if (!IsExist)
+            {
+                AssetDatabase.CreateAsset(scriptable, $"{SkillScriptablePath + id}.asset");
+            }
 
             string prefabPath = ItemPrefabPaths[type];
 
@@ -197,8 +204,6 @@ public static class DataImporter
         // 스킬 정보
         string[] allSkillLines = File.ReadAllLines(CSVPath + SkillCSVName);
 
-        List<SkillScriptable> skills = new();
-
         for (uint i = 1; i < allSkillLines.Length; i++)
         {
             uint idx = i - 1;
@@ -213,12 +218,17 @@ public static class DataImporter
 
             string id = splitSkillData[(int)ESkillAttribute.ID];
 
-            SkillScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{SkillScriptablePath + id}.asset")as SkillScriptable
-                ??ScriptableObject.CreateInstance<SkillScriptable>();
+            SkillScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{SkillScriptablePath + id}.asset")as SkillScriptable;
+
+            bool IsExist = scriptable != null;
+            if (!IsExist) { scriptable = ScriptableObject.CreateInstance<SkillScriptable>(); }
 
             scriptable.SetSkillScriptable(idx, splitSkillData);
 
-            skills.Add(scriptable);
+            if (!IsExist)
+            {
+                AssetDatabase.CreateAsset(scriptable, $"{SkillScriptablePath + id}.asset");
+            }
 
             GameObject prefab = AssetDatabase.LoadMainAssetAtPath($"{SkillPrefabPath + id}.prefab") as GameObject;
             if (prefab == null) { continue; }

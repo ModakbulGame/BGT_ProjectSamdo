@@ -13,8 +13,8 @@ public class PlayerSkillState : MonoBehaviour, IPlayerState
     {
         if(m_player == null) { m_player = _player; }
 
-        m_player.ReadySkill();
         IsReady = true;
+        m_player.ReadySkill();
     }
 
 

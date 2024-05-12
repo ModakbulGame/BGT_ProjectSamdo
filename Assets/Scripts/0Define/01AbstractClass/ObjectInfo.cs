@@ -10,19 +10,20 @@ public enum EAdjType
     MAGIC,
     MOVE_SPEED,
     MAX_HP,
+    WEAPON_CC,
 
     LAST
 }
 
 [Serializable]
-public struct StatAdjust
+public struct TempAdjust
 {
     public EAdjType Type;
     public float Amount;
     public float Time;
     public bool IsNull { get { return Type == EAdjType.LAST; } }
-    public static StatAdjust Null { get { return new(EAdjType.LAST, 0, 0); } }
-    public StatAdjust(EAdjType _type, float _amount, float _time)
+    public static TempAdjust Null { get { return new(EAdjType.LAST, 0, 0); } }
+    public TempAdjust(EAdjType _type, float _amount, float _time)
     {
         Type = _type; Amount = _amount; Time = _time;
     }
@@ -32,7 +33,7 @@ public struct StatAdjust
 public class BuffNDebuff
 {
     [SerializeField]
-    private StatAdjust m_adjInfo;
+    private TempAdjust m_adjInfo;
     public EAdjType AdjType { get { return m_adjInfo.Type; } }
     public float Amount { get { return m_adjInfo.Amount; } }
     public bool IsBuff { get { return m_adjInfo.Amount > 0; } }
@@ -54,7 +55,7 @@ public class BuffNDebuff
         return false;
     }
     private FPointer m_resetFunction;
-    public BuffNDebuff(StatAdjust _adj, FPointer _reset)
+    public BuffNDebuff(TempAdjust _adj, FPointer _reset)
     {
         m_adjInfo = _adj; m_resetFunction = _reset; SetTimeCount(_adj.Time);
     }
@@ -167,9 +168,9 @@ public abstract partial class ObjectScript
 
     // 버프 디버프 정보
     [SerializeField]
-    private List<BuffNDebuff> m_buffNDebuff = new();                // 버프, 디버프 리스트
+    protected List<BuffNDebuff> m_buffNDebuff = new();                // 버프, 디버프 리스트
 
-    public virtual void GetStatAdjust(StatAdjust _adjust)           // 능력치 조정
+    public virtual void GetAdj(TempAdjust _adjust)           // 임시 조정
     {
         BuffNDebuff info = null;
         float replace;
@@ -179,12 +180,13 @@ public abstract partial class ObjectScript
         if (info != null) m_buffNDebuff.Add(info);
     }
 
-    private float GetBuffed(StatAdjust _adj)            // 버프, 디버프 받기
+    private float GetBuffed(TempAdjust _adj)            // 버프, 디버프 받기
     {
         EAdjType type = _adj.Type;
         float amount = _adj.Amount;
         bool isBuff = amount > 1;
         float time = _adj.Time;
+
         bool exist = false;
         for (int i = 0; i<m_buffNDebuff.Count; i++)
         {

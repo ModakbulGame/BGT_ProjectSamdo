@@ -82,8 +82,7 @@ public enum ESkillName
     AROUND_AIRBORNE,
     AROUND_KNOCKBACK,
     BUFF,
-    SAMPLE1,
-    SAMPLE2,
-    SAMPLE3,
+    WEAPON_SLOW,
+    WEAPON_POISON,
     LAST
 }
