@@ -62,6 +62,13 @@ public partial class PlayerController : ObjectScript
 
     public void ChangeState(EPlayerState _state) { m_stateManager.ChangeState(m_playerStates[(int)_state]); }       // 상태 변환
 
+    public void ResetPlayer()
+    {
+        if (IsSkilling) { CancelSkill(); }
+        if (IsThrowing) { CancelThrow(); }
+    }
+
+
 
     // 조준 관련
     public Vector2 PlayerAimDirection { get { return FunctionDefine.DegToVec(PlayManager.CameraRotation); } }       // 플레이어 에임 좌우

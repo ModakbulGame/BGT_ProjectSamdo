@@ -13,6 +13,7 @@ public class SkillInfo
     public float SkillCooltime { get { return SkillData.Cooltime; } }
     public float SkillRadius { get { return SkillData.HitRadius; } }
     public float SkillCastRange { get{ return SkillData.CastingRange; } } 
+    public bool HideWeapon { get { return SkillData.HideWeapon; } }
     public bool Obtained { get; private set; }
 
     public void ObtainSkill() { Obtained = true; }

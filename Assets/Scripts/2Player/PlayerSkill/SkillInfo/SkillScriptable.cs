@@ -22,6 +22,7 @@ public class SkillScriptable : ScriptableObject
     public TempAdjust StatAdjust;
     public string Description;
     public int Price;
+    public bool HideWeapon;
 
     private ECastType Name2Type(ESkillName _skillName)
     {

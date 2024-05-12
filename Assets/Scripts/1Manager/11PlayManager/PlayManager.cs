@@ -34,6 +34,7 @@ public class PlayManager : MonoBehaviour
     public static float GetDistToPlayer(Vector3 _pos) { if (!IsPlayerSet) return -1; return (PlayerPos-_pos).magnitude; }                   // 플레이어와의 거리
     public static void SetPlayerWeapon(EWeaponName _weapon) { Player.SetCurWeapon(_weapon); }                                               // 무기 설정
     public static void StopPlayerInteract() { Player.StopInteract(); }                                                                      // 상호작용 종료
+    public static void ResetPlayer() { Player.ResetPlayer(); }
     public static void TeleportPlayer(Vector3 _pos) { Player.TeleportPlayer(_pos); }
     
     public static void TempGetBuff(float _amount, float _time) { Player.GetAdj(new(EAdjType.MAX_HP, _amount, _time)); }

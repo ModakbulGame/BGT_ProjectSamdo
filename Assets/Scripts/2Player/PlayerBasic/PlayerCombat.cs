@@ -141,11 +141,9 @@ public partial class PlayerController
     {
         UsingSkillIdx = SkillIdx;
         SkillInHand = SkillSlot[UsingSkillIdx];
-        if (SkillInHand != ESkillName.BUFF)
-            SkillStartAnim();
-        else if(SkillInHand == ESkillName.BUFF)
-            BuffStartAnim();
 
+        SkillStartAnim();
+        if (SkillInfoInHand.HideWeapon) { HideWeapon(); }
 
         if (IsHealing) { CancelHeal(); }
 

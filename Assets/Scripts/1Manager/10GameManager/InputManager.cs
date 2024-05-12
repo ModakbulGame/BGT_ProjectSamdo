@@ -83,6 +83,7 @@ public class InputManager : MonoBehaviour
                 if (PlayManager.IsPlaying)                  // Play Manager가 실행 중이면
                 {
                     PlayManager.OpenPlayerUI();                 // PlayerUI 열기
+                    PlayManager.ResetPlayer();
                     SetControlMode(EControlMode.UI_CONTROL);    // UI 조작 모드로
                 }
             }
