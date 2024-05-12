@@ -56,3 +56,23 @@ public enum ECCType
 
     LAST
 }
+
+public enum EQuestType
+{
+    TALKING,
+    COLLECTION,
+    HUNTING,
+
+    LAST
+}
+
+public enum EQuestStatus
+{
+    NOT_AVAILABLE,
+    AVAILABLE,
+    ACCEPTED,
+    COMPLETE,
+    DONE,
+
+    LAST
+}

@@ -6,6 +6,10 @@ using UnityEngine.UI;
 public class NPCScript : ObjectScript, IInteractable
 {
     public string NPCName { get { return m_baseInfo.ObjectName; } }
+    [SerializeField]
+    private int m_npcID;
+    public int NPCID { get { return m_npcID; } }
+    
     protected Transform m_npcTransform;
     public string[] m_npcDialogue;
 
