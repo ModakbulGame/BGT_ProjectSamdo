@@ -39,7 +39,7 @@ public class PlayUIManager : MonoBehaviour
     public bool IsDialogueUIOpend { get { return m_dialogueUI.IsDialogueOpened; } }
     public void OpenDialogueUI(NPCScript _npc) { m_dialogueUI.OpenUI(_npc); }
     public void CloseDialogueUI() { m_dialogueUI.CloseUI(); }
-    public void NextDialogue() { m_dialogueUI.NextDialogue(); }
+    public void ShowNextDialogue() { m_dialogueUI.ShowAllDialogue(); }
 
 
 

@@ -15,8 +15,8 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
 
     private Button m_btn;
 
-    public bool IsDialogueOpened { get; private set; }
     private bool IsOpened { get; set; }
+    public bool IsDialogueOpened { get; private set; }
     private bool ButtonClicked { get; set; }
 
     private NPCScript CurNPC { get; set; }
@@ -49,6 +49,7 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
     {
         CurNPC.StopInteract();
         gameObject.SetActive(false);
+        IsDialogueOpened = false;
     }
 
     IEnumerator Typing(string _contents)
@@ -86,14 +87,6 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
             return;
         }
         CloseUI();
-    }
-
-    private void Update()                       // InputManager에서 해결해보려 했으나 오작동해서 일단 여기서 진행
-    { 
-        if (GameManager.UIControlInputs.UIInteract.triggered)
-        {
-            ButtonClicked = true;
-        }
     }
 
     private void SetComps()
