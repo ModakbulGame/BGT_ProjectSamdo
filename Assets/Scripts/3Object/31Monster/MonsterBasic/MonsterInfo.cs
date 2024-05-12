@@ -72,7 +72,7 @@ public partial class MonsterScript
     public float ViewRange { get { return m_combatInfo.ViewRange; } }                   // 시야 범위
     public float EngageRange { get { return m_combatInfo.EngageRange; } }                // 시야 제외 감지 범위
     public float ReturnRange { get { return m_combatInfo.ReturnRange; } }                // 접근 종료 범위
-    public float AttackRange { get { return m_combatInfo.AttackRange; } }                // 공격 범위
+    public virtual float AttackRange { get { return m_combatInfo.AttackRange; } }        // 공격 범위
     public float ApproachDelay { get { return m_combatInfo.ApproachDelay; } }            // 감지 후 접근 딜레이
     public float FenceRange { get { return m_combatInfo.FenceRange; } }                  // 활동 범위
 
