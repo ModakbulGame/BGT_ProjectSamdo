@@ -222,8 +222,8 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     public bool IsSlowed { get { return m_ccCount[(int)ECCType.SLOW] > 0; } }
     private void GetSlow(HitData _hit)
     {
-        if(IsSlowed) { m_ccCount[(int)ECCType.SLOW] = 10; return; }
-        StartCoroutine(DebuffCotouine(ECCType.SLOW));
+        TempAdjust slow = new(EAdjType.MOVE_SPEED, 0.5f, 5);
+        GetAdj(slow);
     }
     private void GetKnockBack(HitData _hit)
     {
