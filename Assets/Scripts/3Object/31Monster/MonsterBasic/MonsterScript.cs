@@ -176,6 +176,8 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     // 플레이어 능력 관련
     protected MonsterLighter m_lightReciever;
 
+    protected Color DissolveColor { get; private set; }
+
     private bool IsGettingLight { get { if (m_lightReciever == null) return false; return m_lightReciever.GettingLight; } }
     private bool IsPurifyGlowing { get; set; }                  // 빛나고 있어
 
@@ -249,6 +251,16 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     {
         m_hpBar = GetComponentInChildren<ObjectHPBarScript>();
         m_hpBar.SetMaxHP(MaxHP);
+    }
+
+    protected void ShowHPBar()
+    {
+        m_hpBar.gameObject.SetActive(true);
+        ApplyHPUI();
+    }
+    protected void HideHPBar()
+    {
+        m_hpBar.gameObject.SetActive(false);
     }
 
 
