@@ -104,6 +104,7 @@ public class InputManager : MonoBehaviour
                 if (PlayManager.IsPlaying)
                 {
                     // 퀘스트 창 열기
+                    PlayManager.ToggleQuestUI();
                 }
             }
         }

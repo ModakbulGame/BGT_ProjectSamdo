@@ -62,6 +62,7 @@ public enum EQuestType
     TALKING,
     COLLECTION,
     HUNTING,
+    TIME_LIMIT,
 
     LAST
 }
@@ -72,6 +73,7 @@ public enum EQuestStatus
     AVAILABLE,
     ACCEPTED,
     COMPLETE,
+    FAIL,
     DONE,
 
     LAST

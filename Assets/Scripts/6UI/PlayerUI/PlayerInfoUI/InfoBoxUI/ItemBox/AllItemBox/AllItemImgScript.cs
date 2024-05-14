@@ -10,7 +10,6 @@ public class AllItemImgScript : DragMouseOverInfoUI
     public void SetParent(AllItemElmScript _parent) { m_parent = _parent; }
 
     private Image m_itemImg;
-    private float m_clickTime;
     public override Transform MoveTrans => m_parent.MoveTrans;
 
 
@@ -91,7 +90,6 @@ public class AllItemImgScript : DragMouseOverInfoUI
     public override void SetComps()
     {
         base.SetComps();
-        m_clickTime = 0;
         m_itemImg = GetComponent<Image>();
     }
 }

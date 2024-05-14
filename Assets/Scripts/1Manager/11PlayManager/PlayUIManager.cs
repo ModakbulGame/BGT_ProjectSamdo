@@ -41,7 +41,9 @@ public class PlayUIManager : MonoBehaviour
     public void CloseDialogueUI() { m_dialogueUI.CloseUI(); }
     public void ShowNextDialogue() { m_dialogueUI.ShowAllDialogue(); }
 
-
+    [SerializeField]
+    private QuestUIScript m_questUI;                        // 퀘스트 UI
+    public void ToggleQuestUI() { m_questUI.ToggleQuestUI(); }
 
     [SerializeField]
     private OasisUIScript m_oasisUI;                        // 오아시스 UI
