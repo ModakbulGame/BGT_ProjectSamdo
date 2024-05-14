@@ -12,7 +12,7 @@ public class BlinkbeakScript : MonsterScript
     private readonly Color EvadeColor = new(0f, 90/255f, 191/255f, 191/255f);
 
     private readonly float EvadeSpeed = 8;
-    private readonly float EvadeCooltime = 10;
+    private readonly float EvadeCooltime = 4;
     
     private float EvadeTimeCount { get; set; }
     private Vector3 EvadeTarget { get; set; }
@@ -23,10 +23,12 @@ public class BlinkbeakScript : MonsterScript
     {
         EvadeTimeCount = EvadeCooltime;
         Vector3 dir = (Position - CurTarget.Position).normalized;
+        float dist;
         do
         {
-            EvadeTarget = Position + dir * 10 + new Vector3(Random.Range(-4, 4f), 0, Random.Range(-4, 4f));
-        } while (Vector3.Distance(EvadeTarget, Position) < 5);
+            EvadeTarget = Position + dir * 8 + new Vector3(Random.Range(-8, 8f), 0, Random.Range(-8, 8f));
+            dist = Vector3.Distance(EvadeTarget, Position);
+        } while (dist < 6 || dist > 10);
         SetDestination(EvadeTarget);
         CurSpeed = EvadeSpeed;
         StartEvadeDissolve();
@@ -100,7 +102,7 @@ public class BlinkbeakScript : MonsterScript
         base.LookTarget();
         if (Vector3.Distance(Position, CurTarget.Position) > AttackRange)
         {
-            m_rigid.velocity = MoveSpeed / 2f * transform.forward;
+            m_rigid.velocity = MoveSpeed  * 2/ 3f * transform.forward;
         }
     }
     public override void AttackDone()
