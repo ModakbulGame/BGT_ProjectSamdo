@@ -52,7 +52,7 @@ public class MarmulakScript : AnimatedAttackMonster
         for (int i = 0; i<targets.Length; i++)
         {
             ObjectScript obj = targets[i].GetComponentInParent<ObjectScript>();
-            if (obj == null || m_roarList.Contains(obj)) { continue; }
+            if (obj == null || obj == this || m_roarList.Contains(obj)) { continue; }
             Debug.Log($"{obj.ObjectName} 은(는) 공포에 떨고 있다!");
             m_roarList.Add(obj);
         }

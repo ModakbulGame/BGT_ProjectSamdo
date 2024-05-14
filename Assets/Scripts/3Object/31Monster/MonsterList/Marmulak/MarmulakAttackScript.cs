@@ -26,7 +26,7 @@ public class MarmulakAttackScript : MonoBehaviour, IMonsterState
 
     public void Proceed()
     {
-        if (Marmulak.CurAttack == EMarmulakAttack.NORMAL)
+        if (CurAttack == EMarmulakAttack.NORMAL)
         {
             if (!Marmulak.HasTarget)
             {
@@ -36,7 +36,7 @@ public class MarmulakAttackScript : MonoBehaviour, IMonsterState
 
             Marmulak.LookTarget();
         }
-        else if (Marmulak.CurAttack == EMarmulakAttack.ROAR)
+        else if (CurAttack == EMarmulakAttack.ROAR)
         {
 
         }

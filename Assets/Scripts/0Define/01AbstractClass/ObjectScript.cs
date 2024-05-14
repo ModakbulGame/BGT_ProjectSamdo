@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -104,6 +105,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     public virtual void GetHit(HitData _hit)                            // 공격 맞음
     {
         if (IsDead) { return; }
+        if (!IsGrounded && _hit.CCList.Contains(ECCType.AIRBORNE)) { return; }
         float damage = _hit.Damage * (100-Defense) * 0.01f;
         GetDamage(damage);
         Debug.Log($"{_hit.Attacker.ObjectName} => {ObjectName} {damage} 데미지");
@@ -191,8 +193,9 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     }
     private void GetAirborne(HitData _hit)
     {
-        Vector3 force = 8 * Vector3.up;
-        m_rigid.AddForce(force);
+        Vector3 vel = m_rigid.velocity;
+        vel.y = 12;
+        m_rigid.velocity = vel;
     }
     public bool IsStunned { get { return m_ccCount[(int)ECCType.STUN] > 0; } }
     private void GetStun(HitData _hit)
@@ -229,7 +232,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     {
         Vector2 flatDir = (Position2 -_hit.Attacker.Position2).normalized;
         Vector3 dir = new(flatDir.x, 0, flatDir.y);
-        m_rigid.velocity = dir * 8;
+        m_rigid.velocity = dir * 10;
     }
     public bool IsBlind { get { return m_ccCount[(int)ECCType.BLIND] > 0; } }
     public virtual void GetBlind() { }
