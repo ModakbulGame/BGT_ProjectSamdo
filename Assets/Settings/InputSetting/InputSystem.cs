@@ -118,6 +118,15 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""OpenQuestUI"",
+                    ""type"": ""Button"",
+                    ""id"": ""b39faca6-cd18-42f0-8a4e-ebb4a6c00f17"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ThrowItem"",
                     ""type"": ""Button"",
                     ""id"": ""bf8164d9-3f79-49bc-bcf5-984d537d88c1"",
@@ -392,6 +401,17 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""HealItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78fe657d-eab2-404b-ace0-6d0df07ea029"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenQuestUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -495,6 +515,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         m_Player_OpenOptionUI = m_Player.FindAction("OpenOptionUI", throwIfNotFound: true);
         m_Player_OpenPlayUI = m_Player.FindAction("OpenPlayUI", throwIfNotFound: true);
         m_Player_OpenMapUI = m_Player.FindAction("OpenMapUI", throwIfNotFound: true);
+        m_Player_OpenQuestUI = m_Player.FindAction("OpenQuestUI", throwIfNotFound: true);
         m_Player_ThrowItem = m_Player.FindAction("ThrowItem", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Skill1 = m_Player.FindAction("Skill1", throwIfNotFound: true);
@@ -577,6 +598,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_OpenOptionUI;
     private readonly InputAction m_Player_OpenPlayUI;
     private readonly InputAction m_Player_OpenMapUI;
+    private readonly InputAction m_Player_OpenQuestUI;
     private readonly InputAction m_Player_ThrowItem;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Skill1;
@@ -597,6 +619,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         public InputAction @OpenOptionUI => m_Wrapper.m_Player_OpenOptionUI;
         public InputAction @OpenPlayUI => m_Wrapper.m_Player_OpenPlayUI;
         public InputAction @OpenMapUI => m_Wrapper.m_Player_OpenMapUI;
+        public InputAction @OpenQuestUI => m_Wrapper.m_Player_OpenQuestUI;
         public InputAction @ThrowItem => m_Wrapper.m_Player_ThrowItem;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Skill1 => m_Wrapper.m_Player_Skill1;
@@ -642,6 +665,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @OpenMapUI.started += instance.OnOpenMapUI;
             @OpenMapUI.performed += instance.OnOpenMapUI;
             @OpenMapUI.canceled += instance.OnOpenMapUI;
+            @OpenQuestUI.started += instance.OnOpenQuestUI;
+            @OpenQuestUI.performed += instance.OnOpenQuestUI;
+            @OpenQuestUI.canceled += instance.OnOpenQuestUI;
             @ThrowItem.started += instance.OnThrowItem;
             @ThrowItem.performed += instance.OnThrowItem;
             @ThrowItem.canceled += instance.OnThrowItem;
@@ -694,6 +720,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @OpenMapUI.started -= instance.OnOpenMapUI;
             @OpenMapUI.performed -= instance.OnOpenMapUI;
             @OpenMapUI.canceled -= instance.OnOpenMapUI;
+            @OpenQuestUI.started -= instance.OnOpenQuestUI;
+            @OpenQuestUI.performed -= instance.OnOpenQuestUI;
+            @OpenQuestUI.canceled -= instance.OnOpenQuestUI;
             @ThrowItem.started -= instance.OnThrowItem;
             @ThrowItem.performed -= instance.OnThrowItem;
             @ThrowItem.canceled -= instance.OnThrowItem;
@@ -812,6 +841,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         void OnOpenOptionUI(InputAction.CallbackContext context);
         void OnOpenPlayUI(InputAction.CallbackContext context);
         void OnOpenMapUI(InputAction.CallbackContext context);
+        void OnOpenQuestUI(InputAction.CallbackContext context);
         void OnThrowItem(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnSkill1(InputAction.CallbackContext context);
