@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,7 +12,7 @@ public partial class PlayerController
 
     public override void GetHit(HitData _hit)                           // 공격 맞음
     {
-        if (IsInvincible) { return; }           // 무적일 경우
+        if (IsInvincible && !_hit.CCList.Contains(ECCType.AIRBORNE)) { return; }    // 구르는 중이고 에어본이 아니면
         if (!IsDead && IsGuarding && _hit.Attacker.IsMonster) { ((MonsterScript)_hit.Attacker).HitGuardingPlayer(); }
         base.GetHit(_hit);
     }
