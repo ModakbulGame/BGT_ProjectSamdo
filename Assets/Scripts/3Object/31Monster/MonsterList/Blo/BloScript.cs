@@ -39,11 +39,11 @@ public class BloScript : MonsterScript
     }
     public void RushToTarget()
     {
-        Vector3 dir = transform.forward * m_rushSpeed;
-        Vector2 adj = (CurTarget.Position2 - Position2).normalized;
-        Vector3 adj3 = new Vector3(adj.x, 0, adj.y) * 0.1f;
-        dir += adj3;
-        m_rigid.velocity = dir;
+        Vector3 dir = transform.forward;
+        Vector3 rot = (dir + (CurTarget.Position - Position).normalized * 0.1f).normalized;
+        Vector2 rot2 = new(rot.x, rot.z);
+        RotateTo(rot2);
+        m_rigid.velocity = m_rushSpeed * dir.normalized;
     }
 
 

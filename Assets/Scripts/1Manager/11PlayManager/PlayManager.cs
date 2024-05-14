@@ -39,7 +39,7 @@ public class PlayManager : MonoBehaviour
     
     public static void TempGetBuff(float _amount, float _time) { Player.GetAdj(new(EAdjType.MAX_HP, _amount, _time)); }
     
-    // 다른 오브젝트
+    // 다른 오브젝트  ?
     private static ObjectScript Object { get; set; }
     public static float ObjectRotation { get { return 0; } }    // 현재 null이라서 급하게 0으로 땜빵
 

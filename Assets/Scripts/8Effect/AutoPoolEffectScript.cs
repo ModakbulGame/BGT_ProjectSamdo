@@ -5,9 +5,9 @@ using UnityEngine;
 public class AutoPoolEffectScript : EffectScript
 {
     [SerializeField]
-    private float m_destroyTime = 1;
+    protected float m_destroyTime = 1;
 
-    public void OnEnable()
+    public virtual void OnEnable()
     {
         SetDestroyTime(m_destroyTime);
     }
