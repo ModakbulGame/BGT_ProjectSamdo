@@ -98,7 +98,13 @@ public class InputManager : MonoBehaviour
                     // 맵 여닫기
                     PlayManager.ToggleMapUI();
                 }
-
+            }
+            else if(PlayerInputs.OpenQuestUI.triggered)
+            {
+                if (PlayManager.IsPlaying)
+                {
+                    // 퀘스트 창 열기
+                }
             }
         }
         else if (CurControlMode == EControlMode.UI_CONTROL)         // UI 조작 모드일 때

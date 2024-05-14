@@ -96,6 +96,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "OpenQuestUI",
+                    "type": "Button",
+                    "id": "b39faca6-cd18-42f0-8a4e-ebb4a6c00f17",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ThrowItem",
                     "type": "Button",
                     "id": "bf8164d9-3f79-49bc-bcf5-984d537d88c1",
@@ -368,6 +377,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "HealItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "78fe657d-eab2-404b-ace0-6d0df07ea029",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenQuestUI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

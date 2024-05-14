@@ -54,6 +54,12 @@ public class AllItemElmScript : MonoBehaviour
         }
     }
 
+    public void ItemUse()
+    {
+        // 아이템 사용 로직 필요 시 작성
+        Debug.Log("아이템 사용");
+    }
+
     public void RegisterThrowItem()
     {
         if(CurItem.Type != EItemType.THROW) { return; }
