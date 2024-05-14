@@ -39,7 +39,7 @@ public class PlayManager : MonoBehaviour
     
     public static void TempGetBuff(float _amount, float _time) { Player.GetAdj(new(EAdjType.MAX_HP, _amount, _time)); }
     
-    // 다른 오브젝트  ?
+    // 다른 오브젝트  ?   몬스터나 NPC 정보가 필요할수도 있어서 추가했음...
     private static ObjectScript Object { get; set; }
     public static float ObjectRotation { get { return 0; } }    // 현재 null이라서 급하게 0으로 땜빵
 
@@ -127,6 +127,7 @@ public class PlayManager : MonoBehaviour
     public static void ClosePlayerUI() { PlayUIManager.ClosePlayerUI(); }                                                                   // Player UI 닫기
     public static void SetMinimapScale(float _scale) { PlayUIManager.SetMinimapScale(_scale); }                                             // 미니맵 축척
     public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                       // 맵 UI 여닫기
+    public static void ToggleQuestUI() { PlayUIManager.ToggleQuestUI(); }
     public static void OpenNPCUI(NPCScript _npc) { PlayUIManager.OpenDialogueUI(_npc); }                                                    // NPC 대화창 열기
     public static void CloseNPCUI() { PlayUIManager.CloseDialogueUI(); }                                                                    // NPC 대화창 닫기
     public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                  // NPC 대화창 열렸는지 확인

@@ -405,7 +405,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""78fe657d-eab2-404b-ace0-6d0df07ea029"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/semicolon"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
