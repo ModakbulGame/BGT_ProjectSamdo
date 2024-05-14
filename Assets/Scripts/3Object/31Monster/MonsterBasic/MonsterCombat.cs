@@ -39,11 +39,10 @@ public abstract partial class MonsterScript
     public virtual void AttackTriggerOn(int _idx)
     {
         m_normalAttacks[_idx].SetActive(true);
-        if (AttackObject == null)
-        {
-            AttackObject = m_normalAttacks[_idx].GetComponent<ObjectAttackScript>();
-            AttackObject.SetAttack(this, Attack);
-        }
+
+        AttackObject = m_normalAttacks[_idx].GetComponent<ObjectAttackScript>();
+        AttackObject.SetAttack(this, Attack);
+
         AttackObject.SetDamage(Attack);
         base.AttackTriggerOn();
     }

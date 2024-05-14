@@ -51,7 +51,7 @@ public partial class PlayerController
 
 
     // 점프 관련
-    private readonly float JumpPower = 11;                                                  // 점프 파워
+    private readonly float JumpPower = 9;                                                   // 점프 파워
     private readonly float JumpDelay = 0.25f;                                               // 점프 간격
     public readonly float JumpStaminaUse = 1.5f;                                            // 점프 스테미나 소모
 
