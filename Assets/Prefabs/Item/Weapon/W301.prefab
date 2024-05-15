@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8241565183774523399}
-  - component: {fileID: 8798505128692410040}
+  - component: {fileID: 7045302690665450154}
   - component: {fileID: 4838543549254753891}
   - component: {fileID: 5020429656184132615}
   - component: {fileID: 1703255283153766920}
@@ -29,14 +29,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6957446079457345352}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.62814337, y: -0.7658612, z: 0.13569212, w: -0.021913374}
-  m_LocalPosition: {x: -0.00372, y: 0.00016, z: -0.00173}
-  m_LocalScale: {x: 1.4, y: 1.2, z: 1.4}
+  m_LocalRotation: {x: 0.4385896, y: 0.4211303, z: 0.48691487, w: 0.6270585}
+  m_LocalPosition: {x: 0.00707, y: -0.0005, z: 0.00159}
+  m_LocalScale: {x: 0.017, y: 0.012, z: 0.012}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 10.388, y: -191.972, z: -79.808}
---- !u!114 &8798505128692410040
+  m_LocalEulerAnglesHint: {x: 8.044, y: 74.742, z: 81.807}
+--- !u!114 &7045302690665450154
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52,16 +52,16 @@ MonoBehaviour:
   m_modelMultiplier: 30.90435
   m_weaponInfo:
     WeaponType: 2
-    HitType: 0
+    HitType: 1
     WeaponName: "\uAE30\uBCF8 \uD640"
     Attack:
-      Min: 0
-      Max: 0
+      Min: 8
+      Max: 14
     Magic:
-      Min: 0
-      Max: 0
+      Min: 10
+      Max: 16
     AttackSpeed: 0.9
-    Description: 
+    Description: "\uAE30\uBCF8 \uD640 \uC785\uB2C8\uB2E4"
   m_scriptable: {fileID: 11400000, guid: ca3920a02351ca14abef53ae96cc1539, type: 2}
 --- !u!33 &4838543549254753891
 MeshFilter:
@@ -70,7 +70,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6957446079457345352}
-  m_Mesh: {fileID: 4875530682185303157, guid: b1639e979c5636c44bcc3f8c108173be, type: 3}
+  m_Mesh: {fileID: 4875530682185303157, guid: 7382761dbcbe5b2439f212f1eed29f9b, type: 3}
 --- !u!23 &5020429656184132615
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -91,7 +91,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0272dc12a382256489334910fd59aa16, type: 2}
+  - {fileID: 8944514806055558393, guid: 7382761dbcbe5b2439f212f1eed29f9b, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -132,8 +132,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.005, y: 0.0252291, z: 0.005}
-  m_Center: {x: 0.000000005964144, y: 0.011703112, z: 0.0000000067758155}
+  m_Size: {x: 0.5, y: 0.5, z: 2.3616219}
+  m_Center: {x: 0.0000035315388, y: 0.0000022055772, z: -2.1989536}
 --- !u!54 &6183532949117167077
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -160,4 +160,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
