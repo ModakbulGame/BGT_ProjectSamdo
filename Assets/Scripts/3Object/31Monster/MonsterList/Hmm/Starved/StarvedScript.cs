@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class StarvedScript : HmmScript
 {
-
     public override void SetDestination(Vector3 _destination)
     {
         base.SetDestination(_destination);
