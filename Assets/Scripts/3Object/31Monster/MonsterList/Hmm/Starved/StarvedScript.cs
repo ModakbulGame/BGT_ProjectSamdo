@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class StarvedScript : HmmScript
 {
+
+    public override void SetDestination(Vector3 _destination)
+    {
+        base.SetDestination(_destination);
+        m_anim.SetBool("IS_MOVING", true);
+    }
+    public override void StopMove()
+    {
+        base.StopMove();
+        m_anim.SetBool("IS_MOVING", false);
+    }
+
     private int CurAttackIdx { get; set; }
     public override void StartAttack()
     {
