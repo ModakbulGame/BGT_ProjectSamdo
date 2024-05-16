@@ -177,14 +177,14 @@ public static class DataImporter
             {
                 case ValueDefine.WEAPON_CODE:
                     WeaponScript weapon = prefab.GetComponent<WeaponScript>();
-                    if (weapon != null && !weapon.IsScriptableSet) { weapon.SetScriptable((WeaponScriptable)scriptable); }
+                    if (weapon != null) { weapon.SetScriptable((WeaponScriptable)scriptable); }
                     break;
                 case ValueDefine.PATTERN_CODE:
 
                     break;
                 case ValueDefine.THROW_ITEM_CODE:
                     ThrowItemScript throwItem = prefab.GetComponent<ThrowItemScript>();
-                    if (throwItem != null && !throwItem.IsScriptableSet) { throwItem.SetScriptable((ThrowItemScriptable)scriptable); }
+                    if (throwItem != null) { throwItem.SetScriptable((ThrowItemScriptable)scriptable); }
                     break;
                 case ValueDefine.OTHER_ITEM_CODE:
 

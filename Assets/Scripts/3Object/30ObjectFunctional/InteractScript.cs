@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(IInteractable), typeof(CapsuleCollider), typeof(Rigidbody))]
+[RequireComponent(typeof(IInteractable))]
 public class InteractScript : MonoBehaviour                 // 상호작용이 가능한 오브젝트에 넣는 스크립트
 {
     [SerializeField]

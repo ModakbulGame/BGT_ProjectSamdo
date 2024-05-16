@@ -22,7 +22,7 @@ public class WeaponInfo
         Attack = _scriptable.Attack;
         Magic = _scriptable.Magic;
         AttackSpeed = _scriptable.AttackSpeed;
-        Description = _scriptable.DerivedDescription;
+        Description = _scriptable.Description;
     }
 }
 

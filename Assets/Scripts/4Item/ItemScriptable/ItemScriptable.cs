@@ -10,7 +10,6 @@ public class ItemScriptable : ScriptableObject
     public string   Description;
     public float    DropRate;
     public int      ItemPrice;
-    // 테이블이 완성되면 완성될 예정
 
     public virtual void SetItemScriptable(uint _idx, string[] _data)
     {
