@@ -11,6 +11,7 @@ public class GameManager : SingleTon<GameManager>
     public static MonsterScriptable GetMonsterRawData(EMonsterName _monster) { return DataManager.GetMonsterData(_monster); }   // 몬스터 스크립터블
     public static ItemScriptable GetItemRawData(SItem _item) { return DataManager.GetItemData(_item); }                         // 아이템 스크립터블
     public static SkillScriptable GetSkillRawData(ESkillName _skill) { return DataManager.GetSkillData(_skill); }               // 스킬 스크립터블
+    public static NPCScriptable GetNPCRawData(EnpcName _npc) { return DataManager.GetNPCData(_npc); }                           // NPC 스크립터블
 
 
     // 화면

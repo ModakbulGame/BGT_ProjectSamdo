@@ -12,6 +12,9 @@ public class DataManager : MonoBehaviour
     // 몬스터 데이터
     public MonsterScriptable GetMonsterData(EMonsterName _monster) { return m_dataList.GetMonsterData(_monster); }
 
+    // NPC 데이터
+    public NPCScriptable GetNPCData(EnpcName _npc) { return m_dataList.GetNPCData(_npc); }
+
     // 아이템 데이터
     public ItemScriptable GetItemData(SItem _item)
     {
@@ -28,6 +31,7 @@ public class DataManager : MonoBehaviour
 
     // 스킬 데이터
     public SkillScriptable GetSkillData(ESkillName _skill) { return m_dataList.GetSkillData(_skill); }
+
 
 
 
