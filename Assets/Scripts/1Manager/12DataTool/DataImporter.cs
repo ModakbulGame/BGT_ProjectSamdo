@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +12,7 @@ public static class DataImporter
     private const string MonsterCSVName = "MonsterSheet.csv";
     private const string DropCSVName = "DropSheet.csv";
     private const string SkillCSVName = "SkillSheet.csv";
+    private const string NPCCSVName = "NPCSheet.csv";
 
     // 스크립터블 경로
     private const string ScriptablePath = "Assets/Scriptables/";
@@ -25,6 +27,7 @@ public static class DataImporter
         ItemScriptablePath + "Others/"          };
 
     private const string SkillScriptablePath = ScriptablePath + "SkillScriptable/";
+    private const string NPCScriptablePath = ScriptablePath + "NPCScriptable";
 
     // 프리펍 경로
     private const string PrefabPath = "Assets/Prefabs/";
@@ -37,6 +40,7 @@ public static class DataImporter
         ItemPrefabPath + "Others/"
     };
     private const string SkillPrefabPath = PrefabPath + "PlayerSkill/";
+    private const string NPCPrefabPath = PrefabPath + "NPC/";
 
 
     [MenuItem("Utilities/GenerateMonsters")]
@@ -239,6 +243,78 @@ public static class DataImporter
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(scriptable);
             EditorUtility.SetDirty(prefab);
+        }
+    }
+
+    [MenuItem("Utilities/GenerateNPCs")]
+    private static void GenerateNPCData()
+    {
+        // NPC 정보
+        string[] allNPCLines = File.ReadAllLines(CSVPath + NPCCSVName);
+
+        for (uint i = 1; i < allNPCLines.Length; i++)
+        {
+            uint idx = i - 1;
+            string si = allNPCLines[i];
+            string[] splitNPCData = si.Split(',');
+            string[] splitDialogueData = si.Split(new string[] { ",," }, StringSplitOptions.None);
+
+            if (splitNPCData.Length != (int)EnpcAttribute.LAST)
+            {
+                Debug.Log(si + $"does not have {(int)EnpcAttribute.LAST} values.");
+                return;
+            }
+
+            string firstDialogue = splitNPCData[splitNPCData.Length - 1];
+
+            // 대사 빼고의 npc 데이터
+            string[] newSplitNPCData = new string[splitNPCData.Length - 1];
+            Array.Copy(splitNPCData, newSplitNPCData, splitNPCData.Length - 1);
+
+            foreach (string data in newSplitNPCData)
+            {
+                Debug.Log(data);
+            }
+
+            // 대사만 있는 npc 데이터
+            string[] dialogueData = new string[splitDialogueData.Length + 1];
+            dialogueData[0] = firstDialogue;
+            for(int j = 0; j < splitDialogueData.Length; j++)
+            {
+                dialogueData[j + 1] = splitDialogueData[j];
+            }
+
+            foreach(string data in dialogueData)
+            {
+                Debug.Log(data);
+            }
+
+            string id = splitNPCData[(int)EnpcAttribute.ID];
+
+            NPCScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{NPCScriptablePath + id}.asset") as NPCScriptable;
+
+            bool IsExist = scriptable != null;
+            if (!IsExist) { scriptable = ScriptableObject.CreateInstance<NPCScriptable>(); }
+
+            scriptable.SetNPCScriptable(idx, newSplitNPCData);
+            scriptable.SetNPCDialogues(idx, dialogueData);
+
+            if (!IsExist)
+            {
+                AssetDatabase.CreateAsset(scriptable, $"{NPCScriptablePath + id}.asset");
+            }
+
+            // npc 프리팹이 없으므로 
+
+            //GameObject prefab = AssetDatabase.LoadMainAssetAtPath($"{NPCPrefabPath + id}.prefab") as GameObject;
+            //if (prefab == null) { continue; }
+            //if (!prefab.TryGetComponent<NPCScript>(out var script)) { Debug.Log(id + " 스크립트 없음"); continue; }
+
+            //script.SetScriptable(scriptable);
+
+            //AssetDatabase.SaveAssets();
+            //EditorUtility.SetDirty(scriptable);
+            //EditorUtility.SetDirty(prefab);
         }
     }
 }
