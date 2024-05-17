@@ -49,6 +49,7 @@ public partial class MonsterScript
     public bool IsScriptableSet { get { return m_scriptable != null; } }
     public void SetScriptable(MonsterScriptable _scriptable) { m_scriptable = _scriptable; SetInfo(); }     // 스크립터블 입력
     public EMonsterName MonsterEnum { get { return m_scriptable.MonsterEnum; } }                            // enum
+    public EMonsterType MonsterType { get { return m_scriptable.MonsterType; } }                            // 타입
 
     public override void ApplyHPUI()
     {

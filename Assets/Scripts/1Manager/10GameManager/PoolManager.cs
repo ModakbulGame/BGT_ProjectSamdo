@@ -22,7 +22,7 @@ public class PoolManager : MonoBehaviour
     public static GameObject GetObject(GameObject _obj)
     {
         int hash = _obj.GetHashCode();
-        if (!m_pools.ContainsKey(hash)) { Debug.LogError("풀에 추가되지 않은 오브젝트"); return null; }
+        if (!m_pools.ContainsKey(hash)) { Debug.LogError($"풀에 추가되지 않은 {_obj.name}"); return null; }
         CurHash = hash;
         return m_pools[hash].Get();
     }

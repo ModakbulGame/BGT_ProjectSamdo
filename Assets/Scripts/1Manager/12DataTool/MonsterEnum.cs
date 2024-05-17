@@ -23,6 +23,14 @@ public enum EMonsterAttribue
     LAST
 }
 
+public enum EMonsterType
+{
+    NORMAL,
+    ELITE,
+    BOSS,
+    LAST
+}
+
 public enum EMonsterName            // ∏ÛΩ∫≈Õ ¿Ã∏ß
 {
     STARVED_HHM,        // ±æ¡÷∏∞ »Ï

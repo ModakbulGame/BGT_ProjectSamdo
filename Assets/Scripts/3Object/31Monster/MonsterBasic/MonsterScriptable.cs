@@ -7,7 +7,7 @@ public class MonsterScriptable : ScriptableObject
     public uint             Idx;
     public EMonsterName     MonsterEnum;
     public string           ID;
-    public string           MonsterType;
+    public EMonsterType     MonsterType;
     public string           MonsterName;
     public int              MaxHP;
     public float            Attack;
@@ -24,12 +24,24 @@ public class MonsterScriptable : ScriptableObject
     public string           Description;
     public DropInfo         DropInfo;
 
+    private EMonsterType String2Type(string _data)
+    {
+        return _data switch
+        {
+            "NORMAL" => EMonsterType.NORMAL,
+            "ELITE" => EMonsterType.ELITE,
+            "BOSS" => EMonsterType.BOSS,
+
+            _ => EMonsterType.LAST
+        };
+    }
+
     public void SetMonsterScriptable(uint _idx, string[] _data, DropInfo _drop)
     {
         Idx =           _idx;
         MonsterEnum =   (EMonsterName)_idx;
         ID =            _data[(int)EMonsterAttribue.ID];
-        MonsterType =   _data[(int)EMonsterAttribue.TYPE];
+        MonsterType =   String2Type(_data[(int)EMonsterAttribue.TYPE]);
         MonsterName =   _data[(int)EMonsterAttribue.NAME];
         int.TryParse(   _data[(int)EMonsterAttribue.MAX_HP],            out MaxHP);
         float.TryParse( _data[(int)EMonsterAttribue.DAMAGE],            out Attack);

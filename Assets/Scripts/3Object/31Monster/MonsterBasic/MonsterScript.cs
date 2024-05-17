@@ -34,6 +34,8 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     public bool IsAttacking { get { return CurState.StateEnum == EMonsterState.ATTACK; } }
     public bool IsHit { get { return CurState.StateEnum == EMonsterState.HIT; } }
 
+    public override bool IsVoid => MonsterType == EMonsterType.NORMAL && base.IsVoid;
+
 
     // 상태 관련 메소드
     public virtual void StartIdle()          // 로밍 시작
