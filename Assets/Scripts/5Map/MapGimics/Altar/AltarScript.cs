@@ -15,4 +15,15 @@ public class AltarScript : NPCScript
     {
         
     }
+
+    public override void StartInteract()
+    {
+        // PlayManager.OpenAlterUI(this);
+        GameManager.SetControlMode(EControlMode.UI_CONTROL);
+    }
+
+    public override void StopInteract()
+    {
+        base.StopInteract();
+    }
 }
