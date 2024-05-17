@@ -76,13 +76,16 @@ public class DataManager : MonoBehaviour
     {
         return _data switch
         {
-            "SLOW" => ECCType.SLOW,
+            "FATIGUE" => ECCType.FATIGUE,
             "STUN" => ECCType.STUN,
-            "POISON" => ECCType.POISON,
-            "BLEED" => ECCType.BLEED,
-            "STAGGER" => ECCType.STAGGER,
+            "MELANCHOLY" => ECCType.MELANCHOLY,
+            "EXTORTION" => ECCType.EXTORTION,
             "AIRBORNE" => ECCType.AIRBORNE,
             "KNOCKBACK" => ECCType.KNOCKBACK,
+            "WEAKNESS" => ECCType.WEAKNESS,
+            "BIND" => ECCType.BIND,
+            "VOID" => ECCType.VOID,
+            "OBLIVION" => ECCType.OBLIVION,
             "BLIND" => ECCType.BLIND,
 
             _ => ECCType.LAST

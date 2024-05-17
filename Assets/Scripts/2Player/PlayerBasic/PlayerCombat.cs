@@ -130,7 +130,7 @@ public partial class PlayerController
     private ESkillName[] SkillSlot { get { return GameManager.SkillSlot; } }                // 스킬 슬롯
     public int SkillIdx { get { for (int i = 0; i<ValueDefine.MAX_SKILL_SLOT; i++)          // 눌린 스킬
             { if (SkillTriggers[i]) return i; } return -1; } }
-    public bool CanUseSkill { get { return !IsOverload && SkillIdx != -1                    // 스킬 사용 가능 여부
+    public bool CanUseSkill { get { return !IsOverload && !IsOblivion && SkillIdx != -1     // 스킬 사용 가능 여부
                 && SkillSlot[SkillIdx] != ESkillName.LAST && SkillCooltime[SkillIdx] <= 0; } }
     public ESkillName SkillInHand { get; private set; } = ESkillName.LAST;                  // 사용 중인 스킬
     private SkillInfo SkillInfoInHand { get {                                               // ㄴ의 정보
@@ -397,6 +397,23 @@ public partial class PlayerController
 
 
     // CC 관련
+    private IEnumerator OblivionCoroutine;
+    public bool IsOblivion { get { return m_ccCount[(int)ECCType.OBLIVION] > 0; } }
+    public override void GetOblivion()
+    {
+        m_ccCount[(int)ECCType.OBLIVION] = 10;
+        // 스킬 사용 불가 표시
+        if (OblivionCoroutine == null) { OblivionCoroutine = ResetOblivion(); StartCoroutine(OblivionCoroutine); }
+    }
+    private IEnumerator ResetOblivion()
+    {
+        while (!IsDead && IsOblivion)
+        {
+            yield return null;
+        }
+        // 스킬 사용 가능 표시
+    }
+
     private IEnumerator BlindCoroutine;
     public override void GetBlind()
     {
@@ -408,10 +425,8 @@ public partial class PlayerController
     {
         while (!IsDead && m_ccCount[(int)ECCType.BLIND] > 0)
         {
-            m_ccCount[(int)ECCType.BLIND] -= Time.deltaTime;
             yield return null;
         }
         PlayManager.HideBlindMark();
-        m_ccCount[(int)ECCType.BLIND] = 0;
     }
 }

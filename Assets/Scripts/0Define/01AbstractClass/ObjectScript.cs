@@ -107,16 +107,16 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
         if (IsDead) { return; }
         if (!IsGrounded && _hit.CCList.Contains(ECCType.AIRBORNE)) { return; }
         float damage = _hit.Damage * (100-Defense) * 0.01f;
+        if (CurHP > damage) { GetCC(_hit); }
         GetDamage(damage);
         Debug.Log($"{_hit.Attacker.ObjectName} => {ObjectName} {damage} 데미지");
         if (!IsUnstoppable) { PlayHitAnim(); }
-        if (!IsDead) { GetCC(_hit); }
     }
     public virtual void GetDamage(float _damage)                        // 데미지 받음
     {
         float hp = CurHP;
         hp -= _damage;
-        if (hp <= 0) { hp = 0; SetDead(); }
+        if (hp <= 0 || CheckVoid(_damage)) { hp = 0; SetDead(); }
         if (ExtraHP > 0) { ExtraHP -= _damage; }
         SetHP(hp);
     }
@@ -135,98 +135,79 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
 
 
     // CC기
-    // HitData들은 나중에 적용. 둔화는 뺄 예정
-    protected readonly float[] m_ccCount = new float[(int)ECCType.LAST];    // CC기 쿨타임
+    protected readonly float[] m_ccCount = new float[(int)ECCType.LAST];    // CC 쿨타임
 
+    private void CCProc() { for (int i = 0; i<(int)ECCType.LAST; i++) { if (m_ccCount[i] > 0) { m_ccCount[i]-=Time.deltaTime; } } }
     public virtual void GetCC(HitData _hit)                                 // CC 받기
     {
         for (int i = 0; i<_hit.CCList.Length; i++)
         {
             switch (_hit.CCList[i])
             {
-                case ECCType.AIRBORNE:
-                    GetAirborne(_hit);
+                case ECCType.FATIGUE:           // 피로
+                    GetFatigue();
                     break;
-                case ECCType.STUN:
-                    GetStun(_hit);
+                case ECCType.STUN:              // 기절
+                    GetStun();
                     break;
-                case ECCType.BLEED:
-                    GetBleed(_hit);
+                case ECCType.MELANCHOLY:        // 우울
+                    GetMelancholy(_hit);
                     break;
-                case ECCType.STAGGER:
-                    GetStagger(_hit);
+                case ECCType.EXTORTION:         // 갈취
+                    GetExtortion(_hit);
                     break;
-                case ECCType.POISON:
-                    GetPoison(_hit);
+                case ECCType.AIRBORNE:          // 띄움
+                    GetAirborne();
                     break;
-                case ECCType.SLOW:
-                    GetSlow(_hit);
-                    break;
-                case ECCType.KNOCKBACK:
+                case ECCType.KNOCKBACK:         // 밀림
                     GetKnockBack(_hit);
                     break;
-                case ECCType.BLIND:
+                case ECCType.WEAKNESS:          // 나약
+                    GetWeakness();
+                    break;
+                case ECCType.BIND:              // 속박
+                    GetBind();
+                    break;
+                case ECCType.VOID:              // 상실
+                    GetVoid();
+                    break;
+                case ECCType.OBLIVION:          // 망각
+                    GetOblivion();
+                    break;
+                case ECCType.BLIND:             // 실명
                     GetBlind();
                     break;
             }
         }
     }
     #region CC기 세부
-    private IEnumerator DebuffCotouine(ECCType _cc)
+    //  임시 상태 CC
+    private void GetFatigue()       // 피로
     {
-        while (!IsDead && m_ccCount[(int)_cc] > 0)
-        {
-            m_ccCount[(int)_cc] -= Time.deltaTime;
-            yield return null;
-        }
-        m_ccCount[(int)_cc] = 0;
+        TempAdjust slow = new(EAdjType.MOVE_SPEED, 0.7f, 10);
+        GetAdj(slow);
     }
-    private IEnumerator DamageCoroutine(ECCType _cc, float _damage)
+    private void GetWeakness()      // 나약
     {
-        while (!IsDead && m_ccCount[(int)_cc] > 0)
-        {
-            yield return new WaitForSeconds(1);
-            GetDamage(_damage);
-            m_ccCount[(int)_cc]--;
-        }
-        m_ccCount[(int)_cc] = 0;
+        TempAdjust hp = new(EAdjType.MAX_HP, 0.8f, 10);
+        GetAdj(hp);
     }
-    private void GetAirborne(HitData _hit)
+    private void GetBind()          // 속박
+    {
+        TempAdjust slow = new(EAdjType.MOVE_SPEED, 0, 5);
+        GetAdj(slow);
+    }
+
+    // 즉발 CC
+    private void GetStun()
+    {
+        // 애니메이션?
+    }
+    private void GetAirborne()
     {
         Vector3 vel = m_rigid.velocity;
         vel.y = 12;
         m_rigid.velocity = vel;
-    }
-    public bool IsStunned { get { return m_ccCount[(int)ECCType.STUN] > 0; } }
-    private void GetStun(HitData _hit)
-    {
-        // 기절.
-        StartCoroutine(DebuffCotouine(ECCType.STUN));
-    }
-    public bool IsBleeding { get { return m_ccCount[(int)ECCType.BLEED] > 0; } }
-    private void GetBleed(HitData _hit)
-    {
-        bool startCor = !IsBleeding;
-        m_ccCount[(int)ECCType.BLEED] = 5;
-        if (startCor) { StartCoroutine(DamageCoroutine(ECCType.BLEED, 5)); }
-    }
-    private void GetStagger(HitData _hit)
-    {
-        // 경직.
-        StartCoroutine(DebuffCotouine(ECCType.STUN));   // => 필요한가?
-    }
-    public bool IsPoisoned { get { return m_ccCount[(int)ECCType.POISON] > 0; } }
-    private void GetPoison(HitData _hit)
-    {
-        bool startCor = !IsPoisoned;
-        m_ccCount[(int)ECCType.POISON] = 10;
-        if (startCor) { StartCoroutine(DamageCoroutine(ECCType.POISON, 2)); }
-    }
-    public bool IsSlowed { get { return m_ccCount[(int)ECCType.SLOW] > 0; } }
-    private void GetSlow(HitData _hit)
-    {
-        TempAdjust slow = new(EAdjType.MOVE_SPEED, 0.5f, 5);
-        GetAdj(slow);
     }
     private void GetKnockBack(HitData _hit)
     {
@@ -234,7 +215,55 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
         Vector3 dir = new(flatDir.x, 0, flatDir.y);
         m_rigid.velocity = dir * 10;
     }
-    public bool IsBlind { get { return m_ccCount[(int)ECCType.BLIND] > 0; } }
+
+    // 조건부 CC
+    private IEnumerator DamageCoroutine(HitData _hit, ECCType _cc)
+    {
+        float damage = _cc == ECCType.MELANCHOLY ? 2 : 10;
+        ObjectScript attacker = _hit.Attacker;
+        while (!IsDead && m_ccCount[(int)_cc] > 0)
+        {
+            yield return new WaitForSeconds(1);
+            GetDamage(damage);
+            if (_cc == ECCType.EXTORTION) { attacker.HealObj(attacker.MaxHP * 0.1f); }
+            m_ccCount[(int)_cc]--;
+        }
+        m_ccCount[(int)_cc] = 0;
+    }
+
+    public bool IsMelancholy { get { return m_ccCount[(int)ECCType.MELANCHOLY] > 0; } }
+    private void GetMelancholy(HitData _hit)
+    {
+        bool startCor = !IsMelancholy;
+        m_ccCount[(int)ECCType.MELANCHOLY] = 10;
+        if (startCor) { StartCoroutine(DamageCoroutine(_hit, ECCType.MELANCHOLY)); }
+    }
+    public bool IsExtorted { get { return m_ccCount[(int)ECCType.EXTORTION] > 0; } }
+    private void GetExtortion(HitData _hit)
+    {
+        bool startCor = !IsExtorted;
+        m_ccCount[(int)ECCType.EXTORTION] = 3;
+        if (startCor) { StartCoroutine(DamageCoroutine(_hit, ECCType.EXTORTION)); }
+    }
+
+    private readonly float VoidDamagePercent = 0.25f;
+    public virtual bool IsVoid { get { return m_ccCount[(int)ECCType.VOID] > 0; } }
+    private float VoidDamageCount { get; set; }
+    private void GetVoid()
+    {
+        m_ccCount[(int)ECCType.VOID] = 10;
+        VoidDamageCount = 0;
+    }
+    private bool CheckVoid(float _damage)
+    {
+        if (!IsVoid) { return false; } 
+        VoidDamageCount += _damage; 
+        if(VoidDamageCount < MaxHP * VoidDamagePercent) { return false; }
+        return true;
+    }
+
+    // 플레이어 CC
+    public virtual void GetOblivion() { }
     public virtual void GetBlind() { }
     #endregion
 
@@ -243,7 +272,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     public virtual void ProcCooltime()
     {
         BuffNDebuffProc();
-        // CC기도 추가 예정
+        CCProc();
     }
 
     public virtual void Update()

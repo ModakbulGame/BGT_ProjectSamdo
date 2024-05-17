@@ -72,11 +72,13 @@ public static class ValueDefine
     public const char AROUND_CODE = '6';
     public const char AROUND_CC_CODE = '7';
 
-    public const char SLOW_CODE = '1';
+    public const char FATIGUE_CODE = '1';
     public const char STUN_CODE = '2';
-    public const char POISON_CODE = '3';
-    public const char BLEED_CODE = '4';
-    public const char STAGGER_CODE = '5';
-    public const char AIRBORNE_CODE = '6';
-    public const char KNOCKBACK_CODE = '7';
+    public const char MELANCHOLY_CODE = '3';
+    public const char EXTORTION_CODE = '4';
+    public const char AIRBORNE_CODE = '5';
+    public const char KNOCKBACK_CODE = '6';
+    public const char WEAKNESS_CODE = '7';
+    public const char BIND_CODE = '8';
+    public const char VOID_CODE = '9';
 }

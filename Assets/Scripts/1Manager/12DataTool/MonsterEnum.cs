@@ -62,7 +62,9 @@ public enum EMonsterName            // 몬스터 이름
     MINIUUM_WATER,      // 물 미니움
     MINIUUM_CRYSTAL,    // 광물 미니움
     BLO,                // 블로
-    GATEKEEPER,         // 문지기 골렘
+    LIFE_GUARDIAN,      // 생명 문지기
+    WATER_GUARDIAN,     // 물 문지기
+    CRYSTAL_GUARDIAN,   // 광물 문지기
 
     LAST
 }

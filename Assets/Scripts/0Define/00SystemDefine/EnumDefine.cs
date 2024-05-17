@@ -45,14 +45,17 @@ public enum EInteractType
 public enum ECCType
 {
     NONE,               // 일반(없음)
-    SLOW,               // 둔화
+    FATIGUE,            // 피로
     STUN,               // 기절
-    POISON,             // 중독
-    BLEED,              // 출혈
-    STAGGER,            // 경직
-    AIRBORNE,           // 공중
+    MELANCHOLY,         // 우울
+    EXTORTION,          // 갈취
+    AIRBORNE,           // 띄움
     KNOCKBACK,          // 밀림
-    BLIND,
+    WEAKNESS,           // 나약
+    BIND,               // 속박
+    VOID,               // 상실
+    OBLIVION,           // 망각
+    BLIND,              // 실명
 
     LAST
 }

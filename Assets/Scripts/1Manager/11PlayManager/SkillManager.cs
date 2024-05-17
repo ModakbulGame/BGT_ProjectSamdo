@@ -58,17 +58,7 @@ public class SkillManager : MonoBehaviour
         char c2 = _code[1];
         if(c2 != ValueDefine.MELEE_CC_CODE && c2 != ValueDefine.RANGED_CC_CODE && c2 != ValueDefine.AROUND_CC_CODE)
         { return ECCType.NONE; }
-        return _code[2] switch
-        {
-            ValueDefine.SLOW_CODE => ECCType.SLOW,
-            ValueDefine.STUN_CODE => ECCType.STUN,
-            ValueDefine.POISON_CODE => ECCType.POISON,
-            ValueDefine.BLEED_CODE => ECCType.BLEED,
-            ValueDefine.STAGGER_CODE => ECCType.STAGGER,
-            ValueDefine.AIRBORNE_CODE => ECCType.AIRBORNE,
-            ValueDefine.KNOCKBACK_CODE => ECCType.KNOCKBACK,
-            _ => ECCType.NONE
-        };
+        return (ECCType)(_code[2] - '0');
     }
 
 
