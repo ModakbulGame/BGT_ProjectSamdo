@@ -94,6 +94,8 @@ public class PlayManager : MonoBehaviour
     // 스토리
     private StoryManager m_storyManager;
     private static StoryManager StoryManager { get { return Inst.m_storyManager; } }
+    public static List<QuestData> QuestList { get { return StoryManager.QuestList; } }
+    public static List<QuestData> CurQuestList { get { return StoryManager.CurQuestList; } }
 
 
     // 환경
@@ -160,6 +162,7 @@ public class PlayManager : MonoBehaviour
         m_invenManager = GetComponent<InventoryManager>();
         m_invenManager.SetManager();
         m_storyManager = GetComponent<StoryManager>();
+        m_storyManager.SetManager();
         m_environmentManager = GetComponent<EnvironmentManager>();
         m_environmentManager.setManager();
         m_upgradeManager = GetComponent<UpgradeManager>();

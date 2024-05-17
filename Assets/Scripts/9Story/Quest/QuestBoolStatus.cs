@@ -1,0 +1,90 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class QuestBoolStatus : MonoBehaviour
+{
+    private List<QuestData> m_questList = PlayManager.QuestList;
+
+    // 현재 퀘스트 상태 반환
+    public bool RequestAvailableQuest(int _id)
+    {
+        for (int i = 0; i < m_questList.Count; i++)
+        {
+            if (m_questList[i].m_id == _id && m_questList[i].m_status == EQuestStatus.AVAILABLE)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool RequestAcceptedQuest(int _id)
+    {
+        for (int i = 0; i < m_questList.Count; i++)
+        {
+            if (m_questList[i].m_id == _id && m_questList[i].m_status == EQuestStatus.ACCEPTED)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool RequestCompleteQuest(int _id)
+    {
+        for (int i = 0; i < m_questList.Count; i++)
+        {
+            if (m_questList[i].m_id == _id && m_questList[i].m_status == EQuestStatus.COMPLETE)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool CheckAvailableQuests(QuestObject _npcQuest)
+    {
+        for (int i = 0; i < m_questList.Count; i++)
+        {
+            for (int j = 0; j < _npcQuest.availableQuestIDs.Count; j++)
+            {
+                if (m_questList[i].m_id == _npcQuest.availableQuestIDs[j] && m_questList[i].m_status == EQuestStatus.AVAILABLE)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public bool CheckAcceptedQuests(QuestObject _npcQuest)
+    {
+        for (int i = 0; i < m_questList.Count; i++)
+        {
+            for (int j = 0; j < _npcQuest.availableQuestIDs.Count; j++)
+            {
+                if (m_questList[i].m_id == _npcQuest.availableQuestIDs[j] && m_questList[i].m_status == EQuestStatus.ACCEPTED)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public bool CheckCompletedQuests(QuestObject _npcQuest)
+    {
+        for (int i = 0; i < m_questList.Count; i++)
+        {
+            for (int j = 0; j < _npcQuest.availableQuestIDs.Count; j++)
+            {
+                if (m_questList[i].m_id == _npcQuest.availableQuestIDs[j] && m_questList[i].m_status == EQuestStatus.COMPLETE)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}

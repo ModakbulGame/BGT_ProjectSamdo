@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ public static class DataImporter
         ItemScriptablePath + "Others/"          };
 
     private const string SkillScriptablePath = ScriptablePath + "SkillScriptable/";
-    private const string NPCScriptablePath = ScriptablePath + "NPCScriptable";
+    private const string NPCScriptablePath = ScriptablePath + "NPCScriptable/";
 
     // 프리펍 경로
     private const string PrefabPath = "Assets/Prefabs/";
@@ -252,12 +253,12 @@ public static class DataImporter
         // NPC 정보
         string[] allNPCLines = File.ReadAllLines(CSVPath + NPCCSVName);
 
+
         for (uint i = 1; i < allNPCLines.Length; i++)
         {
             uint idx = i - 1;
             string si = allNPCLines[i];
-            string[] splitNPCData = si.Split(',');
-            string[] splitDialogueData = si.Split(new string[] { ",," }, StringSplitOptions.None);
+            string[] splitNPCData = si.Split(",");
 
             if (splitNPCData.Length != (int)EnpcAttribute.LAST)
             {
@@ -265,28 +266,18 @@ public static class DataImporter
                 return;
             }
 
-            string firstDialogue = splitNPCData[splitNPCData.Length - 1];
+            string[] npcData = new string[splitNPCData.Length - 1];     // NPC 정보
+            List<string> dialogueData = new List<string>();             // 대사만 포함하고 있는 리스트
 
-            // 대사 빼고의 npc 데이터
-            string[] newSplitNPCData = new string[splitNPCData.Length - 1];
-            Array.Copy(splitNPCData, newSplitNPCData, splitNPCData.Length - 1);
-
-            foreach (string data in newSplitNPCData)
+            for (int j = 0; j < (splitNPCData.Length - 1); j++)
             {
-                Debug.Log(data);
+                if (splitNPCData[j] != "") npcData[j] = splitNPCData[j];
             }
+            dialogueData.Add(splitNPCData[splitNPCData.Length - 1]);
 
-            // 대사만 있는 npc 데이터
-            string[] dialogueData = new string[splitDialogueData.Length + 1];
-            dialogueData[0] = firstDialogue;
-            for(int j = 0; j < splitDialogueData.Length; j++)
+            foreach (string npc in dialogueData)
             {
-                dialogueData[j + 1] = splitDialogueData[j];
-            }
-
-            foreach(string data in dialogueData)
-            {
-                Debug.Log(data);
+                Debug.Log(npc);
             }
 
             string id = splitNPCData[(int)EnpcAttribute.ID];
@@ -296,15 +287,14 @@ public static class DataImporter
             bool IsExist = scriptable != null;
             if (!IsExist) { scriptable = ScriptableObject.CreateInstance<NPCScriptable>(); }
 
-            scriptable.SetNPCScriptable(idx, newSplitNPCData);
-            scriptable.SetNPCDialogues(idx, dialogueData);
+            scriptable.SetNPCScriptable(idx, npcData, dialogueData);
 
             if (!IsExist)
             {
                 AssetDatabase.CreateAsset(scriptable, $"{NPCScriptablePath + id}.asset");
             }
 
-            // npc 프리팹이 없으므로 
+            // npc 프리팹이 없으므로 일단 주석 처리
 
             //GameObject prefab = AssetDatabase.LoadMainAssetAtPath($"{NPCPrefabPath + id}.prefab") as GameObject;
             //if (prefab == null) { continue; }
