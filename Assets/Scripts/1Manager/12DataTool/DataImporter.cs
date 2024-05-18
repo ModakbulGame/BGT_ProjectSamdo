@@ -8,6 +8,8 @@ using UnityEngine;
 
 public static class DataImporter
 {
+    private static string GameManagerPath = PrefabPath + "System/GameManager.prefab";
+
     private static string CSVPath { get { return Application.dataPath + "/Data/CSVs/"; } }
     private const string ItemCSVName = "ItemSheet.csv";
     private const string MonsterCSVName = "MonsterSheet.csv";
@@ -79,7 +81,8 @@ public static class DataImporter
         // 몬스터 정보
         string[] allMonsterLines = File.ReadAllLines(CSVPath + MonsterCSVName);
 
-        List<MonsterScriptable> monsters = new();
+        List<GameObject> prefabs = new();
+        List<MonsterScriptable> datas = new();
 
         for (uint i = 1; i < allMonsterLines.Length; i++)
         {
@@ -107,16 +110,30 @@ public static class DataImporter
                 AssetDatabase.CreateAsset(scriptable, $"{SkillScriptablePath + id}.asset");
             }
 
-            GameObject prefab = AssetDatabase.LoadMainAssetAtPath($"{MonsterPrefabPath + id}.prefab") as GameObject;
-            if (prefab == null) { continue; }
-            if (!prefab.TryGetComponent<MonsterScript>(out var script)) { Debug.Log(id + " 스크립트 없음"); continue; }
+            datas.Add(scriptable);
 
-            script.SetScriptable(scriptable);
+            GameObject prefab = AssetDatabase.LoadMainAssetAtPath($"{MonsterPrefabPath + id}.prefab") as GameObject;
+            if (prefab != null)
+            {
+                MonsterScript script = prefab.GetComponentInChildren<MonsterScript>();
+                if(script == null) { Debug.LogError("몬스터에 스크립트 없음"); continue; }
+                script.SetScriptable(scriptable);
+                prefabs.Add(prefab);
+            }
 
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(scriptable);
-            EditorUtility.SetDirty(prefab);
+            if (prefab != null) { EditorUtility.SetDirty(prefab); }
         }
+
+        GameObject gameManager = AssetDatabase.LoadMainAssetAtPath(GameManagerPath) as GameObject;
+        MonsterManager monManager = gameManager.GetComponentInChildren<MonsterManager>();
+        monManager.SetMonsterPrefabs(prefabs);
+        DataList dataList = gameManager.GetComponentInChildren<DataList>();
+        dataList.SetMonsterData(datas);
+
+        AssetDatabase.SaveAssets();
+        EditorUtility.SetDirty(gameManager);
     }
 
     [MenuItem("Utilities/GenerateItems")]

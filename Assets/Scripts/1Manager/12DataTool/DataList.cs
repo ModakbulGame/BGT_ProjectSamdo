@@ -28,7 +28,12 @@ public class DataList : MonoBehaviour
     public NPCScriptable GetNPCData(EnpcName _npc) { return m_npcs[(int)_npc]; }
 
 
-    public void SetMonsterData(MonsterScriptable[] _data) { m_monsters = new MonsterScriptable[_data.Length]; for (int i = 0; i<(_data.Length); i++) { m_monsters[i] = _data[i]; } }
+    public void SetMonsterData(List<MonsterScriptable> _data) 
+    { 
+        m_monsters = new MonsterScriptable[_data.Count]; 
+        for (int i = 0; i<(_data.Count); i++) 
+        { m_monsters[i] = _data[i]; } 
+    }
     public void SetItemData(List<ItemScriptable>[] _data)
     {
         SetWeaponData(_data[0].ToArray());
