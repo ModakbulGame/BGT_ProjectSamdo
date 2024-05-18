@@ -5,33 +5,33 @@ using UnityEngine;
 public enum EArrogantAttack
 {
     NORMAL,
-    JUMP,
+    SMASH,
     LAST
 }
 
 public class ArrogantScript : HmmScript
 {
     public EArrogantAttack CurAttack { get; private set; } = EArrogantAttack.NORMAL;
-    private readonly float JumpCooltime = 15;
-    public readonly float JumpRange = 10;
+    private readonly float SmashCooltime = 15;
+    public readonly float SmashRange = 10;
 
-    private bool CanJump { get { return JumpTimeCount <= 0; } }
+    private bool CanSmash { get { return SmashTimeCount <= 0; } }
 
-    public override float AttackRange => CanJump ? JumpRange-2 : base.AttackRange;
+    public override float AttackRange => CanSmash ? SmashRange-2 : base.AttackRange;
 
-    private float JumpTimeCount { get; set; } = 0;
+    private float SmashTimeCount { get; set; } = 0;
 
     public override void StartAttack()
     {
-        if (CanJump) { StartJump(); return; }
+        if (CanSmash) { StartSmash(); return; }
         CurAttack = EArrogantAttack.NORMAL;
         base.StartAttack();
     }
 
-    public void StartJump()
+    public void StartSmash()
     {
-        CurAttack = EArrogantAttack.JUMP;
-        JumpTimeCount = JumpCooltime;
+        CurAttack = EArrogantAttack.SMASH;
+        SmashTimeCount = SmashCooltime;
         StopMove();
         m_anim.SetTrigger("SKILL");
         m_jumpList.Clear();
@@ -39,16 +39,16 @@ public class ArrogantScript : HmmScript
 
     public override void CreateAttack()
     {
-        if (CurAttack == EArrogantAttack.JUMP)
+        if (CurAttack == EArrogantAttack.SMASH)
         {
-            CheckNJump();
+            CheckNSmash();
         }
     }
 
     private readonly List<ObjectScript> m_jumpList = new();
-    public void CheckNJump()
+    public void CheckNSmash()
     {
-        Collider[] targets = Physics.OverlapSphere(Position, JumpRange, ValueDefine.HITTABLE_LAYER);
+        Collider[] targets = Physics.OverlapSphere(Position, SmashRange, ValueDefine.HITTABLE_LAYER);
         for (int i = 0; i<targets.Length; i++)
         {
             ObjectScript obj = targets[i].GetComponentInParent<ObjectScript>();
@@ -69,6 +69,6 @@ public class ArrogantScript : HmmScript
     public override void ProcCooltime()
     {
         base.ProcCooltime();
-        if (JumpTimeCount > 0) { JumpTimeCount -= Time.deltaTime; }
+        if (SmashTimeCount > 0) { SmashTimeCount -= Time.deltaTime; }
     }
 }

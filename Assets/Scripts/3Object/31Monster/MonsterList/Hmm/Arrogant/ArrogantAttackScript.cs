@@ -31,7 +31,7 @@ public class ArrogantAttackScript : MonoBehaviour, IMonsterState
 
             Arrogant.LookTarget();
         }
-        else if (CurAttack == EArrogantAttack.JUMP)
+        else if (CurAttack == EArrogantAttack.SMASH)
         {
 
         }
