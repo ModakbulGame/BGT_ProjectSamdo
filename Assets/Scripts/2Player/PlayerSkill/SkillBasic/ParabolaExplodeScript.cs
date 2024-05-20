@@ -15,14 +15,6 @@ public class ParabolaExplodeScript : ParabolaSkillScript
             m_skillExplosion[i].SetActive(true);
             m_skillExplosion[i].transform.SetParent(null);
         }
-        ReleaseToPool();
-    }
-    public override void ReleaseToPool()
-    {
-        for (int i = 0;i < m_skillExplosion.Length; i++)
-        {
-            OriginalPool.Release(m_skillExplosion[i]);
-        }
     }
     public override void CheckSkillTrigger(Collider _other)
     {

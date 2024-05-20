@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ExplodeScript : ObjectAttackScript
 {
+    private Transform ReturnTransform;
+
     [SerializeField]
     private float m_explosionRadius = 1.75f;
 
@@ -15,5 +17,20 @@ public class ExplodeScript : ObjectAttackScript
         HitData hit = new(Attacker, Damage, _point, CCList);
         _hittable.GetHit(hit);
         AddHitObject(_hittable);
+    }
+
+    public override void AttackOff()
+    {
+        base.AttackOff();
+        if (ReturnTransform != null)
+        {
+            transform.SetParent(ReturnTransform);
+            ReturnTransform = null;
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
