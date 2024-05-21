@@ -1,36 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class ExplodeScript : ObjectAttackScript
 {
+    [SerializeField]
+    private VisualEffect m_explosionEffect;
+
     private Transform ReturnTransform;
 
-    [SerializeField]
-    private float m_explosionRadius = 1.75f;
-
-    public override float Damage => 8;
-
-    public override void GiveDamage(IHittable _hittable, Vector3 _point)
+    public void SetDamage(ObjectScript _attacker, float _damage, float _time)
     {
-        if (CheckHit(_hittable)) { return; }
-        HitData hit = new(Attacker, Damage, _point, CCList);
-        _hittable.GetHit(hit);
-        AddHitObject(_hittable);
+        SetAttack(_attacker, _damage);
+        StartCoroutine(LoseDamage(_time));
     }
 
-    public override void AttackOff()
+    private IEnumerator LoseDamage(float _time)
     {
-        base.AttackOff();
-        if (ReturnTransform != null)
-        {
-            transform.SetParent(ReturnTransform);
-            ReturnTransform = null;
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        yield return new WaitForSeconds(_time);
+        AttackOff();
     }
 }
