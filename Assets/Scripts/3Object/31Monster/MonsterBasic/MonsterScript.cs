@@ -133,7 +133,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
             }
         }
     }
-    public void StartDissolve()             // dissolve vfx 효과 재생
+    public virtual void StartDissolve()             // dissolve vfx 효과 재생
     {
         GameObject effect = GameManager.GetEffectObj(EEffectName.MONSTER_DISSOLVE);
         effect.transform.position = Position;
