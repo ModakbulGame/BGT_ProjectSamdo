@@ -61,6 +61,7 @@ MonoBehaviour:
   m_uiOffset: 2
   m_normalAttacks:
   - {fileID: 8376127291140787350}
+  - {fileID: 5530053198318916150, guid: 77e78430c74129246897cea529787e64, type: 3}
   m_scriptable: {fileID: 11400000, guid: 5d160b7e23d06b74e836cff07f63c80e, type: 2}
   m_combatInfo:
     MaxHP: 100
@@ -76,6 +77,8 @@ MonoBehaviour:
     FenceRange: 25
   m_spawnPoint: {fileID: 0}
   m_dissolveDelay: 2
+  m_attackMaxNum: 5
+  m_throwAttackIdx: 1
 --- !u!114 &7815606524377398159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1562,7 +1565,7 @@ MonoBehaviour:
   baseTransform: {fileID: 0}
   Hips: {fileID: 502794099726073128}
   ScaleReferenceMode: 3
-  finalScaleReference: 1.0864893
+  finalScaleReference: 1.0864881
   finalScaleReferenceSqrt: 0.1
   customScaleReferenceValue: 0.5
   DelayedInitialization: 0

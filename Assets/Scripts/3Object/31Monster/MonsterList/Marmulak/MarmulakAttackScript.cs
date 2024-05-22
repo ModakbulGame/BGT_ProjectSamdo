@@ -17,16 +17,11 @@ public class MarmulakAttackScript : MonoBehaviour, IMonsterState
         if(Marmulak == null) { m_monster = _monster; }
 
         Marmulak.StartAttack();
-        
-        if (CurAttack == EMarmulakAttack.ROAR)
-        {
-
-        }
     }
 
     public void Proceed()
     {
-        if (CurAttack == EMarmulakAttack.NORMAL)
+        if (CurAttack != EMarmulakAttack.ROAR)
         {
             if (!Marmulak.HasTarget)
             {
@@ -35,10 +30,6 @@ public class MarmulakAttackScript : MonoBehaviour, IMonsterState
             }
 
             Marmulak.LookTarget();
-        }
-        else if (CurAttack == EMarmulakAttack.ROAR)
-        {
-
         }
     }
 }

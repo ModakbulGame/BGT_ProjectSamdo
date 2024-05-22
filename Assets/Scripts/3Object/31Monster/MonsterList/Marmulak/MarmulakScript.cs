@@ -5,29 +5,45 @@ using UnityEngine;
 public enum EMarmulakAttack
 {
     NORMAL,
+    THROW,
     ROAR,
     LAST
 }
 
-public class MarmulakScript : AnimatedAttackMonster
+public class MarmulakScript : RangedAttackMonster
 {
     public EMarmulakAttack CurAttack { get; private set; } = EMarmulakAttack.NORMAL;
     private readonly float RoarCooltime = 15;
     public readonly float RoarRange = 10;
+    private readonly float NearAttackRange = 3;
 
-    private bool CanRoar { get { return RoarTimeCount <= 0; } }
+    private bool CanRoar { get { return TargetDistance <= RoarRange && RoarTimeCount <= 0; } }
 
-    public override float AttackRange => CanRoar ? RoarRange-2 : base.AttackRange;
+    public override float AttackRange => CanRoar ? RoarRange-2 : (TargetDistance <= RoarRange) ? NearAttackRange : base.AttackRange;
 
     private float RoarTimeCount { get; set; } = 0;
 
     public override void StartAttack()
     {
         if (CanRoar) { StartRoar(); return; }
-        CurAttack = EMarmulakAttack.NORMAL;
+        if (TargetDistance <= RoarRange)
+        {
+            CurAttack = EMarmulakAttack.NORMAL;
+            m_anim.SetInteger("ATTACK_IDX", 0);
+        }
+        else
+        {
+            CurAttack = EMarmulakAttack.THROW;
+            m_anim.SetInteger("ATTACK_IDX", 1);
+        }
         base.StartAttack();
     }
 
+    public override Vector3 AttackOffset => new(0.63f, 1.391f, 1.321f);
+    public void ThrowBall()
+    {
+        base.CreateAttack();
+    }
     public void StartRoar()
     {
         CurAttack = EMarmulakAttack.ROAR;
@@ -39,10 +55,19 @@ public class MarmulakScript : AnimatedAttackMonster
 
     public override void CreateAttack()
     {
-        if (CurAttack == EMarmulakAttack.ROAR)
+        if (CurAttack == EMarmulakAttack.THROW)
+        {
+            ThrowBall();
+        }
+        else if (CurAttack == EMarmulakAttack.ROAR)
         {
             CheckNRoar();
         }
+    }
+    public override void AttackTriggerOn()
+    {
+        base.AttackTriggerOn();
+        AttackObject.SetDamage(Attack);
     }
 
     private readonly List<ObjectScript> m_roarList = new();

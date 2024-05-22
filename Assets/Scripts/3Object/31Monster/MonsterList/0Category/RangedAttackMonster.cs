@@ -10,6 +10,8 @@ public class RangedAttackMonster : MonsterScript
 
     [SerializeField]
     private int m_attackMaxNum = 5;
+    [SerializeField]
+    private int m_throwAttackIdx = 0;
 
     public virtual Vector3 AttackOffset { get { return Vector3.zero; } }
 
@@ -19,10 +21,11 @@ public class RangedAttackMonster : MonsterScript
         attack.transform.localPosition = AttackOffset;
         attack.transform.parent = null;
 
-        Vector3 dir = (CurTarget.Position - Position).normalized;
+        Vector3 dir = (CurTarget.Position - (attack.transform.position)).normalized;
+        dir.y = 0;
 
         MonsterProjectileScript script = attack.GetComponent<MonsterProjectileScript>();
-        script.SetAttack(this, dir, Attack);
+        script.SetAttack(this, dir, Attack, TargetDistance);
         script.AttackOn();
     }
 
@@ -33,7 +36,7 @@ public class RangedAttackMonster : MonsterScript
     }
     private GameObject OnPoolCreate()
     {
-        GameObject obj = Instantiate(m_normalAttacks[0], transform);
+        GameObject obj = Instantiate(m_normalAttacks[m_throwAttackIdx], transform);
         obj.GetComponent<MonsterProjectileScript>().SetPool(m_attackPool);
         return obj;
     }

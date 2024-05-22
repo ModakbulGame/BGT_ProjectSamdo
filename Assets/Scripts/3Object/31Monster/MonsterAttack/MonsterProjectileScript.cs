@@ -11,7 +11,7 @@ public class MonsterProjectileScript : ObjectAttackScript, IHittable, IPoolable
     [SerializeField]
     private float m_moveSpeed = 6;
     [SerializeField]
-    private float m_attackRange;
+    protected float m_attackRange;
     [SerializeField]
     private float m_lastTime;
 
@@ -32,7 +32,11 @@ public class MonsterProjectileScript : ObjectAttackScript, IHittable, IPoolable
     }
 
 
-    public void SetAttack(ObjectScript _attacker, Vector3 _dir, float _damage) { SetAttack(_attacker, _damage); MoveDir = new(_dir.x, 0, _dir.z); }
+    public virtual void SetAttack(ObjectScript _attacker, Vector3 _dir, float _damage, float _dist)
+    {
+        SetAttack(_attacker, _damage);
+        MoveDir = new(_dir.x, 0, _dir.z);
+    }
 
 
 
