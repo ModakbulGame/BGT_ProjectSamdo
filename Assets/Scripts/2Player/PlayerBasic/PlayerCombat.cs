@@ -16,10 +16,13 @@ public partial class PlayerController
         if (!IsDead && IsGuarding && _hit.Attacker.IsMonster) { ((MonsterScript)_hit.Attacker).HitGuardingPlayer(); }
         base.GetHit(_hit);
     }
-    public override void PlayHitAnim()                                  // 피격 애니메이션
+    public override void PlayHitAnim(HitData _hit)                      // 피격 애니메이션
     {
         if (IsHealing) { CancelHeal(); }
-        StopMove();
+        if (!_hit.CCList.Contains(ECCType.AIRBORNE) && !_hit.CCList.Contains(ECCType.KNOCKBACK))
+        {
+            StopMove();
+        }
         HitAnimation();
         ChangeState(EPlayerState.HIT);
     }

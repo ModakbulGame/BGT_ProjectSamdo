@@ -13,9 +13,9 @@ public abstract partial class MonsterScript
         base.GetHit(_hit);
         m_hpBar.SetCurHP(CurHP);
     }
-    public override void PlayHitAnim()
+    public override void PlayHitAnim(HitData _hit)
     {
-        base.PlayHitAnim();
+        base.PlayHitAnim(_hit);
         ChangeState(EMonsterState.HIT);
     }
     public override void SetDead()
@@ -42,8 +42,6 @@ public abstract partial class MonsterScript
 
         AttackObject = m_normalAttacks[_idx].GetComponent<ObjectAttackScript>();
         AttackObject.SetAttack(this, Attack);
-
-        AttackObject.SetDamage(Attack);
         base.AttackTriggerOn();
     }
     public override void AttackTriggerOff()

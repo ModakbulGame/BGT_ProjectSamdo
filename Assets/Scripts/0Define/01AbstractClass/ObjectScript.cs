@@ -110,7 +110,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
         if (CurHP > damage) { GetCC(_hit); }
         GetDamage(damage);
         Debug.Log($"{_hit.Attacker.ObjectName} => {ObjectName} {damage} 데미지");
-        if (!IsUnstoppable) { PlayHitAnim(); }
+        if (!IsUnstoppable) { PlayHitAnim(_hit); }
     }
     public virtual void GetDamage(float _damage)                        // 데미지 받음
     {
@@ -120,7 +120,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
         if (ExtraHP > 0) { ExtraHP -= _damage; }
         SetHP(hp);
     }
-    public virtual void PlayHitAnim()                                   // 피격 애니메이션 재생
+    public virtual void PlayHitAnim(HitData _hit)                       // 피격 애니메이션 재생
     {
         HitAnimation();
     }
