@@ -14,6 +14,8 @@ public class ParabolaExplodeScript : ParabolaSkillScript
         {
             m_skillExplosion[i].SetActive(true);
             m_skillExplosion[i].transform.SetParent(null);
+            PlayerSkillScript explode = m_skillExplosion[i].GetComponent<PlayerSkillScript>();
+            explode.SetDamage(5);
         }
     }
     public override void CheckSkillTrigger(Collider _other)
