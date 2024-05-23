@@ -5,31 +5,46 @@ using UnityEngine.VFX;
 
 public class ExplodeScript : ObjectAttackScript
 {
-    [SerializeField]
-    private VisualEffect m_explosionEffect;
-    [SerializeField]
-    public override float Damage => base.Damage;
+    protected ObjectAttackScript m_attack;
+    public ObjectAttackScript Attack { get { return m_attack; } }
+    private Transform ReturnTransform { get; set; }
 
-    public void SetDamage(ObjectScript _attacker, float _damage, float _time)
+    public void SetAttack(ObjectAttackScript _attacker,float _damge)
+    {
+        m_attack= _attacker; SetDamage(_damge);
+    }
+    public void SetDamage(ObjectAttackScript _attacker, float _damage, float _time)
     {
         SetAttack(_attacker, _damage);
-        StartCoroutine(Explosion());
+        StartCoroutine(LoseDamage(_time));
     }
 
-    private IEnumerator Explosion()
+    public void SetReturnTransform(Transform _transform)
     {
-        m_explosionEffect.Play();
-        yield return new WaitForSeconds(1f);
-        Destroy(gameObject);
+        ReturnTransform = _transform;
     }
 
-    private void CheckExplosionTrigger(Collider _other)
+    private IEnumerator LoseDamage(float _time)
     {
-        IHittable hittable = _other.GetComponentInParent<IHittable>();
-        hittable ??= _other.GetComponentInChildren<IHittable>();
-        if (hittable == null) { return; }
-        if (hittable.IsPlayer) { return; }
-        Vector3 point = _other.ClosestPoint(transform.position);
-        GiveDamage(hittable, point);
+        yield return new WaitForSeconds(_time);
+        AttackOff();
     }
+
+
+    public override void AttackOff()
+    {
+        base.AttackOff();
+        if (ReturnTransform != null)
+        {
+            transform.SetParent(ReturnTransform);
+            ReturnTransform = null;
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public override void Start() { }
 }

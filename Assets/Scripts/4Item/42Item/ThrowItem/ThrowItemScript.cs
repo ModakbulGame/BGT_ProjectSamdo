@@ -21,4 +21,5 @@ public class ThrowItemScript : PooledItem
     {
         m_rigid = GetComponent<Rigidbody>();
     }
+
 }
