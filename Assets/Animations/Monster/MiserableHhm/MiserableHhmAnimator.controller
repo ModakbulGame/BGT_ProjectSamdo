@@ -517,32 +517,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1102 &3528798005719736138
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Left
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 7e9b6ca48c6b86f4487f8a4c10144046, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1101 &3918752046055731178
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -662,23 +636,20 @@ AnimatorStateMachine:
     m_State: {fileID: 4724323882161891287}
     m_Position: {x: 150, y: 250, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 3528798005719736138}
-    m_Position: {x: 680, y: 180, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: -8518425662071993978}
-    m_Position: {x: 680, y: 230, z: 0}
+    m_Position: {x: 680, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5893339931841388210}
     m_Position: {x: 680, y: 280, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -9085482146873358640}
-    m_Position: {x: 680, y: 330, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 8800799350421760794}
     m_Position: {x: 680, y: 380, z: 0}
   - serializedVersion: 1
+    m_State: {fileID: 8800799350421760794}
+    m_Position: {x: 680, y: 330, z: 0}
+  - serializedVersion: 1
     m_State: {fileID: -4828051847362816547}
-    m_Position: {x: 592.7084, y: 442.00952, z: 0}
+    m_Position: {x: 680, y: 230, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: 889172760292813230}
@@ -687,7 +658,9 @@ AnimatorStateMachine:
   - {fileID: 3918752046055731178}
   - {fileID: -2194571358798297310}
   m_EntryTransitions: []
-  m_StateMachineTransitions: {}
+  m_StateMachineTransitions:
+  - first: {fileID: 889172760292813230}
+    second: []
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 170, y: 190, z: 0}
   m_EntryPosition: {x: 40, y: 130, z: 0}
