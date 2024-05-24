@@ -42,7 +42,7 @@ public class SkillManager : MonoBehaviour
 
 
     private readonly ESkillName[] m_skillSlot = new ESkillName[ValueDefine.MAX_SKILL_SLOT]
-    { ESkillName.BLADE_BASIC,ESkillName.BUFF,ESkillName.WEAPON_POISON};              // 임시 설정
+    { ESkillName.AROUND_FOG,ESkillName.BUFF_COMBAT,ESkillName.BUFF_FATIGUE};              // 임시 설정
     public ESkillName[] SkillSlot { get { return m_skillSlot; } }
 
     public void RegisterSkillSlot(ESkillName _skill, int _idx) { m_skillSlot[_idx] = _skill; }
