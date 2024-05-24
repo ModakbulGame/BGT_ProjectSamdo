@@ -1,22 +1,31 @@
+using MalbersAnimations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
 public class ExplodeScript : ObjectAttackScript
-{
-    protected ObjectAttackScript m_attack;
-    public ObjectAttackScript Attack { get { return m_attack; } }
+{ 
     private Transform ReturnTransform { get; set; }
 
-    public void SetAttack(ObjectAttackScript _attacker,float _damge)
-    {
-        m_attack= _attacker; SetDamage(_damge);
-    }
-    public void SetDamage(ObjectAttackScript _attacker, float _damage, float _time)
+    public void SetDamage(ObjectScript _attacker, float _damage, float _time)
     {
         SetAttack(_attacker, _damage);
         StartCoroutine(LoseDamage(_time));
+    }
+
+    private void CheckExplosion(Collider _other)
+    {
+        IHittable hittable=_other.GetComponentInParent<IHittable>();
+        hittable ??=_other.GetComponentInChildren<IHittable>();
+        if (hittable == null) { return; }
+        Vector3 point = _other.ClosestPoint(transform.position);
+        GiveDamage(hittable, point);
+    }
+
+    private void OnTriggerEnter(Collider _other)
+    {
+        CheckExplosion(_other);
     }
 
     public void SetReturnTransform(Transform _transform)
@@ -30,6 +39,13 @@ public class ExplodeScript : ObjectAttackScript
         AttackOff();
     }
 
+    public override void GiveDamage(IHittable _hittable, Vector3 _point)
+    {
+        if (CheckHit(_hittable)) { return; }
+        HitData hit = new(Attacker, Damage, _point, CCList);
+        _hittable.GetHit(hit);
+        AddHitObject(_hittable);
+    }
 
     public override void AttackOff()
     {
@@ -37,6 +53,7 @@ public class ExplodeScript : ObjectAttackScript
         if (ReturnTransform != null)
         {
             transform.SetParent(ReturnTransform);
+            transform.position = ReturnTransform.position;
             ReturnTransform = null;
             gameObject.SetActive(false);
         }
