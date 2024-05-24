@@ -5,11 +5,11 @@ using UnityEngine;
 public class MiserableScript : HmmScript
 {
     private int CurAttackIdx { get; set; }
-    private bool IsAttackSkill { get { return CurAttackIdx == 2; } }
+    private bool IsAttackSkill { get { return CurAttackIdx == 3; } }
     private int SkillIdx { get; set; }
     public override void StartAttack()
     {
-        CurAttackIdx = Random.Range(0, 3);
+        CurAttackIdx = Random.Range(0, 2);
         if(IsAttackSkill) { SkillIdx = 0; }
         m_anim.SetInteger("ATTACK_IDX", CurAttackIdx);
         base.StartAttack();
@@ -20,8 +20,9 @@ public class MiserableScript : HmmScript
     }
     public override void AttackTriggerOn()
     {
-        int idx = CurAttackIdx;
-        if (IsAttackSkill) { idx = SkillIdx % 2; }
+        int idx;
+        if (!IsAttackSkill) { idx = 0; }
+        else { idx = SkillIdx % 2 + 1; SkillIdx++; }
         AttackTriggerOn(idx);
         AttackObject.SetAttack(this, Attack);
     }

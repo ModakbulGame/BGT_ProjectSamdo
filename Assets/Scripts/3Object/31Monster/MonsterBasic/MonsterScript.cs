@@ -17,6 +17,11 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     public virtual void ReleaseToPool() { m_aiPath.enabled = false; IsSpawned = false; OriginalPool.Release(gameObject); }
 
 
+    // 애님
+    public void StartMoveAnim() { m_anim.SetBool("IS_MOVING", true); }
+    public void StopMoveAnim() { m_anim.SetBool("IS_MOVING", false); }
+
+
     // 스테이트 매니저
     protected MonsterStateManager m_stateManager;
     protected readonly IMonsterState[] m_monsterStates = new IMonsterState[(int)EMonsterState.LAST];
