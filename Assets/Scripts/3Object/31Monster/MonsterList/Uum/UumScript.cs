@@ -8,6 +8,17 @@ public class UumScript : AnimatedAttackMonster
     [SerializeField]
     private VisualEffect m_headFire;
 
+    public override void SetDestination(Vector3 _destination)
+    {
+        base.SetDestination(_destination);
+        StartMoveAnim();
+    }
+    public override void StopMove()
+    {
+        base.StopMove();
+        StopMoveAnim();
+    }
+
 
     private int AttackIdx { get; set; }
 
