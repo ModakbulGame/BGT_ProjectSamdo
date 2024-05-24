@@ -5,10 +5,36 @@ using UnityEngine;
 
 public abstract partial class MonsterScript
 {
+    // 전투 매니저
+    private MonsterBattler m_battleManager;
+    public bool AgainstMonster { get { return m_battleManager.AgainstMonster; } set { m_battleManager.AgainstMonster = value; } }
+    private void SetBattleTarget(ObjectScript _obj)
+    {
+        if (_obj == CurTarget) { return; }
+        if (_obj.IsPlayer) { CurTarget = _obj; }
+        else if (_obj.IsMonster && AgainstMonster) { CurTarget = _obj; }
+    }
+    private bool CheckMonsterBattle(HitData _hit)
+    {
+        if (_hit.Attacker.IsPlayer) { return false; }
+        MonsterScript monster = (MonsterScript)_hit.Attacker;
+        if(!AgainstMonster && !monster.AgainstMonster) { NotTargetDamage(_hit); return true; }
+        AgainstMonster = true;
+        return false;
+    }
+    private void NotTargetDamage(HitData _hit)
+    {
+        float damage = _hit.Damage * (100-Defense) * 0.01f;
+        GetDamage(damage);
+        Debug.Log($"{_hit.Attacker.ObjectName} => {ObjectName} {damage} 데미지");
+    }
+    
+
     // 기본 전투
     public override void GetHit(HitData _hit)    // 맞음
     {
-        if (CurTarget == null) { CurTarget = _hit.Attacker; }
+        if (CheckMonsterBattle(_hit)) { return; }
+        SetBattleTarget(_hit.Attacker);
         SetDeathType(_hit.Attacker);
         base.GetHit(_hit);
         m_hpBar.SetCurHP(CurHP);

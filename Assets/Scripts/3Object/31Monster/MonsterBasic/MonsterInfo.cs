@@ -95,6 +95,7 @@ public partial class MonsterScript
         base.SetComps();
         m_skinneds = GetComponentsInChildren<SkinnedMeshRenderer>();
         m_lightReciever = GetComponent<MonsterLighter>();
+        m_battleManager = GetComponent<MonsterBattler>();
         m_aiPath = GetComponent<AIPath>();
         DissolveColor = m_skinneds[0].materials[0].GetColor("_Dissolvecolor");
     }

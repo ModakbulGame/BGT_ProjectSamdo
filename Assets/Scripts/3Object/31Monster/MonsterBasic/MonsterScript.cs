@@ -7,7 +7,7 @@ using UnityEngine.Pool;
 using UnityEngine.VFX;
 using Cinemachine;
 
-[RequireComponent(typeof(MonsterLighter))]
+[RequireComponent(typeof(MonsterLighter), typeof(MonsterBattler))]
 public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 {
     // Ǯ
