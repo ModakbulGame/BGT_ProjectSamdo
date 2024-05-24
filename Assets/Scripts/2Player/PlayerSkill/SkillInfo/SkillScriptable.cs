@@ -26,19 +26,19 @@ public class SkillScriptable : ScriptableObject
 
     private ECastType Name2Type(ESkillName _skillName)
     {
-        if (_skillName < ESkillName.MELEE_SLOW)
+        if (_skillName < ESkillName.MELEE_STUN)
             return ECastType.MELEE;
-        else if (_skillName < ESkillName.SCEPTER_BASIC)
+        else if (_skillName < ESkillName.RANGED_PROJ1)
             return ECastType.MELEE_CC;
-        else if (_skillName < ESkillName.RANGED_SLOW)
+        else if (_skillName < ESkillName.RANGED_FATIGUE1)
             return ECastType.RANGED;
-        else if (_skillName < ESkillName.CREATION)
+        else if (_skillName < ESkillName.CREATION_SOUL)
             return ECastType.RANGED_CC;
-        else if (_skillName < ESkillName.AROUND)
+        else if (_skillName < ESkillName.AROUND_SHOCKWAVE)
             return ECastType.SUMMON;
-        else if (_skillName < ESkillName.AROUND_SLOW)
+        else if (_skillName < ESkillName.AROUND_FATIGUE)
             return ECastType.AROUND;
-        else if (_skillName < ESkillName.BUFF)
+        else if (_skillName < ESkillName.BUFF_MAXHP)
             return ECastType.AROUND_CC;
         else if (_skillName < ESkillName.LAST)
             return ECastType.BUFF;
