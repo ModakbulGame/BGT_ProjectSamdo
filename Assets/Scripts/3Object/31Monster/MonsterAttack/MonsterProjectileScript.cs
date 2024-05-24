@@ -48,7 +48,7 @@ public class MonsterProjectileScript : ObjectAttackScript, IHittable, IPoolable
 
     private void OnTriggerEnter(Collider _other)
     {
-        if (_other.CompareTag(ValueDefine.PLAYER_TAG))
+        if (_other.CompareTag(ValueDefine.PLAYER_HIT_TAG))
         {
             DestroyAttack();
         }
