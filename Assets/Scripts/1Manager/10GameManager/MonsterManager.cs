@@ -25,17 +25,26 @@ public class MonsterManager : MonoBehaviour
     public MonsterInfo GetMonsterInfo(EMonsterName _monster) { return m_monsterInfo[(int)_monster]; }
 
     [SerializeField]
-    private GameObject[] m_monsterPrefabs = new GameObject[(int)EMonsterName.LAST];
-    public GameObject[] MonsterArray { get { return m_monsterPrefabs; } }
+    private MonsterScriptable[] m_monsterData;
+    public GameObject[] MonsterArray { get {
+            GameObject[] array = new GameObject[m_monsterData.Length];
+            for(int i = 0; i<array.Length; i++) { array[i] = m_monsterData[i].MonsterPrefab; }
+            return array; ; } }
 
-    public void SetMonsterPrefabs(List<GameObject> _mons)
+    public void SetMonsterData(List<MonsterScriptable> _mons)
     {
-
+        m_monsterData = new MonsterScriptable[(int)EMonsterName.LAST];
+        for(int i = 0; i<_mons.Count; i++) { m_monsterData[i] = _mons[i]; }
     }
 
+
+    public MonsterScriptable GetMonsterData(EMonsterName _monster)
+    {
+        return m_monsterData[(int)_monster];
+    }
     public GameObject GetMonsterObj(EMonsterName _monster)
     {
-        return PoolManager.GetObject(m_monsterPrefabs[(int)_monster]);
+        return PoolManager.GetObject(m_monsterData[(int)_monster].MonsterPrefab);
     }
 
     public bool CheckNClearMonster(EMonsterName _monster)
@@ -51,7 +60,7 @@ public class MonsterManager : MonoBehaviour
     {
         for (int i = 0; i<(int)EMonsterName.LAST; i++)
         {
-            m_monsterInfo[i] = new MonsterInfo(GameManager.GetMonsterRawData((EMonsterName)i));
+            m_monsterInfo[i] = new MonsterInfo(GameManager.GetMonsterData((EMonsterName)i));
         }
     }
 }

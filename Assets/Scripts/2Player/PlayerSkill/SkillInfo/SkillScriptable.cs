@@ -4,25 +4,27 @@ using UnityEngine;
 
 public class SkillScriptable : ScriptableObject
 {
-    public uint Idx;
-    public ESkillName SkillEnum;
-    public string ID;
-    public ECastType CastType;
-    public ESkillProperty[] SkillProps;
-    public string SkillName;
-    public float Attack;
-    public float Magic;
-    public float MoveSpeed;
-    public float CastingRange;
-    public float HitRadius;
-    public float PreDelay;
-    public float TotalDelay;
-    public float Cooltime;
-    public int StaminaCost;
-    public TempAdjust StatAdjust;
-    public string Description;
-    public int Price;
-    public bool HideWeapon;
+    public uint                 Idx;
+    public ESkillName           SkillEnum;
+    public string               ID;
+    public ECastType            CastType;
+    public ESkillProperty[]     SkillProps;
+    public string               SkillName;
+    public float                Attack;
+    public float                Magic;
+    public float                MoveSpeed;
+    public float                CastingRange;
+    public float                HitRadius;
+    public float                PreDelay;
+    public float                TotalDelay;
+    public float                Cooltime;
+    public int                  StaminaCost;
+    public TempAdjust           StatAdjust;
+    public string               Description;
+    public int                  Price;
+    public GameObject           SkillPrefab;
+    public Sprite               SkillIcon;
+    public bool                 HideWeapon;
 
     private ECastType Name2Type(ESkillName _skillName)
     {
@@ -48,7 +50,7 @@ public class SkillScriptable : ScriptableObject
     }
 
 
-    public void SetSkillScriptable(uint _idx, string[] _data)
+    public void SetSkillScriptable(uint _idx, string[] _data, GameObject _prefab)
     {
         Idx =               _idx;
         SkillEnum =         (ESkillName)_idx;
@@ -72,5 +74,6 @@ public class SkillScriptable : ScriptableObject
         StatAdjust =        new(type, amount, time);
         Description =       _data[(int)ESkillAttribute.DESCRIPTION];
         int.TryParse(       _data[(int)ESkillAttribute.PRICE],            out Price);
+        SkillPrefab =       _prefab;
     }
 }

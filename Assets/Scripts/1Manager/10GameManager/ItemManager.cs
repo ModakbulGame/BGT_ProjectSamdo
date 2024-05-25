@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEditor;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 // 아이템 관련 enum -> ItemEnum에 있음
 
@@ -71,33 +69,11 @@ public class ItemInfo
 
 public class ItemManager : MonoBehaviour
 {
-    // 아이템 프리펍
-    [SerializeField]
-    private GameObject[] m_dropItemPrefab = new GameObject[(int)EItemType.LAST];            // 드랍 아이템
-    public GameObject GetDropItemPrefab(EItemType _item)
-    {
-        return PoolManager.GetObject(m_dropItemPrefab[(int)_item]);
-    }
-
-    [SerializeField]
-    private GameObject[] m_throwItemPrefabs = new GameObject[(int)EThrowItemName.LAST];     // 투척 아이템
-    public GameObject GetThrowItemPrefab(EThrowItemName _item)
-    {
-        return PoolManager.GetObject(m_throwItemPrefabs[(int)_item]);
-    }
-
-    public GameObject[] ItemArray { get {                                                   // 전체 아이템
-            List<GameObject> list = new();
-            list.AddRange(m_dropItemPrefab);
-            list.AddRange(m_throwItemPrefabs);
-            return list.ToArray(); } }
-
-
     // 아이템 정보
     private readonly Dictionary<SItem, ItemInfo> m_itemInfo = new();
     public ItemInfo GetItemInfo(SItem _item)
     {
-        if(_item.IsEmpty) { Debug.LogError("빈 아이템"); return null; }
+        if (_item.IsEmpty) { Debug.LogError("빈 아이템"); return null; }
         return m_itemInfo[_item];
     }
     public ItemInfo GetItemInfo(string _id)
@@ -117,6 +93,64 @@ public class ItemManager : MonoBehaviour
     }
 
 
+    [SerializeField]
+    private WeaponScriptable[] m_weaponData;
+    [SerializeField]
+    private PatternScriptable[] m_patternData;
+    [SerializeField]
+    private ThrowItemScriptable[] m_throwItemData;
+    [SerializeField]
+    private OtherItemScriptable[] m_othersData;
+
+    public void SetItemData(List<ItemScriptable>[] _datas)
+    {
+        m_weaponData = new WeaponScriptable[_datas[0].Count];
+        for(int i = 0; i<m_weaponData.Length; i++) { m_weaponData[i] = (WeaponScriptable)_datas[0][i]; }
+        m_patternData = new PatternScriptable[_datas[1].Count];
+        for (int i = 0; i<m_patternData.Length; i++) { m_patternData[i] = (PatternScriptable)_datas[1][i]; }
+        m_throwItemData = new ThrowItemScriptable[_datas[2].Count];
+        for (int i = 0; i<m_throwItemData.Length; i++) { m_throwItemData[i] = (ThrowItemScriptable)_datas[2][i]; }
+        m_othersData = new OtherItemScriptable[_datas[3].Count];
+        for (int i = 0; i<m_othersData.Length; i++) { m_othersData[i] = (OtherItemScriptable)_datas[3][i]; }
+    }
+
+    public ItemScriptable GetItemData(SItem _item)
+    {
+        int idx = _item.Idx;
+        return _item.Type switch
+        {
+            EItemType.WEAPON => m_weaponData[idx],
+            EItemType.PATTERN => m_patternData[idx],
+            EItemType.THROW => m_throwItemData[idx],
+            EItemType.OTHERS => m_othersData[idx],
+            _ => null
+        };
+    }
+
+
+    [SerializeField]
+    private GameObject[] m_throwItemPrefabs = new GameObject[(int)EThrowItemName.LAST];     // 투척 아이템
+    public GameObject GetThrowItemPrefab(EThrowItemName _item)
+    {
+        return PoolManager.GetObject(m_throwItemData[(int)_item].ItemPrefab);
+    }
+
+
+    // 아이템 프리펍
+    [SerializeField]
+    private GameObject[] m_dropItemPrefabs = new GameObject[(int)EItemType.LAST];            // 드랍 아이템
+    public GameObject GetDropItemPrefab(EItemType _item)
+    {
+        return PoolManager.GetObject(m_dropItemPrefabs[(int)_item]);
+    }
+
+
+    public GameObject[] ItemArray { get {                                                   // 전체 아이템
+            List<GameObject> list = new();
+            list.AddRange(m_dropItemPrefabs);
+            list.AddRange(m_throwItemPrefabs);
+            return list.ToArray(); } }
+
 
 
     // 아이템 별 종류 수
@@ -132,7 +166,7 @@ public class ItemManager : MonoBehaviour
             for (int j = 0; j<cnt; j++)                         // 아이템 종류에 따라 다르게 저장 추가 예정
             {
                 SItem item = new(type, j);
-                ItemScriptable scriptable = GameManager.GetItemRawData(item);
+                ItemScriptable scriptable = GameManager.GetItemData(item);
                 m_itemInfo[item] = new(scriptable, item);
             }
         }

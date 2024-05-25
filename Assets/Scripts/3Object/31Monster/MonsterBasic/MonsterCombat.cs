@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 
@@ -37,6 +38,10 @@ public abstract partial class MonsterScript
         SetBattleTarget(_hit.Attacker);
         SetDeathType(_hit.Attacker);
         base.GetHit(_hit);
+    }
+    public override void GetDamage(float _damage)
+    {
+        base.GetDamage(_damage);
         m_hpBar.SetCurHP(CurHP);
     }
     public override void PlayHitAnim(HitData _hit)
@@ -165,4 +170,40 @@ public abstract partial class MonsterScript
         HitGuarding = false;
     }
 
+
+    private readonly float InfectRadius = 1.5f;
+    public bool IsMelancholySource { get; private set; }
+    public override void GetMelancholy(HitData _hit)
+    {
+        IsMelancholySource = true;
+        StartCoroutine(InfectMelancholy());
+        base.GetMelancholy(_hit);
+    }
+    public void GetMelancholy()
+    {
+        base.GetMelancholy(HitData.Null);
+    }
+    private IEnumerator InfectMelancholy()
+    {
+        yield return new WaitForSeconds(0.1f);
+        while (!IsDead && IsMelancholy)
+        {
+            FindInfectTarget();
+            yield return new WaitForSeconds(0.1f);
+        }
+        IsMelancholySource = false;
+    }
+    private void FindInfectTarget()
+    {
+        Collider[] cols = Physics.OverlapSphere(Position, InfectRadius, ValueDefine.HITTABLE_LAYER);
+        List<MonsterScript> targets = new();
+        foreach (Collider col in cols)
+        {
+            if (col.CompareTag(ValueDefine.MONSTER_TAG)) { continue; }
+            MonsterScript monster = col.GetComponent<MonsterScript>();
+            if(monster == null || monster.IsDead || monster.IsMelancholy || targets.Contains(monster)) { continue; }
+            targets.Add(monster);
+        }
+        foreach(MonsterScript monster in targets) { monster.GetMelancholy(); }
+    }
 }

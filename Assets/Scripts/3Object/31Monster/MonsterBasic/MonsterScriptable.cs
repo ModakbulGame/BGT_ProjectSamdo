@@ -23,6 +23,8 @@ public class MonsterScriptable : ScriptableObject
     public float            FenceRange;
     public string           Description;
     public DropInfo         DropInfo;
+    public GameObject       MonsterPrefab;
+    public Sprite           MonsterProfile;
 
     private EMonsterType String2Type(string _data)
     {
@@ -36,7 +38,7 @@ public class MonsterScriptable : ScriptableObject
         };
     }
 
-    public void SetMonsterScriptable(uint _idx, string[] _data, DropInfo _drop)
+    public void SetMonsterScriptable(uint _idx, string[] _data, DropInfo _drop, GameObject _prefab)
     {
         Idx =           _idx;
         MonsterEnum =   (EMonsterName)_idx;
@@ -56,7 +58,7 @@ public class MonsterScriptable : ScriptableObject
         float.TryParse( _data[(int)EMonsterAttribue.APPROACH_DELAY],    out ApproachDelay);
         float.TryParse( _data[(int)EMonsterAttribue.FENCE_RANGE],       out FenceRange);
         Description =   _data[(int)EMonsterAttribue.DESCRIPTION];
-
         DropInfo =      _drop;
+        MonsterPrefab = _prefab;
     }
 }

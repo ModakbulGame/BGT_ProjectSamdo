@@ -49,42 +49,18 @@ public class UIManager : MonoBehaviour
     }
 
 
-
-    // UI ÀÌ¹ÌÁö Sprite
-    [SerializeField]
-    private Sprite[] m_monsterSprites = new Sprite[(int)EMonsterName.LAST];
-    [SerializeField]
-    private Sprite[] m_weaponSprites = new Sprite[(int)EWeaponName.LAST];
-    [SerializeField]
-    private Sprite[] m_patternSprites = new Sprite[(int)EPatternName.LAST];
-    [SerializeField]
-    private Sprite[] m_throwItemSprites = new Sprite[(int)EThrowItemName.LAST];
-    [SerializeField]
-    private Sprite[] m_otherItemSprites = new Sprite[(int)EOtherItemName.LAST];
-    [SerializeField]
-    private Sprite[] m_skillSprites = new Sprite[(int)ESkillName.LAST];
-
     public Sprite GetMonsterSprite(EMonsterName _monster)
     {
-        return m_monsterSprites[(int)_monster];
+        return GameManager.GetMonsterData(_monster).MonsterProfile;
     }
 
     public Sprite GetItemSprite(SItem _item)
     {
-        int idx = _item.Idx;
-        return _item.Type switch
-        {
-            EItemType.WEAPON => m_weaponSprites[idx],
-            EItemType.PATTERN => m_patternSprites[idx],
-            EItemType.THROW => m_throwItemSprites[idx],
-            EItemType.OTHERS => m_otherItemSprites[idx],
-
-            _ => null
-        };
+        return GameManager.GetItemData(_item).ItemIcon;
     }
 
     public Sprite GetSkillSprite(ESkillName _skill)
     {
-        return m_skillSprites[(int)_skill];
+        return GameManager.GetSkillData(_skill).SkillIcon;
     }
 }

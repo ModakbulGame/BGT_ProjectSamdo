@@ -5,34 +5,8 @@ using UnityEngine;
 
 public class DataManager : MonoBehaviour
 {
-    [SerializeField]
-    private DataList m_dataList;
-
-
-    // 몬스터 데이터
-    public MonsterScriptable GetMonsterData(EMonsterName _monster) { return m_dataList.GetMonsterData(_monster); }
-
     // NPC 데이터
-    public NPCScriptable GetNPCData(EnpcName _npc) { return m_dataList.GetNPCData(_npc); }
-
-    // 아이템 데이터
-    public ItemScriptable GetItemData(SItem _item)
-    {
-        return _item.Type switch
-        {
-            EItemType.WEAPON => m_dataList.GetWeaponData((EWeaponName)_item.Idx),
-            EItemType.PATTERN => m_dataList.GetPatternData((EPatternName)_item.Idx),
-            EItemType.THROW => m_dataList.GetThrowItemData((EThrowItemName)_item.Idx),
-            EItemType.OTHERS => m_dataList.GetOtherItemData((EOtherItemName)_item.Idx),
-
-            _ => null
-        };
-    }
-
-    // 스킬 데이터
-    public SkillScriptable GetSkillData(ESkillName _skill) { return m_dataList.GetSkillData(_skill); }
-
-
+    //public NPCScriptable GetNPCData(EnpcName _npc) { return m_dataList.GetNPCData(_npc); }
 
 
     public static EItemType IDToItemType(string _id)

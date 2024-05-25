@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5780070357615950228}
   - component: {fileID: 6000130114330537697}
   - component: {fileID: 7016878022558309059}
+  - component: {fileID: 1204584719259142289}
   m_Layer: 0
   m_Name: M513
   m_TagString: Monster
@@ -77,6 +78,7 @@ MonoBehaviour:
   m_spawnPoint: {fileID: 0}
   m_dissolveDelay: 2
   m_attackMaxNum: 5
+  m_throwAttackIdx: 0
 --- !u!114 &5318344071406112501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,6 +242,19 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0.1, y: 0.1, z: 0.1}
+--- !u!114 &1204584719259142289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3677812087295266640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770da8bf480be4c4982904c0fcefd449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_againstMonster: 0
 --- !u!1001 &1812712957248145112
 PrefabInstance:
   m_ObjectHideFlags: 0

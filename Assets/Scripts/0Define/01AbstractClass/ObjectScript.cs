@@ -232,8 +232,9 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     }
 
     public bool IsMelancholy { get { return m_ccCount[(int)ECCType.MELANCHOLY] > 0; } }
-    private void GetMelancholy(HitData _hit)
+    public virtual void GetMelancholy(HitData _hit)
     {
+        if(IsMelancholy) { return; }
         bool startCor = !IsMelancholy;
         m_ccCount[(int)ECCType.MELANCHOLY] = 10;
         if (startCor) { StartCoroutine(DamageCoroutine(_hit, ECCType.MELANCHOLY)); }

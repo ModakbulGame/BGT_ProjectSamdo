@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5890370115289183664}
   - component: {fileID: 8107112462845829967}
   - component: {fileID: 4749932428291933464}
+  - component: {fileID: 3291748090671184164}
   m_Layer: 9
   m_Name: M517
   m_TagString: Monster
@@ -240,6 +241,19 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0.1, y: 0.1, z: 0.1}
+--- !u!114 &3291748090671184164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6291557583224368823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770da8bf480be4c4982904c0fcefd449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_againstMonster: 0
 --- !u!1 &8570056233980586548
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,8 +5,6 @@ using UnityEngine;
 public class DataList : MonoBehaviour
 {
     [SerializeField]
-    private MonsterScriptable[] m_monsters = new MonsterScriptable[(int)EMonsterName.LAST];
-    [SerializeField]
     private WeaponScriptable[] m_weapons = new WeaponScriptable[(int)EWeaponName.LAST];
     [SerializeField]
     private PatternScriptable[] m_patterns = new PatternScriptable[(int)EPatternName.LAST];
@@ -15,25 +13,15 @@ public class DataList : MonoBehaviour
     [SerializeField]
     private OtherItemScriptable[] m_otherItems = new OtherItemScriptable[(int)EOtherItemName.LAST];
     [SerializeField]
-    private SkillScriptable[] m_skills = new SkillScriptable[(int)ESkillName.LAST];
-    [SerializeField]
     private NPCScriptable[] m_npcs = new NPCScriptable[(int)EnpcName.LAST];
 
-    public MonsterScriptable GetMonsterData(EMonsterName _monster) { return m_monsters[(int)_monster]; }
     public WeaponScriptable GetWeaponData(EWeaponName _weapon) { return m_weapons[(int)_weapon]; }
     public PatternScriptable GetPatternData(EPatternName _pattern) { return m_patterns[(int)_pattern]; }
     public ThrowItemScriptable GetThrowItemData(EThrowItemName _throw) { return m_throwItems[(int)_throw]; }
     public OtherItemScriptable GetOtherItemData(EOtherItemName _other) { return m_otherItems[(int)_other]; }
-    public SkillScriptable GetSkillData(ESkillName _skill) { return m_skills[(int)_skill]; }
     public NPCScriptable GetNPCData(EnpcName _npc) { return m_npcs[(int)_npc]; }
 
 
-    public void SetMonsterData(List<MonsterScriptable> _data) 
-    { 
-        m_monsters = new MonsterScriptable[_data.Count]; 
-        for (int i = 0; i<(_data.Count); i++) 
-        { m_monsters[i] = _data[i]; } 
-    }
     public void SetItemData(List<ItemScriptable>[] _data)
     {
         SetWeaponData(_data[0].ToArray());
@@ -45,6 +33,5 @@ public class DataList : MonoBehaviour
     private void SetPatternData(ItemScriptable[] _data) { m_patterns = new PatternScriptable[_data.Length]; for (int i = 0; i<(_data.Length); i++) { m_patterns[i] = (PatternScriptable)_data[i]; } }
     private void SetThrowItemData(ItemScriptable[] _data) { m_throwItems = new ThrowItemScriptable[_data.Length]; for (int i = 0; i<(_data.Length); i++) { m_throwItems[i] = (ThrowItemScriptable)_data[i]; } }
     private void SetOtherItemData(ItemScriptable[] _data) { m_otherItems = new OtherItemScriptable[_data.Length]; for (int i = 0; i<(_data.Length); i++) { m_otherItems[i] = (OtherItemScriptable)_data[i]; } }
-    public void SetSkillData(SkillScriptable[] _data) { m_skills = new SkillScriptable[_data.Length]; for (int i = 0; i<(_data.Length); i++) { m_skills[i] = _data[i]; } }
     public void SetNPCData(NPCScriptable[] _data) { m_npcs = new NPCScriptable[_data.Length]; for (int i = 0; i < (_data.Length); i++) { m_npcs[i] = _data[i]; } }
 }

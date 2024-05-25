@@ -81,7 +81,6 @@ public static class DataImporter
         // 몬스터 정보
         string[] allMonsterLines = File.ReadAllLines(CSVPath + MonsterCSVName);
 
-        List<GameObject> prefabs = new();
         List<MonsterScriptable> datas = new();
 
         for (uint i = 1; i < allMonsterLines.Length; i++)
@@ -100,26 +99,22 @@ public static class DataImporter
 
             MonsterScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{MonsterScriptablePath + id}.asset")as MonsterScriptable;
 
-            bool IsExist = scriptable != null;
-            if (!IsExist) { scriptable = ScriptableObject.CreateInstance<MonsterScriptable>(); }
-
-            scriptable.SetMonsterScriptable(idx, splitMonsterData, dropInfos[id]);
-
-            if (!IsExist)
+            if (scriptable == null)
             {
+                scriptable = ScriptableObject.CreateInstance<MonsterScriptable>();
                 AssetDatabase.CreateAsset(scriptable, $"{SkillScriptablePath + id}.asset");
             }
-
             datas.Add(scriptable);
 
             GameObject prefab = AssetDatabase.LoadMainAssetAtPath($"{MonsterPrefabPath + id}.prefab") as GameObject;
             if (prefab != null)
             {
                 MonsterScript script = prefab.GetComponentInChildren<MonsterScript>();
-                if(script == null) { Debug.LogError("몬스터에 스크립트 없음"); continue; }
+                if (script == null) { Debug.LogError("몬스터에 스크립트 없음"); continue; }
                 script.SetScriptable(scriptable);
-                prefabs.Add(prefab);
             }
+
+            scriptable.SetMonsterScriptable(idx, splitMonsterData, dropInfos[id], prefab);
 
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(scriptable);
@@ -128,9 +123,7 @@ public static class DataImporter
 
         GameObject gameManager = AssetDatabase.LoadMainAssetAtPath(GameManagerPath) as GameObject;
         MonsterManager monManager = gameManager.GetComponentInChildren<MonsterManager>();
-        monManager.SetMonsterPrefabs(prefabs);
-        DataList dataList = gameManager.GetComponentInChildren<DataList>();
-        dataList.SetMonsterData(datas);
+        monManager.SetMonsterData(datas);
 
         AssetDatabase.SaveAssets();
         EditorUtility.SetDirty(gameManager);
@@ -143,6 +136,8 @@ public static class DataImporter
         string[] allItemLines = File.ReadAllLines(CSVPath + ItemCSVName);
 
         uint[] itemCnt = new uint[(int)EItemType.LAST];
+
+        List<ItemScriptable>[] datas = new List<ItemScriptable>[(int)EItemType.LAST] { new(), new(), new(), new() };
 
         for (uint i = 1; i<allItemLines.Length; i++)
         {
@@ -164,60 +159,82 @@ public static class DataImporter
                 case ValueDefine.WEAPON_CODE:
                     type = (uint)EItemType.WEAPON;
                     scriptable = AssetDatabase.LoadMainAssetAtPath($"{ItemScriptablePaths[type] + id}.asset")as WeaponScriptable;
+                    if(scriptable == null)
+                    {
+                        scriptable = ScriptableObject.CreateInstance<WeaponScriptable>();
+                        AssetDatabase.CreateAsset(scriptable, $"{ItemScriptablePaths[type] + id}.asset");
+                    }
                     break;
                 case ValueDefine.PATTERN_CODE:
                     type = (uint)EItemType.PATTERN;
                     scriptable = AssetDatabase.LoadMainAssetAtPath($"{ItemScriptablePaths[type] + id}.asset")as PatternScriptable;
+                    if (scriptable == null)
+                    {
+                        scriptable = ScriptableObject.CreateInstance<PatternScriptable>();
+                        AssetDatabase.CreateAsset(scriptable, $"{ItemScriptablePaths[type] + id}.asset");
+                    }
                     break;
                 case ValueDefine.THROW_ITEM_CODE:
                     type = (uint)EItemType.THROW;
                     scriptable = AssetDatabase.LoadMainAssetAtPath($"{ItemScriptablePaths[type] + id}.asset")as ThrowItemScriptable;
+                    if (scriptable == null)
+                    {
+                        scriptable = ScriptableObject.CreateInstance<ThrowItemScriptable>();
+                        AssetDatabase.CreateAsset(scriptable, $"{ItemScriptablePaths[type] + id}.asset");
+                    }
                     break;
                 case ValueDefine.OTHER_ITEM_CODE:
                     type = (uint)EItemType.OTHERS;
                     scriptable = AssetDatabase.LoadMainAssetAtPath($"{ItemScriptablePaths[type] + id}.asset")as OtherItemScriptable;
+                    if (scriptable == null)
+                    {
+                        scriptable = ScriptableObject.CreateInstance<OtherItemScriptable>();
+                        AssetDatabase.CreateAsset(scriptable, $"{ItemScriptablePaths[type] + id}.asset");
+                    }
                     break;
                 default: Debug.LogError("맞는 ID 없음"); return;
             }
             uint idx = itemCnt[type]++;
-
-            bool IsExist = scriptable != null;
-            if (!IsExist) { scriptable = ScriptableObject.CreateInstance<ItemScriptable>(); }
-
-            scriptable.SetItemScriptable(idx, splitItemData);
-
-            if (!IsExist)
-            {
-                AssetDatabase.CreateAsset(scriptable, $"{SkillScriptablePath + id}.asset");
-            }
+            datas[type].Add(scriptable);
 
             string prefabPath = ItemPrefabPaths[type];
 
             GameObject prefab = AssetDatabase.LoadMainAssetAtPath($"{prefabPath + id}.prefab") as GameObject;
-            if (prefab == null) { continue; }
-            switch (id[0])
+            if (prefab != null)
             {
-                case ValueDefine.WEAPON_CODE:
-                    WeaponScript weapon = prefab.GetComponent<WeaponScript>();
-                    if (weapon != null) { weapon.SetScriptable((WeaponScriptable)scriptable); }
-                    break;
-                case ValueDefine.PATTERN_CODE:
+                switch (id[0])
+                {
+                    case ValueDefine.WEAPON_CODE:
+                        WeaponScript weapon = prefab.GetComponent<WeaponScript>();
+                        if (weapon != null) { weapon.SetScriptable((WeaponScriptable)scriptable); }
+                        break;
+                    case ValueDefine.PATTERN_CODE:
 
-                    break;
-                case ValueDefine.THROW_ITEM_CODE:
-                    ThrowItemScript throwItem = prefab.GetComponent<ThrowItemScript>();
-                    if (throwItem != null) { throwItem.SetScriptable((ThrowItemScriptable)scriptable); }
-                    break;
-                case ValueDefine.OTHER_ITEM_CODE:
+                        break;
+                    case ValueDefine.THROW_ITEM_CODE:
+                        ThrowItemScript throwItem = prefab.GetComponent<ThrowItemScript>();
+                        if (throwItem != null) { throwItem.SetScriptable((ThrowItemScriptable)scriptable); }
+                        break;
+                    case ValueDefine.OTHER_ITEM_CODE:
 
-                    break;
-                default: Debug.LogError("맞는 ID 없음"); return;
+                        break;
+                    default: Debug.LogError("맞는 ID 없음"); return;
+                }
             }
+
+            scriptable.SetItemScriptable(idx, splitItemData, prefab);
 
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(scriptable);
-            EditorUtility.SetDirty(prefab);
+            if (prefab != null) { EditorUtility.SetDirty(prefab); }
         }
+
+        GameObject gameManager = AssetDatabase.LoadMainAssetAtPath(GameManagerPath) as GameObject;
+        ItemManager itemManager = gameManager.GetComponentInChildren<ItemManager>();
+        itemManager.SetItemData(datas);
+
+        AssetDatabase.SaveAssets();
+        EditorUtility.SetDirty(gameManager);
     }
 
     [MenuItem("Utilities/GenerateSkills")]
@@ -225,6 +242,8 @@ public static class DataImporter
     {
         // 스킬 정보
         string[] allSkillLines = File.ReadAllLines(CSVPath + SkillCSVName);
+
+        List<SkillScriptable> datas = new();
 
         for (uint i = 1; i < allSkillLines.Length; i++)
         {
@@ -242,26 +261,34 @@ public static class DataImporter
 
             SkillScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{SkillScriptablePath + id}.asset")as SkillScriptable;
 
-            bool IsExist = scriptable != null;
-            if (!IsExist) { scriptable = ScriptableObject.CreateInstance<SkillScriptable>(); }
-
-            scriptable.SetSkillScriptable(idx, splitSkillData);
-
-            if (!IsExist)
+            if (scriptable == null)
             {
+                scriptable = ScriptableObject.CreateInstance<SkillScriptable>();
                 AssetDatabase.CreateAsset(scriptable, $"{SkillScriptablePath + id}.asset");
             }
+            datas.Add(scriptable);
 
             GameObject prefab = AssetDatabase.LoadMainAssetAtPath($"{SkillPrefabPath + id}.prefab") as GameObject;
-            if (prefab == null) { continue; }
-            if (!prefab.TryGetComponent<PlayerSkillScript>(out var script)) { Debug.Log(id + " 스크립트 없음"); continue; }
+            if (prefab != null)
+            {
+                PlayerSkillScript script = prefab.GetComponentInChildren<PlayerSkillScript>();
+                if (script == null) { Debug.LogError("스킬에 스크립트 없음"); continue; }
+                script.SetScriptable(scriptable);
+            }
 
-            script.SetScriptable(scriptable);
+            scriptable.SetSkillScriptable(idx, splitSkillData, prefab);
 
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(scriptable);
-            EditorUtility.SetDirty(prefab);
+            if (prefab != null) { EditorUtility.SetDirty(prefab); }
         }
+
+        GameObject gameManager = AssetDatabase.LoadMainAssetAtPath(GameManagerPath) as GameObject;
+        SkillManager skillManager = gameManager.GetComponentInChildren<SkillManager>();
+        skillManager.SetSkillData(datas);
+
+        AssetDatabase.SaveAssets();
+        EditorUtility.SetDirty(gameManager);
     }
 
     [MenuItem("Utilities/GenerateNPCs")]

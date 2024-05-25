@@ -8,10 +8,6 @@ public class GameManager : SingleTon<GameManager>
     // 데이터
     private DataManager m_dataManager;
     public static DataManager DataManager { get { return Inst.m_dataManager; } }
-    public static MonsterScriptable GetMonsterRawData(EMonsterName _monster) { return DataManager.GetMonsterData(_monster); }   // 몬스터 스크립터블
-    public static ItemScriptable GetItemRawData(SItem _item) { return DataManager.GetItemData(_item); }                         // 아이템 스크립터블
-    public static SkillScriptable GetSkillRawData(ESkillName _skill) { return DataManager.GetSkillData(_skill); }               // 스킬 스크립터블
-    public static NPCScriptable GetNPCRawData(EnpcName _npc) { return DataManager.GetNPCData(_npc); }                           // NPC 스크립터블
 
 
     // 화면
@@ -43,6 +39,7 @@ public class GameManager : SingleTon<GameManager>
     private static GameObject[] ItemArray { get { return ItemManager.ItemArray; } }
     public static ItemInfo GetItemInfo(SItem _item) { return ItemManager.GetItemInfo(_item); }                                              // 아이템 정보
     public static ItemInfo GetItemInfo(string _id) { return ItemManager.GetItemInfo(_id); }                                                 // 아이템 정보
+    public static ItemScriptable GetItemData(SItem _item) { return ItemManager.GetItemData(_item); }                                        // 아이템 스크립터블
     public static ItemInfo GetWeaponInfo(EWeaponName _weapon) { return GetItemInfo(new SItem(EItemType.WEAPON, (int)_weapon)); }            // 무기 정보
     public static GameObject GetThorwItemPrefab(EThrowItemName _item) { return ItemManager.GetThrowItemPrefab(_item); }                     // 투척 아이템 프리펍
     public static GameObject GetDropItemPrefab(EItemType _item) { return ItemManager.GetDropItemPrefab(_item); }                            // 드랍 아이템 프리펍
@@ -55,6 +52,7 @@ public class GameManager : SingleTon<GameManager>
     private static SkillManager SkillManager { get { return Inst.m_skillManager; } }
     private static GameObject[] SkillArray { get { return SkillManager.SkillArrays; } }
     public static SkillInfo GetSkillInfo(ESkillName _skill) { return SkillManager.GetSkillInfo(_skill); }                                   // 스킬 정보
+    public static SkillScriptable GetSkillData(ESkillName _skill) { return SkillManager.GetSkillData(_skill); }                             // 스킬 스크립터블
     public static GameObject GetSkillObj(ESkillName _skill) { return SkillManager.GetSkillObj(_skill); }                                    // 스킬 프리펍
     public static ESkillName[] SkillSlot { get { return SkillManager.SkillSlot; } }                                                         // 스킬 슬롯
     public static void RegisterSkilSlot(ESkillName _skill, int _idx) { SkillManager.RegisterSkillSlot(_skill, _idx); PlayManager.UpdateSkillSlot(); }   // 스킬 슬롯 설정
@@ -66,6 +64,7 @@ public class GameManager : SingleTon<GameManager>
     private static MonsterManager MonsterManager { get { return Inst.m_monsterManager; } }
     private static GameObject[] MonsterArray { get { return MonsterManager.MonsterArray; } }
     public static MonsterInfo GetMonsterInfo(EMonsterName _monster) { return MonsterManager.GetMonsterInfo(_monster); }                     // 몬스터 정보
+    public static MonsterScriptable GetMonsterData(EMonsterName _monster) { return MonsterManager.GetMonsterData(_monster); }               // 몬스터 스크립터블
     public static GameObject GetMonsterObj(EMonsterName _monster) { return MonsterManager.GetMonsterObj(_monster); }                        // 몬스터 프리펍
     public static bool CheckNClearMonster(EMonsterName _monster) { return MonsterManager.CheckNClearMonster(_monster); }                    // 최초 처치 확인
 

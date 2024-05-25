@@ -27,6 +27,8 @@ public struct HitData
     public float Damage;
     public Vector3 Point;
     public ECCType[] CCList;
+    public bool IsNull { get { return Attacker == null; } }
+    public static HitData Null { get { return new(null, -1, Vector3.zero); } }
     public HitData(ObjectScript _attacker, float _damage, Vector3 _point) : this(_attacker, _damage, _point, ECCType.NONE) { }
     public HitData(ObjectScript _attacker, float _damage, Vector3 _point, ECCType _cc) : this(_attacker, _damage, _point, new ECCType[] { _cc }) { }
     public HitData(ObjectScript _attacker, float _damage, Vector3 _point, ECCType[] _cc)

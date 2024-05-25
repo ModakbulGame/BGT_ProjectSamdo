@@ -6,9 +6,9 @@ public class PatternScriptable : ItemScriptable
 {
     public float HealAmount;
     public float BuffTime;
-    public override void SetItemScriptable(uint _idx, string[] _data)
+    public override void SetItemScriptable(uint _idx, string[] _data, GameObject _prefab)
     {
-        base.SetItemScriptable(_idx, _data);
+        base.SetItemScriptable(_idx, _data, _prefab);
         float.TryParse(_data[(int)EItemAttribute.HEAL_AMOUNT],  out HealAmount);
         float.TryParse(_data[(int)EItemAttribute.BUFF_TIME],    out BuffTime);
     }

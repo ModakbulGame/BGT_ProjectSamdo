@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8348301692858743955}
   - component: {fileID: 1396191856086805860}
   - component: {fileID: 3362015905078227269}
+  - component: {fileID: 6525492517759693848}
   m_Layer: 0
   m_Name: M521
   m_TagString: Monster
@@ -184,6 +185,19 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
+--- !u!114 &6525492517759693848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5534705623194559339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770da8bf480be4c4982904c0fcefd449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_againstMonster: 0
 --- !u!1001 &258904541232197752
 PrefabInstance:
   m_ObjectHideFlags: 0
