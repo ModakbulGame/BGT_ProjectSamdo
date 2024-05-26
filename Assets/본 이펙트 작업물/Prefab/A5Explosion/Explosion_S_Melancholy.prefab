@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1199983331472586134}
   - component: {fileID: 6012584465030598203}
   m_Layer: 0
-  m_Name: Explosion_Weak
+  m_Name: Explosion_S_Melancholy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,8 +28,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -57,9 +57,33 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 2.005267, y: 0, z: 5.0267687, w: 0}
+      - m_Value: {x: 0.079832695, y: 0.50431395, z: 0.735849, w: 0}
         m_Name: ExplosionFireColor
-        m_Overridden: 0
+        m_Overridden: 1
+      - m_Value: {x: 0.000054839467, y: 0, z: 0.0007314645, w: 0}
+        m_Name: Color01
+        m_Overridden: 1
+      - m_Value: {x: 0, y: 0.043990485, z: 0.15294118, w: 0}
+        m_Name: BurstColor
+        m_Overridden: 1
+      - m_Value: {x: 0.036845837, y: 0.8679245, z: 0.6544364, w: 0}
+        m_Name: ParticleColor
+        m_Overridden: 1
+      - m_Value: {x: 0, y: 0.8182029, z: 3.7208736, w: 0}
+        m_Name: ParticleColor2
+        m_Overridden: 1
+      - m_Value: {x: 0.0016402899, y: 0, z: 0.69803923, w: 0}
+        m_Name: BurstPinkColor
+        m_Overridden: 1
+      - m_Value: {x: 0.038047336, y: 0.22576672, z: 0.4245283, w: 0}
+        m_Name: PointColor
+        m_Overridden: 1
+      - m_Value: {x: 0, y: 0.028999198, z: 0.039215688, w: 0}
+        m_Name: FireColor
+        m_Overridden: 1
+      - m_Value: {x: 0, y: 0.10332436, z: 0.21698111, w: 0}
+        m_Name: ExplosionFireSmokeColor
+        m_Overridden: 1
     m_Uint:
       m_Array: []
     m_Int:
