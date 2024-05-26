@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class QuestUIScript : MonoBehaviour
 {
-    private bool m_isMapUIToggle = false;
+    public bool QuestAvailable { get; set; }
+    public bool QuestRunning { get; set; }
+
+    private bool m_isQuestUIToggle = false;
+    private bool m_isQuestLogActive = false;
+
+    public GameObject m_questPanel;
+    public GameObject m_questLogPanel;
 
     public void ToggleQuestUI()
     {
-        if (!m_isMapUIToggle)
+        if (!m_isQuestUIToggle)
         {
             gameObject.SetActive(true);
-            m_isMapUIToggle = true;
+            m_isQuestUIToggle = true;
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -19,15 +26,20 @@ public class QuestUIScript : MonoBehaviour
         else
         {
             gameObject.SetActive(false);
-            m_isMapUIToggle = false;
+            m_isQuestUIToggle = false;
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
     }
 
-    private void Start()
+    public void SetComps()
     {
 
+    }
+
+    private void Start()
+    {
+        SetComps();
     }
 }

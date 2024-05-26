@@ -19,7 +19,9 @@ public class StoryManager : MonoBehaviour
                     if (QuestList[i].m_id == _npcQuest.availableQuestIDs[j] && QuestList[i].m_status == EQuestStatus.AVAILABLE)
                     {
                         Debug.Log("Quest ID: " + _npcQuest.availableQuestIDs[j] + QuestList[i].m_status);
-                        AcceptQuest(_npcQuest.availableQuestIDs[j]);
+                        // AcceptQuest(_npcQuest.availableQuestIDs[j]);
+                        // QuestUIScript.QuestAvailable = true;
+                        // QuestUIScript.m_availableQuest.Add(QuestList[i]);
                     }
                 }
             }
@@ -34,7 +36,9 @@ public class StoryManager : MonoBehaviour
                     || CurQuestList[i].m_status == EQuestStatus.COMPLETE)
                 {
                     Debug.Log("Quest ID: " + _npcQuest.receivableQuestIDs[j] + " is " + CurQuestList[i].m_status);
-                    CompleteQuest(_npcQuest.receivableQuestIDs[j]);
+                    // CompleteQuest(_npcQuest.receivableQuestIDs[j]);
+                    // QuestUIScript.QuestRunning = true;
+                    // QuestUIScript.m_activeQuest.Add(QuestList[i]);
                 }
             }
         }
