@@ -46,6 +46,11 @@ public class PlayUIManager : MonoBehaviour
     public void ToggleQuestUI() { m_questUI.ToggleQuestUI(); }
 
     [SerializeField]
+    private QuestAcceptUIScript m_questAcceptScript;        // NPC 대화 끝에 나오는 퀘스트 창
+    public void ShowNPCQuestUI() { m_questAcceptScript.ShowNPCQuestUI(); }
+
+
+    [SerializeField]
     private OasisUIScript m_oasisUI;                        // 오아시스 UI
     public void OpenOasisUI(OasisNPC _npc) { m_oasisUI.OpenUI(_npc); }
     public void CloseOasisUI() { m_oasisUI.CloseUI(); }

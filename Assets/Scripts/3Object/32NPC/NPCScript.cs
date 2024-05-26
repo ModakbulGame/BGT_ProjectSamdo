@@ -24,6 +24,9 @@ public class NPCScript : MonoBehaviour, IInteractable
     public int NPCID { get { return m_npcInfo.NPCID; } }
     public void SetScriptable(NPCScriptable _scriptable) { m_scriptable = _scriptable; SetInfo(); }
 
+    [SerializeField]
+    private bool m_isQuestExisted;  // 시트에 따라 퀘스트가 존재하는 npc인 경우에는 내부처리로 조정 예정
+    public bool IsQuestExisted { get { return m_isQuestExisted; } }    
     protected Transform m_npcTransform;
     public string[] m_npcDialogue;
 

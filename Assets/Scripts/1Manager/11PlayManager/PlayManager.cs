@@ -131,6 +131,7 @@ public class PlayManager : MonoBehaviour
     public static void SetMinimapScale(float _scale) { PlayUIManager.SetMinimapScale(_scale); }                                             // πÃ¥œ∏  √‡√¥
     public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                       // ∏  UI ø©¥›±‚
     public static void ToggleQuestUI() { PlayUIManager.ToggleQuestUI(); }
+    public static void ShowNPCQuestUI() { PlayUIManager.ShowNPCQuestUI(); }
     public static void OpenNPCUI(NPCScript _npc) { PlayUIManager.OpenDialogueUI(_npc); }                                                    // NPC ¥Î»≠√¢ ø≠±‚
     public static void CloseNPCUI() { PlayUIManager.CloseDialogueUI(); }                                                                    // NPC ¥Î»≠√¢ ¥›±‚
     public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                  // NPC ¥Î»≠√¢ ø≠∑»¥¬¡ˆ »Æ¿Œ

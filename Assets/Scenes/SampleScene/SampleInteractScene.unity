@@ -1599,6 +1599,7 @@ MonoBehaviour:
     NPCID: 0
     UIOffset: 5
   m_scriptable: {fileID: 11400000, guid: 5446716be95d4374bb95485e0f82ab13, type: 2}
+  m_isQuestExisted: 1
   m_npcDialogue:
   - "\uB300\uC0AC1\uB300\uC0AC1\uB300\uC0AC1\uB300\uC0AC1\uB300\uC0AC1"
   - "\uB300\uC0AC2\uB300\uC0AC2\uB300\uC0AC2\uB300\uC0AC2\uB300\uC0AC2"
@@ -2038,6 +2039,7 @@ MonoBehaviour:
     NPCID: 0
     UIOffset: 5
   m_scriptable: {fileID: 0}
+  m_isQuestExisted: 0
   m_npcDialogue:
   - "\uB300\uC0AC4\uB300\uC0AC4\uB300\uC0AC4\uB300\uC0AC4\uB300\uC0AC4"
   - "\uB300\uC0AC5\uB300\uC0AC5\uB300\uC0AC5\uB300\uC0AC5\uB300\uC0AC5"
@@ -2644,6 +2646,7 @@ MonoBehaviour:
     NPCID: 0
     UIOffset: 5
   m_scriptable: {fileID: 0}
+  m_isQuestExisted: 0
   m_npcDialogue:
   - "\uB300\uC0AC4\uB300\uC0AC4\uB300\uC0AC4\uB300\uC0AC4\uB300\uC0AC4"
   - "\uB300\uC0AC5\uB300\uC0AC5\uB300\uC0AC5\uB300\uC0AC5\uB300\uC0AC5"
@@ -3616,6 +3619,7 @@ GameObject:
   - component: {fileID: 2130327952}
   - component: {fileID: 2130327954}
   - component: {fileID: 2130327953}
+  - component: {fileID: 2130327955}
   m_Layer: 5
   m_Name: NPCQuest
   m_TagString: Untagged
@@ -3685,6 +3689,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2130327951}
   m_CullTransparentMesh: 1
+--- !u!114 &2130327955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130327951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e21fda179104f644a02712f51f7161e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_availableQuest: []
+  m_activeQuest: []
+  m_questTitle: {fileID: 1617915768}
+  m_questDescription: {fileID: 1396986707}
+  m_questRewards: {fileID: 465806368}
 --- !u!1001 &287006428094276747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4223,6 +4244,16 @@ PrefabInstance:
       propertyPath: m_dialogueUI
       value: 
       objectReference: {fileID: 1255436309}
+    - target: {fileID: 2297921374195591001, guid: b29b36f50235e9e41a36baba88ef0140,
+        type: 3}
+      propertyPath: m_questAcceptScript
+      value: 
+      objectReference: {fileID: 2130327955}
+    - target: {fileID: 2297921374195591001, guid: b29b36f50235e9e41a36baba88ef0140,
+        type: 3}
+      propertyPath: m_quesetAcceptScript
+      value: 
+      objectReference: {fileID: 2130327955}
     - target: {fileID: 2535943650345298405, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_AnchorMax.y

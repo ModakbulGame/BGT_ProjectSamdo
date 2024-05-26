@@ -22,11 +22,13 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
     private NPCScript CurNPC { get; set; }
     private string[] CurDialogue { get; set; }
     private int DialogueCount { get; set; } = 0;
+    private bool IsQuestExisted;
 
     public void SetNPC(NPCScript _npc)
     {
         CurNPC = _npc;
         CurDialogue = _npc.m_npcDialogue;
+        IsQuestExisted = _npc.IsQuestExisted;
     }
 
     public void OpenUI()
@@ -86,7 +88,11 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
             StartCoroutine(Typing(CurDialogue[DialogueCount]));
             return;
         }
-        CloseUI();
+        if(IsQuestExisted)
+        {
+            PlayManager.ShowNPCQuestUI();
+        }
+        else CloseUI();
     }
 
     private void SetComps()
