@@ -87,6 +87,9 @@ public class PlayUIManager : MonoBehaviour
     public void SetStaminaRate(float _rate) { m_aimUI.SetStaminaRate(_rate); }
     public void SetLightRate(float _rate) { m_aimUI.SetLightRate(_rate); }
     public void SetLightState(bool _on) { m_aimUI.SetLightState(_on); }
+    public void ShowRaycastAim() { m_aimUI.ShowAimUI(); }
+    public void SetRaycastAimState(bool _on) { m_aimUI.SetAimUI(_on); }
+    public void HideRaycastAim() { m_aimUI.HideAimUI(); }
 
 
     [SerializeField]

@@ -57,6 +57,7 @@ public class PlayerSkillState : MonoBehaviour, IPlayerState
         {
             SkillMove();
             DrawSkillAim();
+            if (m_player.IsRaycastSkill) { m_player.CheckRaycast(); }
         }
     }
 }

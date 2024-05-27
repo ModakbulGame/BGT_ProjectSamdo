@@ -149,6 +149,9 @@ public class PlayManager : MonoBehaviour
     public static void SetStaminaRate(float _rate) { PlayUIManager.SetStaminaRate(_rate); }                                                 // 스태미나 비율
     public static void SetLightRate(float _rate) { PlayUIManager.SetLightRate(_rate); }                                                     // 능력 비율
     public static void SetLightState(bool _on) { PlayUIManager.SetLightState(_on); }                                                        // 고갈 설정
+    public static void ShowRaycastAim() { PlayUIManager.ShowRaycastAim(); }                                                                 // 레이캐스트 에임 on
+    public static void SetRaycastAimState(bool _on) { PlayUIManager.SetRaycastAimState(_on); }                                              // 레이캐스트 에임 상태
+    public static void HideRaycastAim() { PlayUIManager.HideRaycastAim(); }                                                                 // 레이캐스트 에임 off
     public static void ShowSkillAim(Vector3 _pos, float _radius, float _range) { PlayUIManager.ShowSkillAim(_pos, _radius, _range); }
     public static Vector3 TraceSkillAim(Vector3 _pos, float _range) { return PlayUIManager.TraceSkillAim(_pos, _range); }
     public static void HideSkillAim() { PlayUIManager.HideSkillAim(); }

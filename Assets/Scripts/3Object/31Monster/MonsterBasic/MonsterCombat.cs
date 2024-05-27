@@ -97,6 +97,14 @@ public abstract partial class MonsterScript
     }
 
 
+    public void GetInstantHit(SkillInfo _skill, GameObject _part)
+    {
+        SkillScriptable data = _skill.SkillData;
+        GetDamage(100);
+    }
+
+
+
     // 전투 대상 관련
     public readonly float MissTargetDelay = 5f;
 

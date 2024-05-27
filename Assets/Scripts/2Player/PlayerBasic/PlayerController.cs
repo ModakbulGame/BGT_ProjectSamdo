@@ -91,6 +91,7 @@ public partial class PlayerController : ObjectScript
     public void HideSkillAim()                                                                                      // 조준 숨기기
     {
         PlayManager.HideSkillAim();
+        if(IsRaycastSkill) { PlayManager.HideRaycastAim(); }
     }
 
     
