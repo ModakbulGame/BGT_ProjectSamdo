@@ -20,7 +20,6 @@ public class UumScript : AnimatedAttackMonster
     }
 
 
-    private int AttackIdx { get; set; }
 
     private readonly float NarrowAttackMultiplier = 1.5f;
 

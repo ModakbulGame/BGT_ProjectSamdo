@@ -60,6 +60,8 @@ public abstract partial class MonsterScript
     [SerializeField]
     protected GameObject[] m_normalAttacks;                                      // 기본 공격 프리펍
 
+    protected int AttackIdx { get; set; }
+
     public bool CanAttack { get { return HasTarget && TargetInAttackRange && AttackTimeCount <= 0; } }  // 공격 가능 여부
     public float AttackTimeCount { get; set; } = 0;                                                     // 공격 쿨타임
 

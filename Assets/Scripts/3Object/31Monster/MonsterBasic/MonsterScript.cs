@@ -43,6 +43,9 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
 
     // 상태 관련 메소드
+    [SerializeField]
+    private bool HasSpeedAttack = true;
+
     public virtual void StartIdle()          // 로밍 시작
     {
         CurSpeed = MoveSpeed;
@@ -55,6 +58,11 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     {
         StopMove();
         AttackAnimation();
+        if (HasSpeedAttack)
+        {
+            bool random = (UnityEngine.Random.Range(0, 2) == 0) ? true : false;
+            m_anim.SetBool("SPEED_ATTACK", random);
+        }
     }
     public void StartHit()              // 피격 시작
     {

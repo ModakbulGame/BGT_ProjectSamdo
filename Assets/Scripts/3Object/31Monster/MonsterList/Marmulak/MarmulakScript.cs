@@ -29,12 +29,12 @@ public class MarmulakScript : RangedAttackMonster
         if (TargetDistance <= RoarRange)
         {
             CurAttack = EMarmulakAttack.NORMAL;
-            m_anim.SetInteger("ATTACK_IDX", 0);
+            m_anim.SetInteger("ATTACK_IDX", Random.Range(0,2));
         }
         else
         {
             CurAttack = EMarmulakAttack.THROW;
-            m_anim.SetInteger("ATTACK_IDX", 1);
+            m_anim.SetInteger("ATTACK_IDX", 2);
         }
         base.StartAttack();
     }

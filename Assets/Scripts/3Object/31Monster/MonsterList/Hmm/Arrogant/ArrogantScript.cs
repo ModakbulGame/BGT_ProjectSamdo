@@ -25,7 +25,15 @@ public class ArrogantScript : HmmScript
     {
         if (CanSmash) { StartSmash(); return; }
         CurAttack = EArrogantAttack.NORMAL;
+
+        AttackIdx = Random.Range(0, 2);
+        m_anim.SetInteger("ATTACK_IDX", AttackIdx);
         base.StartAttack();
+    }
+
+    public override void AttackTriggerOn()
+    {
+        AttackTriggerOn(AttackIdx);
     }
 
     public void StartSmash()
@@ -34,7 +42,7 @@ public class ArrogantScript : HmmScript
         SmashTimeCount = SmashCooltime;
         StopMove();
         m_anim.SetTrigger("SKILL");
-        m_jumpList.Clear();
+        m_smashList.Clear();
     }
 
     public override void CreateAttack()
@@ -45,17 +53,17 @@ public class ArrogantScript : HmmScript
         }
     }
 
-    private readonly List<ObjectScript> m_jumpList = new();
+    private readonly List<ObjectScript> m_smashList = new();
     public void CheckNSmash()
     {
         Collider[] targets = Physics.OverlapSphere(Position, SmashRange, ValueDefine.HITTABLE_LAYER);
         for (int i = 0; i<targets.Length; i++)
         {
             ObjectScript obj = targets[i].GetComponentInParent<ObjectScript>();
-            if (obj == null || obj == this || m_jumpList.Contains(obj)) { continue; }
+            if (obj == null || obj == this || m_smashList.Contains(obj)) { continue; }
             HitData air = new(this, Attack, Position, ECCType.AIRBORNE);
             obj.GetHit(air);
-            m_jumpList.Add(obj);
+            m_smashList.Add(obj);
         }
     }
 

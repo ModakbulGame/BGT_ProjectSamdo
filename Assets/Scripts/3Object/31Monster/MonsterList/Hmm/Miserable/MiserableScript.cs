@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class MiserableScript : HmmScript
 {
-    private int CurAttackIdx { get; set; }
-    private bool IsAttackSkill { get { return CurAttackIdx == 3; } }
+    private bool IsAttackSkill { get { return AttackIdx == 3; } }
     private int SkillIdx { get; set; }
     public override void StartAttack()
     {
-        CurAttackIdx = Random.Range(0, 2);
         if(IsAttackSkill) { SkillIdx = 0; }
-        m_anim.SetInteger("ATTACK_IDX", CurAttackIdx);
+        AttackIdx =  Random.Range(0, 2);
+        m_anim.SetInteger("ATTACK_IDX", AttackIdx);
         base.StartAttack();
     }
     public override void CreateAttack()

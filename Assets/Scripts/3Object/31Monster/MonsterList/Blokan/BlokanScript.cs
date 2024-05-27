@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BlokanScript : BloScript
 {
-    private int AttackIdx { get; set; }
 
     private readonly Vector3[] NormalAttackOffsets = new Vector3[2]
         { new(0,1.5f,1.3f), new(0,1,1.3f) };
