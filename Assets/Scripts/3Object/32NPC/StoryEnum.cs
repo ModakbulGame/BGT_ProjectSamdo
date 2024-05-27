@@ -17,3 +17,17 @@ public enum EnpcName
     BAZ,
     LAST
 }
+
+public enum EQuestAttribute
+{
+    ID,
+    TITLE,
+    TYPE,
+    DESCRIPTION,
+    NEXTQUEST,
+    QUESTOBJECT,
+    OBJECTNUM,
+    REWARD,
+    REWARDNUM,
+    LAST
+}

@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class QuestData : MonoBehaviour
+public class QuestScriptable : ScriptableObject
 {
     public string m_title;              // 퀘스트 이름
     public int m_id;                    // 퀘스트 ID
@@ -17,4 +16,9 @@ public class QuestData : MonoBehaviour
     public int m_questRequireObject;    // 퀘스트 완료에 필요한 오브젝트 수
 
     public int m_reward;                // 보상
+
+    public void SetQuestScriptable(uint _idx, string[] _data)
+    {
+
+    }
 }

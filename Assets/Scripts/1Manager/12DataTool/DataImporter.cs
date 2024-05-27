@@ -16,6 +16,7 @@ public static class DataImporter
     private const string DropCSVName = "DropSheet.csv";
     private const string SkillCSVName = "SkillSheet.csv";
     private const string NPCCSVName = "NPCSheet.csv";
+    private const string QuestCSVName = "QuestSheet.csv";
 
     // 스크립터블 경로
     private const string ScriptablePath = "Assets/Scriptables/";
@@ -31,6 +32,7 @@ public static class DataImporter
 
     private const string SkillScriptablePath = ScriptablePath + "SkillScriptable/";
     private const string NPCScriptablePath = ScriptablePath + "NPCScriptable/";
+    private const string QuestScriptablePath = ScriptablePath + "QuestScriptable/";
 
     // 프리펍 경로
     private const string PrefabPath = "Assets/Prefabs/";
@@ -349,6 +351,46 @@ public static class DataImporter
             //AssetDatabase.SaveAssets();
             //EditorUtility.SetDirty(scriptable);
             //EditorUtility.SetDirty(prefab);
+        }
+    }
+
+    [MenuItem("Utilities/GenerateQuests")]
+    private static void GenerateQuestData()
+    {
+        // 퀘스트 정보
+        string[] allQuestLines = File.ReadAllLines(CSVPath + QuestCSVName);
+
+        List<QuestScriptable> datas = new();
+
+        for (uint i = 1; i < allQuestLines.Length; i++)
+        {
+            uint idx = i - 1;
+            string si = allQuestLines[i];
+            string[] splitQuestData = si.Split(',');
+
+            if (splitQuestData.Length != (int)EQuestAttribute.LAST)
+            {
+                Debug.Log(si + $"does not have {(int)EQuestAttribute.LAST} values.");
+                return;
+            }
+
+            string id = splitQuestData[(int)EQuestAttribute.ID];
+
+            //
+
+            QuestScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{QuestScriptablePath + id}.asset") as QuestScriptable;
+
+            if (scriptable == null)
+            {
+                scriptable = ScriptableObject.CreateInstance<QuestScriptable>();
+                AssetDatabase.CreateAsset(scriptable, $"{QuestScriptablePath + id}.asset");
+            }
+            datas.Add(scriptable);
+
+            scriptable.SetQuestScriptable(idx, splitQuestData);
+
+            AssetDatabase.SaveAssets();
+            EditorUtility.SetDirty(scriptable);
         }
     }
 }
