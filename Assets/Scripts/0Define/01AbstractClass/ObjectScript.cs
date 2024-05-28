@@ -75,6 +75,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
         if (m_rigid.velocity.magnitude > 0)
             m_rigid.velocity = Vector3.zero;
     }
+    public virtual void StartTracing() { }
 
 
     // 회전 관련
@@ -95,7 +96,11 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
         float angle = Mathf.SmoothDampAngle(Rotation, _deg, ref m_rotationRef, SlowRotationSpeed);
         Rotation = angle;
     }
-
+    public void SlowRotate(Vector2 _deg)                                  // 천천히 회전
+    {
+        float deg = FunctionDefine.VecToDeg(_deg);
+        SlowRotate(deg);
+    }
 
     // 전투 관련
     public virtual void CreateAttack() { }                              // 공격 생성 타이밍
