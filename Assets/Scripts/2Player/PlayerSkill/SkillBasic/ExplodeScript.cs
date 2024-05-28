@@ -7,6 +7,7 @@ using UnityEngine.VFX;
 public class ExplodeScript : ObjectAttackScript
 { 
     private Transform ReturnTransform { get; set; }
+    private Vector3 LocalOffset { get; set; }
 
     public void SetDamage(ObjectScript _attacker, float _damage, float _time)
     {
@@ -19,6 +20,7 @@ public class ExplodeScript : ObjectAttackScript
         IHittable hittable=_other.GetComponentInParent<IHittable>();
         hittable ??=_other.GetComponentInChildren<IHittable>();
         if (hittable == null) { return; }
+        if (hittable.IsPlayer) { return; } // 이 부분 삭제하면 전 hittable 공격 가능한 script로 변경
         Vector3 point = _other.ClosestPoint(transform.position);
         GiveDamage(hittable, point);
     }
@@ -54,6 +56,7 @@ public class ExplodeScript : ObjectAttackScript
         {
             transform.SetParent(ReturnTransform);
             transform.position = ReturnTransform.position;
+            transform.localPosition = LocalOffset;
             ReturnTransform = null;
             gameObject.SetActive(false);
         }
