@@ -22,6 +22,10 @@ public class ObjectAnimationLink : MonoBehaviour            // 애니메이션과 스크
         m_object.StopMove();
     }
 
+    public void StartTracing()
+    {
+        m_object.StartTracing();
+    }
     public void AttackTriggerOn()                           // 공격 트리거 on
     {
         m_object.AttackTriggerOn();

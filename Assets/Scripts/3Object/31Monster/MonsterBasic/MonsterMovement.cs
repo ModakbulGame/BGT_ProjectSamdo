@@ -21,6 +21,8 @@ public abstract partial class MonsterScript
 
 
     // 기본 움직임
+    protected bool IsTracing { get; set; }
+
     public override float CurSpeed { get { return m_aiPath.maxSpeed; } protected set { m_aiPath.maxSpeed = value; } }
 
     public virtual void SetDestination(Vector3 _destination)
@@ -42,5 +44,9 @@ public abstract partial class MonsterScript
 
         Vector2 dir = (CurTarget.Position2 - Position2);
         RotateTo(dir);
+    }
+    public override void StartTracing()
+    {
+        IsTracing = true;
     }
 }
