@@ -376,7 +376,6 @@ public static class DataImporter
 
             string id = splitQuestData[(int)EQuestAttribute.ID];
 
-            //
 
             QuestScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{QuestScriptablePath + id}.asset") as QuestScriptable;
 

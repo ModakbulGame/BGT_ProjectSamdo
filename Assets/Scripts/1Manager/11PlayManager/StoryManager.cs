@@ -5,8 +5,8 @@ using UnityEngine;
 // 일단은 한 곳에 작성 중
 public class StoryManager : MonoBehaviour
 {
-    public List<QuestScriptable> QuestList { get; private set; }
-    public List<QuestScriptable> CurQuestList { get; private set; }
+    public List<QuestData> QuestList { get; private set; }
+    public List<QuestData> CurQuestList { get; private set; }
 
     public void QuestRequest(QuestObject _npcQuest)
     {
@@ -133,7 +133,7 @@ public class StoryManager : MonoBehaviour
 
     public void SetManager()
     {
-        QuestList = new List<QuestScriptable>();
-        CurQuestList = new List<QuestScriptable>();
+        QuestList = new List<QuestData>();
+        CurQuestList = new List<QuestData>();
     }
 }

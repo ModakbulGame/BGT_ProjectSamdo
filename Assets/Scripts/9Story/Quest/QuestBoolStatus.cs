@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QuestBoolStatus : MonoBehaviour
 {
-    private List<QuestScriptable> m_questList = PlayManager.QuestList;
+    private List<QuestData> m_questList = PlayManager.QuestList;
 
     // 현재 퀘스트 상태 반환
     public bool RequestAvailableQuest(int _id)

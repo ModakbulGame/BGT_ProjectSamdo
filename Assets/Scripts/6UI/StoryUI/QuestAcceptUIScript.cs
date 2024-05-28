@@ -12,8 +12,8 @@ public class QuestAcceptUIScript : MonoBehaviour
     private QuestObject m_curQuestObject;
     private Button[] m_btns;
 
-    public List<QuestScriptable> m_availableQuest = new List<QuestScriptable>();
-    public List<QuestScriptable> m_activeQuest = new List<QuestScriptable>();
+    public List<QuestData> m_availableQuest = new List<QuestData>();
+    public List<QuestData> m_activeQuest = new List<QuestData>();
 
     // Äù½ºÆ® Á¤º¸
     [SerializeField]

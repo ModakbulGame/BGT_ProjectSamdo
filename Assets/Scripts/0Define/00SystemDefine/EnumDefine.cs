@@ -65,7 +65,7 @@ public enum EQuestType
     TALKING,
     COLLECTION,
     HUNTING,
-    TIME_LIMIT,
+    TIMELIMIT,
 
     LAST
 }
