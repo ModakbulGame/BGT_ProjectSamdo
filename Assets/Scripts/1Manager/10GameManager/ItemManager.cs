@@ -163,7 +163,7 @@ public class ItemManager : MonoBehaviour
         {
             EItemType type = (EItemType)i;
             uint cnt = ItemCounts[i];
-            for (int j = 0; j<cnt; j++)                         // 아이템 종류에 따라 다르게 저장 추가 예정
+            for (int j = 0; j < cnt; j++)                         
             {
                 SItem item = new(type, j);
                 ItemScriptable scriptable = GameManager.GetItemData(item);

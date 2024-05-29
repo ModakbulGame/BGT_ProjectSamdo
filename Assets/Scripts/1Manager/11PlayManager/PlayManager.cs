@@ -96,6 +96,7 @@ public class PlayManager : MonoBehaviour
     private static StoryManager StoryManager { get { return Inst.m_storyManager; } }
     public static List<QuestData> QuestList { get { return StoryManager.QuestList; } }
     public static List<QuestData> CurQuestList { get { return StoryManager.CurQuestList; } }
+    public static QuestScriptable[] QuestData { get { return StoryManager.QuestData; } }
     public static void QuestRequest(QuestObject _npcQuest) { StoryManager.QuestRequest(_npcQuest); }
 
 

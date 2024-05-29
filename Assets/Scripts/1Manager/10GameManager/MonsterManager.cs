@@ -26,6 +26,7 @@ public class MonsterManager : MonoBehaviour
 
     [SerializeField]
     private MonsterScriptable[] m_monsterData;
+    public MonsterScriptable[] MonsterData { get { return m_monsterData; } }
     public GameObject[] MonsterArray { get {
             GameObject[] array = new GameObject[m_monsterData.Length];
             for(int i = 0; i<array.Length; i++) { array[i] = m_monsterData[i].MonsterPrefab; }

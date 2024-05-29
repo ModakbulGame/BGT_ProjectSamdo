@@ -8,6 +8,15 @@ public class StoryManager : MonoBehaviour
     public List<QuestData> QuestList { get; private set; }
     public List<QuestData> CurQuestList { get; private set; }
 
+    [SerializeField]
+    private QuestScriptable[] m_questData;
+    public QuestScriptable[] QuestData { get { return m_questData; } }
+
+
+
+
+    // 아래는 아마 컴포넌트로 분리 진행할 듯
+
     public void QuestRequest(QuestObject _npcQuest)
     {
         if(_npcQuest.availableQuestIDs.Count > 0)
@@ -113,7 +122,7 @@ public class StoryManager : MonoBehaviour
     }
 
     // 퀘스트 수행
-    public void AddQuestItem(GameObject _questobj, int _amount)
+    public void AddQuestItem(string _questobj, int _amount)
     {
         for(int i = 0; i < CurQuestList.Count; i++)
         {
@@ -123,7 +132,7 @@ public class StoryManager : MonoBehaviour
                 {
                     CurQuestList[i].m_questObjectCount += _amount;
                 }
-                if(CurQuestList[i].m_questObjectCount >= CurQuestList[i].m_questRequireObject)
+                if(CurQuestList[i].m_questObjectCount >= CurQuestList[i].m_questRequireObjectCount)
                 {
                     CurQuestList[i].m_status = EQuestStatus.COMPLETE;
                 }

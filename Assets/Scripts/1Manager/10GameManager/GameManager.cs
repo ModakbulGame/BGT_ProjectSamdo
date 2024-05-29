@@ -62,8 +62,9 @@ public class GameManager : SingleTon<GameManager>
     // 몬스터
     private MonsterManager m_monsterManager;
     private static MonsterManager MonsterManager { get { return Inst.m_monsterManager; } }
-    private static GameObject[] MonsterArray { get { return MonsterManager.MonsterArray; } }
+    public static GameObject[] MonsterArray { get { return MonsterManager.MonsterArray; } }
     public static MonsterInfo GetMonsterInfo(EMonsterName _monster) { return MonsterManager.GetMonsterInfo(_monster); }                     // 몬스터 정보
+    public static MonsterScriptable[] MonsterData { get { return MonsterManager.MonsterData; } }
     public static MonsterScriptable GetMonsterData(EMonsterName _monster) { return MonsterManager.GetMonsterData(_monster); }               // 몬스터 스크립터블
     public static GameObject GetMonsterObj(EMonsterName _monster) { return MonsterManager.GetMonsterObj(_monster); }                        // 몬스터 프리펍
     public static bool CheckNClearMonster(EMonsterName _monster) { return MonsterManager.CheckNClearMonster(_monster); }                    // 최초 처치 확인

@@ -12,6 +12,7 @@ public class QuestScriptable : ScriptableObject
     public int NextQuest;             // 다음 퀘스트 ID
         
     public string QuestObject;        // 퀘스트 시 필요한 오브젝트
+    public int QuestObjectCount;      // 퀘스트 시 필요한 오브젝트 수
     public string Reward;             // 보상
     public int RewardNum;             // 보상 수 
 
@@ -36,6 +37,7 @@ public class QuestScriptable : ScriptableObject
         Description = _data[(int)EQuestAttribute.DESCRIPTION];
         QuestObject = _data[(int)EQuestAttribute.QUESTOBJECT];
         Reward = _data[(int)EQuestAttribute.REWARD];
+        int.TryParse(_data[(int)EQuestAttribute.OBJECTNUM], out QuestObjectCount);
         int.TryParse(_data[(int)EQuestAttribute.ID], out Id);
         int.TryParse(_data[(int)EQuestAttribute.NEXTQUEST], out NextQuest);
         int.TryParse(_data[(int)EQuestAttribute.REWARDNUM], out RewardNum);

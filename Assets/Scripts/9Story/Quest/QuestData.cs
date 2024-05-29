@@ -11,15 +11,14 @@ public class QuestData : MonoBehaviour
     public string m_description;        
     public int m_nextQuest;             
 
-    public GameObject m_questObject;
-    public string m_questRequireObject;
-    public int m_questObjectCount;       
- 
+    public string m_questObject;             // 퀘스트 수행 시 필요한 오브젝트
+    public int m_questRequireObjectCount;    // 수행에 필요한 오브젝트 수
+    public int m_questObjectCount;           // 현재 수집 / 사냥한 오브젝트 수 
 
-    public GameObject m_reward;                 
+    public string m_reward;                 
     public int m_rewardNum;
 
-    private GameObject String2Obj()
+    private GameObject String2Data(string _name)
     {
         return null;
     }
@@ -31,9 +30,9 @@ public class QuestData : MonoBehaviour
         m_type = _scriptable.Type;
         m_description = _scriptable.Description;
         m_nextQuest = _scriptable.NextQuest;
-        // m_questObject = _scriptable.QuestObject;
-        m_questRequireObject = _scriptable.QuestObject;
-        // m_reward = _scriptable.Reward;
+        m_questObject = _scriptable.QuestObject;
+        m_questObjectCount = _scriptable.QuestObjectCount;
+        m_reward = _scriptable.Reward;
         m_rewardNum = _scriptable.RewardNum;
     }
 }

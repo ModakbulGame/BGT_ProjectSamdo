@@ -56,12 +56,17 @@ public class QuestAcceptUIScript : MonoBehaviour
         QuestAvailable = false;
         QuestRunning = false;
 
+        // 프로토타입으로 Q001을 이용한 퀘스트를 구현
+        m_questTitle.text = PlayManager.QuestData[0].Title;
+        m_questDescription.text = PlayManager.QuestData[0].Description;
+        m_questRewards.text = $"보상 {PlayManager.QuestData[0].Reward} {PlayManager.QuestData[0].RewardNum}개";
+
         m_btns = GetComponentsInChildren<Button>();
         m_btns[0].onClick.AddListener(AcceptQuest); // 수락 버튼
         m_btns[1].onClick.AddListener(DenyQuest);   // 거절 버튼
     }
 
-    private void Start()
+    private void Awake()
     {
         SetComps();
     }
