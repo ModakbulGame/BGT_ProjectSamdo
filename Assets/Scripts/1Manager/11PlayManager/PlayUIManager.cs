@@ -46,6 +46,10 @@ public class PlayUIManager : MonoBehaviour
     public void ToggleQuestUI() { m_questUI.ToggleQuestUI(); }
 
     [SerializeField]
+    private MiniQuestUIScript m_miniQuestUI;                // 축약된 퀘스트 UI(오른쪽에 있는 거)
+    public void ExpressCurQuestInfo() { m_miniQuestUI.ExpressCurQuestInfo(); }
+
+    [SerializeField]
     private QuestAcceptUIScript m_questAcceptScript;        // NPC 대화 끝에 나오는 퀘스트 창
     public void ShowNPCQuestUI() { m_questAcceptScript.ShowNPCQuestUI(); }
 

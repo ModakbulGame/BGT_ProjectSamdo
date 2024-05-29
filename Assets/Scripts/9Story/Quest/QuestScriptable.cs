@@ -16,6 +16,9 @@ public class QuestScriptable : ScriptableObject
     public string Reward;             // 보상
     public int RewardNum;             // 보상 수 
 
+    public EQuestStatus Status;     // 퀘스트 수행 상태
+    public int CurQuestObjectCount;    // 현재 수집 / 사냥한 오브젝트 수 
+
     private EQuestType Name2Type(EQuestType _questType)
     {
         if (_questType < EQuestType.TALKING)
@@ -41,5 +44,8 @@ public class QuestScriptable : ScriptableObject
         int.TryParse(_data[(int)EQuestAttribute.ID], out Id);
         int.TryParse(_data[(int)EQuestAttribute.NEXTQUEST], out NextQuest);
         int.TryParse(_data[(int)EQuestAttribute.REWARDNUM], out RewardNum);
+
+        Status = EQuestStatus.AVAILABLE;
+        CurQuestObjectCount = 0;
     }
 }

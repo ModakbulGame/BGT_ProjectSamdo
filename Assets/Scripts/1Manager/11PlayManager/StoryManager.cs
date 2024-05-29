@@ -5,12 +5,12 @@ using UnityEngine;
 // 일단은 한 곳에 작성 중
 public class StoryManager : MonoBehaviour
 {
-    public List<QuestData> QuestList { get; private set; }
-    public List<QuestData> CurQuestList { get; private set; }
+    public List<QuestScriptable> QuestList { get; private set; }
+    public List<QuestScriptable> CurQuestList { get; private set; }
 
     [SerializeField]
-    private QuestScriptable[] m_questData;
-    public QuestScriptable[] QuestData { get { return m_questData; } }
+    private QuestScriptable[] m_QuestScriptable;
+    public QuestScriptable[] QuestData{ get { return m_QuestScriptable; } }
 
 
 
@@ -25,9 +25,9 @@ public class StoryManager : MonoBehaviour
             {
                 for(int j = 0; j < _npcQuest.availableQuestIDs.Count; j++)
                 {
-                    if (QuestList[i].m_id == _npcQuest.availableQuestIDs[j] && QuestList[i].m_status == EQuestStatus.AVAILABLE)
+                    if (QuestList[i].Id == _npcQuest.availableQuestIDs[j] && QuestList[i].Status == EQuestStatus.AVAILABLE)
                     {
-                        Debug.Log("Quest ID: " + _npcQuest.availableQuestIDs[j] + QuestList[i].m_status);
+                        Debug.Log("Quest ID: " + _npcQuest.availableQuestIDs[j] + QuestList[i].Status);
                         // AcceptQuest(_npcQuest.availableQuestIDs[j]);
                         // QuestUIScript.QuestAvailable = true;
                         // QuestUIScript.m_availableQuest.Add(QuestList[i]);
@@ -41,10 +41,10 @@ public class StoryManager : MonoBehaviour
         {
             for (int j = 0; j < _npcQuest.receivableQuestIDs.Count; j++)
             {
-                if (CurQuestList[i].m_id == _npcQuest.receivableQuestIDs[j] && CurQuestList[i].m_status == EQuestStatus.ACCEPTED
-                    || CurQuestList[i].m_status == EQuestStatus.COMPLETE)
+                if (CurQuestList[i].Id == _npcQuest.receivableQuestIDs[j] && CurQuestList[i].Status == EQuestStatus.ACCEPTED
+                    || CurQuestList[i].Status == EQuestStatus.COMPLETE)
                 {
-                    Debug.Log("Quest ID: " + _npcQuest.receivableQuestIDs[j] + " is " + CurQuestList[i].m_status);
+                    Debug.Log("Quest ID: " + _npcQuest.receivableQuestIDs[j] + " is " + CurQuestList[i].Status);
                     // CompleteQuest(_npcQuest.receivableQuestIDs[j]);
                     // QuestUIScript.QuestRunning = true;
                     // QuestUIScript.m_activeQuest.Add(QuestList[i]);
@@ -58,10 +58,10 @@ public class StoryManager : MonoBehaviour
     {
         for(int i = 0; i < QuestList.Count; i++)
         {
-            if (QuestList[i].m_id == _id && QuestList[i].m_status == EQuestStatus.AVAILABLE)
+            if (QuestList[i].Id == _id && QuestList[i].Status == EQuestStatus.AVAILABLE)
             {
                 CurQuestList.Add(QuestList[i]);
-                QuestList[i].m_status = EQuestStatus.ACCEPTED;
+                QuestList[i].Status = EQuestStatus.ACCEPTED;
             }
         }
     }
@@ -71,10 +71,10 @@ public class StoryManager : MonoBehaviour
     {
         for (int i = 0; i < QuestList.Count; i++)
         {
-            if (CurQuestList[i].m_id == _id && CurQuestList[i].m_status == EQuestStatus.ACCEPTED)
+            if (CurQuestList[i].Id == _id && CurQuestList[i].Status == EQuestStatus.ACCEPTED)
             {
-                CurQuestList[i].m_status = EQuestStatus.AVAILABLE;
-                CurQuestList[i].m_questObjectCount = 0;
+                CurQuestList[i].Status = EQuestStatus.AVAILABLE;
+                CurQuestList[i].CurQuestObjectCount = 0;
                 CurQuestList.Remove(CurQuestList[i]);
             }
         }
@@ -85,9 +85,9 @@ public class StoryManager : MonoBehaviour
     {
         for(int i = 0; i < QuestList.Count; i++)
         {
-            if (CurQuestList[i].m_id == _id && CurQuestList[i].m_status == EQuestStatus.COMPLETE)
+            if (CurQuestList[i].Id == _id && CurQuestList[i].Status == EQuestStatus.COMPLETE)
             {
-                CurQuestList[i].m_status = EQuestStatus.DONE;
+                CurQuestList[i].Status = EQuestStatus.DONE;
                 CurQuestList.Remove(CurQuestList[i]);
             }
             // 보상
@@ -103,9 +103,9 @@ public class StoryManager : MonoBehaviour
         int tempID = 0;
         for(int i = 0; i < QuestList.Count; i++)
         {
-            if (QuestList[i].m_id == _questID && QuestList[i].m_nextQuest > 0)
+            if (QuestList[i].Id == _questID && QuestList[i].NextQuest > 0)
             {
-                tempID = QuestList[i].m_nextQuest;
+                tempID = QuestList[i].NextQuest;
             }
         }
 
@@ -113,9 +113,9 @@ public class StoryManager : MonoBehaviour
         {
             for(int i = 0; i < QuestList.Count; i++)
             {
-                if (QuestList[i].m_id == tempID && QuestList[i].m_status == EQuestStatus.NOT_AVAILABLE)
+                if (QuestList[i].Id == tempID && QuestList[i].Status == EQuestStatus.NOT_AVAILABLE)
                 {
-                    QuestList[i].m_status = EQuestStatus.AVAILABLE;
+                    QuestList[i].Status = EQuestStatus.AVAILABLE;
                 }
             }
         }
@@ -126,15 +126,15 @@ public class StoryManager : MonoBehaviour
     {
         for(int i = 0; i < CurQuestList.Count; i++)
         {
-            if(CurQuestList[i].m_status == EQuestStatus.ACCEPTED)
+            if(CurQuestList[i].Status == EQuestStatus.ACCEPTED)
             {
-                if (CurQuestList[i].m_questObject == _questobj)
+                if (CurQuestList[i].QuestObject == _questobj)
                 {
-                    CurQuestList[i].m_questObjectCount += _amount;
+                    CurQuestList[i].CurQuestObjectCount += _amount;
                 }
-                if(CurQuestList[i].m_questObjectCount >= CurQuestList[i].m_questRequireObjectCount)
+                if(CurQuestList[i].CurQuestObjectCount >= CurQuestList[i].QuestObjectCount)
                 {
-                    CurQuestList[i].m_status = EQuestStatus.COMPLETE;
+                    CurQuestList[i].Status = EQuestStatus.COMPLETE;
                 }
             }
         }
@@ -142,7 +142,7 @@ public class StoryManager : MonoBehaviour
 
     public void SetManager()
     {
-        QuestList = new List<QuestData>();
-        CurQuestList = new List<QuestData>();
+        QuestList = new List<QuestScriptable>();
+        CurQuestList = new List<QuestScriptable>();
     }
 }

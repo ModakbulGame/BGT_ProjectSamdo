@@ -12,8 +12,8 @@ public class QuestAcceptUIScript : MonoBehaviour
     private QuestObject m_curQuestObject;
     private Button[] m_btns;
 
-    public List<QuestData> m_availableQuest = new List<QuestData>();
-    public List<QuestData> m_activeQuest = new List<QuestData>();
+    public List<QuestScriptable> m_availableQuest = new List<QuestScriptable>();
+    public List<QuestScriptable> m_activeQuest = new List<QuestScriptable>();
 
     // 퀘스트 정보
     [SerializeField]
@@ -23,12 +23,6 @@ public class QuestAcceptUIScript : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI m_questRewards;
 
-    public void CheckQuests(QuestObject _obj)
-    {
-    
-
-    }
-
     public void ShowNPCQuestUI()
     {
         gameObject.SetActive(true);
@@ -37,6 +31,9 @@ public class QuestAcceptUIScript : MonoBehaviour
     private void AcceptQuest()
     {
         Debug.Log("퀘스트 수락!");
+        PlayManager.QuestScriptable[0].Status = EQuestStatus.ACCEPTED;  // 퀘스트 수락
+        PlayManager.CurQuestList.Add(PlayManager.QuestScriptable[0]);   // 수락된 퀘스트는 CurQuestList에 추가
+        PlayManager.ExpressCurQuestInfo();                              // 퀘스트 창에 표시
         CloseNPCQuestUI();
     }
 
@@ -57,9 +54,9 @@ public class QuestAcceptUIScript : MonoBehaviour
         QuestRunning = false;
 
         // 프로토타입으로 Q001을 이용한 퀘스트를 구현
-        m_questTitle.text = PlayManager.QuestData[0].Title;
-        m_questDescription.text = PlayManager.QuestData[0].Description;
-        m_questRewards.text = $"보상 {PlayManager.QuestData[0].Reward} {PlayManager.QuestData[0].RewardNum}개";
+        m_questTitle.text = PlayManager.QuestScriptable[0].Title;
+        m_questDescription.text = PlayManager.QuestScriptable[0].Description;
+        m_questRewards.text = $"보상 {PlayManager.QuestScriptable[0].Reward} {PlayManager.QuestScriptable[0].RewardNum}개";
 
         m_btns = GetComponentsInChildren<Button>();
         m_btns[0].onClick.AddListener(AcceptQuest); // 수락 버튼

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class QuestBoolStatus : MonoBehaviour
 {
-    private List<QuestData> m_questList = PlayManager.QuestList;
+    private List<QuestScriptable> m_questList = PlayManager.QuestList;
 
     // 현재 퀘스트 상태 반환
     public bool RequestAvailableQuest(int _id)
     {
         for (int i = 0; i < m_questList.Count; i++)
         {
-            if (m_questList[i].m_id == _id && m_questList[i].m_status == EQuestStatus.AVAILABLE)
+            if (m_questList[i].Id == _id && m_questList[i].Status == EQuestStatus.AVAILABLE)
             {
                 return true;
             }
@@ -23,7 +23,7 @@ public class QuestBoolStatus : MonoBehaviour
     {
         for (int i = 0; i < m_questList.Count; i++)
         {
-            if (m_questList[i].m_id == _id && m_questList[i].m_status == EQuestStatus.ACCEPTED)
+            if (m_questList[i].Id == _id && m_questList[i].Status == EQuestStatus.ACCEPTED)
             {
                 return true;
             }
@@ -35,7 +35,7 @@ public class QuestBoolStatus : MonoBehaviour
     {
         for (int i = 0; i < m_questList.Count; i++)
         {
-            if (m_questList[i].m_id == _id && m_questList[i].m_status == EQuestStatus.COMPLETE)
+            if (m_questList[i].Id == _id && m_questList[i].Status == EQuestStatus.COMPLETE)
             {
                 return true;
             }
@@ -49,7 +49,7 @@ public class QuestBoolStatus : MonoBehaviour
         {
             for (int j = 0; j < _npcQuest.availableQuestIDs.Count; j++)
             {
-                if (m_questList[i].m_id == _npcQuest.availableQuestIDs[j] && m_questList[i].m_status == EQuestStatus.AVAILABLE)
+                if (m_questList[i].Id == _npcQuest.availableQuestIDs[j] && m_questList[i].Status == EQuestStatus.AVAILABLE)
                 {
                     return true;
                 }
@@ -64,7 +64,7 @@ public class QuestBoolStatus : MonoBehaviour
         {
             for (int j = 0; j < _npcQuest.availableQuestIDs.Count; j++)
             {
-                if (m_questList[i].m_id == _npcQuest.availableQuestIDs[j] && m_questList[i].m_status == EQuestStatus.ACCEPTED)
+                if (m_questList[i].Id == _npcQuest.availableQuestIDs[j] && m_questList[i].Status == EQuestStatus.ACCEPTED)
                 {
                     return true;
                 }
@@ -79,7 +79,7 @@ public class QuestBoolStatus : MonoBehaviour
         {
             for (int j = 0; j < _npcQuest.availableQuestIDs.Count; j++)
             {
-                if (m_questList[i].m_id == _npcQuest.availableQuestIDs[j] && m_questList[i].m_status == EQuestStatus.COMPLETE)
+                if (m_questList[i].Id == _npcQuest.availableQuestIDs[j] && m_questList[i].Status == EQuestStatus.COMPLETE)
                 {
                     return true;
                 }

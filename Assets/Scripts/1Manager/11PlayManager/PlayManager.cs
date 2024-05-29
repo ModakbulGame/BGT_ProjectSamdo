@@ -94,9 +94,9 @@ public class PlayManager : MonoBehaviour
     // 스토리
     private StoryManager m_storyManager;
     private static StoryManager StoryManager { get { return Inst.m_storyManager; } }
-    public static List<QuestData> QuestList { get { return StoryManager.QuestList; } }
-    public static List<QuestData> CurQuestList { get { return StoryManager.CurQuestList; } }
-    public static QuestScriptable[] QuestData { get { return StoryManager.QuestData; } }
+    public static List<QuestScriptable> QuestList { get { return StoryManager.QuestList; } }
+    public static List<QuestScriptable> CurQuestList { get { return StoryManager.CurQuestList; } }
+    public static QuestScriptable[] QuestScriptable { get { return StoryManager.QuestData; } }
     public static void QuestRequest(QuestObject _npcQuest) { StoryManager.QuestRequest(_npcQuest); }
 
 
@@ -131,8 +131,9 @@ public class PlayManager : MonoBehaviour
     public static void ClosePlayerUI() { PlayUIManager.ClosePlayerUI(); }                                                                   // Player UI 닫기
     public static void SetMinimapScale(float _scale) { PlayUIManager.SetMinimapScale(_scale); }                                             // 미니맵 축척
     public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                       // 맵 UI 여닫기
-    public static void ToggleQuestUI() { PlayUIManager.ToggleQuestUI(); }
-    public static void ShowNPCQuestUI() { PlayUIManager.ShowNPCQuestUI(); }
+    public static void ToggleQuestUI() { PlayUIManager.ToggleQuestUI(); }                                                                   // 퀘스트 창 여닫기
+    public static void ShowNPCQuestUI() { PlayUIManager.ShowNPCQuestUI(); }                                                                 // 퀘스트 수락/거절 창 표시
+    public static void ExpressCurQuestInfo() { PlayUIManager.ExpressCurQuestInfo(); }
     public static void OpenNPCUI(NPCScript _npc) { PlayUIManager.OpenDialogueUI(_npc); }                                                    // NPC 대화창 열기
     public static void CloseNPCUI() { PlayUIManager.CloseDialogueUI(); }                                                                    // NPC 대화창 닫기
     public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                  // NPC 대화창 열렸는지 확인
