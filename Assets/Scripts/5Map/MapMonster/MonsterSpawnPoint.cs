@@ -2,11 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EAreaType
+{
+    AISLE,
+    FIELD,
+
+
+    LAST
+}
+
 public class MonsterSpawnPoint : MonoBehaviour
 {
     [SerializeField]
     private float m_fenceRange = 30;
-    public float FenceRange { get { return m_fenceRange; } }
+    [SerializeField]
+    private EAreaType m_areaType;
+
+    private readonly float[] m_rangeMultiplier = new float[(int)EAreaType.LAST] { 1, 1.5f };
+
+    public float RangeMultiplier { get { return m_rangeMultiplier[(int)m_areaType]; } }
+
     public Vector3 SpawnPosition { get { return transform.position; } }
 
 
