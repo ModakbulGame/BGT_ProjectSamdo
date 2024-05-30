@@ -300,7 +300,7 @@ public partial class PlayerController
         if (info.IsNull) { return; }
         _skill.transform.position = info.Point;
         _skill.GetComponent<EffectScript>().SetDestroyTime(2); ;
-        RaycastTarget.GetInstantHit(SkillInfoInHand, info.Target);
+        RaycastTarget.GetInstantHit(SkillInfoInHand, info.Target, this);
     }
 
     // ¹«±â CC

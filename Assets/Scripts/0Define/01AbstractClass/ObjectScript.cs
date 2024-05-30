@@ -106,32 +106,40 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     public virtual void CreateAttack() { }                              // 공격 생성 타이밍
     public virtual void AttackTriggerOn() { if (!AttackObject) return; AttackObject.AttackOn(); }       // 공격 트리거 on
     public virtual void AttackTriggerOff() { if (!AttackObject) return; AttackObject.AttackOff(); }     // 공격 트리거 off
-    public virtual void AttackDone() { }                                // 공격 모션 끝
-    public virtual void GetHit(HitData _hit)                            // 공격 맞음
+    public virtual void AttackDone() { }                                    // 공격 모션 끝
+    public virtual void GetHit(HitData _hit)                                // 공격 맞음
     {
         if (IsDead) { return; }
         if (!IsGrounded && _hit.CCList.Contains(ECCType.AIRBORNE)) { return; }
         float damage = _hit.Damage * (100-Defense) * 0.01f;
         if (CurHP > damage) { GetCC(_hit); }
-        GetDamage(damage);
+        GetDamage(damage, _hit.Attacker);
         Debug.Log($"{_hit.Attacker.ObjectName} => {ObjectName} {damage} 데미지");
         if (!IsUnstoppable) { PlayHitAnim(_hit); }
     }
-    public virtual void GetDamage(float _damage)                        // 데미지 받음
+    public virtual void GetDamage(float _damage, ObjectScript _attacker)    // 데미지 받음
     {
         float hp = CurHP;
         hp -= _damage;
+        if (_attacker != null) 
+        { 
+            _attacker.GaveDamage(this, _damage); 
+        }
         if (hp <= 0 || CheckVoid(_damage)) { hp = 0; SetDead(); }
         if (ExtraHP > 0) { ExtraHP -= _damage; }
         SetHP(hp);
     }
-    public virtual void PlayHitAnim(HitData _hit)                       // 피격 애니메이션 재생
+    public virtual void GaveDamage(ObjectScript _target, float _damage) { }
+    public virtual void PlayHitAnim(HitData _hit)                           // 피격 애니메이션 재생
     {
         HitAnimation();
     }
-    public virtual void SetHP(float _hp) { CurHP = _hp; }               // HP 설정
-    public virtual void SetDead() { IsDead = true; }                    // 죽음 설정
-    public virtual void HealObj(float _heal)                            // 회복
+    public virtual void SetHP(float _hp) 
+    {
+        CurHP = _hp; 
+    }                   // HP 설정
+    public virtual void SetDead() { IsDead = true; }                        // 죽음 설정
+    public virtual void HealObj(float _heal)                                // 회복
     {
         float hp = CurHP + _heal;
         if (hp > MaxHP) { hp = MaxHP; }
@@ -229,7 +237,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
         while (!IsDead && m_ccCount[(int)_cc] > 0)
         {
             yield return new WaitForSeconds(1);
-            GetDamage(damage);
+            GetDamage(damage, attacker);
             if (_cc == ECCType.EXTORTION) { attacker.HealObj(attacker.MaxHP * 0.1f); }
             m_ccCount[(int)_cc]--;
         }

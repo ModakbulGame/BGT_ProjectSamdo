@@ -9,13 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7029200938158750450}
-  - component: {fileID: 2508222740684373097}
+  - component: {fileID: 3557179056570199196}
   - component: {fileID: 8845934459699198658}
   - component: {fileID: 7229214969447431716}
   - component: {fileID: 4602168716442109495}
   - component: {fileID: 5296837395338050109}
   - component: {fileID: -6558690038543513444}
   - component: {fileID: 8028411489081456261}
+  - component: {fileID: 5020835059341038419}
   m_Layer: 9
   m_Name: M507
   m_TagString: Monster
@@ -43,7 +44,7 @@ Transform:
   - {fileID: 2309944297017006197}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &2508222740684373097
+--- !u!114 &3557179056570199196
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52,7 +53,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4113875238200415537}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d091059cc4d6b2c4f942132cb29a650e, type: 3}
+  m_Script: {fileID: 11500000, guid: ee8c752d89a7ebb41bfc67e05f025e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_baseInfo:
@@ -69,9 +70,9 @@ MonoBehaviour:
   - {fileID: 8774051692207393923}
   m_scriptable: {fileID: 11400000, guid: 1f95ad6ed9a82c7498d0cd231d5652ae, type: 2}
   m_combatInfo:
-    MaxHP: 100
+    MaxHP: 50
     Defense: 5
-    Attack: 5
+    Attack: 40
     ApproachSpeed: 5
     ViewAngle: 120
     ViewRange: 20
@@ -81,8 +82,8 @@ MonoBehaviour:
     ApproachDelay: 1
     FenceRange: 25
   m_spawnPoint: {fileID: 0}
-  HasSpeedAttack: 0
-  m_dissolveDelay: 2
+  HasSpeedAttack: 1
+  m_dissolveDelay: 1
 --- !u!114 &8845934459699198658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +260,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_againstMonster: 0
+--- !u!114 &5020835059341038419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4113875238200415537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d091059cc4d6b2c4f942132cb29a650e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_baseInfo:
+    ObjectName: "\uC0DD\uBA85 \uB545\uACE0\uC591\uC774"
+    AttackSpeed: 1
+    MoveSpeed: 3
+  m_buffNDebuff: []
+  m_curHP: 0
+  m_curSpeed: 0
+  m_uiOffset: 2
+  m_normalAttacks:
+  - {fileID: 3182551727449803534}
+  - {fileID: 5379810400386613370}
+  - {fileID: 8774051692207393923}
+  m_scriptable: {fileID: 11400000, guid: 1f95ad6ed9a82c7498d0cd231d5652ae, type: 2}
+  m_combatInfo:
+    MaxHP: 50
+    Defense: 5
+    Attack: 40
+    ApproachSpeed: 5
+    ViewAngle: 120
+    ViewRange: 20
+    EngageRange: 15
+    ReturnRange: 15
+    AttackRange: 2.5
+    ApproachDelay: 1
+    FenceRange: 25
+  m_spawnPoint: {fileID: 0}
+  HasSpeedAttack: 0
+  m_dissolveDelay: 2
 --- !u!1001 &891634348866949445
 PrefabInstance:
   m_ObjectHideFlags: 0

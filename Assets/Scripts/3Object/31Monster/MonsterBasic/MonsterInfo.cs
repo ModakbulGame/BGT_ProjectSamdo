@@ -119,11 +119,11 @@ public partial class MonsterScript
 
     public virtual void OnEnable()
     {
-        base.Start();
         SetUI();
         if (m_spawnPoint != null) { m_spawnPoint.AddMonster(this); }
         if (AttackObject == null) { SetAttackObject(); }
         StartCoroutine(WaitSpawned());
+        base.Start();
     }
     public virtual IEnumerator WaitSpawned()
     {
