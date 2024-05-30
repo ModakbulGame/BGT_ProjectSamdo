@@ -94,7 +94,7 @@ public class AnimateAttackScript : ObjectAttackScript
     public virtual bool CheckTarget(Collider _collider)
     {
         ObjectScript obj = _collider.GetComponentInParent<ObjectScript>();
-        if (obj == m_attacker || CheckHit(obj)) { return false; }
+        if (obj == m_attacker || obj.IsDead || CheckHit(obj)) { return false; }
         return true;
     }
     public virtual void CreateHitEffect(IHittable _hittable, Vector3 _pos) { }

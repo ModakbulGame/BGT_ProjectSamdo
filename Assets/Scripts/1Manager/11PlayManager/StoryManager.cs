@@ -124,7 +124,7 @@ public class StoryManager : MonoBehaviour
     // 퀘스트 수행
     public void AddQuestItem(string _questobj, int _amount)
     {
-        for(int i = 0; i < CurQuestList.Count; i++)
+/*        for(int i = 0; i < CurQuestList.Count; i++)
         {
             if(CurQuestList[i].Status == EQuestStatus.ACCEPTED)
             {
@@ -137,7 +137,7 @@ public class StoryManager : MonoBehaviour
                     CurQuestList[i].Status = EQuestStatus.COMPLETE;
                 }
             }
-        }
+        }*/
     }
 
     public void SetManager()

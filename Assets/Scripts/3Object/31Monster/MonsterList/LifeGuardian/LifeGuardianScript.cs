@@ -23,7 +23,6 @@ public class LifeGuardianScript : AnimatedAttackMonster
     public override void LookTarget()
     {
         if (CurTarget == null) { return; }
-        if (IsAttacking && Vector2.Distance(CurTarget.Position2, Position2) > AttackRange) { return; }
 
         Vector2 dir = (CurTarget.Position2 - Position2).normalized;
         if (IsTracing)
@@ -47,7 +46,7 @@ public class LifeGuardianScript : AnimatedAttackMonster
         base.AttackTriggerOn();
         AttackObject.SetDamage(Attack);
 
-        AttackProceed = true/* AttackIdx < 3 && Random.Range(0, 2) == 0*/;
+        AttackProceed = AttackIdx < 2 && Random.Range(0, 2) == 0;
         m_anim.SetBool("PROCEED_ATTACK", AttackProceed);
     }
     public override void AttackDone()
