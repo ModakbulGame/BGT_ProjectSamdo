@@ -7,7 +7,7 @@ public class ProjectileSkillScript : PlayerSkillScript
 {
     protected Rigidbody m_rigid;
     private float MoveSpeed { get { return 5;/*m_scriptable.MoveSpeed;*/ } }
-
+    [SerializeField]
     private Vector3 MoveDir;
 
     public override void ReleaseToPool()
