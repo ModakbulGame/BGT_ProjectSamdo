@@ -3,6 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
+public enum EUumAttackType
+{
+    NORMAL1 = 0,
+    NORMAL2 = 2,
+
+    NORMAL3 = 5,
+
+    SKILL2 = 6,
+    SKILL1 = 7,
+
+    LAST
+}
+
 public class UumScript : AnimatedAttackMonster
 {
     [SerializeField]
@@ -23,17 +36,25 @@ public class UumScript : AnimatedAttackMonster
 
     private readonly float NarrowAttackMultiplier = 1.5f;
 
+    private readonly List<ObjectAttackScript> AttackObjects = new();
+
     public override void StartAttack()
     {
-        AttackIdx = Random.Range(0, 5);
+        AttackIdx = 4/*Random.Range(0, 5)*/;
         m_anim.SetInteger("ATTACK_IDX", AttackIdx);
+        AttackObjects.Clear();
         base.StartAttack();
     }
     public override void CreateAttack()
     {
+        EUumAttackType type = EUumAttackType.LAST;
+        if(AttackIdx == 2) { type = EUumAttackType.NORMAL3; }
+        else if(AttackIdx == 3) { type = EUumAttackType.SKILL2; }
+        else if (AttackIdx == 4) { type = EUumAttackType.SKILL1; }
+
         float attack = Attack;
-        if(AttackIdx == 2) { attack *= NarrowAttackMultiplier; }
-        AttackObject = m_normalAttacks[AttackIdx].GetComponent<ObjectAttackScript>();
+        if(type == EUumAttackType.NORMAL3) { attack *= NarrowAttackMultiplier; }
+        AttackObject = m_normalAttacks[(int)type].GetComponent<ObjectAttackScript>();
         AttackObject.SetAttack(this, attack);
         AttackObject.AttackOn();
     }
@@ -42,26 +63,45 @@ public class UumScript : AnimatedAttackMonster
         switch (AttackIdx)
         {
             case 0:
-            case 1:
-                AttackObject = m_normalAttacks[AttackIdx].GetComponent<ObjectAttackScript>();
-                AttackObject.SetAttack(this, Attack);
-                break;
+            case 2:
             case 3:
+                for(int i=(int)EUumAttackType.NORMAL1;i<=(int)EUumAttackType.NORMAL2;i++)
+                {
+                    AttackObjects.Add(m_normalAttacks[i].GetComponent<ObjectAttackScript>());
+                    AttackObjects[i].SetAttack(this, Attack);
+                    if(AttackIdx == 3) { AttackObjects[i].SetCCType(ECCType.KNOCKBACK); }
+                }
+                break;
+            case 1:
             case 4:
-                AttackObject = m_normalAttacks[AttackIdx-3].GetComponent<ObjectAttackScript>();
-                AttackObject.SetAttack(this, Attack);
-                AttackObject.SetCCType(ECCType.KNOCKBACK);
+                for (int i = (int)EUumAttackType.NORMAL2; i<(int)EUumAttackType.NORMAL3; i++)
+                {
+                    int idx = i - (int)EUumAttackType.NORMAL2;
+                    AttackObjects.Add(m_normalAttacks[i].GetComponent<ObjectAttackScript>());
+                    AttackObjects[idx].SetAttack(this, Attack);
+                    if (AttackIdx == 4) { AttackObjects[idx].SetCCType(ECCType.KNOCKBACK); }
+                }
                 break;
         }
-        AttackObject.AttackOn();
+        foreach (ObjectAttackScript attack in AttackObjects)
+        {
+            attack.AttackOn();
+        }
     }
     public override void AttackTriggerOff()
     {
-        AttackObject.AttackOff();
+        foreach (ObjectAttackScript attack in AttackObjects)
+        {
+            attack.AttackOff();
+        }
+        AttackObject?.AttackOff();
     }
     public override void AttackDone()
     {
-        AttackObject.ResetCCType();
+        foreach (ObjectAttackScript attack in AttackObjects)
+        {
+            attack.ResetCCType();
+        }
         base.AttackDone();
     }
     public override void LookTarget()
