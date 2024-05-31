@@ -57,7 +57,7 @@ public class QuestScriptable : ScriptableObject
         int.TryParse(_data[(int)EQuestAttribute.OBJECTNUM], out QuestObjectCount);
         int.TryParse(_data[(int)EQuestAttribute.REWARDNUM], out RewardNum);
 
-        Status = EQuestStatus.NOT_AVAILABLE;
+        Status = EQuestStatus.AVAILABLE;
         CurQuestObjectCount = 0;
     }
 }

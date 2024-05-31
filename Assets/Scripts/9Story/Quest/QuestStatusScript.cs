@@ -49,10 +49,10 @@ public class QuestStatusScript : MonoBehaviour
     {
         for (int i = 0; i < PlayManager.QuestList.Count; i++)
         {
-            if (PlayManager.QuestList[i].Id.Equals(_id) && PlayManager.QuestList[i].Status == EQuestStatus.AVAILABLE)
+            if (PlayManager.QuestList[i].Id == _id && PlayManager.QuestList[i].Status == EQuestStatus.AVAILABLE)
             {
-                PlayManager.CurQuestList.Add(PlayManager.QuestList[i]);
                 PlayManager.QuestList[i].Status = EQuestStatus.ACCEPTED;
+                PlayManager.CurQuestList.Add(PlayManager.QuestList[i]);
             }
         }
     }
@@ -62,7 +62,7 @@ public class QuestStatusScript : MonoBehaviour
     {
         for (int i = 0; i < PlayManager.QuestList.Count; i++)
         {
-            if (PlayManager.CurQuestList[i].Id.Equals(_id) && PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED)
+            if (PlayManager.CurQuestList[i].Id == _id && PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED)
             {
                 PlayManager.CurQuestList[i].Status = EQuestStatus.AVAILABLE;
                 PlayManager.CurQuestList[i].CurQuestObjectCount = 0;
@@ -76,7 +76,7 @@ public class QuestStatusScript : MonoBehaviour
     {
         for (int i = 0; i < PlayManager.QuestList.Count; i++)
         {
-            if (PlayManager.CurQuestList[i].Id.Equals(_id) && PlayManager.CurQuestList[i].Status == EQuestStatus.COMPLETE)
+            if (PlayManager.CurQuestList[i].Id == _id && PlayManager.CurQuestList[i].Status == EQuestStatus.COMPLETE)
             {
                 int rewardNum = PlayManager.CurQuestList[i].RewardNum;
 

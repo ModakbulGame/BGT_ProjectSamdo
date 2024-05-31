@@ -50,7 +50,6 @@ public class NPCDialogueScript : MonoBehaviour
 
     public void CloseUI()
     {
-        
         CurNPC.StopInteract();
         gameObject.SetActive(false);
         IsDialogueOpened = false;
