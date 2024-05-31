@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Rocks
+  m_Name: Pillar01
   m_Shader: {fileID: 4800000, guid: f560932f44076e9438f038943604f8f5, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -15,7 +15,7 @@ Material:
   - _VERTEXCOLORCHANNEL_B
   m_InvalidKeywords:
   - _BLENDNORMALS_ON
-  - _EMISSION
+  - _DETAIL_MULX2
   - _METALLICGLOSSMAP
   - _NORMALMAP
   m_LightmapFlags: 4
@@ -29,23 +29,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 29b4cc02c1ced4d4e8aeb8bf118bb40d, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DepositAlbedo:
-        m_Texture: {fileID: 2800000, guid: 1bbb6f363f884124aaa1cad8329f78cf, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DepositBumpMap:
-        m_Texture: {fileID: 2800000, guid: fcc0f7f30aa29f44e831dfb556f69df4, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DepositMask:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DepositMetallicGlossMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 00113ffe21ddcb541ad8b6eb2278bb65, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedo:
@@ -56,20 +40,12 @@ Material:
         m_Texture: {fileID: 2800000, guid: 1bbb6f363f884124aaa1cad8329f78cf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _DetailAlbedoMap1:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _DetailMask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailMetallicGlossMap:
         m_Texture: {fileID: 2800000, guid: 8d961c07e5665584094383581d95e88e, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailMetallicGlossMap1:
-        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailNormalMap:
@@ -81,14 +57,6 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailNormalMap2:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailOcclusionMap:
-        m_Texture: {fileID: 2800000, guid: ad3184682e743454cb23eb11d58fa95a, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailOcclusionMap1:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -109,27 +77,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 3fe1213c565022a49b6a6d3a9a66d60e, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MeshBumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MeshOcclusionMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 1695acb9a4bd8374198c98751d48a3e4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 1e8709662c6b25d4c8d99d631776fcb7, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicRSmoothnessA:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: a6f45ce98b56c094e8869bae8aa5fbcb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: 672a10588bd4fbe4aa9befdf1b4f4e8e, type: 3}
+        m_Texture: {fileID: 2800000, guid: aa2310f76129d864d9ac8faed0837e31, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -137,10 +93,6 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SecondAlbedo:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _TextureSample2:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -169,50 +121,36 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DepositContrast: 0
-    - _DepositFalloff: -1.49
-    - _DepositGlossiness: 0.25
-    - _DepositMetallic: 0
     - _DepositPosition: 0
-    - _DepositPower: 0.634
+    - _DepositPower: 0.528
     - _DepositThreshold: 50
-    - _DepositTiling: 1
     - _DetailNormalMapScale: 1
-    - _DisplacementPower: 0
-    - _DistanceMax: 3
-    - _DistanceMin: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _Float0: 1
     - _GlossMapScale: 1
-    - _Glossiness: 1
+    - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _LayerContrast: 0
     - _LayerPosition: 0
-    - _LayerPower: 0
-    - _LayerThreshold: 12.5
-    - _MaskPower: 0
-    - _MeshBumpScale: 1
-    - _MeshOcclusionStrength: 0
+    - _LayerPower: 0.5
+    - _LayerThreshold: 50
     - _Metallic: 0
     - _MetallicPower: 0
     - _Mode: 0
-    - _NoiseScale: 3.88
     - _NormalPower: 1
-    - _OcclusionPower: 0
-    - _OcclusionStrength: 1
-    - _Parallax: 0
-    - _ParallaxBias: 0
+    - _OcclusionPower: 0.5
+    - _OcclusionStrength: 0.5
+    - _Parallax: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _SecondNormalPower: 1
     - _SeeVertexColors: 0
-    - _SmoothnessPower: 0.446
+    - _SmoothnessPower: 0.396
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TesselationPower: 0.01
-    - _Tiling: 0.25
+    - _Tiling: 1.51
     - _Tiling2: 1
     - _UVSec: 0
     - _UseVertexColor: 0
@@ -220,8 +158,7 @@ Material:
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
-    - _2ndColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DirtColor: {r: 1, g: 1, b: 1, a: 1}
+    - _2ndColor: {r: 1, g: 1, b: 1, a: 0}
+    - _Color: {r: 0.5176471, g: 0.2509804, b: 0.5058824, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
