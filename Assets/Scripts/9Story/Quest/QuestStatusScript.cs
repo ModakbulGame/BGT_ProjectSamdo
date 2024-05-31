@@ -1,0 +1,133 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class QuestStatusScript : MonoBehaviour
+{
+    public void QuestRequest(QuestObject _npcQuest)
+    {
+        if (_npcQuest.availableQuestIDs.Count > 0)
+        {
+            for (int i = 0; i < PlayManager.QuestList.Count; i++)
+            {
+                for (int j = 0; j < _npcQuest.availableQuestIDs.Count; j++)
+                {
+                    if (PlayManager.QuestList[i].Id.Equals(_npcQuest.availableQuestIDs[j]) && PlayManager.QuestList[i].Status == EQuestStatus.AVAILABLE)
+                    {
+                        Debug.Log("Quest ID: " + _npcQuest.availableQuestIDs[j] + PlayManager.QuestList[i].Status);
+                        // AcceptQuest(_npcQuest.availableQuestIDs[j]);
+                        // QuestUIScript.QuestAvailable = true;
+                        // QuestUIScript.m_availableQuest.Add(PlayManager.QuestList[i]);
+                    }
+                }
+            }
+        }
+    }
+
+    public void Activeuest(QuestObject _npcQuest)
+    {
+        // 활성화된 퀘스트
+        for (int i = 0; i < PlayManager.CurQuestList.Count; i++)
+        {
+            for (int j = 0; j < _npcQuest.receivableQuestIDs.Count; j++)
+            {
+                if (PlayManager.CurQuestList[i].Id.Equals(_npcQuest.receivableQuestIDs[j]) && PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED
+                    || PlayManager.CurQuestList[i].Status == EQuestStatus.COMPLETE)
+                {
+                    Debug.Log("Quest ID: " + _npcQuest.receivableQuestIDs[j] + " is " + PlayManager.CurQuestList[i].Status);
+                    // CompleteQuest(_npcQuest.receivableQuestIDs[j]);
+                    // QuestUIScript.QuestRunning = true;
+                    // QuestUIScript.m_activeQuest.Add(PlayManager.QuestList[i]);
+                }
+            }
+        }
+    }
+
+    // 퀘스트 수락
+    public void AcceptQuest(string _id)
+    {
+        for (int i = 0; i < PlayManager.QuestList.Count; i++)
+        {
+            if (PlayManager.QuestList[i].Id.Equals(_id) && PlayManager.QuestList[i].Status == EQuestStatus.AVAILABLE)
+            {
+                PlayManager.CurQuestList.Add(PlayManager.QuestList[i]);
+                PlayManager.QuestList[i].Status = EQuestStatus.ACCEPTED;
+            }
+        }
+    }
+
+    // 퀘스트 포기
+    public void GiveUpQuest(string _id)
+    {
+        for (int i = 0; i < PlayManager.QuestList.Count; i++)
+        {
+            if (PlayManager.CurQuestList[i].Id.Equals(_id) && PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED)
+            {
+                PlayManager.CurQuestList[i].Status = EQuestStatus.AVAILABLE;
+                PlayManager.CurQuestList[i].CurQuestObjectCount = 0;
+                PlayManager.CurQuestList.Remove(PlayManager.CurQuestList[i]);
+            }
+        }
+    }
+
+    // 퀘스트 클리어
+    public void CompleteQuest(string _id)
+    {
+        for (int i = 0; i < PlayManager.QuestList.Count; i++)
+        {
+            if (PlayManager.CurQuestList[i].Id.Equals(_id) && PlayManager.CurQuestList[i].Status == EQuestStatus.COMPLETE)
+            {
+                PlayManager.CurQuestList[i].Status = EQuestStatus.DONE;
+                PlayManager.CurQuestList.Remove(PlayManager.CurQuestList[i]);
+            }
+            // 보상
+
+
+        }
+        CheckChainQuest(_id);
+    }
+
+    // 연관 퀘스트 확인
+    private void CheckChainQuest(string _questID)
+    {
+        string tempID = "";
+        for (int i = 0; i < PlayManager.QuestList.Count; i++)
+        {
+            if (PlayManager.QuestList[i].Id.Equals(_questID) && PlayManager.QuestList[i].NextQuest != "")
+            {
+                tempID = PlayManager.QuestList[i].NextQuest;
+            }
+        }
+
+        if (tempID != "")
+        {
+            for (int i = 0; i < PlayManager.QuestList.Count; i++)
+            {
+                if (PlayManager.QuestList[i].Id == tempID && PlayManager.QuestList[i].Status == EQuestStatus.NOT_AVAILABLE)
+                {
+                    PlayManager.QuestList[i].Status = EQuestStatus.AVAILABLE;
+                }
+            }
+        }
+    }
+
+    // 퀘스트 수행
+    public void AddQuestItem(string _questobj, int _amount)
+    {
+        /*        for(int i = 0; i < PlayManager.CurQuestList.Count; i++)
+                {
+                    if(PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED)
+                    {
+                        if (PlayManager.CurQuestList[i].QuestObject == _questobj)
+                        {
+                            PlayManager.CurQuestList[i].CurQuestObjectCount += _amount;
+                        }
+                        if(PlayManager.CurQuestList[i].CurQuestObjectCount >= PlayManager.CurQuestList[i].QuestObjectCount)
+                        {
+                            PlayManager.CurQuestList[i].Status = EQuestStatus.COMPLETE;
+                        }
+                    }
+                }*/
+    }
+}

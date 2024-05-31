@@ -6,8 +6,8 @@ using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 OasisUIScript와 비슷해서 추후 통합 작업 진행할 듯
-{
+public class NPCDialogueScript : MonoBehaviour
+{ 
     [SerializeField]
     private TextMeshProUGUI m_typingText;
     [SerializeField]
@@ -22,6 +22,7 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
     private NPCScript CurNPC { get; set; }
     private string[] CurDialogue { get; set; }
     private int DialogueCount { get; set; } = 0;
+    
     private bool IsQuestExisted;
 
     public void SetNPC(NPCScript _npc)
@@ -49,10 +50,13 @@ public class NPCDialogueScript : MonoBehaviour      // 기존에 만들어져 있던 Oasi
 
     public void CloseUI()
     {
+        
         CurNPC.StopInteract();
         gameObject.SetActive(false);
         IsDialogueOpened = false;
     }
+
+
 
     IEnumerator Typing(string _contents)
     {

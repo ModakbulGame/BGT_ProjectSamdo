@@ -26,6 +26,9 @@ public class NPCScript : MonoBehaviour, IInteractable
 
     [SerializeField]
     private bool m_isQuestExisted;  // 시트에 따라 퀘스트가 존재하는 npc인 경우에는 내부처리로 조정 예정
+    [SerializeField]
+    private bool m_isQuestRelated;  // 얘도
+
     public bool IsQuestExisted { get { return m_isQuestExisted; } }    
     protected Transform m_npcTransform;
     public string[] m_npcDialogue;
@@ -39,6 +42,8 @@ public class NPCScript : MonoBehaviour, IInteractable
     {
 
     }
+
+    
 
     public virtual void StartInteract() 
     {

@@ -31,9 +31,9 @@ public class QuestAcceptUIScript : MonoBehaviour
     private void AcceptQuest()
     {
         Debug.Log("퀘스트 수락!");
-        PlayManager.QuestScriptable[0].Status = EQuestStatus.ACCEPTED;  // 퀘스트 수락
-        PlayManager.CurQuestList.Add(PlayManager.QuestScriptable[0]);   // 수락된 퀘스트는 CurQuestList에 추가
-        PlayManager.ExpressCurQuestInfo();                              // 퀘스트 창에 표시
+        PlayManager.QuestList[0].Status = EQuestStatus.ACCEPTED;  // 퀘스트 수락
+        PlayManager.CurQuestList.Add(PlayManager.QuestList[0]);   // 수락된 퀘스트는 CurQuestList에 추가
+        PlayManager.ExpressCurQuestInfo();                        // 퀘스트 창에 표시
         CloseNPCQuestUI();
     }
 
@@ -54,9 +54,10 @@ public class QuestAcceptUIScript : MonoBehaviour
         QuestRunning = false;
 
         // 프로토타입으로 Q001을 이용한 퀘스트를 구현
-        m_questTitle.text = PlayManager.QuestScriptable[0].Title;
-        m_questDescription.text = PlayManager.QuestScriptable[0].Description;
-        m_questRewards.text = $"보상 {PlayManager.QuestScriptable[0].Reward} {PlayManager.QuestScriptable[0].RewardNum}개";
+        m_questTitle.text = PlayManager.QuestList[0].Title;
+        m_questDescription.text = PlayManager.QuestList[0].Description;
+        m_questRewards.text = $"보상 {PlayManager.QuestList[0].Reward} {PlayManager.QuestList[0].RewardNum}개";
+        Debug.Log(PlayManager.QuestList[0].Id);
 
         m_btns = GetComponentsInChildren<Button>();
         m_btns[0].onClick.AddListener(AcceptQuest); // 수락 버튼
