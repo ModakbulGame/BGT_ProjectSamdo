@@ -31,3 +31,11 @@ public enum EQuestAttribute
     REWARDNUM,
     LAST
 }
+
+public enum ERewardName
+{
+    SOUL,
+    STAT,
+    ITEM,
+    LAST
+}

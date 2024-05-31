@@ -78,14 +78,29 @@ public class QuestStatusScript : MonoBehaviour
         {
             if (PlayManager.CurQuestList[i].Id.Equals(_id) && PlayManager.CurQuestList[i].Status == EQuestStatus.COMPLETE)
             {
+                int rewardNum = PlayManager.CurQuestList[i].RewardNum;
+
                 PlayManager.CurQuestList[i].Status = EQuestStatus.DONE;
                 PlayManager.CurQuestList.Remove(PlayManager.CurQuestList[i]);
+
+                // 보상
+                switch(PlayManager.CurQuestList[i].Reward) 
+                {
+                    case ERewardName.SOUL: 
+                        PlayManager.AddSoul(rewardNum); 
+                        break;
+                    case ERewardName.STAT:
+                        PlayManager.AddStatPoint(rewardNum);
+                        break;
+                    case ERewardName.ITEM:
+                        // 아이템 추가
+                        break;
+                    default:
+                        break;
+                }
             }
-            // 보상
-
-
         }
-        CheckChainQuest(_id);
+        // CheckChainQuest(_id);
     }
 
     // 연관 퀘스트 확인
