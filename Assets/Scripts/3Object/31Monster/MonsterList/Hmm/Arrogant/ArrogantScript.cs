@@ -13,7 +13,6 @@ public class ArrogantScript : HmmScript
 {
     public EArrogantAttack CurAttack { get; private set; } = EArrogantAttack.NORMAL;
     private readonly float SmashCooltime = 15;
-    public readonly float SmashRange = 10;
 
     private bool CanSmash { get { return SmashTimeCount <= 0; } }
 
@@ -53,10 +52,14 @@ public class ArrogantScript : HmmScript
         }
     }
 
+    [SerializeField]
+    private Transform m_smashTransform;
+    public readonly float SmashRange = 1.75f;
+
     private readonly List<ObjectScript> m_smashList = new();
     public void CheckNSmash()
     {
-        Collider[] targets = Physics.OverlapSphere(Position, SmashRange, ValueDefine.HITTABLE_LAYER);
+        Collider[] targets = Physics.OverlapSphere(m_smashTransform.position, SmashRange, ValueDefine.HITTABLE_LAYER);
         for (int i = 0; i<targets.Length; i++)
         {
             ObjectScript obj = targets[i].GetComponentInParent<ObjectScript>();

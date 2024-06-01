@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5487178740258794928}
   - component: {fileID: 4731394825013175420}
-  - component: {fileID: 265507419635513023}
+  - component: {fileID: 5689086546304576327}
   - component: {fileID: 7200266591055613845}
   - component: {fileID: 2738727334567862129}
   m_Layer: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 1, y: -0, z: -0, w: -0.00000008940697}
   m_LocalPosition: {x: 0.00324, y: -0.03275, z: 0}
-  m_LocalScale: {x: 0.010000001, y: 0.018114004, z: 0.010000003}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ccList: 
---- !u!136 &265507419635513023
-CapsuleCollider:
+--- !u!135 &5689086546304576327
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -66,11 +66,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 0.5
-  m_Height: 1.9999994
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 2.910383e-11}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &7200266591055613845
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -78,7 +76,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5025597869680249764}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &2738727334567862129
 MeshRenderer:
   m_ObjectHideFlags: 0

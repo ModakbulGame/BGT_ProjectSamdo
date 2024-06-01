@@ -105,9 +105,21 @@ public class BlinkbeakScript : MonsterScript
             m_rigid.velocity = MoveSpeed  * 2/ 3f * transform.forward;
         }
     }
+
+
+
+    private readonly int EvadeAttackStack = 2;
+    private int AttackStack { get; set; }
+
     public override void AttackDone()
     {
-        if (EvadeTimeCount <= 0) { EvadeBlinkbeak(); return; }
+        AttackStack++;
+        if (AttackStack >= EvadeAttackStack && EvadeTimeCount <= 0) 
+        {
+            EvadeBlinkbeak();
+            AttackStack = 0;    
+            return;
+        }
         base.AttackDone();
     }
 

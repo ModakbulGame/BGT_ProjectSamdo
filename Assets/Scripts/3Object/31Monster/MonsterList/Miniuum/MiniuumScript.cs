@@ -42,6 +42,7 @@ public class MiniuumScript : MonsterScript
     }
     private IEnumerator DashCoroutine()
     {
+        Debug.Log(Position2);
         IsDashing = true;
         while (!IsDead && Vector2.Distance(Position2, CurTarget.Position2) > 0.5f && IsDashing)
         {
@@ -50,6 +51,7 @@ public class MiniuumScript : MonsterScript
             yield return null;
         }
         m_rigid.velocity = Vector3.zero;
+        Debug.Log(Position2);
     }
 
     public override void AttackTriggerOff()
