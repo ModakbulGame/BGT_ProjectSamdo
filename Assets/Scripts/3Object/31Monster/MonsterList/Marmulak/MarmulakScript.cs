@@ -83,7 +83,7 @@ public class MarmulakScript : RangedAttackMonster
 
 
     private readonly float RoarCooltime = 15;
-    public readonly float RoarRange = 4;
+    public readonly float RoarRange = 8;
     private readonly float RoarGap = 0.5f;
 
     [SerializeField]

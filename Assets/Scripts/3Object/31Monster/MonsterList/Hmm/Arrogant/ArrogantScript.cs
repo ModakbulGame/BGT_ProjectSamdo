@@ -54,7 +54,7 @@ public class ArrogantScript : HmmScript
 
     [SerializeField]
     private Transform m_smashTransform;
-    public readonly float SmashRange = 1.75f;
+    public readonly float SmashRange = 3.5f;
 
     private readonly List<ObjectScript> m_smashList = new();
     public void CheckNSmash()
