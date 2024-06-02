@@ -51,8 +51,7 @@ MonoBehaviour:
   m_ccList: 
   m_scriptable: {fileID: 11400000, guid: 88ec7992a142e86478deafd5d94e3c53, type: 2}
   m_lastTime: 10
-  MoveDir: {x: 0, y: 0, z: 0}
-  m_upperForce: 12
+  m_upperForce: 1
   m_skillExplosion:
   - {fileID: 2629885101518212977}
 --- !u!54 &8106584187017698325
@@ -235,10 +234,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3374350548144985320, guid: eebd9ea217619ef4581261b21b4de3fc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7118526781328233638, guid: eebd9ea217619ef4581261b21b4de3fc,
         type: 3}
       propertyPath: m_Name
       value: Explosion_XL
+      objectReference: {fileID: 0}
+    - target: {fileID: 7118526781328233638, guid: eebd9ea217619ef4581261b21b4de3fc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7118526781328233638, guid: eebd9ea217619ef4581261b21b4de3fc,
         type: 3}
