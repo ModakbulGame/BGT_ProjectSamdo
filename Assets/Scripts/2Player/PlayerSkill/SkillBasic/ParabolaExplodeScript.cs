@@ -5,7 +5,7 @@ public class ParabolaExplodeScript : ParabolaSkillScript
 {
     [SerializeField]
     private GameObject[] m_skillExplosion;
-    private Vector3[] SkillOffset;
+    Vector3[] SkillOffset { get; set; }
 
     private void ExplodeSkill()
     {
@@ -15,7 +15,7 @@ public class ParabolaExplodeScript : ParabolaSkillScript
             m_skillExplosion[i].transform.localPosition = SkillOffset[i];
             m_skillExplosion[i].transform.SetParent(null);
             ExplodeScript explode = m_skillExplosion[i].GetComponent<ExplodeScript>();
-            explode.SetDamage(m_attacker, 5, 1);
+            explode.SetDamage(m_attacker, 5, 1); //
             explode.SetReturnTransform(transform);
         }
     }
@@ -30,7 +30,7 @@ public class ParabolaExplodeScript : ParabolaSkillScript
     {
         GameObject gameObject = _other.gameObject;
         int groundLayer = LayerMask.NameToLayer("Ground");
-        if (gameObject.layer == groundLayer) { ExplodeSkill(); }
+        if (gameObject.layer == groundLayer) { ExplodeSkill(); } //
         CheckSkillTrigger(_other);
     }
 
@@ -38,6 +38,6 @@ public class ParabolaExplodeScript : ParabolaSkillScript
     {
         base.Start();
         SkillOffset = new Vector3[m_skillExplosion.Length];
-        for(int i = 0; i<3; i++) { SkillOffset[i] = m_skillExplosion[i].transform.localPosition; }
+        for(int i = 0; i<m_skillExplosion.Length; i++) { SkillOffset[i] = m_skillExplosion[i].transform.localPosition; }
     }
 }

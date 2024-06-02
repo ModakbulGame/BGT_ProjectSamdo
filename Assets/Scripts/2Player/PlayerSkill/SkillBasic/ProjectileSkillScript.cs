@@ -7,8 +7,21 @@ public class ProjectileSkillScript : PlayerSkillScript
 {
     protected Rigidbody m_rigid;
     private float MoveSpeed { get { return 5;/*m_scriptable.MoveSpeed;*/ } }
-    [SerializeField]
     private Vector3 MoveDir;
+
+    private void DeleteTrailOnHit()
+    {
+        TrailRenderer[] trailRenderers = GetComponentsInChildren<TrailRenderer>();
+        foreach(TrailRenderer trailRenderer in trailRenderers)
+        {
+            trailRenderer.enabled = false;
+        }
+    }
+    public override void CheckSkillTrigger(Collider _other)
+    {
+        base.CheckSkillTrigger(_other);
+        DeleteTrailOnHit();
+    }
 
     public override void ReleaseToPool()
     {

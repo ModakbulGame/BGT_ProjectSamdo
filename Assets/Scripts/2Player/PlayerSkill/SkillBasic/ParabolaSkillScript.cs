@@ -5,7 +5,7 @@ using UnityEngine;
 public class ParabolaSkillScript : ProjectileSkillScript
 {
     [SerializeField]
-    private float m_upperForce = 5;
+    private float m_upperForce = 1;
 
     [SerializeField]
     private float ForceMultiplier { get; set; } = 1;
@@ -20,7 +20,7 @@ public class ParabolaSkillScript : ProjectileSkillScript
 
     public override void FixedUpdate()
     {
-        m_rigid.AddForce(Vector3.down * ValueDefine.PARABOLA_GRAVITY); // rigidbody mass Use it or not?? if yes, m_rigid.mass
+        m_rigid.AddForce(Vector3.down * m_rigid.mass * ValueDefine.PARABOLA_GRAVITY); 
         base.FixedUpdate();
     }
 }
