@@ -12,9 +12,6 @@ public class QuestAcceptUIScript : MonoBehaviour
     private QuestObject m_curQuestObject;
     private Button[] m_btns;
 
-    public List<QuestScriptable> m_availableQuest = new List<QuestScriptable>();
-    public List<QuestScriptable> m_activeQuest = new List<QuestScriptable>();
-
     // 퀘스트 정보
     [SerializeField]
     private TextMeshProUGUI m_questTitle;
@@ -32,9 +29,7 @@ public class QuestAcceptUIScript : MonoBehaviour
     {
         Debug.Log("퀘스트 수락!");
         PlayManager.AcceptQuest("Q001");
-        //PlayManager.QuestList[0].Status = EQuestStatus.ACCEPTED;  // 퀘스트 수락
-        //PlayManager.CurQuestList.Add(PlayManager.QuestList[0]);   // 수락된 퀘스트는 CurQuestList에 추가
-        PlayManager.ExpressCurQuestInfo();                        // 퀘스트 창에 표시
+        PlayManager.ExpressCurQuestInfo();  // 퀘스트 창에 표시
         CloseNPCQuestUI();
     }
 

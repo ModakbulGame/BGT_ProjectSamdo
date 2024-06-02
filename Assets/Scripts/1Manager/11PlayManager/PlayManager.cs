@@ -98,6 +98,7 @@ public class PlayManager : MonoBehaviour
     public static List<QuestScriptable> CurQuestList { get { return StoryManager.CurQuestList; } }
     public static void AcceptQuest(string _id) { StoryManager.AcceptQuest(_id); }
     public static void GiveUpQuest(string _id) { StoryManager.GiveUpQuest(_id); }
+    public static void ClearQuest(string _id) { StoryManager.ClearQuest(_id); }
     public static void CompleteQuest(string _id) { StoryManager.CompleteQuest(_id); }
 
 
@@ -134,7 +135,7 @@ public class PlayManager : MonoBehaviour
     public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                       // 맵 UI 여닫기
     public static void ToggleQuestUI() { PlayUIManager.ToggleQuestUI(); }                                                                   // 퀘스트 창 여닫기
     public static void ShowNPCQuestUI() { PlayUIManager.ShowNPCQuestUI(); }                                                                 // 퀘스트 수락/거절 창 표시
-    public static void ExpressCurQuestInfo() { PlayUIManager.ExpressCurQuestInfo(); }
+    public static void ExpressCurQuestInfo() { PlayUIManager.ExpressCurQuestInfo(); }                                                       // 현재 퀘스트 정보 표시
     public static void OpenNPCUI(NPCScript _npc) { PlayUIManager.OpenDialogueUI(_npc); }                                                    // NPC 대화창 열기
     public static void CloseNPCUI() { PlayUIManager.CloseDialogueUI(); }                                                                    // NPC 대화창 닫기
     public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                  // NPC 대화창 열렸는지 확인

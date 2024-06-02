@@ -72,17 +72,31 @@ public class QuestStatusScript : MonoBehaviour
     }
 
     // 퀘스트 클리어
+    public void ClearQuest(string _id)
+    {
+        for (int i = 0; i < PlayManager.CurQuestList.Count; i++)
+        {
+            if (PlayManager.CurQuestList[i].Id == _id && PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED)
+            {
+                Debug.Log("퀘스트 클리어!");
+                PlayManager.CurQuestList[i].Status = EQuestStatus.COMPLETE;
+                // 이하 퀘스트 창 정보 변경
+
+
+            }
+        }
+    }
+
+    // 퀘스트 완료
     public void CompleteQuest(string _id)
     {
-        for (int i = 0; i < PlayManager.QuestList.Count; i++)
+        for (int i = 0; i < PlayManager.CurQuestList.Count; i++)
         {
             if (PlayManager.CurQuestList[i].Id == _id && PlayManager.CurQuestList[i].Status == EQuestStatus.COMPLETE)
             {
                 int rewardNum = PlayManager.CurQuestList[i].RewardNum;
 
                 PlayManager.CurQuestList[i].Status = EQuestStatus.DONE;
-                PlayManager.CurQuestList.Remove(PlayManager.CurQuestList[i]);
-
                 // 보상
                 switch(PlayManager.CurQuestList[i].Reward) 
                 {
@@ -98,6 +112,7 @@ public class QuestStatusScript : MonoBehaviour
                     default:
                         break;
                 }
+                PlayManager.CurQuestList.Remove(PlayManager.CurQuestList[i]);
             }
         }
         // CheckChainQuest(_id);

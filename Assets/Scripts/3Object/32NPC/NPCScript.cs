@@ -29,7 +29,9 @@ public class NPCScript : MonoBehaviour, IInteractable
     [SerializeField]
     private bool m_isQuestRelated;  // ¾êµµ
 
-    public bool IsQuestExisted { get { return m_isQuestExisted; } }    
+    public bool IsQuestExisted { get { return m_isQuestExisted; } }   
+    public bool IsQuestRelated { get { return m_isQuestRelated; } }
+
     protected Transform m_npcTransform;
     public string[] m_npcDialogue;
 

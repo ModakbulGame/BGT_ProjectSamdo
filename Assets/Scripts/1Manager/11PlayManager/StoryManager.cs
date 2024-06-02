@@ -14,6 +14,7 @@ public class StoryManager : MonoBehaviour
 
     public void AcceptQuest(string _id) { m_questStatus.AcceptQuest(_id); }
     public void GiveUpQuest(string _id) { m_questStatus.GiveUpQuest(_id); }
+    public void ClearQuest(string _id) { m_questStatus.ClearQuest(_id); }   
     public void CompleteQuest(string _id) { m_questStatus.CompleteQuest(_id); }
    
 
