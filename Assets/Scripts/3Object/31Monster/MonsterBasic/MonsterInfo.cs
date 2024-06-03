@@ -122,6 +122,7 @@ public partial class MonsterScript
         SetUI();
         if (m_spawnPoint != null) { m_spawnPoint.AddMonster(this); }
         if (AttackObject == null) { SetAttackObject(); }
+        m_aiPath.enabled = false;
         StartCoroutine(WaitSpawned());
         base.Start();
     }
@@ -129,7 +130,7 @@ public partial class MonsterScript
     {
         while (!IsSpawned)
         {
-            yield return null;
+            yield return new WaitForSeconds(0.1f);
         }
         m_aiPath.enabled = true;
         ChangeState(EMonsterState.IDLE);

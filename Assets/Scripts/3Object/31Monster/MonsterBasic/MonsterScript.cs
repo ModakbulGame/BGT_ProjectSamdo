@@ -13,7 +13,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     // Ǯ
     public ObjectPool<GameObject> OriginalPool { get; set; }
     public void SetPool(ObjectPool<GameObject> _pool) { OriginalPool = _pool; }
-    public virtual void OnPoolGet() { IsSpawned = true; }
+    public virtual void OnPoolGet() { m_aiPath.enabled = true; IsSpawned = true; }
     public virtual void ReleaseToPool() { m_aiPath.enabled = false; IsSpawned = false; OriginalPool.Release(gameObject); }
 
 

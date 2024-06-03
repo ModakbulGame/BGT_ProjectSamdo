@@ -179,6 +179,7 @@ public partial class PlayerController
 
         SkillStartAnim();
         if (SkillInfoInHand.HideWeapon) { HideWeapon(); }
+        if (SkillInfoInHand.ShowCastingEffect) { CastingEffectOn(); }
 
         if (IsHealing) { CancelHeal(); }
 
@@ -258,6 +259,7 @@ public partial class PlayerController
     public void SkillDone()                                                                 // 스킬 사용 종료
     {
         HideSkillAim();
+        if (SkillInfoInHand.ShowCastingEffect) { CastingEffectOff(); }
         SkillInHand = ESkillName.LAST;
         UsingSkillIdx = -1;
         ShowWeapon();

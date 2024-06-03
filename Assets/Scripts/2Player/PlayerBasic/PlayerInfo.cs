@@ -216,6 +216,13 @@ public partial class PlayerController
 
 
 
+    private SkillCastingEffect m_castingEffect;
+    private void CastingEffectOn() { m_castingEffect.ShowEffect(); }
+    private void CastingEffectOff() { m_castingEffect.HideEffect(); }
+
+
+
+
     // 상속 정보
     public override bool IsPlayer { get { return true; } }
 
@@ -226,6 +233,8 @@ public partial class PlayerController
         base.SetComps();
         m_collider = GetComponentInChildren<CapsuleCollider>();
         FunctionDefine.SetFriction(m_collider, FloorFriction, true);
+        m_castingEffect = GetComponentInChildren<SkillCastingEffect>();
+        m_castingEffect.SetComps();
     }
     private void SetStates()                // 상태들 추가
     {

@@ -11,6 +11,9 @@ public enum EEffectName
     HIT_SLASH,
     HIT_BLOW,
     HIT_POWER,
+    HIT_FATIGUE,
+    HIT_MELANCHOLY,
+    
 
     LAST
 }

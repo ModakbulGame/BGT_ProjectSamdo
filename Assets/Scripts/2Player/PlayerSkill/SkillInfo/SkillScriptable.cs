@@ -25,6 +25,7 @@ public class SkillScriptable : ScriptableObject
     public GameObject           SkillPrefab;
     public Sprite               SkillIcon;
     public bool                 HideWeapon;
+    public bool                 ShowCastingEffect;
 
     private ECastType Name2Type(ESkillName _skillName)
     {

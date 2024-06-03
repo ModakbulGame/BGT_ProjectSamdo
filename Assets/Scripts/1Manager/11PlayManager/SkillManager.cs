@@ -14,6 +14,7 @@ public class SkillInfo
     public float SkillRadius { get { return SkillData.HitRadius; } }
     public float SkillCastRange { get{ return SkillData.CastingRange; } } 
     public bool HideWeapon { get { return SkillData.HideWeapon; } }
+    public bool ShowCastingEffect { get { return SkillData.ShowCastingEffect; } }
     public bool Obtained { get; private set; }
 
     public void ObtainSkill() { Obtained = true; }
