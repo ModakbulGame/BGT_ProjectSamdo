@@ -37,7 +37,7 @@ public class LifeGuardianScript : AnimatedAttackMonster
 
     public override void StartAttack()
     {
-        AttackIdx = 0/*Random.Range(0, 4)*/;
+        AttackIdx = Random.Range(0, 4);
         m_anim.SetInteger("ATTACK_IDX", AttackIdx);
         base.StartAttack();
     }
@@ -57,5 +57,11 @@ public class LifeGuardianScript : AnimatedAttackMonster
             base.AttackDone();
         }
         else { AttackIdx++; }
+    }
+
+
+    private void StartSkill()
+    {
+
     }
 }
