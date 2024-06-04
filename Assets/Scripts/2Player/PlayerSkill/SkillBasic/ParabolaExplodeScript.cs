@@ -20,10 +20,26 @@ public class ParabolaExplodeScript : ParabolaSkillScript
         }
     }
 
+    public void DisableExplosion()
+    {
+        if(m_skillExplosion!= null)
+        {
+            for (int i = 0; i < m_skillExplosion.Length; i++)
+            {
+                m_skillExplosion[i].SetActive(false);
+            }
+        }
+    }
+
     public override void CollideTarget()
     {
         ExplodeSkill();
         base.CollideTarget();
+    }
+
+    public override void ReleaseToPool()
+    {
+        base.ReleaseToPool();
     }
 
     private void OnTriggerEnter(Collider _other)
