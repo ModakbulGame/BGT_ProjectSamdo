@@ -6,7 +6,8 @@ using UnityEngine;
 public class ProjectileSkillScript : PlayerSkillScript
 {
     protected Rigidbody m_rigid;
-    private float MoveSpeed { get { return 5;/*m_scriptable.MoveSpeed;*/ } }
+    private float HitRadius { get { return m_scriptable.HitRadius; } }
+    private float MoveSpeed { get { return m_scriptable.MoveSpeed; } }
     private Vector3 MoveDir;
 
     private void DeleteTrailOnHit()
@@ -40,6 +41,11 @@ public class ProjectileSkillScript : PlayerSkillScript
         ReleaseToPool();
     }
 
+    public override void Start()
+    {
+        SphereCollider sphereCollider = GetComponent<SphereCollider>();
+        sphereCollider.radius = HitRadius;
+    }
 
     private void Awake()
     {

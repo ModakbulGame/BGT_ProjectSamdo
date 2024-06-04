@@ -7,7 +7,6 @@ using UnityEngine.VFX;
 public class ExplodeScript : ObjectAttackScript
 { 
     private Transform ReturnTransform { get; set; }
-    private Vector3 LocalOffset { get; set; }  //  얘가 필요한가?
 
     public void SetDamage(ObjectScript _attacker, float _damage, float _time)
     {
@@ -56,7 +55,6 @@ public class ExplodeScript : ObjectAttackScript
         {
             transform.SetParent(ReturnTransform);
             transform.position = ReturnTransform.position;
-            transform.localPosition = LocalOffset;
             ReturnTransform = null;
             gameObject.SetActive(false);
         }
@@ -65,6 +63,4 @@ public class ExplodeScript : ObjectAttackScript
             Destroy(gameObject);
         }
     }
-
-    public override void Start() { }
 }
