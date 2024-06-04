@@ -6,9 +6,9 @@ using UnityEngine;
 public class ProjectileSkillScript : PlayerSkillScript
 {
     protected Rigidbody m_rigid;
-    private float HitRadius { get { return m_scriptable.HitRadius; } }
-    private float MoveSpeed { get { return m_scriptable.MoveSpeed; } }
-    private Vector3 MoveDir;
+    public float HitRadius { get { return m_scriptable.HitRadius; } }
+    public float MoveSpeed { get { return m_scriptable.MoveSpeed; } }
+    public Vector3 MoveDir;
 
     private void DeleteTrailOnHit()
     {
@@ -28,6 +28,7 @@ public class ProjectileSkillScript : PlayerSkillScript
     {
         m_rigid.velocity = Vector3.zero;
         base.ReleaseToPool();
+        DeleteTrailOnHit();
     }
 
     public void SetSkill(PlayerController _player, float _attack, float _magic, Vector2 _dir)
