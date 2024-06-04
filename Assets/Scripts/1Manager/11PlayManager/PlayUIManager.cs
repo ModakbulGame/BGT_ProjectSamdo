@@ -47,11 +47,13 @@ public class PlayUIManager : MonoBehaviour
 
     [SerializeField]
     private MiniQuestUIScript m_miniQuestUI;                // 축약된 퀘스트 UI(오른쪽에 있는 거)
+    public UnityEngine.UI.Image[] ClearImg { get { return m_miniQuestUI.ClearImg; } }
     public void ExpressCurQuestInfo() { m_miniQuestUI.ExpressCurQuestInfo(); }
 
     [SerializeField]
     private QuestAcceptUIScript m_questAcceptScript;        // NPC 대화 끝에 나오는 퀘스트 창
     public void ShowNPCQuestUI() { m_questAcceptScript.ShowNPCQuestUI(); }
+    public void ChangeBtnsTxt() { m_questAcceptScript.ChangeBtnsText(); }
 
 
     [SerializeField]

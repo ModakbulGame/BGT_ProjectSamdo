@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class NPCDialogueScript : MonoBehaviour
-{ 
+{
     [SerializeField]
     private TextMeshProUGUI m_typingText;
     [SerializeField]
@@ -22,7 +22,7 @@ public class NPCDialogueScript : MonoBehaviour
     private NPCScript CurNPC { get; set; }
     private string[] CurDialogue { get; set; }
     private int DialogueCount { get; set; } = 0;
-    
+
     private bool m_isQuestExisted;
     private bool m_isQuestRelated;
 
@@ -52,19 +52,17 @@ public class NPCDialogueScript : MonoBehaviour
 
     public void ClearQuest()
     {
+
         PlayManager.ClearQuest("Q001");
-        PlayManager.CompleteQuest("Q001");
+        PlayManager.ChangeBtnsTxt();
     }
 
     public void CloseUI()
     {
-        if(m_isQuestRelated) ClearQuest();
         CurNPC.StopInteract();
         gameObject.SetActive(false);
         IsDialogueOpened = false;
     }
-
-
 
     IEnumerator Typing(string _contents)
     {
@@ -74,7 +72,7 @@ public class NPCDialogueScript : MonoBehaviour
         {
             m_typingText.text += _contents[i];
             yield return new WaitForSeconds(m_textSpeed);
-            
+
             if (ButtonClicked)                          // 좌클릭하면 전체 내용 한 번에 출력
             {
                 m_typingText.text = _contents;
@@ -100,10 +98,11 @@ public class NPCDialogueScript : MonoBehaviour
             StartCoroutine(Typing(CurDialogue[DialogueCount]));
             return;
         }
-        if(m_isQuestExisted)
+        if (m_isQuestExisted)
         {
             PlayManager.ShowNPCQuestUI();
         }
+        else if (m_isQuestRelated) ClearQuest();
         else CloseUI();
     }
 

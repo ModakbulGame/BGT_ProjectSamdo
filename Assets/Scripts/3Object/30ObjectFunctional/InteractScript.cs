@@ -7,6 +7,7 @@ public class InteractScript : MonoBehaviour                 // 상호작용이 가능한
 {
     [SerializeField]
     private float m_canInteractDist = 2.5f;                                             // 상호작용 가능 거리
+    private float m_canInteractAngle = 120f;
 
     private IInteractable m_interactable;                                               // 오브젝트 내 IInteractable을 상속한 오브젝트
 

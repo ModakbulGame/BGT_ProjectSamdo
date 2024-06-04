@@ -80,9 +80,9 @@ public class QuestStatusScript : MonoBehaviour
             {
                 Debug.Log("퀘스트 클리어!");
                 PlayManager.CurQuestList[i].Status = EQuestStatus.COMPLETE;
-                // 이하 퀘스트 창 정보 변경
-
-
+                
+                PlayManager.ClearImg[i % 4].gameObject.SetActive(true);
+                PlayManager.ShowNPCQuestUI();
             }
         }
     }

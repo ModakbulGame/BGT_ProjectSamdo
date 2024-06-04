@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.VFX;
 using Cinemachine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayManager : MonoBehaviour
 {
@@ -136,6 +137,8 @@ public class PlayManager : MonoBehaviour
     public static void ToggleQuestUI() { PlayUIManager.ToggleQuestUI(); }                                                                   // 퀘스트 창 여닫기
     public static void ShowNPCQuestUI() { PlayUIManager.ShowNPCQuestUI(); }                                                                 // 퀘스트 수락/거절 창 표시
     public static void ExpressCurQuestInfo() { PlayUIManager.ExpressCurQuestInfo(); }                                                       // 현재 퀘스트 정보 표시
+    public static void ChangeBtnsTxt() { PlayUIManager.ChangeBtnsTxt(); }
+    public static Image[] ClearImg { get { return PlayUIManager.ClearImg; } }
     public static void OpenNPCUI(NPCScript _npc) { PlayUIManager.OpenDialogueUI(_npc); }                                                    // NPC 대화창 열기
     public static void CloseNPCUI() { PlayUIManager.CloseDialogueUI(); }                                                                    // NPC 대화창 닫기
     public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                  // NPC 대화창 열렸는지 확인
