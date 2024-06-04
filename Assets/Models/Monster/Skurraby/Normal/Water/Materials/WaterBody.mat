@@ -27,7 +27,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Albedo:
-        m_Texture: {fileID: 2800000, guid: 3f5a80c06c66d80458d357165ed8f50d, type: 3}
+        m_Texture: {fileID: 2800000, guid: aff1ba0c6e53380429fc040d76f82a4f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -60,6 +60,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: b77470da25440bc4d9ef21484d928254, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Metalic:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -118,6 +122,8 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
+    - _FresnelOnOff: 0
+    - _Fresnelpower: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -136,8 +142,10 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _TexturePow: 0
     - _UVSec: 0
     - _UseEmissionMap: 0
+    - _UseMetalicMap: 0
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 1
