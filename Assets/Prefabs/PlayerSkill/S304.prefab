@@ -345,6 +345,7 @@ MonoBehaviour:
   m_ccList: 
   m_scriptable: {fileID: 11400000, guid: e61e332f4bdef164893a145427df6e87, type: 2}
   m_lastTime: 10
+  MoveDir: {x: 0, y: 0, z: 0}
   m_upperForce: 1
   m_skillExplosion:
   - {fileID: 691049591221989222}
@@ -796,6 +797,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7908929174452563710}
     m_Modifications:
+    - target: {fileID: 2475190802444363351, guid: 105f9408c443a594dac31b7f7b4228a2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4635129688695410102, guid: 105f9408c443a594dac31b7f7b4228a2,
         type: 3}
       propertyPath: m_LocalPosition.x
