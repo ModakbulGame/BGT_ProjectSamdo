@@ -7,6 +7,12 @@ public class ParabolaExplodeScript : ParabolaSkillScript
     private GameObject[] m_skillExplosion;
     Vector3[] SkillOffset { get; set; }
 
+
+    public override void CollideGround()
+    {
+        CollideTarget();
+    }
+
     private void ExplodeSkill()
     {
         for (int i = 0; i < m_skillExplosion.Length; i++)   
@@ -44,13 +50,6 @@ public class ParabolaExplodeScript : ParabolaSkillScript
         //DisableExplosion();
     }
 
-    private void OnTriggerEnter(Collider _other)
-    {
-        GameObject gameObject = _other.gameObject;
-        int groundLayer = LayerMask.NameToLayer("Ground");
-        if (gameObject.layer == groundLayer) { ExplodeSkill(); } //
-        CheckSkillTrigger(_other);
-    }
 
     public override void Start()
     {

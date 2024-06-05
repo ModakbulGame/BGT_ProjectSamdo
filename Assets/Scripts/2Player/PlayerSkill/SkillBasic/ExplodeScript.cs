@@ -5,10 +5,8 @@ using UnityEngine;
 using UnityEngine.VFX;
 
 public class ExplodeScript : ObjectAttackScript
-{ 
+{
     private Transform ReturnTransform { get; set; }
-    [SerializeField]
-    private float activeTime = 1f;
 
     public void SetDamage(ObjectScript _attacker, float _damage, float _time)
     {
@@ -67,4 +65,5 @@ public class ExplodeScript : ObjectAttackScript
         }
     }
 
+    public override void Start() { }
 }

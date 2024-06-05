@@ -361,7 +361,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6235755098897690200
 GameObject:
@@ -802,6 +802,11 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2544013764930368848, guid: eebd9ea217619ef4581261b21b4de3fc,
+        type: 3}
+      propertyPath: m_vfx
+      value: 
+      objectReference: {fileID: 7453564583642599715}
     - target: {fileID: 3317257610996304661, guid: eebd9ea217619ef4581261b21b4de3fc,
         type: 3}
       propertyPath: m_AllowInstancing
@@ -880,6 +885,12 @@ PrefabInstance:
 --- !u!4 &2291729943511590850 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6247892889371950580, guid: eebd9ea217619ef4581261b21b4de3fc,
+    type: 3}
+  m_PrefabInstance: {fileID: 5294303824856898102}
+  m_PrefabAsset: {fileID: 0}
+--- !u!2083052967 &7453564583642599715 stripped
+VisualEffect:
+  m_CorrespondingSourceObject: {fileID: 3317257610996304661, guid: eebd9ea217619ef4581261b21b4de3fc,
     type: 3}
   m_PrefabInstance: {fileID: 5294303824856898102}
   m_PrefabAsset: {fileID: 0}

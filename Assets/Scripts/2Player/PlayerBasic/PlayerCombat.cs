@@ -223,7 +223,7 @@ public partial class PlayerController
                 break;
             case ECastType.RANGED:
             case ECastType.RANGED_CC:
-                skill.transform.localPosition = Vector3.up;
+                skill.transform.localPosition = SkillInfoInHand.SkillData.SkillPrefab.transform.localPosition;
                 skill.transform.SetParent(null);
                 ProjectileSkillScript projectile = skill.GetComponentInChildren<ProjectileSkillScript>();
                 projectile.SetSkill(this, Attack, Magic, PlayerAimDirection);

@@ -18,11 +18,6 @@ public class ProjectileSkillScript : PlayerSkillScript
             trailRenderer.enabled = false;
         }
     }
-    public override void CheckSkillTrigger(Collider _other)
-    {
-        base.CheckSkillTrigger(_other);
-        DeleteTrailOnHit();
-    }
 
     public override void ReleaseToPool()
     {

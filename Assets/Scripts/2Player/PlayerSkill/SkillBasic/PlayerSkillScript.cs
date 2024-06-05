@@ -40,7 +40,7 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
         OriginalPool.Release(gameObject);
     }
 
-    private void OnTriggerEnter(Collider _other)
+    public virtual void OnTriggerEnter(Collider _other)
     {
         CheckSkillTrigger(_other);
     }

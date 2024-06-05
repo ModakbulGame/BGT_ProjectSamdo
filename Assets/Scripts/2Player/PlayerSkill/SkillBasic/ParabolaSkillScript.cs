@@ -17,6 +17,18 @@ public class ParabolaSkillScript : ProjectileSkillScript
         m_rigid.velocity = Vector3.up * UpperForce;
     }
 
+    public virtual void CollideGround()
+    {
+
+    }
+
+    public override void OnTriggerEnter(Collider _other)
+    {
+        if (!_other.CompareTag(ValueDefine.TERRAIN_TAG)) { return; }
+        Debug.Log(transform.position);
+        CollideGround();
+    }
+
 
     public override void FixedUpdate()
     {
