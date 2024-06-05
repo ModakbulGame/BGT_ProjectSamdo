@@ -23,15 +23,15 @@ public class NPCDialogueScript : MonoBehaviour
     private string[] CurDialogue { get; set; }
     private int DialogueCount { get; set; } = 0;
 
-    private bool m_isQuestExisted;
-    private bool m_isQuestRelated;
+    private bool m_isQuestStarted;
+    private bool m_isQuestEnded;
 
     public void SetNPC(NPCScript _npc)
     {
         CurNPC = _npc;
         CurDialogue = _npc.m_npcDialogue;
-        m_isQuestExisted = _npc.IsQuestExisted;
-        m_isQuestRelated = _npc.IsQuestRelated;
+        m_isQuestStarted = _npc.IsQuestStarted;
+        m_isQuestEnded = _npc.IsQuestEnded;
     }
 
     public void OpenUI()
@@ -97,11 +97,15 @@ public class NPCDialogueScript : MonoBehaviour
             StartCoroutine(Typing(CurDialogue[DialogueCount]));
             return;
         }
-        if (m_isQuestExisted)
+        if (m_isQuestStarted)
         {
             PlayManager.ShowNPCQuestUI();
         }
-        else if (m_isQuestRelated) ClearQuest();
+        else if (m_isQuestEnded)
+        {
+            ClearQuest();
+            PlayManager.ShowNPCQuestUI();
+        }
         else CloseUI();
     }
 
