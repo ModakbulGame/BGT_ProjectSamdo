@@ -311,8 +311,10 @@ MonoBehaviour:
   m_ccList: 
   m_scriptable: {fileID: 11400000, guid: 88ec7992a142e86478deafd5d94e3c53, type: 2}
   m_lastTime: 10
+  MoveDir: {x: 0, y: 0, z: 0}
   m_upperForce: 1
-  m_skillExplosion: []
+  m_skillExplosion:
+  - {fileID: 7490642469343973801}
 --- !u!54 &-4500738504728409979
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -795,6 +797,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3067494066969674087}
     m_Modifications:
+    - target: {fileID: 1024150144556866249, guid: eebd9ea217619ef4581261b21b4de3fc,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3317257610996304661, guid: eebd9ea217619ef4581261b21b4de3fc,
         type: 3}
       propertyPath: m_AllowInstancing
@@ -873,6 +880,12 @@ PrefabInstance:
 --- !u!4 &2291729943511590850 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6247892889371950580, guid: eebd9ea217619ef4581261b21b4de3fc,
+    type: 3}
+  m_PrefabInstance: {fileID: 5294303824856898102}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7490642469343973801 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3354406449540598687, guid: eebd9ea217619ef4581261b21b4de3fc,
     type: 3}
   m_PrefabInstance: {fileID: 5294303824856898102}
   m_PrefabAsset: {fileID: 0}

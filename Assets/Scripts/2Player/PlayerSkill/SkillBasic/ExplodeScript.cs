@@ -7,12 +7,15 @@ using UnityEngine.VFX;
 public class ExplodeScript : ObjectAttackScript
 { 
     private Transform ReturnTransform { get; set; }
+    [SerializeField]
+    private float activeTime = 1f;
 
     public void SetDamage(ObjectScript _attacker, float _damage, float _time)
     {
         SetAttack(_attacker, _damage);
         StartCoroutine(LoseDamage(_time));
     }
+
 
     private void CheckExplosion(Collider _other)
     {
@@ -63,4 +66,5 @@ public class ExplodeScript : ObjectAttackScript
             Destroy(gameObject);
         }
     }
+
 }

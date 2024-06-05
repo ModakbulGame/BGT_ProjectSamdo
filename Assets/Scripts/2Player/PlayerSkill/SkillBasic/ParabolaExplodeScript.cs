@@ -20,13 +20,14 @@ public class ParabolaExplodeScript : ParabolaSkillScript
         }
     }
 
-    public void DisableExplosion()
+    private void DisableExplosion()
     {
         if(m_skillExplosion!= null)
         {
             for (int i = 0; i < m_skillExplosion.Length; i++)
             {
                 m_skillExplosion[i].SetActive(false);
+                m_skillExplosion[i].transform.SetParent(gameObject.transform);
             }
         }
     }
@@ -40,6 +41,7 @@ public class ParabolaExplodeScript : ParabolaSkillScript
     public override void ReleaseToPool()
     {
         base.ReleaseToPool();
+        //DisableExplosion();
     }
 
     private void OnTriggerEnter(Collider _other)
