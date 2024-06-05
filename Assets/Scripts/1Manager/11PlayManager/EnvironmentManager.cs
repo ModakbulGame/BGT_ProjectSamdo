@@ -19,6 +19,8 @@ public class EnvironmentManager : MonoBehaviour
     public float MapWidth { get { return MapRT.x - MapLB.x; } }
     public float MapHeight { get { return MapRT.z - MapLB.z; } }
 
+    public GameObject[] MapOasis;
+
 
     public void setManager()
     {

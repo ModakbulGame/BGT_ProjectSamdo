@@ -7,9 +7,8 @@ using TMPro;
 using UnityEngine.SceneManagement;
 
 public class MapUIScript : MonoBehaviour
-{
-    [SerializeField]                            // 맵 UI에 표시되는 오브젝트와 이미지들
-    private GameObject[] m_mapOasis;
+{                           
+    private GameObject[] m_mapOasis;  // 맵 UI에 표시되는 오브젝트와 이미지들
     [SerializeField]
     private GameObject m_mapOasisImage;
 
@@ -90,7 +89,8 @@ public class MapUIScript : MonoBehaviour
 
     private void SetComps()
     {
-        m_mapOasis = GameObject.FindGameObjectsWithTag(ValueDefine.OASIS_TAG);
+        m_mapOasis = PlayManager.MapOasis;
+
         SynchronizeOasisLocation();
 
         m_mapName = GetComponentInChildren<TextMeshProUGUI>();

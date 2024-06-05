@@ -163,7 +163,7 @@ public class PlayUIManager : MonoBehaviour
         m_skillSlot.SetComps();
         m_aimUI = m_mainCanvas.GetComponentInChildren<AimUIScript>();
         m_equipSlot = m_mainCanvas.GetComponentInChildren<EquipSlotUIScript>();
-        //m_mapArea = new Vector2(MapWidth, MapHeight);
+        m_mapArea = new Vector2(MapWidth, MapHeight);
 
         UpdateSkillSlot();
         UpdateEquipSlot();

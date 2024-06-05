@@ -111,8 +111,7 @@ public class PlayManager : MonoBehaviour
     public static float MapWidth { get { return EnvironmentManager.MapWidth; } }
     public static float MapHeight { get { return EnvironmentManager.MapHeight; } }
 
-    public static Transform[] NormalizeObjects { get { return null; } }
-    public static GameObject[] MapOasis { get { return null; } }
+    public static GameObject[] MapOasis { get { return EnvironmentManager.MapOasis; } }
 
 
     // 업그레이드

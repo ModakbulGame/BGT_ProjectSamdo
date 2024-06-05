@@ -39,9 +39,9 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
     {
         if(CurDestination == EMapPointName.LAST) { return; }
         CloseUI();
-        m_fadeInOutGraphic.Fade_Out();
+        // m_fadeInOutGraphic.Fade_Out();
         MoveToOasis(CurDestination);
-        m_fadeInOutGraphic.Fade_In();
+        // m_fadeInOutGraphic.Fade_In();
     }
 
     public void MoveToOasis(EMapPointName _point)
