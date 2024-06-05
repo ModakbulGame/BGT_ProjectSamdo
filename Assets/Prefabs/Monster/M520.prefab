@@ -71,7 +71,7 @@ MonoBehaviour:
     ViewRange: 15
     EngageRange: 15
     ReturnRange: 15
-    AttackRange: 1.5
+    AttackRange: 5
     ApproachDelay: 1
     FenceRange: 25
   m_spawnPoint: {fileID: 0}
@@ -623,6 +623,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 2880707256716361268, guid: 0890b0b07c374a34990fe11e4e449673,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: fb7e58a872b3d254d840db6ac6f0d602, type: 2}
     - target: {fileID: 2998520531923715122, guid: 0890b0b07c374a34990fe11e4e449673,
         type: 3}
       propertyPath: m_Layer
@@ -738,7 +743,11 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0890b0b07c374a34990fe11e4e449673,
         type: 3}
-      insertIndex: 1
+      insertIndex: -1
+      addedObject: {fileID: 7619623850439294684}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0890b0b07c374a34990fe11e4e449673,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1907900859529247962}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0890b0b07c374a34990fe11e4e449673,
         type: 3}
@@ -980,6 +989,27 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4111059620869299614}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &7619623850439294684
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3876476816379142351}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 899581cbec7ba6244836e7cce7902954, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1907900859529247962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1014,7 +1044,7 @@ CapsuleCollider:
   m_Radius: 1.7
   m_Height: 5
   m_Direction: 1
-  m_Center: {x: 0, y: 2.8, z: 0}
+  m_Center: {x: 0, y: 2.5, z: 0}
 --- !u!114 &5860406963158564361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1027,7 +1057,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f3505aa6d98bd4418e0744d5ab56fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mecanim: {fileID: 7523262457504948239}
+  Mecanim: {fileID: 0}
   GroundedParameter: 
   MovingParameter: 
   User_IsMovingMecanim_NotMovingFloat_Threshold: 0.1
@@ -1491,7 +1521,7 @@ MonoBehaviour:
   baseTransform: {fileID: 0}
   Hips: {fileID: 8347690889843201435}
   ScaleReferenceMode: 3
-  finalScaleReference: 2.2334208
+  finalScaleReference: 2.2334206
   finalScaleReferenceSqrt: 0.1
   customScaleReferenceValue: 0.5
   DelayedInitialization: 0
@@ -1687,12 +1717,6 @@ CapsuleCollider:
   m_Height: 0.01632926
   m_Direction: 1
   m_Center: {x: 0.0001925669, y: 0.0070889536, z: -0.0000000011864671}
---- !u!95 &7523262457504948239 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 0890b0b07c374a34990fe11e4e449673,
-    type: 3}
-  m_PrefabInstance: {fileID: 4111059620869299614}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7766081704671489547 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5966074166800511893, guid: 0890b0b07c374a34990fe11e4e449673,
