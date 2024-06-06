@@ -9,6 +9,7 @@ public class ProjectileSkillScript : PlayerSkillScript
     public float HitRadius { get { return m_scriptable.HitRadius; } }
     public float MoveSpeed { get { return m_scriptable.MoveSpeed; } }
     public Vector3 MoveDir;
+    private Vector3 StartPosition;
 
     private void DeleteTrailOnHit()
     {
@@ -41,6 +42,7 @@ public class ProjectileSkillScript : PlayerSkillScript
     {
         SphereCollider sphereCollider = GetComponent<SphereCollider>();
         sphereCollider.radius = HitRadius;
+        StartPosition = transform.position;
     }
 
     private void Awake()
@@ -54,6 +56,8 @@ public class ProjectileSkillScript : PlayerSkillScript
         Vector3 dir = MoveSpeed * MoveDir;
         vel.x = dir.x; vel.z = dir.z;
         m_rigid.velocity = vel;
+        float distanceMoved = Vector3.Distance(StartPosition, transform.position);
+        if(distanceMoved > m_scriptable.CastingRange) { Destroy(gameObject); }
     }
 }
 
