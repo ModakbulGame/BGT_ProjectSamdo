@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
+using Unity.VisualScripting;
 
 public enum EMonsterDeathType
 {
@@ -81,6 +83,9 @@ public partial class MonsterScript
     // 상속 정보
     public override bool IsMonster { get { return true; } }
 
+    // 카메라 세팅
+    private CinemachineImpulseSource m_impulseSource;
+
 
     // 초기 설정
     protected void ReplaceState(EMonsterState _enum, IMonsterState _state)  // 몬스터 세부 상태 설정 (기본 상태 클래스 -> 몬스터별 상태 클래스)
@@ -97,6 +102,8 @@ public partial class MonsterScript
         m_lightReciever = GetComponent<MonsterLighter>();
         m_battleManager = GetComponent<MonsterBattler>();
         m_aiPath = GetComponent<AIPath>();
+        m_impulseSource.AddComponent<CinemachineImpulseSource>();
+        SetImpulseInfo();
         DissolveColor = m_skinneds[0].materials[0].GetColor("_Dissolvecolor");
     }
 
@@ -115,6 +122,17 @@ public partial class MonsterScript
         m_baseInfo.SetInfo(m_scriptable);
         m_combatInfo = new MonsterCombatInfo();
         m_combatInfo.SetInfo(m_scriptable);
+    }
+
+    public void SetImpulseInfo()
+    {
+        m_impulseSource.m_ImpulseDefinition.m_ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Explosion;
+
+        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_AttackTime = 0.05f;    // 공격 시간
+        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = 0.15f;   // 유지 시간
+        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_DecayTime = 0.3f;      // 감쇠 시간
+
+        m_impulseSource.m_DefaultVelocity = new Vector3(0.1f, 0.1f, 0.1f);
     }
 
     public virtual void OnEnable()
@@ -140,5 +158,6 @@ public partial class MonsterScript
     {
         base.Awake();
         SetStates();
+
     }
 }
