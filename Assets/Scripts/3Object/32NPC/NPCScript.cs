@@ -35,6 +35,19 @@ public class NPCScript : MonoBehaviour, IInteractable
     protected Transform m_npcTransform;
     public string[] m_npcDialogue;
 
+    public bool InteractableRotation 
+    {
+        get
+        {
+            Vector3 forward = transform.forward;                                // 오브젝트의 전방 벡터
+            Vector3 toTarget = PlayManager.PlayerPos - transform.position;      // 플레이어 위치로의 벡터
+
+            toTarget.Normalize();
+            float angle = Vector3.SignedAngle(forward, toTarget, Vector3.up);
+            return angle >= -60f && angle <= 60f;
+        }
+    }
+
     public EInteractType InteractType { get { return EInteractType.NPC; } }
     public bool Interactions { get { return gameObject.CompareTag(ValueDefine.NPC_TAG); } }
     public float UIOffset { get { return m_npcInfo.UIOffset; } }        // 상호작용 UI 띄울 높이
@@ -58,5 +71,4 @@ public class NPCScript : MonoBehaviour, IInteractable
         PlayManager.StopPlayerInteract();
         GameManager.SetControlMode(EControlMode.THIRD_PERSON);
     }
-
 }

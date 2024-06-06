@@ -34,9 +34,8 @@ public class PlayerCameraScript : MonoBehaviour
     public void SetUIControl()                              // UI 조작 모드 설정
     {
         CurCameraMode = EControlMode.UI_CONTROL;
-        m_cameraDetail.m_Lens.FieldOfView = 20;
-        m_cameraDetail.m_YAxis.Value = 0.3f;
-        m_cameraDetail.m_XAxis.Value = PlayManager.ObjectRotation;
+        m_cameraDetail.m_Lens.FieldOfView = 25;
+        m_cameraDetail.m_YAxis.Value = 0.6f;
         SetCinemachineSpeed(0);
     }
 

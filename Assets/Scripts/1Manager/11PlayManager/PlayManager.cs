@@ -42,7 +42,6 @@ public class PlayManager : MonoBehaviour
     
     // 다른 오브젝트  ?   몬스터나 NPC 정보가 필요할수도 있어서 추가했음...
     private static ObjectScript Object { get; set; }
-    public static float ObjectRotation { get { return 0; } }    // 현재 null이라서 급하게 0으로 땜빵
 
 
     // 카메라

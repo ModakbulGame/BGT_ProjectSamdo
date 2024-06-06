@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class QuestAcceptUIScript : MonoBehaviour
 {
-    public bool QuestAvailable { get; set; }
-    public bool QuestRunning { get; set; }
-
     private QuestObject m_curQuestObject;
     private Button[] m_btns;
 
@@ -59,9 +56,6 @@ public class QuestAcceptUIScript : MonoBehaviour
 
     public void SetComps()
     {
-        QuestAvailable = false;
-        QuestRunning = false;
-
         m_btns = GetComponentsInChildren<Button>();
         m_firstBtnTxt = m_btns[0].GetComponentInChildren<TextMeshProUGUI>();
         m_secondBtnTxt = m_btns[1].GetComponentInChildren<TextMeshProUGUI>();
