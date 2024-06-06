@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 817195540317668183}
   - component: {fileID: 2496879277347236863}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: BaseTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 4112367168591750353}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.89}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 0, y: 1.2, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3000064865486053423}
@@ -73,7 +73,7 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Time: 0.2
   m_PreviewTimeScale: 1
   m_Parameters:
@@ -154,7 +154,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3000064865486053423}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: SwordTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.53699, y: 0.53699, z: 0.53699}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 817195540317668183}
@@ -189,7 +189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3035513804248887935}
   - component: {fileID: 7366704485264499166}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: MiddleTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,14 +204,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6564526078213559376}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00000008146033, y: 0.00000004371139, z: 0.000000014901158,
-    w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.69}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.07, y: 1, z: 0}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3000064865486053423}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &7366704485264499166
 TrailRenderer:
   serializedVersion: 3
@@ -254,7 +253,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Time: 0.4
+  m_Time: 0.3
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -273,7 +272,7 @@ TrailRenderer:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 0.046297073
+        value: 0
         inSlope: -1.3544959
         outSlope: -1.3544959
         tangentMode: 0
@@ -335,7 +334,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8363882481381714095}
   - component: {fileID: 9212942600847665533}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: PointTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,13 +349,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7941385987143451878}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.02174463, w: 0.9997636}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.84, y: 1.29, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3000064865486053423}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &9212942600847665533
 TrailRenderer:
   serializedVersion: 3
@@ -398,7 +397,7 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Time: 0.5
   m_PreviewTimeScale: 1
   m_Parameters:
