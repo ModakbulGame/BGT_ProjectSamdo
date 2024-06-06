@@ -20,9 +20,10 @@ public class NPCScript : MonoBehaviour, IInteractable
     private NPCInfo m_npcInfo;
     [SerializeField]
     private NPCScriptable m_scriptable;
-    public string NPCName { get { return m_npcInfo.ObjectName; } }
-    public int NPCID { get { return m_npcInfo.NPCID; } }
-    public void SetScriptable(NPCScriptable _scriptable) { m_scriptable = _scriptable; SetInfo(); }
+
+    public string NPCID { get; private set; }
+    public string NPCName { get; private set; }
+    public string[] NPCDialogues { get; private set; }
 
     [SerializeField]
     private bool m_isQuestStarted;  // 시트에 따라 퀘스트가 존재하는 npc인 경우에는 내부처리로 조정 예정
@@ -31,9 +32,6 @@ public class NPCScript : MonoBehaviour, IInteractable
 
     public bool IsQuestStarted { get { return m_isQuestStarted; } }   
     public bool IsQuestEnded { get { return m_isQuestEnded; } }
-
-    protected Transform m_npcTransform;
-    public string[] m_npcDialogue;
 
     public bool InteractableRotation 
     {
@@ -55,13 +53,14 @@ public class NPCScript : MonoBehaviour, IInteractable
 
     private void SetInfo()
     {
-
+        NPCID = m_scriptable.ID;
+        NPCName = m_scriptable.NPCName;
+        NPCDialogues = m_scriptable.Dialogues;
     }
-
-    
 
     public virtual void StartInteract() 
     {
+        SetInfo();
         PlayManager.OpenNPCUI(this);
         GameManager.SetControlMode(EControlMode.UI_CONTROL);
     }

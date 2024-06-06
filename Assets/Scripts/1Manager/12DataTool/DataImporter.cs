@@ -306,25 +306,11 @@ public static class DataImporter
             string si = allNPCLines[i];
             string[] splitNPCData = si.Split(",");
 
-            if (splitNPCData.Length != (int)EnpcAttribute.LAST)
-            {
-                Debug.Log(si + $"does not have {(int)EnpcAttribute.LAST} values.");
-                return;
-            }
-
-            string[] npcData = new string[splitNPCData.Length - 1];     // NPC 정보
-            List<string> dialogueData = new List<string>();             // 대사만 포함하고 있는 리스트
-
-            for (int j = 0; j < (splitNPCData.Length - 1); j++)
-            {
-                if (splitNPCData[j] != "") npcData[j] = splitNPCData[j];
-            }
-            dialogueData.Add(splitNPCData[splitNPCData.Length - 1]);
-
-            foreach (string npc in dialogueData)
-            {
-                Debug.Log(npc);
-            }
+            //if (splitNPCData.Length != (int)EnpcAttribute.LAST)
+            //{
+            //    Debug.Log(si + $"does not have {(int)EnpcAttribute.LAST} values.");
+            //    return;
+            //}
 
             string id = splitNPCData[(int)EnpcAttribute.ID];
 
@@ -333,7 +319,7 @@ public static class DataImporter
             bool IsExist = scriptable != null;
             if (!IsExist) { scriptable = ScriptableObject.CreateInstance<NPCScriptable>(); }
 
-            scriptable.SetNPCScriptable(idx, npcData, dialogueData);
+            scriptable.SetNPCScriptable(idx, splitNPCData);
 
             if (!IsExist)
             {

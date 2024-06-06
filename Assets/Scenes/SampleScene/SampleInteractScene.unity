@@ -2467,13 +2467,9 @@ MonoBehaviour:
     MoveSpeed: 5
     NPCID: 0
     UIOffset: 5
-  m_scriptable: {fileID: 11400000, guid: 5446716be95d4374bb95485e0f82ab13, type: 2}
+  m_scriptable: {fileID: 11400000, guid: ddb1cea1ee6dd0349b2317f165549910, type: 2}
   m_isQuestStarted: 1
   m_isQuestEnded: 0
-  m_npcDialogue:
-  - "\uB300\uC0AC1\uB300\uC0AC1\uB300\uC0AC1\uB300\uC0AC1\uB300\uC0AC1"
-  - "\uB300\uC0AC2\uB300\uC0AC2\uB300\uC0AC2\uB300\uC0AC2\uB300\uC0AC2"
-  - "\uB300\uC0AC3\uB300\uC0AC3\uB300\uC0AC3\uB300\uC0AC3\uB300\uC0AC3"
 --- !u!136 &791657515
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3543,13 +3539,9 @@ MonoBehaviour:
     MoveSpeed: 5
     NPCID: 0
     UIOffset: 5
-  m_scriptable: {fileID: 0}
+  m_scriptable: {fileID: 11400000, guid: 0a95271d73e2ed344a9fa22035dd853f, type: 2}
   m_isQuestStarted: 0
   m_isQuestEnded: 1
-  m_npcDialogue:
-  - "\uB300\uC0AC4\uB300\uC0AC4\uB300\uC0AC4\uB300\uC0AC4\uB300\uC0AC4"
-  - "\uB300\uC0AC5\uB300\uC0AC5\uB300\uC0AC5\uB300\uC0AC5\uB300\uC0AC5"
-  - "\uB300\uC0AC6\uB300\uC0AC6\uB300\uC0AC6\uB300\uC0AC6\uB300\uC0AC6"
 --- !u!136 &1249821212
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4433,13 +4425,9 @@ MonoBehaviour:
     MoveSpeed: 5
     NPCID: 0
     UIOffset: 5
-  m_scriptable: {fileID: 0}
+  m_scriptable: {fileID: 11400000, guid: 16412317845ae2d4d8db1d3b337a2508, type: 2}
   m_isQuestStarted: 0
   m_isQuestEnded: 0
-  m_npcDialogue:
-  - "\uB300\uC0AC4\uB300\uC0AC4\uB300\uC0AC4\uB300\uC0AC4\uB300\uC0AC4"
-  - "\uB300\uC0AC5\uB300\uC0AC5\uB300\uC0AC5\uB300\uC0AC5\uB300\uC0AC5"
-  - "\uB300\uC0AC6\uB300\uC0AC6\uB300\uC0AC6\uB300\uC0AC6\uB300\uC0AC6"
 --- !u!114 &1422106739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4866,6 +4854,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617915766}
   m_CullTransparentMesh: 1
+--- !u!114 &1666083272 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6989962549015080794, guid: acb1c722dec43fa4babc20e7da80e675,
+    type: 3}
+  m_PrefabInstance: {fileID: 861254979864330519}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1720374509
 GameObject:
   m_ObjectHideFlags: 0
@@ -7776,12 +7776,12 @@ PrefabInstance:
     - target: {fileID: 5779788400399406593, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000017193397
+      value: -0.000000017193397
       objectReference: {fileID: 0}
     - target: {fileID: 5779788400399406593, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -6.683474e-10
+      value: 6.683474e-10
       objectReference: {fileID: 0}
     - target: {fileID: 5812277014525792941, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
@@ -8684,6 +8684,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1365489905}
     m_Modifications:
+    - target: {fileID: 814035808459629189, guid: acb1c722dec43fa4babc20e7da80e675,
+        type: 3}
+      propertyPath: m_nameText
+      value: 
+      objectReference: {fileID: 1666083272}
+    - target: {fileID: 1249285860641770249, guid: acb1c722dec43fa4babc20e7da80e675,
+        type: 3}
+      propertyPath: m_Name
+      value: NPCName
+      objectReference: {fileID: 0}
     - target: {fileID: 3017167479671582546, guid: acb1c722dec43fa4babc20e7da80e675,
         type: 3}
       propertyPath: m_Name

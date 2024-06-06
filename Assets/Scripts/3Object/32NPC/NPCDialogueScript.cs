@@ -9,6 +9,8 @@ using UnityEngine.InputSystem;
 public class NPCDialogueScript : MonoBehaviour
 {
     [SerializeField]
+    private TextMeshProUGUI m_nameText;
+    [SerializeField]
     private TextMeshProUGUI m_typingText;
     [SerializeField]
     private float m_textSpeed = 0.1f;
@@ -20,6 +22,7 @@ public class NPCDialogueScript : MonoBehaviour
     private bool ButtonClicked { get; set; }
 
     private NPCScript CurNPC { get; set; }
+    private string CurNPCName { get; set; }
     private string[] CurDialogue { get; set; }
     private int DialogueCount { get; set; } = 0;
 
@@ -29,9 +32,13 @@ public class NPCDialogueScript : MonoBehaviour
     public void SetNPC(NPCScript _npc)
     {
         CurNPC = _npc;
-        CurDialogue = _npc.m_npcDialogue;
-        m_isQuestStarted = _npc.IsQuestStarted;
-        m_isQuestEnded = _npc.IsQuestEnded;
+
+        CurNPCName = CurNPC.NPCName;
+        CurDialogue = CurNPC.NPCDialogues;
+        m_isQuestStarted = CurNPC.IsQuestStarted;
+        m_isQuestEnded = CurNPC.IsQuestEnded;
+
+        m_nameText.text = CurNPCName;
     }
 
     public void OpenUI()
@@ -45,8 +52,8 @@ public class NPCDialogueScript : MonoBehaviour
 
     public void OpenUI(NPCScript _npc)
     {
-        OpenUI();
         SetNPC(_npc);
+        OpenUI();
         StartCoroutine(Typing(CurDialogue[DialogueCount]));
     }
 
