@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-using Unity.VisualScripting;
 
 public enum EMonsterDeathType
 {
@@ -102,7 +101,6 @@ public partial class MonsterScript
         m_lightReciever = GetComponent<MonsterLighter>();
         m_battleManager = GetComponent<MonsterBattler>();
         m_aiPath = GetComponent<AIPath>();
-        m_impulseSource.AddComponent<CinemachineImpulseSource>();
         SetImpulseInfo();
         DissolveColor = m_skinneds[0].materials[0].GetColor("_Dissolvecolor");
     }
@@ -126,19 +124,18 @@ public partial class MonsterScript
 
     public void SetImpulseInfo()
     {
-        m_impulseSource.m_ImpulseDefinition.m_ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Explosion;
+/*        m_impulseSource.m_ImpulseDefinition.m_ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Explosion;
 
         m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_AttackTime = 0.05f;    // 공격 시간
         m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = 0.15f;   // 유지 시간
         m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_DecayTime = 0.3f;      // 감쇠 시간
 
-        m_impulseSource.m_DefaultVelocity = new Vector3(0.1f, 0.1f, 0.1f);
+        m_impulseSource.m_DefaultVelocity = new Vector3(0.1f, 0.1f, 0.1f);*/
     }
 
     public virtual void OnEnable()
     {
         SetUI();
-        if (m_spawnPoint != null) { m_spawnPoint.AddMonster(this); }
         if (AttackObject == null) { SetAttackObject(); }
         m_aiPath.enabled = false;
         StartCoroutine(WaitSpawned());

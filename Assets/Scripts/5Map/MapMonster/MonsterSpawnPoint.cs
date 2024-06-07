@@ -14,6 +14,9 @@ public enum EAreaType
 public class MonsterSpawnPoint : MonoBehaviour
 {
     [SerializeField]
+    private MonsterSpawner[] m_spawners;
+
+    [SerializeField]
     private float m_fenceRange = 30;
     [SerializeField]
     private EAreaType m_areaType;
@@ -31,5 +34,27 @@ public class MonsterSpawnPoint : MonoBehaviour
     { 
         if(m_spawnedMonsters.Contains(_monster)) { return; }
         m_spawnedMonsters.Add(_monster);
+    }
+
+
+    private void SetComps()
+    {
+        m_spawners = GetComponentsInChildren<MonsterSpawner>();
+        foreach (MonsterSpawner spawner in m_spawners)
+        {
+            spawner.SetPoint(this);
+        }
+    }
+
+    private void Awake()
+    {
+        SetComps();
+    }
+    private void Start()
+    {
+        foreach (MonsterSpawner spawner in m_spawners)
+        {
+            spawner.SpawnMonster();
+        }
     }
 }

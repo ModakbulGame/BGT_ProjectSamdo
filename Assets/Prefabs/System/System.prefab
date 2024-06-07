@@ -3117,7 +3117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ffcc395429ec8b44864fd281efddcb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_QuestScriptable: []
+  m_questList: []
 --- !u!114 &489907280240462172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3133,6 +3133,7 @@ MonoBehaviour:
   m_mapPositioner:
   - {fileID: 0}
   - {fileID: 0}
+  MapOasis: []
 --- !u!114 &7843800677733957874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4826,7 +4827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_playerCamera: {fileID: 4939970798653348248}
-  m_cameraChange: {fileID: 0}
+  m_camChange: {fileID: 0}
 --- !u!20 &270833215795905991
 Camera:
   m_ObjectHideFlags: 0
@@ -10666,10 +10667,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6f7a618f453a649b65281e1828e332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_mapOasis:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   m_mapOasisImage: {fileID: 648231005377805726, guid: 0b113f99da97a3344850d8dc807ed79a,
     type: 3}
   m_mapPlayerImage: {fileID: 2755667520348362087}
