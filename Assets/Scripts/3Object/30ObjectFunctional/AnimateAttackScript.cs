@@ -85,7 +85,6 @@ public class AnimateAttackScript : ObjectAttackScript
             if (hittable == null) { Debug.LogError("히터블 스크립트 없음"); continue; }
             if (!CheckTarget(collider)) { continue; }
             Vector3 pos = CheckNHit(hittable);
-            AddHitObject(hittable);
             CreateHitEffect(hittable, pos);
             hit |= hittable.IsMonster;
         }

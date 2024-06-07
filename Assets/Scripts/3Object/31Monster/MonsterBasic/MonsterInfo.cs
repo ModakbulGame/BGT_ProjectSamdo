@@ -133,21 +133,17 @@ public partial class MonsterScript
         m_impulseSource.m_DefaultVelocity = new Vector3(0.1f, 0.1f, 0.1f);*/
     }
 
-    public virtual void OnEnable()
+    public virtual void OnSpawned()
     {
-        SetUI();
-        if (AttackObject == null) { SetAttackObject(); }
         m_aiPath.enabled = false;
+        IsSpawned = false;
         StartCoroutine(WaitSpawned());
-        base.Start();
     }
     public virtual IEnumerator WaitSpawned()
     {
-        while (!IsSpawned)
-        {
-            yield return new WaitForSeconds(0.1f);
-        }
+        yield return new WaitForSeconds(0.1f);
         m_aiPath.enabled = true;
+        IsSpawned = true;
         ChangeState(EMonsterState.IDLE);
     }
 
@@ -155,6 +151,11 @@ public partial class MonsterScript
     {
         base.Awake();
         SetStates();
-
+    }
+    public override void Start()
+    {
+        SetUI();
+        if (AttackObject == null) { SetAttackObject(); }
+        base.Start();
     }
 }

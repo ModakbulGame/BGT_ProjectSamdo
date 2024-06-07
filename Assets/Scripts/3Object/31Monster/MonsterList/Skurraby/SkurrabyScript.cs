@@ -28,19 +28,17 @@ public class SkurrabyScript : MonsterScript
 
     public void SkurrabySpawned(Vector2 _dir, ObjectScript _obj)
     {
-        IsSpawned = false;
         CurTarget = _obj;
         m_rigid.velocity = 5 * new Vector3(_dir.x, 1, _dir.y);
-        StartCoroutine(SpawnDelay());
     }
     public override IEnumerator WaitSpawned()
     {
-        while (!IsSpawned) { yield return null; }
+        while (!IsGrounded) { yield return null; }
         m_aiPath.enabled = true;
+        IsSpawned = true;
         if (CurTarget != null) { ChangeState(EMonsterState.APPROACH); }
         else { ChangeState(EMonsterState.IDLE); }
     }
-    private IEnumerator SpawnDelay() { yield return new WaitForSeconds(1.5f); IsSpawned = true; }
 
     public void ReadyFire()
     {
@@ -87,7 +85,7 @@ public class SkurrabyScript : MonsterScript
         {
             IHittable hit = col.GetComponentInParent<IHittable>();
             hit ??= col.GetComponentInChildren<IHittable>();
-            if(hit == null || hit == this) { continue; }
+            if(hit == null || hit.IsMonster) { continue; }
             ExplodeSkurraby();
             return;
         }

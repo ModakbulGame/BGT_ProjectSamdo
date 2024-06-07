@@ -47,9 +47,9 @@ public class BloScript : MonsterScript
     }
 
 
-    public override void OnEnable()
+    public override void OnSpawned()
     {
-        base.OnEnable();
+        base.OnSpawned();
         RushDone = false;
     }
 

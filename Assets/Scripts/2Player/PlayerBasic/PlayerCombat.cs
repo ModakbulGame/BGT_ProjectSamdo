@@ -97,14 +97,12 @@ public partial class PlayerController
     }
     public override void AttackTriggerOn()                              // 무기 히트 판정 on
     {
-        base.AttackTriggerOn();
         CurWeapon.AttackOn();
         AttackCreated = true;
         UseStamina(AttackStaminaUse);
     }
     public override void AttackTriggerOff()                             // 무기 히트 판정 off
     {
-        base.AttackTriggerOff();
         CurWeapon.AttackOff();
         AttackFinished = true;
     }

@@ -12,8 +12,8 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     // 풀
     public ObjectPool<GameObject> OriginalPool { get; set; }
     public void SetPool(ObjectPool<GameObject> _pool) { OriginalPool = _pool; }
-    public virtual void OnPoolGet() { m_aiPath.enabled = true; IsSpawned = true; }
-    public virtual void ReleaseToPool() { m_aiPath.enabled = false; IsSpawned = false; OriginalPool.Release(gameObject); }
+    public virtual void OnPoolGet() { OnSpawned(); }
+    public virtual void ReleaseToPool() { OriginalPool.Release(gameObject); }
 
 
     // 애님
@@ -32,7 +32,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
     // 몬스터 상태
     public bool InCombat { get { return !IsIdle; } }                                            // 전투 중인지
-    public virtual bool IsSpawned { get; protected set; } = true;
+    public virtual bool IsSpawned { get; protected set; } = false;
     public bool IsIdle { get { return CurState.StateEnum == EMonsterState.IDLE; } }
     public bool IsApproaching { get { return CurState.StateEnum == EMonsterState.APPROACH; } }
     public bool IsAttacking { get { return CurState.StateEnum == EMonsterState.ATTACK; } }
@@ -262,7 +262,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     // UI 관련
     private ObjectHPBarScript m_hpBar;
 
-    private void SetUI()                // UI 설정
+    protected void SetUI()                // UI 설정
     {
         m_hpBar = GetComponentInChildren<ObjectHPBarScript>();
         m_hpBar.SetMaxHP(MaxHP);

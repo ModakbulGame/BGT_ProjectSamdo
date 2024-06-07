@@ -23,6 +23,7 @@ public class MonsterIdleState : MonoBehaviour, IMonsterState
 
     private void StartMove()
     {
+        if (!m_monster.IsSpawned) { return; }
         Vector3 destination;
         do
         {
