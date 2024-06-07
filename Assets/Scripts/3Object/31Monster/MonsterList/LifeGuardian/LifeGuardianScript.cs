@@ -60,8 +60,15 @@ public class LifeGuardianScript : AnimatedAttackMonster
     }
 
 
+    // ½ºÅ³
     private readonly float AnySkillCooltime = 8;
     private float AnySkillTimeCount { get; set; }
+
+    [SerializeField]
+    private float[] m_skillDamage = new float[3];
+    [SerializeField]
+    private float[] m_skillCooltime = new float[3];
+
 
     public override int SkillNum => 3;
     public override bool CanSkill => AnySkillTimeCount <= 0 && HasTarget && TargetInAttackRange && CheckCurSkill != -1;
@@ -69,6 +76,8 @@ public class LifeGuardianScript : AnimatedAttackMonster
     private ObjectAttackScript CurSkill { get; set; }
     public bool CreatedSkill { get; private set; }
     public bool RushStarted { get; private set; }
+
+    private readonly float RushSpeed = 8;
 
     public override void StartSkill()
     {
@@ -84,21 +93,21 @@ public class LifeGuardianScript : AnimatedAttackMonster
         if (CurSkillIdx == 0)
         {
             CurSkill = SkillList[0];
-            CurSkill.SetAttack(this, 10);
+            CurSkill.SetAttack(this, m_skillDamage[0]);
             CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
         }
         else if (CurSkillIdx == 1)
         {
             CurSkill = SkillList[1];
-            CurSkill.SetAttack(this, 10);
+            CurSkill.SetAttack(this, m_skillDamage[1]);
             CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
         }
         else if (CurSkillIdx == 2)
         {
             CurSkill = SkillList[2];
-            CurSkill.SetAttack(this, 10);
+            CurSkill.SetAttack(this, m_skillDamage[2]);
             CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
             RushStarted = true;
@@ -127,14 +136,21 @@ public class LifeGuardianScript : AnimatedAttackMonster
     }
     public void RushForward()
     {
-        m_rigid.velocity = 8 * transform.forward;
+        m_rigid.velocity = RushSpeed * transform.forward;
     }
     public override void SkillDone()
     {
-        base.SkillDone();
-
         SkillTimeCount[CurSkillIdx] = SkillCooltime[CurSkillIdx];
         AnySkillTimeCount = AnySkillCooltime;
+
+        if (CurSkillIdx == 1)
+        {
+            ChangeState(EMonsterState.ATTACK);
+        }
+        else
+        {
+            base.SkillDone();
+        }
     }
 
 
@@ -152,7 +168,7 @@ public class LifeGuardianScript : AnimatedAttackMonster
     public override void InitSkillInfo()
     {
         base.InitSkillInfo();
-        SkillCooltime = new float[3] { 10, 10, 10 };
+        SkillCooltime = new float[3] { m_skillCooltime[0], m_skillCooltime[1], m_skillCooltime[2] };
     }
 
     public override void SetStates()

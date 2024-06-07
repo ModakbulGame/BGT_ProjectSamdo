@@ -7,6 +7,7 @@ using UnityEngine;
 public abstract partial class ObjectScript : MonoBehaviour, IHittable
 {
     // 위치, 회전
+    public Vector3 Velocity { get { return m_rigid.velocity; } }
     public Vector2 Velocity2 { get { return new(m_rigid.velocity.x, m_rigid.velocity.z); } }        // 2차원 속도
     public Vector3 Position { get { return transform.position; } }                                  // 좌표
     public Vector2 Position2 { get { return new(transform.position.x, transform.position.z); } }    // 평면 좌표
@@ -79,6 +80,10 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     public virtual void AddForce(Vector3 _dir)
     {
         m_rigid.AddForce(_dir);
+    }
+    public void SetVelocity(Vector3 _vel)
+    {
+        m_rigid.velocity = _vel;
     }
 
 

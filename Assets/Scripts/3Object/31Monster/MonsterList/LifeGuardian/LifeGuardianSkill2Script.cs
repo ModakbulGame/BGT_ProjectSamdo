@@ -5,7 +5,9 @@ using UnityEngine;
 public class LifeGuardianSkill2Script : ObjectAttackScript
 {
     private float SkillRadius { get; set; }
-    private readonly float DamageGap = 0.5f;
+    
+    private readonly float DamageGap = 0.2f;
+    private readonly float DrainForce = 9;
 
     private float GapCount { get; set; }
 
@@ -27,10 +29,12 @@ public class LifeGuardianSkill2Script : ObjectAttackScript
         foreach (Collider col in hits)
         {
             ObjectScript script = col.GetComponentInParent<ObjectScript>();
-            if(script == null || script.IsDead || !script.IsPlayer) { continue; }
-            script.GetDamage(Damage, Attacker);
-            Vector3 dir = 5 * (transform.position - script.Position).normalized;
+            if(script == null ||  script.IsDead || !script.IsPlayer) { continue; }
+            Vector3 dir = DrainForce * (transform.position - script.Position);
             script.AddForce(dir);
+            if (m_hitObjects.Contains(script)) { return; }
+            script.GetDamage(Damage, Attacker);
+            m_hitObjects.Add(script);
         }
     }
 
@@ -46,6 +50,7 @@ public class LifeGuardianSkill2Script : ObjectAttackScript
     {
         SkillRadius = transform.localScale.x * 0.5f;
     }
+    public override void Start() { }
 
     private void Update()
     {
