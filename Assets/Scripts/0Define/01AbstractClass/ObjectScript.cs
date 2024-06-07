@@ -76,6 +76,10 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
             m_rigid.velocity = Vector3.zero;
     }
     public virtual void StartTracing() { }
+    public virtual void AddForce(Vector3 _dir)
+    {
+        m_rigid.AddForce(_dir);
+    }
 
 
     // 회전 관련

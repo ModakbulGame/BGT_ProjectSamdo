@@ -37,6 +37,27 @@ public class ObjectAnimationLink : MonoBehaviour            // 애니메이션과 스크
     }
 
 
+    // 몬스터 전용
+    public void SkillOnTiming()
+    {
+        ((MonsterScript)m_object).SkillOn();
+    }
+    public void CreateSkillTiming()
+    {
+        ((MonsterScript)m_object).CreateSkill();
+    }
+    public void SkillOffTiming()
+    {
+        ((MonsterScript)m_object).SkillOff();
+    }
+    public void SkillDoneTiming()
+    {
+        ((MonsterScript)m_object).SkillDone();
+    }
+
+
+
+
     private void Awake()
     {
         m_object = GetComponentInParent<ObjectScript>();

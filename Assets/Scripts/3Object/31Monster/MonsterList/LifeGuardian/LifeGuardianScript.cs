@@ -17,7 +17,7 @@ public class LifeGuardianScript : AnimatedAttackMonster
 
 
     private bool AttackProceed { get; set; }
-    private float[] AttackAngle = new float[4] { 0, 30, -30, -45 };
+    private readonly float[] AttackAngle = new float[4] { 0, 30, -30, -15 };
 
 
     public override void LookTarget()
@@ -60,8 +60,104 @@ public class LifeGuardianScript : AnimatedAttackMonster
     }
 
 
-    private void StartSkill()
-    {
+    private readonly float AnySkillCooltime = 8;
+    private float AnySkillTimeCount { get; set; }
 
+    public override int SkillNum => 3;
+    public override bool CanSkill => AnySkillTimeCount <= 0 && HasTarget && TargetInAttackRange && CheckCurSkill != -1;
+
+    private ObjectAttackScript CurSkill { get; set; }
+    public bool CreatedSkill { get; private set; }
+    public bool RushStarted { get; private set; }
+
+    public override void StartSkill()
+    {
+        CurSkillIdx = CheckCurSkill;
+        if(CurSkillIdx == -1) { return; }
+        m_anim.SetInteger("SKILL_IDX", CurSkillIdx);
+        m_anim.SetBool("IS_SKILLING", true);
+        StopMove();
+        CreatedSkill = false;
+    }
+    public override void SkillOn()
+    {
+        if (CurSkillIdx == 0)
+        {
+            CurSkill = SkillList[0];
+            CurSkill.SetAttack(this, 10);
+            CurSkill.gameObject.SetActive(true);
+            CurSkill.AttackOn();
+        }
+        else if (CurSkillIdx == 1)
+        {
+            CurSkill = SkillList[1];
+            CurSkill.SetAttack(this, 10);
+            CurSkill.gameObject.SetActive(true);
+            CurSkill.AttackOn();
+        }
+        else if (CurSkillIdx == 2)
+        {
+            CurSkill = SkillList[2];
+            CurSkill.SetAttack(this, 10);
+            CurSkill.gameObject.SetActive(true);
+            CurSkill.AttackOn();
+            RushStarted = true;
+        }
+        CreatedSkill = true;
+    }
+    public override void SkillOff()
+    {
+        if (CurSkillIdx == 0)
+        {
+            CurSkill.AttackOff();
+            CurSkill.gameObject.SetActive(false);
+        }
+        else if (CurSkillIdx == 1)
+        {
+            CurSkill.AttackOff();
+            CurSkill.gameObject.SetActive(false);
+        }
+        else if (CurSkillIdx == 2)
+        {
+            CurSkill.AttackOff();
+            CurSkill.gameObject.SetActive(false);
+            RushStarted = false;
+        }
+        m_anim.SetBool("IS_SKILLING", false);
+    }
+    public void RushForward()
+    {
+        m_rigid.velocity = 8 * transform.forward;
+    }
+    public override void SkillDone()
+    {
+        base.SkillDone();
+
+        SkillTimeCount[CurSkillIdx] = SkillCooltime[CurSkillIdx];
+        AnySkillTimeCount = AnySkillCooltime;
+    }
+
+
+
+    public override void ProcCooltime()
+    {
+        base.ProcCooltime();
+        if(AnySkillTimeCount > 0) { AnySkillTimeCount -= Time.deltaTime; }
+        for (int i = 0; i<SkillNum; i++)
+        {
+            if (SkillTimeCount[i] > 0) { SkillTimeCount[i] -= Time.deltaTime; }
+        }
+    }
+
+    public override void InitSkillInfo()
+    {
+        base.InitSkillInfo();
+        SkillCooltime = new float[3] { 10, 10, 10 };
+    }
+
+    public override void SetStates()
+    {
+        base.SetStates();
+        m_monsterStates[(int)EMonsterState.SKILL] = gameObject.AddComponent<LifeGuardianSkillState>();
     }
 }

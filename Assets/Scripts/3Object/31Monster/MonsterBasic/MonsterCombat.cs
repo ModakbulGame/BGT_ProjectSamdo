@@ -54,6 +54,11 @@ public abstract partial class MonsterScript
         base.SetDead();
         ChangeState(EMonsterState.DIE);
     }
+    public void GetInstantHit(SkillInfo _skill, GameObject _part, ObjectScript _attacker)
+    {
+        SkillScriptable data = _skill.SkillData;
+        GetDamage(100, _attacker);
+    }
 
 
     // 공격 관련
@@ -97,10 +102,39 @@ public abstract partial class MonsterScript
     }
 
 
-    public void GetInstantHit(SkillInfo _skill, GameObject _part, ObjectScript _attacker)
+    // 스킬
+    [SerializeField]
+    protected ObjectAttackScript[] SkillList;
+    public virtual int SkillNum { get { return 0; } }
+    public float[] SkillCooltime { get; protected set; }
+    public float[] SkillTimeCount { get; protected set; }
+    public int CheckCurSkill { get {
+            List<int> list = new();
+            for (int i = 0; i<SkillCooltime.Length; i++) { if (SkillTimeCount[i] <= 0) list.Add(i); }
+            if(list.Count > 0) { return list[UnityEngine.Random.Range(0, list.Count)]; }
+            return -1; } }
+
+    public virtual bool CanSkill => false;
+    public int CurSkillIdx { get; protected set; }
+
+    public virtual void InitSkillInfo()
     {
-        SkillScriptable data = _skill.SkillData;
-        GetDamage(100, _attacker);
+        SkillCooltime = new float[SkillNum];
+        SkillTimeCount = new float[SkillNum];
+    }
+    public virtual void StartSkill()
+    {
+        StopMove();
+    }
+    public virtual void SkillOn() { }
+    public virtual void SkillOff() { }
+    public virtual void CreateSkill() { }
+    public virtual void SkillDone()
+    {
+        if (CurTarget != null)
+            ChangeState(EMonsterState.APPROACH);
+        else
+            ChangeState(EMonsterState.IDLE);
     }
 
 

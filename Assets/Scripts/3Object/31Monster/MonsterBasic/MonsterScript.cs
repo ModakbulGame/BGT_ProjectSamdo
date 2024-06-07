@@ -36,6 +36,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     public bool IsIdle { get { return CurState.StateEnum == EMonsterState.IDLE; } }
     public bool IsApproaching { get { return CurState.StateEnum == EMonsterState.APPROACH; } }
     public bool IsAttacking { get { return CurState.StateEnum == EMonsterState.ATTACK; } }
+    public bool IsSkilling { get { return CurState.StateEnum == EMonsterState.SKILL; } }
     public bool IsHit { get { return CurState.StateEnum == EMonsterState.HIT; } }
 
     public override bool IsVoid => MonsterType == EMonsterType.NORMAL && base.IsVoid;

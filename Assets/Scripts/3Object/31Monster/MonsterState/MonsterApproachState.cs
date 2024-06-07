@@ -38,6 +38,11 @@ public class MonsterApproachState : MonoBehaviour, IMonsterState
             m_monster.ChangeState(EMonsterState.IDLE);
             return;
         }
+        if (m_monster.CanSkill)
+        {
+            m_monster.ChangeState(EMonsterState.SKILL);
+            return;
+        }
         if (m_monster.CanAttack)
         {
             m_monster.ChangeState(EMonsterState.ATTACK);

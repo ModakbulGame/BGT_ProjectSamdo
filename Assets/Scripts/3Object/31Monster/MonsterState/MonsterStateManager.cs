@@ -8,6 +8,7 @@ public enum EMonsterState
     IDLE,
     APPROACH,
     ATTACK,
+    SKILL,
     HIT,
     DIE,
     LAST

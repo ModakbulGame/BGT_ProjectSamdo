@@ -151,6 +151,8 @@ public partial class MonsterScript
     {
         base.Awake();
         SetStates();
+        InitSkillInfo();
+        if(m_spawnPoint == null) { OnSpawned(); }
     }
     public override void Start()
     {
