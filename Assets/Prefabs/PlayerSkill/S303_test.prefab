@@ -9,10 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7653542313859952760}
+  - component: {fileID: 2079743954309663055}
   - component: {fileID: 7225547370773887245}
   - component: {fileID: 8327929658263979374}
   m_Layer: 1
-  m_Name: A2Projectile_XL
+  m_Name: S303_test
   m_TagString: PlayerSkill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,6 +40,22 @@ Transform:
   - {fileID: 4574068477554632248}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2079743954309663055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251905705746076710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004b7e42a863f814ab2d508320973928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ccList: 
+  m_scriptable: {fileID: 11400000, guid: 998a1ee35e789374998a8eb0a8643409, type: 2}
+  m_lastTime: 10
+  MoveDir: {x: 0, y: 0, z: 0}
 --- !u!54 &7225547370773887245
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -85,7 +102,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2434224601333395572
 GameObject:

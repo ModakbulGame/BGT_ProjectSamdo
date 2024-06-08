@@ -27,7 +27,7 @@ public class ProjectileSkillScript : PlayerSkillScript
         DeleteTrailOnHit();
     }
 
-    public void SetSkill(PlayerController _player, float _attack, float _magic, Vector2 _dir)
+    public virtual void SetSkill(PlayerController _player, float _attack, float _magic, Vector2 _dir)
     {
         SetSkill(_player, _attack, _magic);
         MoveDir = new(_dir.x,0,_dir.y);
@@ -57,7 +57,7 @@ public class ProjectileSkillScript : PlayerSkillScript
         vel.x = dir.x; vel.z = dir.z;
         m_rigid.velocity = vel;
         float distanceMoved = Vector3.Distance(StartPosition, transform.position);
-        if(distanceMoved > m_scriptable.CastingRange) { Destroy(gameObject); }
+        if(distanceMoved > m_scriptable.CastingRange * 2) { Destroy(gameObject); }
     }
 }
 

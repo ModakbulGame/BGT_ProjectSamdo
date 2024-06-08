@@ -10,11 +10,12 @@ public class ParabolaSkillScript : ProjectileSkillScript
     [SerializeField]
     private float ForceMultiplier { get; set; } = 1;
     private float UpperForce { get { return m_upperForce * ForceMultiplier; } }
+
     public override void OnEnable()
     {
         base.OnEnable();
-        ForceMultiplier = m_scriptable.MoveSpeed;
-        m_rigid.velocity = Vector3.up * UpperForce;
+        ForceMultiplier = m_scriptable.MoveSpeed ;
+        m_rigid.velocity = Vector3.up * UpperForce / 2;
     }
 
     public virtual void CollideGround()
@@ -24,8 +25,8 @@ public class ParabolaSkillScript : ProjectileSkillScript
 
     public override void OnTriggerEnter(Collider _other)
     {
+        base.OnTriggerEnter( _other );
         if (!_other.CompareTag(ValueDefine.TERRAIN_TAG)) { return; }
-        Debug.Log(transform.position);
         CollideGround();
     }
 

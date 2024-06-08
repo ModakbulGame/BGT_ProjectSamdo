@@ -27,6 +27,7 @@ public class PlayerSkillScript : ObjectAttackScript, IPoolable
         Damages[0] = _attack;
         Damages[1] = _magic;
     }
+
     public float ResultDamage { get { 
             return (m_scriptable.Attack * Damages[0] * Attacker.AttackMultiplier +
                 m_scriptable.Magic * Damages[1] * Attacker.MagicMultiplier) * Attacker.DamageMultiplier; } }
