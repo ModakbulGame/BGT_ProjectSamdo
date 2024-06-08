@@ -10,10 +10,9 @@ public class ExplodeScript : ObjectAttackScript
 
     public void SetDamage(ObjectScript _attacker, float _damage, float _time)
     {
-        SetAttack(_attacker, _damage);
+        SetAttack(_attacker, _damage * Attacker.MagicMultiplier);
         StartCoroutine(LoseDamage(_time));
     }
-
 
     private void CheckExplosion(Collider _other)
     {
@@ -44,7 +43,7 @@ public class ExplodeScript : ObjectAttackScript
     public override void GiveDamage(IHittable _hittable, Vector3 _point)
     {
         if (CheckHit(_hittable)) { return; }
-        HitData hit = new(Attacker, Damage, _point, CCList);
+        HitData hit = new(Attacker, Damage * Attacker.MagicMultiplier * Attacker.DamageMultiplier, _point, CCList);
         _hittable.GetHit(hit);
         AddHitObject(_hittable);
     }
