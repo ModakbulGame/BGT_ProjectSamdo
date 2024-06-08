@@ -36,11 +36,11 @@ public class DataManager : MonoBehaviour
     {
         return _data switch
         {
-            "DAMAGE" => EAdjType.DAMAGE,
-            "ATTACK" => EAdjType.ATTACK,
-            "MAGIC" => EAdjType.MAGIC,
-            "MOVE_SPEED" => EAdjType.MOVE_SPEED,
-            "WEAPON_CC" => EAdjType.WEAPON_CC,
+            "Damage" => EAdjType.DAMAGE,
+            "Attack" => EAdjType.ATTACK,
+            "Magic" => EAdjType.MAGIC,
+            "MoveSpeed" => EAdjType.MOVE_SPEED,
+            "WeaponCC" => EAdjType.WEAPON_CC,
 
             _ => EAdjType.LAST
         };
@@ -50,17 +50,17 @@ public class DataManager : MonoBehaviour
     {
         return _data switch
         {
-            "FATIGUE" => ECCType.FATIGUE,
-            "STUN" => ECCType.STUN,
-            "MELANCHOLY" => ECCType.MELANCHOLY,
-            "EXTORTION" => ECCType.EXTORTION,
-            "AIRBORNE" => ECCType.AIRBORNE,
-            "KNOCKBACK" => ECCType.KNOCKBACK,
-            "WEAKNESS" => ECCType.WEAKNESS,
-            "BIND" => ECCType.BIND,
-            "VOID" => ECCType.VOID,
-            "OBLIVION" => ECCType.OBLIVION,
-            "BLIND" => ECCType.BLIND,
+            "Fatigue" => ECCType.FATIGUE,
+            "Stun" => ECCType.STUN,
+            "Melancholy" => ECCType.MELANCHOLY,
+            "Extortion" => ECCType.EXTORTION,
+            "Airborne" => ECCType.AIRBORNE,
+            "Knockback" => ECCType.KNOCKBACK,
+            "Weakness" => ECCType.WEAKNESS,
+            "Bind" => ECCType.BIND,
+            "Void" => ECCType.VOID,
+            "Oblivion" => ECCType.OBLIVION,
+            "Blind" => ECCType.BLIND,
 
             _ => ECCType.LAST
         };
@@ -68,6 +68,7 @@ public class DataManager : MonoBehaviour
 
     public static ESkillProperty[] String2Properties(string _data)
     {
+        if(_data == "") { return new ESkillProperty[0]; }
         string[] datas = _data.Split('/');
         ESkillProperty[] props = new ESkillProperty[datas.Length];
         for (int i = 0; i<datas.Length; i++)
@@ -80,14 +81,14 @@ public class DataManager : MonoBehaviour
     {
         return _data switch
         {
-            "SLASH" => ESkillProperty.SLASH,
-            "HIT" => ESkillProperty.HIT,
-            "EXPLOSION" => ESkillProperty.EXPLOSION,
-            "SHOCKWAVE" => ESkillProperty.SHOCKWAVE,
-            "FOG" => ESkillProperty.FOG,
-            "TOTEM" => ESkillProperty.TOTEM,
-            "LIGHT" => ESkillProperty.LIGHT,
-            "SOUL" => ESkillProperty.SOUL,
+            "Slash" => ESkillProperty.SLASH,
+            "Hit" => ESkillProperty.HIT,
+            "Explosion" => ESkillProperty.EXPLOSION,
+            "Shockwave" => ESkillProperty.SHOCKWAVE,
+            "Fog" => ESkillProperty.FOG,
+            "Totem" => ESkillProperty.TOTEM,
+            "Light" => ESkillProperty.LIGHT,
+            "Soul" => ESkillProperty.SOUL,
 
             _ => ESkillProperty.LAST
         };

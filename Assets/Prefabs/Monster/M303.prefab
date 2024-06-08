@@ -202,7 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_baseInfo:
     ObjectName: "\uC6C0"
-    AttackSpeed: 1
+    AttackSpeed: 3
     MoveSpeed: 3
   m_buffNDebuff: []
   m_curHP: 0
@@ -217,9 +217,10 @@ MonoBehaviour:
   - {fileID: 3174002365771830750}
   - {fileID: 5242295678101427111}
   - {fileID: 8375717135982188017}
+  SkillList: []
   m_scriptable: {fileID: 11400000, guid: d4bdf71dbc67fe84ea819e869a6f86ac, type: 2}
   m_combatInfo:
-    MaxHP: 100
+    MaxHP: 400
     Defense: 5
     Attack: 5
     ApproachSpeed: 5
@@ -227,7 +228,7 @@ MonoBehaviour:
     ViewRange: 15
     EngageRange: 15
     ReturnRange: 15
-    AttackRange: 1.5
+    AttackRange: 4.5
     ApproachDelay: 1
     FenceRange: 25
   m_spawnPoint: {fileID: 0}

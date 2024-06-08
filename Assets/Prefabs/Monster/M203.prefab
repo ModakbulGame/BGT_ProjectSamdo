@@ -85,8 +85,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_baseInfo:
     ObjectName: "\uB9C8\uB974\uBAB0\uB77D \uD30C\uC218\uAFBC"
-    AttackSpeed: 1
-    MoveSpeed: 3
+    AttackSpeed: 1.5
+    MoveSpeed: 2
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
@@ -94,13 +94,14 @@ MonoBehaviour:
   m_normalAttacks:
   - {fileID: 8376127291140787350}
   - {fileID: 5530053198318916150, guid: 77e78430c74129246897cea529787e64, type: 3}
+  SkillList: []
   m_scriptable: {fileID: 11400000, guid: 5d160b7e23d06b74e836cff07f63c80e, type: 2}
   m_combatInfo:
-    MaxHP: 100
+    MaxHP: 400
     Defense: 5
     Attack: 5
-    ApproachSpeed: 5
-    ViewAngle: 120
+    ApproachSpeed: 6
+    ViewAngle: 160
     ViewRange: 25
     EngageRange: 15
     ReturnRange: 15
