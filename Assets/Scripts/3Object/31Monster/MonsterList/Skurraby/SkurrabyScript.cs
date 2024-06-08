@@ -28,12 +28,13 @@ public class SkurrabyScript : MonsterScript
 
     public void SkurrabySpawned(Vector2 _dir, ObjectScript _obj)
     {
+        base.OnSpawned();
         CurTarget = _obj;
         m_rigid.velocity = 5 * new Vector3(_dir.x, 1, _dir.y);
     }
     public override IEnumerator WaitSpawned()
     {
-        while (!IsGrounded) { yield return null; }
+        yield return new WaitForSeconds(1.5f);
         m_aiPath.enabled = true;
         IsSpawned = true;
         if (CurTarget != null) { ChangeState(EMonsterState.APPROACH); }

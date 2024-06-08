@@ -135,6 +135,7 @@ public partial class MonsterScript
 
     public virtual void OnSpawned()
     {
+        ChangeState(EMonsterState.IDLE);
         m_aiPath.enabled = false;
         IsSpawned = false;
         StartCoroutine(WaitSpawned());
@@ -144,7 +145,6 @@ public partial class MonsterScript
         yield return new WaitForSeconds(0.1f);
         m_aiPath.enabled = true;
         IsSpawned = true;
-        ChangeState(EMonsterState.IDLE);
     }
 
     public override void Awake()
