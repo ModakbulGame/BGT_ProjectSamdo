@@ -17,8 +17,6 @@ public class MonsterSpawnPoint : MonoBehaviour
     private MonsterSpawner[] m_spawners;
 
     [SerializeField]
-    private float m_fenceRange = 30;
-    [SerializeField]
     private EAreaType m_areaType;
 
     private readonly float[] m_rangeMultiplier = new float[(int)EAreaType.LAST] { 1, 1.5f };
