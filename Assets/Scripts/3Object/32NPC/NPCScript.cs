@@ -30,13 +30,14 @@ public class NPCScript : MonoBehaviour, IInteractable
     [SerializeField]
     private bool m_isQuestEnded;  // 얘도
 
-    public bool IsQuestStarted { get { return m_isQuestStarted; } }   
+    public bool IsQuestStarted { get { return m_isQuestStarted; } }
     public bool IsQuestEnded { get { return m_isQuestEnded; } }
 
-    public bool InteractableRotation 
+    public bool InteractableRotation
     {
         get
         {
+
             Vector3 forward = transform.forward;                                // 오브젝트의 전방 벡터
             Vector3 toTarget = PlayManager.PlayerPos - transform.position;      // 플레이어 위치로의 벡터
 
@@ -58,14 +59,14 @@ public class NPCScript : MonoBehaviour, IInteractable
         NPCDialogues = m_scriptable.Dialogues;
     }
 
-    public virtual void StartInteract() 
+    public virtual void StartInteract()
     {
         SetInfo();
         PlayManager.OpenNPCUI(this);
         GameManager.SetControlMode(EControlMode.UI_CONTROL);
     }
 
-    public virtual void StopInteract() 
+    public virtual void StopInteract()
     {
         PlayManager.StopPlayerInteract();
         GameManager.SetControlMode(EControlMode.THIRD_PERSON);

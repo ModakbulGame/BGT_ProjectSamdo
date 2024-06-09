@@ -24,7 +24,7 @@ public partial class PlayerController
             GameObject obj = hits[i].collider.gameObject;
             InteractScript script = obj.GetComponentInParent<InteractScript>()
                 ?? obj.GetComponentInChildren<InteractScript>();
-            if (script == null || !script.CanInteract /*|| !script.CanInteractNPC*/) { continue; }    // 스크립트가 없거나 상호작용 불가능인 경우
+            if (script == null || !script.CanInteract || !script.CanInteractNPC) { continue; }    // 스크립트가 없거나 상호작용 불가능인 경우
             interact = script;
         }
         if (interact != null && interact != m_interactableObject)   // 대상이 바뀐 경우
@@ -35,7 +35,7 @@ public partial class PlayerController
             m_interactableObject = interact;
             m_interactableObject.AbleInteract();
         }
-        if ((m_interactableObject != null && !m_interactableObject.CanInteract)/* || (m_interactableObject != null && !m_interactableObject.CanInteractNPC)*/)  // 대상이 사라진 경우
+        if (m_interactableObject != null && !m_interactableObject.CanInteract)  // 대상이 사라진 경우
         {
             m_interactableObject.DisableInteract();
             m_interactableObject = null;

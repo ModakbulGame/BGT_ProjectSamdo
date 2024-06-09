@@ -12,13 +12,19 @@ public class InteractScript : MonoBehaviour                 // 상호작용이 가능한
     private IInteractable m_interactable;                                               // 오브젝트 내 IInteractable을 상속한 오브젝트
 
     private InteractToggleUI m_interactToggleUI;                                        // 상호작용 조작 띄우는 UI
-//    private NPCScript m_npc;
+     private NPCScript m_npc;
 
     public bool CanInteract { get { return DistToPlayer <= m_canInteractDist; } }  // 상호작용 가능한지
-/*    public bool CanInteractNPC 
+    public bool CanInteractNPC // NPC인 경우에만 좌우 60도로 상호작용 가능
     { 
-        get { return DistToPlayer <= m_canInteractDist && m_npc.InteractableRotation; } 
-    }*/
+        get 
+        {
+            if (m_npc != null)
+                return DistToPlayer <= m_canInteractDist && m_npc.InteractableRotation;
+            else
+                return CanInteract;
+        } 
+    }
 
     public float DistToPlayer { get { return PlayManager.GetDistToPlayer(transform.position); } }           // 플레이어와의 거리
     public Transform InteractTransform { get { return transform; } }                                        // 상호작용 대상의 위치
@@ -64,7 +70,7 @@ public class InteractScript : MonoBehaviour                 // 상호작용이 가능한
     private void Awake()
     {
         m_interactable = GetComponent<IInteractable>();
-        // m_npc = GetComponent<NPCScript>();
+        m_npc = GetComponent<NPCScript>();
     }
     private void Start()
     {
