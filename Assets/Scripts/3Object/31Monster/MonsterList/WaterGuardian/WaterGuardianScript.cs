@@ -17,7 +17,7 @@ public class WaterGuardianScript : AnimatedAttackMonster
 
 
     private bool AttackProceed { get; set; }
-    private readonly float[] AttackAngle = new float[4] { 22, -15, 0, 75 };
+    private readonly float[] AttackAngle = new float[4] { 15, -15, 0, 75 };
     private readonly float SkillAngle = 25;
 
 
@@ -151,14 +151,12 @@ public class WaterGuardianScript : AnimatedAttackMonster
         if (CurSkillIdx == 0)
         {
             CurSkill.AttackOff();
-            CurSkill.gameObject.SetActive(false);
             CreatedSkill = true;
             IsTracing = false;
         }
         else if (CurSkillIdx == 1)
         {
             CurSkill.AttackOff();
-            CurSkill.gameObject.SetActive(false);
             m_rigid.velocity = Vector3.zero;
         }
         m_anim.SetBool("IS_SKILLING", false);

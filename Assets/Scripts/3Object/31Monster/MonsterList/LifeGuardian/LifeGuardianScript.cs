@@ -81,7 +81,7 @@ public class LifeGuardianScript : AnimatedAttackMonster
 
     public override void StartSkill()
     {
-        CurSkillIdx = CheckCurSkill;
+        CurSkillIdx = 0/*CheckCurSkill*/;
         if(CurSkillIdx == -1) { return; }
         m_anim.SetInteger("SKILL_IDX", CurSkillIdx);
         m_anim.SetBool("IS_SKILLING", true);
