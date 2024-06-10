@@ -29,6 +29,8 @@ public enum EQuestAttribute
     OBJECTNUM,
     REWARD,
     REWARDNUM,
+    STARTOBJECT,
+    ENDOBJECT,
     LAST
 }
 

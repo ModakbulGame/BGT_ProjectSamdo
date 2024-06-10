@@ -13,11 +13,14 @@ public class QuestScriptable : ScriptableObject
    
     public string QuestObject;        // 퀘스트 시 필요한 오브젝트
     public int QuestObjectCount;      // 퀘스트 시 필요한 오브젝트 수
-    public ERewardName Reward;             // 보상
+    public ERewardName Reward;        // 보상
     public int RewardNum;             // 보상 수 
 
-    public EQuestStatus Status;     // 퀘스트 수행 상태
-    public int CurQuestObjectCount;    // 현재 수집 / 사냥한 오브젝트 수 
+    public EQuestStatus Status;       // 퀘스트 수행 상태
+    public int CurQuestObjectCount;   // 현재 수집 / 사냥한 오브젝트 수 
+
+    public string StartObject;        // 퀘스트를 주는 오브젝트
+    public string EndObject;          // 퀘스트 수행 중 거치거나 완료하는 오브젝트
 
     private EQuestType String2QuestType(string _data)
     {
@@ -54,6 +57,8 @@ public class QuestScriptable : ScriptableObject
         Description = _data[(int)EQuestAttribute.DESCRIPTION];
         QuestObject = _data[(int)EQuestAttribute.QUESTOBJECT];
         Reward = String2Reward(_data[(int)EQuestAttribute.REWARD]);
+        StartObject = _data[(int)EQuestAttribute.STARTOBJECT];
+        EndObject = _data[(int)EQuestAttribute.ENDOBJECT];
         int.TryParse(_data[(int)EQuestAttribute.OBJECTNUM], out QuestObjectCount);
         int.TryParse(_data[(int)EQuestAttribute.REWARDNUM], out RewardNum);
 

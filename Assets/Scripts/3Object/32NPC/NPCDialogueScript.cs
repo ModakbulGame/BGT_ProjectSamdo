@@ -33,10 +33,10 @@ public class NPCDialogueScript : MonoBehaviour
     {
         CurNPC = _npc;
 
-        CurNPCName = CurNPC.NPCName;
-        CurDialogue = CurNPC.NPCDialogues;
-        m_isQuestStarted = CurNPC.IsQuestStarted;
-        m_isQuestEnded = CurNPC.IsQuestEnded;
+        CurNPCName = _npc.NPCName;
+        CurDialogue = _npc.NPCDialogues;
+        m_isQuestStarted = _npc.IsQuestStarted;
+        m_isQuestEnded = _npc.IsQuestEnded;
 
         m_nameText.text = CurNPCName;
     }

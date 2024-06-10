@@ -8,6 +8,7 @@ public class PlayerCameraScript : MonoBehaviour
 {
     private CinemachineFreeLook m_cameraDetail;
     public CinemachineFreeLook PlayerFreeLook { get { return m_cameraDetail; } }
+    private CinemachineImpulseListener m_listner;
 
     private const float XMoveMultiplier = 120;              // 민감도 1당 X 움직임
     private const float YMoveMultiplier = 1.5f;                // 민감도 1당 Y 움직임
@@ -49,6 +50,7 @@ public class PlayerCameraScript : MonoBehaviour
     private void SetComps()
     {
         m_cameraDetail = GetComponent<CinemachineFreeLook>();
+        m_listner = gameObject.AddComponent<CinemachineImpulseListener>();
     }
 
     private void Awake()

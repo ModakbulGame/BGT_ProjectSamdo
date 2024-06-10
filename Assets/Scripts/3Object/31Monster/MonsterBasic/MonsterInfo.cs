@@ -82,7 +82,7 @@ public partial class MonsterScript
     // 상속 정보
     public override bool IsMonster { get { return true; } }
 
-    // 카메라 세팅
+    // 공격 시 카메라 움직임 세팅
     private CinemachineImpulseSource m_impulseSource;
 
 
@@ -101,6 +101,7 @@ public partial class MonsterScript
         m_lightReciever = GetComponent<MonsterLighter>();
         m_battleManager = GetComponent<MonsterBattler>();
         m_aiPath = GetComponent<AIPath>();
+        m_impulseSource = gameObject.AddComponent<CinemachineImpulseSource>();
         SetImpulseInfo();
         DissolveColor = m_skinneds[0].materials[0].GetColor("_Dissolvecolor");
     }
@@ -124,13 +125,13 @@ public partial class MonsterScript
 
     public void SetImpulseInfo()
     {
-/*        m_impulseSource.m_ImpulseDefinition.m_ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Explosion;
+        m_impulseSource.m_ImpulseDefinition.m_ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Explosion;
 
         m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_AttackTime = 0.05f;    // 공격 시간
         m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = 0.15f;   // 유지 시간
         m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_DecayTime = 0.3f;      // 감쇠 시간
 
-        m_impulseSource.m_DefaultVelocity = new Vector3(0.1f, 0.1f, 0.1f);*/
+        m_impulseSource.m_DefaultVelocity = new Vector3(0.1f, 0.1f, 0.1f);
     }
 
     public virtual void OnSpawned()
