@@ -28,7 +28,7 @@ public class NPCScript : MonoBehaviour, IInteractable
     [SerializeField]
     private bool m_isQuestStarted;  // 시트에 따라 퀘스트가 존재하는 npc인 경우에는 내부처리로 조정 예정
     [SerializeField]
-    private bool m_isQuestEnded;  // 얘도
+    private bool m_isQuestEnded;    // 얘도
 
     public bool IsQuestStarted { get { return m_isQuestStarted; } }
     public bool IsQuestEnded { get { return m_isQuestEnded; } }
@@ -37,7 +37,6 @@ public class NPCScript : MonoBehaviour, IInteractable
     {
         get
         {
-
             Vector3 forward = transform.forward;                                // 오브젝트의 전방 벡터
             Vector3 toTarget = PlayManager.PlayerPos - transform.position;      // 플레이어 위치로의 벡터
 
@@ -50,7 +49,7 @@ public class NPCScript : MonoBehaviour, IInteractable
     public EInteractType InteractType { get { return EInteractType.NPC; } }
     public bool Interactions { get { return gameObject.CompareTag(ValueDefine.NPC_TAG); } }
     public float UIOffset { get { return m_npcInfo.UIOffset; } }        // 상호작용 UI 띄울 높이
-    public virtual string InfoTxt { get { return "대화"; } }    // 상호작용 UI에 띄울 말 => 말이 상황에 따라 바뀌는 경우 조건문 추가 
+    public virtual string InfoTxt { get { return "대화"; } }            // 상호작용 UI에 띄울 말 => 말이 상황에 따라 바뀌는 경우 조건문 추가 
 
     private void SetInfo()
     {
