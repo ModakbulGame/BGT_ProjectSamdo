@@ -148,6 +148,13 @@ public partial class MonsterScript
         ChangeState(EMonsterState.IDLE);
     }
 
+    private readonly float DespawnTime = 7.5f;
+    public void DespawnMonster()
+    {
+        m_spawnPoint.DespawnMonster(this);
+        DestroyMonster();
+    }
+
     public override void Awake()
     {
         base.Awake();

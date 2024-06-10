@@ -34,6 +34,11 @@ public class MonsterSpawnPoint : MonoBehaviour
         m_spawnedMonsters.Add(_monster);
     }
 
+    public void RemoveMonster(MonsterScript _monster)
+    {
+        m_spawnedMonsters.Remove(_monster);
+    }
+
 
     private void SetComps()
     {

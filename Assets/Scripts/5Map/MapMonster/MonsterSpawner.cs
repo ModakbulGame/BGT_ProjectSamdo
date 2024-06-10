@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static MalbersAnimations.AIWanderArea;
 
 public class MonsterSpawner : MonoBehaviour
 {
@@ -12,6 +11,8 @@ public class MonsterSpawner : MonoBehaviour
     private EMonsterName m_spawnMonster;
     [SerializeField]
     private int m_spawnNum = 1;
+    [SerializeField]
+    private float m_respawnTime = 10;
 
     public Vector3 SpawnPosition { get { return transform.position; } }
     public float RangeMultiplier { get { return m_point.RangeMultiplier; } }
@@ -35,5 +36,16 @@ public class MonsterSpawner : MonoBehaviour
             m_point.AddMonster(script);
             script.SetSpawnPoint(this);
         }
+    }
+
+    public void DespawnMonster(MonsterScript _monster)
+    {
+        m_point.RemoveMonster(_monster);
+        StartCoroutine(RespawnCoroutine());
+    }
+    private IEnumerator RespawnCoroutine()
+    {
+        yield return new WaitForSeconds(m_respawnTime);
+        SpawnMonster();
     }
 }

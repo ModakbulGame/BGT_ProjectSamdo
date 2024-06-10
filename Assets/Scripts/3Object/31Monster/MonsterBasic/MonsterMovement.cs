@@ -29,6 +29,17 @@ public abstract partial class MonsterScript
     {
         m_aiPath.destination = _destination;
         m_aiPath.SearchPath();
+        StartCoroutine(CheckDespawn());
+    }
+    private IEnumerator CheckDespawn()
+    {
+        float time = DespawnTime;
+        while (time > 0 && m_aiPath.reachedDestination)
+        {
+            time -= Time.deltaTime;
+            if(time <= 0) { DespawnMonster(); }
+            yield return null;
+        }
     }
 
     public override void StopMove()                  // 움직임 초기화
@@ -48,5 +59,18 @@ public abstract partial class MonsterScript
     public override void StartTracing()
     {
         IsTracing = true;
+    }
+
+    public void DetectCliff()
+    {
+        Ray ray = new Ray(Position + Vector3.up * ObjectHeight, transform.forward + Vector3.down);
+        if (!Physics.Raycast(ray, ObjectHeight * 10, ValueDefine.GROUND_LAYER))
+        {
+            RefindPath();
+        }
+    }
+    private void RefindPath()
+    {
+        SetDestination(Position - transform.forward);
     }
 }

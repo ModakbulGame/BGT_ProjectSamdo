@@ -57,6 +57,7 @@ public class MonsterIdleState : MonoBehaviour, IMonsterState
 
     public void Proceed()
     {
+        m_monster.DetectCliff();
         m_monster.FindTarget();
 
         if (m_monster.HasTarget)

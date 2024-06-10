@@ -40,7 +40,7 @@ public class UumScript : AnimatedAttackMonster
 
     public override void StartAttack()
     {
-        AttackIdx = 4/*Random.Range(0, 5)*/;
+        AttackIdx = Random.Range(0, 5);
         m_anim.SetInteger("ATTACK_IDX", AttackIdx);
         AttackObjects.Clear();
         base.StartAttack();
