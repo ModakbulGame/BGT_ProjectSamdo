@@ -34,10 +34,17 @@ public class PlayUIManager : MonoBehaviour
         return normalPos;
     }
 
+
+    [SerializeField]
+    private InteractInfoUI m_interactInfoUI;
+    public void ShowInteractInfo(string _info) { m_interactInfoUI.ShowInteractInfo(_info); }
+    public void HideInteractInfo() { m_interactInfoUI.HideInteractInfo(); }
+
+
     [SerializeField]
     private NPCDialogueScript m_dialogueUI;                 // NPC UI
     public bool IsDialogueUIOpend { get { return m_dialogueUI.IsDialogueOpened; } }
-    public void OpenDialogueUI(NPCScript _npc) { m_dialogueUI.OpenUI(_npc); }
+    public void OpenDialogueUI(QuestNPCScript _npc) { m_dialogueUI.OpenUI(_npc); }
     public void CloseDialogueUI() { m_dialogueUI.CloseUI(); }
     public void ShowNextDialogue() { m_dialogueUI.ShowAllDialogue(); }
 

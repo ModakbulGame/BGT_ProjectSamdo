@@ -21,7 +21,7 @@ public class NPCDialogueScript : MonoBehaviour
     public bool IsDialogueOpened { get; private set; }
     private bool ButtonClicked { get; set; }
 
-    private NPCScript CurNPC { get; set; }
+    private QuestNPCScript CurNPC { get; set; }
     private string CurNPCName { get; set; }
     private string[] CurDialogue { get; set; }
     private int DialogueCount { get; set; } = 0;
@@ -29,7 +29,7 @@ public class NPCDialogueScript : MonoBehaviour
     private bool m_isQuestStarted;
     private bool m_isQuestEnded;
 
-    public void SetNPC(NPCScript _npc)
+    public void SetNPC(QuestNPCScript _npc)
     {
         CurNPC = _npc;
 
@@ -50,7 +50,7 @@ public class NPCDialogueScript : MonoBehaviour
         DialogueCount = 0;
     }
 
-    public void OpenUI(NPCScript _npc)
+    public void OpenUI(QuestNPCScript _npc)
     {
         SetNPC(_npc);
         OpenUI();
