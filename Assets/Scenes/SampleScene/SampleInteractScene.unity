@@ -2381,7 +2381,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 791657512}
-  - component: {fileID: 791657513}
+  - component: {fileID: 791657516}
   - component: {fileID: 791657514}
   - component: {fileID: 791657511}
   - component: {fileID: 791657515}
@@ -2436,19 +2436,6 @@ Transform:
   - {fileID: 1346017024}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 207.223, z: 0}
---- !u!114 &791657513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 791657509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e94bfe3252354e418383b0ad2bd3018, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_canInteractDist: 2
 --- !u!114 &791657514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2461,15 +2448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6976a51a5a32034cb289b48f5778dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_npcInfo:
-    ObjectName: 
-    AttackSpeed: 1
-    MoveSpeed: 5
-    NPCID: 0
-    UIOffset: 5
   m_scriptable: {fileID: 11400000, guid: ddb1cea1ee6dd0349b2317f165549910, type: 2}
-  m_isQuestStarted: 1
-  m_isQuestEnded: 0
 --- !u!136 &791657515
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2493,6 +2472,21 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1.25, z: 0}
+--- !u!114 &791657516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 791657509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770380af173ad874aab996950b6593ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_scriptable: {fileID: 11400000, guid: ddb1cea1ee6dd0349b2317f165549910, type: 2}
+  m_isQuestStarted: 0
+  m_isQuestEnded: 0
 --- !u!1 &849114869
 GameObject:
   m_ObjectHideFlags: 0
@@ -3453,7 +3447,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1249821210}
-  - component: {fileID: 1249821209}
+  - component: {fileID: 1249821213}
   - component: {fileID: 1249821211}
   - component: {fileID: 1249821207}
   - component: {fileID: 1249821212}
@@ -3491,19 +3485,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &1249821209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1249821206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e94bfe3252354e418383b0ad2bd3018, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_canInteractDist: 2
 --- !u!4 &1249821210
 Transform:
   m_ObjectHideFlags: 0
@@ -3533,15 +3514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6976a51a5a32034cb289b48f5778dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_npcInfo:
-    ObjectName: 
-    AttackSpeed: 1
-    MoveSpeed: 5
-    NPCID: 0
-    UIOffset: 5
   m_scriptable: {fileID: 11400000, guid: 0a95271d73e2ed344a9fa22035dd853f, type: 2}
-  m_isQuestStarted: 0
-  m_isQuestEnded: 1
 --- !u!136 &1249821212
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3565,6 +3538,21 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1.25, z: 0}
+--- !u!114 &1249821213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249821206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770380af173ad874aab996950b6593ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_scriptable: {fileID: 11400000, guid: 0a95271d73e2ed344a9fa22035dd853f, type: 2}
+  m_isQuestStarted: 0
+  m_isQuestEnded: 0
 --- !u!224 &1255436305 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6349988900320924271, guid: acb1c722dec43fa4babc20e7da80e675,
@@ -4346,7 +4334,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1422106740}
-  - component: {fileID: 1422106739}
+  - component: {fileID: 1422106741}
   - component: {fileID: 1422106738}
   - component: {fileID: 1422106737}
   - component: {fileID: 1422106736}
@@ -4419,28 +4407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6976a51a5a32034cb289b48f5778dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_npcInfo:
-    ObjectName: 
-    AttackSpeed: 1
-    MoveSpeed: 5
-    NPCID: 0
-    UIOffset: 5
   m_scriptable: {fileID: 11400000, guid: 16412317845ae2d4d8db1d3b337a2508, type: 2}
-  m_isQuestStarted: 0
-  m_isQuestEnded: 0
---- !u!114 &1422106739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1422106735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e94bfe3252354e418383b0ad2bd3018, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_canInteractDist: 2
 --- !u!4 &1422106740
 Transform:
   m_ObjectHideFlags: 0
@@ -4458,6 +4425,21 @@ Transform:
   - {fileID: 1737599825}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 103.183, z: 0}
+--- !u!114 &1422106741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422106735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770380af173ad874aab996950b6593ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_scriptable: {fileID: 11400000, guid: 16412317845ae2d4d8db1d3b337a2508, type: 2}
+  m_isQuestStarted: 0
+  m_isQuestEnded: 0
 --- !u!114 &1461575504 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1651204260255995646, guid: b29b36f50235e9e41a36baba88ef0140,
@@ -7776,12 +7758,12 @@ PrefabInstance:
     - target: {fileID: 5779788400399406593, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000017193397
+      value: 0.000000017193397
       objectReference: {fileID: 0}
     - target: {fileID: 5779788400399406593, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 6.683474e-10
+      value: -6.683474e-10
       objectReference: {fileID: 0}
     - target: {fileID: 5812277014525792941, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}

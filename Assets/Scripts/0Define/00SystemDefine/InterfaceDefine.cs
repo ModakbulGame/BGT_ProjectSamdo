@@ -25,7 +25,6 @@ public interface IHidable               // 빛 비춰서 변화가 생길 수 있는 오브젝�
 public interface IInteractable          // 상호작용이 가능한 오브젝트에 필수 부착
 {
     public EInteractType InteractType { get; }
-    public float UIOffset { get; }          // 상호작용 토글 UI 높이
     public string InfoTxt { get; }          // 상호작용 정보 텍스트
     public void StartInteract();            // 상호작용 시작
     public void StopInteract();             // 상호작용 중단

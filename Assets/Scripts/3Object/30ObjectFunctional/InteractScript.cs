@@ -5,28 +5,27 @@ using UnityEngine;
 [RequireComponent(typeof(IInteractable))]
 public class InteractScript : MonoBehaviour                 // 상호작용이 가능한 오브젝트에 넣는 스크립트
 {
+    private Vector2 Position2 { get { return new(transform.position.x, transform.position.z); } }
+
     [SerializeField]
     private float m_canInteractDist = 2.5f;                                             // 상호작용 가능 거리
     private float m_canInteractAngle = 120f;
 
     private IInteractable m_interactable;                                               // 오브젝트 내 IInteractable을 상속한 오브젝트
 
-    private InteractToggleUI m_interactToggleUI;                                        // 상호작용 조작 띄우는 UI
-     private NPCScript m_npc;
+    private float InteractAngle { get { if (m_interactable.InteractType == EInteractType.NPC) return m_canInteractAngle / 2; return m_canInteractAngle; } }
+    public bool CanInteract { get { return DistToPlayer <= m_canInteractDist && AngleToPlayer <= InteractAngle; } }  // 상호작용 가능한지
 
-    public bool CanInteract { get { return DistToPlayer <= m_canInteractDist; } }  // 상호작용 가능한지
-    public bool CanInteractNPC // NPC인 경우에만 좌우 60도로 상호작용 가능
-    { 
-        get 
-        {
-            if (m_npc != null)
-                return DistToPlayer <= m_canInteractDist && m_npc.InteractableRotation;
-            else
-                return CanInteract;
-        } 
-    }
 
     public float DistToPlayer { get { return PlayManager.GetDistToPlayer(transform.position); } }           // 플레이어와의 거리
+    public float AngleToPlayer { get {
+            Vector2 dir = (Position2 - PlayManager.PlayerPos2).normalized;
+            float rot = FunctionDefine.VecToDeg(dir);
+            Vector2 forward = new(transform.forward.x, transform.forward.z);
+            float fRot = FunctionDefine.VecToDeg(forward);
+            float gap = rot - fRot;
+            if (gap <= -360) { gap += 360; } else if(gap >= 360) { gap -= 360; }
+            return gap; } }
     public Transform InteractTransform { get { return transform; } }                                        // 상호작용 대상의 위치
 
 
@@ -40,11 +39,11 @@ public class InteractScript : MonoBehaviour                 // 상호작용이 가능한
     }
     private void ShowToggleUI()                 // 조작 UI 띄우기
     {
-        m_interactToggleUI.gameObject.SetActive(true);
+        PlayManager.ShowInteractInfo(m_interactable.InfoTxt);
     }
     private void HideToggleUI()                 // 조작 UI 숨기기
     {
-        m_interactToggleUI.gameObject.SetActive(false);
+        PlayManager.HideInteractInfo();
     }
 
 
@@ -59,21 +58,8 @@ public class InteractScript : MonoBehaviour                 // 상호작용이 가능한
         ShowToggleUI();
     }
 
-
-    private void SetToggleUI()
-    {
-        m_interactToggleUI = GetComponentInChildren<InteractToggleUI>();
-        m_interactToggleUI.SetInfoTxt(m_interactable.InfoTxt);
-        HideToggleUI();
-    }
-
     private void Awake()
     {
         m_interactable = GetComponent<IInteractable>();
-        m_npc = GetComponent<NPCScript>();
-    }
-    private void Start()
-    {
-        SetToggleUI();
     }
 }
