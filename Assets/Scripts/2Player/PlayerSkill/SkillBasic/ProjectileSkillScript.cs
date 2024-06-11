@@ -41,7 +41,10 @@ public class ProjectileSkillScript : PlayerSkillScript
     public override void Start()
     {
         SphereCollider sphereCollider = GetComponent<SphereCollider>();
-        sphereCollider.radius = HitRadius;
+        if(sphereCollider!= null)
+        {
+            sphereCollider.radius = HitRadius;
+        }
         StartPosition = transform.position;
     }
 

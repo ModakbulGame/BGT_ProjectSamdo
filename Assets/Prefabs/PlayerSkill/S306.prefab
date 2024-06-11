@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8193439379522678243}
-  - component: {fileID: 6267469357287277344}
-  - component: {fileID: 6893389884982629964}
-  - component: {fileID: 2654035276295106290}
+  - component: {fileID: 3038568079256850973}
+  - component: {fileID: 2872401937522483283}
   m_Layer: 1
   m_Name: S306
   m_TagString: PlayerSkill
@@ -28,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 6785288005657645411}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -36,7 +35,7 @@ Transform:
   - {fileID: 4784306386070011153}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6267469357287277344
+--- !u!114 &3038568079256850973
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,7 +56,7 @@ MonoBehaviour:
   - {fileID: 7945703449345095873}
   - {fileID: 4476713345637350607}
   angleBetweenObjects: 60
---- !u!54 &6893389884982629964
+--- !u!54 &2872401937522483283
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -84,27 +83,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &2654035276295106290
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6785288005657645411}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &3750374934999613995
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -166,7 +144,17 @@ PrefabInstance:
     - target: {fileID: 6505675140739709674, guid: 2a15333e5c2bb134bb5458250f37910c,
         type: 3}
       propertyPath: m_Name
-      value: A2Projectile_S
+      value: S306_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6505675140739709674, guid: 2a15333e5c2bb134bb5458250f37910c,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 8849387356299311517, guid: 2a15333e5c2bb134bb5458250f37910c,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -246,7 +234,17 @@ PrefabInstance:
     - target: {fileID: 6505675140739709674, guid: 2a15333e5c2bb134bb5458250f37910c,
         type: 3}
       propertyPath: m_Name
-      value: A2Projectile_S (1)
+      value: S306_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6505675140739709674, guid: 2a15333e5c2bb134bb5458250f37910c,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 8849387356299311517, guid: 2a15333e5c2bb134bb5458250f37910c,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
