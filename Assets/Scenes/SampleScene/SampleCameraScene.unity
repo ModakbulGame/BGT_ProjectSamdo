@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 83838336}
   - component: {fileID: 83838335}
-  - component: {fileID: 83838337}
   m_Layer: 0
   m_Name: SwitchCollider
   m_TagString: Camera
@@ -178,21 +177,6 @@ Transform:
   - {fileID: 1980210204}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &83838337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 83838334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a97d54f9f79438a43b3eb4823418ceda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_changeCamera: {fileID: 1980210205}
-  m_changeCameras:
-  - {fileID: 1980210205}
 --- !u!1001 &244777833
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1204,7 +1188,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 818342521067284792}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 818342521067284793}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 319d2fe34a804e245819465c9505ea59, type: 3}
@@ -2210,7 +2194,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_cameraChange
       value: 
-      objectReference: {fileID: 83838337}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3509,17 +3493,17 @@ PrefabInstance:
     - target: {fileID: 4537957579909852597, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.1115059
+      value: 0.111505926
       objectReference: {fileID: 0}
     - target: {fileID: 4537957579909852597, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000016581163
+      value: -0.000000018159184
       objectReference: {fileID: 0}
     - target: {fileID: 4537957579909852597, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000018604999
+      value: 0.0000000020375635
       objectReference: {fileID: 0}
     - target: {fileID: 4556916552329128296, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
@@ -3600,7 +3584,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_cameraChange
       value: 
-      objectReference: {fileID: 83838337}
+      objectReference: {fileID: 0}
     - target: {fileID: 4743060573065822952, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -5219,10 +5203,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1894118606}
-    - targetCorrespondingSourceObject: {fileID: 1830335194102907244, guid: b29b36f50235e9e41a36baba88ef0140,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 818342521067284796}
     - targetCorrespondingSourceObject: {fileID: 7679146343510668260, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       insertIndex: -1
@@ -5268,12 +5248,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1114311270}
   m_SourcePrefab: {fileID: 100100000, guid: b29b36f50235e9e41a36baba88ef0140, type: 3}
---- !u!1 &818342521067284793 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1830335194102907244, guid: b29b36f50235e9e41a36baba88ef0140,
-    type: 3}
-  m_PrefabInstance: {fileID: 818342521067284792}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &818342521067284794 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7679146343510668260, guid: b29b36f50235e9e41a36baba88ef0140,
@@ -5297,29 +5271,6 @@ MonoBehaviour:
   m_AmplitudeGain: 0
   m_FrequencyGain: 0
   mNoiseOffsets: {x: 0, y: 0, z: 0}
---- !u!114 &818342521067284796
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 818342521067284793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ApplyAfter: 2
-  m_ChannelMask: 1
-  m_Gain: 1
-  m_Use2DDistance: 0
-  m_UseCameraSpace: 1
-  m_ReactionSettings:
-    m_SecondaryNoise: {fileID: 0}
-    m_AmplitudeGain: 1
-    m_FrequencyGain: 1
-    m_Duration: 1
-    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

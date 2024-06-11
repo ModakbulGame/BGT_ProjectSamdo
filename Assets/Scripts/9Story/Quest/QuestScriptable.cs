@@ -10,6 +10,7 @@ public class QuestScriptable : ScriptableObject
     public string NextQuest;          // 다음 퀘스트 ID
     public EQuestType Type;           // 퀘스트 종류
     public string Description;        // 퀘스트 설명
+    public float TimeLimit;           // 제한 시간
    
     public string QuestObject;        // 퀘스트 시 필요한 오브젝트
     public int QuestObjectCount;      // 퀘스트 시 필요한 오브젝트 수
