@@ -34,6 +34,7 @@ public class OasisRestUIScript : MonoBehaviour, IOasisUI
     public void CloseUI()
     {
         m_parent.FunctionDone();
+        m_parent.CloseUI();
         gameObject.SetActive(false);
     }
 

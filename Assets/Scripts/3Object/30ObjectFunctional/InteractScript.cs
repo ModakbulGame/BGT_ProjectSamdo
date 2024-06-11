@@ -14,7 +14,8 @@ public class InteractScript : MonoBehaviour                 // 상호작용이 가능한
     private IInteractable m_interactable;                                               // 오브젝트 내 IInteractable을 상속한 오브젝트
 
     private float InteractAngle { get { if (m_interactable.InteractType == EInteractType.NPC) return m_canInteractAngle / 2; return m_canInteractAngle; } }
-    public bool CanInteract { get { return DistToPlayer <= m_canInteractDist && AngleToPlayer <= InteractAngle; } }  // 상호작용 가능한지
+    public bool CanInteract { get { return DistToPlayer <= m_canInteractDist &&
+                (m_interactable.InteractType != EInteractType.NPC || AngleToPlayer <= InteractAngle); } }  // 상호작용 가능한지
 
 
     public float DistToPlayer { get { return PlayManager.GetDistToPlayer(transform.position); } }           // 플레이어와의 거리
