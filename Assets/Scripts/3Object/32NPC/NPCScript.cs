@@ -25,13 +25,8 @@ public class NPCScript : MonoBehaviour, IInteractable
     public string NPCName { get; private set; }
     public string[] NPCDialogues { get; private set; }
 
-    [SerializeField]
-    private bool m_isQuestStarted;  // 시트에 따라 퀘스트가 존재하는 npc인 경우에는 내부처리로 조정 예정
-    [SerializeField]
-    private bool m_isQuestEnded;    // 얘도
-
-    public bool IsQuestStarted { get { return m_isQuestStarted; } }
-    public bool IsQuestEnded { get { return m_isQuestEnded; } }
+    public bool IsQuestStarted { get; set; }
+    public bool IsQuestEnded { get; set; }
 
     public bool InteractableRotation
     {
@@ -69,5 +64,11 @@ public class NPCScript : MonoBehaviour, IInteractable
     {
         PlayManager.StopPlayerInteract();
         GameManager.SetControlMode(EControlMode.THIRD_PERSON);
+    }
+
+    private void Start()
+    {
+        PlayManager.SetQuestStartObjectStatus(NPCName);
+        PlayManager.SetQuestEndObjectStatus(NPCName);
     }
 }

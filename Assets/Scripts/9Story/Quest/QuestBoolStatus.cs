@@ -4,86 +4,40 @@ using UnityEngine;
 
 public class QuestBoolStatus : MonoBehaviour
 {
-    private List<QuestScriptable> m_questList = PlayManager.QuestList;
-
-    // 현재 퀘스트 상태 반환
-    public bool RequestAvailableQuest(int _id)
+    public void SetQuestStartObjectStatus(string _start)
     {
-        for (int i = 0; i < m_questList.Count; i++)
+        for(int i = 0; i < PlayManager.QuestList.Count; i++)
         {
-            if (m_questList[i].Id.Equals(_id) && m_questList[i].Status == EQuestStatus.AVAILABLE)
+            if (PlayManager.QuestList[i].Status == EQuestStatus.ACCEPTED && PlayManager.CurQuestList[i].StartObject == _start)
             {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public bool RequestAcceptedQuest(int _id)
-    {
-        for (int i = 0; i < m_questList.Count; i++)
-        {
-            if (m_questList[i].Id.Equals(_id) && m_questList[i].Status == EQuestStatus.ACCEPTED)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public bool RequestCompleteQuest(int _id)
-    {
-        for (int i = 0; i < m_questList.Count; i++)
-        {
-            if (m_questList[i].Id.Equals(_id) && m_questList[i].Status == EQuestStatus.COMPLETE)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public bool CheckAvailableQuests(QuestObject _npcQuest)
-    {
-        for (int i = 0; i < m_questList.Count; i++)
-        {
-            for (int j = 0; j < _npcQuest.availableQuestIDs.Count; j++)
-            {
-                if (m_questList[i].Id.Equals(_npcQuest.availableQuestIDs[j]) && m_questList[i].Status == EQuestStatus.AVAILABLE)
+                for(int j = 0; j < PlayManager.NPCs.Length; j++)
                 {
-                    return true;
+                    PlayManager.NPCs[j].IsQuestStarted = true;
                 }
             }
         }
-        return false;
     }
 
-    public bool CheckAcceptedQuests(QuestObject _npcQuest)
+    public void SetQuestEndObjectStatus(string _end)
     {
-        for (int i = 0; i < m_questList.Count; i++)
+        for (int i = 0; i < PlayManager.QuestList.Count; i++)
         {
-            for (int j = 0; j < _npcQuest.availableQuestIDs.Count; j++)
+            if (PlayManager.QuestList[i].Status == EQuestStatus.ACCEPTED && PlayManager.CurQuestList[i].EndObject == _end)
             {
-                if (m_questList[i].Id.Equals(_npcQuest.availableQuestIDs[j]) && m_questList[i].Status == EQuestStatus.ACCEPTED)
+                for (int j = 0; j < PlayManager.NPCs.Length; j++)
                 {
-                    return true;
+                    PlayManager.NPCs[j].IsQuestEnded = true;
                 }
             }
         }
-        return false;
     }
 
-    public bool CheckCompletedQuests(QuestObject _npcQuest)
+    public bool CheckRequiredQuestObject(string _name)
     {
-        for (int i = 0; i < m_questList.Count; i++)
+        for (int i = 0; i < PlayManager.CurQuestList.Count; i++)
         {
-            for (int j = 0; j < _npcQuest.availableQuestIDs.Count; j++)
-            {
-                if (m_questList[i].Id.Equals(_npcQuest.availableQuestIDs[j]) && m_questList[i].Status == EQuestStatus.COMPLETE)
-                {
-                    return true;
-                }
-            }
+            if (PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED && PlayManager.CurQuestList[i].QuestObject == _name)
+                return true;
         }
         return false;
     }

@@ -53,6 +53,14 @@ public class QuestStatusScript : MonoBehaviour
             {
                 PlayManager.QuestList[i].Status = EQuestStatus.ACCEPTED;
                 PlayManager.CurQuestList.Add(PlayManager.QuestList[i]);
+
+                //for (int j = 0; j < PlayManager.NPCs.Length; j++)
+                //{
+                //    if (PlayManager.GetQuestStartObjectStatus(PlayManager.NPCs[j].NPCName))
+                //        PlayManager.NPCs[j].IsQuestStarted = true;
+                //    if (PlayManager.GetQuestEndObjectStatus(PlayManager.NPCs[j].NPCName))
+                //        PlayManager.NPCs[j].IsQuestEnded = true;
+                //}
             }
         }
     }
@@ -89,7 +97,7 @@ public class QuestStatusScript : MonoBehaviour
     }
 
     // 퀘스트 수행(시간 제한)
-    public void DoTimeAttackQuest(string _id)
+    public void DoTimeLimitQuest(string _id)
     {
 
     }

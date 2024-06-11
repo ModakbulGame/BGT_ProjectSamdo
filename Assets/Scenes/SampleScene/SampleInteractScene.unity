@@ -2468,8 +2468,6 @@ MonoBehaviour:
     NPCID: 0
     UIOffset: 5
   m_scriptable: {fileID: 11400000, guid: ddb1cea1ee6dd0349b2317f165549910, type: 2}
-  m_isQuestStarted: 1
-  m_isQuestEnded: 0
 --- !u!136 &791657515
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3540,8 +3538,6 @@ MonoBehaviour:
     NPCID: 0
     UIOffset: 5
   m_scriptable: {fileID: 11400000, guid: 0a95271d73e2ed344a9fa22035dd853f, type: 2}
-  m_isQuestStarted: 0
-  m_isQuestEnded: 1
 --- !u!136 &1249821212
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4426,8 +4422,6 @@ MonoBehaviour:
     NPCID: 0
     UIOffset: 5
   m_scriptable: {fileID: 11400000, guid: 16412317845ae2d4d8db1d3b337a2508, type: 2}
-  m_isQuestStarted: 0
-  m_isQuestEnded: 0
 --- !u!114 &1422106739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6331,6 +6325,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489907280240462172, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
+      propertyPath: NPCs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 489907280240462172, guid: b29b36f50235e9e41a36baba88ef0140,
+        type: 3}
+      propertyPath: NPCs.Array.data[0]
+      value: 
+      objectReference: {fileID: 791657514}
+    - target: {fileID: 489907280240462172, guid: b29b36f50235e9e41a36baba88ef0140,
+        type: 3}
+      propertyPath: NPCs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1249821211}
+    - target: {fileID: 489907280240462172, guid: b29b36f50235e9e41a36baba88ef0140,
+        type: 3}
+      propertyPath: NPCs.Array.data[2]
+      value: 
+      objectReference: {fileID: 1422106738}
+    - target: {fileID: 489907280240462172, guid: b29b36f50235e9e41a36baba88ef0140,
+        type: 3}
       propertyPath: MapOasis.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -6642,7 +6656,7 @@ PrefabInstance:
     - target: {fileID: 1626691497986503837, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_questList.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1626691497986503837, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
@@ -6666,6 +6680,12 @@ PrefabInstance:
       propertyPath: m_questList.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: ad22694329e765d4f9586caa098a0493,
+        type: 2}
+    - target: {fileID: 1626691497986503837, guid: b29b36f50235e9e41a36baba88ef0140,
+        type: 3}
+      propertyPath: m_questList.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1513738803ade414fa9ddb0acc096833,
         type: 2}
     - target: {fileID: 1626691497986503837, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
@@ -7776,12 +7796,12 @@ PrefabInstance:
     - target: {fileID: 5779788400399406593, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000017193397
+      value: 0.000000017193397
       objectReference: {fileID: 0}
     - target: {fileID: 5779788400399406593, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 6.683474e-10
+      value: -6.683474e-10
       objectReference: {fileID: 0}
     - target: {fileID: 5812277014525792941, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}

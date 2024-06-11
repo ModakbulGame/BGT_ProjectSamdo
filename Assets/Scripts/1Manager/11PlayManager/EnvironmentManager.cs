@@ -20,6 +20,7 @@ public class EnvironmentManager : MonoBehaviour
     public float MapHeight { get { return MapRT.z - MapLB.z; } }
 
     public GameObject[] MapOasis;
+    public NPCScript[] NPCs;
 
 
     public void setManager()

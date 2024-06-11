@@ -9,7 +9,6 @@ public class TimerScript : MonoBehaviour
     private TextMeshProUGUI[] m_timerTxt;
     private TextMeshProUGUI m_gameOverTxt;  // 성공 시 완료, 실패 시 실패 텍스트
 
-    [SerializeField]
     private float time = 60;   // 임시로 1분
     private int min, sec;
 
@@ -28,8 +27,8 @@ public class TimerScript : MonoBehaviour
 
         if (min <= 0 && sec <= 0)
         {
-            m_timerTxt[0].text = 0.ToString();
-            m_timerTxt[1].text = 0.ToString();
+            m_timerTxt[0].text = 00.ToString();
+            m_timerTxt[1].text = 00.ToString();
         }
 
         else

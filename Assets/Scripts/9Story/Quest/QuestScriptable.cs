@@ -62,6 +62,7 @@ public class QuestScriptable : ScriptableObject
         EndObject = _data[(int)EQuestAttribute.ENDOBJECT];
         int.TryParse(_data[(int)EQuestAttribute.OBJECTNUM], out QuestObjectCount);
         int.TryParse(_data[(int)EQuestAttribute.REWARDNUM], out RewardNum);
+        float.TryParse(_data[(int)EQuestAttribute.TIMELIMIT], out TimeLimit);
 
         Status = EQuestStatus.AVAILABLE;
         CurQuestObjectCount = 0;

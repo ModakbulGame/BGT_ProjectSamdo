@@ -40,9 +40,6 @@ public class PlayManager : MonoBehaviour
     
     public static void TempGetBuff(float _amount, float _time) { Player.GetAdj(new(EAdjType.MAX_HP, _amount, _time)); }
     
-    // 다른 오브젝트  ?   몬스터나 NPC 정보가 필요할수도 있어서 추가했음...
-    private static ObjectScript Object { get; set; }
-
 
     // 카메라
     [SerializeField]
@@ -100,6 +97,10 @@ public class PlayManager : MonoBehaviour
     public static void GiveUpQuest(string _id) { StoryManager.GiveUpQuest(_id); }
     public static void ClearQuest(string _id) { StoryManager.ClearQuest(_id); }
     public static void CompleteQuest(string _id) { StoryManager.CompleteQuest(_id); }
+    public static void DoObjectQuest(string _obj, int _amount) { StoryManager.DoObjectQuest(_obj, _amount); }
+    public static void SetQuestStartObjectStatus(string _start) { StoryManager.SetQuestStartObjectStatus(_start); }
+    public static void SetQuestEndObjectStatus(string _end) { StoryManager.SetQuestEndObjectStatus(_end); }
+    public static bool CheckRequiredQuestObject(string _name) { return StoryManager.CheckRequiredQuestObject(_name); }
 
 
     // 환경
@@ -111,6 +112,7 @@ public class PlayManager : MonoBehaviour
     public static float MapHeight { get { return EnvironmentManager.MapHeight; } }
 
     public static GameObject[] MapOasis { get { return EnvironmentManager.MapOasis; } }
+    public static NPCScript[] NPCs { get { return EnvironmentManager.NPCs; } }
 
 
     // 업그레이드
