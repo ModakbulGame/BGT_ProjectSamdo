@@ -71,6 +71,29 @@ public class QuestStatusScript : MonoBehaviour
         }
     }
 
+    // 퀘스트 수행(사냥, 수집)
+    public void DoObjectQuest(string _obj, int _amount)
+    {
+        for (int i = 0; i < PlayManager.CurQuestList.Count; i++)
+        {
+            if (PlayManager.CurQuestList[i].QuestObject == _obj && PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED)
+            {
+                PlayManager.CurQuestList[i].CurQuestObjectCount += _amount;
+
+                if (PlayManager.CurQuestList[i].CurQuestObjectCount >= PlayManager.CurQuestList[i].QuestObjectCount)
+                {
+                    PlayManager.CurQuestList[i].Status = EQuestStatus.COMPLETE;
+                }
+            }
+        }
+    }
+
+    // 퀘스트 수행(시간 제한)
+    public void DoTimeAttackQuest(string _id)
+    {
+
+    }
+
     // 퀘스트 클리어
     public void ClearQuest(string _id)
     {
@@ -80,7 +103,7 @@ public class QuestStatusScript : MonoBehaviour
             {
                 Debug.Log("퀘스트 클리어!");
                 PlayManager.CurQuestList[i].Status = EQuestStatus.COMPLETE;
-                
+
                 PlayManager.ClearImg[i % 4].gameObject.SetActive(true);
                 PlayManager.ShowNPCQuestUI();
             }
@@ -98,10 +121,10 @@ public class QuestStatusScript : MonoBehaviour
 
                 PlayManager.CurQuestList[i].Status = EQuestStatus.DONE;
                 // 보상
-                switch(PlayManager.CurQuestList[i].Reward) 
+                switch (PlayManager.CurQuestList[i].Reward)
                 {
-                    case ERewardName.SOUL: 
-                        PlayManager.AddSoul(rewardNum); 
+                    case ERewardName.SOUL:
+                        PlayManager.AddSoul(rewardNum);
                         break;
                     case ERewardName.STAT:
                         PlayManager.AddStatPoint(rewardNum);
@@ -140,24 +163,5 @@ public class QuestStatusScript : MonoBehaviour
                 }
             }
         }
-    }
-
-    // 퀘스트 수행
-    public void AddQuestItem(string _questobj, int _amount)
-    {
-        /*        for(int i = 0; i < PlayManager.CurQuestList.Count; i++)
-                {
-                    if(PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED)
-                    {
-                        if (PlayManager.CurQuestList[i].QuestObject == _questobj)
-                        {
-                            PlayManager.CurQuestList[i].CurQuestObjectCount += _amount;
-                        }
-                        if(PlayManager.CurQuestList[i].CurQuestObjectCount >= PlayManager.CurQuestList[i].QuestObjectCount)
-                        {
-                            PlayManager.CurQuestList[i].Status = EQuestStatus.COMPLETE;
-                        }
-                    }
-                }*/
     }
 }

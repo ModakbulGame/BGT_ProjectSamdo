@@ -29,6 +29,7 @@ public enum EQuestAttribute
     OBJECTNUM,
     REWARD,
     REWARDNUM,
+    TIMELIMIT,
     STARTOBJECT,
     ENDOBJECT,
     LAST
