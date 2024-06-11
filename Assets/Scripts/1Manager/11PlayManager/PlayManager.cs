@@ -14,6 +14,18 @@ public class PlayManager : MonoBehaviour
 
     // 메인 함수
     public static bool IsPlaying { get { return Inst != null && Inst.gameObject != null; } }                // 플레이 중인지
+    public static void RestAtPoint(OasisNPC _oasis)
+    {
+        StartRestUI();
+        Player.RestAnimation();
+        Inst.StartCoroutine(Inst.RestDoneCoroutine(_oasis));
+    }
+    private IEnumerator RestDoneCoroutine(OasisNPC _oasis)
+    {
+        yield return new WaitForSeconds(3);
+        EndRestUI();
+        TeleportPlayer(_oasis.RespawnPoint);
+    }
 
 
     // 플레이어
@@ -112,7 +124,7 @@ public class PlayManager : MonoBehaviour
     public static float MapHeight { get { return EnvironmentManager.MapHeight; } }
 
     public static GameObject[] MapOasis { get { return EnvironmentManager.MapOasis; } }
-    public static NPCScript[] NPCs { get { return EnvironmentManager.NPCs; } }
+    public static QuestNPCScript[] NPCs { get { return EnvironmentManager.NPCs; } }
 
 
     // 업그레이드
@@ -165,6 +177,8 @@ public class PlayManager : MonoBehaviour
     public static void HideSkillAim() { PlayUIManager.HideSkillAim(); }
     public static void DrawThrowLine(Vector3 _force, float _mass, Vector3 _start) { PlayUIManager.DrawThrowLine(_force, _mass, _start); }   // 던지기 궤적 그리기
     public static void HideThrowLine() { PlayUIManager.HideThrowLine(); }                                                                   // 던지기 궤적 off
+    private static void StartRestUI() { PlayUIManager.StartRest(); }
+    private static void EndRestUI() { PlayUIManager.EndRest(); }
     public static void ShowBlindMark() { PlayUIManager.ShowBlindMark(); }
     public static void HideBlindMark() { PlayUIManager.HideBlindMark(); }
 

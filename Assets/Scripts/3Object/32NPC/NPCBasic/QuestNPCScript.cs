@@ -12,6 +12,9 @@ public class QuestNPCScript : NPCScript
     public bool IsQuestStarted { get { return m_isQuestStarted; } }
     public bool IsQuestEnded { get { return m_isQuestEnded; } }
 
+    public void StartQuest() { m_isQuestStarted = true; }
+    public void EndQuest() { m_isQuestEnded = false; }
+
     public override void StartInteract()
     {
         PlayManager.OpenNPCUI(this);

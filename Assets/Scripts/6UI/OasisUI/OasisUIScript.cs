@@ -7,11 +7,10 @@ using UnityEngine.UI;
 
 public enum EOasisFunctionName
 {
-    CHECKPOINT,
+    REST,
     TRANSPORT,
     TRADE,
     RESET,
-    REST,
     LAST
 }
 
@@ -23,38 +22,35 @@ public interface IOasisUI
 
 public class OasisUIScript : MonoBehaviour
 {
-    private OasisNPC m_npc;
-    public void SetNPC(OasisNPC _npc) 
-    { 
-        m_npc = _npc; 
-    }
+    private OasisNPC m_oasis;
+    public void SetNPC(OasisNPC _oasis) { m_oasis = _oasis; }
+
+    public OasisNPC Oasis { get { return m_oasis; } }
 
     [SerializeField]
-    private GameObject[] m_uiPrefabs = new GameObject[(int)EOasisFunctionName.LAST];
+    private GameObject[] m_uis = new GameObject[(int)EOasisFunctionName.LAST];
 
 
     private Button[] m_btns;
 
-    private bool Opened { get; set; }                       // 열린 적 있는지 (처음 열리는지 확인용)
+    private bool IsCompsSet { get; set; }                       // 열린 적 있는지 (처음 열리는지 확인용)
 
     private bool ButtonClicked { get; set; }
 
-    public void OpenUI()
-    {
-        gameObject.SetActive(true);
-        if (!Opened) { SetComps(); }
 
-        ButtonClicked = false;
-    }
     public void OpenUI(OasisNPC _npc)
     {
+        gameObject.SetActive(true);
+        if (!IsCompsSet) { SetComps(); }
+
+        ButtonClicked = false;
+
         SetNPC(_npc);
-        OpenUI();
     }
 
     public void CloseUI()                       // 닫기
     {
-        m_npc.StopInteract();
+        m_oasis.StopInteract();
         gameObject.SetActive(false);
     } 
 
@@ -63,7 +59,7 @@ public class OasisUIScript : MonoBehaviour
     {
         if(ButtonClicked == true) { return; }
 
-        GameObject ui = Instantiate(m_uiPrefabs[(int)_function], GameManager.GetCanvasTransform(ECanvasType.CONTROL));
+        GameObject ui = m_uis[(int)_function];
         ui.GetComponent<IOasisUI>().OpenUI(this);
         ButtonClicked = true;
     }
@@ -77,7 +73,7 @@ public class OasisUIScript : MonoBehaviour
     {
         m_btns = GetComponentsInChildren<Button>();
         SetBtns();
-        Opened = true;
+        IsCompsSet = true;
     }
     private void SetBtns()
     {
@@ -87,15 +83,5 @@ public class OasisUIScript : MonoBehaviour
             m_btns[i].onClick.AddListener(delegate { ClickButton(function); });
         }
         m_btns[(int)EOasisFunctionName.LAST].onClick.AddListener(CloseUI);
-    }
-
-    private void Awake()
-    {
-
-    }
-
-    private void Start()
-    {
-        if (!Opened) { SetComps(); OpenUI(); }
     }
 }

@@ -139,6 +139,11 @@ public partial class PlayerController : ObjectScript
         get { return m_cooltimes[(int)ECooltimeName.GUARD]; }
         private set { m_cooltimes[(int)ECooltimeName.GUARD] = value; }
     }
+    public float ThrowCooltime
+    {
+        get { return m_cooltimes[(int)ECooltimeName.THROW]; }
+        private set { m_cooltimes[(int)ECooltimeName.THROW] = value; }
+    }
     public float HealCooltime
     {
         get { return m_cooltimes[(int)ECooltimeName.HEAL]; }

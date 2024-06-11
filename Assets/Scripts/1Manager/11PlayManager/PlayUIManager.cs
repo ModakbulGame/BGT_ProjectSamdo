@@ -145,6 +145,13 @@ public class PlayUIManager : MonoBehaviour
     public void HideThrowLine() { m_throwLineUI.HideThrowLine(); }              // ´øÁö±â ±ËÀû ¼û±â±â
 
 
+
+    [SerializeField]
+    private RestImageScript m_restImg;
+    public void StartRest() { m_restImg.ShowImg(); }
+    public void EndRest() { m_restImg.HideImg(); }
+
+
     [SerializeField]
     private SpitPoisonUIScript m_spitUI;
     public void ShowBlindMark()

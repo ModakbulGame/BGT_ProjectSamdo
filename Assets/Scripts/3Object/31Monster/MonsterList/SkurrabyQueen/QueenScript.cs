@@ -43,6 +43,21 @@ public class QueenScript : MonsterScript
 
     public bool IsSpitting { get; private set; }                    // 독 뿜는 중
 
+    public float AngleToPlayer
+    {
+        get
+        {
+            Vector2 dir = (Position2 - PlayManager.PlayerPos2).normalized;
+            float rot = FunctionDefine.VecToDeg(dir);
+            Vector2 forward = new(transform.forward.x, transform.forward.z);
+            float fRot = FunctionDefine.VecToDeg(forward);
+            float gap = rot - fRot;
+            if (gap <= -360) { gap += 360; } else if (gap >= 360) { gap -= 360; }
+            return gap;
+        }
+    }
+
+
     public void EvadeQueen()                                        // 회피 기동
     {
         StopMove();
@@ -109,7 +124,7 @@ public class QueenScript : MonsterScript
         foreach (Collider col in cols)
         {
             PlayerController player = col.GetComponentInParent<PlayerController>();
-            if(player == null) { continue; }
+            if(player == null || AngleToPlayer > SpitAngle) { continue; }
             player.GetBlind();
             break;
         }

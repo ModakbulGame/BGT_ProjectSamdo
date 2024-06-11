@@ -12,7 +12,7 @@ public class QuestBoolStatus : MonoBehaviour
             {
                 for(int j = 0; j < PlayManager.NPCs.Length; j++)
                 {
-                    PlayManager.NPCs[j].IsQuestStarted = true;
+                    PlayManager.NPCs[j].StartQuest();
                 }
             }
         }
@@ -26,7 +26,7 @@ public class QuestBoolStatus : MonoBehaviour
             {
                 for (int j = 0; j < PlayManager.NPCs.Length; j++)
                 {
-                    PlayManager.NPCs[j].IsQuestEnded = true;
+                    PlayManager.NPCs[j].EndQuest();
                 }
             }
         }

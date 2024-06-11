@@ -8,6 +8,7 @@ public enum ECooltimeName                               // 쿨타임 종류
     JUMP,
     ROLL,
     GUARD,
+    THROW,
     HEAL,
     SKILL1,
 

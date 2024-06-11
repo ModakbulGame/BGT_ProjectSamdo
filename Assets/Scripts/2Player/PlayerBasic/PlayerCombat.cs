@@ -419,7 +419,7 @@ public partial class PlayerController
     private readonly Vector3 TempThrowOffset = new(0.371f, 1.628f, 0.664f);                 // 임시 던지기 생성 오프셋
     private readonly Vector3 TempThrowRotation = new(-64.449f, -30.487f, 40.266f);          // 임시 던지기 오브젝트 회전
 
-    public bool CanThrow { get { return IsUpperIdleAnim && ThrowItemTrigger; } }            // 투척 가능 여부
+    public bool CanThrow { get { return IsUpperIdleAnim && ThrowCooltime <= 0 && ThrowItemTrigger; } }     // 투척 가능 여부
     private EThrowItemName ItemInHand { get; set; } = EThrowItemName.LAST;                  // 던지기 준비 중인 아이템 Enum
     private GameObject InHandPrefab { get; set; }                                           // 손에 든 아이템 오브젝트
     public Vector3 ThrowOffset
@@ -486,6 +486,8 @@ public partial class PlayerController
         script.SetFlying(force);
         DestroyInHand();
         PlayManager.UseThrowItem();
+
+        ThrowCooltime = ThrowDelay;
     }
     public void DoneThrow()                                                                 // 던지기 완료
     {

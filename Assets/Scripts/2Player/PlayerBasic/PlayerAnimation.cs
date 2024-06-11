@@ -90,6 +90,12 @@ public partial class PlayerController
     private void ShowWeapon() { CurWeapon.gameObject.SetActive(true); }                                         // 무기 보이기
 
 
+    public void RestAnimation()
+    {
+        m_anim.SetTrigger("REST");
+    }
+
+
 
     // 초기 설정
     private void SetAnimator()          // 애니메이터 해시 설정

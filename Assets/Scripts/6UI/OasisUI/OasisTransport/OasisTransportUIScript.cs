@@ -7,11 +7,17 @@ using UnityEngine.UI;
 public class OasisTransportUIScript : MonoBehaviour, IOasisUI
 {
     private OasisUIScript m_parent;
-    private FadeInOutGraphic m_fadeInOutGraphic;
+
+    private bool IsCompsSet { get; set; }
+
     public void OpenUI(OasisUIScript _parent) 
-    { 
-        m_parent = _parent; 
-        SetComps(); 
+    {
+        gameObject.SetActive(true);
+        if (!IsCompsSet)
+        {
+            m_parent = _parent;
+            SetComps();
+        }
     }
 
     private Transform m_parentTransform;
@@ -39,9 +45,7 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
     {
         if(CurDestination == EMapPointName.LAST) { return; }
         CloseUI();
-        // m_fadeInOutGraphic.Fade_Out();
         MoveToOasis(CurDestination);
-        // m_fadeInOutGraphic.Fade_In();
     }
 
     public void MoveToOasis(EMapPointName _point)
@@ -69,7 +73,7 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
     public void CloseUI()
     {
         m_parent.FunctionDone();
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
     
 
@@ -89,5 +93,6 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
         btns[1].onClick.AddListener(CancelUI);
         m_oasisPoints = GetComponentsInChildren<OasisPointUIScript>();
         SetPoints();
+        IsCompsSet = true;
     }
 }

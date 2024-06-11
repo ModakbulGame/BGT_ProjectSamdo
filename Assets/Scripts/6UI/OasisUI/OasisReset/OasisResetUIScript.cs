@@ -6,7 +6,18 @@ using UnityEngine.UI;
 public class OasisResetUIScript : MonoBehaviour, IOasisUI
 {
     private OasisUIScript m_parent;
-    public void OpenUI(OasisUIScript _parent) { m_parent = _parent; SetComps(); }
+
+    private bool IsCompsSet { get; set; }
+
+    public void OpenUI(OasisUIScript _parent)
+    {
+        gameObject.SetActive(true);
+        if (!IsCompsSet)
+        {
+            m_parent = _parent;
+            SetComps();
+        } 
+    }
 
     private OasisStatResetUI m_statResetUI;
     private OasisTraitResetUI m_traitResetUI;
@@ -21,7 +32,7 @@ public class OasisResetUIScript : MonoBehaviour, IOasisUI
     public void CloseUI()
     {
         m_parent.FunctionDone();
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
 
