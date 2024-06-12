@@ -28,11 +28,13 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
     private Button m_cancelBtn;
     private OasisPointUIScript[] m_oasisPoints;
 
+    public EOasisPointName CurOasisName { get { return m_parent.Oasis.PointName; } }
     private EOasisPointName CurDestination { get; set; } = EOasisPointName.LAST;
 
 
     public void SetDestination(EOasisPointName _point)
     {
+        if(_point == m_parent.Oasis.PointName) { return; }
         if(CurDestination != EOasisPointName.LAST)
         {
             m_oasisPoints[(int)CurDestination].ResetDestination();
@@ -53,7 +55,7 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
 
     public void MoveToOasis(EOasisPointName _point)
     {
-        if (m_parent.Oasis.PointName == _point)
+        if (CurOasisName == _point)
         {
             Debug.Log("현재 위치한 화톳불입니다!");
             return;
@@ -74,6 +76,7 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
     {
         m_parent.FunctionDone();
         gameObject.SetActive(false);
+        m_parent.CloseUI();
     }
     
 

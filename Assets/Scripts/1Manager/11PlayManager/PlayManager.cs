@@ -33,7 +33,7 @@ public class PlayManager : MonoBehaviour
     }
     private IEnumerator TransportCoroutine(EOasisPointName _oasis)
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         TeleportPlayer(OasisList[(int)_oasis].RespawnPoint);
         yield return new WaitForSeconds(1);
         EndBlackoutUI();

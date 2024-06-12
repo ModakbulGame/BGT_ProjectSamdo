@@ -19,10 +19,12 @@ public class OasisPointUIScript : MonoBehaviour
     private EOasisPointName PointName { get { return m_pointName; } set { m_pointName = value; } }
 
     private readonly Color IdleColor = new(246/255f, 187/255f, 187/255f);
+    private readonly Color CurColor = new(38/255f, 167/255f, 245/255f);
     private readonly Color SelectColor = new(1, 0, 0);
 
     public void SetDestination()
     {
+        if(m_parent.CurOasisName == PointName) { return; }
         m_parent.SetDestination(PointName);
         m_img.color = SelectColor;
     }
@@ -54,6 +56,7 @@ public class OasisPointUIScript : MonoBehaviour
         PointName = _oasis;
         SetBtns();
         SetPosition(_rect);
-        ResetDestination();
+        if (_oasis == m_parent.CurOasisName) { m_img.color = CurColor; }
+        else { ResetDestination(); }
     }
 }
