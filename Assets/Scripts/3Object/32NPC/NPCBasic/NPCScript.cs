@@ -6,7 +6,7 @@ using UnityEngine;
 public class NPCScript : MonoBehaviour, IInteractable
 {
     [SerializeField]
-    private NPCScriptable m_scriptable;
+    protected NPCScriptable m_scriptable;
 
     public Vector2 Position2 { get { return new(transform.position.x, transform.position.z); } }
 

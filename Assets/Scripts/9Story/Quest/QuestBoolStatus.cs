@@ -8,7 +8,7 @@ public class QuestBoolStatus : MonoBehaviour
     {
         for(int i = 0; i < PlayManager.QuestList.Count; i++)
         {
-            if (PlayManager.QuestList[i].Status == EQuestStatus.ACCEPTED && PlayManager.CurQuestList[i].StartObject == _start)
+            if (PlayManager.QuestList[i].Status == EQuestStatus.AVAILABLE && PlayManager.QuestList[i].StartObject == _start)
             {
                 for(int j = 0; j < PlayManager.NPCList.Length; j++)
                 {
