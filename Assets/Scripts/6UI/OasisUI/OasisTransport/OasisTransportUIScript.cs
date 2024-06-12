@@ -20,17 +20,20 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
         }
     }
 
-    private Transform m_parentTransform;
-    public Transform ParentTransform { get { return m_parentTransform; } }
+    [SerializeField]
+    private RectTransform m_mapImg;
+    [SerializeField]
     private Button m_transportBtn;
+    [SerializeField]
+    private Button m_cancelBtn;
     private OasisPointUIScript[] m_oasisPoints;
 
-    private EMapPointName CurDestination { get; set; } = EMapPointName.LAST;
+    private EOasisPointName CurDestination { get; set; } = EOasisPointName.LAST;
 
 
-    public void SetDestination(EMapPointName _point)
+    public void SetDestination(EOasisPointName _point)
     {
-        if(CurDestination != EMapPointName.LAST)
+        if(CurDestination != EOasisPointName.LAST)
         {
             m_oasisPoints[(int)CurDestination].ResetDestination();
         }
@@ -43,24 +46,21 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
     
     private void TransportTo()
     {
-        if(CurDestination == EMapPointName.LAST) { return; }
+        if(CurDestination == EOasisPointName.LAST) { return; }
         CloseUI();
         MoveToOasis(CurDestination);
     }
 
-    public void MoveToOasis(EMapPointName _point)
+    public void MoveToOasis(EOasisPointName _point)
     {
-        Transform destOasis = PlayManager.MapOasis[(int)_point].transform;
-
-        if (PlayManager.GetDistToPlayer(destOasis.position) <= 2.5f)  // 상호 작용 거리 내 화톳불이 있으면 그 곳으로는 이동 불가, 없을 시 이동 가능
+        if (m_parent.Oasis.PointName == _point)
         {
             Debug.Log("현재 위치한 화톳불입니다!");
             return;
         }
         else
         {
-            Debug.Log(CurDestination + "로 이동!");
-            PlayManager.TeleportPlayer(destOasis.position);
+            PlayManager.TransportToOasis(_point);
             CloseUI();
         }
     }
@@ -77,22 +77,21 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
     }
     
 
-    private void SetPoints()
+    private void SetBtns()
     {
-        for (int i = 0; i<(int)EMapPointName.LAST; i++)
-        {
-            m_oasisPoints[i].SetParent(this, (EMapPointName)i);
-        }
+        m_transportBtn.onClick.AddListener(TransportTo);
+        m_cancelBtn.onClick.AddListener(CancelUI);
     }
     private void SetComps()
     {
-        Button[] btns = GetComponentsInChildren<Button>();
-        m_transportBtn = btns[0];
-        m_transportBtn.onClick.AddListener(TransportTo);
-        m_transportBtn.interactable = false;
-        btns[1].onClick.AddListener(CancelUI);
         m_oasisPoints = GetComponentsInChildren<OasisPointUIScript>();
-        SetPoints();
+        SetBtns();
+        for (int i = 0; i<m_oasisPoints.Length; i++)
+        {
+            if (i >= (int)EOasisPointName.LAST) { m_oasisPoints[i].gameObject.SetActive(false); continue; }
+            m_oasisPoints[i].SetParent(this);
+            m_oasisPoints[i].SetComps((EOasisPointName)i, m_mapImg);
+        }
         IsCompsSet = true;
     }
 }

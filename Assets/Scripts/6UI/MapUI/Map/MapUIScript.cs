@@ -7,8 +7,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 
 public class MapUIScript : MonoBehaviour
-{                           
-    private GameObject[] m_mapOasis;  // 맵 UI에 표시되는 오브젝트와 이미지들
+{
     [SerializeField]
     private GameObject m_mapOasisImage;
 
@@ -27,6 +26,8 @@ public class MapUIScript : MonoBehaviour
     private float m_currentZoom = 1f;
     private float m_maxIncrement = 2.0f;
     private float m_minIncrement = 0.4f;
+
+    private OasisNPC[] OasisList { get { return PlayManager.OasisList; } }
 
 
     public void ToggleMapUI()
@@ -76,11 +77,11 @@ public class MapUIScript : MonoBehaviour
 
     private void SynchronizeOasisLocation()
     {
-        for (uint i = 0; i < m_mapOasis.Length; i++)
+        for (uint i = 0; i < OasisList.Length; i++)
         {
             GameObject OasisImage = Instantiate(m_mapOasisImage, Vector3.zero, Quaternion.identity, m_mapImage.transform);
             Image mapOasisImage = OasisImage.GetComponent<Image>();
-            Transform mapOasisTransform = m_mapOasis[i].transform;
+            Transform mapOasisTransform = OasisList[i].transform;
 
             mapOasisImage.rectTransform.anchoredPosition = new Vector2(m_mapImage.rectTransform.sizeDelta.x * PlayManager.NormalizeLocation(mapOasisTransform).x, 
                 m_mapImage.rectTransform.sizeDelta.y * PlayManager.NormalizeLocation(mapOasisTransform).y);
@@ -89,8 +90,6 @@ public class MapUIScript : MonoBehaviour
 
     private void SetComps()
     {
-        m_mapOasis = PlayManager.MapOasis;
-
         SynchronizeOasisLocation();
 
         m_mapName = GetComponentInChildren<TextMeshProUGUI>();

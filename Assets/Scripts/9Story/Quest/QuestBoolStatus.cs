@@ -10,9 +10,9 @@ public class QuestBoolStatus : MonoBehaviour
         {
             if (PlayManager.QuestList[i].Status == EQuestStatus.ACCEPTED && PlayManager.CurQuestList[i].StartObject == _start)
             {
-                for(int j = 0; j < PlayManager.NPCs.Length; j++)
+                for(int j = 0; j < PlayManager.NPCList.Length; j++)
                 {
-                    PlayManager.NPCs[j].StartQuest();
+                    PlayManager.NPCList[j].StartQuest();
                 }
             }
         }
@@ -24,9 +24,9 @@ public class QuestBoolStatus : MonoBehaviour
         {
             if (PlayManager.QuestList[i].Status == EQuestStatus.ACCEPTED && PlayManager.CurQuestList[i].EndObject == _end)
             {
-                for (int j = 0; j < PlayManager.NPCs.Length; j++)
+                for (int j = 0; j < PlayManager.NPCList.Length; j++)
                 {
-                    PlayManager.NPCs[j].EndQuest();
+                    PlayManager.NPCList[j].EndQuest();
                 }
             }
         }

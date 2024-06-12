@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RestImageScript : MonoBehaviour
+public class BlackoutImageScript : MonoBehaviour
 {
     private Animator m_anim;
 

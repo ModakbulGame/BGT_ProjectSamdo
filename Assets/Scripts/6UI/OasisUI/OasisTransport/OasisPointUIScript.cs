@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,14 +7,16 @@ using UnityEngine.UI;
 
 public class OasisPointUIScript : MonoBehaviour
 {
-    public OasisTransportUIScript m_parent;
-    public void SetParent(OasisTransportUIScript _parent, EMapPointName _point) { m_parent = _parent; PointName = _point; SetComps(); }
+    private OasisTransportUIScript m_parent;
+    public void SetParent(OasisTransportUIScript _parent) { m_parent = _parent; }
 
-    private Image m_mapImg;
+    private RectTransform m_rect;
     private Image m_img;
     private Button m_btn;
 
-    private EMapPointName PointName { get; set; }
+    [SerializeField]
+    private EOasisPointName m_pointName;
+    private EOasisPointName PointName { get { return m_pointName; } set { m_pointName = value; } }
 
     private readonly Color IdleColor = new(246/255f, 187/255f, 187/255f);
     private readonly Color SelectColor = new(1, 0, 0);
@@ -27,30 +30,30 @@ public class OasisPointUIScript : MonoBehaviour
     public void ResetDestination()
     {
         m_img.color = IdleColor;
-    } 
-
-    private void NormalizeOasisLocation()
-    {
-        RectTransform btnRectTransform = m_btn.transform.parent.GetComponent<RectTransform>();
-
-        Vector2 normalImgPos = PlayManager.NormalizeLocation(PlayManager.MapOasis[(int)PointName].transform);
-        Vector2 normalBtnPos = normalImgPos; 
-
-        m_img.rectTransform.anchoredPosition = new Vector2(m_mapImg.rectTransform.sizeDelta.x * normalImgPos.x, m_mapImg.rectTransform.sizeDelta.y * normalImgPos.y);
-        btnRectTransform.anchoredPosition = new Vector2(m_mapImg.rectTransform.sizeDelta.x * normalBtnPos.x, m_mapImg.rectTransform.sizeDelta.y * normalBtnPos.y);
     }
-    
+
+    private void SetPosition(RectTransform _rect)
+    {
+        float width = PlayManager.MapWidth, height = PlayManager.MapHeight;
+
+        Vector2 pos = PlayManager.OasisList[(int)PointName].Position2;
+        Vector2 mapSize = _rect.sizeDelta;
+
+        m_rect.anchoredPosition = new(mapSize.x * pos.x / width, mapSize.y * pos.y / height);
+    }
+
     private void SetBtns()
     {
         m_btn.onClick.AddListener(SetDestination);
     }
-    private void SetComps()
+    public void SetComps(EOasisPointName _oasis, RectTransform _rect)
     {
+        m_rect = GetComponent<RectTransform>();
         m_img = GetComponent<Image>();
         m_btn = GetComponent<Button>();
-        m_mapImg = transform.parent.GetComponent<Image>();
+        PointName = _oasis;
         SetBtns();
-        NormalizeOasisLocation();
+        SetPosition(_rect);
         ResetDestination();
     }
 }

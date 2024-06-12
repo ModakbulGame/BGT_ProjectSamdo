@@ -147,9 +147,9 @@ public class PlayUIManager : MonoBehaviour
 
 
     [SerializeField]
-    private RestImageScript m_restImg;
-    public void StartRest() { m_restImg.ShowImg(); }
-    public void EndRest() { m_restImg.HideImg(); }
+    private BlackoutImageScript m_blackoutUI;
+    public void StartBlackout() { m_blackoutUI.ShowImg(); }
+    public void EndBlackout() { m_blackoutUI.HideImg(); }
 
 
     [SerializeField]

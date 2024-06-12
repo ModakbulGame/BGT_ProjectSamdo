@@ -8,6 +8,8 @@ public class NPCScript : MonoBehaviour, IInteractable
     [SerializeField]
     private NPCScriptable m_scriptable;
 
+    public Vector2 Position2 { get { return new(transform.position.x, transform.position.z); } }
+
     public string NPCID { get { return m_scriptable.ID; } }
     public string NPCName { get { return m_scriptable.NPCName; } }
     public string[] NPCDialogues { get { return m_scriptable.Dialogues; } }

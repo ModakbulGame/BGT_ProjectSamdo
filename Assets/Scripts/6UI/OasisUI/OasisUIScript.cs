@@ -24,7 +24,6 @@ public class OasisUIScript : MonoBehaviour
 {
     private OasisNPC m_oasis;
     public void SetNPC(OasisNPC _oasis) { m_oasis = _oasis; }
-
     public OasisNPC Oasis { get { return m_oasis; } }
 
     [SerializeField]

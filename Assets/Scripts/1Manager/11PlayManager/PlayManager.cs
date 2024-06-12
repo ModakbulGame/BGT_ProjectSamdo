@@ -16,15 +16,27 @@ public class PlayManager : MonoBehaviour
     public static bool IsPlaying { get { return Inst != null && Inst.gameObject != null; } }                // 플레이 중인지
     public static void RestAtPoint(OasisNPC _oasis)
     {
-        StartRestUI();
+        StartBlackoutUI();
         Player.RestAnimation();
         Inst.StartCoroutine(Inst.RestDoneCoroutine(_oasis));
     }
     private IEnumerator RestDoneCoroutine(OasisNPC _oasis)
     {
         yield return new WaitForSeconds(3);
-        EndRestUI();
+        EndBlackoutUI();
         TeleportPlayer(_oasis.RespawnPoint);
+    }
+    public static void TransportToOasis(EOasisPointName _target)
+    {
+        StartBlackoutUI();
+        Inst.StartCoroutine(Inst.TransportCoroutine(_target));
+    }
+    private IEnumerator TransportCoroutine(EOasisPointName _oasis)
+    {
+        yield return new WaitForSeconds(3);
+        TeleportPlayer(OasisList[(int)_oasis].RespawnPoint);
+        yield return new WaitForSeconds(1);
+        EndBlackoutUI();
     }
 
 
@@ -118,13 +130,13 @@ public class PlayManager : MonoBehaviour
     // 환경
     private EnvironmentManager m_environmentManager;
     private static EnvironmentManager EnvironmentManager { get { return Inst.m_environmentManager; } }
-    public static Vector3 MapLB { get { return EnvironmentManager.m_mapPositioner[0].position; } }
-    public static Vector3 MapRT { get { return EnvironmentManager.m_mapPositioner[1].position; } }
+    public static Vector3 MapLB { get { return EnvironmentManager.MapLB; } }
+    public static Vector3 MapRT { get { return EnvironmentManager.MapRT; } }
     public static float MapWidth { get { return EnvironmentManager.MapWidth; } }
     public static float MapHeight { get { return EnvironmentManager.MapHeight; } }
 
-    public static GameObject[] MapOasis { get { return EnvironmentManager.MapOasis; } }
-    public static QuestNPCScript[] NPCs { get { return EnvironmentManager.NPCs; } }
+    public static OasisNPC[] OasisList { get { return EnvironmentManager.OasisList; } }
+    public static QuestNPCScript[] NPCList { get { return EnvironmentManager.NPCList; } }
 
 
     // 업그레이드
@@ -139,7 +151,7 @@ public class PlayManager : MonoBehaviour
     // GUI
     private PlayUIManager m_playUIManager;
     private static PlayUIManager PlayUIManager { get { return Inst.m_playUIManager; } }
-    public static Vector2 NormalizeLocation(Transform _obj) { return PlayUIManager.NormalizeLocation(_obj); }                              // 위치 정규화(3D -> 2D)
+    public static Vector2 NormalizeLocation(Transform _obj) { return PlayUIManager.NormalizeLocation(_obj); }                               // 위치 정규화(3D -> 2D)
     public static Canvas GetCanvas(ECanvasType _canvas) { return PlayUIManager.GetCanvas(_canvas); }                                        // 캔버스
     public static RectTransform CanvasTrans(ECanvasType _canvas) { return GetCanvas(_canvas).GetComponent<RectTransform>(); }               
     public static void OpenPlayerUI() { PlayUIManager.OpenPlayerUI(); }                                                                     // Player UI 열기
@@ -177,8 +189,8 @@ public class PlayManager : MonoBehaviour
     public static void HideSkillAim() { PlayUIManager.HideSkillAim(); }
     public static void DrawThrowLine(Vector3 _force, float _mass, Vector3 _start) { PlayUIManager.DrawThrowLine(_force, _mass, _start); }   // 던지기 궤적 그리기
     public static void HideThrowLine() { PlayUIManager.HideThrowLine(); }                                                                   // 던지기 궤적 off
-    private static void StartRestUI() { PlayUIManager.StartRest(); }
-    private static void EndRestUI() { PlayUIManager.EndRest(); }
+    private static void StartBlackoutUI() { PlayUIManager.StartBlackout(); }
+    private static void EndBlackoutUI() { PlayUIManager.EndBlackout(); }
     public static void ShowBlindMark() { PlayUIManager.ShowBlindMark(); }
     public static void HideBlindMark() { PlayUIManager.HideBlindMark(); }
 
@@ -191,7 +203,7 @@ public class PlayManager : MonoBehaviour
         m_storyManager = GetComponent<StoryManager>();
         m_storyManager.SetManager();
         m_environmentManager = GetComponent<EnvironmentManager>();
-        m_environmentManager.setManager();
+        m_environmentManager.SetManager();
         m_upgradeManager = GetComponent<UpgradeManager>();
         m_playUIManager = GetComponent<PlayUIManager>();
         m_playUIManager.SetManager();
