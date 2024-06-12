@@ -10,7 +10,7 @@ public class ExplodeScript : ObjectAttackScript
 
     public void SetDamage(ObjectScript _attacker, float _damage, float _time)
     {
-        SetAttack(_attacker, _damage * Attacker.MagicMultiplier);
+        SetAttack(_attacker, _damage);
         StartCoroutine(LoseDamage(_time));
     }
 
