@@ -19,9 +19,24 @@ public class S303 : ProjectileSkillScript
             explode.SetReturnTransform(transform);
     }
 
+    public override void CheckSkillTrigger(Collider _other)
+    {
+        base.CheckSkillTrigger(_other);
+    }
+
+    public override void AttackOff()
+    {
+        IsAttacking = true;
+    }
+
+    public override void OnDestroyObject()
+    {
+        ExplodeSkill();
+        base.OnDestroyObject();
+    }
+
     public override void GiveDamage(IHittable _hittable, Vector3 _point)
     {
-        if (CheckHit(_hittable)) { return; }
         HitData hit = new(Player, ResultDamage, _point, CCList);
         _hittable.GetHit(hit);
     }
@@ -29,6 +44,5 @@ public class S303 : ProjectileSkillScript
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        ExplodeSkill();
     }
 }
