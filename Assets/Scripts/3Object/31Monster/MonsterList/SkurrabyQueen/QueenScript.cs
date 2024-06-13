@@ -147,8 +147,17 @@ public class QueenScript : MonsterScript
         skurraby.GetComponent<SkurrabyScript>().SetPool(m_skurrabyPool);
         return skurraby;
     }
-    private void OnPoolGet(GameObject _skurraby) { _skurraby.SetActive(true); }
-    private void OnPoolRelease(GameObject _skurraby) { _skurraby.transform.SetParent(transform); _skurraby.SetActive(false); }
+    private void OnPoolGet(GameObject _skurraby) 
+    {
+        _skurraby.SetActive(true);
+        _skurraby.GetComponent<SkurrabyScript>().OnSpawned();
+    }
+    private void OnPoolRelease(GameObject _skurraby)
+    {
+        _skurraby.GetComponent<SkurrabyScript>().ResetSkurraby();
+        _skurraby.transform.SetParent(transform);
+        _skurraby.SetActive(false);
+    }
     private void OnPoolDestroy(GameObject _skurraby) { Destroy(_skurraby); }
 
     public override void SetStates()

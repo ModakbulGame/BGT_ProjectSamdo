@@ -138,6 +138,7 @@ public partial class MonsterScript
     {
         m_aiPath.enabled = false;
         IsSpawned = false;
+        base.Start();
         StartCoroutine(WaitSpawned());
     }
     public virtual IEnumerator WaitSpawned()
@@ -160,11 +161,11 @@ public partial class MonsterScript
         base.Awake();
         SetStates();
         InitSkillInfo();
-        if(m_spawnPoint == null) { OnSpawned(); }
+        SetUI();
     }
     public override void Start()
     {
-        SetUI();
+        if (m_spawnPoint == null) { OnSpawned(); }
         if (AttackObject == null) { SetAttackObject(); }
         base.Start();
     }

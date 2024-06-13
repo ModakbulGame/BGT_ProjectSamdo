@@ -18,7 +18,7 @@ public class SkurrabyAttackState : MonoBehaviour, IMonsterState
     public void ChangeTo(MonsterScript _monster)
     {
         if (m_monster == null) { m_monster = _monster; }
-        m_monster.StartAttack();
+        Skurraby.StartAttack();
 
         FireCount = TimeToFire;
         HasFired = false;

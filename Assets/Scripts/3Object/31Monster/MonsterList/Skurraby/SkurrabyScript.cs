@@ -13,7 +13,7 @@ public class SkurrabyScript : MonsterScript
 
     public override bool CanPurify => Firing;
 
-    public bool Flying { get; private set; }
+    public bool IsFlying { get; private set; }
     private bool Firing { get; set; }
 
     private Vector2 FlyDirection { get { if (!HasTarget) { return Vector2.zero; }
@@ -26,9 +26,18 @@ public class SkurrabyScript : MonsterScript
         base.ReleaseToPool();
     }
 
+    public void ResetSkurraby()
+    {
+        IsFlying = false;
+        Firing = false;
+        IsSpawned = false;
+        IsDead = false;
+        CurHP = MaxHP;
+    }
+
+
     public void SkurrabySpawned(Vector2 _dir, ObjectScript _obj)
     {
-        base.OnSpawned();
         CurTarget = _obj;
         m_rigid.velocity = 5 * new Vector3(_dir.x, 1, _dir.y);
     }
@@ -51,22 +60,23 @@ public class SkurrabyScript : MonsterScript
         Vector2 fireDir = SkurrabyFirePower * FlyDirection;
         m_rigid.velocity = new(fireDir.x, 5, fireDir.y);
         m_anim.SetTrigger("FIRE");
-        Flying = true;
+        IsFlying = true;
     }
 
     public void CheckFlyDone()
     {
-        if(!Flying) { return; }
+        if(!IsFlying) { return; }
         if(IsGrounded) { FlyDone(); }
     }
     private void FlyDone()
     {
-        Flying = false; Firing = false;
+        IsFlying = false; Firing = false;
     }
 
 
     public void ExplodeSkurraby()
     {
+        FlyDone();
         m_skurrabyExplode.SetActive(true);
         m_skurrabyExplode.transform.SetParent(null);
         MonsterSkillScript attack = m_skurrabyExplode.GetComponent<MonsterSkillScript>();
@@ -75,12 +85,16 @@ public class SkurrabyScript : MonsterScript
         IsDead = true;
         DestroyMonster();
     }
+    public override void StartAttack()
+    {
+        StopMove();
+    }
 
     private readonly float CollisionRadius = 0.75f;
 
     private void CheckFlyCollision()
     {
-        if(!Flying || IsDead) { return; }
+        if(!IsFlying || IsDead) { return; }
         Collider[] colliders = Physics.OverlapSphere(Position + Vector3.up * ObjectHeight / 2, CollisionRadius, ValueDefine.HITTABLE_LAYER);
         foreach (Collider col in colliders)
         {
@@ -94,7 +108,7 @@ public class SkurrabyScript : MonsterScript
 
     public override void GetHit(HitData _hit)    // ¸ÂÀ½
     {
-        if (Flying) { _hit.Damage = CurHP; base.GetHit(_hit); }
+        if (IsFlying) { _hit.Damage = CurHP; base.GetHit(_hit); }
         else { base.GetHit( _hit); }
     }
 
