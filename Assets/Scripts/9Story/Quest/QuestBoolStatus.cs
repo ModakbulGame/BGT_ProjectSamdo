@@ -29,7 +29,6 @@ public class QuestBoolStatus : MonoBehaviour
                 {
                     if (PlayManager.QuestList[i].EndObject == PlayManager.NPCList[j].NPCName)
                         PlayManager.NPCList[j].EndQuest();
-                    Debug.Log(PlayManager.NPCList[j].IsQuestEnded);
                 }
             }
         }

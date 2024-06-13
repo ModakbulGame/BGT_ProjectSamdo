@@ -78,6 +78,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         m_hpBar.DestroyUI();                // HP바
         m_rigid.useGravity = false;         // 중력
         GetComponentInChildren<CapsuleCollider>().isTrigger = true;         // 트리거
+        
         if (PlayManager.CheckRequiredQuestObject(ObjectName))
         {
             PlayManager.DoObjectQuest(ObjectName, 1);
