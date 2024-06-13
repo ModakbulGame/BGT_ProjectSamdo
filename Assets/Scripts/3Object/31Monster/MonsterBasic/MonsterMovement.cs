@@ -29,6 +29,7 @@ public abstract partial class MonsterScript
     {
         m_aiPath.destination = _destination;
         m_aiPath.SearchPath();
+        CurSpeed = MoveSpeed;
         StartCoroutine(CheckDespawn());
     }
     private IEnumerator CheckDespawn()
