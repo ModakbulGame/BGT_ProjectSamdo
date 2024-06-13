@@ -172,4 +172,21 @@ public class QuestStatusScript : MonoBehaviour
         PlayManager.ClearImg[_idx % 4].gameObject.SetActive(true);
         PlayManager.ShowNPCQuestUI();
     }
+
+    //private IEnumerator QuestTimer(float _time)
+    //{
+    //    while (_timer > 0 && isPlaying)
+    //    {
+    //        _timer -= Time.deltaTime;
+    //        string minutes = Mathf.Floor(_timer / 60).ToString("00");
+    //        string seconds = (_timer % 60).ToString("00");
+    //        _timerText.text = string.Format("{0}:{1}", minutes, seconds);
+    //        yield return null;
+
+    //        if (_time <= 0)
+    //        {
+    //            // 30초가 다 지나 timer가 0초가 됐을 때 실행할 부분
+    //        }
+    //    }
+    //}
 }

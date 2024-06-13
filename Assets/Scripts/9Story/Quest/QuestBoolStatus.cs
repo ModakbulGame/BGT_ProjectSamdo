@@ -23,12 +23,13 @@ public class QuestBoolStatus : MonoBehaviour
     {
         for (int i = 0; i < PlayManager.QuestList.Count; i++)
         {
-            if (PlayManager.QuestList[i].Status == EQuestStatus.ACCEPTED && PlayManager.CurQuestList[i].EndObject == _end)
+            if (PlayManager.QuestList[i].Status == EQuestStatus.ACCEPTED && PlayManager.QuestList[i].EndObject == _end)
             {
                 for (int j = 0; j < PlayManager.NPCList.Length; j++)
                 {
                     if (PlayManager.QuestList[i].EndObject == PlayManager.NPCList[j].NPCName)
                         PlayManager.NPCList[j].EndQuest();
+                    Debug.Log(PlayManager.NPCList[j].IsQuestEnded);
                 }
             }
         }

@@ -35,7 +35,7 @@ public class QuestAcceptUIScript : MonoBehaviour
     {
         if (m_firstBtnTxt.text == "수락")
         {
-            Debug.Log("퀘스트 수락!");
+            Debug.Log("퀘스트 수락!"); 
 
             PlayManager.AcceptQuest("Q001");
             PlayManager.SetQuestEndObjectStatus(PlayManager.NPCList[1].NPCName);
