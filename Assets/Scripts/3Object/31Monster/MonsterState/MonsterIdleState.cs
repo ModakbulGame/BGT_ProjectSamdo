@@ -50,6 +50,7 @@ public class MonsterIdleState : MonoBehaviour, IMonsterState
 
     private void PauseRoaming()
     {
+        m_monster.StopMove();
         IsMoving = false;
         IsRotating = false;
         ResetCount = Random.Range(3f, 10f);
