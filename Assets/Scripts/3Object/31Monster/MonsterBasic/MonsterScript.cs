@@ -80,7 +80,9 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         GetComponentInChildren<CapsuleCollider>().isTrigger = true;         // Æ®¸®°Å
 
         if (PlayManager.CheckRequiredQuestObject(ObjectName))
+        {
             PlayManager.DoObjectQuest(ObjectName, 1);
+        }
     }
 
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class QuestStatusScript : MonoBehaviour
@@ -53,14 +54,6 @@ public class QuestStatusScript : MonoBehaviour
             {
                 PlayManager.QuestList[i].Status = EQuestStatus.ACCEPTED;
                 PlayManager.CurQuestList.Add(PlayManager.QuestList[i]);
-
-                //for (int j = 0; j < PlayManager.NPCs.Length; j++)
-                //{
-                //    if (PlayManager.GetQuestStartObjectStatus(PlayManager.NPCs[j].NPCName))
-                //        PlayManager.NPCs[j].IsQuestStarted = true;
-                //    if (PlayManager.GetQuestEndObjectStatus(PlayManager.NPCs[j].NPCName))
-                //        PlayManager.NPCs[j].IsQuestEnded = true;
-                //}
             }
         }
     }
@@ -87,10 +80,12 @@ public class QuestStatusScript : MonoBehaviour
             if (PlayManager.CurQuestList[i].QuestObject == _obj && PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED)
             {
                 PlayManager.CurQuestList[i].CurQuestObjectCount += _amount;
+                Debug.Log($"{_obj} {PlayManager.CurQuestList[i].CurQuestObjectCount} / {PlayManager.CurQuestList[i].QuestObjectCount}");
 
                 if (PlayManager.CurQuestList[i].CurQuestObjectCount >= PlayManager.CurQuestList[i].QuestObjectCount)
                 {
                     PlayManager.CurQuestList[i].Status = EQuestStatus.COMPLETE;
+                    ShowQuestClearImg(i);
                 }
             }
         }
@@ -109,11 +104,8 @@ public class QuestStatusScript : MonoBehaviour
         {
             if (PlayManager.CurQuestList[i].Id == _id && PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED)
             {
-                Debug.Log("퀘스트 클리어!");
                 PlayManager.CurQuestList[i].Status = EQuestStatus.COMPLETE;
-
-                PlayManager.ClearImg[i % 4].gameObject.SetActive(true);
-                PlayManager.ShowNPCQuestUI();
+                ShowQuestClearImg(i);
             }
         }
     }
@@ -128,6 +120,7 @@ public class QuestStatusScript : MonoBehaviour
                 int rewardNum = PlayManager.CurQuestList[i].RewardNum;
 
                 PlayManager.CurQuestList[i].Status = EQuestStatus.DONE;
+
                 // 보상
                 switch (PlayManager.CurQuestList[i].Reward)
                 {
@@ -171,5 +164,12 @@ public class QuestStatusScript : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void ShowQuestClearImg(int _idx)
+    {
+        Debug.Log("퀘스트 클리어!");
+        PlayManager.ClearImg[_idx % 4].gameObject.SetActive(true);
+        PlayManager.ShowNPCQuestUI();
     }
 }
