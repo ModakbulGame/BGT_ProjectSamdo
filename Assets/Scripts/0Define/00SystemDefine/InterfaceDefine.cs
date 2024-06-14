@@ -6,7 +6,7 @@ using UnityEngine.Pool;
 public interface IHaveData
 {
     public void LoadData();
-    public void SetData();
+    public void SaveData();
 }
 
 public interface IHittable          // 데미지를 입을 수 있는 오브젝트들이 공통적으로 가져야 하는 인터페이스

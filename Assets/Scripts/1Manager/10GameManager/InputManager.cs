@@ -43,13 +43,12 @@ public class InputManager : MonoBehaviour
                 break;
         }
 
-        PlayManager.SetCameraMode(_mode);
+        if (GameManager.IsInGame) { PlayManager.SetCameraMode(_mode); ; }
     }
 
-    private void InitSetting()                              // 임시 초기 세팅
+    private void InitSetting()
     {
-        SetControlMode(EControlMode.THIRD_PERSON);
-        SetMouseSensitive(1);
+        SetControlMode(EControlMode.UI_CONTROL);
     }
 
 
@@ -70,12 +69,7 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-/*        if (PlayerInputs.OpenOptionUI.triggered)          // 시간 중지가 필요할 경우
-        {
-            if(Time.timeScale == 0) { Time.timeScale = 1; }
-            else { Time.timeScale = 0; }
-        }*/
-
+        if (!GameManager.IsInGame) { return; }
         if (CurControlMode == EControlMode.THIRD_PERSON)            // 플레이어 조작 모드일 때
         {
             if (PlayerInputs.OpenPlayUI.triggered)              // Tab 누르면

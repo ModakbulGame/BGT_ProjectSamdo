@@ -5,6 +5,38 @@ using UnityEngine;
 
 public class DataManager : MonoBehaviour
 {
+    private readonly SaveData[] m_gameData = new SaveData[ValueDefine.MAX_SAVE];
+
+    public SaveData[] GameData { get { return m_gameData; } }
+
+    private void LoadGameData()
+    {
+        for (int i = 0; i<ValueDefine.MAX_SAVE; i++)
+        {
+
+        }
+    }
+
+    private readonly List<IHaveData> m_dataList = new();
+    public void RegisterData(IHaveData _data) 
+    {
+        m_dataList.Add(_data);
+        _data.LoadData();
+    }
+    public void SaveData()
+    {
+        foreach (IHaveData data in m_dataList)
+        {
+            data.SaveData();
+        }
+    }
+    public void ClearData()
+    {
+        m_dataList.Clear();
+    }
+
+
+
     // NPC µ•¿Ã≈Õ
     //public NPCScriptable GetNPCData(EnpcName _npc) { return m_dataList.GetNPCData(_npc); }
 
@@ -96,6 +128,6 @@ public class DataManager : MonoBehaviour
 
     public void SetManager()
     {
-
+        LoadGameData();
     }
 }

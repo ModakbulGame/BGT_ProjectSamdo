@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public partial class PlayerController : ObjectScript
+public partial class PlayerController : ObjectScript, IHaveData
 {
     // 입력 관련 관련
     private InputSystem.PlayerActions PlayerInput { get { return GameManager.PlayerInputs; } }                      // Input System Player 입력

@@ -30,7 +30,14 @@ public static class ValueDefine
     public const string PLAYER_HIT_TAG = "PlayerHit";               // 플레이어 히트 부위
 
 
+    // 씬 인덱스
+    public const int LOADING_SCENE_IDX = 0;
+    public const int TITLE_SCENE_IDX = 1;
+    public const int HELL_SCENE_IDX = 2;
+
+
     // 값
+    public const int MAX_SAVE = 12;
     public const float PARABOLA_GRAVITY = 20;                       // 포물선 계산 시 중력
     public readonly static Vector3 NullVector = Vector3.up * 100;   // 아무것도 아닌 벡터
     public const int MAX_SKILL_SLOT = 3;                            // 장착 가능 스킬 수

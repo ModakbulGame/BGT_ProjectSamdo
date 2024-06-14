@@ -1,13 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : SingleTon<GameManager>
 {
+    public static bool IsInGame { get { return SceneManager.GetActiveScene().buildIndex > ValueDefine.TITLE_SCENE_IDX; } }
+    public static void StartGame()
+    {
+        SceneManager.LoadScene(ValueDefine.HELL_SCENE_IDX);
+    }
+    public static void LoadGame(int _idx)
+    {
+        SaveData data = GameData[_idx];
+        PlayManager.SetCurData(data);
+        StartGame();
+    }
+
+
     // 데이터
     private DataManager m_dataManager;
     public static DataManager DataManager { get { return Inst.m_dataManager; } }
+    public static SaveData[] GameData { get { return DataManager.GameData; } }
+    public static void RegisterData(IHaveData _data) { DataManager.RegisterData(_data); }
+    public static void SaveGameData() { DataManager.SaveData(); }
 
 
     // 화면

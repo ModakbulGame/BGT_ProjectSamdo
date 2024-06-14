@@ -1,10 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.VFX;
 using Cinemachine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlayManager : MonoBehaviour
@@ -14,6 +11,22 @@ public class PlayManager : MonoBehaviour
 
     // 메인 함수
     public static bool IsPlaying { get { return Inst != null && Inst.gameObject != null; } }                // 플레이 중인지
+    public static SaveData CurSaveData { get; private set; }
+    public static bool IsNewData { get { return CurSaveData == null; } }
+    public static void SetCurData(SaveData _data) { CurSaveData = _data; }
+    private static void LoadData()
+    {
+        // 1 정보
+
+
+        // 3 플레이어
+        GameManager.RegisterData(Player);
+    }
+    private static void StartPlay()
+    {
+        GameManager.SetMouseSensitive(1);
+        GameManager.SetControlMode(EControlMode.THIRD_PERSON);
+    }
     public static void RestAtPoint(OasisNPC _oasis)
     {
         StartBlackoutUI();
@@ -214,5 +227,10 @@ public class PlayManager : MonoBehaviour
         if (Inst != null) { Destroy(Inst.gameObject); }
         Inst = this;
         SetSubManagers();
+        if (!IsNewData) { LoadData(); }
+    }
+    private void Start()
+    {
+        StartPlay();
     }
 }

@@ -123,6 +123,23 @@ public class PlayerCombatInfo : ObjectCombatInfo        // 플레이어 전투 정보
 
 public partial class PlayerController
 {
+    // 데이터
+    public void LoadData()
+    {
+        SaveData data = PlayManager.CurSaveData;
+
+        transform.position = data.PlayerPos;
+        transform.localEulerAngles = data.PlayerRot;
+    }
+    public void SaveData()
+    {
+        SaveData data = PlayManager.CurSaveData;
+
+        data.PlayerPos = transform.position;
+        data.PlayerRot = transform.localEulerAngles;
+    }
+
+
     // 기본 컴포넌트
     private CapsuleCollider m_collider;
 
