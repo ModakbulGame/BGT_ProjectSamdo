@@ -126,6 +126,9 @@ public partial class PlayerController
     // ตฅภฬลอ
     public void LoadData()
     {
+        GameManager.RegisterData(this);
+        if (PlayManager.IsNewData) { return; }
+
         SaveData data = PlayManager.CurSaveData;
 
         transform.position = data.PlayerPos;

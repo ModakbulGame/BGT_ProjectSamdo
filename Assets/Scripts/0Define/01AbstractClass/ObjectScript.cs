@@ -11,10 +11,11 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     public Vector2 Velocity2 { get { return new(m_rigid.velocity.x, m_rigid.velocity.z); } }        // 2차원 속도
     public Vector3 Position { get { return transform.position; } }                                  // 좌표
     public Vector2 Position2 { get { return new(transform.position.x, transform.position.z); } }    // 평면 좌표
-    public float Rotation                                               // y축 각도
+    public Vector3 Rotation { get { return transform.localEulerAngles; } private set { transform.localEulerAngles = value; } }
+    public float Direction                                               // y축 각도
     {
-        get { return transform.eulerAngles.y; }
-        protected set { Vector3 rot = transform.eulerAngles; rot.y = value; transform.eulerAngles = rot; }
+        get { return Rotation.y; }
+        protected set { Vector3 rot = Rotation; rot.y = value; Rotation = rot; }
     }
     private readonly float RotationSpeed = 0.05f;                       // 회전 속도
     private readonly float SlowRotationSpeed = 0.3f;                    // 회전 속도
@@ -88,26 +89,26 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
 
 
     // 회전 관련
-    public void RotateTo(float _deg)                                    // 각도로 회전
+    public void RotateTo(float _dir)                                    // 각도로 회전
     {
-        if (Rotation == _deg) { return; }
-        float angle = Mathf.SmoothDampAngle(Rotation, _deg, ref m_rotationRef, RotationSpeed);
-        Rotation = angle;
+        if (Direction == _dir) { return; }
+        float angle = Mathf.SmoothDampAngle(Direction, _dir, ref m_rotationRef, RotationSpeed);
+        Direction = angle;
     }
     public void RotateTo(Vector2 _dir)                                  // 방향으로 회전
     {
         float deg = FunctionDefine.VecToDeg(_dir);
         RotateTo(deg);
     }
-    public void SlowRotate(float _deg)                                  // 천천히 회전
+    public void SlowRotate(float _dir)                                  // 천천히 회전
     {
-        if (Rotation == _deg) { return; }
-        float angle = Mathf.SmoothDampAngle(Rotation, _deg, ref m_rotationRef, SlowRotationSpeed);
-        Rotation = angle;
+        if (Direction == _dir) { return; }
+        float angle = Mathf.SmoothDampAngle(Direction, _dir, ref m_rotationRef, SlowRotationSpeed);
+        Direction = angle;
     }
-    public void SlowRotate(Vector2 _deg)                                  // 천천히 회전
+    public void SlowRotate(Vector2 _dir)                                  // 천천히 회전
     {
-        float deg = FunctionDefine.VecToDeg(_deg);
+        float deg = FunctionDefine.VecToDeg(_dir);
         SlowRotate(deg);
     }
 

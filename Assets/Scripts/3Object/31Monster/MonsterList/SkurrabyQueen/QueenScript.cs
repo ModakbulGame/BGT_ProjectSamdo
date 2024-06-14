@@ -104,7 +104,7 @@ public class QueenScript : MonsterScript
         if (CurSkurraby >= MAX_SKURRABY) { return; }
         GameObject skurraby = m_skurrabyPool.Get();
         skurraby.transform.localPosition = SkurrabyOffset;
-        Vector2 dir = FunctionDefine.DegToVec(Rotation);
+        Vector2 dir = FunctionDefine.DegToVec(Direction);
         SkurrabyScript script = skurraby.GetComponent<SkurrabyScript>();
         script.SkurrabySpawned(dir, CurTarget);
         skurraby.transform.SetParent(null);

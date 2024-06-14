@@ -1,9 +1,24 @@
 using Pathfinding;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+
+[Serializable]
+public struct MonsterSaveData
+{
+    public int SpawnerIdx;
+    public Vector3 Position;
+    public Vector3 Rotation;
+    public float CurHP;
+    public MonsterSaveData(MonsterScript _monster) 
+    {
+        SpawnerIdx = _monster.SpanwerIdx;
+        Position = _monster.Position;
+        Rotation = _monster.Rotation;
+        CurHP = _monster.CurHP;
+    }
+}
 
 public enum EMonsterDeathType
 {

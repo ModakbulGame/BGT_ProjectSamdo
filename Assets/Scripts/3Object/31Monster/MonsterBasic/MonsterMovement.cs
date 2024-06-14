@@ -15,6 +15,7 @@ public abstract partial class MonsterScript
     private MonsterSpawner m_spawnPoint;         // 활동 기준점
     public void SetSpawnPoint(MonsterSpawner _point) { m_spawnPoint = _point; }         // 기준점 설정
     public bool HasPoint { get { return m_spawnPoint != null; } }                       // 기준점 존재 여부
+    public int SpanwerIdx { get { return m_spawnPoint.SpawnerIdx; } }
     public Vector3 SpawnPosition { get { if (!HasPoint) { return new(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity); } return m_spawnPoint.SpawnPosition; } }
     public float SpawnFenceRange { get { return m_combatInfo.FenceRange * m_spawnPoint.RangeMultiplier; } }
     public bool OutOfRange(Vector3 _position) { if(!HasPoint) { return false; } return Vector3.Distance(SpawnPosition, _position) > SpawnFenceRange; }

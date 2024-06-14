@@ -9776,38 +9776,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!1 &2875938540846295010
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4463522343702981536}
-  m_Layer: 1
-  m_Name: Particle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4463522343702981536
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2875938540846295010}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.9699993}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1007821891933227231}
-  m_Father: {fileID: 5598205902413164897}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2891658011186839769
 GameObject:
   m_ObjectHideFlags: 0
@@ -14958,7 +14926,7 @@ GameObject:
   - component: {fileID: 8794734291551040936}
   - component: {fileID: 3767418731498267910}
   m_Layer: 1
-  m_Name: A12_VisualGraph
+  m_Name: Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14973,11 +14941,11 @@ Transform:
   m_GameObject: {fileID: 6051739599751046192}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.01, y: 0, z: 0.03}
+  m_LocalPosition: {x: 0.010007277, y: 0, z: -0.9399965}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4463522343702981536}
+  m_Father: {fileID: 5598205902413164897}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!2083052967 &8794734291551040936
 VisualEffect:
@@ -15000,7 +14968,13 @@ VisualEffect:
     m_Vector2f:
       m_Array: []
     m_Vector3f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 0, y: 0, z: -10}
+        m_Name: MoveMax
+        m_Overridden: 1
+      - m_Value: {x: 0, y: 0, z: 0}
+        m_Name: MoveMin
+        m_Overridden: 1
     m_Vector4f:
       m_Array: []
     m_Uint:
@@ -15093,7 +15067,7 @@ Transform:
   - {fileID: 2501556820275450118}
   - {fileID: 9044726464670675167}
   - {fileID: 2540108371239264928}
-  - {fileID: 4463522343702981536}
+  - {fileID: 1007821891933227231}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8140265432186853633

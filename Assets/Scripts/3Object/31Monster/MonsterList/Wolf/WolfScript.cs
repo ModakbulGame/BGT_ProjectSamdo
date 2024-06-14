@@ -40,7 +40,7 @@ public class WolfScript : MonsterScript
             Vector3 target = CurTarget.Position;
             Vector2 aim2;
             if (CurTarget.IsPlayer) { aim2 = PlayManager.PlayerAimDirection; }
-            else { aim2 = FunctionDefine.DegToVec(CurTarget.Rotation); }
+            else { aim2 = FunctionDefine.DegToVec(CurTarget.Direction); }
             Vector3 aim = new(aim2.x, 0, aim2.y);
             switch (CurRole)
             {
@@ -64,7 +64,7 @@ public class WolfScript : MonsterScript
             if(CurTarget == null) { return 0; }
             float target;
             if (CurTarget.IsPlayer) { target = FunctionDefine.VecToDeg(PlayManager.PlayerAimDirection); }
-            else { target = CurTarget.Rotation; }
+            else { target = CurTarget.Direction; }
             Vector2 dir = (Position2 - CurTarget.Position2);
             float deg = FunctionDefine.VecToDeg(dir);
             float gap = target-deg;

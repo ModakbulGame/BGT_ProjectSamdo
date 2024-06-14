@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public enum EOasisPointName
 {
-    POINT1,
+    START_OASIS,
     POINT2,
     POINT3,
     POINT4,
@@ -29,15 +29,21 @@ public class EnvironmentManager : MonoBehaviour
     public OasisNPC[] OasisList { get { return m_oasisList; } }
 
     [SerializeField]
+    private MonsterSpawnPoint[] m_spawnPointList;
+    public MonsterSpawnPoint[] SpawnPointList { get { return m_spawnPointList; } }
+
+
+
+    [SerializeField]
     private QuestNPCScript[] m_npcList;
     public QuestNPCScript[] NPCList { get { return m_npcList; } }
 
 
     public void SetManager()
     {
-        if(SceneManager.GetActiveScene().name != "SampleTestMapScene") { return; }
+        if (SceneManager.GetActiveScene().name != "SampleTestMapScene") { return; }
         m_oasisList = m_mapObject.GetComponentsInChildren<OasisNPC>();
         // m_npcList = m_mapObject.GetComponentsInChildren<QuestNPCScript>();
-        for(int i=0;i<m_oasisList.Length;i++) { OasisNPC oasis = m_oasisList[i]; oasis.SetPoint((EOasisPointName)i); }
+        for (int i = 0; i<m_oasisList.Length; i++) { OasisNPC oasis = m_oasisList[i]; oasis.SetPoint((EOasisPointName)i); }
     }
 }

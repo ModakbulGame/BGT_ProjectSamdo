@@ -14,14 +14,6 @@ public class PlayManager : MonoBehaviour
     public static SaveData CurSaveData { get; private set; }
     public static bool IsNewData { get { return CurSaveData == null; } }
     public static void SetCurData(SaveData _data) { CurSaveData = _data; }
-    private static void LoadData()
-    {
-        // 1 정보
-
-
-        // 3 플레이어
-        GameManager.RegisterData(Player);
-    }
     private static void StartPlay()
     {
         IsPlaying = true;
@@ -154,6 +146,7 @@ public class PlayManager : MonoBehaviour
     public static float MapHeight { get { return EnvironmentManager.MapHeight; } }
 
     public static OasisNPC[] OasisList { get { return EnvironmentManager.OasisList; } }
+    public static MonsterSpawnPoint[] SpawnPointList { get { return EnvironmentManager.SpawnPointList; } }
     public static QuestNPCScript[] NPCList { get { return EnvironmentManager.NPCList; } }
 
 
@@ -232,7 +225,6 @@ public class PlayManager : MonoBehaviour
         if (Inst != null) { Destroy(Inst.gameObject); }
         Inst = this;
         SetSubManagers();
-        if (!IsNewData) { LoadData(); }
     }
     private void Start()
     {

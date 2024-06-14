@@ -5,7 +5,7 @@ using UnityEngine;
 public class MonsterSpawner : MonoBehaviour
 {
     private MonsterSpawnPoint m_point;
-    public void SetPoint(MonsterSpawnPoint _point) { m_point = _point; }
+    public void SetPoint(MonsterSpawnPoint _point, int _idx) { m_point = _point; SpawnerIdx = _idx; }
 
     [SerializeField]
     private EMonsterName m_spawnMonster;
@@ -14,6 +14,7 @@ public class MonsterSpawner : MonoBehaviour
     [SerializeField]
     private float m_respawnTime = 10;
 
+    public int SpawnerIdx { get; private set; }
     public Vector3 SpawnPosition { get { return transform.position; } }
     public float RangeMultiplier { get { return m_point.RangeMultiplier; } }
 

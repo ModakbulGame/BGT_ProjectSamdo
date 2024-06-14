@@ -23,8 +23,9 @@ public class DataManager : MonoBehaviour
         m_dataList.Add(_data);
         _data.LoadData();
     }
-    public void SaveData()
+    public void SaveData(EOasisPointName _oasis)
     {
+        PlayManager.CurSaveData.OasisPoint = _oasis;
         foreach (IHaveData data in m_dataList)
         {
             data.SaveData();

@@ -11,7 +11,7 @@ public enum EAreaType
     LAST
 }
 
-public class MonsterSpawnPoint : MonoBehaviour
+public class MonsterSpawnPoint : MonoBehaviour, IHaveData
 {
     [SerializeField]
     private MonsterSpawner[] m_spawners;
@@ -28,6 +28,8 @@ public class MonsterSpawnPoint : MonoBehaviour
 
     [SerializeField]
     private List<MonsterScript> m_spawnedMonsters = new();
+    public List<MonsterScript> SpawnedMonsters { get { return m_spawnedMonsters; } }
+
     public void AddMonster(MonsterScript _monster) 
     { 
         if(m_spawnedMonsters.Contains(_monster)) { return; }
@@ -40,12 +42,28 @@ public class MonsterSpawnPoint : MonoBehaviour
     }
 
 
+    public void LoadData()
+    {
+        GameManager.RegisterData(this);
+        if (PlayManager.IsNewData) { return; }
+
+        SaveData data = PlayManager.CurSaveData;
+
+    }
+
+    public void SaveData()
+    {
+
+    }
+
+
     private void SetComps()
     {
         m_spawners = GetComponentsInChildren<MonsterSpawner>();
-        foreach (MonsterSpawner spawner in m_spawners)
+        for (int i=0;i<m_spawners.Length;i++)
         {
-            spawner.SetPoint(this);
+            MonsterSpawner spawner = m_spawners[i];
+            spawner.SetPoint(this, i);
         }
     }
 

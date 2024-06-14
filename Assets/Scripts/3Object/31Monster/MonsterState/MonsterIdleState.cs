@@ -38,8 +38,8 @@ public class MonsterIdleState : MonoBehaviour, IMonsterState
     private void RandomRotate()
     {
         IsRotating = true;
-        float rot = m_monster.Rotation;
-        TargetRotation = rot + Random.Range(-60f, 60f);
+        float dir = m_monster.Direction;
+        TargetRotation = dir + Random.Range(-60f, 60f);
         RotateTo();
     }
 

@@ -23,7 +23,7 @@ public class GameManager : SingleTon<GameManager>
     public static DataManager DataManager { get { return Inst.m_dataManager; } }
     public static SaveData[] GameData { get { return DataManager.GameData; } }
     public static void RegisterData(IHaveData _data) { DataManager.RegisterData(_data); }
-    public static void SaveGameData() { DataManager.SaveData(); }
+    public static void SaveGameData(EOasisPointName _oasis) { DataManager.SaveData(_oasis); }
 
 
     // È­¸é

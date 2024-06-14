@@ -7,10 +7,14 @@ using UnityEngine;
 public class SaveData
 {
     public string SavedTime;
+    public EOasisPointName OasisPoint;
     public Vector3 PlayerPos;
     public Vector3 PlayerRot;
 
+    public List<MonsterSaveData> MonsterData;
 
-
-
+    public SaveData()
+    { 
+        MonsterData = new(); 
+    }
 }

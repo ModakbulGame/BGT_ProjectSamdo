@@ -31,10 +31,10 @@ public class BattleDebugger : MonoBehaviour
         Gizmos.DrawWireSphere(position, range);
 
         float deg = _monster.ViewAngle;
-        float rot = _monster.Rotation;
-        Vector3 right = FunctionDefine.AngleToDir(rot + deg * 0.5f);
-        Vector3 left = FunctionDefine.AngleToDir(rot - deg * 0.5f);
-        Vector3 look = FunctionDefine.AngleToDir(rot);
+        float dir = _monster.Direction;
+        Vector3 right = FunctionDefine.AngleToDir(dir + deg * 0.5f);
+        Vector3 left = FunctionDefine.AngleToDir(dir - deg * 0.5f);
+        Vector3 look = FunctionDefine.AngleToDir(dir);
 
         Debug.DrawRay(position, right * range, Color.blue);
         Debug.DrawRay(position, left * range, Color.blue);
@@ -49,7 +49,7 @@ public class BattleDebugger : MonoBehaviour
         float range = _monster.ViewRange;
         Vector3 pos = _monster.transform.position;
         float deg = _monster.ViewAngle;
-        float rot = _monster.Rotation;
+        float rot = _monster.Direction;
         Vector3 look = FunctionDefine.AngleToDir(rot);
 
         Collider[] targets = Physics.OverlapSphere(pos, range);

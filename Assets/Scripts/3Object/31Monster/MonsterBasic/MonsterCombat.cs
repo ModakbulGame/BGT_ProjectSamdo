@@ -158,7 +158,7 @@ public abstract partial class MonsterScript
             if (player == null) { continue; }
             Vector3 targetPos = col.transform.position;
             Vector3 targetDir = (targetPos - transform.position).normalized;
-            Vector3 look = FunctionDefine.AngleToDir(Rotation);
+            Vector3 look = FunctionDefine.AngleToDir(Direction);
             float targetAngle = Mathf.Acos(Vector3.Dot(look, targetDir)) * Mathf.Rad2Deg;
             if (targetAngle <= ViewAngle * 0.5f && !Physics.Raycast(transform.position, targetDir, ViewRange))
             {

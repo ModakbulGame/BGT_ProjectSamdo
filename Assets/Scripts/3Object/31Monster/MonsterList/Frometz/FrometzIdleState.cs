@@ -29,7 +29,7 @@ public class FrometzIdleState : MonoBehaviour, IMonsterState
     {
         RotateCount -= Time.deltaTime;
         if (RotateCount > 0) {  return; }
-        else if(RotateCount > -1f) { if (RotateDir == 0) { RotateDir = Random.Range(-90f, 90f); } Frometz.SlowRotate(Frometz.Rotation + RotateDir); }
+        else if(RotateCount > -1f) { if (RotateDir == 0) { RotateDir = Random.Range(-90f, 90f); } Frometz.SlowRotate(Frometz.Direction + RotateDir); }
         else { RotateDir = 0; RotateCount = Random.Range(2, 5f); }
     }
 
