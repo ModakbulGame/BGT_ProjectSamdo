@@ -43,12 +43,7 @@ public class InputManager : MonoBehaviour
                 break;
         }
 
-        if (GameManager.IsInGame) { PlayManager.SetCameraMode(_mode); ; }
-    }
-
-    private void InitSetting()
-    {
-        SetControlMode(EControlMode.UI_CONTROL);
+        if (PlayManager.IsPlaying) { PlayManager.SetCameraMode(_mode); ; }
     }
 
 
@@ -62,59 +57,42 @@ public class InputManager : MonoBehaviour
         m_inputSystem = new();
     }
 
-    private void Start()
-    {
-        InitSetting();
-    }
-
     private void Update()
     {
-        if (!GameManager.IsInGame) { return; }
+        if (!PlayManager.IsPlaying) { return; }
         if (CurControlMode == EControlMode.THIRD_PERSON)            // 플레이어 조작 모드일 때
         {
             if (PlayerInputs.OpenPlayUI.triggered)              // Tab 누르면
             {
-                if (PlayManager.IsPlaying)                  // Play Manager가 실행 중이면
-                {
-                    PlayManager.OpenPlayerUI();                 // PlayerUI 열기
-                    PlayManager.ResetPlayer();
-                    SetControlMode(EControlMode.UI_CONTROL);    // UI 조작 모드로
-                }
+                PlayManager.OpenPlayerUI();                 // PlayerUI 열기
+                PlayManager.ResetPlayer();
+                SetControlMode(EControlMode.UI_CONTROL);    // UI 조작 모드로
             }
             else if (PlayerInputs.OpenOptionUI.triggered)       // Escape 누르면
             {
                 // 설정 창 열기
             }
-            else if(PlayerInputs.OpenMapUI.triggered)
+            else if (PlayerInputs.OpenMapUI.triggered)
             {
-                if(PlayManager.IsPlaying)
-                {
-                    // 맵 여닫기
-                    PlayManager.ToggleMapUI();
-                }
+                // 맵 여닫기
+                PlayManager.ToggleMapUI();
             }
-            else if(PlayerInputs.OpenQuestUI.triggered)
+            else if (PlayerInputs.OpenQuestUI.triggered)
             {
-                if (PlayManager.IsPlaying)
-                {
-                    // 퀘스트 창 열기
-                    PlayManager.ToggleQuestUI();
-                }
+                // 퀘스트 창 열기
+                PlayManager.ToggleQuestUI();
             }
         }
         else if (CurControlMode == EControlMode.UI_CONTROL)         // UI 조작 모드일 때
         {
             if (UIControlInputs.CloseUI.triggered)              // Escape 누르면
             {
-                if (PlayManager.IsPlaying)                  // Play Manager가 실행 중이면
-                {
-                    PlayManager.ClosePlayerUI();                // PlayerUI 닫기(임시)
-                    SetControlMode(EControlMode.THIRD_PERSON);  // 플레이어 조작 모드로
-                }
+                PlayManager.ClosePlayerUI();                // PlayerUI 닫기(임시)
+                SetControlMode(EControlMode.THIRD_PERSON);  // 플레이어 조작 모드로
             }
-            else if(UIControlInputs.UIInteract.triggered)       // NPCDialogueScript의 Update를 여기서 진행시키고자 했음   
+            else if (UIControlInputs.UIInteract.triggered)       // NPCDialogueScript의 Update를 여기서 진행시키고자 했음   
             {
-                if (PlayManager.IsPlaying && PlayManager.IsDialogueOpend)
+                if (PlayManager.IsDialogueOpend)
                 {
                     PlayManager.ShowNextDialogue();
                 }

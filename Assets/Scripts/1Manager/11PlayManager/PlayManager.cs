@@ -10,7 +10,7 @@ public class PlayManager : MonoBehaviour
 
 
     // 메인 함수
-    public static bool IsPlaying { get { return Inst != null && Inst.gameObject != null; } }                // 플레이 중인지
+    public static bool IsPlaying { get; private set; }                // 플레이 중인지
     public static SaveData CurSaveData { get; private set; }
     public static bool IsNewData { get { return CurSaveData == null; } }
     public static void SetCurData(SaveData _data) { CurSaveData = _data; }
@@ -24,8 +24,13 @@ public class PlayManager : MonoBehaviour
     }
     private static void StartPlay()
     {
-        GameManager.SetMouseSensitive(1);
+        IsPlaying = true;
         GameManager.SetControlMode(EControlMode.THIRD_PERSON);
+        GameManager.SetMouseSensitive(1);
+    }
+    public static void EndPlay()
+    {
+        IsPlaying = false;
     }
     public static void RestAtPoint(OasisNPC _oasis)
     {
