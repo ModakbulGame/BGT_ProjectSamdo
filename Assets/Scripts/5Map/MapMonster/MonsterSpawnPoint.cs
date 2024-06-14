@@ -1,6 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+[Serializable]
+public struct SpawnerData
+{
+    public int PointHash;
+    public int SpawnerIdx;
+    public SpawnerData(MonsterSpawnPoint _point, int _idx) 
+    {
+        PointHash = _point.GetHashCode();
+        SpawnerIdx = _idx;
+    }
+}
 
 public enum EAreaType
 {
@@ -41,19 +54,43 @@ public class MonsterSpawnPoint : MonoBehaviour, IHaveData
         m_spawnedMonsters.Remove(_monster);
     }
 
-
+    public readonly List<MonsterSaveData> MonsterDataCache = new();
     public void LoadData()
     {
         GameManager.RegisterData(this);
         if (PlayManager.IsNewData) { return; }
 
+        MonsterDataCache.Clear();
+
         SaveData data = PlayManager.CurSaveData;
-
+        foreach(MonsterSaveData monster in data.MonsterData) 
+        {
+            if(monster.SpawnerData.PointHash != GetHashCode()) { continue; }
+            MonsterDataCache.Add(monster);
+        }
     }
-
+    private void SpawnMonsters()
+    {
+        for (int i=0;i<m_spawners.Length;i++)
+        {
+            MonsterSpawner spawner = m_spawners[i];
+            foreach (MonsterSaveData data in MonsterDataCache)
+            {
+                if(data.SpawnerData.SpawnerIdx != i) { continue; }
+                spawner.SpawnMonster(data);
+            }
+            spawner.SpawnMonster();
+        }
+    }
     public void SaveData()
     {
+        SaveData data = PlayManager.CurSaveData;
 
+        foreach (MonsterScript monster in m_spawnedMonsters)
+        {
+            MonsterSaveData save = new(monster);
+            data.MonsterData.Add(save);
+        }
     }
 
 
@@ -69,13 +106,11 @@ public class MonsterSpawnPoint : MonoBehaviour, IHaveData
 
     private void Awake()
     {
+        LoadData();
         SetComps();
     }
     private void Start()
     {
-        foreach (MonsterSpawner spawner in m_spawners)
-        {
-            spawner.SpawnMonster();
-        }
+        SpawnMonsters();
     }
 }

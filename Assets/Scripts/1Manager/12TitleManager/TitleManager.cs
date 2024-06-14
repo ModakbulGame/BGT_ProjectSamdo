@@ -25,12 +25,8 @@ public class TitleManager : MonoBehaviour
 
     private void SetLoadData()
     {
-        SaveData[] data = GameManager.GameData;
-        bool hasData = false;
-        for (int i = 0; i<ValueDefine.MAX_SAVE; i++)
-        {
-            if (data[i] != null) { hasData = true; break; }
-        }
+        List<SaveData> data = GameManager.GameData;
+        bool hasData = data.Count > 0;
         m_loadBtn.interactable = hasData;
     }
 

@@ -22,17 +22,13 @@ public class LoadingListElm : MonoBehaviour
     public void LoadData(int _idx, SaveData _data)
     {
         LoadingIdx = _idx;
-        if (_data == null) { EmptySlot(); return; }
-        m_img.color = SlotColor;
         m_btn.interactable = true;
-        SetLoading(_data);
-    }
-    private void SetLoading(SaveData _data)
-    {
+        m_img.color = SlotColor;
         m_slotTxt.text = _data.SavedTime;
     }
-    private void EmptySlot()
+    public void EmptySlot(int _idx)
     {
+        LoadingIdx = _idx;
         m_btn.interactable = false;
         m_img.color = EmptyColor;
         m_slotTxt.text = "ºó ½½·Ô";

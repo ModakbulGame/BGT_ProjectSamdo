@@ -16,6 +16,7 @@ public class PlayManager : MonoBehaviour
     public static void SetCurData(SaveData _data) { CurSaveData = _data; }
     private static void StartPlay()
     {
+        if (IsNewData) { CurSaveData = new(); GameManager.AddGameData(CurSaveData); }
         IsPlaying = true;
         GameManager.SetControlMode(EControlMode.THIRD_PERSON);
         GameManager.SetMouseSensitive(1);
@@ -26,6 +27,7 @@ public class PlayManager : MonoBehaviour
     }
     public static void RestAtPoint(OasisNPC _oasis)
     {
+        GameManager.SaveGameData(_oasis.PointName);
         StartBlackoutUI();
         Player.RestAnimation();
         Inst.StartCoroutine(Inst.RestDoneCoroutine(_oasis));

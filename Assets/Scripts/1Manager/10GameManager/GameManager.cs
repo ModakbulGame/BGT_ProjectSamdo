@@ -21,9 +21,10 @@ public class GameManager : SingleTon<GameManager>
     // 데이터
     private DataManager m_dataManager;
     public static DataManager DataManager { get { return Inst.m_dataManager; } }
-    public static SaveData[] GameData { get { return DataManager.GameData; } }
+    public static List<SaveData> GameData { get { return DataManager.GameData; } }
+    public static void SaveGameData(EOasisPointName _oasis) { DataManager.SaveCurData(_oasis); }
+    public static void AddGameData(SaveData _data) { DataManager.AddGameData(_data); }
     public static void RegisterData(IHaveData _data) { DataManager.RegisterData(_data); }
-    public static void SaveGameData(EOasisPointName _oasis) { DataManager.SaveData(_oasis); }
 
 
     // 화면

@@ -130,15 +130,15 @@ public partial class PlayerController
         if (PlayManager.IsNewData) { return; }
 
         SaveData data = PlayManager.CurSaveData;
+        OasisNPC oasis = PlayManager.OasisList[(int)data.OasisPoint];
 
-        transform.position = data.PlayerPos;
+        transform.position = oasis.RespawnPoint;
         transform.localEulerAngles = data.PlayerRot;
     }
     public void SaveData()
     {
         SaveData data = PlayManager.CurSaveData;
 
-        data.PlayerPos = transform.position;
         data.PlayerRot = transform.localEulerAngles;
     }
 
@@ -280,6 +280,7 @@ public partial class PlayerController
 
     public override void Awake()
     {
+        LoadData();
         base.Awake();
         SetStates();
         SetAnimator();

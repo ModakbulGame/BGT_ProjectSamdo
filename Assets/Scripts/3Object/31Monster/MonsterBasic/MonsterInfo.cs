@@ -7,13 +7,15 @@ using Cinemachine;
 [Serializable]
 public struct MonsterSaveData
 {
-    public int SpawnerIdx;
+    public EMonsterName MonsterEnum;
+    public SpawnerData SpawnerData;
     public Vector3 Position;
     public Vector3 Rotation;
     public float CurHP;
     public MonsterSaveData(MonsterScript _monster) 
     {
-        SpawnerIdx = _monster.SpanwerIdx;
+        MonsterEnum = _monster.MonsterEnum;
+        SpawnerData = _monster.SpawnerData;
         Position = _monster.Position;
         Rotation = _monster.Rotation;
         CurHP = _monster.CurHP;

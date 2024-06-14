@@ -16,9 +16,10 @@ public class LoadingListScript : MonoBehaviour
     {
         gameObject.SetActive(true);
         if (!IsCompsSet) { SetComps(); }
-        SaveData[] data = GameManager.GameData;
+        List<SaveData> data = GameManager.GameData;
         for (int i = 0; i<ValueDefine.MAX_SAVE; i++)
         {
+            if (i >= data.Count) { m_elms[i].EmptySlot(i); continue; }
             m_elms[i].LoadData(i, data[i]);
         }
     }

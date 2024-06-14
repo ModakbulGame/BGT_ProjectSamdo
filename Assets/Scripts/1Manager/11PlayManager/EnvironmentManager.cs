@@ -41,7 +41,7 @@ public class EnvironmentManager : MonoBehaviour
 
     public void SetManager()
     {
-        if (SceneManager.GetActiveScene().name != "SampleTestMapScene") { return; }
+        if (PlayManager.IsPlaying) { return; }
         m_oasisList = m_mapObject.GetComponentsInChildren<OasisNPC>();
         // m_npcList = m_mapObject.GetComponentsInChildren<QuestNPCScript>();
         for (int i = 0; i<m_oasisList.Length; i++) { OasisNPC oasis = m_oasisList[i]; oasis.SetPoint((EOasisPointName)i); }
