@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class DropItemScript : PooledItem, IInteractable
@@ -43,6 +44,10 @@ public class DropItemScript : PooledItem, IInteractable
     public void GetItem()
     {
         PlayManager.AddInventoryItem(DropItem, 1);
+        //if (PlayManager.CheckRequiredQuestObject(아이템 이름?))
+        //{
+        //    PlayManager.DoObjectQuest(아이템 이름?, 1);
+        //}
         ReleaseToPool();
     }
 }

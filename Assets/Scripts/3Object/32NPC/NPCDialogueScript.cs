@@ -59,7 +59,7 @@ public class NPCDialogueScript : MonoBehaviour
 
     public void ClearQuest()
     {
-        PlayManager.ClearQuest("Q001");
+        PlayManager.ClearQuest("Q002");
         PlayManager.ChangeBtnsTxt();
     }
 

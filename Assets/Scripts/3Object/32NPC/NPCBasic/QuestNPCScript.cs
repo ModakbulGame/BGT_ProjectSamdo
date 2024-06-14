@@ -11,7 +11,7 @@ public class QuestNPCScript : NPCScript
     public bool IsQuestEnded { get { return m_isQuestEnded; } }
 
     public void StartQuest() { m_isQuestStarted = true; }
-    public void EndQuest() { m_isQuestEnded = false; }
+    public void EndQuest() { m_isQuestEnded = true; }
 
     public override void StartInteract()
     {
@@ -23,6 +23,5 @@ public class QuestNPCScript : NPCScript
     private void Start()
     {
         PlayManager.SetQuestStartObjectStatus(NPCName);
-        Debug.Log($"{NPCName} quest status is {m_isQuestStarted}");
     }
 }
