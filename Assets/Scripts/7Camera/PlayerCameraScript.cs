@@ -57,4 +57,8 @@ public class PlayerCameraScript : MonoBehaviour
     {
         SetComps();
     }
+    private void Start()
+    {
+        m_cameraDetail.m_XAxis.Value = PlayManager.PlayerDirection;
+    }
 }

@@ -5,16 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : SingleTon<GameManager>
 {
+    public static bool IsInTitle { get { return SceneManager.GetActiveScene().buildIndex == ValueDefine.TITLE_SCENE_IDX; } }
     public static bool IsInGame { get { return SceneManager.GetActiveScene().buildIndex > ValueDefine.TITLE_SCENE_IDX; } }
     public static void StartGame()
     {
-        SceneManager.LoadScene(ValueDefine.HELL_SCENE_IDX);
+        MoveToPlayScene(null);
     }
     public static void LoadGame(int _idx)
     {
         SaveData data = GameData[_idx];
-        PlayManager.SetCurData(data);
-        StartGame();
+        MoveToPlayScene(data);
+    }
+    private static void MoveToPlayScene(SaveData _data)
+    {
+        PlayManager.SetCurData(_data);
+        SceneManager.LoadScene(ValueDefine.HELL_SCENE_IDX);
     }
 
 

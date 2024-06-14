@@ -13,10 +13,11 @@ public class PlayManager : MonoBehaviour
     public static bool IsPlaying { get; private set; }                // 플레이 중인지
     public static SaveData CurSaveData { get; private set; }
     public static bool IsNewData { get { return CurSaveData == null; } }
-    public static void SetCurData(SaveData _data) { CurSaveData = _data; }
+    private static bool IsFromTitle { get; set; }
+    public static void SetCurData(SaveData _data) { CurSaveData = _data; IsFromTitle = true; }
     private static void StartPlay()
     {
-        if (IsNewData) { CurSaveData = new(); GameManager.AddGameData(CurSaveData); }
+        if (IsNewData && IsFromTitle) { CurSaveData = new(); GameManager.AddGameData(CurSaveData); }
         IsPlaying = true;
         GameManager.SetControlMode(EControlMode.THIRD_PERSON);
         GameManager.SetMouseSensitive(1);
@@ -62,7 +63,7 @@ public class PlayManager : MonoBehaviour
     public static bool IsPlayerLightOn { get { return Player.IsLightOn; } }                                                                 // 플레이어 능력 사용중
     public static Vector3 PlayerPos { get { if (IsPlayerSet) return Player.transform.position; return ValueDefine.NullVector; } }           // 플레이어 위치
     public static Vector2 PlayerPos2 { get { if (IsPlayerSet) return Player.Position2; return ValueDefine.NullVector; } }                   // 플레이어 평면 위치
-
+    public static float PlayerDirection { get { return Player.Direction; } }
     public static Vector2 PlayerAimDirection { get { return Player.PlayerAimDirection; } }                                                  // 카메라 조준 벡터
     public static Transform PlayerTransform { get { if (IsPlayerSet) return Player.transform; return null; } }
     public static PlayerStatInfo PlayerStatInfo { get { return Player.GetStatInfo(); } }
