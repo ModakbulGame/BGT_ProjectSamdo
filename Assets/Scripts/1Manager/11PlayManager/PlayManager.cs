@@ -141,7 +141,8 @@ public class PlayManager : MonoBehaviour
     public static void CompleteQuest(string _id) { StoryManager.CompleteQuest(_id); }
     public static void DoObjectQuest(string _obj, int _amount) { StoryManager.DoObjectQuest(_obj, _amount); }
     public static void SetQuestStartObjectStatus(string _start) { StoryManager.SetQuestStartObjectStatus(_start); }
-    public static void SetQuestEndObjectStatus(string _end) { StoryManager.SetQuestEndObjectStatus(_end); }
+    public static void SetQuestEndObjectStatus(string _id) { StoryManager.SetQuestEndObjectStatus(_id); }
+    public static bool CheckQuestCompleted(string _id) { return StoryManager.CheckQuestCompleted(_id); }
     public static bool CheckRequiredQuestObject(string _name) { return StoryManager.CheckRequiredQuestObject(_name); }
 
 

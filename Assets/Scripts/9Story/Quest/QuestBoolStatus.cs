@@ -19,16 +19,29 @@ public class QuestBoolStatus : MonoBehaviour
         }
     }
 
-    public void SetQuestEndObjectStatus(string _end)
+    public bool CheckQuestCompleted(string _id)
+    {
+        for (int i = 0; i < PlayManager.CurQuestList.Count; i++)
+        {
+            if (PlayManager.CurQuestList[i].Id == _id && PlayManager.CurQuestList[i].Type == EQuestType.TALKING && PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED  // ´ëÈ­ Äù½ºÆ®
+                || PlayManager.CurQuestList[i].Id == _id && PlayManager.CurQuestList[i].Status == EQuestStatus.COMPLETE)  // ±× ¿Ü Äù½ºÆ®
+                    return true; 
+        }
+        return false;
+    }
+
+    public void SetQuestEndObjectStatus(string _id)
     {
         for (int i = 0; i < PlayManager.QuestList.Count; i++)
         {
-            if (PlayManager.QuestList[i].Status == EQuestStatus.ACCEPTED && PlayManager.QuestList[i].EndObject == _end)
+            if (PlayManager.QuestList[i].Id == _id && PlayManager.QuestList[i].Status == EQuestStatus.COMPLETE)
             {
                 for (int j = 0; j < PlayManager.NPCList.Length; j++)
                 {
                     if (PlayManager.QuestList[i].EndObject == PlayManager.NPCList[j].NPCName)
+                    {
                         PlayManager.NPCList[j].EndQuest();
+                    }
                 }
             }
         }

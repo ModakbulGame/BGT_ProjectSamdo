@@ -52,15 +52,12 @@ public class NPCDialogueScript : MonoBehaviour
 
     public void OpenUI(QuestNPCScript _npc)
     {
+        Debug.Log(m_isQuestEnded);
         SetNPC(_npc);
+        if (PlayManager.CheckQuestCompleted("Q002"))
+            m_isQuestEnded = true;
         OpenUI();
         StartCoroutine(Typing(CurDialogue[DialogueCount]));
-    }
-
-    public void ClearQuest()
-    {
-        PlayManager.ClearQuest("Q002");
-        PlayManager.ChangeBtnsTxt();
     }
 
     public void CloseUI()
@@ -104,14 +101,16 @@ public class NPCDialogueScript : MonoBehaviour
             StartCoroutine(Typing(CurDialogue[DialogueCount]));
             return;
         }
-        if (m_isQuestStarted)
+        if (m_isQuestStarted && !m_isQuestEnded)
         {
             PlayManager.ShowNPCQuestUI();
+            m_isQuestStarted = false;
         }
-        else if (m_isQuestEnded)
+        else if (m_isQuestEnded && !m_isQuestStarted)
         {
-            ClearQuest();
+            PlayManager.ChangeBtnsTxt();
             PlayManager.ShowNPCQuestUI();
+            m_isQuestEnded = false;
         }
         else CloseUI();
     }

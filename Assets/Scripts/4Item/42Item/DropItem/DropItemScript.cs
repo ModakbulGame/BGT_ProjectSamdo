@@ -12,8 +12,14 @@ public class DropItemScript : PooledItem, IInteractable
 
     public SItem DropItem { get { return m_dropItem; } }
     public int ItemNum { get { return m_itemNum; } }
+    public string DropItemName { get; private set; }
 
-    public void SetDropItem(string _id) { SItem item = GameManager.GetItemInfo(_id).Item; SetDropItem(item); }
+    public void SetDropItem(string _id)
+    {
+        SItem item = GameManager.GetItemInfo(_id).Item;
+        DropItemName = GameManager.GetItemInfo(_id).ItemName;
+        SetDropItem(item);
+    }
     public void SetDropItem(SItem _item) { SetDropItem(_item, 1); }
     public void SetDropItem(SItem _item, int _num) { m_dropItem = _item; m_itemNum = _num; }
 
@@ -30,7 +36,7 @@ public class DropItemScript : PooledItem, IInteractable
 
     public virtual void StopInteract()
     {
-       
+
     }
 
 
@@ -44,9 +50,9 @@ public class DropItemScript : PooledItem, IInteractable
     public void GetItem()
     {
         PlayManager.AddInventoryItem(DropItem, 1);
-        //if (PlayManager.CheckRequiredQuestObject(아이템 이름?))
+        //if (PlayManager.CheckRequiredQuestObject(DropItemName))
         //{
-        //    PlayManager.DoObjectQuest(아이템 이름?, 1);
+        //    PlayManager.DoObjectQuest(DropItemName, 1);
         //}
         ReleaseToPool();
     }

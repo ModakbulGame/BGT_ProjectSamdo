@@ -38,7 +38,6 @@ public class QuestAcceptUIScript : MonoBehaviour
             Debug.Log("퀘스트 수락!"); 
 
             PlayManager.AcceptQuest("Q002");
-            PlayManager.SetQuestEndObjectStatus(PlayManager.NPCList[2].NPCName);
             PlayManager.ExpressCurQuestInfo();  // 퀘스트 창에 표시
         }
         else PlayManager.CompleteQuest("Q002"); // 완료 버튼; 퀘스트 클리어
@@ -62,7 +61,6 @@ public class QuestAcceptUIScript : MonoBehaviour
         m_firstBtnTxt = m_btns[0].GetComponentInChildren<TextMeshProUGUI>();
         m_secondBtnTxt = m_btns[1].GetComponentInChildren<TextMeshProUGUI>();
 
-       //
         m_questTitle.text = PlayManager.QuestList[1].Title;
         m_questDescription.text = PlayManager.QuestList[1].Description;
         m_questRewards.text = $"보상 {PlayManager.QuestList[1].Reward} {PlayManager.QuestList[0].RewardNum}개";
