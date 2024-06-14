@@ -84,8 +84,8 @@ public class QuestStatusScript : MonoBehaviour
 
                 if (PlayManager.CurQuestList[i].CurQuestObjectCount >= PlayManager.CurQuestList[i].QuestObjectCount)
                 {
-                    PlayManager.CurQuestList[i].Status = EQuestStatus.COMPLETE;
-                    ShowQuestClearImg(i);
+                    string clearQuest = PlayManager.CurQuestList[i].Id;
+                    ClearQuest(clearQuest);
                 }
             }
         }
@@ -94,7 +94,13 @@ public class QuestStatusScript : MonoBehaviour
     // 퀘스트 수행(시간 제한)
     public void DoTimeLimitQuest(string _id)
     {
-
+        for (int i = 0; i < PlayManager.CurQuestList.Count; i++)
+        {
+            if (PlayManager.CurQuestList[i].Id == _id && PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED)
+            {
+                StartCoroutine(QuestTimer(PlayManager.CurQuestList[i].TimeLimit));
+            }
+        }
     }
 
     // 퀘스트 클리어
@@ -170,23 +176,29 @@ public class QuestStatusScript : MonoBehaviour
     {
         Debug.Log("퀘스트 클리어!");
         PlayManager.ClearImg[_idx % 4].gameObject.SetActive(true);
-        PlayManager.ShowNPCQuestUI();
     }
 
-    //private IEnumerator QuestTimer(float _time)
-    //{
-    //    while (_timer > 0 && isPlaying)
-    //    {
-    //        _timer -= Time.deltaTime;
-    //        string minutes = Mathf.Floor(_timer / 60).ToString("00");
-    //        string seconds = (_timer % 60).ToString("00");
-    //        _timerText.text = string.Format("{0}:{1}", minutes, seconds);
-    //        yield return null;
+    private IEnumerator QuestTimer(float _time)
+    {
+        while (_time > 0)
+        {
+            _time -= Time.deltaTime;
 
-    //        if (_time <= 0)
-    //        {
-    //            // 30초가 다 지나 timer가 0초가 됐을 때 실행할 부분
-    //        }
-    //    }
-    //}
+            string minutes = Mathf.Floor(_time / 60).ToString("00");
+            string seconds = (_time % 60).ToString("00");
+            // _timerText.text = string.Format("{0}:{1}", minutes, seconds);
+
+            if (PlayManager.CheckQuestCompleted("Q002"))
+            {
+                // 퀘스트 완료 수행
+
+            }
+
+            if (!PlayManager.CheckQuestCompleted("Q002") && _time <= 0)
+            {
+                // 퀘스트 실패
+            }
+            yield return null;
+        }
+    }
 }

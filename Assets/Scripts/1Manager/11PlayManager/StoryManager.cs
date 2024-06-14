@@ -22,7 +22,8 @@ public class StoryManager : MonoBehaviour
     
     // 이름 일치 여부 확인
     public void SetQuestStartObjectStatus(string _start) { m_questBoolStatus.SetQuestStartObjectStatus(_start); }
-    public void SetQuestEndObjectStatus(string _end) { m_questBoolStatus.SetQuestEndObjectStatus(_end); }
+    public void SetQuestEndObjectStatus(string _id) { m_questBoolStatus.SetQuestEndObjectStatus(_id); }
+    public bool CheckQuestCompleted(string _id) { return m_questBoolStatus.CheckQuestCompleted(_id); }
     public bool CheckRequiredQuestObject(string _name) { return m_questBoolStatus.CheckRequiredQuestObject(_name); }
 
 
