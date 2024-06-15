@@ -25,6 +25,7 @@ public class PlayManager : MonoBehaviour
     public static void EndPlay()
     {
         IsPlaying = false;
+        IsFromTitle = false;
     }
     public static void RestAtPoint(OasisNPC _oasis)
     {
@@ -53,6 +54,14 @@ public class PlayManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         EndBlackoutUI();
     }
+    public static void PlayerDead()
+    {
+
+    }
+    public static void RestartGame(SaveData _data)
+    {
+
+    }
 
 
     // 플레이어
@@ -68,6 +77,7 @@ public class PlayManager : MonoBehaviour
     public static float PlayerDirection { get { return Player.Direction; } }
     public static Vector2 PlayerAimDirection { get { return Player.PlayerAimDirection; } }                                                  // 카메라 조준 벡터
     public static Transform PlayerTransform { get { if (IsPlayerSet) return Player.transform; return null; } }
+    public static Transform CameraFocusTransform { get { if (IsPlayerSet) { return Player.CameraFocus; } return null; } }
     public static PlayerStatInfo PlayerStatInfo { get { return Player.GetStatInfo(); } }
     public static void ApplyPlayerStat() { Player.ApplyStat(); }
     public static SPlayerWeaponInfo PlayerWeaponInfo { get { return Player.CurWeaponInfo; } }
@@ -89,6 +99,7 @@ public class PlayManager : MonoBehaviour
     public static float CameraAngle { get { return CameraManager.CameraAngle; } }                                                           // 카메라 위아래 각도
     public static void SetCameraMode(EControlMode _mode) { CameraManager.SetCameraMode(_mode); }                                            // 조작 모드 전달
     public static void SetCameraSensitive(float _sensitive) { CameraManager.SetCameraSensitive(_sensitive); }                               // 마우스 민감도 전달
+    public static void LooseCameraFocus() { CameraManager.LooseFocus(); }
     public static void CameraSwitch(CinemachineFreeLook _targetCamera) { CameraManager.SwitchToCamera(_targetCamera); }                    // 카메라 변환
 
 
@@ -152,7 +163,7 @@ public class PlayManager : MonoBehaviour
     public static Vector3 MapRT { get { return EnvironmentManager.MapRT; } }
     public static float MapWidth { get { return EnvironmentManager.MapWidth; } }
     public static float MapHeight { get { return EnvironmentManager.MapHeight; } }
-
+    public static float WaterHeight { get { return EnvironmentManager.WaterHeight; } }
     public static OasisNPC[] OasisList { get { return EnvironmentManager.OasisList; } }
     public static MonsterSpawnPoint[] SpawnPointList { get { return EnvironmentManager.SpawnPointList; } }
     public static QuestNPCScript[] NPCList { get { return EnvironmentManager.NPCList; } }

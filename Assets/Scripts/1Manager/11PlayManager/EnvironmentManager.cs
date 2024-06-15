@@ -31,6 +31,8 @@ public class EnvironmentManager : MonoBehaviour
     private MonsterSpawnPoint[] m_spawnPointList;
     public MonsterSpawnPoint[] SpawnPointList { get { return m_spawnPointList; } }
 
+    private Transform m_waterTransform;
+    public float WaterHeight { get { return m_waterTransform.position.y; } }
 
 
     [SerializeField]
@@ -43,5 +45,7 @@ public class EnvironmentManager : MonoBehaviour
         m_oasisList = m_mapObject.GetComponentsInChildren<OasisNPC>();
         // m_npcList = m_mapObject.GetComponentsInChildren<QuestNPCScript>();
         for (int i = 0; i<m_oasisList.Length; i++) { OasisNPC oasis = m_oasisList[i]; oasis.SetPoint((EOasisPointName)i); }
+        m_waterTransform = m_mapObject.GetComponentInChildren<MapWaterScript>().transform;
+
     }
 }

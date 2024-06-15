@@ -36,6 +36,12 @@ public partial class PlayerController
         base.SetDead();
         if (IsHealing) { CancelHeal(); }
         ChangeState(EPlayerState.DIE);
+        if (PlayManager.IsPlaying) { StartCoroutine(RestartCoroutine()); }
+    }
+    private IEnumerator RestartCoroutine()
+    {
+        yield return new WaitForSeconds(3);
+        PlayManager.PlayerDead();
     }
 
 

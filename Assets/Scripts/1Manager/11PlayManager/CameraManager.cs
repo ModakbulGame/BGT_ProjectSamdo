@@ -25,6 +25,11 @@ public class CameraManager : MonoBehaviour
         m_playerCamera.SetCameraSensitive(_sensitive);
     }
 
+    public void LooseFocus()
+    {
+        m_playerCamera.LooseFocus();
+    }
+
     public void SwitchToCamera(CinemachineFreeLook _targetCamera)
     {
         m_camChange.SwitchToCamera(_targetCamera);

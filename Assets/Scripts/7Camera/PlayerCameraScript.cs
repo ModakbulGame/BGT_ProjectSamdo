@@ -24,6 +24,14 @@ public class PlayerCameraScript : MonoBehaviour
         // m_cameraDetail.m_XAxis.Value = 0;
         SetCinemachineSpeed(MouseSensitive);
     }
+    public void ResetTrace()
+    {
+        m_cameraDetail.Follow = PlayManager.PlayerTransform;
+    }
+    public void LooseFocus()
+    {
+        m_cameraDetail.Follow = PlayManager.CameraFocusTransform;
+    }
     public void SetCameraSensitive(float _sensitive)        // 마우스 민감도 설정
     {
         MouseSensitive = _sensitive;

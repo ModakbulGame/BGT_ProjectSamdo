@@ -145,6 +145,9 @@ public partial class PlayerController
 
     // 기본 컴포넌트
     private CapsuleCollider m_collider;
+    [SerializeField]
+    private Transform m_cameraFocus;
+    public Transform CameraFocus { get { return m_cameraFocus; } }
 
 
     // 기초 정보
