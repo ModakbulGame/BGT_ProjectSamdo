@@ -202,11 +202,6 @@ public partial class PlayerController
 
     private void InitWeapon()
     {
-        foreach (WeaponScript weapon in m_weapons) { if (weapon.gameObject.activeSelf) { CurWeapon = weapon; } }
-        if (CurWeapon != null)
-        {
-            PlayManager.SetCurWeapon(CurWeapon.WeaponEnum);
-        }
         EWeaponName name = PlayManager.CurWeapon;
         SetCurWeapon(name);
     }

@@ -28,16 +28,18 @@ public class PlayManager : MonoBehaviour
     }
     public static void RestAtPoint(OasisNPC _oasis)
     {
-        GameManager.SaveGameData(_oasis.PointName);
         StartBlackoutUI();
         Player.RestAnimation();
         Inst.StartCoroutine(Inst.RestDoneCoroutine(_oasis));
     }
     private IEnumerator RestDoneCoroutine(OasisNPC _oasis)
     {
-        yield return new WaitForSeconds(3);
-        EndBlackoutUI();
+        yield return new WaitForSeconds(2);
         TeleportPlayer(_oasis.RespawnPoint);
+        Player.RestorePlayer();
+        yield return new WaitForSeconds(1);
+        EndBlackoutUI();
+        GameManager.SaveGameData(_oasis.PointName);
     }
     public static void TransportToOasis(EOasisPointName _target)
     {
@@ -72,11 +74,11 @@ public class PlayManager : MonoBehaviour
     public static float GetDistToPlayer(Vector3 _pos) { if (!IsPlayerSet) return -1; return (PlayerPos-_pos).magnitude; }                   // 플레이어와의 거리
     public static void SetPlayerWeapon(EWeaponName _weapon) { Player.SetCurWeapon(_weapon); }                                               // 무기 설정
     public static void StopPlayerInteract() { Player.StopInteract(); }                                                                      // 상호작용 종료
-    public static void ResetPlayer() { Player.ResetPlayer(); }
+    public static void ResetPlayer() { Player.ResetPlayerAction(); }
     public static void TeleportPlayer(Vector3 _pos) { Player.TeleportPlayer(_pos); }
-    
+
     public static void TempGetBuff(float _amount, float _time) { Player.GetAdj(new(EAdjType.MAX_HP, _amount, _time)); }
-    
+
 
     // 카메라
     [SerializeField]
@@ -99,7 +101,9 @@ public class PlayManager : MonoBehaviour
     public static void SetInventoryItem(int _idx, SItem _item, int _num) { InvenManager.SetInventoryItem(_idx, _item, _num); }                  // 인벤토리 해당 Idx에 아이템 설정
     public static void RemoveInventoryItem(int _idx) { InvenManager.RemoveInventoryItem(_idx); }                                                // 인벤토리 해당 Idx 아이템 제거
     public static void SwapItemInven(int _idx1, int _idx2) { InvenManager.SwapItemInven(_idx1, _idx2); InventoryEditted(); }
+    public static bool[] WeaponObtained { get { return InvenManager.WeaponObatined; } }
     public static EWeaponName CurWeapon { get { return InvenManager.CurWeapon; } }                                                              // 장착 중인 무기
+    public static void ObtainWeapon(EWeaponName _weapon) { InvenManager.ObtainWeapon(_weapon); }
     public static void SetCurWeapon(EWeaponName _weapon) { InvenManager.SetCurWeapon(_weapon); }                                                // 무기 설정
     public static void EquipWeapon(EWeaponName _weapon) { InvenManager.EquipWeapon(_weapon); }                                                  // 무기 장착
     public static EPatternName CurHealPattern { get { return InvenManager.CurHealPattern; } }                                                   // 현재 회복 아이템
@@ -120,10 +124,10 @@ public class PlayManager : MonoBehaviour
     public static int[] PatternNum { get { return InvenManager.PatternNum; } }                                                                  // 문양별 개수
     public static void AddSoul(int _num) { InvenManager.AddSoul(_num); }                                                                        // 영혼 추가
     public static void AddPurified(int _num) { InvenManager.AddPurified(_num); }                                                                // 성불 영혼 추가
-    public static void AddPattern(EProperty _type, int _num) { InvenManager.AddPattern(_type, _num); }                                          // 문양 추가
+    public static void AddPattern(EPatternName _type, int _num) { InvenManager.AddPattern(_type, _num); }                                       // 문양 추가
     public static void UseSoul(int _num) { InvenManager.UseSoul(_num); }                                                                        // 영혼 사용
     public static void UsePurified(int _num) { InvenManager.UsePurified(_num); }                                                                // 성불 영혼 사용
-    public static void UsePattern(EProperty _type, int _num) { InvenManager.UsePattern(_type, _num); }                                          // 문양 사용
+    public static void UsePattern(EPatternName _type, int _num) { InvenManager.UsePattern(_type, _num); }                                       // 문양 사용
 
     // 스토리
     private StoryManager m_storyManager;
@@ -168,7 +172,7 @@ public class PlayManager : MonoBehaviour
     private static PlayUIManager PlayUIManager { get { return Inst.m_playUIManager; } }
     public static Vector2 NormalizeLocation(Transform _obj) { return PlayUIManager.NormalizeLocation(_obj); }                               // 위치 정규화(3D -> 2D)
     public static Canvas GetCanvas(ECanvasType _canvas) { return PlayUIManager.GetCanvas(_canvas); }                                        // 캔버스
-    public static RectTransform CanvasTrans(ECanvasType _canvas) { return GetCanvas(_canvas).GetComponent<RectTransform>(); }               
+    public static RectTransform CanvasTrans(ECanvasType _canvas) { return GetCanvas(_canvas).GetComponent<RectTransform>(); }
     public static void OpenPlayerUI() { PlayUIManager.OpenPlayerUI(); }                                                                     // Player UI 열기
     public static void ClosePlayerUI() { PlayUIManager.ClosePlayerUI(); }                                                                   // Player UI 닫기
     public static void ShowInteractInfo(string _info) { PlayUIManager.ShowInteractInfo(_info); }

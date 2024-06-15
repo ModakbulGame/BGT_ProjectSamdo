@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : MonoBehaviour, IHaveData
 {
     // 영혼
     private int m_soulNum = 0;
@@ -38,40 +38,20 @@ public class InventoryManager : MonoBehaviour
     }
 
     // 문양
-    private readonly int[] m_patternNum = new int[(int)EProperty.LAST] { 0, 0, 0 };
+    private readonly int[] m_patternNum = new int[(int)EPatternName.LAST];
     public int[] PatternNum { get { return m_patternNum; } }
-    public void AddPattern(EProperty _type, int _num)
+    public void AddPattern(EPatternName _type, int _num)
     {
         m_patternNum[(int)_type] += _num;
         GameManager.CreateSideTextAlarm($"문양 {_num}개 획득!");
         PlayManager.UpdateMaterials();
     }
-    public void UsePattern(EProperty _type, int _num)
+    public void UsePattern(EPatternName _type, int _num)
     {
         if (m_patternNum[(int)_type] < _num) { Debug.LogError("보유 문양보다 많은 개수 사용"); return; }
         m_patternNum[(int)_type] -= _num;
         PlayManager.UpdateMaterials();
     }
-
-
-    // 장비 인벤토리
-    private bool[] WeaponObatined { get {
-            bool[] list = new bool[(int)EWeaponName.LAST];
-            for (int i = 0; i<(int)EWeaponName.LAST; i++)
-            { list[i] = GameManager.GetItemInfo(new SItem(EItemType.WEAPON, i)).Obtained; }
-            return list; } }
-    public EWeaponName CurWeapon { get; private set; } = EWeaponName.BASIC_SWORD;    // 장착 중인 무기
-    public void SetCurWeapon(EWeaponName _weapon)               // 무기 설정
-    {
-        CurWeapon = _weapon;
-    }
-    public void EquipWeapon(EWeaponName _weapon)                // 무기 장착
-    {
-        if (!WeaponObatined[(int)_weapon]) { Debug.LogError("무기 미습득"); return; }
-        SetCurWeapon(_weapon);
-        PlayManager.SetPlayerWeapon(_weapon);
-    }
-
 
     // 회복 아이템 (각인 문양?)
     private readonly List<EPatternName> m_healPatternList = new();
@@ -91,6 +71,31 @@ public class InventoryManager : MonoBehaviour
             m_healPatternList.Add(_pattern);
         }
     }
+
+
+    // 장비 인벤토리
+    private readonly bool[] m_weaponObtained = new bool[(int)EWeaponName.LAST];
+    public bool[] WeaponObatined { get { return m_weaponObtained; } }
+    public EWeaponName CurWeapon { get; private set; } = EWeaponName.BASIC_SWORD;    // 장착 중인 무기
+
+    public readonly static EWeaponName InitialWeapon = EWeaponName.BASIC_SCEPTER;
+
+    private void InitWeaponObtained() { for(int i = 0; i<=(int)InitialWeapon; i++) { m_weaponObtained[i] = true; } }
+    public void ObtainWeapon(EWeaponName _weapon)
+    {
+        m_weaponObtained[(int)_weapon] = true;
+    }
+    public void SetCurWeapon(EWeaponName _weapon)               // 무기 설정
+    {
+        CurWeapon = _weapon;
+    }
+    public void EquipWeapon(EWeaponName _weapon)                // 무기 장착
+    {
+        if (!WeaponObatined[(int)_weapon]) { Debug.LogError("무기 미습득"); return; }
+        SetCurWeapon(_weapon);
+        PlayManager.SetPlayerWeapon(_weapon);
+    }
+
 
     // 투척 아이템
     private readonly List<EThrowItemName> m_throwItemList = new();
@@ -132,7 +137,7 @@ public class InventoryManager : MonoBehaviour
 
 
     // 아이템 인벤토리
-    private readonly ItemInventory m_itemInven = new();                                 // 아이템 인벤토리
+    private ItemInventory m_itemInven;                                                  // 아이템 인벤토리
     public InventoryElm[] Inventory { get { return m_itemInven.Inventory; } }           // 아이템 목록
     public void AddInventoryItem(SItem _item, int _num) { m_itemInven.AddItem(_item, _num); }                           // 아이템 추가
     public void SetInventoryItem(int _idx, SItem _item, int _num) { m_itemInven.SetItem(_idx, _item, _num); }           // idx에 아이템 설정
@@ -141,44 +146,40 @@ public class InventoryManager : MonoBehaviour
     public void RemoveInventoryItem(int _idx) { m_itemInven.RemoveItem(_idx); }                                         // 아이템 제거
 
 
-    // 초기 설정
-    private void TempSetItem()
+    public void LoadData()
     {
-        for (int i = 0; i<(int)EWeaponName.GOBLIN_SCEPTER; i++)
-        {
-            GameManager.ObtainWeapon((EWeaponName)i);
-            WeaponObatined[i] = true;
-        }
+        GameManager.RegisterData(this);
+        if (PlayManager.IsNewData) { m_itemInven = new(); InitWeaponObtained(); return; }
 
-        for (int i = 0; i<(int)EThrowItemName.LAST; i++)
-        {
-            AddInventoryItem(new(EItemType.THROW, i), 10);
-        }
-        for (int i = 0; i<(int)EPatternName.LAST; i++)
-        {
-            AddInventoryItem(new(EItemType.PATTERN, i), 10);
-        }
-        for (int i = 0; i<(int)EOtherItemName.LAST; i++)
-        {
-            AddInventoryItem(new(EItemType.OTHERS, i), 10);
-        }
+        SaveData data = PlayManager.CurSaveData;
+
+        m_soulNum = data.Soul;
+        m_purifiedNum = data.PurifiedSoul;
+        for(int i = 0; i<(int)EPatternName.LAST; i++) { m_patternNum[i] = data.PatternNum[i]; }
+        foreach(EPatternName pattern in data.HealPatternList) { m_healPatternList.Add(pattern); }
+        for(int i = 0; i<(int)EWeaponName.LAST; i++) { m_weaponObtained[i] = data.WeaponObtained[i]; }
+        CurWeapon = data.CurWeapon;
+        foreach(EThrowItemName throwItem in data.ThrowItemList) { m_throwItemList.Add(throwItem); }
+        m_itemInven = new(data.Inventory);
     }
-    private void TempSetItemSlot()
+    public void SaveData()
     {
-        for (int i = 0; i<(int)EPatternName.LAST; i+=2)
-        {
-            m_healPatternList.Add((EPatternName)i);
-        }
-        for (int i = 0; i<(int)EThrowItemName.LAST; i++)
-        {
-            m_throwItemList.Add((EThrowItemName)i);
-        }
+        SaveData data = PlayManager.CurSaveData;
+
+        data.Soul = m_soulNum;
+        data.PurifiedSoul = m_purifiedNum;
+        for (int i = 0; i<(int)EPatternName.LAST; i++) { data.PatternNum[i] = m_patternNum[i]; }
+        foreach (EPatternName pattern in m_healPatternList) { data.HealPatternList.Add(pattern); }
+        for(int i = 0; i<(int)EWeaponName.LAST; i++) { data.WeaponObtained[i] = m_weaponObtained[i]; }
+        data.CurWeapon = CurWeapon;
+        foreach(EThrowItemName throwItem in m_throwItemList) { data.ThrowItemList.Add(throwItem); }
+        for (int i = 0; i<ValueDefine.MAX_INVENTORY; i++) { data.Inventory[i].SetItem(Inventory[i]); }
     }
+
 
 
     public void SetManager()
     {
-        TempSetItem();              // 아이템 습득 임시 설정
-        TempSetItemSlot();         // 던지기 아이템 리스트 임시 설정
+        LoadData();
     }
 }

@@ -65,7 +65,6 @@ public class GameManager : SingleTon<GameManager>
     public static ItemInfo GetWeaponInfo(EWeaponName _weapon) { return GetItemInfo(new SItem(EItemType.WEAPON, (int)_weapon)); }            // 무기 정보
     public static GameObject GetThorwItemPrefab(EThrowItemName _item) { return ItemManager.GetThrowItemPrefab(_item); }                     // 투척 아이템 프리펍
     public static GameObject GetDropItemPrefab(EItemType _item) { return ItemManager.GetDropItemPrefab(_item); }                            // 드랍 아이템 프리펍
-    public static void ObtainWeapon(EWeaponName _weapon) { ItemManager.ObtainWeapon(_weapon); }
 
 
 

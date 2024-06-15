@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 // 아이템 관련 enum -> ItemEnum에 있음
@@ -54,16 +52,13 @@ public class ItemInfo
     public EItemType ItemType { get; private set; }
     public string ItemDescription { get { return ItemData.Description; } }
     public SItem Item { get; private set; }
-    public bool Obtained { get; private set; }
-
-    public void ObtainItem() { Obtained = true; }
+    public bool Obtained { get { if (ItemType != EItemType.WEAPON) { return true; } return PlayManager.WeaponObtained[Item.Idx]; } }
 
     public ItemInfo(ItemScriptable _scriptable, SItem _item)
     {
         ItemData = _scriptable;
         Item = _item;
         ItemType = _item.Type;
-        Obtained = ItemType != EItemType.WEAPON;
     }
 }
 
@@ -83,13 +78,6 @@ public class ItemManager : MonoBehaviour
             if (kv.Value.ItemID == _id) { return kv.Value; }
         }
         return null;
-    }
-
-    public void ObtainWeapon(EWeaponName _weapon)       // 무기 획득
-    {
-        SItem weapon = new(EItemType.WEAPON, (int)_weapon);
-        if (m_itemInfo[weapon].Obtained) { return; }
-        m_itemInfo[weapon].ObtainItem();
     }
 
 
@@ -150,7 +138,6 @@ public class ItemManager : MonoBehaviour
             list.AddRange(m_dropItemPrefabs);
             list.AddRange(m_throwItemPrefabs);
             return list.ToArray(); } }
-
 
 
     // 아이템 별 종류 수

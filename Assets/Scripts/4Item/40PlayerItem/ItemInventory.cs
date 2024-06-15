@@ -3,16 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class InventoryElm       // 각 인벤토리 칸의 정보
 {
     public SItem Item;                                                            // 아이템 이름 idx
     public int Num;                                                               // 아이템 개수
     public bool IsEmpty { get { return Item.IsEmpty; } }                          // 비었는지
     public void SetItem(SItem _item, int _num) { Item = _item; Num = _num; }    // 인벤토리 설정
+    public void SetItem(InventoryElm _other) { Item = _other.Item; Num = _other.Num; }
     public void Additem(int _num) { Num += _num; }
     public void UseItem(int _num) { if(Num >= _num) { Num -= _num; } }          // 아이템 사용
     public void EmptyInventory() { Item = SItem.Empty; Num = 0; }               // 비우기
     public InventoryElm() { EmptyInventory(); }                                     // 빈 생성자
+    public InventoryElm(InventoryElm _other) { SetItem(_other); }
 }
 
 public class ItemInventory
@@ -20,7 +23,7 @@ public class ItemInventory
     private readonly InventoryElm[] m_inventory = new InventoryElm[ValueDefine.MAX_INVENTORY];        // 인벤토리 배열
     public InventoryElm[] Inventory { get { return m_inventory; } }
 
-    private int EmptyIdx { get { for (int i = 0; i<ValueDefine.MAX_INVENTORY; i++) { if (m_inventory[i].IsEmpty) return i; } return -1; } }     // 빈 인벤토리 idx
+    public int EmptyIdx { get { for (int i = 0; i<ValueDefine.MAX_INVENTORY; i++) { if (m_inventory[i].IsEmpty) return i; } return -1; } }     // 빈 인벤토리 idx
 
 
     public void AddItem(SItem _item, int _num)                  // 빈 인벤토리에 아이템 추가
@@ -62,4 +65,5 @@ public class ItemInventory
 
 
     public ItemInventory() { for(int i=0;i<ValueDefine.MAX_INVENTORY; i++) { m_inventory[i] = new(); } }
+    public ItemInventory(InventoryElm[] _data) { for(int i=0;i<ValueDefine.MAX_INVENTORY; i++) { m_inventory[i] = new(_data[i]); } }
 }

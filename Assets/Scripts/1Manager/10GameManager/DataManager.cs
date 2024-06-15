@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using System.IO;
-using UnityEngine.Playables;
 
 public class DataManager : MonoBehaviour
 {
@@ -62,7 +61,7 @@ public class DataManager : MonoBehaviour
             data.SaveData();
         }
 
-        SaveGameFile();
+        AddGameData(CurData);
     }
     public void ClearAllData()
     {
