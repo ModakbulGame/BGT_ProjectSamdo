@@ -41,7 +41,6 @@ public class ParabolaExplodeScript : ParabolaSkillScript
     public override void ReleaseToPool()
     {
         base.ReleaseToPool();
-        //DisableExplosion();
     }
 
 

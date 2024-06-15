@@ -32,7 +32,7 @@ public class ProjectileSkillScript : PlayerSkillScript
         Destroy(gameObject);
     }
 
-    protected virtual bool DistanceCheck(float _distanceMoved)
+    public virtual bool DistanceCheck(float _distanceMoved)
     {
         return _distanceMoved > m_scriptable.CastingRange;
     }
@@ -41,6 +41,7 @@ public class ProjectileSkillScript : PlayerSkillScript
     {
         SetSkill(_player, _attack, _magic);
         MoveDir = new(_dir.x,0,_dir.y);
+        transform.localEulerAngles = new(0, FunctionDefine.VecToDeg(_dir), 0);
     }
 
     public override void CollideTarget()
