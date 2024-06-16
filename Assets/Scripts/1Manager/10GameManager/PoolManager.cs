@@ -37,7 +37,7 @@ public class PoolManager : MonoBehaviour
             InitPool(_items[i], DEFAULT_ITEM_NUM);
         }
         // ½ºÅ³
-        for(int i = 0; i<(int)ESkillName.LAST; i++)
+        for(int i = 0; i<(int)EPowerName.LAST; i++)
         {
             if (_skills[i] == null) { continue; }
             InitPool(_skills[i], DEFAULT_SKILL_NUM);

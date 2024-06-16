@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5406106366309503936}
   m_Layer: 0
   m_Name: SubAttack
-  m_TagString: MonsterAttack
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 7781031196755855056}
   m_Layer: 9
   m_Name: HornCollider
-  m_TagString: MonsterHit
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -666,6 +666,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaterGuardianNormal
       objectReference: {fileID: 0}
+    - target: {fileID: 103634261760929328, guid: 9728e481bf60a7341b9ab421b2533770,
+        type: 3}
+      propertyPath: m_TagString
+      value: MonsterAttack
+      objectReference: {fileID: 0}
     - target: {fileID: 309700571893705869, guid: 9728e481bf60a7341b9ab421b2533770,
         type: 3}
       propertyPath: m_Size.x
@@ -821,7 +826,7 @@ PrefabInstance:
     - target: {fileID: -8109829993498575500, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
       propertyPath: m_TagString
-      value: MonsterHit
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: -7658363960959658956, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
@@ -836,7 +841,7 @@ PrefabInstance:
     - target: {fileID: -7318146090709184487, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
       propertyPath: m_TagString
-      value: MonsterHit
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: -6591919036847234910, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
@@ -856,7 +861,7 @@ PrefabInstance:
     - target: {fileID: -4853954078887083693, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
       propertyPath: m_TagString
-      value: MonsterHit
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: -4551599135802936181, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
@@ -911,7 +916,7 @@ PrefabInstance:
     - target: {fileID: 1640033196676990117, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
       propertyPath: m_TagString
-      value: MonsterHit
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1726527512867401859, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
@@ -921,7 +926,7 @@ PrefabInstance:
     - target: {fileID: 1726527512867401859, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
       propertyPath: m_TagString
-      value: MonsterHit
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2626715512951081392, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
@@ -941,7 +946,7 @@ PrefabInstance:
     - target: {fileID: 3026522392604817644, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
       propertyPath: m_TagString
-      value: MonsterHit
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 3404150548016400311, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
@@ -956,7 +961,7 @@ PrefabInstance:
     - target: {fileID: 3440663850312004499, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
       propertyPath: m_TagString
-      value: MonsterHit
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 3756075173390184458, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
@@ -986,7 +991,7 @@ PrefabInstance:
     - target: {fileID: 6950137226260877016, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
       propertyPath: m_TagString
-      value: MonsterHit
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7097182929985908383, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
@@ -1001,7 +1006,7 @@ PrefabInstance:
     - target: {fileID: 7242993359035194598, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
       propertyPath: m_TagString
-      value: MonsterHit
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7732948995435857383, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
@@ -1011,7 +1016,7 @@ PrefabInstance:
     - target: {fileID: 7732948995435857383, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
       propertyPath: m_TagString
-      value: MonsterHit
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 8081611880471559644, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
@@ -1021,7 +1026,7 @@ PrefabInstance:
     - target: {fileID: 8081611880471559644, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}
       propertyPath: m_TagString
-      value: MonsterHit
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 8356538690890272372, guid: ebb9107a3bb395145b28a92c27ffc001,
         type: 3}

@@ -48,8 +48,9 @@ public class MonsterProjectileScript : ObjectAttackScript, IHittable, IPoolable
 
     private void OnTriggerEnter(Collider _other)
     {
-        if (_other.CompareTag(ValueDefine.PLAYER_HIT_TAG))
+        if (_other.includeLayers == LayerMask.NameToLayer(ValueDefine.HITTABLE_LAYER_NAME))
         {
+            if(_other.GetComponentInParent<PlayerController>() == null) { return; }
             DestroyAttack();
         }
         else if (_other.CompareTag(ValueDefine.TERRAIN_TAG))

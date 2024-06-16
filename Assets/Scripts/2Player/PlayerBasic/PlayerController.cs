@@ -10,9 +10,9 @@ public partial class PlayerController : ObjectScript, IHaveData
     public bool JumpPressing { get; private set; }                                                                  // 스페이스바
     public bool RollPressing { get; private set; }                                                                  // 쉬프트
     public bool AttackTrigger { get { return PlayerInput.Attack.triggered; } }                                      // 좌클릭
-    public bool[] SkillTriggers { get {
-            return new bool[ValueDefine.MAX_SKILL_SLOT] { 
-                PlayerInput.Skill1.triggered, PlayerInput.Skill2.triggered, PlayerInput.Skill3.triggered }; } }                                                                         // 숫자 123
+    public bool[] PowerTriggers { get {
+            return new bool[ValueDefine.MAX_POWER_SLOT] { 
+                PlayerInput.Power1.triggered, PlayerInput.Power2.triggered, PlayerInput.Power3.triggered }; } }                                                                         // 숫자 123
     public bool GuardTrigger { get { return PlayerInput.Guard.triggered; } }                                        // 우클릭
     public bool GuardPressing { get; private set; }                                                                 // 우클릭 입력 중
     public bool LightTrigger { get { return PlayerInput.Light.triggered; } }                                        // T
@@ -55,7 +55,7 @@ public partial class PlayerController : ObjectScript, IHaveData
     public bool IsAttacking { get { return CurState.StateEnum == EPlayerState.ATTACK; } }                           // 공격 중
     public bool IsGuarding { get { return CurState.StateEnum == EPlayerState.GUARD; } }                             // 가드 중
     public bool IsHit { get { return CurState.StateEnum == EPlayerState.HIT; } }                                    // 히트 중
-    public bool IsSkilling { get { return CurState.StateEnum == EPlayerState.SKILL; } }                             // 스킬 중
+    public bool IsPowering { get { return CurState.StateEnum == EPlayerState.Power; } }                             // 스킬 중
     public bool IsJumping { get { return CurState.StateEnum == EPlayerState.JUMP; } }                               // 점프 중
     public bool IsRolling { get { return CurState.StateEnum == EPlayerState.ROLL; } }                               // 구르기 중
     public bool IsThrowing { get { return CurState.StateEnum == EPlayerState.THROW; } }                             // 구르기 중
@@ -64,7 +64,7 @@ public partial class PlayerController : ObjectScript, IHaveData
 
     public void ResetPlayerAction()
     {
-        if (IsSkilling) { CancelSkill(); }
+        if (IsPowering) { CancelPower(); }
         if (IsThrowing) { CancelThrow(); }
     }
 
@@ -103,18 +103,18 @@ public partial class PlayerController : ObjectScript, IHaveData
             Vector2 dir = PlayerAimDirection * cos;
             return new(dir.x, sin, dir.y); } }
 
-    public void ShowSkillAim(float _radius, float _range)                                                           // 조준 보이기
+    public void ShowPowerAim(float _radius, float _range)                                                           // 조준 보이기
     {
-        PlayManager.ShowSkillAim(Position, _radius, _range);
+        PlayManager.ShowPowerAim(Position, _radius, _range);
     }
-    public void TraceSkillAim()                                                                                     // 조준 마크 위치 설정
+    public void TracePowerAim()                                                                                     // 조준 마크 위치 설정
     {
-        PlayManager.TraceSkillAim(Position, SkillInfoInHand.SkillCastRange);
+        PlayManager.TracePowerAim(Position, PowerInfoInHand.PowerCastRange);
     }
-    public void HideSkillAim()                                                                                      // 조준 숨기기
+    public void HidePowerAim()                                                                                      // 조준 숨기기
     {
-        PlayManager.HideSkillAim();
-        if (IsRaycastSkill) { PlayManager.HideRaycastAim(); }
+        PlayManager.HidePowerAim();
+        if (IsRaycastPower) { PlayManager.HideRaycastAim(); }
     }
 
     
@@ -172,10 +172,10 @@ public partial class PlayerController : ObjectScript, IHaveData
         get { return m_cooltimes[(int)ECooltimeName.HEAL]; }
         private set { m_cooltimes[(int)ECooltimeName.HEAL] = value; }
     }
-    public float[] SkillCooltime
+    public float[] PowerCooltime
     {
-        get { return m_cooltimes[(int)ECooltimeName.SKILL1..(int)ECooltimeName.LAST]; }
-        private set { for (int i = 0; i<ValueDefine.MAX_SKILL_SLOT; i++) { m_cooltimes[(int)ECooltimeName.SKILL1 + i] = value[i]; } }
+        get { return m_cooltimes[(int)ECooltimeName.POWER1..(int)ECooltimeName.LAST]; }
+        private set { for (int i = 0; i<ValueDefine.MAX_POWER_SLOT; i++) { m_cooltimes[(int)ECooltimeName.POWER1 + i] = value[i]; } }
     }
     public override void ProcCooltime()
     {
@@ -261,7 +261,7 @@ public partial class PlayerController : ObjectScript, IHaveData
         LightOff();
         IsOverload = true;
         PlayManager.SetLightState(false);
-        if (IsSkilling) { CancelSkill(); }
+        if (IsPowering) { CancelPower(); }
     }
     private void OverloadRestoreLight()
     {

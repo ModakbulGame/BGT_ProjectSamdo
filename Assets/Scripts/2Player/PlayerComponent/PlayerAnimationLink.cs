@@ -41,13 +41,13 @@ public class PlayerAnimationLink : MonoBehaviour
         m_player.ChangeState(EPlayerState.IDLE);
     }
 
-    public void CreateSkill()
+    public void CreatePower()
     {
-        m_player.CreateSkill();
+        m_player.CreatePower();
     }
-    public void SkillDone()
+    public void PowerDone()
     {
-        m_player.SkillDone();
+        m_player.PowerDone();
     }
 
     public void StartInvincible()           // 무적 시작

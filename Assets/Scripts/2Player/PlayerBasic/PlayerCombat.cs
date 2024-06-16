@@ -144,76 +144,76 @@ public partial class PlayerController
 
 
     // 스킬 관련
-    private ESkillName[] SkillSlot { get { return GameManager.SkillSlot; } }                // 스킬 슬롯
-    public int SkillIdx
+    private EPowerName[] PowerSlot { get { return PlayManager.PowerSlot; } }                // 스킬 슬롯
+    public int PowerIdx
     {
         get
         {
-            for (int i = 0; i<ValueDefine.MAX_SKILL_SLOT; i++)          // 눌린 스킬
-            { if (SkillTriggers[i]) return i; }
+            for (int i = 0; i<ValueDefine.MAX_POWER_SLOT; i++)          // 눌린 스킬
+            { if (PowerTriggers[i]) return i; }
             return -1;
         }
     }
-    public bool CanUseSkill
+    public bool CanUsePower
     {
         get
         {
-            return !IsOverload && !IsOblivion && SkillIdx != -1     // 스킬 사용 가능 여부
-                && SkillSlot[SkillIdx] != ESkillName.LAST && SkillCooltime[SkillIdx] <= 0;
+            return !IsOverload && !IsOblivion && PowerIdx != -1     // 스킬 사용 가능 여부
+                && PowerSlot[PowerIdx] != EPowerName.LAST && PowerCooltime[PowerIdx] <= 0;
         }
     }
-    public ESkillName SkillInHand { get; private set; } = ESkillName.LAST;                  // 사용 중인 스킬
-    private SkillInfo SkillInfoInHand
+    public EPowerName PowerInHand { get; private set; } = EPowerName.LAST;                  // 사용 중인 스킬
+    private PowerInfo PowerInfoInHand
     {
         get
         {                                               // ㄴ의 정보
-            if (SkillInHand == ESkillName.LAST) return null;
-            return GameManager.GetSkillInfo(SkillInHand);
+            if (PowerInHand == EPowerName.LAST) return null;
+            return GameManager.GetPowerInfo(PowerInHand);
         }
     }
-    public int UsingSkillIdx { get; private set; } = -1;                                    // ㄴ의 슬롯 번호
+    public int UsingPowerIdx { get; private set; } = -1;                                    // ㄴ의 슬롯 번호
 
-    public bool IsRaycastSkill { get { return SkillInHand == ESkillName.RANGED_KNOCKBACK1; } }
+    public bool IsRaycastPower { get { return PowerInHand == EPowerName.RANGED_KNOCKBACK1; } }
 
-    public void ReadySkill()                                                                // 스킬 사용 준비
+    public void ReadyPower()                                                                // 스킬 사용 준비
     {
-        UsingSkillIdx = SkillIdx;
-        SkillInHand = SkillSlot[UsingSkillIdx];
+        UsingPowerIdx = PowerIdx;
+        PowerInHand = PowerSlot[UsingPowerIdx];
 
-        SkillStartAnim();
-        if (SkillInfoInHand.HideWeapon) { HideWeapon(); }
-        if (SkillInfoInHand.ShowCastingEffect) { CastingEffectOn(); }
+        PowerStartAnim();
+        if (PowerInfoInHand.HideWeapon) { HideWeapon(); }
+        if (PowerInfoInHand.ShowCastingEffect) { CastingEffectOn(); }
 
         if (IsHealing) { CancelHeal(); }
 
-        if (SkillInfoInHand.CastType == ECastType.SUMMON)
+        if (PowerInfoInHand.CastType == ECastType.SUMMON)
         {
-            ShowSkillAim(SkillInfoInHand.SkillRadius, SkillInfoInHand.SkillCastRange);
+            ShowPowerAim(PowerInfoInHand.PowerRadius, PowerInfoInHand.PowerCastRange);
         }
-        if (IsRaycastSkill)
+        if (IsRaycastPower)
         {
             PlayManager.ShowRaycastAim();
         }
         GuardDelayStart();
     }
-    public void FireSkill()                                                                 // 스킬 사용
+    public void FirePower()                                                                 // 스킬 사용
     {
-        float coolTime = SkillInfoInHand.SkillCooltime;
-        SkillCooltime[UsingSkillIdx] = coolTime;
-        PlayManager.UseSkillSlot(UsingSkillIdx, coolTime);
-        SkillFireAnim();
-        HideSkillAim();
+        float coolTime = PowerInfoInHand.PowerCooltime;
+        PowerCooltime[UsingPowerIdx] = coolTime;
+        PlayManager.UsePowerSlot(UsingPowerIdx, coolTime);
+        PowerFireAnim();
+        HidePowerAim();
     }
-    public void CreateSkill()                                                               // 스킬 오브젝트 생성
+    public void CreatePower()                                                               // 스킬 오브젝트 생성
     {
-        GameObject skill = GameManager.GetSkillObj(SkillInHand);
-        ECastType type = SkillInfoInHand.CastType;
-        skill.transform.SetParent(transform);
+        GameObject power = GameManager.GetPowerObj(PowerInHand);
+        ECastType type = PowerInfoInHand.CastType;
+        power.transform.SetParent(transform);
 
-        if (IsRaycastSkill)
+        if (IsRaycastPower)
         {
-            RaycastDone(skill);
-            SkillAnimDone();
+            RaycastDone(power);
+            PowerAnimDone();
             return;
         }
 
@@ -221,50 +221,50 @@ public partial class PlayerController
         {
             case ECastType.MELEE:
             case ECastType.MELEE_CC:
-                skill.transform.localPosition = Vector3.zero;
-                skill.transform.localEulerAngles = Vector3.zero;
+                power.transform.localPosition = Vector3.zero;
+                power.transform.localEulerAngles = Vector3.zero;
                 break;
             case ECastType.RANGED:
             case ECastType.RANGED_CC:
-                skill.transform.localPosition = SkillInfoInHand.SkillData.SkillPrefab.transform.localPosition;
-                skill.transform.SetParent(null);
-                ProjectileSkillScript projectile = skill.GetComponentInChildren<ProjectileSkillScript>();
-                projectile.SetSkill(this, Attack, Magic, PlayerAimDirection);
+                power.transform.localPosition = PowerInfoInHand.PowerData.PowerPrefab.transform.localPosition;
+                power.transform.SetParent(null);
+                ProjectilePowerScript projectile = power.GetComponentInChildren<ProjectilePowerScript>();
+                projectile.SetPower(this, Attack, Magic, PlayerAimDirection);
                 break;
             case ECastType.SUMMON:
-                skill.transform.SetParent(null);
-                skill.transform.position = PlayManager.TraceSkillAim(Position, SkillInfoInHand.SkillCastRange);
+                power.transform.SetParent(null);
+                power.transform.position = PlayManager.TracePowerAim(Position, PowerInfoInHand.PowerCastRange);
                 break;
             case ECastType.AROUND:
             case ECastType.AROUND_CC:
-                skill.transform.localPosition = Vector3.zero;
-                skill.transform.SetParent(null);
-                AroundSkillScript around = skill.GetComponentInChildren<AroundSkillScript>();
-                around.SetSkill(this, Attack, Magic);
+                power.transform.localPosition = Vector3.zero;
+                power.transform.SetParent(null);
+                AroundPowerScript around = power.GetComponentInChildren<AroundPowerScript>();
+                around.SetPower(this, Attack, Magic);
                 break;
             case ECastType.BUFF:
-                TempAdjust adjust = SkillInfoInHand.SkillData.StatAdjust;
+                TempAdjust adjust = PowerInfoInHand.PowerData.StatAdjust;
                 GetAdj(adjust);
-                skill.transform.localPosition = Vector3.zero;
+                power.transform.localPosition = Vector3.zero;
                 break;
             default:
-                PlayerSkillScript script = skill.GetComponentInChildren<PlayerSkillScript>();
-                script.SetSkill(this, Attack, Magic);
+                PlayerPowerScript script = power.GetComponentInChildren<PlayerPowerScript>();
+                script.SetPower(this, Attack, Magic);
                 break;
         };
 
-        SkillAnimDone();
+        PowerAnimDone();
     }
-    public void CancelSkill()                                                               // 스킬 취소
+    public void CancelPower()                                                               // 스킬 취소
     {
-        SkillAnimDone();
+        PowerAnimDone();
     }
-    public void SkillDone()                                                                 // 스킬 사용 종료
+    public void PowerDone()                                                                 // 스킬 사용 종료
     {
-        HideSkillAim();
-        if (SkillInfoInHand.ShowCastingEffect) { CastingEffectOff(); }
-        SkillInHand = ESkillName.LAST;
-        UsingSkillIdx = -1;
+        HidePowerAim();
+        if (PowerInfoInHand.ShowCastingEffect) { CastingEffectOff(); }
+        PowerInHand = EPowerName.LAST;
+        UsingPowerIdx = -1;
         ShowWeapon();
         ChangeState(EPlayerState.IDLE);
     }
@@ -299,13 +299,13 @@ public partial class PlayerController
         PlayManager.SetRaycastAimState(false);
         return RaycastTargetInfo.Null;
     }
-    private void RaycastDone(GameObject _skill)
+    private void RaycastDone(GameObject _power)
     {
         RaycastTargetInfo info = CheckRaycast();
         if (info.IsNull) { return; }
-        _skill.transform.position = info.Point;
-        _skill.GetComponent<EffectScript>().SetDestroyTime(2); ;
-        RaycastTarget.GetInstantHit(SkillInfoInHand, info.Target, this);
+        _power.transform.position = info.Point;
+        _power.GetComponent<EffectScript>().SetDestroyTime(2); ;
+        RaycastTarget.GetInstantHit(PowerInfoInHand, info.Target, this);
     }
 
     // 무기 CC

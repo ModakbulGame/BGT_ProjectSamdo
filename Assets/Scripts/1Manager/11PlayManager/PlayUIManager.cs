@@ -86,9 +86,9 @@ public class PlayUIManager : MonoBehaviour
     public void SetMaxHP(float _hp) { m_hpBar.SetMaxHP(_hp); }
     public void SetCurHP(float _hp) { m_hpBar.SetCurHP(_hp); }
 
-    private SkillSlotUIScript m_skillSlot;                  // 스킬 슬롯
-    public void UpdateSkillSlot() { m_skillSlot.UpdateUI(); }
-    public void UseSkillSlot(int _idx, float _cooltime) { m_skillSlot.UseSkill(_idx, _cooltime); }
+    private PowerSlotUIScript m_powerSlot;                  // 스킬 슬롯
+    public void UpdatePowerSlot() { m_powerSlot.UpdateUI(); }
+    public void UsePowerSlot(int _idx, float _cooltime) { m_powerSlot.UsePower(_idx, _cooltime); }
 
     private EquipSlotUIScript m_equipSlot;
     public void UpdateEquipSlot() { m_equipSlot.UpdateUI(); }
@@ -106,13 +106,13 @@ public class PlayUIManager : MonoBehaviour
 
 
     [SerializeField]
-    private PlayerSkillAimScript m_skillAimUI;
-    public void ShowSkillAim(Vector3 _pos, float _radius, float _range)       // 스킬 에임 보이기
+    private PlayerPowerAimScript m_powerAimUI;
+    public void ShowPowerAim(Vector3 _pos, float _radius, float _range)       // 스킬 에임 보이기
     {
-        m_skillAimUI.ShowDrawer(_radius);
-        TraceSkillAim(_pos, _range);
+        m_powerAimUI.ShowDrawer(_radius);
+        TracePowerAim(_pos, _range);
     }
-    public Vector3 TraceSkillAim(Vector3 _pos, float _range)
+    public Vector3 TracePowerAim(Vector3 _pos, float _range)
     {
         Vector3 pos = _pos;
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -130,12 +130,12 @@ public class PlayUIManager : MonoBehaviour
                 }
             }
         }
-        m_skillAimUI.TraceAim(pos);
+        m_powerAimUI.TraceAim(pos);
         return pos;
     }
-    public void HideSkillAim()                                  // 스킬 에임 숨기기
+    public void HidePowerAim()                                  // 스킬 에임 숨기기
     {
-        m_skillAimUI.HideDrawer();
+        m_powerAimUI.HideDrawer();
     }
 
 
@@ -173,13 +173,13 @@ public class PlayUIManager : MonoBehaviour
     {
         m_hpBar = m_mainCanvas.GetComponentInChildren<PlayerHPBarScript>();
         m_hpBar.SetComps();
-        m_skillSlot = m_mainCanvas.GetComponentInChildren<SkillSlotUIScript>();
-        m_skillSlot.SetComps();
+        m_powerSlot = m_mainCanvas.GetComponentInChildren<PowerSlotUIScript>();
+        m_powerSlot.SetComps();
         m_aimUI = m_mainCanvas.GetComponentInChildren<AimUIScript>();
         m_equipSlot = m_mainCanvas.GetComponentInChildren<EquipSlotUIScript>();
         m_mapArea = new Vector2(MapWidth, MapHeight);
 
-        UpdateSkillSlot();
+        UpdatePowerSlot();
         UpdateEquipSlot();
 
     }

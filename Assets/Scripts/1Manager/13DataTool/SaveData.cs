@@ -15,7 +15,6 @@ public class SaveData
     public PlayerStatInfo StatInfo;
     public int LeftStatPoint;
     public int UsedStatPoint;
-    public ESkillName[] SkillSlot;
 
     // 아이템 정보
     public int Soul;
@@ -27,6 +26,12 @@ public class SaveData
     public List<EThrowItemName> ThrowItemList;
     public InventoryElm[] Inventory;
 
+    // 스킬 정보
+    public EPowerName[] PowerSlot;
+
+
+    // 퀘스트 정보
+
 
     // 몬스터 정보
     public List<MonsterSaveData> MonsterData;
@@ -36,7 +41,7 @@ public class SaveData
         SavedTime = DateTime.Now.ToString();
 
         StatInfo = new();
-        SkillSlot = new ESkillName[ValueDefine.MAX_SKILL_SLOT] { ESkillName.LAST,ESkillName.LAST,ESkillName.LAST};
+        PowerSlot = new EPowerName[ValueDefine.MAX_POWER_SLOT] { EPowerName.LAST,EPowerName.LAST,EPowerName.LAST};
 
         PatternNum = new int[(int)EPatternName.LAST];
         HealPatternList = new();
@@ -57,8 +62,8 @@ public class SaveData
         StatInfo = new(_other.StatInfo);
         LeftStatPoint = _other.LeftStatPoint;
         UsedStatPoint = _other.UsedStatPoint;
-        SkillSlot = new ESkillName[ValueDefine.MAX_SKILL_SLOT];
-        for(int i = 0; i<ValueDefine.MAX_SKILL_SLOT; i++) { SkillSlot[i] = _other.SkillSlot[i]; }
+        PowerSlot = new EPowerName[ValueDefine.MAX_POWER_SLOT];
+        for(int i = 0; i<ValueDefine.MAX_POWER_SLOT; i++) { PowerSlot[i] = _other.PowerSlot[i]; }
 
         Soul = _other.Soul;
         PurifiedSoul = _other.PurifiedSoul;

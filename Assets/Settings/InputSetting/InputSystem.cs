@@ -145,7 +145,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Skill1"",
+                    ""name"": ""Power1"",
                     ""type"": ""Button"",
                     ""id"": ""3ae140a4-adb1-4018-86d4-e5945cb7a05f"",
                     ""expectedControlType"": ""Button"",
@@ -154,7 +154,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Skill2"",
+                    ""name"": ""Power2"",
                     ""type"": ""Button"",
                     ""id"": ""f417c2d3-218c-4ae5-9ffc-8e70a7dcde89"",
                     ""expectedControlType"": ""Button"",
@@ -163,7 +163,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Skill3"",
+                    ""name"": ""Power3"",
                     ""type"": ""Button"",
                     ""id"": ""16fc49bb-3287-4a68-9ef7-99be87cfa516"",
                     ""expectedControlType"": ""Button"",
@@ -343,7 +343,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Skill1"",
+                    ""action"": ""Power1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -354,7 +354,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Skill2"",
+                    ""action"": ""Power2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -365,7 +365,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Skill3"",
+                    ""action"": ""Power3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -518,9 +518,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         m_Player_OpenQuestUI = m_Player.FindAction("OpenQuestUI", throwIfNotFound: true);
         m_Player_ThrowItem = m_Player.FindAction("ThrowItem", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        m_Player_Skill1 = m_Player.FindAction("Skill1", throwIfNotFound: true);
-        m_Player_Skill2 = m_Player.FindAction("Skill2", throwIfNotFound: true);
-        m_Player_Skill3 = m_Player.FindAction("Skill3", throwIfNotFound: true);
+        m_Player_Power1 = m_Player.FindAction("Power1", throwIfNotFound: true);
+        m_Player_Power2 = m_Player.FindAction("Power2", throwIfNotFound: true);
+        m_Player_Power3 = m_Player.FindAction("Power3", throwIfNotFound: true);
         m_Player_HealItem = m_Player.FindAction("HealItem", throwIfNotFound: true);
         // UIControl
         m_UIControl = asset.FindActionMap("UIControl", throwIfNotFound: true);
@@ -601,9 +601,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_OpenQuestUI;
     private readonly InputAction m_Player_ThrowItem;
     private readonly InputAction m_Player_Interact;
-    private readonly InputAction m_Player_Skill1;
-    private readonly InputAction m_Player_Skill2;
-    private readonly InputAction m_Player_Skill3;
+    private readonly InputAction m_Player_Power1;
+    private readonly InputAction m_Player_Power2;
+    private readonly InputAction m_Player_Power3;
     private readonly InputAction m_Player_HealItem;
     public struct PlayerActions
     {
@@ -622,9 +622,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         public InputAction @OpenQuestUI => m_Wrapper.m_Player_OpenQuestUI;
         public InputAction @ThrowItem => m_Wrapper.m_Player_ThrowItem;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
-        public InputAction @Skill1 => m_Wrapper.m_Player_Skill1;
-        public InputAction @Skill2 => m_Wrapper.m_Player_Skill2;
-        public InputAction @Skill3 => m_Wrapper.m_Player_Skill3;
+        public InputAction @Power1 => m_Wrapper.m_Player_Power1;
+        public InputAction @Power2 => m_Wrapper.m_Player_Power2;
+        public InputAction @Power3 => m_Wrapper.m_Player_Power3;
         public InputAction @HealItem => m_Wrapper.m_Player_HealItem;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -674,15 +674,15 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
-            @Skill1.started += instance.OnSkill1;
-            @Skill1.performed += instance.OnSkill1;
-            @Skill1.canceled += instance.OnSkill1;
-            @Skill2.started += instance.OnSkill2;
-            @Skill2.performed += instance.OnSkill2;
-            @Skill2.canceled += instance.OnSkill2;
-            @Skill3.started += instance.OnSkill3;
-            @Skill3.performed += instance.OnSkill3;
-            @Skill3.canceled += instance.OnSkill3;
+            @Power1.started += instance.OnPower1;
+            @Power1.performed += instance.OnPower1;
+            @Power1.canceled += instance.OnPower1;
+            @Power2.started += instance.OnPower2;
+            @Power2.performed += instance.OnPower2;
+            @Power2.canceled += instance.OnPower2;
+            @Power3.started += instance.OnPower3;
+            @Power3.performed += instance.OnPower3;
+            @Power3.canceled += instance.OnPower3;
             @HealItem.started += instance.OnHealItem;
             @HealItem.performed += instance.OnHealItem;
             @HealItem.canceled += instance.OnHealItem;
@@ -729,15 +729,15 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
-            @Skill1.started -= instance.OnSkill1;
-            @Skill1.performed -= instance.OnSkill1;
-            @Skill1.canceled -= instance.OnSkill1;
-            @Skill2.started -= instance.OnSkill2;
-            @Skill2.performed -= instance.OnSkill2;
-            @Skill2.canceled -= instance.OnSkill2;
-            @Skill3.started -= instance.OnSkill3;
-            @Skill3.performed -= instance.OnSkill3;
-            @Skill3.canceled -= instance.OnSkill3;
+            @Power1.started -= instance.OnPower1;
+            @Power1.performed -= instance.OnPower1;
+            @Power1.canceled -= instance.OnPower1;
+            @Power2.started -= instance.OnPower2;
+            @Power2.performed -= instance.OnPower2;
+            @Power2.canceled -= instance.OnPower2;
+            @Power3.started -= instance.OnPower3;
+            @Power3.performed -= instance.OnPower3;
+            @Power3.canceled -= instance.OnPower3;
             @HealItem.started -= instance.OnHealItem;
             @HealItem.performed -= instance.OnHealItem;
             @HealItem.canceled -= instance.OnHealItem;
@@ -844,9 +844,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         void OnOpenQuestUI(InputAction.CallbackContext context);
         void OnThrowItem(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-        void OnSkill1(InputAction.CallbackContext context);
-        void OnSkill2(InputAction.CallbackContext context);
-        void OnSkill3(InputAction.CallbackContext context);
+        void OnPower1(InputAction.CallbackContext context);
+        void OnPower2(InputAction.CallbackContext context);
+        void OnPower3(InputAction.CallbackContext context);
         void OnHealItem(InputAction.CallbackContext context);
     }
     public interface IUIControlActions

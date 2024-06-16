@@ -17,7 +17,7 @@ public partial class PlayerController
     private int LandHash;                                                       // 착지 값
     private int GuardHash;                                                      // 가드 값
     private int ThrowReadyHash;                                                 // 던지기 준비 값
-    private int SkillHash;                                                      // 스킬 값
+    private int PowerHash;                                                      // 스킬 값
 
 
     // 애니메이션 상태
@@ -35,7 +35,7 @@ public partial class PlayerController
     {
         if (IsGuarding) { GuardHitAnim(); return;  }
         AttackOffAnim();
-        SkillAnimDone();
+        PowerAnimDone();
         base.HitAnimation();
     }
     public void GuardHitAnim() { m_anim.SetTrigger("GUARD_HIT"); }
@@ -61,10 +61,10 @@ public partial class PlayerController
     public void AttackOffAnim() { SetAttackAnim(0); }                                                           // 공격 종료
 
     // 스킬 관련
-    public void SkillStartAnim() { m_anim.SetBool(SkillHash, true); }                                           // 스킬 준비
-    public void BuffStartAnim() { m_anim.SetBool(SkillHash,true); }                                             // 버프 준비
-    public void SkillFireAnim() { m_anim.SetTrigger("SKILL_FIRE"); }                                            // 스킬 발사
-    public void SkillAnimDone() { m_anim.SetBool(SkillHash, false); }                                           // 스킬 종료
+    public void PowerStartAnim() { m_anim.SetBool(PowerHash, true); }                                           // 스킬 준비
+    public void BuffStartAnim() { m_anim.SetBool(PowerHash,true); }                                             // 버프 준비
+    public void PowerFireAnim() { m_anim.SetTrigger("POWER_FIRE"); }                                            // 스킬 발사
+    public void PowerAnimDone() { m_anim.SetBool(PowerHash, false); }                                           // 스킬 종료
 
     // 가드 관련
     public void GuardAnimStart() { m_anim.SetBool(GuardHash, true); }                                           // 가드 상태로 전환
@@ -106,6 +106,6 @@ public partial class PlayerController
         LandHash = Animator.StringToHash("IS_LANDING");
         GuardHash = Animator.StringToHash("IS_GUARDING");
         ThrowReadyHash = Animator.StringToHash("IS_THROW_READY");
-        SkillHash = Animator.StringToHash("SKILL_ON");
+        PowerHash = Animator.StringToHash("POWER_ON");
     }
 }

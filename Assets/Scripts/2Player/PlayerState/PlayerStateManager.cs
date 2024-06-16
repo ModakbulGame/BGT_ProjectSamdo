@@ -10,7 +10,7 @@ public enum EPlayerState
     FALL,
     ATTACK,
     GUARD,
-    SKILL,
+    Power,
     ROLL,
     THROW,
     HIT,

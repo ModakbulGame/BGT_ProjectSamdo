@@ -15,6 +15,9 @@ public static class ValueDefine
     public const int HIDING_LAYER_IDX = 3;                          // 숨기기 레이어의 순서
     public const int HITTABLE_LAYER_IDX = 9;
 
+    // 레이어 단어
+    public const string HITTABLE_LAYER_NAME = "Hittable";
+
     // 태그
     public const string PLAYER_TAG = "Player";                      // 플레이어
     public const string CAMERA_TAG = "Camera";                      // 카메라
@@ -23,11 +26,9 @@ public static class ValueDefine
     public const string NPC_TAG = "NPC";                            // NPC
     public const string OASIS_TAG = "Oasis";
     public const string PLAYER_WEAPON_TAG = "PlayerWeapon";         // 플레이어 무기
-    public const string PLAYER_SKILL_TAG = "PlayerSkill";           // 플레이어 주술
+    public const string PLAYER_POWER_TAG = "PlayerPower";           // 플레이어 주술
     public const string MONSTER_ATTACK_TAG = "MonsterAttack";       // 몬스터 공격
     public const string TERRAIN_TAG = "Terrain";                    // 터레인
-    public const string MONSTER_HIT_TAG = "MonsterHit";             // 몬스터 히트 부위
-    public const string PLAYER_HIT_TAG = "PlayerHit";               // 플레이어 히트 부위
 
 
     // 씬 인덱스
@@ -41,7 +42,7 @@ public static class ValueDefine
     public const int MAX_SAVE = 12;
     public const float PARABOLA_GRAVITY = 20;                       // 포물선 계산 시 중력
     public readonly static Vector3 NullVector = Vector3.up * 100;   // 아무것도 아닌 벡터
-    public const int MAX_SKILL_SLOT = 3;                            // 장착 가능 스킬 수
+    public const int MAX_POWER_SLOT = 3;                            // 장착 가능 스킬 수
     public const int MAX_INVENTORY = 64;                            // 인벤토리 최대 크기
     public const int MAX_ITEM_VARIETY = 128;                        // 아이템 종류별 개수
     public const int MAX_HEAL_ITEM = 3;                             // 최대 등록 가능 회복 아이템

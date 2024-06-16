@@ -54,9 +54,9 @@ public abstract partial class MonsterScript
         base.SetDead();
         ChangeState(EMonsterState.DIE);
     }
-    public void GetInstantHit(SkillInfo _skill, GameObject _part, ObjectScript _attacker)
+    public void GetInstantHit(PowerInfo _skill, GameObject _part, ObjectScript _attacker)
     {
-        SkillScriptable data = _skill.SkillData;
+        PowerScriptable data = _skill.PowerData;
         GetDamage(100, _attacker);
     }
 

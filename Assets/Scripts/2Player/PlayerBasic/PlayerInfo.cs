@@ -11,9 +11,9 @@ public enum ECooltimeName                               // 쿨타임 종류
     GUARD,
     THROW,
     HEAL,
-    SKILL1,
+    POWER1,
 
-    LAST = SKILL1 + ValueDefine.MAX_SKILL_SLOT
+    LAST = POWER1 + ValueDefine.MAX_POWER_SLOT
 }
 
 public struct SPlayerWeaponInfo                         // 무기 정보
@@ -250,7 +250,7 @@ public partial class PlayerController
 
 
 
-    private SkillCastingEffect m_castingEffect;
+    private PowerCastingEffect m_castingEffect;
     private void CastingEffectOn() { m_castingEffect.ShowEffect(); }
     private void CastingEffectOff() { m_castingEffect.HideEffect(); }
 
@@ -267,7 +267,7 @@ public partial class PlayerController
         base.SetComps();
         m_collider = GetComponentInChildren<CapsuleCollider>();
         FunctionDefine.SetFriction(m_collider, FloorFriction, true);
-        m_castingEffect = GetComponentInChildren<SkillCastingEffect>();
+        m_castingEffect = GetComponentInChildren<PowerCastingEffect>();
         m_castingEffect.SetComps();
     }
     private void SetStates()                // 상태들 추가
@@ -279,7 +279,7 @@ public partial class PlayerController
         m_playerStates[(int)EPlayerState.FALL] = gameObject.AddComponent<PlayerFallState>();
         m_playerStates[(int)EPlayerState.ATTACK] = gameObject.AddComponent<PlayerAttackState>();
         m_playerStates[(int)EPlayerState.GUARD] = gameObject.AddComponent<PlayerGaurdState>();
-        m_playerStates[(int)EPlayerState.SKILL] = gameObject.AddComponent<PlayerSkillState>();
+        m_playerStates[(int)EPlayerState.Power] = gameObject.AddComponent<PlayerPowerState>();
         m_playerStates[(int)EPlayerState.ROLL] = gameObject.AddComponent<PlayerRollState>();
         m_playerStates[(int)EPlayerState.THROW] = gameObject.AddComponent<PlayerThrowState>();
         m_playerStates[(int)EPlayerState.HIT] = gameObject.AddComponent<PlayerHitState>();
@@ -309,6 +309,6 @@ public partial class PlayerController
         InitStamina();                      // 스테미나 설정
         InitLight();                        // 능력 초기 설정
         InitWeapon();                       // 무기 설정
-        HideSkillAim();                     // 스킬 에임 끄기
+        HidePowerAim();                     // 스킬 에임 끄기
     }
 }

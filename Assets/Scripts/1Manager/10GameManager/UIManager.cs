@@ -59,8 +59,8 @@ public class UIManager : MonoBehaviour
         return GameManager.GetItemData(_item).ItemIcon;
     }
 
-    public Sprite GetSkillSprite(ESkillName _skill)
+    public Sprite GetPowerSprite(EPowerName _skill)
     {
-        return GameManager.GetSkillData(_skill).SkillIcon;
+        return GameManager.GetPowerData(_skill).PowerIcon;
     }
 }

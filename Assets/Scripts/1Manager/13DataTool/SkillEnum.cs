@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum ESkillAttribute
+public enum EPowerAttribute
 {
     ID,                         // ID
     CAST_TYPE,                  // 캐스팅 타입
@@ -39,7 +39,7 @@ public enum ECastType
     LAST
 }
 
-public enum ESkillProperty
+public enum EPowerProperty
 {
     SLASH,
     HIT,
@@ -53,7 +53,7 @@ public enum ESkillProperty
     LAST
 }
 
-public enum ESkillName
+public enum EPowerName
 {
     MELEE_SLASH,
     MELEE_SOUL,

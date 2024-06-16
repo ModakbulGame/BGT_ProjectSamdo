@@ -15,7 +15,7 @@ public static class DataImporter
     private const string ItemCSVName = "ItemSheet.csv";
     private const string MonsterCSVName = "MonsterSheet.csv";
     private const string DropCSVName = "DropSheet.csv";
-    private const string SkillCSVName = "SkillSheet.csv";
+    private const string PowerCSVName = "PowerSheet.csv";
     private const string NPCCSVName = "NPCSheet.csv";
     private const string QuestCSVName = "QuestSheet.csv";
 
@@ -31,7 +31,7 @@ public static class DataImporter
         ItemScriptablePath + "ThrowItem/",
         ItemScriptablePath + "Others/"          };
 
-    private const string SkillScriptablePath = ScriptablePath + "SkillScriptable/";
+    private const string PowerScriptablePath = ScriptablePath + "PowerScriptable/";
     private const string NPCScriptablePath = ScriptablePath + "NPCScriptable/";
     private const string QuestScriptablePath = ScriptablePath + "QuestScriptable/";
 
@@ -45,7 +45,7 @@ public static class DataImporter
         ItemPrefabPath + "ThrowItem/",
         ItemPrefabPath + "Others/"
     };
-    private const string SkillPrefabPath = PrefabPath + "PlayerSkill/";
+    private const string PowerPrefabPath = PrefabPath + "PlayerPower/";
     private const string NPCPrefabPath = PrefabPath + "NPC/";
 
 
@@ -105,7 +105,7 @@ public static class DataImporter
             if (scriptable == null)
             {
                 scriptable = ScriptableObject.CreateInstance<MonsterScriptable>();
-                AssetDatabase.CreateAsset(scriptable, $"{SkillScriptablePath + id}.asset");
+                AssetDatabase.CreateAsset(scriptable, $"{PowerScriptablePath + id}.asset");
             }
             datas.Add(scriptable);
 
@@ -130,6 +130,8 @@ public static class DataImporter
 
         AssetDatabase.SaveAssets();
         EditorUtility.SetDirty(gameManager);
+
+        Debug.Log("몬스터 정보 불러오기 완료");
     }
 
     [MenuItem("Utilities/GenerateItems")]
@@ -238,48 +240,50 @@ public static class DataImporter
 
         AssetDatabase.SaveAssets();
         EditorUtility.SetDirty(gameManager);
+
+        Debug.Log("아이템 정보 불러오기 완료");
     }
 
-    [MenuItem("Utilities/GenerateSkills")]
-    private static void GenerateSkillData()
+    [MenuItem("Utilities/GeneratePowers")]
+    private static void GeneratePowerData()
     {
         // 스킬 정보
-        string[] allSkillLines = File.ReadAllLines(CSVPath + SkillCSVName);
+        string[] allPowerLines = File.ReadAllLines(CSVPath + PowerCSVName);
 
-        List<SkillScriptable> datas = new();
+        List<PowerScriptable> datas = new();
 
-        for (uint i = 1; i < allSkillLines.Length; i++)
+        for (uint i = 1; i < allPowerLines.Length; i++)
         {
             uint idx = i - 1;
-            string si = allSkillLines[i];
-            string[] splitSkillData = si.Split(',');
+            string si = allPowerLines[i];
+            string[] splitPowerData = si.Split(',');
 
-            if (splitSkillData.Length != (int)ESkillAttribute.LAST)
+            if (splitPowerData.Length != (int)EPowerAttribute.LAST)
             {
-                Debug.Log(si + $"does not have {(int)ESkillAttribute.LAST} values.");
+                Debug.Log(si + $"does not have {(int)EPowerAttribute.LAST} values.");
                 return;
             }
 
-            string id = splitSkillData[(int)ESkillAttribute.ID];
+            string id = splitPowerData[(int)EPowerAttribute.ID];
 
-            SkillScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{SkillScriptablePath + id}.asset")as SkillScriptable;
+            PowerScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{PowerScriptablePath + id}.asset")as PowerScriptable;
 
             if (scriptable == null)
             {
-                scriptable = ScriptableObject.CreateInstance<SkillScriptable>();
-                AssetDatabase.CreateAsset(scriptable, $"{SkillScriptablePath + id}.asset");
+                scriptable = ScriptableObject.CreateInstance<PowerScriptable>();
+                AssetDatabase.CreateAsset(scriptable, $"{PowerScriptablePath + id}.asset");
             }
             datas.Add(scriptable);
 
-            GameObject prefab = AssetDatabase.LoadMainAssetAtPath($"{SkillPrefabPath + id}.prefab") as GameObject;
+            GameObject prefab = AssetDatabase.LoadMainAssetAtPath($"{PowerPrefabPath + id}.prefab") as GameObject;
             if (prefab != null)
             {
-                PlayerSkillScript script = prefab.GetComponentInChildren<PlayerSkillScript>();
+                PlayerPowerScript script = prefab.GetComponentInChildren<PlayerPowerScript>();
                 if (script == null) { Debug.LogError("스킬에 스크립트 없음"); continue; }
                 script.SetScriptable(scriptable);
             }
 
-            scriptable.SetSkillScriptable(idx, splitSkillData, prefab);
+            scriptable.SetPowerScriptable(idx, splitPowerData, prefab);
 
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(scriptable);
@@ -287,11 +291,13 @@ public static class DataImporter
         }
 
         GameObject gameManager = AssetDatabase.LoadMainAssetAtPath(GameManagerPath) as GameObject;
-        SkillManager skillManager = gameManager.GetComponentInChildren<SkillManager>();
-        skillManager.SetSkillData(datas);
+        PowerManager powerManager = gameManager.GetComponentInChildren<PowerManager>();
+        powerManager.SetPowerData(datas);
 
         AssetDatabase.SaveAssets();
         EditorUtility.SetDirty(gameManager);
+
+        Debug.Log("권능 정보 불러오기 완료");
     }
 
     [MenuItem("Utilities/GenerateNPCs")]
@@ -339,6 +345,8 @@ public static class DataImporter
             //EditorUtility.SetDirty(scriptable);
             //EditorUtility.SetDirty(prefab);
         }
+
+        Debug.Log("NPC 정보 불러오기 완료");
     }
 
     [MenuItem("Utilities/GenerateQuests")]
@@ -377,6 +385,8 @@ public static class DataImporter
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(scriptable);
         }
+
+        Debug.Log("퀘스트 정보 불러오기 완료");
     }
 }
 #endif

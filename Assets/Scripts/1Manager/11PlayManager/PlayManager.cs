@@ -170,14 +170,18 @@ public class PlayManager : MonoBehaviour
     public static QuestNPCScript[] NPCList { get { return EnvironmentManager.NPCList; } }
 
 
-    // 업그레이드
-    private UpgradeManager m_upgradeManager;
-    private static UpgradeManager UpgradeManager { get { return Inst.m_upgradeManager; } }
-    public static int LeftStatPoint { get { return UpgradeManager.LeftStatPoint; } }
-    public static int UsedStatPoint { get { return UpgradeManager.UsedStatPoint; } }
-    public static void AddStatPoint(int _add) { UpgradeManager.AddStatPoint(_add); }
-    public static void UpgradeStat(int[] _point) { UpgradeManager.UpgradeStat(_point); }
-    public static void ResetStat() { UpgradeManager.ResetStat(); }
+    // 플레이어 능력치, 권능
+    private PlayerForceManager m_forceManager;
+    private static PlayerForceManager ForceManager { get { return Inst.m_forceManager; } }
+    public static int LeftStatPoint { get { return ForceManager.LeftStatPoint; } }
+    public static int UsedStatPoint { get { return ForceManager.UsedStatPoint; } }
+    public static void AddStatPoint(int _add) { ForceManager.AddStatPoint(_add); }
+    public static void UpgradeStat(int[] _point) { ForceManager.UpgradeStat(_point); }
+    public static void ResetStat() { ForceManager.ResetStat(); }
+    public static bool[] PowerObtained { get { return ForceManager.PowerObtained; } }
+    public static EPowerName[] PowerSlot { get { return ForceManager.PowerSlot; } }                                                         // 스킬 슬롯
+    public static void RegisterPowerSlot(EPowerName _popwer, int _idx) { ForceManager.RegisterPowerSlot(_popwer, _idx); UpdatePowerSlot(); }// 스킬 슬롯 설정
+    public static void ObtainPower(EPowerName _power) { ForceManager.ObtainPower(_power); }
 
 
     // GUI
@@ -202,8 +206,8 @@ public class PlayManager : MonoBehaviour
     public static void ShowNextDialogue() { PlayUIManager.ShowNextDialogue(); }                                                             // 다음 대화 출력
     public static void OpenOasisUI(OasisNPC _npc) { PlayUIManager.OpenOasisUI(_npc); }                                                      // 화톳불 UI 열기
     public static void CloseOasisUI() { PlayUIManager.CloseOasisUI(); }                                                                     // 화톳불 UI 닫기
-    public static void UpdateSkillSlot() { PlayUIManager.UpdateSkillSlot(); }                                                               // 스킬 슬롯 UI
-    public static void UseSkillSlot(int _idx, float _cooltime) { PlayUIManager.UseSkillSlot(_idx, _cooltime); }                             // 스킬 쿨타임 진행
+    public static void UpdatePowerSlot() { PlayUIManager.UpdatePowerSlot(); }                                                               // 스킬 슬롯 UI
+    public static void UsePowerSlot(int _idx, float _cooltime) { PlayUIManager.UsePowerSlot(_idx, _cooltime); }                             // 스킬 쿨타임 진행
     public static void UpdateThrowItemSlot() { PlayUIManager.UpdateThrowItemSlot(); }                                                       // 던지기 아이템 UI
     public static void UpdateHealItemSlot() { PlayUIManager.UpdateHealItemSlot(); }                                                         // 회복 아이템 UI
     public static void UpdateInfoUI() { PlayUIManager.UpdateInfoUI(); }                                                                     // 플레이어 인포 UI 업데이트
@@ -216,9 +220,9 @@ public class PlayManager : MonoBehaviour
     public static void ShowRaycastAim() { PlayUIManager.ShowRaycastAim(); }                                                                 // 레이캐스트 에임 on
     public static void SetRaycastAimState(bool _on) { PlayUIManager.SetRaycastAimState(_on); }                                              // 레이캐스트 에임 상태
     public static void HideRaycastAim() { PlayUIManager.HideRaycastAim(); }                                                                 // 레이캐스트 에임 off
-    public static void ShowSkillAim(Vector3 _pos, float _radius, float _range) { PlayUIManager.ShowSkillAim(_pos, _radius, _range); }
-    public static Vector3 TraceSkillAim(Vector3 _pos, float _range) { return PlayUIManager.TraceSkillAim(_pos, _range); }
-    public static void HideSkillAim() { PlayUIManager.HideSkillAim(); }
+    public static void ShowPowerAim(Vector3 _pos, float _radius, float _range) { PlayUIManager.ShowPowerAim(_pos, _radius, _range); }
+    public static Vector3 TracePowerAim(Vector3 _pos, float _range) { return PlayUIManager.TracePowerAim(_pos, _range); }
+    public static void HidePowerAim() { PlayUIManager.HidePowerAim(); }
     public static void DrawThrowLine(Vector3 _force, float _mass, Vector3 _start) { PlayUIManager.DrawThrowLine(_force, _mass, _start); }   // 던지기 궤적 그리기
     public static void HideThrowLine() { PlayUIManager.HideThrowLine(); }                                                                   // 던지기 궤적 off
     private static void StartBlackoutUI() { PlayUIManager.StartBlackout(); }
@@ -236,8 +240,8 @@ public class PlayManager : MonoBehaviour
         m_storyManager.SetManager();
         m_environmentManager = GetComponent<EnvironmentManager>();
         m_environmentManager.SetManager();
-        m_upgradeManager = GetComponent<UpgradeManager>();
-        m_upgradeManager.SetManager();
+        m_forceManager = GetComponent<PlayerForceManager>();
+        m_forceManager.SetManager();
         m_playUIManager = GetComponent<PlayUIManager>();
         m_playUIManager.SetManager();
     }

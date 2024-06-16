@@ -136,31 +136,31 @@ public class DataManager : MonoBehaviour
         };
     }
 
-    public static ESkillProperty[] String2Properties(string _data)
+    public static EPowerProperty[] String2Properties(string _data)
     {
-        if (_data == "") { return new ESkillProperty[0]; }
+        if (_data == "") { return new EPowerProperty[0]; }
         string[] datas = _data.Split('/');
-        ESkillProperty[] props = new ESkillProperty[datas.Length];
+        EPowerProperty[] props = new EPowerProperty[datas.Length];
         for (int i = 0; i<datas.Length; i++)
         {
             props[i] = String2Property(datas[i]);
         }
         return props;
     }
-    private static ESkillProperty String2Property(string _data)
+    private static EPowerProperty String2Property(string _data)
     {
         return _data switch
         {
-            "Slash" => ESkillProperty.SLASH,
-            "Hit" => ESkillProperty.HIT,
-            "Explosion" => ESkillProperty.EXPLOSION,
-            "Shockwave" => ESkillProperty.SHOCKWAVE,
-            "Fog" => ESkillProperty.FOG,
-            "Totem" => ESkillProperty.TOTEM,
-            "Light" => ESkillProperty.LIGHT,
-            "Soul" => ESkillProperty.SOUL,
+            "Slash" => EPowerProperty.SLASH,
+            "Hit" => EPowerProperty.HIT,
+            "Explosion" => EPowerProperty.EXPLOSION,
+            "Shockwave" => EPowerProperty.SHOCKWAVE,
+            "Fog" => EPowerProperty.FOG,
+            "Totem" => EPowerProperty.TOTEM,
+            "Light" => EPowerProperty.LIGHT,
+            "Soul" => EPowerProperty.SOUL,
 
-            _ => ESkillProperty.LAST
+            _ => EPowerProperty.LAST
         };
     }
 

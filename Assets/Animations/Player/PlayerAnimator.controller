@@ -609,7 +609,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerSkill1
+  m_Name: PlayerPower1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -879,7 +879,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: SKILL_ON
+    m_ConditionEvent: POWER_ON
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2268529140818436476}
@@ -1867,19 +1867,19 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: SKILL_ON
+  - m_Name: POWER_ON
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: SKILL_FIRE
+  - m_Name: POWER_FIRE
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: SKILL_IDX
+  - m_Name: POWER_IDX
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -1929,7 +1929,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerSkillReady
+  m_Name: PlayerPowerReady
   m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
@@ -2035,7 +2035,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerSkill
+  m_Name: PlayerPower
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 61003726453400201}
@@ -2412,7 +2412,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerSkillCancel
+  m_Name: PlayerPowerCancel
   m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
@@ -3121,11 +3121,11 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerSkill
+  m_Name: PlayerPowerFire
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -5425844058439861311}
-    m_Position: {x: 370, y: -60, z: 0}
+    m_Position: {x: 340, y: -70, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -3145,7 +3145,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: SKILL_ON
+    m_ConditionEvent: POWER_ON
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 61003726453400201}
@@ -3281,7 +3281,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: SKILL_ON
+    m_ConditionEvent: POWER_ON
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 944745395360236024}
   m_DstState: {fileID: 0}
@@ -3611,7 +3611,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: SKILL_FIRE
+    m_ConditionEvent: POWER_FIRE
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 5548170811654805879}
   m_DstState: {fileID: 0}

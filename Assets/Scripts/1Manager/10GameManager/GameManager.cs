@@ -68,16 +68,13 @@ public class GameManager : SingleTon<GameManager>
 
 
 
-    // 스킬
-    private SkillManager m_skillManager;
-    private static SkillManager SkillManager { get { return Inst.m_skillManager; } }
-    private static GameObject[] SkillArray { get { return SkillManager.SkillArrays; } }
-    public static SkillInfo GetSkillInfo(ESkillName _skill) { return SkillManager.GetSkillInfo(_skill); }                                   // 스킬 정보
-    public static SkillScriptable GetSkillData(ESkillName _skill) { return SkillManager.GetSkillData(_skill); }                             // 스킬 스크립터블
-    public static GameObject GetSkillObj(ESkillName _skill) { return SkillManager.GetSkillObj(_skill); }                                    // 스킬 프리펍
-    public static ESkillName[] SkillSlot { get { return SkillManager.SkillSlot; } }                                                         // 스킬 슬롯
-    public static void RegisterSkilSlot(ESkillName _skill, int _idx) { SkillManager.RegisterSkillSlot(_skill, _idx); PlayManager.UpdateSkillSlot(); }   // 스킬 슬롯 설정
-    public static void ObtainSkill(ESkillName _skill) { SkillManager.ObtainSkill(_skill); }
+    // 권능
+    private PowerManager m_powerManager;
+    private static PowerManager PowerManager { get { return Inst.m_powerManager; } }
+    private static GameObject[] PowerArray { get { return PowerManager.PowerArrays; } }
+    public static PowerInfo GetPowerInfo(EPowerName _power) { return PowerManager.GetPowerInfo(_power); }                                   // 스킬 정보
+    public static PowerScriptable GetPowerData(EPowerName _power) { return PowerManager.GetPowerData(_power); }                             // 스킬 스크립터블
+    public static GameObject GetPowerObj(EPowerName _power) { return PowerManager.GetPowerObj(_power); }                                    // 스킬 프리펍
 
 
     // 몬스터
@@ -106,7 +103,7 @@ public class GameManager : SingleTon<GameManager>
     public static void CreateSideTextAlarm(string _alarm) { UIManager.CreateSideTextAlarm(_alarm); }                            // 화면 사이드 텍스트 알람 생성
     public static Sprite GetMonsterSprite(EMonsterName _monster) { return UIManager.GetMonsterSprite(_monster); }               // 몬스터 이미지
     public static Sprite GetItemSprite(SItem _item) { return UIManager.GetItemSprite(_item); }                                  // 아이템 이미지
-    public static Sprite GetSkillSprite(ESkillName _skill) { return UIManager.GetSkillSprite(_skill); }                         // 스킬 이미지
+    public static Sprite GetPowerSprite(EPowerName _power) { return UIManager.GetPowerSprite(_power); }                         // 스킬 이미지
 
 
     private PoolManager m_poolManager;
@@ -124,15 +121,15 @@ public class GameManager : SingleTon<GameManager>
         m_inputManager.SetManager();
         m_itemManager = GetComponent<ItemManager>();
         m_itemManager.SetManager();
-        m_skillManager = GetComponent<SkillManager>();
-        m_skillManager.SetManager();
+        m_powerManager = GetComponent<PowerManager>();
+        m_powerManager.SetManager();
         m_monsterManager = GetComponent<MonsterManager>();
         m_monsterManager.SetManager();
         m_effectManager = GetComponent<EffectManager>();
         m_effectManager.SetManager();
         m_uiManager = GetComponent<UIManager>();
         m_poolManager = GetComponent<PoolManager>();
-        m_poolManager.SetManager(ItemArray, SkillArray, MonsterArray, EffectArray);
+        m_poolManager.SetManager(ItemArray, PowerArray, MonsterArray, EffectArray);
     }
 
     public override void Awake()

@@ -53,9 +53,9 @@ public class PlayerGaurdState : MonoBehaviour, IPlayerState
             m_player.ChangeState(EPlayerState.ATTACK);
             return;
         }
-        if (m_player.CanUseSkill)
+        if (m_player.CanUsePower)
         {
-            m_player.ChangeState(EPlayerState.SKILL);
+            m_player.ChangeState(EPlayerState.Power);
             return;
         }
     }
