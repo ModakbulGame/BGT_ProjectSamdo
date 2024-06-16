@@ -7,6 +7,8 @@ public class QuestNPCScript : NPCScript
     private bool m_isQuestStarted;
     private bool m_isQuestEnded;
 
+    public List<QuestScriptable> NPCQuestList;
+
     public bool IsQuestStarted { get { return m_isQuestStarted; } }
     public bool IsQuestEnded { get { return m_isQuestEnded; } }
 
@@ -23,5 +25,10 @@ public class QuestNPCScript : NPCScript
     private void Start()
     {
         PlayManager.SetQuestStartObjectStatus(NPCName);
+        for (int i = 0; i < PlayManager.QuestList.Count; i++)
+        {
+            if (PlayManager.QuestList[i].StartObject == NPCName)
+                NPCQuestList.Add(PlayManager.QuestList[i]);
+        }
     }
 }

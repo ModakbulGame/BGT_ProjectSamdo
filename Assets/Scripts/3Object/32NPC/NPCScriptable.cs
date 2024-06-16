@@ -9,8 +9,6 @@ public class NPCScriptable : ScriptableObject
     public string NPCName;
     public string[] Dialogues;
 
-    public List<QuestScriptable> NPCQuestList;
-
     public void SetNPCScriptable(uint _idx, string[] _data)
     {
         Idx = _idx;     
@@ -21,13 +19,6 @@ public class NPCScriptable : ScriptableObject
         for(int i = 2; i < _data.Length; i++)
         {
             Dialogues[i - 2] = _data[i];
-        }
-
-        for(int i = 0; i < PlayManager.QuestList.Count; i++)
-        {
-            if (PlayManager.QuestList[i].StartObject == NPCName)
-                NPCQuestList.Add(PlayManager.QuestList[i]);
-            Debug.Log(NPCQuestList[i]);
         }
     }
 }
