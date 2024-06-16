@@ -704,7 +704,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.7992931, g: 0.7692239, b: 0.8113208, a: 1}
+  m_Color: {r: 0.623309, g: 0.5496173, b: 0.6509434, a: 1}
   m_Intensity: 1.5
   m_Range: 10
   m_SpotAngle: 30
@@ -4636,17 +4636,17 @@ PrefabInstance:
     - target: {fileID: 3461696784827391445, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.11150584
+      value: 0.11150583
       objectReference: {fileID: 0}
     - target: {fileID: 3461696784827391445, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000007404118
+      value: -0.000000007404118
       objectReference: {fileID: 0}
     - target: {fileID: 3461696784827391445, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -8.307834e-10
+      value: 8.307833e-10
       objectReference: {fileID: 0}
     - target: {fileID: 3745641688317797720, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
@@ -4711,17 +4711,17 @@ PrefabInstance:
     - target: {fileID: 4582025259472549370, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.111505836
+      value: 0.11150583
       objectReference: {fileID: 0}
     - target: {fileID: 4582025259472549370, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -5.538854e-18
+      value: -0.000000007404118
       objectReference: {fileID: 0}
     - target: {fileID: 4582025259472549370, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1.2300753e-16
+      value: 8.307833e-10
       objectReference: {fileID: 0}
     - target: {fileID: 5376537915761361678, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
@@ -4791,12 +4791,12 @@ PrefabInstance:
     - target: {fileID: 5779788400399406593, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000017157486
+      value: 0.00000001715749
       objectReference: {fileID: 0}
     - target: {fileID: 5779788400399406593, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000012962224
+      value: -0.0000000012962226
       objectReference: {fileID: 0}
     - target: {fileID: 6806316245021483699, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
@@ -4924,12 +4924,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1798969241}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1959011676 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8799692269862159407, guid: 5a15dfc4dbda09d41853696cd7505cf2,
-    type: 3}
-  m_PrefabInstance: {fileID: 9126745084093026326}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1982030783
 Mesh:
   m_ObjectHideFlags: 0
@@ -5847,11 +5841,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 194427517174628875, guid: 5a15dfc4dbda09d41853696cd7505cf2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 264468960533208664, guid: 5a15dfc4dbda09d41853696cd7505cf2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5902,45 +5891,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 973271663098529858, guid: 5a15dfc4dbda09d41853696cd7505cf2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2514903569629825682, guid: 5a15dfc4dbda09d41853696cd7505cf2,
-        type: 3}
-      propertyPath: m_spawnMonster
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 2777487427101303942, guid: 5a15dfc4dbda09d41853696cd7505cf2,
-        type: 3}
-      propertyPath: m_spawnMonster
-      value: 31
-      objectReference: {fileID: 0}
-    - target: {fileID: 6082095018922955238, guid: 5a15dfc4dbda09d41853696cd7505cf2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6282924344287014247, guid: 5a15dfc4dbda09d41853696cd7505cf2,
         type: 3}
       propertyPath: m_Name
       value: DemoMap
-      objectReference: {fileID: 0}
-    - target: {fileID: 7282099551527142611, guid: 5a15dfc4dbda09d41853696cd7505cf2,
-        type: 3}
-      propertyPath: m_spawnMonster
-      value: 29
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865089632254320890, guid: 5a15dfc4dbda09d41853696cd7505cf2,
-        type: 3}
-      propertyPath: m_respawnSpot
-      value: 
-      objectReference: {fileID: 1959011676}
-    - target: {fileID: 8115643217359815169, guid: 5a15dfc4dbda09d41853696cd7505cf2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
