@@ -115,6 +115,13 @@ public class BattleDebugger : MonoBehaviour
         m_monsterList.Clear();
         MonsterScript[] monsters = FindObjectsOfType<MonsterScript>();
         foreach(MonsterScript monster in monsters) { m_monsterList.Add(monster); }
+        if (AbleDebug)
+        {
+            for (int i = 0; i<(int)EPowerName.LAST; i++)
+            {
+                PlayManager.ObtainPower((EPowerName)i);
+            }
+        }
     }
     private void SetInfos()
     {
