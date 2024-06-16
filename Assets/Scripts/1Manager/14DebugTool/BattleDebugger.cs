@@ -16,11 +16,11 @@ public class BattleDebugger : MonoBehaviour
 
     private void DrawDebugs()                               // 오브젝트별 디버깅
     {
-        if(!AbleDebug) { return; }
-        for (int i=0;i<m_monsterList.Count;i++)
+        if (!AbleDebug) { return; }
+        for (int i = 0; i<m_monsterList.Count; i++)
         {
             MonsterScript monster = m_monsterList[i];
-            if(monster == null || monster.IsDead) { m_monsterList.Remove(monster); continue; }
+            if (monster == null || monster.IsDead) { m_monsterList.Remove(monster); continue; }
             DrawView(monster);
             DrawTarget(monster);
         }
@@ -44,9 +44,9 @@ public class BattleDebugger : MonoBehaviour
     }
     private void DrawTarget(MonsterScript _monster)           // 공격 대상 표시
     {
-        if(!AbleDebug) { return; }
+        if (!AbleDebug) { return; }
         ObjectScript target = _monster.CurTarget;
-        if(target == null) { return; }
+        if (target == null) { return; }
 
         float range = _monster.ViewRange;
         Vector3 pos = _monster.transform.position;
@@ -74,7 +74,7 @@ public class BattleDebugger : MonoBehaviour
     private bool ShowingCreateMonster { get; set; }
     private void ShowCreateMonster()
     {
-        if(GUI.Button(new Rect(20, 50, 280, 50), "취소"))
+        if (GUI.Button(new Rect(20, 50, 280, 50), "취소"))
         {
             ShowingCreateMonster = false;
         }
@@ -94,7 +94,7 @@ public class BattleDebugger : MonoBehaviour
     private void CreateMonster(int _idx)
     {
         GameObject prefab = GameManager.GetMonsterObj((EMonsterName)_idx);
-        if(prefab == null) { Debug.Log("몬스터 미완성"); return; }
+        if (prefab == null) { Debug.Log("몬스터 미완성"); return; }
 
         Vector3 point;
         if (m_spawnPoint != null) { point = m_spawnPoint.SpawnPosition; }
@@ -114,6 +114,10 @@ public class BattleDebugger : MonoBehaviour
 
     private void SetTempPower()
     {
+        for (int i = 0; i<(int)EPowerName.LAST; i++)
+        {
+            PlayManager.ObtainPower((EPowerName)i);
+        }
         for (int i = 0; i<ValueDefine.MAX_POWER_SLOT; i++)
         {
             PlayManager.RegisterPowerSlot(PowerSlot[i], i);
@@ -126,14 +130,9 @@ public class BattleDebugger : MonoBehaviour
     {
         m_monsterList.Clear();
         MonsterScript[] monsters = FindObjectsOfType<MonsterScript>();
-        foreach(MonsterScript monster in monsters) { m_monsterList.Add(monster); }
-        if (AbleDebug)
-        {
-            for (int i = 0; i<(int)EPowerName.LAST; i++)
-            {
-                PlayManager.ObtainPower((EPowerName)i);
-            }
-        }
+        foreach (MonsterScript monster in monsters) { m_monsterList.Add(monster); }
+
+        SetTempPower();
     }
     private void SetInfos()
     {
