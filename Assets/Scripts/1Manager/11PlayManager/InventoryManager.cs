@@ -76,7 +76,7 @@ public class InventoryManager : MonoBehaviour, IHaveData
     // 장비 인벤토리
     private readonly bool[] m_weaponObtained = new bool[(int)EWeaponName.LAST];
     public bool[] WeaponObatined { get { return m_weaponObtained; } }
-    public EWeaponName CurWeapon { get; private set; } = EWeaponName.BASIC_SWORD;    // 장착 중인 무기
+    public EWeaponName CurWeapon { get; private set; } = EWeaponName.BASIC_BLADE;    // 장착 중인 무기
 
     public readonly static EWeaponName InitialWeapon = EWeaponName.BASIC_SCEPTER;
 

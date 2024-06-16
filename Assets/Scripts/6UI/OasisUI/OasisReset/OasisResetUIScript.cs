@@ -12,22 +12,22 @@ public class OasisResetUIScript : MonoBehaviour, IOasisUI
     public void OpenUI(OasisUIScript _parent)
     {
         gameObject.SetActive(true);
-        if (!IsCompsSet)
-        {
-            m_parent = _parent;
-            SetComps();
-        } 
+        if (!IsCompsSet) { m_parent = _parent; SetComps(); }
+        UpdateUI();
     }
+
+    [SerializeField]
+    private Button m_cancelBtn;
 
     private OasisStatResetUI m_statResetUI;
     private OasisTraitResetUI m_traitResetUI;
 
-
-
-    private void CancelUI()
+    public void UpdateUI()
     {
-        CloseUI();
+        m_statResetUI.UpdateUI();
+        m_traitResetUI.UpdateUI();
     }
+
 
     public void CloseUI()
     {
@@ -36,11 +36,17 @@ public class OasisResetUIScript : MonoBehaviour, IOasisUI
     }
 
 
+    private void SetBtns()
+    {
+        m_cancelBtn.onClick.AddListener(CloseUI);
+    }
+
     private void SetComps()
     {
-        Button[] btns = GetComponentsInChildren<Button>();
-        btns[0].onClick.AddListener(CancelUI);
         m_statResetUI = GetComponentInChildren<OasisStatResetUI>();
+        m_statResetUI.SetParent(this); m_statResetUI.SetComps();
         m_traitResetUI = GetComponentInChildren<OasisTraitResetUI>();
+        m_traitResetUI.SetParent(this); m_traitResetUI.SetComps();
+        SetBtns();
     }
 }

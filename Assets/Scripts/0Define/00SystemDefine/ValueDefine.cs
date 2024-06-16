@@ -37,6 +37,7 @@ public static class ValueDefine
 
 
     // 값
+    public const int INITIAL_STAT = 10;
     public const int MAX_SAVE = 12;
     public const float PARABOLA_GRAVITY = 20;                       // 포물선 계산 시 중력
     public readonly static Vector3 NullVector = Vector3.up * 100;   // 아무것도 아닌 벡터

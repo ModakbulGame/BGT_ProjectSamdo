@@ -32,7 +32,7 @@ public class PlayerStatInfo                             // ÇÃ·¹ÀÌ¾î ½ºÅÈ Á¤º¸
     public float m_endure;          // Áö±¸·Â
     public float m_strength;        // ±Ù·Â
     public float m_intellect;       // Áö·Â
-    public float m_rapid;           // ¹ÎÃ¸
+    public float m_rapid;           // ¹ÎÃ¸   
     public float m_mental;          // Á¤½Å
 
     public void SetStat(EStatInfoName _name, float _num)      // ½ºÅÈ ¼³Á¤
@@ -72,7 +72,7 @@ public class PlayerStatInfo                             // ÇÃ·¹ÀÌ¾î ½ºÅÈ Á¤º¸
             _ => -1,
         };
     }
-    public PlayerStatInfo() { m_health = 10; m_endure = 10; m_strength = 10; m_intellect = 10; m_rapid = 10; m_mental = 10; }
+    public PlayerStatInfo() { for(int i = 0; i<(int)EStatInfoName.LAST; i++) { SetStat((EStatInfoName)i, ValueDefine.INITIAL_STAT); } }
     public PlayerStatInfo(PlayerStatInfo _other)
     {
         m_health = _other.m_health;

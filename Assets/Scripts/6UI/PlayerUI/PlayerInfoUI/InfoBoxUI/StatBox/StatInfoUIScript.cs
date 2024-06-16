@@ -38,7 +38,7 @@ public class StatInfoUIScript : MonoBehaviour
     {
         PlayerStat = _info;
         SetStatNums(PlayerStat);
-        SetPointUsing(0);
+        ClearUsingPoint();
     }
 
 
@@ -85,10 +85,14 @@ public class StatInfoUIScript : MonoBehaviour
     }
     private void ResetPoint()
     {
-        for(int i=0;i<(int)EStatInfoName.LAST;i++) { m_usingPoints[i] = 0; }
-        SetPointUsing(0);
+        ClearUsingPoint();
         SetStatNums(PlayerStat);
         m_parent.ResetStatUse();
+    }
+    private void ClearUsingPoint()
+    {
+        for (int i = 0; i<(int)EStatInfoName.LAST; i++) { m_usingPoints[i] = 0; }
+        SetPointUsing(0);
     }
 
 

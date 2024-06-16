@@ -6,9 +6,9 @@ public class UpgradeManager : MonoBehaviour, IHaveData
 {
     private PlayerStatInfo PlayerStatInfo { get { return PlayManager.PlayerStatInfo; } }
 
-    public readonly static int InitialStatPoint = 0;
+    public readonly static int InitialStatPoint = 2;
     public int LeftStatPoint { get; private set; }
-    private int UsedStatPoint { get; set; }
+    public int UsedStatPoint { get; private set; }
 
 
     public void AddStatPoint(int _add)
