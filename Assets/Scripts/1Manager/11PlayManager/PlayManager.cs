@@ -79,6 +79,7 @@ public class PlayManager : MonoBehaviour
     public static Transform PlayerTransform { get { if (IsPlayerSet) return Player.transform; return null; } }
     public static Transform CameraFocusTransform { get { if (IsPlayerSet) { return Player.CameraFocus; } return null; } }
     public static PlayerStatInfo PlayerStatInfo { get { return Player.GetStatInfo(); } }
+    public static void ApplyStatReset() { Player.ResetStatInfo(); }
     public static void ApplyPlayerStat() { Player.ApplyStat(); }
     public static SPlayerWeaponInfo PlayerWeaponInfo { get { return Player.CurWeaponInfo; } }
     public static float GetDistToPlayer(Vector3 _pos) { if (!IsPlayerSet) return -1; return (PlayerPos-_pos).magnitude; }                   // 플레이어와의 거리
@@ -175,7 +176,7 @@ public class PlayManager : MonoBehaviour
     public static int LeftStatPoint { get { return UpgradeManager.LeftStatPoint; } }
     public static void AddStatPoint(int _add) { UpgradeManager.AddStatPoint(_add); }
     public static void UpgradeStat(int[] _point) { UpgradeManager.UpgradeStat(_point); }
-
+    public static void ResetStat() { UpgradeManager.ResetStat(); }
 
 
     // GUI
@@ -235,6 +236,7 @@ public class PlayManager : MonoBehaviour
         m_environmentManager = GetComponent<EnvironmentManager>();
         m_environmentManager.SetManager();
         m_upgradeManager = GetComponent<UpgradeManager>();
+        m_upgradeManager.SetManager();
         m_playUIManager = GetComponent<PlayUIManager>();
         m_playUIManager.SetManager();
     }

@@ -25,7 +25,7 @@ public class SkillInfo
     }
 }
 
-public class SkillManager : MonoBehaviour
+public class SkillManager : MonoBehaviour, IHaveData
 {
     private readonly SkillInfo[] m_skillInfo = new SkillInfo[(int)ESkillName.LAST];
     public SkillInfo GetSkillInfo(ESkillName _skill) { return m_skillInfo[(int)_skill]; }
@@ -55,8 +55,7 @@ public class SkillManager : MonoBehaviour
     }
 
 
-    private readonly ESkillName[] m_skillSlot = new ESkillName[ValueDefine.MAX_SKILL_SLOT]
-    { ESkillName.RANGED_PARAB1,ESkillName.RANGED_KNOCKBACK1,ESkillName.BUFF_FATIGUE};              // 임시 설정
+    private readonly ESkillName[] m_skillSlot = new ESkillName[ValueDefine.MAX_SKILL_SLOT] { ESkillName.LAST, ESkillName.LAST, ESkillName.LAST };
     public ESkillName[] SkillSlot { get { return m_skillSlot; } }
 
     public void RegisterSkillSlot(ESkillName _skill, int _idx) { m_skillSlot[_idx] = _skill; }
@@ -73,6 +72,30 @@ public class SkillManager : MonoBehaviour
         if(c2 != ValueDefine.MELEE_CC_CODE && c2 != ValueDefine.RANGED_CC_CODE && c2 != ValueDefine.AROUND_CC_CODE)
         { return ECCType.NONE; }
         return (ECCType)(_code[2] - '0');
+    }
+
+
+    public void LoadData()
+    {
+        GameManager.RegisterData(this);
+        if (PlayManager.IsNewData) { return; }
+
+        SaveData data = PlayManager.CurSaveData;
+
+        for (int i = 0; i<ValueDefine.MAX_SKILL_SLOT; i++)
+        {
+            m_skillSlot[i] = data.SkillSlot[i];
+        }
+    }
+
+    public void SaveData()
+    {   
+        SaveData data = PlayManager.CurSaveData;
+
+        for (int i = 0; i<ValueDefine.MAX_SKILL_SLOT; i++)
+        {
+            data.SkillSlot[i] = m_skillSlot[i];
+        }
     }
 
 

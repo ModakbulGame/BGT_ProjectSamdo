@@ -530,6 +530,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6809434339164723957, guid: 5a15dfc4dbda09d41853696cd7505cf2, type: 3}
+    - {fileID: 7717490624704253793, guid: 5a15dfc4dbda09d41853696cd7505cf2, type: 3}
+    - {fileID: 5458940055141371175, guid: 5a15dfc4dbda09d41853696cd7505cf2, type: 3}
+    - {fileID: 2979694529983339956, guid: 5a15dfc4dbda09d41853696cd7505cf2, type: 3}
+    - {fileID: 3508139030379543514, guid: 5a15dfc4dbda09d41853696cd7505cf2, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6534181365680073469, guid: 5a15dfc4dbda09d41853696cd7505cf2,
@@ -727,6 +731,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1857077891604205670, guid: b29b36f50235e9e41a36baba88ef0140,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2236082166519567943, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_Color.b
@@ -790,7 +799,7 @@ PrefabInstance:
     - target: {fileID: 3421939570936312166, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3461696784827391445, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
@@ -810,12 +819,12 @@ PrefabInstance:
     - target: {fileID: 3461696784827391445, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.000000007404118
+      value: -0.000000007404118
       objectReference: {fileID: 0}
     - target: {fileID: 3461696784827391445, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 8.307834e-10
+      value: -8.307833e-10
       objectReference: {fileID: 0}
     - target: {fileID: 3461696784827391445, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
@@ -825,7 +834,7 @@ PrefabInstance:
     - target: {fileID: 3461696784827391445, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.11150584
+      value: -0.11150583
       objectReference: {fileID: 0}
     - target: {fileID: 3745641688317797720, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
@@ -880,17 +889,17 @@ PrefabInstance:
     - target: {fileID: 4537957579909852597, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.000015258789
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4537957579909852597, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.0000000074041178
+      value: -4.3855036e-16
       objectReference: {fileID: 0}
     - target: {fileID: 4537957579909852597, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 8.307832e-10
+      value: 1.198523e-17
       objectReference: {fileID: 0}
     - target: {fileID: 4537957579909852597, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
@@ -900,7 +909,7 @@ PrefabInstance:
     - target: {fileID: 4537957579909852597, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.11150583
+      value: -0.111505836
       objectReference: {fileID: 0}
     - target: {fileID: 4582025259472549370, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
@@ -910,12 +919,12 @@ PrefabInstance:
     - target: {fileID: 4582025259472549370, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 4.3855036e-16
+      value: -0.0000000074041178
       objectReference: {fileID: 0}
     - target: {fileID: 4582025259472549370, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -1.198523e-17
+      value: -8.307832e-10
       objectReference: {fileID: 0}
     - target: {fileID: 4582025259472549370, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
@@ -925,7 +934,7 @@ PrefabInstance:
     - target: {fileID: 4582025259472549370, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.111505836
+      value: -0.11150583
       objectReference: {fileID: 0}
     - target: {fileID: 5376537915761361678, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
@@ -1000,7 +1009,7 @@ PrefabInstance:
     - target: {fileID: 5777970527815601089, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5779788400399406593, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
@@ -1010,12 +1019,12 @@ PrefabInstance:
     - target: {fileID: 5779788400399406593, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.000000017157491
+      value: -0.000000017157488
       objectReference: {fileID: 0}
     - target: {fileID: 5779788400399406593, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0000000012962228
+      value: -0.0000000012962224
       objectReference: {fileID: 0}
     - target: {fileID: 5779788400399406593, guid: b29b36f50235e9e41a36baba88ef0140,
         type: 3}
@@ -1168,10 +1177,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAABIIex2Ib8yrQIAAMAFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFtVNtu2kAQ/RW0z01kc0vStxYIaaUkKKTKQ8nD4B3wivWutZcAifj3zq4NdkglJJszZy5nLv5gQtkSM6fN1Ah+rzmy7x0W3tm3TmO8wx2stZqLdzxyXgR3eSBB5DyBE5rwNLhZXaAzIvuh1jKQEwK9Eittiglf40hbZwlegbRIJqNd8FYEfXTYrnbY18/38Owc6C1D5dA0rO4gvezWzIv0yO0ObyLbq0xCUSIPVTdOg8ExOL1FoiJFNSe5HPSu0uSmH7JpKYWty2JuX0bZIyitJ1FE4AJIZixoQH9zFOvchQLazo+rlUVXSzGwHwtD3aqisp+6amEBdlNV+AbS40lwFfL+i3XYj+aV0cXdMWuahAwuF9nmCfYZWNfqcBseN2WnsU1bkBtYSnzJUT3oqdFecTI644Ort9gdt0KdlI1yzDYNr6r1DPTl15mmzUwPUftuJEWxrBn0dy517HUcFBqazi8qN26IrVmEhhL+WHyGdXuVasOtMNaRqU6nQm1L7U2gsknsWJDi3UgbhRGuKy5RgXT7GYVx5+M7s7XSnlluIRxNnby2HW/hzCXCDT9JzkwzvW1GZfG3L8qZFsrNEUyWt+LZXG/v0eaP3kmhsFEUDA/UxJFWqlo9+x+3uTcryFpuDnfOGxyDg3gAVBPtCG+7UkOjh/JShnWMKkLwv6Qi/F5Dk3OgvDLC7EGreDqfnq9hDdZe8M9Lzvgw6V1fL6+G/S5yhOQig37Svc6GvX6aYC9ZsngFQlHPQc6qptWjog1SjRZFG3/8rnWmBsp4ddzAdireC90av1ArPc8MonqsIpzEoqEk9JXgEy5I5hydEyruHvtYMKmzDfJF47CInZ3snIFPaCnetAvIgo3i52zBAny6qpnBN4HbkH1xKouCoaTZIX8WEgsogyk5sMM/UEsDBBQAAAgIAABIIewC03PZbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jO01FFQSi9KLMgoBooYgjilmSkgdrRSipmBsYVFkrmZiVFqSmqigW5yoomBkUWymbGJoUGqsUGSUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAABIIex2Ib8yrQIAAMAFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAABIIewC03PZbQAAAHgAAAAJACQAAAAAAAAAAAAAAPoCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAsgMAAAAA
+    dataString: UEsDBBQAAAgIAABIIewzuZ6urgIAAMAFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFtVNtu4jAQ/RXk522VcGu7b7tA6a7UFpWu+rD0YYgHYuHYkS8FWvHvO3YCSelKkRzPnLmcufiDCWVLzJw2UyP4vebIvndY+GffOo3yDnew1mou3vGIeRHc5QEEEfMETmiSp8HM6gKdEdkPtZYBnJDQK7HSppjwNY60dZbEK5AWSWW0C9aKRB8dtqsN9vX5Hs7Ogf4yVA5Ng+oO0stujbxIj9ju8CaivcokFCXykHVjNBgcndNfBCpiVGOSy0HvKk1u+iGallLYOi3m9mWkPYLSeiJFAC6AaMaEBnTNUaxzFxJoGz+uVhZdTcXAfiwMVavyyn7qqoQF2E2V4RtIjyfClcv7L9phP6pXRhd3x6hpEiK4XGSbJ9hnYF2rwm3xuEk7jWXagtzAUuJLjupBT432ipPSGR9MvcXuuOXqxGyUY7ZpcFWuZ0Jffu1p2vT0ELnvRlIUyxpB17nUsda9cEdD3flF6cYJsTWKpCGFPxafYd0epVpxK4x1pKrDqZDbUnsToGwSKxaoeDfSRmEU1xmXqEC6/YzcuPP2nelaYc80txCWpg5e6467cGYSxQ0+Sc5UM71tWmXxty/KmRbKzRFMlrf82Vxv79Hmj95JobBhFBQPVMSRVqoaPfsfs7k3K8haZg53zhscg4O4AJQTzQhvm1JBo4XyUoZxjCyC87/EInyvocg5UFwZxexBq7g6n87XMAZrL/jnIWd8mPSur5dXw34XOUJykUE/6V5nw14/TbCXLFncAqGo5iBnVdHqVtEEqYaLook/vmudqYEybh03sJ2K90K32i/USs8zg6geKw8nsmgoCL0SfMIF0Zyjc0LF2WMfCyZ1tkG+aAwWsbKTnTPwSVqKN+2CZMFG8TlbsCA+bdXM4JvAbYi+OKVFzlBS75A/C4kFlEGVHNjhH1BLAwQUAAAICAAASCHsAtNz2W0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IztNRRUEovSizIKAaKGII4pZkpIHa0UoqZgbGFRZK5mYlRakpqooFucqKJgZFFspmxiaFBqrFBklIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAASCHsM7merq4CAADABQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAASCHsAtNz2W0AAAB4AAAACQAkAAAAAAAAAAAAAAD7AgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAALMDAAAAAA==
     file_cachedStartup: {fileID: 0}
     cacheStartup: 0
-  showNavGraphs: 0
+  showNavGraphs: 1
   showUnwalkableNodes: 1
   debugMode: 0
   debugFloor: 0

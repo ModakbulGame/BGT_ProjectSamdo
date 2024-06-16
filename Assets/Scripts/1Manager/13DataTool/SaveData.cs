@@ -9,7 +9,13 @@ public class SaveData
     // 기본 정보
     public string SavedTime;
     public EOasisPointName OasisPoint;
+
+    // 플레이어 정보
     public Vector3 PlayerRot;
+    public PlayerStatInfo StatInfo;
+    public int LeftStatPoint;
+    public int UsedStatPoint;
+    public ESkillName[] SkillSlot;
 
     // 아이템 정보
     public int Soul;
@@ -29,6 +35,9 @@ public class SaveData
     {
         SavedTime = DateTime.Now.ToString();
 
+        StatInfo = new();
+        SkillSlot = new ESkillName[ValueDefine.MAX_SKILL_SLOT] { ESkillName.LAST,ESkillName.LAST,ESkillName.LAST};
+
         PatternNum = new int[(int)EPatternName.LAST];
         HealPatternList = new();
         WeaponObtained = new bool[(int)EWeaponName.LAST];
@@ -43,7 +52,13 @@ public class SaveData
     {
         SavedTime = DateTime.Now.ToString();
         OasisPoint = _other.OasisPoint;
+
         PlayerRot = _other.PlayerRot;
+        StatInfo = new(_other.StatInfo);
+        LeftStatPoint = _other.LeftStatPoint;
+        UsedStatPoint = _other.UsedStatPoint;
+        SkillSlot = new ESkillName[ValueDefine.MAX_SKILL_SLOT];
+        for(int i = 0; i<ValueDefine.MAX_SKILL_SLOT; i++) { SkillSlot[i] = _other.SkillSlot[i]; }
 
         Soul = _other.Soul;
         PurifiedSoul = _other.PurifiedSoul;

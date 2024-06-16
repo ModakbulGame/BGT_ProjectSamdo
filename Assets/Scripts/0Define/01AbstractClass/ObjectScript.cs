@@ -139,6 +139,10 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
         if (ExtraHP > 0) { ExtraHP -= _damage; }
         SetHP(hp);
     }
+    public virtual void GetRawDamage(float _damage)
+    {
+        GetDamage(_damage, null);
+    }
     public virtual void GaveDamage(ObjectScript _target, float _damage) { }
     public virtual void PlayHitAnim(HitData _hit)                           // 피격 애니메이션 재생
     {

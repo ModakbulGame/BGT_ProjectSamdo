@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public enum ECooltimeName                               // ÄðÅ¸ÀÓ Á¾·ù
@@ -72,6 +73,15 @@ public class PlayerStatInfo                             // ÇÃ·¹ÀÌ¾î ½ºÅÈ Á¤º¸
         };
     }
     public PlayerStatInfo() { m_health = 10; m_endure = 10; m_strength = 10; m_intellect = 10; m_rapid = 10; m_mental = 10; }
+    public PlayerStatInfo(PlayerStatInfo _other)
+    {
+        m_health = _other.m_health;
+        m_endure = _other.m_endure;
+        m_strength = _other.m_strength;
+        m_intellect = _other.m_intellect;
+        m_rapid = _other.m_rapid;
+        m_mental = _other.m_mental;
+    }
     public PlayerStatInfo(PlayerStatInfo _info, int[] _point)
     {
         m_health = _info.m_health + _point[0];
@@ -127,19 +137,23 @@ public partial class PlayerController
     public void LoadData()
     {
         GameManager.RegisterData(this);
-        if (PlayManager.IsNewData) { return; }
+        if (PlayManager.IsNewData) { m_statInfo = new(); return; }
 
         SaveData data = PlayManager.CurSaveData;
         OasisNPC oasis = PlayManager.OasisList[(int)data.OasisPoint];
 
         transform.position = oasis.RespawnPoint;
         transform.localEulerAngles = data.PlayerRot;
+
+        m_statInfo = new(data.StatInfo);
     }
     public void SaveData()
     {
         SaveData data = PlayManager.CurSaveData;
 
         data.PlayerRot = transform.localEulerAngles;
+
+        data.StatInfo = new(m_statInfo);
     }
 
 
@@ -163,7 +177,7 @@ public partial class PlayerController
 
     // ½ºÅÈ Á¤º¸
     [SerializeField]
-    protected PlayerStatInfo m_statInfo = new();    // ½ºÅÈ Á¤º¸
+    protected PlayerStatInfo m_statInfo;    // ½ºÅÈ Á¤º¸
     public float Health { get { return m_statInfo.m_health; } }                     // Ã¼·Â
     public float Endure { get { return m_statInfo.m_endure; } }                     // Áö±¸·Â
     public float Strength { get { return m_statInfo.m_strength; } }                 // ±Ù·Â
@@ -171,6 +185,7 @@ public partial class PlayerController
     public float Rapid { get { return m_statInfo.m_rapid; } }                       // ¹ÎÃ¸
     public float Mental { get { return m_statInfo.m_mental; } }                     // Á¤½Å
     public PlayerStatInfo GetStatInfo() { return m_statInfo; }
+    public void ResetStatInfo() { m_statInfo = new(); ApplyStat(); }
     public void SetStat(EStatInfoName _name, float _num) { m_statInfo.SetStat(_name, _num); ApplyStat(); }      // ½ºÅÈ ¼³Á¤
 
 

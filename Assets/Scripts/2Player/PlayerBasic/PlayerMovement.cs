@@ -114,12 +114,12 @@ public partial class PlayerController
     {
         StopFallAnim();
         JumpCooltime = JumpDelay;
-        if (_velocity <= FallDeathVelocity) { GetDamage(MaxHP, null); }
+        if (_velocity <= FallDeathVelocity) { GetRawDamage(MaxHP); }
         else if (_velocity <= FallDamageVelocity) 
         {
             float ratio = 0.125f + ((FallDamageVelocity - _velocity) / (FallDamageVelocity - FallDeathVelocity)) * 7 / 8f;
             float damage = MaxHP * Mathf.Round(ratio * 1000) * 0.001f;
-            GetDamage(damage, null);
+            GetRawDamage(damage);
         }
         else if(_velocity > LandVelocity)
         {

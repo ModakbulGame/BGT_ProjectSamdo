@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpgradeManager : MonoBehaviour
+public class UpgradeManager : MonoBehaviour, IHaveData
 {
     private PlayerStatInfo PlayerStatInfo { get { return PlayManager.PlayerStatInfo; } }
 
-    public int LeftStatPoint { get; private set; } = 2;
+    public readonly static int InitialStatPoint = 0;
+    public int LeftStatPoint { get; private set; }
+    private int UsedStatPoint { get; set; }
 
 
     public void AddStatPoint(int _add)
@@ -24,6 +26,7 @@ public class UpgradeManager : MonoBehaviour
             {
                 PlayerStatInfo.UpgradeStat((EStatInfoName)i, _point[i]);
                 LeftStatPoint -= _point[i];
+                UsedStatPoint += _point[i];
             }
         }
         PlayManager.ApplyPlayerStat();
@@ -31,5 +34,35 @@ public class UpgradeManager : MonoBehaviour
             Debug.LogError("스탯 오버 사용");
     }
 
+    public void ResetStat()
+    {
+        LeftStatPoint += UsedStatPoint;
+        UsedStatPoint = 0;
 
+        PlayManager.ApplyStatReset();
+    }
+
+
+    public void LoadData()
+    {
+        GameManager.RegisterData(this);
+        if (PlayManager.IsNewData) { LeftStatPoint = InitialStatPoint; return; }
+
+        SaveData data = PlayManager.CurSaveData;
+
+        LeftStatPoint = data.LeftStatPoint;
+        UsedStatPoint = data.UsedStatPoint;
+    }
+    public void SaveData()
+    {
+        SaveData data = PlayManager.CurSaveData;
+
+        data.LeftStatPoint = LeftStatPoint;
+        data.UsedStatPoint = UsedStatPoint;
+    }
+
+    public void SetManager()
+    {
+        LoadData();
+    }
 }

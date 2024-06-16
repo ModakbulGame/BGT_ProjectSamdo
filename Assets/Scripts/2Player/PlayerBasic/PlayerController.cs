@@ -86,7 +86,7 @@ public partial class PlayerController : ObjectScript, IHaveData
     }
     private void PlayerDrowned()
     {
-        SetDead();
+        GetRawDamage(MaxHP);
         m_cameraFocus.SetParent(null);
         PlayManager.LooseCameraFocus();
     }
