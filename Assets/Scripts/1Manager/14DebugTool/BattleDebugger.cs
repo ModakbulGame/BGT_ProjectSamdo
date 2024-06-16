@@ -7,6 +7,8 @@ public class BattleDebugger : MonoBehaviour
     [SerializeField]
     private bool AbleDebug = true;
     [SerializeField]
+    private EPowerName[] PowerSlot = new EPowerName[ValueDefine.MAX_POWER_SLOT];
+    [SerializeField]
     private List<MonsterScript> m_monsterList = new();
     [SerializeField]
     private MonsterSpawnPoint m_spawnPoint;
@@ -95,7 +97,7 @@ public class BattleDebugger : MonoBehaviour
         if(prefab == null) { Debug.Log("몬스터 미완성"); return; }
 
         Vector3 point;
-        if (m_spawnPoint == null) { point = m_spawnPoint.SpawnPosition; }
+        if (m_spawnPoint != null) { point = m_spawnPoint.SpawnPosition; }
         else { point = Vector3.zero; }
 
         prefab.transform.SetParent(null);
@@ -109,6 +111,16 @@ public class BattleDebugger : MonoBehaviour
 
     private const int MonsterCount = (int)EMonsterName.LAST;
     private readonly string[] m_monsterNames = new string[MonsterCount];
+
+    private void SetTempPower()
+    {
+        for (int i = 0; i<ValueDefine.MAX_POWER_SLOT; i++)
+        {
+            PlayManager.RegisterPowerSlot(PowerSlot[i], i);
+        }
+    }
+
+
 
     public void StartDebugger()
     {
