@@ -4,26 +4,16 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-public class QuestStatusScript : MonoBehaviour
+public class QuestProgressScript : MonoBehaviour
 {
-    public void QuestRequest(QuestObject _npcQuest)
+    public QuestScriptable RequireQuest(string _id) 
     {
-        if (_npcQuest.availableQuestIDs.Count > 0)
+        for (int i = 0; i < PlayManager.CurQuestList.Count; i++)
         {
-            for (int i = 0; i < PlayManager.QuestList.Count; i++)
-            {
-                for (int j = 0; j < _npcQuest.availableQuestIDs.Count; j++)
-                {
-                    if (PlayManager.QuestList[i].Id.Equals(_npcQuest.availableQuestIDs[j]) && PlayManager.QuestList[i].Status == EQuestStatus.AVAILABLE)
-                    {
-                        Debug.Log("Quest ID: " + _npcQuest.availableQuestIDs[j] + PlayManager.QuestList[i].Status);
-                        // AcceptQuest(_npcQuest.availableQuestIDs[j]);
-                        // QuestUIScript.QuestAvailable = true;
-                        // QuestUIScript.m_availableQuest.Add(PlayManager.QuestList[i]);
-                    }
-                }
-            }
+            if (PlayManager.QuestList[i].Id == _id && PlayManager.QuestList[i].Status == EQuestStatus.AVAILABLE)
+                return PlayManager.QuestList[i];
         }
+        return null;
     }
 
     public void Activeuest(QuestObject _npcQuest)
@@ -98,7 +88,8 @@ public class QuestStatusScript : MonoBehaviour
         {
             if (PlayManager.CurQuestList[i].Id == _id && PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED)
             {
-                StartCoroutine(QuestTimer(PlayManager.CurQuestList[i].TimeLimit));
+                QuestScriptable curQuest = PlayManager.CurQuestList[i];
+                StartCoroutine(QuestTimer(curQuest, PlayManager.CurQuestList[i].TimeLimit));
             }
         }
     }
@@ -178,7 +169,7 @@ public class QuestStatusScript : MonoBehaviour
         PlayManager.ClearImg[_idx % 4].gameObject.SetActive(true);
     }
 
-    private IEnumerator QuestTimer(float _time)
+    private IEnumerator QuestTimer(QuestScriptable _curQuest, float _time)
     {
         while (_time > 0)
         {
@@ -186,17 +177,24 @@ public class QuestStatusScript : MonoBehaviour
 
             string minutes = Mathf.Floor(_time / 60).ToString("00");
             string seconds = (_time % 60).ToString("00");
-            // _timerText.text = string.Format("{0}:{1}", minutes, seconds);
+            
+            Debug.Log(string.Format("{0}:{1}", minutes, seconds));
 
             if (PlayManager.CheckQuestCompleted("Q002"))
             {
                 // 퀘스트 완료 수행
-
+                ClearQuest(_curQuest.Id);
+                StopCoroutine("QuestTimer");
+                yield break; 
             }
 
             if (!PlayManager.CheckQuestCompleted("Q002") && _time <= 0)
             {
                 // 퀘스트 실패
+                PlayManager.CurQuestList.Remove(_curQuest);
+                _curQuest.Status = EQuestStatus.AVAILABLE;
+                StopCoroutine("QuestTimer");
+                yield break; 
             }
             yield return null;
         }
