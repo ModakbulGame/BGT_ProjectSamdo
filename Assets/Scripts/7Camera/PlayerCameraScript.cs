@@ -21,7 +21,7 @@ public class PlayerCameraScript : MonoBehaviour
         CurCameraMode = EControlMode.THIRD_PERSON;
         m_cameraDetail.m_Lens.FieldOfView = 40;
         m_cameraDetail.m_YAxis.Value = 0.5f;
-        // m_cameraDetail.m_XAxis.Value = 0;
+        //m_cameraDetail.m_XAxis.Value = 0;
         SetCinemachineSpeed(MouseSensitive);
     }
     public void ResetTrace()
@@ -43,11 +43,13 @@ public class PlayerCameraScript : MonoBehaviour
     public void SetUIControl()                              // UI 조작 모드 설정
     {
         CurCameraMode = EControlMode.UI_CONTROL;
-        m_cameraDetail.m_Lens.FieldOfView = 25;
-        m_cameraDetail.m_YAxis.Value = 0.6f;
         SetCinemachineSpeed(0);
     }
-
+    public void SetNPCView()
+    {
+        m_cameraDetail.m_Lens.FieldOfView = 25;
+        m_cameraDetail.m_YAxis.Value = 0.6f;
+    }
     private void SetCinemachineSpeed(float _speed)          // 실제 민감도 설정 함수
     {
         m_cameraDetail.m_XAxis.m_MaxSpeed = XMoveMultiplier * _speed;

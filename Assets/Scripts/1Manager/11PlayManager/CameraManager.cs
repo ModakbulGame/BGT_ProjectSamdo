@@ -19,6 +19,7 @@ public class CameraManager : MonoBehaviour
         if (_mode == EControlMode.THIRD_PERSON) { m_playerCamera.SetThirdPerson(); }
         else if (_mode == EControlMode.UI_CONTROL) { m_playerCamera.SetUIControl(); }
     }
+    public void SetNPCView() { m_playerCamera.SetNPCView(); }
 
     public void SetCameraSensitive(float _sensitive)                            // 카메라 민감도 전달 받음
     {
