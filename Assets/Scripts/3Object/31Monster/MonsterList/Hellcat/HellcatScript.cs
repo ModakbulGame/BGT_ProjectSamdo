@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class HellcatScript : MonsterScript
 {
+    public override bool CanPurify => !HittedPlayer;
+
+    private bool HittedPlayer { get; set; }
+
+
     private const float JumpAttackDist = 1.75f;
     private const float JumpMoveSpeed = 3.5f;
 
@@ -82,6 +87,17 @@ public class HellcatScript : MonsterScript
         AttackTriggerOn(2);
     }
 
+
+    public override void AttackedPlayer(HitData _hit)
+    {
+        base.AttackedPlayer(_hit);
+        HittedPlayer = true;
+    }
+    public override void OnSpawned()
+    {
+        base.OnSpawned();
+        HittedPlayer = false;
+    }
 
     public override void SetStates()
     {

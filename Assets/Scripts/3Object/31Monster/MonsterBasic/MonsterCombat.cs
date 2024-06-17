@@ -43,6 +43,7 @@ public abstract partial class MonsterScript
         SetBattleTarget(_hit.Attacker);
         SetDeathType(_hit.Attacker);
         base.GetHit(_hit);
+        CheckPowerProp(_hit.Property);
     }
     public override void PlayHitAnim(HitData _hit)
     {
@@ -60,6 +61,13 @@ public abstract partial class MonsterScript
         GetDamage(100, _attacker);
     }
     public virtual void AttackedPlayer(HitData _hit) { }
+
+    private void CheckPowerProp(EPowerProperty _prop)
+    {
+        if(_prop == EPowerProperty.LAST) { return; }
+        GetPropHit(_prop);
+    }
+    public virtual void GetPropHit(EPowerProperty _prop) { }
 
 
     // 공격 관련

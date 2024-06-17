@@ -5,6 +5,9 @@ using UnityEngine.VFX;
 
 public class MiniuumScript : MonsterScript
 {
+    public override bool CanPurify => true;
+
+
     [SerializeField]
     private VisualEffect m_headFire;
 

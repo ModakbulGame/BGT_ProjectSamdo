@@ -13,7 +13,7 @@ public enum EQueenSkillName
 
 public class QueenScript : MonsterScript
 {
-    public override bool CanPurify => HatchCount > 4;
+    public override bool CanPurify => HatchCount > PurifyHatch;
 
     private int HatchCount { get; set; }
     private readonly int PurifyHatch = 4;
@@ -114,6 +114,7 @@ public class QueenScript : MonsterScript
         SkurrabyScript script = skurraby.GetComponent<SkurrabyScript>();
         script.SkurrabySpawned(dir, CurTarget);
         skurraby.transform.SetParent(null);
+        HatchCount++;
     }
     private IEnumerator SpittingCoroutine()                         // 독 뿜기 코루틴
     {
@@ -144,6 +145,7 @@ public class QueenScript : MonsterScript
     public override void OnSpawned()
     {
         base.OnSpawned();
+        HatchCount = 0;
     }
 
 
