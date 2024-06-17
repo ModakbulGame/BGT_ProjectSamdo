@@ -22,13 +22,14 @@ public class QuestNPCScript : NPCScript
 
     }
 
-    private void Start()
+    public void Start()
     {
-        PlayManager.SetQuestStartObjectStatus(NPCName);
         for (int i = 0; i < PlayManager.QuestList.Count; i++)
         {
             if (PlayManager.QuestList[i].StartObject == NPCName)
                 NPCQuestList.Add(PlayManager.QuestList[i]);
         }
+        PlayManager.SetQuestStartObjectStatus(NPCName);
+        Debug.Log($"{NPCName} is {m_isQuestStarted}");
     }
 }

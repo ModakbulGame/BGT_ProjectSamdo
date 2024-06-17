@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MinimapScript : MonoBehaviour
@@ -9,6 +11,7 @@ public class MinimapScript : MonoBehaviour
     private float m_mapScale = 8;
     [SerializeField]
     private Image m_mapImg;
+    private TextMeshProUGUI m_mapName;
     private RectTransform MapRect { get { return m_mapImg.rectTransform; } }
     private float MapImgHeight { get { return m_mapImg.sprite.rect.height; } }
 
@@ -46,6 +49,8 @@ public class MinimapScript : MonoBehaviour
     }
     private void Start()
     {
+        m_mapName = GetComponentInChildren<TextMeshProUGUI>();
+        m_mapName.text = SceneManager.GetActiveScene().name;
         InitSize();
         SetScale(MapScale);
         SetRotation();

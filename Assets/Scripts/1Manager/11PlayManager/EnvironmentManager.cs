@@ -34,7 +34,6 @@ public class EnvironmentManager : MonoBehaviour
     private Transform m_waterTransform;
     public float WaterHeight { get { return m_waterTransform.position.y; } }
 
-
     [SerializeField]
     private QuestNPCScript[] m_npcList;
     public QuestNPCScript[] NPCList { get { return m_npcList; } }
@@ -44,8 +43,9 @@ public class EnvironmentManager : MonoBehaviour
     {
         if (!GameManager.IsInGame) { return; }
         m_oasisList = m_mapObject.GetComponentsInChildren<OasisNPC>();
-        // m_npcList = m_mapObject.GetComponentsInChildren<QuestNPCScript>();
+        m_npcList = m_mapObject.GetComponentsInChildren<QuestNPCScript>();
         for (int i = 0; i<m_oasisList.Length; i++) { OasisNPC oasis = m_oasisList[i]; oasis.SetPoint((EOasisPointName)i); }
+        // for (int i = 0; i<m_npcList.Length; i++) { NPCList[i].SetComps(); } 
         m_waterTransform = m_mapObject.GetComponentInChildren<MapWaterScript>().transform;
 
     }
