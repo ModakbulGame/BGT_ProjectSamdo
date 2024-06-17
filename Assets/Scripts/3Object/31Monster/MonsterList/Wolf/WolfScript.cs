@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class WolfScript : MonsterScript
 {
-    private WolfPeckScript m_peck;
-    public void SetPeck(WolfPeckScript _peck) { m_peck = _peck; }
+    public override bool CanPurify => m_peck.CurPurifyTurn == PeckIdx;
 
+    private WolfPeckScript m_peck;
+    public void SetPeck(WolfPeckScript _peck, int _idx) { m_peck = _peck; PeckIdx = _idx; }
+
+    public int PeckIdx { get; private set; } = -1;
     public EWolfRole CurRole { get; private set; } = EWolfRole.MAIN;
     public void SetRole(EWolfRole _role) { CurRole = _role; }
     public void ResetRole() { if (m_peck == null) { return; } m_peck.ResetRole(); }
-
 
     private void JabAnimation() { m_anim.SetTrigger("JAB"); }
 
@@ -134,6 +136,12 @@ public class WolfScript : MonsterScript
         else
             ChangeState(EMonsterState.IDLE);
         AttackTimeCount = 1 / AttackSpeed;
+    }
+
+    public override void SetDead()
+    {
+        base.SetDead();
+        m_peck.WolfDead(this);
     }
 
 

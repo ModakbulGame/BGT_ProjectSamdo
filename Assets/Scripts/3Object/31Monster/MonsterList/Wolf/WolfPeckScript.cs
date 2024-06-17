@@ -20,17 +20,18 @@ public class WolfPeckScript : MonoBehaviour
 
     public bool Engaging { get; private set; }
 
+    public int CurPurifyTurn { get; private set; }
+
     public void EngageWolfs(WolfScript _wolf, ObjectScript _target) // 늑대 전투 개시
     {
         Engaging = true;
-        m_wolfs.Sort((wolf1, wolf2) => { return wolf1.TargetDistance < wolf2.TargetDistance ? -1 : 1; });
+        ResetRole();
         for (int i = 0; i<m_wolfs.Count; i++)
         {
-            m_wolfs[i].SetRole((EWolfRole)i);
             if (m_wolfs[i] == _wolf) { continue; }
             m_wolfs[i].SetAttackTarget(_target);
-            m_wolfs[i].PositionWolf();
         }
+        CurPurifyTurn = 0;
     }
 
 
@@ -42,7 +43,10 @@ public class WolfPeckScript : MonoBehaviour
 
     public void WolfDead(WolfScript _wolf)
     {
-
+        if(_wolf.PeckIdx != CurPurifyTurn) { CurPurifyTurn = -1; }
+        else { CurPurifyTurn++; }
+        m_wolfs.Remove(_wolf);
+        ResetRole();
     }
 
 
@@ -55,7 +59,12 @@ public class WolfPeckScript : MonoBehaviour
 
     public void ResetRole()
     {
-
+        m_wolfs.Sort((wolf1, wolf2) => { return wolf1.TargetDistance < wolf2.TargetDistance ? -1 : 1; });
+        for (int i = 0; i<m_wolfs.Count; i++)
+        {
+            m_wolfs[i].SetRole((EWolfRole)i);
+            m_wolfs[i].PositionWolf();
+        }
     }
 
     private void InitPeck()
@@ -65,9 +74,10 @@ public class WolfPeckScript : MonoBehaviour
             List<WolfScript> leavingWolfs = new();
             leavingWolfs.AddRange(m_wolfs.GetRange((int)EWolfRole.LAST, m_wolfs.Count - (int)EWolfRole.LAST));
         }
-        foreach (WolfScript wolf in m_wolfs)
+        for (int i=0;i<m_wolfs.Count;i++)
         {
-            wolf.SetPeck(this);
+            WolfScript wolf = m_wolfs[i];
+            wolf.SetPeck(this, i);
         }
     }
 
