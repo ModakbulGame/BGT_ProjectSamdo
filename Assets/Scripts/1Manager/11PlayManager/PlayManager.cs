@@ -190,6 +190,10 @@ public class PlayManager : MonoBehaviour
     public static Vector2 NormalizeLocation(Transform _obj) { return PlayUIManager.NormalizeLocation(_obj); }                               // 위치 정규화(3D -> 2D)
     public static Canvas GetCanvas(ECanvasType _canvas) { return PlayUIManager.GetCanvas(_canvas); }                                        // 캔버스
     public static RectTransform CanvasTrans(ECanvasType _canvas) { return GetCanvas(_canvas).GetComponent<RectTransform>(); }
+    public static bool IsOptionOpen { get { return PlayUIManager.IsOptionOpen; } }
+    public static void OpenOptionUI() { PlayUIManager.OpenOptionUI(); }
+    public static void CloseOptionUI() { PlayUIManager.CloseOptionUI(); }
+    public static bool IsPlayerUIOpen { get { return PlayUIManager.IsPlayerUIOpen; } }
     public static void OpenPlayerUI() { PlayUIManager.OpenPlayerUI(); }                                                                     // Player UI 열기
     public static void ClosePlayerUI() { PlayUIManager.ClosePlayerUI(); }                                                                   // Player UI 닫기
     public static void ShowInteractInfo(string _info) { PlayUIManager.ShowInteractInfo(_info); }
@@ -229,6 +233,7 @@ public class PlayManager : MonoBehaviour
     private static void EndBlackoutUI() { PlayUIManager.EndBlackout(); }
     public static void ShowBlindMark() { PlayUIManager.ShowBlindMark(); }
     public static void HideBlindMark() { PlayUIManager.HideBlindMark(); }
+    
 
 
 

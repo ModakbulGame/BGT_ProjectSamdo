@@ -6,21 +6,25 @@ using UnityEngine.SceneManagement;
 public class GameManager : SingleTon<GameManager>
 {
     public static bool IsInTitle { get { return SceneManager.GetActiveScene().buildIndex == ValueDefine.TITLE_SCENE_IDX; } }
-    public static bool IsInGame { get { return SceneManager.GetActiveScene().buildIndex > ValueDefine.TITLE_SCENE_IDX
-                && SceneManager.GetActiveScene().buildIndex < 3; /*임시 조건*/ } }
+    public static bool IsInGame { get { return SceneManager.GetActiveScene().buildIndex > ValueDefine.LOADING_SCENE_IDX
+                && SceneManager.GetActiveScene().buildIndex <= ValueDefine.HELL_SCENE_IDX; /*임시 조건*/ } }
     public static void StartGame()
     {
-        MoveToPlayScene(null);
+        MoveToLoading(null);
     }
     public static void LoadGame(int _idx)
     {
         SaveData data = GameData[_idx];
-        MoveToPlayScene(data);
+        MoveToLoading(data);
     }
-    private static void MoveToPlayScene(SaveData _data)
+    private static void MoveToLoading(SaveData _data)
     {
         PlayManager.SetCurData(_data);
-        SceneManager.LoadScene(ValueDefine.HELL_SCENE_IDX);
+        SceneManager.LoadScene(ValueDefine.LOADING_SCENE_IDX);
+    }
+    public static void ReturnToTitle()
+    {
+        SceneManager.LoadScene(ValueDefine.TITLE_SCENE_IDX);
     }
 
 

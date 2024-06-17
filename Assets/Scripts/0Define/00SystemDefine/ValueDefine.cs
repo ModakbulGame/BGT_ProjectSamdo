@@ -32,9 +32,10 @@ public static class ValueDefine
 
 
     // ¾À ÀÎµ¦½º
-    public const int LOADING_SCENE_IDX = 0;
+    public const int LOGO_SCENE_IDX = 0;
     public const int TITLE_SCENE_IDX = 1;
-    public const int HELL_SCENE_IDX = 2;
+    public const int LOADING_SCENE_IDX = 2;
+    public const int HELL_SCENE_IDX = 3;
 
 
     // °ª

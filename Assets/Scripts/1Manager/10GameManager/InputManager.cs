@@ -70,7 +70,8 @@ public class InputManager : MonoBehaviour
             }
             else if (PlayerInputs.OpenOptionUI.triggered)       // Escape 누르면
             {
-                // 설정 창 열기
+                PlayManager.OpenOptionUI();
+                SetControlMode(EControlMode.UI_CONTROL);    // UI 조작 모드로
             }
             else if (PlayerInputs.OpenMapUI.triggered)
             {
@@ -87,8 +88,16 @@ public class InputManager : MonoBehaviour
         {
             if (UIControlInputs.CloseUI.triggered)              // Escape 누르면
             {
-                PlayManager.ClosePlayerUI();                // PlayerUI 닫기(임시)
-                SetControlMode(EControlMode.THIRD_PERSON);  // 플레이어 조작 모드로
+                if (PlayManager.IsPlayerUIOpen)
+                {
+                    PlayManager.ClosePlayerUI();                // PlayerUI 닫기
+                    return;
+                }
+                if (PlayManager.IsOptionOpen)
+                {
+                    PlayManager.CloseOptionUI();
+                    return;
+                }
             }
             else if (UIControlInputs.UIInteract.triggered)       // NPCDialogueScript의 Update를 여기서 진행시키고자 했음   
             {

@@ -11,8 +11,17 @@ public class PlayUIManager : MonoBehaviour
     private Canvas[] m_canvases = new Canvas[(int)ECanvasType.LAST];
     public Canvas GetCanvas(ECanvasType _canvas) { return m_canvases[(int)_canvas]; }
 
+
+    [SerializeField]
+    private OptionUIScript m_optionUI;
+    public bool IsOptionOpen { get { return m_optionUI.gameObject.activeSelf; } }
+    public void OpenOptionUI() { m_optionUI.OpenUI(); }
+    public void CloseOptionUI() { m_optionUI.CloseUI(); }
+
+
     [SerializeField]
     private PlayerUIScript m_playerUI;                      // 플레이어 정보 UI (탭 누르면 나오는거)
+    public bool IsPlayerUIOpen { get { return m_playerUI.gameObject.activeSelf; } }
     public void OpenPlayerUI() { m_playerUI.OpenUI(); }     // 열기
     public void ClosePlayerUI() { m_playerUI.CloseUI(); }   // 닫기
     public void UpdateMaterials() { if (m_playerUI.gameObject.activeSelf) m_playerUI.UpdateMaterials(); }   // 재료 업데이트
