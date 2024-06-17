@@ -13,6 +13,7 @@ public class PowerInfo
     public float PowerCooltime { get { return PowerData.Cooltime; } }
     public float PowerRadius { get { return PowerData.HitRadius; } }
     public float PowerCastRange { get{ return PowerData.CastingRange; } } 
+    public int MotionIdx { get { return PowerData.MotionIdx; } }
     public bool HideWeapon { get { return PowerData.HideWeapon; } }
     public bool ShowCastingEffect { get { return PowerData.ShowCastingEffect; } }
 

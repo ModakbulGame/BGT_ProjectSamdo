@@ -63,7 +63,7 @@ public partial class PlayerController
     // 스킬 관련
     public void PowerStartAnim() { m_anim.SetBool(PowerHash, true); }                                           // 스킬 준비
     public void BuffStartAnim() { m_anim.SetBool(PowerHash,true); }                                             // 버프 준비
-    public void PowerFireAnim() { m_anim.SetTrigger("POWER_FIRE"); }                                            // 스킬 발사
+    public void PowerFireAnim(int _idx) { m_anim.SetInteger("POWER_IDX", _idx);  m_anim.SetTrigger("POWER_FIRE"); } // 스킬 발사
     public void PowerAnimDone() { m_anim.SetBool(PowerHash, false); }                                           // 스킬 종료
 
     // 가드 관련

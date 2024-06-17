@@ -203,7 +203,8 @@ public partial class PlayerController
         float coolTime = PowerInfoInHand.PowerCooltime;
         PowerCooltime[UsingPowerIdx] = coolTime;
         PlayManager.UsePowerSlot(UsingPowerIdx, coolTime);
-        PowerFireAnim();
+        int idx = PowerInfoInHand.MotionIdx;
+        PowerFireAnim(idx);
         HidePowerAim();
     }
     public void CreatePower()                                                               // 스킬 오브젝트 생성
