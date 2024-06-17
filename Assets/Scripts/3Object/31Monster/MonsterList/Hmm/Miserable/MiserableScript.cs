@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MiserableScript : HmmScript
 {
+    public override bool CanPurify => IsMelancholy;
+
     private bool IsAttackSkill { get { return AttackIdx == 3; } }
     private int SkillIdx { get; set; }
     public override void StartAttack()

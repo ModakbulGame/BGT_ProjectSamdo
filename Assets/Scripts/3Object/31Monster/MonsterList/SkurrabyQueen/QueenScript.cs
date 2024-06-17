@@ -13,6 +13,12 @@ public enum EQueenSkillName
 
 public class QueenScript : MonsterScript
 {
+    public override bool CanPurify => HatchCount > 4;
+
+    private int HatchCount { get; set; }
+    private readonly int PurifyHatch = 4;
+
+
     [SerializeField]
     private GameObject m_skurrabyPrefab;
 
@@ -135,6 +141,12 @@ public class QueenScript : MonsterScript
     }
 
 
+    public override void OnSpawned()
+    {
+        base.OnSpawned();
+    }
+
+
     // 초기 설정
     private void InitPool()
     {
@@ -171,7 +183,6 @@ public class QueenScript : MonsterScript
         base.Awake();
         InitPool();
     }
-
     public override void Update()
     {
         base.Update();

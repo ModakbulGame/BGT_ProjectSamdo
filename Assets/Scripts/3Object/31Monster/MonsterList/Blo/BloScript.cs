@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class BloScript : MonsterScript
 {
-    public override bool CanPurify => true;
+    public override bool CanPurify => !AbsorbedSoul;
 
+    protected bool AbsorbedSoul { get; set; }
 
     [SerializeField]
     private float m_rushSpeed = 6;
+    public virtual int AbsorbAmount { get { return 2; } }
 
     private bool RushDone { get; set; }
 
@@ -46,11 +48,25 @@ public class BloScript : MonsterScript
         m_rigid.velocity = m_rushSpeed * dir.normalized;
     }
 
+    public override void AttackedPlayer(HitData _hit)
+    {
+        if (!IsRushing || AbsorbedSoul) { return; }
+        AbsorbSoul();
+    }
+    private void AbsorbSoul()
+    {
+        int soul = PlayManager.SoulNum;
+        int absorb = FunctionDefine.Min(AbsorbAmount, soul);
+        PlayManager.LooseSoul(absorb);
+        AbsorbedSoul = true;
+    }
+
 
     public override void OnSpawned()
     {
         base.OnSpawned();
         RushDone = false;
+        AbsorbedSoul = false;
     }
 
     public override void SetStates()

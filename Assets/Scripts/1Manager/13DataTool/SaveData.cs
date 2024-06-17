@@ -28,6 +28,7 @@ public class SaveData
 
     // 스킬 정보
     public EPowerName[] PowerSlot;
+    public bool[] PowerObtained;
 
 
     // 퀘스트 정보
@@ -42,6 +43,7 @@ public class SaveData
 
         StatInfo = new();
         PowerSlot = new EPowerName[ValueDefine.MAX_POWER_SLOT] { EPowerName.LAST,EPowerName.LAST,EPowerName.LAST};
+        PowerObtained = new bool[(int)EPowerName.LAST];
 
         PatternNum = new int[(int)EPatternName.LAST];
         HealPatternList = new();
@@ -64,6 +66,8 @@ public class SaveData
         UsedStatPoint = _other.UsedStatPoint;
         PowerSlot = new EPowerName[ValueDefine.MAX_POWER_SLOT];
         for(int i = 0; i<ValueDefine.MAX_POWER_SLOT; i++) { PowerSlot[i] = _other.PowerSlot[i]; }
+        PowerObtained = new bool[(int)EPowerName.LAST];
+        for(int i = 0; i<(int)EPowerName.LAST; i++) { PowerObtained[i] = _other.PowerObtained[i]; }
 
         Soul = _other.Soul;
         PurifiedSoul = _other.PurifiedSoul;

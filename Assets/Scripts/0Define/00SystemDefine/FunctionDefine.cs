@@ -8,6 +8,11 @@ public delegate void EventPointer(PointerEventData _data);          // 마우스 정
 
 public static class FunctionDefine
 {
+    public static int Min(int _n1, int _n2) { if (_n1 <= _n2) { return _n1; } return _n2; }
+    public static float Min(float _n1, float _n2) { if (_n1 <= _n2) { return _n1; } return _n2; }
+    public static int Max(int _n1, int _n2) { if (_n1 >= _n2) { return _n1; } return _n2; }
+    public static float Max(float _n1, float _n2) { if (_n1 >= _n2) { return _n1; } return _n2; }
+
     public static float Sin(float _angle) { return Mathf.Sin(_angle * Mathf.Deg2Rad); }                 // 사인 (각도로 반환)
     public static float Cos(float _angle) { return Mathf.Cos(_angle * Mathf.Deg2Rad); }                 // 코사인 (각도로 반환)
 
@@ -44,7 +49,7 @@ public static class FunctionDefine
     public static Vector2 DegToVec(float _deg)              // 각도=>벡터 변환
     {
         if (_deg == 0) return Vector2.up;
-        else if(_deg < 180)
+        else if (_deg < 180)
         {
             float tan = Mathf.Tan((90-_deg) * Mathf.Deg2Rad);
             return new Vector2(1, tan).normalized;

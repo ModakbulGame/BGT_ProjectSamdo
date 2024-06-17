@@ -11,6 +11,8 @@ public enum EArrogantAttack
 
 public class ArrogantScript : HmmScript
 {
+    public override bool CanPurify => IsFatigure;
+
     public EArrogantAttack CurAttack { get; private set; } = EArrogantAttack.NORMAL;
     private readonly float SmashCooltime = 15;
 

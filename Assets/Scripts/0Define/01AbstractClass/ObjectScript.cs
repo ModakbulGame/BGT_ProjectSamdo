@@ -209,9 +209,11 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     }
     #region CC기 세부
     //  임시 상태 CC
+    public bool IsFatigure { get { return m_ccCount[(int)ECCType.FATIGUE] > 0; } }
     private void GetFatigue()       // 피로
     {
         TempAdjust slow = new(EAdjType.MOVE_SPEED, 0.7f, 10);
+        m_ccCount[(int)ECCType.FATIGUE] = 10;
         GetAdj(slow);
     }
     private void GetWeakness()      // 나약

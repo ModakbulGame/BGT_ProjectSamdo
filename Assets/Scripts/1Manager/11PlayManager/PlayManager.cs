@@ -137,7 +137,7 @@ public class PlayManager : MonoBehaviour
     public static void AddSoul(int _num) { InvenManager.AddSoul(_num); }                                                                        // 영혼 추가
     public static void AddPurified(int _num) { InvenManager.AddPurified(_num); }                                                                // 성불 영혼 추가
     public static void AddPattern(EPatternName _type, int _num) { InvenManager.AddPattern(_type, _num); }                                       // 문양 추가
-    public static void UseSoul(int _num) { InvenManager.UseSoul(_num); }                                                                        // 영혼 사용
+    public static void LooseSoul(int _num) { InvenManager.LooseSoul(_num); }                                                                        // 영혼 사용
     public static void UsePurified(int _num) { InvenManager.UsePurified(_num); }                                                                // 성불 영혼 사용
     public static void UsePattern(EPatternName _type, int _num) { InvenManager.UsePattern(_type, _num); }                                       // 문양 사용
 

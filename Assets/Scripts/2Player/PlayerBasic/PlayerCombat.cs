@@ -13,8 +13,10 @@ public partial class PlayerController
     public override void GetHit(HitData _hit)                           // 공격 맞음
     {
         if (IsInvincible && !_hit.CCList.Contains(ECCType.AIRBORNE)) { return; }    // 구르는 중이고 에어본이 아니면
-        if (!IsDead && IsGuarding && _hit.Attacker.IsMonster) { ((MonsterScript)_hit.Attacker).HitGuardingPlayer(); }
+        MonsterScript monster = (MonsterScript)_hit.Attacker;
+        if (!IsDead && IsGuarding && _hit.Attacker.IsMonster) { monster.HitGuardingPlayer(); }
         base.GetHit(_hit);
+        monster.AttackedPlayer(_hit);
     }
     public override void PlayHitAnim(HitData _hit)                      // 피격 애니메이션
     {

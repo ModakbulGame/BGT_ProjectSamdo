@@ -22,7 +22,6 @@ public class SkurrabyAttackState : MonoBehaviour, IMonsterState
 
         FireCount = TimeToFire;
         HasFired = false;
-        Skurraby.ReadyFire();
     }
 
     private void FireBombcrab()

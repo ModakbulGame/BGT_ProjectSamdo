@@ -59,6 +59,7 @@ public abstract partial class MonsterScript
         PowerScriptable data = _skill.PowerData;
         GetDamage(100, _attacker);
     }
+    public virtual void AttackedPlayer(HitData _hit) { }
 
 
     // 공격 관련

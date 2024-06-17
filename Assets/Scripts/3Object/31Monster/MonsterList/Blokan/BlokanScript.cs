@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BlokanScript : BloScript
 {
+    public override bool CanPurify => AbsorbedSoul;
+
+
+
 
     private readonly Vector3[] NormalAttackOffsets = new Vector3[2]
         { new(0,1.5f,1.3f), new(0,1,1.3f) };

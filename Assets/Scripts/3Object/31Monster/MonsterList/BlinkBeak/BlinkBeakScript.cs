@@ -5,6 +5,10 @@ using UnityEngine.VFX;
 
 public class BlinkbeakScript : MonsterScript
 {
+    public override bool CanPurify => EvadeTimeCount >= (EvadeCooltime - PurifyTime);
+
+    private readonly float PurifyTime = 5;
+
     private IMonsterState m_evadeState;
 
     private readonly float EvadeDissolveTime = 0.5f;

@@ -75,6 +75,10 @@ public class PlayerForceManager : MonoBehaviour, IHaveData
         {
             m_powerSlot[i] = data.PowerSlot[i];
         }
+        for (int i = 0; i<(int)EPowerName.LAST; i++)
+        {
+            m_powerObtained[i] = data.PowerObtained[i];
+        }
     }
     public void SaveData()
     {
@@ -86,6 +90,10 @@ public class PlayerForceManager : MonoBehaviour, IHaveData
         for (int i = 0; i<ValueDefine.MAX_POWER_SLOT; i++)
         {
             data.PowerSlot[i] = m_powerSlot[i];
+        }
+        for (int i = 0; i<(int)EPowerName.LAST; i++)
+        {
+            data.PowerObtained[i] = m_powerObtained[i];
         }
     }
 

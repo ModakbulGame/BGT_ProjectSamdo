@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : SingleTon<GameManager>
 {
     public static bool IsInTitle { get { return SceneManager.GetActiveScene().buildIndex == ValueDefine.TITLE_SCENE_IDX; } }
-    public static bool IsInGame { get { return SceneManager.GetActiveScene().buildIndex > ValueDefine.TITLE_SCENE_IDX; } }
+    public static bool IsInGame { get { return SceneManager.GetActiveScene().buildIndex > ValueDefine.TITLE_SCENE_IDX
+                && SceneManager.GetActiveScene().buildIndex < 3; /*임시 조건*/ } }
     public static void StartGame()
     {
         MoveToPlayScene(null);

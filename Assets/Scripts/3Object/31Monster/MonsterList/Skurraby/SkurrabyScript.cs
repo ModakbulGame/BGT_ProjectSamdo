@@ -11,10 +11,11 @@ public class SkurrabyScript : MonsterScript
     [SerializeField]
     private GameObject m_skurrabyExplode;
 
-    public override bool CanPurify => Firing;
+    public override bool CanPurify => JumpCount > PurifyJump;
+    private readonly int PurifyJump = 2;
 
     public bool IsFlying { get; private set; }
-    private bool Firing { get; set; }
+    private int JumpCount { get; set; }
 
     private Vector2 FlyDirection { get { if (!HasTarget) { return Vector2.zero; }
             return ((CurTarget.Position2 + CurTarget.Velocity2 / 2) - Position2).normalized; } }
@@ -29,12 +30,11 @@ public class SkurrabyScript : MonsterScript
     public void ResetSkurraby()
     {
         IsFlying = false;
-        Firing = false;
+        JumpCount = 0;
         IsSpawned = false;
         IsDead = false;
         CurHP = MaxHP;
     }
-
 
     public void SkurrabySpawned(Vector2 _dir, ObjectScript _obj)
     {
@@ -50,10 +50,6 @@ public class SkurrabyScript : MonsterScript
         else { ChangeState(EMonsterState.IDLE); }
     }
 
-    public void ReadyFire()
-    {
-        Firing = true;
-    }
     public void FireSkurraby()
     {
         if(!HasTarget) { ChangeState(EMonsterState.IDLE); return; }
@@ -70,7 +66,7 @@ public class SkurrabyScript : MonsterScript
     }
     private void FlyDone()
     {
-        IsFlying = false; Firing = false;
+        IsFlying = false; JumpCount++;
     }
 
 

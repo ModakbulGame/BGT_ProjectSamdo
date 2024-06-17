@@ -77,7 +77,7 @@ public partial class PlayerController : ObjectScript, IHaveData
 
     private void CheckDrowned()
     {
-        if (IsDead) { return; }
+        if (!GameManager.IsInGame || IsDead) { return; }
         float water = PlayManager.WaterHeight;
         if (transform.position.y <= water)
         {

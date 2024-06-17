@@ -18,6 +18,8 @@ public enum EUumAttackType
 
 public class UumScript : AnimatedAttackMonster
 {
+    public override bool CanPurify => SkillTimeCount[0] > 0 || SkillTimeCount[1] > 0;
+
     [SerializeField]
     private VisualEffect m_headFire;
 
@@ -32,6 +34,8 @@ public class UumScript : AnimatedAttackMonster
         StopMoveAnim();
     }
 
+    private readonly float PurifyTime = 5;
+    private float[] SkillTimer = new float[2];
 
 
     private readonly float NarrowAttackMultiplier = 1.5f;
@@ -103,6 +107,7 @@ public class UumScript : AnimatedAttackMonster
             attack.ResetCCType();
         }
         base.AttackDone();
+        if(AttackIdx == 3 || AttackIdx == 4) { SkillTimeCount[AttackIdx - 3] = PurifyTime; }
     }
     public override void LookTarget()
     {
@@ -115,5 +120,12 @@ public class UumScript : AnimatedAttackMonster
     {
         base.StartDissolve();
         m_headFire.Stop();
+    }
+
+    public override void ProcCooltime()
+    {
+        base.ProcCooltime();
+        if (SkillTimeCount[0] > 0) { SkillTimeCount[0] -= Time.deltaTime; }
+        if (SkillTimeCount[1] > 0) { SkillTimeCount[1] -= Time.deltaTime; }
     }
 }

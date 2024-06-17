@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StarvedScript : HmmScript
 {
+    public override bool CanPurify => IsExtorted;
+
     private int CurAttackIdx { get; set; }
     public override void StartAttack()
     {
