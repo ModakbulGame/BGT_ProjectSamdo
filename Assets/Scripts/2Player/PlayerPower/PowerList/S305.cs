@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class S305 : ParabolaExplodeScript
 {
-    public override void FixedUpdate()
+    public override bool DistanceCheck(float _distanceMoved)
     {
-        m_rigid.AddForce(Vector3.down * m_rigid.mass / 2 * ValueDefine.PARABOLA_GRAVITY);
-        base.FixedUpdate();
+        return _distanceMoved > m_scriptable.CastingRange * 2;
     }
 }

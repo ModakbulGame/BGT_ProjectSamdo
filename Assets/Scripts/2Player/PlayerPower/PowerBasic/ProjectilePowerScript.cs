@@ -24,7 +24,7 @@ public class ProjectilePowerScript : PlayerPowerScript
     {
         m_rigid.velocity = Vector3.zero;
         base.ReleaseToPool();
-        DeleteTrailOnHit();
+        //DeleteTrailOnHit();
     }
 
     public virtual void OnDestroyObject()
