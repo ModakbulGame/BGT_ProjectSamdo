@@ -79,17 +79,6 @@ public class DataManager : MonoBehaviour
     //public NPCScriptable GetNPCData(EnpcName _npc) { return m_dataList.GetNPCData(_npc); }
 
 
-    public static EItemType IDToItemType(string _id)
-    {
-        return _id[0] switch
-        {
-            ValueDefine.WEAPON_CODE => EItemType.WEAPON,
-            ValueDefine.PATTERN_CODE => EItemType.PATTERN,
-            ValueDefine.THROW_ITEM_CODE => EItemType.THROW,
-            ValueDefine.OTHER_ITEM_CODE => EItemType.OTHERS,
-            _ => EItemType.LAST
-        };
-    }
 
     public static EWeaponType IDToWeaponType(string _id)
     {
@@ -101,7 +90,6 @@ public class DataManager : MonoBehaviour
             _ => EWeaponType.LAST
         };
     }
-
     public static EAdjType String2Adj(string _data)
     {
         return _data switch
@@ -115,7 +103,6 @@ public class DataManager : MonoBehaviour
             _ => EAdjType.LAST
         };
     }
-
     public static ECCType String2CC(string _data)
     {
         return _data switch
@@ -133,57 +120,6 @@ public class DataManager : MonoBehaviour
             "Blind" => ECCType.BLIND,
 
             _ => ECCType.LAST
-        };
-    }
-
-    public static EPowerProperty[] String2Properties(string _data)
-    {
-        if (_data == "") { return new EPowerProperty[0]; }
-        string[] datas = _data.Split('/');
-        EPowerProperty[] props = new EPowerProperty[datas.Length];
-        for (int i = 0; i<datas.Length; i++)
-        {
-            props[i] = String2Property(datas[i]);
-        }
-        return props;
-    }
-    private static EPowerProperty String2Property(string _data)
-    {
-        return _data switch
-        {
-            "Slash" => EPowerProperty.SLASH,
-            "Hit" => EPowerProperty.HIT,
-            "Explosion" => EPowerProperty.EXPLOSION,
-            "Shockwave" => EPowerProperty.SHOCKWAVE,
-            "Fog" => EPowerProperty.FOG,
-            "Totem" => EPowerProperty.TOTEM,
-            "Light" => EPowerProperty.LIGHT,
-            "Soul" => EPowerProperty.SOUL,
-
-            _ => EPowerProperty.LAST
-        };
-    }
-    public static EQuestType[] String2QuestTypes(string _data)
-    {
-        if (_data == "") { return new EQuestType[0]; }
-        string[] datas = _data.Split('/');
-        EQuestType[] types = new EQuestType[datas.Length];
-        for (int i = 0; i < datas.Length; i++)
-        {
-            types[i] = String2QuestType(datas[i]);
-        }
-        return types;
-    }
-    private static EQuestType String2QuestType(string _data)
-    {
-        return _data switch
-        {
-            "TALKING" => EQuestType.TALKING,
-            "COLLECTION" => EQuestType.COLLECTION,
-            "HUNTING" => EQuestType.HUNTING,
-            "TIMELIMIT" => EQuestType.TIMELIMIT,
-
-            _ => EQuestType.LAST
         };
     }
 

@@ -73,11 +73,8 @@ public class ItemManager : MonoBehaviour
     }
     public ItemInfo GetItemInfo(string _id)
     {
-        foreach (KeyValuePair<SItem, ItemInfo> kv in m_itemInfo)
-        {
-            if (kv.Value.ItemID == _id) { return kv.Value; }
-        }
-        return null;
+        SItem item = ID2Item(_id);
+        return GetItemInfo(item);
     }
 
 
@@ -138,6 +135,38 @@ public class ItemManager : MonoBehaviour
             list.AddRange(m_dropItemPrefabs);
             list.AddRange(m_throwItemPrefabs);
             return list.ToArray(); } }
+
+
+    public static EItemType IDToItemType(string _id)
+    {
+        return _id[0] switch
+        {
+            ValueDefine.WEAPON_CODE => EItemType.WEAPON,
+            ValueDefine.PATTERN_CODE => EItemType.PATTERN,
+            ValueDefine.THROW_ITEM_CODE => EItemType.THROW,
+            ValueDefine.OTHER_ITEM_CODE => EItemType.OTHERS,
+            _ => EItemType.LAST
+        };
+    }
+    public static EWeaponType IDToWeaponType(string _id)
+    {
+        return _id[1] switch
+        {
+            ValueDefine.BLADE_CODE => EWeaponType.BLADE,
+            ValueDefine.SWORD_CODE => EWeaponType.SWORD,
+            ValueDefine.SCEPTER_CODE => EWeaponType.SCEPTER,
+            _ => EWeaponType.LAST
+        };
+    }
+    public static SItem ID2Item(string _id)
+    {
+        if (_id == "") { return SItem.Empty; }
+        EItemType type = IDToItemType(_id);
+        int.TryParse(_id[1..], out int idx);
+        return new SItem(type, idx);
+    }
+
+
 
 
     // 아이템 별 종류 수

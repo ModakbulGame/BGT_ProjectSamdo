@@ -57,6 +57,13 @@ public class MonsterManager : MonoBehaviour
     }
 
 
+    public static EMonsterName ID2Monster(string _id)
+    {
+        int.TryParse(_id[1..], out int idx);
+        return (EMonsterName)idx;
+    }
+
+
     public void SetManager()
     {
         for (int i = 0; i<(int)EMonsterName.LAST; i++)

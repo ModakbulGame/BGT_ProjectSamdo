@@ -8,7 +8,8 @@ using UnityEngine;
 
 public static class DataImporter
 {
-    private static string GameManagerPath = PrefabPath + "System/GameManager.prefab";
+    private readonly static string GameManagerPath = PrefabPath + "System/GameManager.prefab";
+    private readonly static string HellMapPath = PrefabPath + "Environment/HellMap.prefab";
 
     private static string CSVPath { get { return Application.dataPath + "/Data/CSVs/"; } }
     private const string ItemCSVName = "ItemSheet.csv";
@@ -299,69 +300,13 @@ public static class DataImporter
         Debug.Log("권능 정보 불러오기 완료");
     }
 
-    [MenuItem("Utilities/GenerateNPCs")]
+    [MenuItem("Utilities/GenerateNPCNQuest")]
     private static void GenerateNPCData()
-    {
-        // NPC 정보
-        string[] allNPCLines = File.ReadAllLines(CSVPath + NPCCSVName);
-
-        List<NPCScriptable> data = new();
-
-        for (uint i = 1; i < allNPCLines.Length; i++)
-        {
-            uint idx = i - 1;
-            string si = allNPCLines[i];
-            string[] splitNPCData = si.Split(",");
-
-            //if (splitNPCData.Length != (int)EnpcAttribute.LAST)
-            //{
-            //    Debug.Log(si + $"does not have {(int)EnpcAttribute.LAST} values.");
-            //    return;
-            //}
-
-            string id = splitNPCData[(int)EnpcAttribute.ID];
-
-            NPCScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{NPCScriptablePath + id}.asset") as NPCScriptable;
-
-            bool IsExist = scriptable != null;
-            if (!IsExist) { scriptable = ScriptableObject.CreateInstance<NPCScriptable>(); }
-
-            scriptable.SetNPCScriptable(idx, splitNPCData);
-
-            if (!IsExist)
-            {
-                AssetDatabase.CreateAsset(scriptable, $"{NPCScriptablePath + id}.asset");
-            }
-
-            // npc 프리팹이 없으므로 일단 주석 처리
-
-            //GameObject prefab = AssetDatabase.LoadMainAssetAtPath($"{NPCPrefabPath + id}.prefab") as GameObject;
-            //if (prefab == null) { continue; }
-            //if (!prefab.TryGetComponent<NPCScript>(out var script)) { Debug.Log(id + " 스크립트 없음"); continue; }
-
-            data.Add(scriptable);
-
-            //script.SetScriptable(scriptable);
-
-            //AssetDatabase.SaveAssets();
-            //EditorUtility.SetDirty(scriptable);
-            //EditorUtility.SetDirty(prefab);
-        }
-
-        GameObject gameManager = AssetDatabase.LoadMainAssetAtPath(GameManagerPath) as GameObject;
-        StoryManager storyManager = gameManager.GetComponentInChildren<StoryManager>();
-        storyManager.SetNPCData(data);
-
-        Debug.Log("NPC 정보 불러오기 완료");
-    }
-
-    [MenuItem("Utilities/GenerateQuests")]
-    private static void GenerateQuestData()
     {
         // 퀘스트 정보
         string[] allQuestLines = File.ReadAllLines(CSVPath + QuestCSVName);
 
-        List<QuestScriptable> data = new();
+        List<QuestScriptable> questData = new();
 
         for (uint i = 1; i < allQuestLines.Length; i++)
         {
@@ -384,7 +329,7 @@ public static class DataImporter
                 scriptable = ScriptableObject.CreateInstance<QuestScriptable>();
                 AssetDatabase.CreateAsset(scriptable, $"{QuestScriptablePath + id}.asset");
             }
-            data.Add(scriptable);
+            questData.Add(scriptable);
 
             scriptable.SetQuestScriptable(idx, splitQuestData);
 
@@ -392,14 +337,86 @@ public static class DataImporter
             EditorUtility.SetDirty(scriptable);
         }
 
+
+        GameObject hellMap = AssetDatabase.LoadMainAssetAtPath(HellMapPath) as GameObject;
+        OasisNPC[] oasisList = hellMap.GetComponentsInChildren<OasisNPC>();
+        if(oasisList.Length != (int)EOasisPointName.LAST) { Debug.LogError("맵에 오아시스 개수 다름"); return; }
+        AltarScript[] altarList = hellMap.GetComponentsInChildren<AltarScript>();
+        if (altarList.Length != (int)EAltarName.LAST) { Debug.LogError("맵에 제단 개수 다름"); return; }
+
+        // NPC 정보
+        string[] allNPCLines = File.ReadAllLines(CSVPath + NPCCSVName);
+
+        List<NPCScriptable> data = new();
+
+        for (uint i = 1; i < allNPCLines.Length; i++)
+        {
+            uint idx = i - 1;
+            string si = allNPCLines[i];
+            string[] splitNPCData = si.Split(",");
+
+            if (splitNPCData.Length < (int)ENPCAttribute.DIALOGUES - 1)
+            {
+                Debug.Log(si + $"NPC 데이터 줄 개수 모자람");
+                return;
+            }
+
+            string npc = splitNPCData[(int)ENPCAttribute.SNPC];
+
+            NPCScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{NPCScriptablePath + npc}.asset") as NPCScriptable;
+
+            bool IsExist = scriptable != null;
+            if (!IsExist) { scriptable = ScriptableObject.CreateInstance<NPCScriptable>(); }
+
+            scriptable.SetNPCScriptable(idx, splitNPCData);
+            foreach (QuestScriptable quest in questData)
+            {
+                if(quest.StartNPC == scriptable.NPC) { scriptable.AddQuest(quest); }
+            }
+
+            if (!IsExist)
+            {
+                AssetDatabase.CreateAsset(scriptable, $"{NPCScriptablePath + npc}.asset");
+            }
+
+            ENPCType type = scriptable.NPC.Type;
+            if (type == ENPCType.OASIS)
+            {
+                uint oasisIdx = idx;
+                oasisList[oasisIdx].SetOasis(oasisIdx, scriptable);
+            }
+            else if(type == ENPCType.ALTAR)
+            {
+                uint altarIdx = idx - (int)EOasisPointName.LAST;
+                altarList[altarIdx].SetAltar(altarIdx, scriptable);
+            }
+            else
+            {
+                //GameObject prefab = AssetDatabase.LoadMainAssetAtPath($"{NPCPrefabPath + npc}.prefab") as GameObject;
+                //if (prefab == null) { continue; }
+                //if (!prefab.TryGetComponent<NPCScript>(out var script)) { Debug.Log(npc + " 스크립트 없음"); continue; }
+                //script.SetScriptable(scriptable);
+                //AssetDatabase.SaveAssets();
+                //EditorUtility.SetDirty(prefab);
+            }
+
+            data.Add(scriptable);
+
+            AssetDatabase.SaveAssets();
+            EditorUtility.SetDirty(scriptable);
+        }
+
+        EditorUtility.SetDirty(hellMap);
+
         GameObject gameManager = AssetDatabase.LoadMainAssetAtPath(GameManagerPath) as GameObject;
         StoryManager storyManager = gameManager.GetComponentInChildren<StoryManager>();
-        storyManager.SetQuestData(data);
+        storyManager.SetQuestData(questData);
+        storyManager.SetNPCData(data);
 
         AssetDatabase.SaveAssets();
         EditorUtility.SetDirty(gameManager);
 
-        Debug.Log("퀘스트 정보 불러오기 완료");
+        Debug.Log("NPC, 퀘스트 정보 불러오기 완료");
     }
 }
 #endif

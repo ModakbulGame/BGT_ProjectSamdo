@@ -53,6 +53,34 @@ public class PowerManager : MonoBehaviour
     }
 
 
+    public static EPowerProperty[] String2PowerProps(string _data)
+    {
+        if (_data == "") { return new EPowerProperty[0]; }
+        string[] datas = _data.Split('/');
+        EPowerProperty[] props = new EPowerProperty[datas.Length];
+        for (int i = 0; i<datas.Length; i++)
+        {
+            props[i] = String2PowerProp(datas[i]);
+        }
+        return props;
+    }
+    private static EPowerProperty String2PowerProp(string _data)
+    {
+        return _data switch
+        {
+            "Slash" => EPowerProperty.SLASH,
+            "Hit" => EPowerProperty.HIT,
+            "Explosion" => EPowerProperty.EXPLOSION,
+            "Shockwave" => EPowerProperty.SHOCKWAVE,
+            "Fog" => EPowerProperty.FOG,
+            "Totem" => EPowerProperty.TOTEM,
+            "Light" => EPowerProperty.LIGHT,
+            "Soul" => EPowerProperty.SOUL,
+
+            _ => EPowerProperty.LAST
+        };
+    }
+
 
     public static ECCType IDToCC(string _code)
     {

@@ -192,43 +192,50 @@ public class PlayManager : MonoBehaviour
     private PlayUIManager m_playUIManager;
     private static PlayUIManager PlayUIManager { get { return Inst.m_playUIManager; } }
     public static Canvas GetCanvas(ECanvasType _canvas) { return PlayUIManager.GetCanvas(_canvas); }                                        // 캔버스
+
+        // 온오프 UI
     public static bool IsOptionOpen { get { return PlayUIManager.IsOptionOpen; } }
-    public static void OpenOptionUI() { PlayUIManager.OpenOptionUI(); }
-    public static void CloseOptionUI() { PlayUIManager.CloseOptionUI(); }
+    public static void ToggleOptionUI(bool _on) { PlayUIManager.ToggleOptionUI(_on); }                                                      // 옵션 UI 여닫기
     public static bool IsPlayerUIOpen { get { return PlayUIManager.IsPlayerUIOpen; } }
-    public static void OpenPlayerUI() { PlayUIManager.OpenPlayerUI(); }                                                                     // Player UI 열기
-    public static void ClosePlayerUI() { PlayUIManager.ClosePlayerUI(); }                                                                   // Player UI 닫기
-    public static void ShowInteractInfo(string _info) { PlayUIManager.ShowInteractInfo(_info); }
-    public static void HideInteractInfo() { PlayUIManager.HideInteractInfo(); }
+    public static void TogglePlayerUI(bool _on) { PlayUIManager.TogglePlayerUI(_on); }                                                      // 플레이어 인포 UI 여닫기
+    public static void UpdateInfoUI() { PlayUIManager.UpdateInfoUI(); }                                                                     // 플레이어 인포 UI 업데이트
+    public static void UpdateMaterials() { PlayUIManager.UpdateMaterials(); }                                                               // 재화 업데이트
     public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                       // 맵 UI 여닫기
     public static void ToggleQuestUI() { PlayUIManager.ToggleQuestUI(); }                                                                   // 퀘스트 창 여닫기
-    public static void OpenOasisUI(OasisNPC _npc) { PlayUIManager.OpenOasisUI(_npc); }                                                      // 화톳불 UI 열기
-    public static void CloseOasisUI() { PlayUIManager.CloseOasisUI(); }                                                                     // 화톳불 UI 닫기
+    public static void OpenOasisUI(OasisNPC _npc) { PlayUIManager.OpenOasisUI(_npc); }                                                      // 오아시스 UI 열기
+    public static void CloseOasisUI() { PlayUIManager.CloseOasisUI(); }                                                                     // 오아시스 UI 닫기
+
+        // 메인 캔버스 상시 UI
+    public static void SetPlayerMaxHP(float _hp) { PlayUIManager.SetMaxHP(_hp); }                                                           // 체력바 최대 체력
+    public static void SetPlayerCurHP(float _hp) { PlayUIManager.SetCurHP(_hp); }                                                           // 체력바 현재 체력
     public static void UpdatePowerSlot() { PlayUIManager.UpdatePowerSlot(); }                                                               // 스킬 슬롯 UI
     public static void UsePowerSlot(int _idx, float _cooltime) { PlayUIManager.UsePowerSlot(_idx, _cooltime); }                             // 스킬 쿨타임 진행
     public static void UpdateThrowItemSlot() { PlayUIManager.UpdateThrowItemSlot(); }                                                       // 던지기 아이템 UI
     public static void UpdateHealItemSlot() { PlayUIManager.UpdateHealItemSlot(); }                                                         // 회복 아이템 UI
-    public static void UpdateInfoUI() { PlayUIManager.UpdateInfoUI(); }                                                                     // 플레이어 인포 UI 업데이트
-    public static void UpdateMaterials() { PlayUIManager.UpdateMaterials(); }                                                               // 재화 업데이트
-    public static void SetPlayerMaxHP(float _hp) { PlayUIManager.SetMaxHP(_hp); }                                                           // 체력바 최대 체력
-    public static void SetPlayerCurHP(float _hp) { PlayUIManager.SetCurHP(_hp); }                                                           // 체력바 현재 체력
+    public static void UpdateQuestSidebar() { PlayUIManager.UpdateQuestSideBar(); }                                                         // 퀘스트 바 업데이트
+    public static void SetMinimapScale(float _scale) { PlayUIManager.SetMinimapScale(_scale); }                                             // 미니맵 축척 설정
     public static void SetStaminaRate(float _rate) { PlayUIManager.SetStaminaRate(_rate); }                                                 // 스태미나 비율
     public static void SetLightRate(float _rate) { PlayUIManager.SetLightRate(_rate); }                                                     // 능력 비율
     public static void SetLightState(bool _on) { PlayUIManager.SetLightState(_on); }                                                        // 고갈 설정
     public static void ShowRaycastAim() { PlayUIManager.ShowRaycastAim(); }                                                                 // 레이캐스트 에임 on
     public static void SetRaycastAimState(bool _on) { PlayUIManager.SetRaycastAimState(_on); }                                              // 레이캐스트 에임 상태
     public static void HideRaycastAim() { PlayUIManager.HideRaycastAim(); }                                                                 // 레이캐스트 에임 off
-    public static void ShowPowerAim(Vector3 _pos, float _radius, float _range) { PlayUIManager.ShowPowerAim(_pos, _radius, _range); }
-    public static Vector3 TracePowerAim(Vector3 _pos, float _range) { return PlayUIManager.TracePowerAim(_pos, _range); }
-    public static void HidePowerAim() { PlayUIManager.HidePowerAim(); }
+
+    // 인게임 UI
+    public static void ShowInteractInfo(string _info) { PlayUIManager.ShowInteractInfo(_info); }                                            // 상호작용 키 on
+    public static void HideInteractInfo() { PlayUIManager.HideInteractInfo(); }                                                             // 상호작용 키 off
+    public static void ShowPowerAim(Vector3 _pos, float _radius, float _range) { PlayUIManager.ShowPowerAim(_pos, _radius, _range); }       // 권능 에임 on
+    public static Vector3 TracePowerAim(Vector3 _pos, float _range) { return PlayUIManager.TracePowerAim(_pos, _range); }                   // 권능 에임 위치 설정
+    public static void HidePowerAim() { PlayUIManager.HidePowerAim(); }                                                                     // 권능 에임 off
     public static void DrawThrowLine(Vector3 _force, float _mass, Vector3 _start) { PlayUIManager.DrawThrowLine(_force, _mass, _start); }   // 던지기 궤적 그리기
     public static void HideThrowLine() { PlayUIManager.HideThrowLine(); }                                                                   // 던지기 궤적 off
-    private static void StartBlackoutUI() { PlayUIManager.StartBlackout(); }
-    private static void EndBlackoutUI() { PlayUIManager.EndBlackout(); }
-    public static void ShowBlindMark() { PlayUIManager.ShowBlindMark(); }
-    public static void HideBlindMark() { PlayUIManager.HideBlindMark(); }
+    private static void StartBlackoutUI() { PlayUIManager.StartBlackout(); }                                                                // fade 시작
+    private static void EndBlackoutUI() { PlayUIManager.EndBlackout(); }                                                                    // fade 종료
+    public static void ShowBlindMark() { PlayUIManager.ShowBlindMark(); }                                                                   // 실명 on
+    public static void HideBlindMark() { PlayUIManager.HideBlindMark(); }                                                                   // 실명 off
 
-    public static void ShowNPCQuestUI(QuestNPCScript _npc) { PlayUIManager.ShowNPCQuestUI(_npc); }                                                                 // 퀘스트 수락/거절 창 표시
+
+    public static void ShowNPCQuestUI(QuestNPCScript _npc) { PlayUIManager.ShowNPCQuestUI(_npc); }                                          // 퀘스트 수락/거절 창 표시
     public static void ExpressCurQuestInfo() { PlayUIManager.ExpressCurQuestInfo(); }                                                       // 현재 퀘스트 정보 표시
     public static void ChangeBtnsTxt() { PlayUIManager.ChangeBtnsTxt(); }
     public static Image[] ClearImg { get { return PlayUIManager.ClearImg; } }

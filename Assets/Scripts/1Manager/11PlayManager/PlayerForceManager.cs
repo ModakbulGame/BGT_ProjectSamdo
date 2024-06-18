@@ -1,3 +1,4 @@
+using MalbersAnimations.Controller;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,11 +22,11 @@ public class PlayerForceManager : MonoBehaviour, IHaveData
 
     public void UpgradeStat(int[] _point)
     {
-        for (int i = 0; i<(int)EStatInfoName.LAST; i++)
+        for (int i = 0; i<(int)EStatName.LAST; i++)
         {
             if (_point[i] > 0)
             {
-                PlayerStatInfo.UpgradeStat((EStatInfoName)i, _point[i]);
+                PlayerStatInfo.UpgradeStat((EStatName)i, _point[i]);
                 LeftStatPoint -= _point[i];
                 UsedStatPoint += _point[i];
             }
@@ -96,6 +97,22 @@ public class PlayerForceManager : MonoBehaviour, IHaveData
             data.PowerObtained[i] = m_powerObtained[i];
         }
     }
+
+
+    public static EStatName String2Stat(string _data)
+    {
+        return _data switch
+        {
+            "HEALTH" => EStatName.HEALTH,
+            "ENDURE" => EStatName.ENDURE,
+            "STRENGTH" => EStatName.STRENGTH,
+            "INTELLECT" => EStatName.INTELLECT,
+            "RAPID" => EStatName.RAPID,
+            "MENTAL" => EStatName.MENTAL,
+            _ => EStatName.LAST
+        };
+    }
+
 
     public void SetManager()
     {

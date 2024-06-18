@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 
 public class PlayUIManager : MonoBehaviour
 {
+    // 캔버스
     [SerializeField]
     private Canvas[] m_canvases = new Canvas[(int)ECanvasType.LAST];
     public Canvas GetCanvas(ECanvasType _canvas) { return m_canvases[(int)_canvas]; }
@@ -15,26 +16,30 @@ public class PlayUIManager : MonoBehaviour
     private Canvas OptionCanvas { get { return m_canvases[(int)ECanvasType.OPTION]; } }
 
 
+
+    // 온 오프 UI
     [SerializeField]
     private OptionUIScript m_optionUI;
     public bool IsOptionOpen { get { return m_optionUI.gameObject.activeSelf; } }
-    public void OpenOptionUI() { m_optionUI.OpenUI(); }
-    public void CloseOptionUI() { m_optionUI.CloseUI(); }
+    public void ToggleOptionUI(bool _on) { if (_on) { m_optionUI.OpenUI(); } else { m_optionUI.CloseUI(); } }
 
 
     [SerializeField]
     private PlayerUIScript m_playerUI;                      // 플레이어 정보 UI (탭 누르면 나오는거)
     public bool IsPlayerUIOpen { get { return m_playerUI.gameObject.activeSelf; } }
-    public void OpenPlayerUI() { m_playerUI.OpenUI(); }     // 열기
-    public void ClosePlayerUI() { m_playerUI.CloseUI(); }   // 닫기
+    public void TogglePlayerUI(bool _on) { if (_on) { m_playerUI.OpenUI(); } else { m_playerUI.CloseUI(); } } // 여닫기
     public void UpdateMaterials() { if (m_playerUI.gameObject.activeSelf) m_playerUI.UpdateMaterials(); }   // 재료 업데이트
     public void UpdateInfoUI() { if (m_playerUI.gameObject.activeSelf) m_playerUI.UpdateInfoUI(); }         // 정보 업데이트
 
 
     [SerializeField]
-    private InteractInfoUI m_interactInfoUI;
-    public void ShowInteractInfo(string _info) { m_interactInfoUI.ShowInteractInfo(_info); }
-    public void HideInteractInfo() { m_interactInfoUI.HideInteractInfo(); }
+    private MapUIScript m_mapUI;                            // 맵 UI
+    public void ToggleMapUI() { m_mapUI.ToggleMapUI(); }
+
+
+    [SerializeField]
+    private QuestUIScript m_questUI;                        // 퀘스트 UI
+    public void ToggleQuestUI() { m_questUI.ToggleQuestUI(); }
 
 
     [SerializeField]
@@ -43,26 +48,30 @@ public class PlayUIManager : MonoBehaviour
     public void CloseOasisUI() { m_oasisUI.CloseUI(); }
 
 
-    [SerializeField]
-    private MapUIScript m_mapUI;                            // 맵 UI
-    public void ToggleMapUI() { m_mapUI.ToggleMapUI(); }
 
-
+    // 메인 캔버스 상시 UI
     private PlayerHPBarScript m_hpBar;                      // HP 바
     public void SetMaxHP(float _hp) { m_hpBar.SetMaxHP(_hp); }
     public void SetCurHP(float _hp) { m_hpBar.SetCurHP(_hp); }
+
 
     private PowerSlotUIScript m_powerSlot;                  // 스킬 슬롯
     public void UpdatePowerSlot() { m_powerSlot.UpdateUI(); }
     public void UsePowerSlot(int _idx, float _cooltime) { m_powerSlot.UsePower(_idx, _cooltime); }
 
+
     private EquipSlotUIScript m_equipSlot;
-    public void UpdateEquipSlot() { m_equipSlot.UpdateUI(); }
     public void UpdateThrowItemSlot() { m_equipSlot.UpdateThrowItemImg(); }
     public void UpdateHealItemSlot() { m_equipSlot.UpdateHealItemImg(); }
 
+
+    private QuestSideBarScript m_questSideBar;
+    public void UpdateQuestSideBar() { m_questSideBar.UpdateUI(); }
+
+
     private MinimapScript m_miniMap;
     public void SetMinimapScale(float _scale) { m_miniMap.SetScale(_scale); }
+
 
     private AimUIScript m_aimUI;                            // 플레이어 에임 UI
     public void SetStaminaRate(float _rate) { m_aimUI.SetStaminaRate(_rate); }
@@ -73,12 +82,7 @@ public class PlayUIManager : MonoBehaviour
     public void HideRaycastAim() { m_aimUI.HideAimUI(); }
 
 
-    [SerializeField]
-    private QuestSideBarScript m_questSideBar;
-    public void OpenQuestSideBar() { m_questSideBar.OpenUI(); }
-    public void UpdateQuestSideBar() { if (!m_questSideBar.gameObject.activeSelf) { return; } m_questSideBar.UpdateUI(); }
-
-
+    // 인게임 UI
     private PlayerPowerAimScript m_powerAimUI;
     public void ShowPowerAim(Vector3 _pos, float _radius, float _range)       // 스킬 에임 보이기
     {
@@ -117,10 +121,16 @@ public class PlayUIManager : MonoBehaviour
     public void HideThrowLine() { m_throwLineUI.HideThrowLine(); }              // 던지기 궤적 숨기기
 
 
+    [SerializeField]
+    private InteractInfoUI m_interactInfoUI;
+    public void ShowInteractInfo(string _info) { m_interactInfoUI.ShowInteractInfo(_info); }
+    public void HideInteractInfo() { m_interactInfoUI.HideInteractInfo(); }
+
 
     private BlackoutImageScript m_blackoutUI;
     public void StartBlackout() { m_blackoutUI.ShowImg(); }
     public void EndBlackout() { m_blackoutUI.HideImg(); }
+
 
     private SpitPoisonUIScript m_spitUI;
     public void ShowBlindMark()
@@ -141,10 +151,6 @@ public class PlayUIManager : MonoBehaviour
     public void OpenDialogueUI(QuestNPCScript _npc) { m_dialogueUI.OpenUI(_npc); }
     public void CloseDialogueUI() { m_dialogueUI.CloseUI(); }
     public void ShowNextDialogue() { m_dialogueUI.ShowAllDialogue(); }
-
-    [SerializeField]
-    private QuestUIScript m_questUI;                        // 퀘스트 UI
-    public void ToggleQuestUI() { m_questUI.ToggleQuestUI(); }
 
     [SerializeField]
     private MiniQuestUIScript m_miniQuestUI;                // 축약된 퀘스트 UI(오른쪽에 있는 거)
@@ -185,6 +191,7 @@ public class PlayUIManager : MonoBehaviour
         m_powerSlot = MainCanvas.GetComponentInChildren<PowerSlotUIScript>();
         m_powerSlot.SetComps();
         m_miniMap = MainCanvas.GetComponentInChildren<MinimapScript>();
+        m_questSideBar = MainCanvas.GetComponentInChildren<QuestSideBarScript>();
         m_aimUI = MainCanvas.GetComponentInChildren<AimUIScript>();
         m_equipSlot = MainCanvas.GetComponentInChildren<EquipSlotUIScript>();
 
@@ -195,7 +202,7 @@ public class PlayUIManager : MonoBehaviour
         m_spitUI = MainCanvas.GetComponentInChildren<SpitPoisonUIScript>();
 
         UpdatePowerSlot();
-        UpdateEquipSlot();
-
+        UpdateThrowItemSlot();
+        UpdateHealItemSlot();
     }
 }

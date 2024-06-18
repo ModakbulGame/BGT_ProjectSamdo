@@ -64,13 +64,13 @@ public class InputManager : MonoBehaviour
         {
             if (PlayerInputs.OpenPlayUI.triggered)              // Tab 누르면
             {
-                PlayManager.OpenPlayerUI();                 // PlayerUI 열기
+                PlayManager.TogglePlayerUI(true);           // PlayerUI 열기
                 PlayManager.ResetPlayer();
                 SetControlMode(EControlMode.UI_CONTROL);    // UI 조작 모드로
             }
             else if (PlayerInputs.OpenOptionUI.triggered)       // Escape 누르면
             {
-                PlayManager.OpenOptionUI();
+                PlayManager.ToggleOptionUI(true);
                 SetControlMode(EControlMode.UI_CONTROL);    // UI 조작 모드로
             }
             else if (PlayerInputs.OpenMapUI.triggered)
@@ -90,12 +90,12 @@ public class InputManager : MonoBehaviour
             {
                 if (PlayManager.IsPlayerUIOpen)
                 {
-                    PlayManager.ClosePlayerUI();                // PlayerUI 닫기
+                    PlayManager.TogglePlayerUI(false);          // PlayerUI 닫기
                     return;
                 }
                 if (PlayManager.IsOptionOpen)
                 {
-                    PlayManager.CloseOptionUI();
+                    PlayManager.ToggleOptionUI(false);
                     return;
                 }
             }

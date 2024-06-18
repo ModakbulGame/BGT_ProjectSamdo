@@ -31,17 +31,17 @@ public class GameManager : SingleTon<GameManager>
     // 데이터
     private DataManager m_dataManager;
     public static DataManager DataManager { get { return Inst.m_dataManager; } }
-    public static List<SaveData> GameData { get { return DataManager.GameData; } }
-    public static void SaveGameData(EOasisPointName _oasis) { DataManager.SaveCurData(_oasis); }
-    public static void AddGameData(SaveData _data) { DataManager.AddGameData(_data); }
-    public static void RegisterData(IHaveData _data) { DataManager.RegisterData(_data); }
+    public static List<SaveData> GameData { get { return DataManager.GameData; } }                                                          // 저장된 것들
+    public static void SaveGameData(EOasisPointName _oasis) { DataManager.SaveCurData(_oasis); }                                            // 오아시스에서 저장
+    public static void AddGameData(SaveData _data) { DataManager.AddGameData(_data); }                                                      // 저장 데이터 추가
+    public static void RegisterData(IHaveData _data) { DataManager.RegisterData(_data); }                                                   // 데이터에 등록(기록 시작)
 
 
     // 화면
     private DisplayManager m_displayManager;
     public static DisplayManager DisplayManager { get { return Inst.m_displayManager; } }
-    public static float WidthRatio { get { return DisplayManager.WidthRatio; } }                                                // 화면 너비 비율
-    public static float HeightRatio { get { return DisplayManager.HeightRatio; } }                                              // 화면 높이 비율
+    public static float WidthRatio { get { return DisplayManager.WidthRatio; } }                                                            // 화면 너비 비율
+    public static float HeightRatio { get { return DisplayManager.HeightRatio; } }                                                          // 화면 높이 비율
 
 
     // 소리
@@ -52,12 +52,12 @@ public class GameManager : SingleTon<GameManager>
     // 입력
     private InputManager m_inputManager;
     public static InputManager InputManager { get { return Inst.m_inputManager; } }
-    public static InputSystem.PlayerActions PlayerInputs { get { return InputManager.PlayerInputs; } }                          // 플레이어 Input
-    public static InputSystem.UIControlActions UIControlInputs { get { return InputManager.UIControlInputs; } }                 // UI조작 Input
-    public static EControlMode ControlMode { get { return InputManager.CurControlMode; } }                                      // 조작 모드
-    public static float MouseSensitive { get { return InputManager.MouseSensitive; } }                                          // 마우스 민감도
-    public static void SetControlMode(EControlMode _mode) { InputManager.SetControlMode(_mode); }                               // 조작 모드 변경
-    public static void SetMouseSensitive(float _sensitive) { InputManager.SetMouseSensitive(_sensitive); }                      // 마우스 민감도 설정
+    public static InputSystem.PlayerActions PlayerInputs { get { return InputManager.PlayerInputs; } }                                      // 플레이어 Input
+    public static InputSystem.UIControlActions UIControlInputs { get { return InputManager.UIControlInputs; } }                             // UI조작 Input
+    public static EControlMode ControlMode { get { return InputManager.CurControlMode; } }                                                  // 조작 모드
+    public static float MouseSensitive { get { return InputManager.MouseSensitive; } }                                                      // 마우스 민감도
+    public static void SetControlMode(EControlMode _mode) { InputManager.SetControlMode(_mode); }                                           // 조작 모드 변경
+    public static void SetMouseSensitive(float _sensitive) { InputManager.SetMouseSensitive(_sensitive); }                                  // 마우스 민감도 설정
 
 
     // 아이템
@@ -96,23 +96,23 @@ public class GameManager : SingleTon<GameManager>
     private EffectManager m_effectManager;
     private static EffectManager EffectManager { get { return Inst.m_effectManager; } }
     private static GameObject[] EffectArray { get { return EffectManager.EffectArray; } }
-    public static GameObject GetEffectObj(EEffectName _effect) { return EffectManager.GetEffectObj(_effect); }
+    public static GameObject GetEffectObj(EEffectName _effect) { return EffectManager.GetEffectObj(_effect); }                              // 이펙트 오브젝트 받기
 
 
     // 근토리
     private StoryManager m_storyManager;
     private static StoryManager StoryManager { get { return Inst.m_storyManager; } }
-    public static QuestScriptable GetQeustData(EQuestEnum _quest) { return StoryManager.GetQuestData(_quest); }
-    public static NPCScriptable GetNPCData(EnpcEnum _npc) { return StoryManager.GetNPCData(_npc); }
+    public static QuestScriptable GetQeustData(EQuestEnum _quest) { return StoryManager.GetQuestData(_quest); }                             // 퀘스트 정보
+    public static NPCScriptable GetNPCData(SNPC _npc) { return StoryManager.GetNPCData(_npc); }                                             // NPC 정보
 
 
     // UI
     private UIManager m_uiManager;
     public static UIManager UIManager { get { return Inst.m_uiManager; } }
-    public static void CreateSideTextAlarm(string _alarm) { UIManager.CreateSideTextAlarm(_alarm); }                            // 화면 사이드 텍스트 알람 생성
-    public static Sprite GetMonsterSprite(EMonsterName _monster) { return UIManager.GetMonsterSprite(_monster); }               // 몬스터 이미지
-    public static Sprite GetItemSprite(SItem _item) { return UIManager.GetItemSprite(_item); }                                  // 아이템 이미지
-    public static Sprite GetPowerSprite(EPowerName _power) { return UIManager.GetPowerSprite(_power); }                         // 스킬 이미지
+    public static void CreateSideTextAlarm(string _alarm) { UIManager.CreateSideTextAlarm(_alarm); }                                        // 화면 사이드 텍스트 알람 생성
+    public static Sprite GetMonsterSprite(EMonsterName _monster) { return UIManager.GetMonsterSprite(_monster); }                           // 몬스터 이미지
+    public static Sprite GetItemSprite(SItem _item) { return UIManager.GetItemSprite(_item); }                                              // 아이템 이미지
+    public static Sprite GetPowerSprite(EPowerName _power) { return UIManager.GetPowerSprite(_power); }                                     // 스킬 이미지
 
 
     private PoolManager m_poolManager;

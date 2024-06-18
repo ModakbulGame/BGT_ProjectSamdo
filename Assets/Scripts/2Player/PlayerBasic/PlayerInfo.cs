@@ -35,44 +35,44 @@ public class PlayerStatInfo                             // ÇÃ·¹ÀÌ¾î ½ºÅÈ Á¤º¸
     public float m_rapid;           // ¹ÎÃ¸   
     public float m_mental;          // Á¤½Å
 
-    public void SetStat(EStatInfoName _name, float _num)      // ½ºÅÈ ¼³Á¤
+    public void SetStat(EStatName _name, float _num)      // ½ºÅÈ ¼³Á¤
     {
         switch (_name)
         {
-            case EStatInfoName.HEALTH: m_health = _num; break;
-            case EStatInfoName.ENDURE: m_endure = _num; break;
-            case EStatInfoName.STRENGTH: m_strength = _num; break;
-            case EStatInfoName.INTELLECT: m_intellect = _num; break;
-            case EStatInfoName.RAPID: m_rapid = _num; break;
-            case EStatInfoName.MENTAL: m_mental = _num; break;
+            case EStatName.HEALTH: m_health = _num; break;
+            case EStatName.ENDURE: m_endure = _num; break;
+            case EStatName.STRENGTH: m_strength = _num; break;
+            case EStatName.INTELLECT: m_intellect = _num; break;
+            case EStatName.RAPID: m_rapid = _num; break;
+            case EStatName.MENTAL: m_mental = _num; break;
         }
     }
-    public void UpgradeStat(EStatInfoName _name, float _up)
+    public void UpgradeStat(EStatName _name, float _up)
     {
         switch (_name)
         {
-            case EStatInfoName.HEALTH: m_health += _up; break;
-            case EStatInfoName.ENDURE: m_endure += _up; break;
-            case EStatInfoName.STRENGTH: m_strength += _up; break;
-            case EStatInfoName.INTELLECT: m_intellect += _up; break;
-            case EStatInfoName.RAPID: m_rapid += _up; break;
-            case EStatInfoName.MENTAL: m_mental += _up; break;
+            case EStatName.HEALTH: m_health += _up; break;
+            case EStatName.ENDURE: m_endure += _up; break;
+            case EStatName.STRENGTH: m_strength += _up; break;
+            case EStatName.INTELLECT: m_intellect += _up; break;
+            case EStatName.RAPID: m_rapid += _up; break;
+            case EStatName.MENTAL: m_mental += _up; break;
         }
     }
-    public float GetStat(EStatInfoName _name)
+    public float GetStat(EStatName _name)
     {
         return _name switch
         {
-            EStatInfoName.HEALTH => m_health,
-            EStatInfoName.ENDURE => m_endure,
-            EStatInfoName.STRENGTH => m_strength,
-            EStatInfoName.INTELLECT => m_intellect,
-            EStatInfoName.RAPID => m_rapid,
-            EStatInfoName.MENTAL => m_mental,
+            EStatName.HEALTH => m_health,
+            EStatName.ENDURE => m_endure,
+            EStatName.STRENGTH => m_strength,
+            EStatName.INTELLECT => m_intellect,
+            EStatName.RAPID => m_rapid,
+            EStatName.MENTAL => m_mental,
             _ => -1,
         };
     }
-    public PlayerStatInfo() { for(int i = 0; i<(int)EStatInfoName.LAST; i++) { SetStat((EStatInfoName)i, ValueDefine.INITIAL_STAT); } }
+    public PlayerStatInfo() { for(int i = 0; i<(int)EStatName.LAST; i++) { SetStat((EStatName)i, ValueDefine.INITIAL_STAT); } }
     public PlayerStatInfo(PlayerStatInfo _other)
     {
         m_health = _other.m_health;
@@ -186,7 +186,7 @@ public partial class PlayerController
     public float Mental { get { return m_statInfo.m_mental; } }                     // Á¤½Å
     public PlayerStatInfo GetStatInfo() { return m_statInfo; }
     public void ResetStatInfo() { m_statInfo = new(); ApplyStat(); }
-    public void SetStat(EStatInfoName _name, float _num) { m_statInfo.SetStat(_name, _num); ApplyStat(); }      // ½ºÅÈ ¼³Á¤
+    public void SetStat(EStatName _name, float _num) { m_statInfo.SetStat(_name, _num); ApplyStat(); }      // ½ºÅÈ ¼³Á¤
 
 
     // ÀüÅõ Á¤º¸

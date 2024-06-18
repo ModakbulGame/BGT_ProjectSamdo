@@ -12,6 +12,15 @@ public enum EOasisPointName
     LAST
 }
 
+public enum EAltarName
+{
+    START1,
+    LIFE1,
+    TEMP1,
+
+    LAST
+}
+
 public class EnvironmentManager : MonoBehaviour
 {
     [SerializeField]
@@ -27,6 +36,9 @@ public class EnvironmentManager : MonoBehaviour
     private OasisNPC[] m_oasisList;
     public OasisNPC[] OasisList { get { return m_oasisList; } }
 
+    private AltarScript[] m_altarList;
+    public AltarScript[] AltarList { get { return m_altarList; } }
+
     [SerializeField]
     private MonsterSpawnPoint[] m_spawnPointList;
     public MonsterSpawnPoint[] SpawnPointList { get { return m_spawnPointList; } }
@@ -41,9 +53,18 @@ public class EnvironmentManager : MonoBehaviour
     {
         if (!GameManager.IsInGame) { return; }
         m_oasisList = m_mapObject.GetComponentsInChildren<OasisNPC>();
-        m_npcList = m_mapObject.GetComponentsInChildren<QuestNPCScript>();
-        for (int i = 0; i<m_oasisList.Length; i++) { OasisNPC oasis = m_oasisList[i]; oasis.SetPoint((EOasisPointName)i); }
-        // for (int i = 0; i<m_npcList.Length; i++) { NPCList[i].SetComps(); } 
-
+        if (m_oasisList.Length != (int)EOasisPointName.LAST) { Debug.LogError("오아시스 개수 안맞음"); return; }
+        for (int i = 0; i<m_oasisList.Length; i++)
+        {
+            NPCScriptable scriptable = GameManager.GetNPCData(new(ENPCType.OASIS, i));
+            m_oasisList[i].SetScriptable(scriptable);
+        }
+        m_altarList = m_mapObject.GetComponentsInChildren<AltarScript>();
+        if (m_altarList.Length != (int)EOasisPointName.LAST) { Debug.LogError("제단 개수 안맞음"); return; }
+        for (int i = 0; i<m_altarList.Length; i++)
+        {
+            NPCScriptable scriptable = GameManager.GetNPCData(new(ENPCType.ALTAR, i));
+            m_altarList[i].SetScriptable(scriptable);
+        }
     }
 }

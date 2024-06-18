@@ -13,17 +13,32 @@ MonoBehaviour:
   m_Name: Q001
   m_EditorClassIdentifier: 
   Idx: 0
-  Title: "\uB300\uD654\uB97C \uD574\uBCF4\uC790"
   Id: Q001
-  NextQuest: Q002
-  Types: 00000000
-  Description: "NPC2\uC640\uC758 \uB300\uD654"
+  Enum: 0
+  Name: "\uB300\uD654\uB97C \uD574\uBCF4\uC790"
+  Content:
+    Type: 1
+    Amount: -1
+    Monster: 36
+    Item:
+      Type: 4
+      Idx: -1
+    NPC:
+      Type: 3
+      Idx: -1
   TimeLimit: 0
-  QuestObject: 
-  QuestObjectCount: 0
-  Reward: 0
-  RewardNum: 2
-  Status: 1
-  CurQuestObjectCount: 0
-  StartObject: "\uC9C8\uB7FF"
-  EndObject: "\uB2E4\uD06C\uB85C\uB4DC"
+  NextQuest: 2
+  Description: "\uB9CE\uC774 \uBA3C \uC81C\uB2E8\uACFC\uC758 \uB300\uD654"
+  Reward:
+    Type: 0
+    Amount: 2
+    Stat: 6
+    Item:
+      Type: 4
+      Idx: -1
+  StartNPC:
+    Type: 1
+    Idx: 0
+  CompleteNPC:
+    Type: 1
+    Idx: 1

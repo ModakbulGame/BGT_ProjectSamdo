@@ -4,29 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[Serializable]
-public class QuestInfo
-{
-    public EQuestEnum QuestName;
-    public EQuestStatus Status;
-    public float QuestProgress;
-    public float QuestTimeCount;
-    public void SetQuestStatus(EQuestStatus _status) { Status = _status; }
-    public void SetQuestProgress(float _prog) { QuestProgress = _prog; }
-    public QuestScriptable QuestData { get { return GameManager.GetQeustData(QuestName); } }
-    public float QuestTarget { get { return QuestData.QuestObjectCount; } }
-    public float QuestTimeLimit { get { return QuestData.TimeLimit; } }
-    private void SetInfo(EQuestEnum _name, EQuestStatus _status, float _progress, float _time)
-    {
-        QuestName = _name;
-        SetQuestStatus(_status);
-        SetQuestProgress(_progress);
-        QuestTimeCount = _time;
-    }
-    public QuestInfo(EQuestEnum _name) { SetInfo(_name, EQuestStatus.NOT_AVAILABLE, 0, 0); }
-    public QuestInfo(QuestInfo _other) { SetInfo(_other.QuestName, _other.Status, _other.QuestProgress, 0); }
-}
-
 public class QuestManager : MonoBehaviour, IHaveData
 {
     private QuestInfo[] m_questInfoList;
@@ -50,7 +27,7 @@ public class QuestManager : MonoBehaviour, IHaveData
     {
         QuestInfo info = m_questInfoList[(int)_quest];
         info.SetQuestProgress(_prog);
-        if(_prog == info.QuestTarget) { SetQuestStatus(_quest, EQuestStatus.COMPLETE); }
+        if(_prog == info.QuestContent.Amount) { SetQuestStatus(_quest, EQuestStatus.COMPLETE); }
     }
 
 
@@ -102,10 +79,19 @@ public class QuestManager : MonoBehaviour, IHaveData
     }
 
 
+    public static EQuestEnum String2Enum(string _id)
+    {
+        if(_id == "") { return EQuestEnum.LAST; }
+        int.TryParse(_id[1..], out int idx);
+        return (EQuestEnum)idx;
+    }
+
+
     public void SetManager()
     {
         CurQuestList = new List<QuestScriptable>();
         m_questProgress = gameObject.AddComponent<QuestProgressScript>();
         m_questBoolStatus = gameObject.AddComponent<QuestBoolStatus>();
+        LoadData();
     }
 }

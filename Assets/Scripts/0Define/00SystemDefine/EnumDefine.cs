@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EStatInfoName
+public enum EStatName
 {
     HEALTH,     // 체력
     ENDURE,     // 지구력

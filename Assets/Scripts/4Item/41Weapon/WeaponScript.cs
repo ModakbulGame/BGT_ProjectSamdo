@@ -15,7 +15,7 @@ public class WeaponInfo
     public string Description;
     public void SetInfo(WeaponScriptable _scriptable)
     {
-        WeaponType = DataManager.IDToWeaponType(_scriptable.ID);
+        WeaponType = ItemManager.IDToWeaponType(_scriptable.ID);
         if(WeaponType == EWeaponType.SCEPTER) { HitType = EHitType.BLOW; }
         else { HitType = EHitType.SLASH; }
         WeaponName = _scriptable.ItemName;
