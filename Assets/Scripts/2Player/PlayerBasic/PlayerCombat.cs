@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -264,8 +265,12 @@ public partial class PlayerController
     }
     public void PowerDone()                                                                 // 스킬 사용 종료
     {
+        if(PowerInHand == EPowerName.LAST){ return; }
         HidePowerAim();
-        if (PowerInfoInHand.ShowCastingEffect) { CastingEffectOff(); }
+        if (PowerInfoInHand.ShowCastingEffect)
+        {
+            CastingEffectOff();
+        }
         PowerInHand = EPowerName.LAST;
         UsingPowerIdx = -1;
         ShowWeapon();
