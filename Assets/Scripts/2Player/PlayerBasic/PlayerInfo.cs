@@ -245,8 +245,8 @@ public partial class PlayerController
         }
         CurWeapon.gameObject.name = name;
     }
-    private void SetWeaponCCType(ECCType _cc) { CurWeapon.SetCCType(_cc); }
-    private void ResetWeaponCCType() { CurWeapon.ResetCCType(); }
+    private void SetWeaponCCType(ECCType _cc) { CurWeapon.SetCCType(_cc); CurWeapon.BuffEffectOn(_cc); }
+    private void ResetWeaponCCType() { CurWeapon.ResetCCType(); CurWeapon.BuffEffectOff(); }
 
 
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public enum EMarmulakAttack
 {
@@ -84,28 +85,30 @@ public class MarmulakScript : RangedAttackMonster
     }
 
 
+    [SerializeField]
+    private MarmulakRoarEffect m_roarEffect;
 
     private readonly float RoarCooltime = 15;
     public readonly float RoarRange = 8;
-    private readonly float RoarGap = 0.5f;
+    private readonly float RoarGap = 0.4f;
 
-    [SerializeField]
-    private Transform m_roarTransform;
     private bool IsRoaring { get; set; }
 
     private readonly List<ObjectScript> m_roarList = new();
     private IEnumerator RoarCoroutine()
     {
+        m_roarEffect.Play();
         while (IsRoaring && !IsDead)
         {
             CheckNRoar();
             yield return new WaitForSeconds(RoarGap);
         }
+        m_roarEffect.Stop();
     }
     public void CheckNRoar()
     {
         m_roarList.Clear();
-        Collider[] targets = Physics.OverlapSphere(m_roarTransform.position, RoarRange, ValueDefine.HITTABLE_LAYER);
+        Collider[] targets = Physics.OverlapSphere(m_roarEffect.transform.position, RoarRange, ValueDefine.HITTABLE_LAYER);
         for (int i = 0; i<targets.Length; i++)
         {
             ObjectScript obj = targets[i].GetComponentInParent<ObjectScript>();

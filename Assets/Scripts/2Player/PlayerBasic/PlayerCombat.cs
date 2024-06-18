@@ -321,6 +321,12 @@ public partial class PlayerController
         }
 
         base.GetAdj(_adjust);
+        CreateBuffEffect();
+    }
+    private void CreateBuffEffect()
+    {
+        GameObject effect = GameManager.GetEffectObj(EEffectName.BUFF);
+        effect.transform.SetParent(transform);
     }
 
     private void GetWeaponAdj(TempAdjust _adjust)
@@ -335,10 +341,9 @@ public partial class PlayerController
                 return;
             }
         }
-        BuffNDebuff info = new(_adjust, ResetWeaponCC);
+        BuffNDebuff info = new(_adjust, ResetWeaponCCType);
         m_buffNDebuff.Add(info);
     }
-    private void ResetWeaponCC() { SetWeaponCCType(ECCType.NONE); }
 
 
     // 가드 관련

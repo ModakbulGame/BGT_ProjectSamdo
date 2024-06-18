@@ -125,7 +125,7 @@ public class AnimateAttackScript : ObjectAttackScript
     }
 
 
-    private void SetComps()
+    public virtual void SetComps()
     {
         m_collider = GetComponent<BoxCollider>();
     }

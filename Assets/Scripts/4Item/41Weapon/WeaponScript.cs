@@ -60,7 +60,6 @@ public class WeaponScript : AnimateAttackScript
         }
     }
 
-
     public void SetScriptable(WeaponScriptable _scriptable)
     { 
         m_scriptable = _scriptable; 
@@ -69,5 +68,26 @@ public class WeaponScript : AnimateAttackScript
     private void SetInfo()
     {
         m_weaponInfo.SetInfo(m_scriptable);
+        m_buffEffect.InitWeapon(WeaponType);
+    }
+
+
+    private WeaponTrailEffect m_trailEffect;
+    public override void AttackOn() { m_trailEffect.SetTrail(true); }
+    public override void AttackOff() { m_trailEffect.SetTrail(false); }
+
+
+    private WeaponBuffEffectScript m_buffEffect;
+    public void BuffEffectOn(ECCType _cc) { m_buffEffect.EffectOn(_cc); }
+    public void BuffEffectOff() { m_buffEffect.EffectOff(); }
+
+
+
+
+    public override void SetComps()
+    {
+        base.SetComps();
+        m_buffEffect = GetComponentInChildren<WeaponBuffEffectScript>();
+        m_trailEffect = GetComponentInChildren<WeaponTrailEffect>();
     }
 }

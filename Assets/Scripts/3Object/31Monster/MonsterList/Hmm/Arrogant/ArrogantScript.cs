@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public enum EArrogantAttack
 {
@@ -50,18 +51,19 @@ public class ArrogantScript : HmmScript
     {
         if (CurAttack == EArrogantAttack.SMASH)
         {
+            m_smash.Play();
             CheckNSmash();
         }
     }
 
     [SerializeField]
-    private Transform m_smashTransform;
+    private VisualEffect m_smash;
     public readonly float SmashRange = 3.5f;
 
     private readonly List<ObjectScript> m_smashList = new();
     public void CheckNSmash()
     {
-        Collider[] targets = Physics.OverlapSphere(m_smashTransform.position, SmashRange, ValueDefine.HITTABLE_LAYER);
+        Collider[] targets = Physics.OverlapSphere(m_smash.transform.position, SmashRange, ValueDefine.HITTABLE_LAYER);
         for (int i = 0; i<targets.Length; i++)
         {
             ObjectScript obj = targets[i].GetComponentInParent<ObjectScript>();

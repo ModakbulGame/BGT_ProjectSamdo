@@ -36,7 +36,7 @@ public abstract partial class MonsterScript
     private IEnumerator CheckDespawn()
     {
         float time = DespawnTime;
-        while (time > 0 && !m_aiPath.reachedDestination)
+        while (IsRoaming && time > 0 && !m_aiPath.reachedDestination)
         {
             time -= Time.deltaTime;
             if(time <= 0) { DespawnMonster(); }

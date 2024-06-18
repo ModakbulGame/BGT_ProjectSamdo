@@ -7,7 +7,7 @@ public class MonsterIdleState : MonoBehaviour, IMonsterState
     private MonsterScript m_monster;
     public EMonsterState StateEnum { get { return EMonsterState.IDLE; } }
 
-    private bool IsMoving { get; set; }
+    public bool IsMoving { get; private set; }
     private bool IsRotating { get; set; }
     private float TargetRotation { get; set; }
     private float ResetCount { get; set; }

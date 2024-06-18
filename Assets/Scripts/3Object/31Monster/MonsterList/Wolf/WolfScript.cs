@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WolfScript : MonsterScript
 {
-    public override bool CanPurify => m_peck.CurPurifyTurn == PeckIdx;
+    public override bool CanPurify => m_peck != null ? m_peck.CurPurifyTurn == PeckIdx : false;
 
     private WolfPeckScript m_peck;
     public void SetPeck(WolfPeckScript _peck, int _idx) { m_peck = _peck; PeckIdx = _idx; }
@@ -141,7 +141,7 @@ public class WolfScript : MonsterScript
     public override void SetDead()
     {
         base.SetDead();
-        m_peck.WolfDead(this);
+        if(m_peck != null) { m_peck.WolfDead(this); }
     }
 
 

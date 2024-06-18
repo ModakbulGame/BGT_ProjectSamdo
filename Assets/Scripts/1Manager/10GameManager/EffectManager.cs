@@ -8,6 +8,7 @@ public enum EEffectName
 {
     MONSTER_DISSOLVE,
     HEAL,
+    BUFF,
     HIT_SLASH,
     HIT_BLOW,
     HIT_POWER,

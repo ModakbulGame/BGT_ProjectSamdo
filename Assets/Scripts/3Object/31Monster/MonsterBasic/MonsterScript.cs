@@ -34,6 +34,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     public bool InCombat { get { return !IsIdle; } }                                            // 전투 중인지
     public virtual bool IsSpawned { get; protected set; } = false;
     public bool IsIdle { get { if (!IsSpawned) { return true; } return CurState.StateEnum == EMonsterState.IDLE; } }
+    public bool IsRoaming { get { return IsIdle && ((MonsterIdleState)CurState).IsMoving; } }
     public bool IsApproaching { get { return CurState.StateEnum == EMonsterState.APPROACH; } }
     public bool IsAttacking { get { return CurState.StateEnum == EMonsterState.ATTACK; } }
     public bool IsSkilling { get { return CurState.StateEnum == EMonsterState.SKILL; } }
