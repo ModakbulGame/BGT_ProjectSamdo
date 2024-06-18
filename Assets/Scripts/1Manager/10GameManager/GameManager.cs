@@ -109,7 +109,6 @@ public class GameManager : SingleTon<GameManager>
     // UI
     private UIManager m_uiManager;
     public static UIManager UIManager { get { return Inst.m_uiManager; } }
-    public static RectTransform GetCanvasTransform(ECanvasType _canvas) { return UIManager.GetCanvasTransform(_canvas); }       // 캔버스 트랜스폼
     public static void CreateSideTextAlarm(string _alarm) { UIManager.CreateSideTextAlarm(_alarm); }                            // 화면 사이드 텍스트 알람 생성
     public static Sprite GetMonsterSprite(EMonsterName _monster) { return UIManager.GetMonsterSprite(_monster); }               // 몬스터 이미지
     public static Sprite GetItemSprite(SItem _item) { return UIManager.GetItemSprite(_item); }                                  // 아이템 이미지

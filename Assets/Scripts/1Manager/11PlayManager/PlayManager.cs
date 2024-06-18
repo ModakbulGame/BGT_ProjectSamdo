@@ -191,9 +191,7 @@ public class PlayManager : MonoBehaviour
     // GUI
     private PlayUIManager m_playUIManager;
     private static PlayUIManager PlayUIManager { get { return Inst.m_playUIManager; } }
-    public static Vector2 NormalizeLocation(Transform _obj) { return PlayUIManager.NormalizeLocation(_obj); }                               // 위치 정규화(3D -> 2D)
     public static Canvas GetCanvas(ECanvasType _canvas) { return PlayUIManager.GetCanvas(_canvas); }                                        // 캔버스
-    public static RectTransform CanvasTrans(ECanvasType _canvas) { return GetCanvas(_canvas).GetComponent<RectTransform>(); }
     public static bool IsOptionOpen { get { return PlayUIManager.IsOptionOpen; } }
     public static void OpenOptionUI() { PlayUIManager.OpenOptionUI(); }
     public static void CloseOptionUI() { PlayUIManager.CloseOptionUI(); }
@@ -204,14 +202,6 @@ public class PlayManager : MonoBehaviour
     public static void HideInteractInfo() { PlayUIManager.HideInteractInfo(); }
     public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                       // 맵 UI 여닫기
     public static void ToggleQuestUI() { PlayUIManager.ToggleQuestUI(); }                                                                   // 퀘스트 창 여닫기
-    public static void ShowNPCQuestUI(QuestNPCScript _npc) { PlayUIManager.ShowNPCQuestUI(_npc); }                                                                 // 퀘스트 수락/거절 창 표시
-    public static void ExpressCurQuestInfo() { PlayUIManager.ExpressCurQuestInfo(); }                                                       // 현재 퀘스트 정보 표시
-    public static void ChangeBtnsTxt() { PlayUIManager.ChangeBtnsTxt(); }
-    public static Image[] ClearImg { get { return PlayUIManager.ClearImg; } }
-    public static void OpenNPCUI(QuestNPCScript _npc) { PlayUIManager.OpenDialogueUI(_npc); }                                               // NPC 대화창 열기
-    public static void CloseNPCUI() { PlayUIManager.CloseDialogueUI(); }                                                                    // NPC 대화창 닫기
-    public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                  // NPC 대화창 열렸는지 확인
-    public static void ShowNextDialogue() { PlayUIManager.ShowNextDialogue(); }                                                             // 다음 대화 출력
     public static void OpenOasisUI(OasisNPC _npc) { PlayUIManager.OpenOasisUI(_npc); }                                                      // 화톳불 UI 열기
     public static void CloseOasisUI() { PlayUIManager.CloseOasisUI(); }                                                                     // 화톳불 UI 닫기
     public static void UpdatePowerSlot() { PlayUIManager.UpdatePowerSlot(); }                                                               // 스킬 슬롯 UI
@@ -237,7 +227,16 @@ public class PlayManager : MonoBehaviour
     private static void EndBlackoutUI() { PlayUIManager.EndBlackout(); }
     public static void ShowBlindMark() { PlayUIManager.ShowBlindMark(); }
     public static void HideBlindMark() { PlayUIManager.HideBlindMark(); }
-    
+
+    public static void ShowNPCQuestUI(QuestNPCScript _npc) { PlayUIManager.ShowNPCQuestUI(_npc); }                                                                 // 퀘스트 수락/거절 창 표시
+    public static void ExpressCurQuestInfo() { PlayUIManager.ExpressCurQuestInfo(); }                                                       // 현재 퀘스트 정보 표시
+    public static void ChangeBtnsTxt() { PlayUIManager.ChangeBtnsTxt(); }
+    public static Image[] ClearImg { get { return PlayUIManager.ClearImg; } }
+    public static void OpenNPCUI(QuestNPCScript _npc) { PlayUIManager.OpenDialogueUI(_npc); }                                               // NPC 대화창 열기
+    public static void CloseNPCUI() { PlayUIManager.CloseDialogueUI(); }                                                                    // NPC 대화창 닫기
+    public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                  // NPC 대화창 열렸는지 확인
+    public static void ShowNextDialogue() { PlayUIManager.ShowNextDialogue(); }                                                             // 다음 대화 출력
+    public static Vector2 NormalizeLocation(Transform _obj) { return PlayUIManager.NormalizeLocation(_obj); }                               // 위치 정규화(3D -> 2D)
 
 
 

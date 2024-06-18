@@ -10,13 +10,21 @@ public class QuestInfo
     public EQuestEnum QuestName;
     public EQuestStatus Status;
     public float QuestProgress;
+    public float QuestTimeCount;
     public void SetQuestStatus(EQuestStatus _status) { Status = _status; }
     public void SetQuestProgress(float _prog) { QuestProgress = _prog; }
     public QuestScriptable QuestData { get { return GameManager.GetQeustData(QuestName); } }
     public float QuestTarget { get { return QuestData.QuestObjectCount; } }
-    private void SetInfo(EQuestEnum _name, EQuestStatus _status, float _progress) { QuestName = _name; Status = _status; QuestProgress = _progress; }
-    public QuestInfo(EQuestEnum _name) { SetInfo(_name, EQuestStatus.NOT_AVAILABLE, 0); }
-    public QuestInfo(QuestInfo _other) { SetInfo(_other.QuestName, _other.Status, _other.QuestProgress); }
+    public float QuestTimeLimit { get { return QuestData.TimeLimit; } }
+    private void SetInfo(EQuestEnum _name, EQuestStatus _status, float _progress, float _time)
+    {
+        QuestName = _name;
+        SetQuestStatus(_status);
+        SetQuestProgress(_progress);
+        QuestTimeCount = _time;
+    }
+    public QuestInfo(EQuestEnum _name) { SetInfo(_name, EQuestStatus.NOT_AVAILABLE, 0, 0); }
+    public QuestInfo(QuestInfo _other) { SetInfo(_other.QuestName, _other.Status, _other.QuestProgress, 0); }
 }
 
 public class QuestManager : MonoBehaviour, IHaveData
@@ -55,17 +63,17 @@ public class QuestManager : MonoBehaviour, IHaveData
     private QuestBoolStatus m_questBoolStatus;
 
     // 퀘스트 수행에 필요한 메소드
-    public void AcceptQuest(string _id) { m_questProgress.AcceptQuest(_id); }
-    public void GiveUpQuest(string _id) { m_questProgress.GiveUpQuest(_id); }
-    public void ClearQuest(string _id) { m_questProgress.ClearQuest(_id); }   
-    public void CompleteQuest(string _id) { m_questProgress.CompleteQuest(_id); }
-    public void DoObjectQuest(string _obj, int _amount) { m_questProgress.DoObjectQuest(_obj, _amount); }
+    public void AcceptQuest(string _id) { /* m_questProgress.AcceptQuest(_id); */}
+    public void GiveUpQuest(string _id) { /* m_questProgress.GiveUpQuest(_id); */}
+    public void ClearQuest(string _id) { /* m_questProgress.ClearQuest(_id); */}   
+    public void CompleteQuest(string _id) { /* m_questProgress.CompleteQuest(_id); */}
+    public void DoObjectQuest(string _obj, int _amount) { /* m_questProgress.DoObjectQuest(_obj, _amount); */}
     
     // 이름 일치 여부 확인
-    public void SetQuestStartObjectStatus(string _start) { m_questBoolStatus.SetQuestStartObjectStatus(_start); }
-    public void SetQuestEndObjectStatus(string _id) { m_questBoolStatus.SetQuestEndObjectStatus(_id); }
-    public bool CheckQuestCompleted(string _id) { return m_questBoolStatus.CheckQuestCompleted(_id); }
-    public bool CheckRequiredQuestObject(string _name) { return m_questBoolStatus.CheckRequiredQuestObject(_name); }
+    public void SetQuestStartObjectStatus(string _start) { /* m_questBoolStatus.SetQuestStartObjectStatus(_start); */}
+    public void SetQuestEndObjectStatus(string _id) { /* m_questBoolStatus.SetQuestEndObjectStatus(_id); */}
+    public bool CheckQuestCompleted(string _id) { return false; /* return m_questBoolStatus.CheckQuestCompleted(_id); */}
+    public bool CheckRequiredQuestObject(string _name) { return false; /* return m_questBoolStatus.CheckRequiredQuestObject(_name); */}
 
 
 
