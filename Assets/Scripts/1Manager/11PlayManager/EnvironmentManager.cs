@@ -4,10 +4,10 @@ using UnityEngine;
 
 public enum EOasisPointName
 {
-    START_OASIS,
-    POINT2,
-    POINT3,
-    POINT4,
+    START1,
+    START2,
+    LIFE1,
+    LIFE2,
 
     LAST
 }
@@ -31,8 +31,6 @@ public class EnvironmentManager : MonoBehaviour
     private MonsterSpawnPoint[] m_spawnPointList;
     public MonsterSpawnPoint[] SpawnPointList { get { return m_spawnPointList; } }
 
-    private Transform m_waterTransform;
-    public float WaterHeight { get { return m_waterTransform.position.y; } }
 
     [SerializeField]
     private QuestNPCScript[] m_npcList;
@@ -46,7 +44,6 @@ public class EnvironmentManager : MonoBehaviour
         m_npcList = m_mapObject.GetComponentsInChildren<QuestNPCScript>();
         for (int i = 0; i<m_oasisList.Length; i++) { OasisNPC oasis = m_oasisList[i]; oasis.SetPoint((EOasisPointName)i); }
         // for (int i = 0; i<m_npcList.Length; i++) { NPCList[i].SetComps(); } 
-        m_waterTransform = m_mapObject.GetComponentInChildren<MapWaterScript>().transform;
 
     }
 }

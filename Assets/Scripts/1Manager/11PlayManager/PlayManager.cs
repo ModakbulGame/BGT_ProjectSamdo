@@ -143,19 +143,23 @@ public class PlayManager : MonoBehaviour
     public static void UsePattern(EPatternName _type, int _num) { InvenManager.UsePattern(_type, _num); }                                       // 문양 사용
 
     // 스토리
-    private StoryManager m_storyManager;
-    private static StoryManager StoryManager { get { return Inst.m_storyManager; } }
-    public static List<QuestScriptable> QuestList { get { return StoryManager.QuestList; } }
-    public static List<QuestScriptable> CurQuestList { get { return StoryManager.CurQuestList; } }
-    public static void AcceptQuest(string _id) { StoryManager.AcceptQuest(_id); }
-    public static void GiveUpQuest(string _id) { StoryManager.GiveUpQuest(_id); }
-    public static void ClearQuest(string _id) { StoryManager.ClearQuest(_id); }
-    public static void CompleteQuest(string _id) { StoryManager.CompleteQuest(_id); }
-    public static void DoObjectQuest(string _obj, int _amount) { StoryManager.DoObjectQuest(_obj, _amount); }
-    public static void SetQuestStartObjectStatus(string _start) { StoryManager.SetQuestStartObjectStatus(_start); }
-    public static void SetQuestEndObjectStatus(string _id) { StoryManager.SetQuestEndObjectStatus(_id); }
-    public static bool CheckQuestCompleted(string _id) { return StoryManager.CheckQuestCompleted(_id); }
-    public static bool CheckRequiredQuestObject(string _name) { return StoryManager.CheckRequiredQuestObject(_name); }
+    private QuestManager m_questManager;
+    private static QuestManager QuestManager { get { return Inst.m_questManager; } }
+    public static List<QuestInfo> QuestInfoList { get { return QuestManager.QuestInfoList; } }
+    public static void SetQuestStatus(EQuestEnum _quest, EQuestStatus _status) { QuestManager.SetQuestStatus(_quest, _status); }
+    public static void SetQuestProgress(EQuestEnum _quest, float _prog) { QuestManager.SetQuestProgress(_quest, _prog); }
+
+    public static List<QuestScriptable> QuestList { get { return QuestManager.QuestList; } }
+    public static List<QuestScriptable> CurQuestList { get { return QuestManager.CurQuestList; } }
+    public static void AcceptQuest(string _id) { QuestManager.AcceptQuest(_id); }
+    public static void GiveUpQuest(string _id) { QuestManager.GiveUpQuest(_id); }
+    public static void ClearQuest(string _id) { QuestManager.ClearQuest(_id); }
+    public static void CompleteQuest(string _id) { QuestManager.CompleteQuest(_id); }
+    public static void DoObjectQuest(string _obj, int _amount) { QuestManager.DoObjectQuest(_obj, _amount); }
+    public static void SetQuestStartObjectStatus(string _start) { QuestManager.SetQuestStartObjectStatus(_start); }
+    public static void SetQuestEndObjectStatus(string _id) { QuestManager.SetQuestEndObjectStatus(_id); }
+    public static bool CheckQuestCompleted(string _id) { return QuestManager.CheckQuestCompleted(_id); }
+    public static bool CheckRequiredQuestObject(string _name) { return QuestManager.CheckRequiredQuestObject(_name); }
 
 
     // 환경
@@ -165,7 +169,6 @@ public class PlayManager : MonoBehaviour
     public static Vector3 MapRT { get { return EnvironmentManager.MapRT; } }
     public static float MapWidth { get { return EnvironmentManager.MapWidth; } }
     public static float MapHeight { get { return EnvironmentManager.MapHeight; } }
-    public static float WaterHeight { get { return EnvironmentManager.WaterHeight; } }
     public static OasisNPC[] OasisList { get { return EnvironmentManager.OasisList; } }
     public static MonsterSpawnPoint[] SpawnPointList { get { return EnvironmentManager.SpawnPointList; } }
     public static QuestNPCScript[] NPCList { get { return EnvironmentManager.NPCList; } }
@@ -242,8 +245,8 @@ public class PlayManager : MonoBehaviour
     {
         m_invenManager = GetComponent<InventoryManager>();
         m_invenManager.SetManager();
-        m_storyManager = GetComponent<StoryManager>();
-        m_storyManager.SetManager();
+        m_questManager = GetComponent<QuestManager>();
+        m_questManager.SetManager();
         m_environmentManager = GetComponent<EnvironmentManager>();
         m_environmentManager.SetManager();
         m_forceManager = GetComponent<PlayerForceManager>();

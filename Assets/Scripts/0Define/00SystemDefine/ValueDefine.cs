@@ -22,13 +22,13 @@ public static class ValueDefine
     public const string PLAYER_TAG = "Player";                      // 플레이어
     public const string CAMERA_TAG = "Camera";                      // 카메라
     public const string MONSTER_TAG = "Monster";                    // 몬스터
-    public const string ITEM_TAG = "Item";                          // 아이템
     public const string NPC_TAG = "NPC";                            // NPC
     public const string OASIS_TAG = "Oasis";
     public const string PLAYER_WEAPON_TAG = "PlayerWeapon";         // 플레이어 무기
     public const string PLAYER_POWER_TAG = "PlayerPower";           // 플레이어 주술
     public const string MONSTER_ATTACK_TAG = "MonsterAttack";       // 몬스터 공격
-    public const string TERRAIN_TAG = "Terrain";                    // 터레인
+    public const string WATER_TAG = "Water";                        // 물
+    public const string TERRAIN_TAG = "Terrain";                    // 지형
 
 
     // 씬 인덱스

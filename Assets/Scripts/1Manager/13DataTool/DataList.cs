@@ -13,13 +13,13 @@ public class DataList : MonoBehaviour
     [SerializeField]
     private OtherItemScriptable[] m_otherItems = new OtherItemScriptable[(int)EOtherItemName.LAST];
     [SerializeField]
-    private NPCScriptable[] m_npcs = new NPCScriptable[(int)EnpcName.LAST];
+    private NPCScriptable[] m_npcs = new NPCScriptable[(int)EnpcEnum.LAST];
 
     public WeaponScriptable GetWeaponData(EWeaponName _weapon) { return m_weapons[(int)_weapon]; }
     public PatternScriptable GetPatternData(EPatternName _pattern) { return m_patterns[(int)_pattern]; }
     public ThrowItemScriptable GetThrowItemData(EThrowItemName _throw) { return m_throwItems[(int)_throw]; }
     public OtherItemScriptable GetOtherItemData(EOtherItemName _other) { return m_otherItems[(int)_other]; }
-    public NPCScriptable GetNPCData(EnpcName _npc) { return m_npcs[(int)_npc]; }
+    public NPCScriptable GetNPCData(EnpcEnum _npc) { return m_npcs[(int)_npc]; }
 
 
     public void SetItemData(List<ItemScriptable>[] _data)

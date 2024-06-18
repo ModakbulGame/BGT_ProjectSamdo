@@ -32,6 +32,7 @@ public class SaveData
 
 
     // 퀘스트 정보
+    public QuestInfo[] QuestInfos;
 
 
     // 몬스터 정보
@@ -52,6 +53,9 @@ public class SaveData
         ThrowItemList = new();
         Inventory = new InventoryElm[ValueDefine.MAX_INVENTORY];
         for(int i = 0; i<ValueDefine.MAX_INVENTORY; i++) { Inventory[i] = new(); }
+
+        QuestInfos = new QuestInfo[(int)EQuestEnum.LAST];
+        for(int i = 0; i<(int)EQuestEnum.LAST; i++) { QuestInfos[i] = new((EQuestEnum)i); }
 
         MonsterData = new();
     }
@@ -82,6 +86,9 @@ public class SaveData
         foreach(EThrowItemName item in _other.ThrowItemList) { ThrowItemList.Add(item); }
         Inventory = new InventoryElm[ValueDefine.MAX_INVENTORY];
         for(int i = 0; i<ValueDefine.MAX_INVENTORY; i++) { Inventory[i] = new(_other.Inventory[i]); }
+
+        QuestInfos = new QuestInfo[(int)EQuestEnum.LAST];
+        for(int i = 0; i<(int)EQuestEnum.LAST; i++) { QuestInfos[i] = new(_other.QuestInfos[i]); }
 
         MonsterData = new();
         foreach(MonsterSaveData monster in _other.MonsterData) { MonsterData.Add(monster); }

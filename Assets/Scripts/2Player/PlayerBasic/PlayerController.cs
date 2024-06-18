@@ -75,17 +75,9 @@ public partial class PlayerController : ObjectScript, IHaveData
         CurHP = MaxHP;
     }
 
-    private void CheckDrowned()
-    {
-        if (!GameManager.IsInGame || IsDead) { return; }
-        float water = PlayManager.WaterHeight;
-        if (transform.position.y <= water)
-        {
-            PlayerDrowned();
-        }
-    }
     private void PlayerDrowned()
     {
+        if (!GameManager.IsInGame || IsDead) { return; }
         GetRawDamage(MaxHP);
         m_cameraFocus.SetParent(null);
         PlayManager.LooseCameraFocus();
@@ -300,7 +292,6 @@ public partial class PlayerController : ObjectScript, IHaveData
     {
         PrePhysicsUpdate();                 // 선처리 물리
 
-        CheckDrowned();
         CurState.FixedProceed();            // 현재 상태 FixedUpdate
 
         LatePhysicsUpdate();                // 후처리 물리

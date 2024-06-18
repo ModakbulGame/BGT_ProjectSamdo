@@ -71,8 +71,6 @@ public class GameManager : SingleTon<GameManager>
     public static GameObject GetThorwItemPrefab(EThrowItemName _item) { return ItemManager.GetThrowItemPrefab(_item); }                     // 투척 아이템 프리펍
     public static GameObject GetDropItemPrefab(EItemType _item) { return ItemManager.GetDropItemPrefab(_item); }                            // 드랍 아이템 프리펍
 
-
-
     // 권능
     private PowerManager m_powerManager;
     private static PowerManager PowerManager { get { return Inst.m_powerManager; } }
@@ -99,6 +97,13 @@ public class GameManager : SingleTon<GameManager>
     private static EffectManager EffectManager { get { return Inst.m_effectManager; } }
     private static GameObject[] EffectArray { get { return EffectManager.EffectArray; } }
     public static GameObject GetEffectObj(EEffectName _effect) { return EffectManager.GetEffectObj(_effect); }
+
+
+    // 근토리
+    private StoryManager m_storyManager;
+    private static StoryManager StoryManager { get { return Inst.m_storyManager; } }
+    public static QuestScriptable GetQeustData(EQuestEnum _quest) { return StoryManager.GetQuestData(_quest); }
+    public static NPCScriptable GetNPCData(EnpcEnum _npc) { return StoryManager.GetNPCData(_npc); }
 
 
     // UI
@@ -132,6 +137,7 @@ public class GameManager : SingleTon<GameManager>
         m_monsterManager.SetManager();
         m_effectManager = GetComponent<EffectManager>();
         m_effectManager.SetManager();
+        m_storyManager = GetComponent<StoryManager>();
         m_uiManager = GetComponent<UIManager>();
         m_poolManager = GetComponent<PoolManager>();
         m_poolManager.SetManager(ItemArray, PowerArray, MonsterArray, EffectArray);
