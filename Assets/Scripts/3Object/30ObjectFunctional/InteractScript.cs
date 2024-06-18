@@ -12,6 +12,7 @@ public class InteractScript : MonoBehaviour                 // 상호작용이 가능한
     private float m_canInteractAngle = 120f;
 
     private IInteractable m_interactable;                                               // 오브젝트 내 IInteractable을 상속한 오브젝트
+    private QuestNPCScript m_questNPC;
 
     private float InteractAngle { get { if (m_interactable.InteractType == EInteractType.NPC) return m_canInteractAngle / 2; return m_canInteractAngle; } }
     public bool CanInteract { get { return DistToPlayer <= m_canInteractDist &&
@@ -51,6 +52,7 @@ public class InteractScript : MonoBehaviour                 // 상호작용이 가능한
     public void StartInteract()                // 상호작용 시작
     {
         m_interactable.StartInteract();
+        if (m_questNPC != null) { PlayManager.SetNPCView(); }
         HideToggleUI();
     }
     public void StopInteract()                  // 상호작용 중단
@@ -62,5 +64,6 @@ public class InteractScript : MonoBehaviour                 // 상호작용이 가능한
     private void Awake()
     {
         m_interactable = GetComponent<IInteractable>();
+        m_questNPC = GetComponent<QuestNPCScript>();
     }
 }

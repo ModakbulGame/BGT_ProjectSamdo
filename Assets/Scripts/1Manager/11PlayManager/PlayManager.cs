@@ -99,6 +99,7 @@ public class PlayManager : MonoBehaviour
     public static float CameraRotation { get { return CameraManager.CameraRotation; } }                                                     // 카메라 좌우 각도
     public static float CameraAngle { get { return CameraManager.CameraAngle; } }                                                           // 카메라 위아래 각도
     public static void SetCameraMode(EControlMode _mode) { CameraManager.SetCameraMode(_mode); }                                            // 조작 모드 전달
+    public static void SetNPCView() { CameraManager.SetNPCView(); }
     public static void SetCameraSensitive(float _sensitive) { CameraManager.SetCameraSensitive(_sensitive); }                               // 마우스 민감도 전달
     public static void LooseCameraFocus() { CameraManager.LooseFocus(); }
     public static void CameraSwitch(CinemachineFreeLook _targetCamera) { CameraManager.SwitchToCamera(_targetCamera); }                    // 카메라 변환
