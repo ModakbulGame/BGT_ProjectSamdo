@@ -1,7 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
+public struct SNPC
+{
+    public ENPCType Type;
+    public int Idx;
+    public bool IsNull { get { return Type == ENPCType.LAST; } }
+    public static SNPC Null { get { return new(ENPCType.LAST, -1); } }
+    public SNPC(ENPCType _type, int _idx) { Type =_type; Idx = _idx; }
+
+    public static bool operator ==(SNPC _npc1, SNPC _npc2) { return _npc1.Type == _npc2.Type && _npc1.Idx == _npc2.Idx; }
+    public static bool operator !=(SNPC _npc1, SNPC _npc2) { return !(_npc1 == _npc2); }
+
+    public readonly override bool Equals(object _obj)
+    {
+        return _obj is SNPC sNPC&&
+               Type==sNPC.Type&&
+               Idx==sNPC.Idx;
+    }
+    public readonly override int GetHashCode()
+    {
+        return HashCode.Combine(Type, Idx);
+    }
+}
 public class StoryManager : MonoBehaviour
 {
     [SerializeField]
@@ -29,7 +53,7 @@ public class StoryManager : MonoBehaviour
             case ENPCType.OASIS:
                 return m_npcData[_npc.Idx];
             case ENPCType.ALTAR:
-                return m_npcData[_npc.Idx + (int)EOasisPointName.LAST];
+                return m_npcData[_npc.Idx + (int)EOasisName.LAST];
             case ENPCType.OTHER:
                 Debug.Log("아직 없는 유형");
                 break;
@@ -40,12 +64,14 @@ public class StoryManager : MonoBehaviour
     public static SNPC String2NPC(string _data)     // 종류별로 9개씩만 가능
     {
         if(_data == "") { return SNPC.Null; }
-        string type = _data[..(_data.Length-1)];
-        int idx = _data[_data.Length-1] - '1';
+        int stringLen = _data.Length - 2;
+        string type = _data[..(stringLen)];
+        int.TryParse(_data[(stringLen)..], out int idx);
         return type switch
         {
             "OASIS" => new(ENPCType.OASIS, idx),
             "ALTAR" => new(ENPCType.ALTAR, idx),
+            "SLATE" => new(ENPCType.SLATE, idx),
             "OTHER" => new(ENPCType.OTHER, idx),
 
             _ => SNPC.Null

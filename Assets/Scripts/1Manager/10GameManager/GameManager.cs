@@ -32,7 +32,7 @@ public class GameManager : SingleTon<GameManager>
     private DataManager m_dataManager;
     public static DataManager DataManager { get { return Inst.m_dataManager; } }
     public static List<SaveData> GameData { get { return DataManager.GameData; } }                                                          // 저장된 것들
-    public static void SaveGameData(EOasisPointName _oasis) { DataManager.SaveCurData(_oasis); }                                            // 오아시스에서 저장
+    public static void SaveGameData(EOasisName _oasis) { DataManager.SaveCurData(_oasis); }                                            // 오아시스에서 저장
     public static void AddGameData(SaveData _data) { DataManager.AddGameData(_data); }                                                      // 저장 데이터 추가
     public static void RegisterData(IHaveData _data) { DataManager.RegisterData(_data); }                                                   // 데이터에 등록(기록 시작)
 

@@ -340,9 +340,11 @@ public static class DataImporter
 
         GameObject hellMap = AssetDatabase.LoadMainAssetAtPath(HellMapPath) as GameObject;
         OasisNPC[] oasisList = hellMap.GetComponentsInChildren<OasisNPC>();
-        if(oasisList.Length != (int)EOasisPointName.LAST) { Debug.LogError("맵에 오아시스 개수 다름"); return; }
-        AltarScript[] altarList = hellMap.GetComponentsInChildren<AltarScript>();
+        if(oasisList.Length != (int)EOasisName.LAST) { Debug.LogError("맵에 오아시스 개수 다름"); return; }
+        AltarNPC[] altarList = hellMap.GetComponentsInChildren<AltarNPC>();
         if (altarList.Length != (int)EAltarName.LAST) { Debug.LogError("맵에 제단 개수 다름"); return; }
+        SlateNPC[] slateList = hellMap.GetComponentsInChildren<SlateNPC>();
+        if (slateList.Length != (int)ESlateName.LAST) { Debug.LogError("맵에 석판 개수 다름"); return; }
 
         // NPC 정보
         string[] allNPCLines = File.ReadAllLines(CSVPath + NPCCSVName);
@@ -385,10 +387,15 @@ public static class DataImporter
                 uint oasisIdx = idx;
                 oasisList[oasisIdx].SetOasis(oasisIdx, scriptable);
             }
-            else if(type == ENPCType.ALTAR)
+            else if (type == ENPCType.ALTAR)
             {
-                uint altarIdx = idx - (int)EOasisPointName.LAST;
+                uint altarIdx = idx - (int)EOasisName.LAST;
                 altarList[altarIdx].SetAltar(altarIdx, scriptable);
+            }
+            else if (type == ENPCType.SLATE)
+            {
+                uint slateIdx = idx - (int)EOasisName.LAST - (int)EAltarName.LAST;
+                slateList[slateIdx].SetSlate(slateIdx, scriptable);
             }
             else
             {

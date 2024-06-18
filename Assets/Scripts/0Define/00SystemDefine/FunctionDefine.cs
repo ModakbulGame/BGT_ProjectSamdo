@@ -34,6 +34,19 @@ public static class FunctionDefine
         return n3 * 0.001f;
     }
 
+    public static T2[] GetRow<T1, T2>(T1[,] _array, int _row) where T2 : T1
+    {
+        int cols = _array.GetLength(1);
+        T2[] row = new T2[cols];
+
+        for (int i = 0; i < cols; i++)
+        {
+            row[i] = (T2)_array[_row, i];
+        }
+
+        return row;
+    }
+
     public static void AddEvent(EventTrigger _trigger, EventTriggerType _type, EventPointer _function)  // 이벤트 트리거에 이벤트 추가
     {
         EventTrigger.Entry entry = new() { eventID = _type };

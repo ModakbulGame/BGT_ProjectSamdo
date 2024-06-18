@@ -49,7 +49,7 @@ public class DataManager : MonoBehaviour
         if (m_gameData.Count >= ValueDefine.MAX_SAVE) { m_gameData.RemoveLast(); }
         SaveGameFile();
     }
-    public void SaveCurData(EOasisPointName _oasis)
+    public void SaveCurData(EOasisName _oasis)
     {
         CurData = new(CurData)
         {

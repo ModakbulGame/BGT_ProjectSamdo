@@ -8,7 +8,7 @@ public class SaveData
 {
     // 기본 정보
     public string SavedTime;
-    public EOasisPointName OasisPoint;
+    public EOasisName OasisPoint;
 
     // 플레이어 정보
     public Vector3 PlayerRot;

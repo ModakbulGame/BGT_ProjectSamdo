@@ -28,14 +28,14 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
     private Button m_cancelBtn;
     private OasisPointUIScript[] m_oasisPoints;
 
-    public EOasisPointName CurOasisName { get { return m_parent.Oasis.PointName; } }
-    private EOasisPointName CurDestination { get; set; } = EOasisPointName.LAST;
+    public EOasisName CurOasisName { get { return m_parent.Oasis.PointName; } }
+    private EOasisName CurDestination { get; set; } = EOasisName.LAST;
 
 
-    public void SetDestination(EOasisPointName _point)
+    public void SetDestination(EOasisName _point)
     {
         if(_point == m_parent.Oasis.PointName) { return; }
-        if(CurDestination != EOasisPointName.LAST)
+        if(CurDestination != EOasisName.LAST)
         {
             m_oasisPoints[(int)CurDestination].ResetDestination();
         }
@@ -48,12 +48,12 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
     
     private void TransportTo()
     {
-        if(CurDestination == EOasisPointName.LAST) { return; }
+        if(CurDestination == EOasisName.LAST) { return; }
         CloseUI();
         MoveToOasis(CurDestination);
     }
 
-    public void MoveToOasis(EOasisPointName _point)
+    public void MoveToOasis(EOasisName _point)
     {
         if (CurOasisName == _point)
         {
@@ -91,9 +91,9 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
         SetBtns();
         for (int i = 0; i<m_oasisPoints.Length; i++)
         {
-            if (i >= (int)EOasisPointName.LAST) { m_oasisPoints[i].gameObject.SetActive(false); continue; }
+            if (i >= (int)EOasisName.LAST) { m_oasisPoints[i].gameObject.SetActive(false); continue; }
             m_oasisPoints[i].SetParent(this);
-            m_oasisPoints[i].SetComps((EOasisPointName)i, m_mapImg);
+            m_oasisPoints[i].SetComps((EOasisName)i, m_mapImg);
         }
         IsCompsSet = true;
     }

@@ -42,12 +42,12 @@ public class PlayManager : MonoBehaviour
         EndBlackoutUI();
         GameManager.SaveGameData(_oasis.PointName);
     }
-    public static void TransportToOasis(EOasisPointName _target)
+    public static void TransportToOasis(EOasisName _target)
     {
         StartBlackoutUI();
         Inst.StartCoroutine(Inst.TransportCoroutine(_target));
     }
-    private IEnumerator TransportCoroutine(EOasisPointName _oasis)
+    private IEnumerator TransportCoroutine(EOasisName _oasis)
     {
         yield return new WaitForSeconds(2);
         TeleportPlayer(OasisList[(int)_oasis].RespawnPoint);
@@ -170,8 +170,9 @@ public class PlayManager : MonoBehaviour
     public static float MapWidth { get { return EnvironmentManager.MapWidth; } }
     public static float MapHeight { get { return EnvironmentManager.MapHeight; } }
     public static OasisNPC[] OasisList { get { return EnvironmentManager.OasisList; } }
+    public static AltarNPC[] AltarList { get { return EnvironmentManager.AltarList; } }
+    public static SlateNPC[] SlateList { get { return EnvironmentManager.SlateList; } }
     public static MonsterSpawnPoint[] SpawnPointList { get { return EnvironmentManager.SpawnPointList; } }
-    public static QuestNPCScript[] NPCList { get { return EnvironmentManager.NPCList; } }
 
 
     // 플레이어 능력치, 권능

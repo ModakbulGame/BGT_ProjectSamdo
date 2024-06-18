@@ -15,8 +15,8 @@ public class OasisPointUIScript : MonoBehaviour
     private Button m_btn;
 
     [SerializeField]
-    private EOasisPointName m_pointName;
-    private EOasisPointName PointName { get { return m_pointName; } set { m_pointName = value; } }
+    private EOasisName m_pointName;
+    private EOasisName PointName { get { return m_pointName; } set { m_pointName = value; } }
 
     private readonly Color IdleColor = new(246/255f, 187/255f, 187/255f);
     private readonly Color CurColor = new(38/255f, 167/255f, 245/255f);
@@ -48,7 +48,7 @@ public class OasisPointUIScript : MonoBehaviour
     {
         m_btn.onClick.AddListener(SetDestination);
     }
-    public void SetComps(EOasisPointName _oasis, RectTransform _rect)
+    public void SetComps(EOasisName _oasis, RectTransform _rect)
     {
         m_rect = GetComponent<RectTransform>();
         m_img = GetComponent<Image>();
