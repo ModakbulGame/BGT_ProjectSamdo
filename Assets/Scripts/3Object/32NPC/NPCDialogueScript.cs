@@ -115,7 +115,6 @@ public class NPCDialogueScript : MonoBehaviour
         {
             PlayManager.ChangeBtnsTxt();
             PlayManager.ShowNPCQuestUI(CurNPC);
-            m_isQuestEnded = false;
         }
         else CloseUI();
     }
