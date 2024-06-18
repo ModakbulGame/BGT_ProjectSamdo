@@ -168,7 +168,16 @@ public partial class PlayerController
     // 기초 정보
     public override float ObjectHeight { get { return m_collider.height; } }        // 오브젝트 높이
     private float HalfHeight { get { return ObjectHeight / 2; } }
+    
     private CinemachineImpulseSource m_impulseSource;
+    [SerializeField]
+    private Vector3 m_defaultVelocity = new Vector3(1.0f, 1.0f, 1.0f);
+    [SerializeField]
+    private float m_attackTime = 0.05f;
+    [SerializeField]
+    private float m_sustainTime = 0.05f;
+    [SerializeField]
+    private float m_decayTime = 0.25f;
 
     public override void ApplyHPUI()
     {
@@ -179,11 +188,10 @@ public partial class PlayerController
     {
         m_impulseSource.m_ImpulseDefinition.m_ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Explosion;
 
-        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_AttackTime = 0.05f;    // 공격 시간
-        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = 0.15f;   // 유지 시간
-        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_DecayTime = 0.3f;      // 감쇠 시간
-
-        m_impulseSource.m_DefaultVelocity = new Vector3(0.1f, 0.1f, 0.1f);
+        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_AttackTime = m_attackTime;     // 공격 시간
+        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = m_sustainTime;   // 유지 시간
+        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_DecayTime = m_decayTime;       // 감쇠 시간
+        m_impulseSource.m_DefaultVelocity = m_defaultVelocity;
     }
 
     // 스탯 정보
