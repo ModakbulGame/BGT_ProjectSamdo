@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -167,13 +168,23 @@ public partial class PlayerController
     // 기초 정보
     public override float ObjectHeight { get { return m_collider.height; } }        // 오브젝트 높이
     private float HalfHeight { get { return ObjectHeight / 2; } }
+    private CinemachineImpulseSource m_impulseSource;
 
     public override void ApplyHPUI()
     {
         PlayManager.SetPlayerMaxHP(MaxHP);
         PlayManager.SetPlayerCurHP(CurHP);
     }
+    public void SetImpulseInfo()
+    {
+        m_impulseSource.m_ImpulseDefinition.m_ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Explosion;
 
+        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_AttackTime = 0.05f;    // 공격 시간
+        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = 0.15f;   // 유지 시간
+        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_DecayTime = 0.3f;      // 감쇠 시간
+
+        m_impulseSource.m_DefaultVelocity = new Vector3(0.1f, 0.1f, 0.1f);
+    }
 
     // 스탯 정보
     [SerializeField]
@@ -266,6 +277,8 @@ public partial class PlayerController
     {
         base.SetComps();
         m_collider = GetComponentInChildren<CapsuleCollider>();
+        m_impulseSource = GetComponent<CinemachineImpulseSource>();
+        SetImpulseInfo();
         FunctionDefine.SetFriction(m_collider, FloorFriction, true);
         m_castingEffect = GetComponentInChildren<PowerCastingEffect>();
         m_castingEffect.SetComps();
