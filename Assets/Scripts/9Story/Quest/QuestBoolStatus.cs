@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QuestBoolStatus : MonoBehaviour
 {
-    public void SetQuestStartObjectStatus(string _start)
+/*    public void SetQuestStartObjectStatus(string _start)
     {
         for(int i = 0; i < PlayManager.QuestList.Count; i++)
         {
@@ -55,5 +55,5 @@ public class QuestBoolStatus : MonoBehaviour
                 return true;
         }
         return false;
-    }
+    }*/
 }

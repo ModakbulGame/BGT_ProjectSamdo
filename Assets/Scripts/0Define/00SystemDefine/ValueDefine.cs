@@ -22,13 +22,13 @@ public static class ValueDefine
     public const string PLAYER_TAG = "Player";                      // 플레이어
     public const string CAMERA_TAG = "Camera";                      // 카메라
     public const string MONSTER_TAG = "Monster";                    // 몬스터
-    public const string ITEM_TAG = "Item";                          // 아이템
     public const string NPC_TAG = "NPC";                            // NPC
     public const string OASIS_TAG = "Oasis";
     public const string PLAYER_WEAPON_TAG = "PlayerWeapon";         // 플레이어 무기
     public const string PLAYER_POWER_TAG = "PlayerPower";           // 플레이어 주술
     public const string MONSTER_ATTACK_TAG = "MonsterAttack";       // 몬스터 공격
-    public const string TERRAIN_TAG = "Terrain";                    // 터레인
+    public const string WATER_TAG = "Water";                        // 물
+    public const string TERRAIN_TAG = "Terrain";                    // 지형
 
 
     // 씬 인덱스
@@ -49,6 +49,7 @@ public static class ValueDefine
     public const int MAX_HEAL_ITEM = 3;                             // 최대 등록 가능 회복 아이템
     public const int MAX_THROW_ITEM = 8;                            // 최대 등록 가능 투척 아이템
     public const int MAX_REGISTER_PATTERN = 5;                      // 최대 각인 가능 문양
+    public const int MAX_QUEST_NUM = 4;                             // 최대 진행 가능 퀘스트
     public const int DIE_DAMAGE = 999;
 
 

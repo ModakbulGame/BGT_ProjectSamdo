@@ -11,6 +11,9 @@ public class PlayUIManager : MonoBehaviour
     private Canvas[] m_canvases = new Canvas[(int)ECanvasType.LAST];
     public Canvas GetCanvas(ECanvasType _canvas) { return m_canvases[(int)_canvas]; }
 
+    private Canvas MainCanvas { get { return m_canvases[(int)ECanvasType.MAIN]; } }
+    private Canvas OptionCanvas { get { return m_canvases[(int)ECanvasType.OPTION]; } }
+
 
     [SerializeField]
     private OptionUIScript m_optionUI;
@@ -27,22 +30,6 @@ public class PlayUIManager : MonoBehaviour
     public void UpdateMaterials() { if (m_playerUI.gameObject.activeSelf) m_playerUI.UpdateMaterials(); }   // 재료 업데이트
     public void UpdateInfoUI() { if (m_playerUI.gameObject.activeSelf) m_playerUI.UpdateInfoUI(); }         // 정보 업데이트
 
-    private Vector3 MapLB { get { return PlayManager.MapLB; } }
-    private Vector3 MapRT { get { return PlayManager.MapRT; } }
-    private float MapWidth { get { return PlayManager.MapWidth; } }
-    private float MapHeight { get { return PlayManager.MapHeight; } }
-
-    private Vector2 m_mapArea;
-
-    public Vector2 NormalizeLocation(Transform _obj)
-    {
-        Vector2 originalPos = new Vector2(Vector3.Distance(new Vector3(MapLB.x, 0f, 0f), new Vector3(_obj.position.x, 0f, 0f)),
-                Vector3.Distance(new Vector3(0f, 0f, MapRT.z), new Vector3(0f, 0f, _obj.position.z)));
-        Vector2 normalPos = new Vector2(originalPos.x / m_mapArea.x, originalPos.y / m_mapArea.y);
-
-        return normalPos;
-    }
-
 
     [SerializeField]
     private InteractInfoUI m_interactInfoUI;
@@ -51,44 +38,14 @@ public class PlayUIManager : MonoBehaviour
 
 
     [SerializeField]
-    private NPCDialogueScript m_dialogueUI;                 // NPC UI
-    public bool IsDialogueUIOpend { get { return m_dialogueUI.IsDialogueOpened; } }
-    public void OpenDialogueUI(QuestNPCScript _npc) { m_dialogueUI.OpenUI(_npc); }
-    public void CloseDialogueUI() { m_dialogueUI.CloseUI(); }
-    public void ShowNextDialogue() { m_dialogueUI.ShowAllDialogue(); }
-
-    [SerializeField]
-    private QuestUIScript m_questUI;                        // 퀘스트 UI
-    public void ToggleQuestUI() { m_questUI.ToggleQuestUI(); }
-
-    [SerializeField]
-    private MiniQuestUIScript m_miniQuestUI;                // 축약된 퀘스트 UI(오른쪽에 있는 거)
-    public UnityEngine.UI.Image[] ClearImg { get { return m_miniQuestUI.ClearImg; } }
-    public void ExpressCurQuestInfo() { m_miniQuestUI.ExpressCurQuestInfo(); }
-
-    [SerializeField]
-    private QuestAcceptUIScript m_questAcceptScript;        // NPC 대화 끝에 나오는 퀘스트 창
-    public void ShowNPCQuestUI(QuestNPCScript _npc) { m_questAcceptScript.ShowNPCQuestUI(_npc); }
-    public void ChangeBtnsTxt() { m_questAcceptScript.ChangeBtnsText(); }
-
-
-    [SerializeField]
     private OasisUIScript m_oasisUI;                        // 오아시스 UI
     public void OpenOasisUI(OasisNPC _npc) { m_oasisUI.OpenUI(_npc); }
     public void CloseOasisUI() { m_oasisUI.CloseUI(); }
-
-    [SerializeField]
-    private MinimapScript m_miniMap;
-    public void SetMinimapScale(float _scale) { m_miniMap.SetScale(_scale); }
 
 
     [SerializeField]
     private MapUIScript m_mapUI;                            // 맵 UI
     public void ToggleMapUI() { m_mapUI.ToggleMapUI(); }
-
-
-    [SerializeField]
-    private GameObject m_mainCanvas;                        // 메인 캔버스
 
 
     private PlayerHPBarScript m_hpBar;                      // HP 바
@@ -104,6 +61,8 @@ public class PlayUIManager : MonoBehaviour
     public void UpdateThrowItemSlot() { m_equipSlot.UpdateThrowItemImg(); }
     public void UpdateHealItemSlot() { m_equipSlot.UpdateHealItemImg(); }
 
+    private MinimapScript m_miniMap;
+    public void SetMinimapScale(float _scale) { m_miniMap.SetScale(_scale); }
 
     private AimUIScript m_aimUI;                            // 플레이어 에임 UI
     public void SetStaminaRate(float _rate) { m_aimUI.SetStaminaRate(_rate); }
@@ -115,6 +74,11 @@ public class PlayUIManager : MonoBehaviour
 
 
     [SerializeField]
+    private QuestSideBarScript m_questSideBar;
+    public void OpenQuestSideBar() { m_questSideBar.OpenUI(); }
+    public void UpdateQuestSideBar() { if (!m_questSideBar.gameObject.activeSelf) { return; } m_questSideBar.UpdateUI(); }
+
+
     private PlayerPowerAimScript m_powerAimUI;
     public void ShowPowerAim(Vector3 _pos, float _radius, float _range)       // 스킬 에임 보이기
     {
@@ -148,20 +112,16 @@ public class PlayUIManager : MonoBehaviour
     }
 
 
-    [SerializeField]
     private PlayerThrowLineRenderer m_throwLineUI;          // 플레이어 던지기 궤적 UI
     public void DrawThrowLine(Vector3 _force, float _mass, Vector3 _start) { m_throwLineUI.DrawThrowLine(_force, _mass, _start); }      // 던지기 궤적 그리기
     public void HideThrowLine() { m_throwLineUI.HideThrowLine(); }              // 던지기 궤적 숨기기
 
 
 
-    [SerializeField]
     private BlackoutImageScript m_blackoutUI;
     public void StartBlackout() { m_blackoutUI.ShowImg(); }
     public void EndBlackout() { m_blackoutUI.HideImg(); }
 
-
-    [SerializeField]
     private SpitPoisonUIScript m_spitUI;
     public void ShowBlindMark()
     {
@@ -175,18 +135,64 @@ public class PlayUIManager : MonoBehaviour
 
 
 
+    [SerializeField]
+    private NPCDialogueScript m_dialogueUI;                 // NPC UI
+    public bool IsDialogueUIOpend { get { return m_dialogueUI.IsDialogueOpened; } }
+    public void OpenDialogueUI(QuestNPCScript _npc) { m_dialogueUI.OpenUI(_npc); }
+    public void CloseDialogueUI() { m_dialogueUI.CloseUI(); }
+    public void ShowNextDialogue() { m_dialogueUI.ShowAllDialogue(); }
+
+    [SerializeField]
+    private QuestUIScript m_questUI;                        // 퀘스트 UI
+    public void ToggleQuestUI() { m_questUI.ToggleQuestUI(); }
+
+    [SerializeField]
+    private MiniQuestUIScript m_miniQuestUI;                // 축약된 퀘스트 UI(오른쪽에 있는 거)
+    public UnityEngine.UI.Image[] ClearImg { get { return m_miniQuestUI.ClearImg; } }
+    public void ExpressCurQuestInfo() { m_miniQuestUI.ExpressCurQuestInfo(); }
+
+    [SerializeField]
+    private QuestAcceptUIScript m_questAcceptScript;        // NPC 대화 끝에 나오는 퀘스트 창
+    public void ShowNPCQuestUI(QuestNPCScript _npc) { m_questAcceptScript.ShowNPCQuestUI(_npc); }
+    public void ChangeBtnsTxt() { m_questAcceptScript.ChangeBtnsText(); }
+
+
+
+
+    private Vector3 MapLB { get { return PlayManager.MapLB; } }
+    private Vector3 MapRT { get { return PlayManager.MapRT; } }
+
+    private Vector2 MapArea { get { return new(MapRT.x - MapLB.x, MapRT.y - MapLB.y); } }
+
+    public Vector2 NormalizeLocation(Transform _obj)
+    {
+        Vector2 originalPos = new(Vector3.Distance(new Vector3(MapLB.x, 0f, 0f), new Vector3(_obj.position.x, 0f, 0f)),
+                Vector3.Distance(new Vector3(0f, 0f, MapRT.z), new Vector3(0f, 0f, _obj.position.z)));
+        Vector2 normalPos = new(originalPos.x / MapArea.x, originalPos.y / MapArea.y);
+
+        return normalPos;
+    }
+
+
+
 
 
 
     public void SetManager()
     {
-        m_hpBar = m_mainCanvas.GetComponentInChildren<PlayerHPBarScript>();
+        m_hpBar = MainCanvas.GetComponentInChildren<PlayerHPBarScript>();
         m_hpBar.SetComps();
-        m_powerSlot = m_mainCanvas.GetComponentInChildren<PowerSlotUIScript>();
+        m_powerSlot = MainCanvas.GetComponentInChildren<PowerSlotUIScript>();
         m_powerSlot.SetComps();
-        m_aimUI = m_mainCanvas.GetComponentInChildren<AimUIScript>();
-        m_equipSlot = m_mainCanvas.GetComponentInChildren<EquipSlotUIScript>();
-        m_mapArea = new Vector2(MapWidth, MapHeight);
+        m_miniMap = MainCanvas.GetComponentInChildren<MinimapScript>();
+        m_aimUI = MainCanvas.GetComponentInChildren<AimUIScript>();
+        m_equipSlot = MainCanvas.GetComponentInChildren<EquipSlotUIScript>();
+
+        m_powerAimUI = GetComponentInChildren<PlayerPowerAimScript>();
+        m_throwLineUI = GetComponentInChildren<PlayerThrowLineRenderer>();
+
+        m_blackoutUI = OptionCanvas.GetComponentInChildren<BlackoutImageScript>();
+        m_spitUI = MainCanvas.GetComponentInChildren<SpitPoisonUIScript>();
 
         UpdatePowerSlot();
         UpdateEquipSlot();

@@ -143,19 +143,23 @@ public class PlayManager : MonoBehaviour
     public static void UsePattern(EPatternName _type, int _num) { InvenManager.UsePattern(_type, _num); }                                       // 문양 사용
 
     // 스토리
-    private StoryManager m_storyManager;
-    private static StoryManager StoryManager { get { return Inst.m_storyManager; } }
-    public static List<QuestScriptable> QuestList { get { return StoryManager.QuestList; } }
-    public static List<QuestScriptable> CurQuestList { get { return StoryManager.CurQuestList; } }
-    public static void AcceptQuest(string _id) { StoryManager.AcceptQuest(_id); }
-    public static void GiveUpQuest(string _id) { StoryManager.GiveUpQuest(_id); }
-    public static void ClearQuest(string _id) { StoryManager.ClearQuest(_id); }
-    public static void CompleteQuest(string _id) { StoryManager.CompleteQuest(_id); }
-    public static void DoObjectQuest(string _obj, int _amount) { StoryManager.DoObjectQuest(_obj, _amount); }
-    public static void SetQuestStartObjectStatus(string _start) { StoryManager.SetQuestStartObjectStatus(_start); }
-    public static void SetQuestEndObjectStatus(string _id) { StoryManager.SetQuestEndObjectStatus(_id); }
-    public static bool CheckQuestCompleted(string _id) { return StoryManager.CheckQuestCompleted(_id); }
-    public static bool CheckRequiredQuestObject(string _name) { return StoryManager.CheckRequiredQuestObject(_name); }
+    private QuestManager m_questManager;
+    private static QuestManager QuestManager { get { return Inst.m_questManager; } }
+    public static List<QuestInfo> QuestInfoList { get { return QuestManager.QuestInfoList; } }
+    public static void SetQuestStatus(EQuestEnum _quest, EQuestStatus _status) { QuestManager.SetQuestStatus(_quest, _status); }
+    public static void SetQuestProgress(EQuestEnum _quest, float _prog) { QuestManager.SetQuestProgress(_quest, _prog); }
+
+    public static List<QuestScriptable> QuestList { get { return QuestManager.QuestList; } }
+    public static List<QuestScriptable> CurQuestList { get { return QuestManager.CurQuestList; } }
+    public static void AcceptQuest(string _id) { QuestManager.AcceptQuest(_id); }
+    public static void GiveUpQuest(string _id) { QuestManager.GiveUpQuest(_id); }
+    public static void ClearQuest(string _id) { QuestManager.ClearQuest(_id); }
+    public static void CompleteQuest(string _id) { QuestManager.CompleteQuest(_id); }
+    public static void DoObjectQuest(string _obj, int _amount) { QuestManager.DoObjectQuest(_obj, _amount); }
+    public static void SetQuestStartObjectStatus(string _start) { QuestManager.SetQuestStartObjectStatus(_start); }
+    public static void SetQuestEndObjectStatus(string _id) { QuestManager.SetQuestEndObjectStatus(_id); }
+    public static bool CheckQuestCompleted(string _id) { return QuestManager.CheckQuestCompleted(_id); }
+    public static bool CheckRequiredQuestObject(string _name) { return QuestManager.CheckRequiredQuestObject(_name); }
 
 
     // 환경
@@ -165,7 +169,6 @@ public class PlayManager : MonoBehaviour
     public static Vector3 MapRT { get { return EnvironmentManager.MapRT; } }
     public static float MapWidth { get { return EnvironmentManager.MapWidth; } }
     public static float MapHeight { get { return EnvironmentManager.MapHeight; } }
-    public static float WaterHeight { get { return EnvironmentManager.WaterHeight; } }
     public static OasisNPC[] OasisList { get { return EnvironmentManager.OasisList; } }
     public static MonsterSpawnPoint[] SpawnPointList { get { return EnvironmentManager.SpawnPointList; } }
     public static QuestNPCScript[] NPCList { get { return EnvironmentManager.NPCList; } }
@@ -188,9 +191,7 @@ public class PlayManager : MonoBehaviour
     // GUI
     private PlayUIManager m_playUIManager;
     private static PlayUIManager PlayUIManager { get { return Inst.m_playUIManager; } }
-    public static Vector2 NormalizeLocation(Transform _obj) { return PlayUIManager.NormalizeLocation(_obj); }                               // 위치 정규화(3D -> 2D)
     public static Canvas GetCanvas(ECanvasType _canvas) { return PlayUIManager.GetCanvas(_canvas); }                                        // 캔버스
-    public static RectTransform CanvasTrans(ECanvasType _canvas) { return GetCanvas(_canvas).GetComponent<RectTransform>(); }
     public static bool IsOptionOpen { get { return PlayUIManager.IsOptionOpen; } }
     public static void OpenOptionUI() { PlayUIManager.OpenOptionUI(); }
     public static void CloseOptionUI() { PlayUIManager.CloseOptionUI(); }
@@ -201,14 +202,6 @@ public class PlayManager : MonoBehaviour
     public static void HideInteractInfo() { PlayUIManager.HideInteractInfo(); }
     public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                       // 맵 UI 여닫기
     public static void ToggleQuestUI() { PlayUIManager.ToggleQuestUI(); }                                                                   // 퀘스트 창 여닫기
-    public static void ShowNPCQuestUI(QuestNPCScript _npc) { PlayUIManager.ShowNPCQuestUI(_npc); }                                                                 // 퀘스트 수락/거절 창 표시
-    public static void ExpressCurQuestInfo() { PlayUIManager.ExpressCurQuestInfo(); }                                                       // 현재 퀘스트 정보 표시
-    public static void ChangeBtnsTxt() { PlayUIManager.ChangeBtnsTxt(); }
-    public static Image[] ClearImg { get { return PlayUIManager.ClearImg; } }
-    public static void OpenNPCUI(QuestNPCScript _npc) { PlayUIManager.OpenDialogueUI(_npc); }                                               // NPC 대화창 열기
-    public static void CloseNPCUI() { PlayUIManager.CloseDialogueUI(); }                                                                    // NPC 대화창 닫기
-    public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                  // NPC 대화창 열렸는지 확인
-    public static void ShowNextDialogue() { PlayUIManager.ShowNextDialogue(); }                                                             // 다음 대화 출력
     public static void OpenOasisUI(OasisNPC _npc) { PlayUIManager.OpenOasisUI(_npc); }                                                      // 화톳불 UI 열기
     public static void CloseOasisUI() { PlayUIManager.CloseOasisUI(); }                                                                     // 화톳불 UI 닫기
     public static void UpdatePowerSlot() { PlayUIManager.UpdatePowerSlot(); }                                                               // 스킬 슬롯 UI
@@ -234,7 +227,16 @@ public class PlayManager : MonoBehaviour
     private static void EndBlackoutUI() { PlayUIManager.EndBlackout(); }
     public static void ShowBlindMark() { PlayUIManager.ShowBlindMark(); }
     public static void HideBlindMark() { PlayUIManager.HideBlindMark(); }
-    
+
+    public static void ShowNPCQuestUI(QuestNPCScript _npc) { PlayUIManager.ShowNPCQuestUI(_npc); }                                                                 // 퀘스트 수락/거절 창 표시
+    public static void ExpressCurQuestInfo() { PlayUIManager.ExpressCurQuestInfo(); }                                                       // 현재 퀘스트 정보 표시
+    public static void ChangeBtnsTxt() { PlayUIManager.ChangeBtnsTxt(); }
+    public static Image[] ClearImg { get { return PlayUIManager.ClearImg; } }
+    public static void OpenNPCUI(QuestNPCScript _npc) { PlayUIManager.OpenDialogueUI(_npc); }                                               // NPC 대화창 열기
+    public static void CloseNPCUI() { PlayUIManager.CloseDialogueUI(); }                                                                    // NPC 대화창 닫기
+    public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                  // NPC 대화창 열렸는지 확인
+    public static void ShowNextDialogue() { PlayUIManager.ShowNextDialogue(); }                                                             // 다음 대화 출력
+    public static Vector2 NormalizeLocation(Transform _obj) { return PlayUIManager.NormalizeLocation(_obj); }                               // 위치 정규화(3D -> 2D)
 
 
 
@@ -242,8 +244,8 @@ public class PlayManager : MonoBehaviour
     {
         m_invenManager = GetComponent<InventoryManager>();
         m_invenManager.SetManager();
-        m_storyManager = GetComponent<StoryManager>();
-        m_storyManager.SetManager();
+        m_questManager = GetComponent<QuestManager>();
+        m_questManager.SetManager();
         m_environmentManager = GetComponent<EnvironmentManager>();
         m_environmentManager.SetManager();
         m_forceManager = GetComponent<PlayerForceManager>();

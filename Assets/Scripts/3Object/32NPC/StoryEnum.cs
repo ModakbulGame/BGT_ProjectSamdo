@@ -10,7 +10,7 @@ public enum EnpcAttribute
     LAST
 } 
 
-public enum EnpcName
+public enum EnpcEnum
 {
     FOO,
     BAR,

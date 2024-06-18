@@ -71,8 +71,6 @@ public class GameManager : SingleTon<GameManager>
     public static GameObject GetThorwItemPrefab(EThrowItemName _item) { return ItemManager.GetThrowItemPrefab(_item); }                     // 투척 아이템 프리펍
     public static GameObject GetDropItemPrefab(EItemType _item) { return ItemManager.GetDropItemPrefab(_item); }                            // 드랍 아이템 프리펍
 
-
-
     // 권능
     private PowerManager m_powerManager;
     private static PowerManager PowerManager { get { return Inst.m_powerManager; } }
@@ -101,10 +99,16 @@ public class GameManager : SingleTon<GameManager>
     public static GameObject GetEffectObj(EEffectName _effect) { return EffectManager.GetEffectObj(_effect); }
 
 
+    // 근토리
+    private StoryManager m_storyManager;
+    private static StoryManager StoryManager { get { return Inst.m_storyManager; } }
+    public static QuestScriptable GetQeustData(EQuestEnum _quest) { return StoryManager.GetQuestData(_quest); }
+    public static NPCScriptable GetNPCData(EnpcEnum _npc) { return StoryManager.GetNPCData(_npc); }
+
+
     // UI
     private UIManager m_uiManager;
     public static UIManager UIManager { get { return Inst.m_uiManager; } }
-    public static RectTransform GetCanvasTransform(ECanvasType _canvas) { return UIManager.GetCanvasTransform(_canvas); }       // 캔버스 트랜스폼
     public static void CreateSideTextAlarm(string _alarm) { UIManager.CreateSideTextAlarm(_alarm); }                            // 화면 사이드 텍스트 알람 생성
     public static Sprite GetMonsterSprite(EMonsterName _monster) { return UIManager.GetMonsterSprite(_monster); }               // 몬스터 이미지
     public static Sprite GetItemSprite(SItem _item) { return UIManager.GetItemSprite(_item); }                                  // 아이템 이미지
@@ -132,6 +136,7 @@ public class GameManager : SingleTon<GameManager>
         m_monsterManager.SetManager();
         m_effectManager = GetComponent<EffectManager>();
         m_effectManager.SetManager();
+        m_storyManager = GetComponent<StoryManager>();
         m_uiManager = GetComponent<UIManager>();
         m_poolManager = GetComponent<PoolManager>();
         m_poolManager.SetManager(ItemArray, PowerArray, MonsterArray, EffectArray);

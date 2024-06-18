@@ -15,13 +15,13 @@ public class InteractScript : MonoBehaviour                 // 상호작용이 가능한
     private QuestNPCScript m_questNPC;
 
     private float InteractAngle { get { if (m_interactable.InteractType == EInteractType.NPC) return m_canInteractAngle / 2; return m_canInteractAngle; } }
-    public bool CanInteract { get { return DistToPlayer <= m_canInteractDist &&
-                (m_interactable.InteractType != EInteractType.NPC || AngleToPlayer <= InteractAngle); } }  // 상호작용 가능한지
+    public bool CanInteract { get { return DistToPlayer <= m_canInteractDist/* &&
+                (m_interactable.InteractType != EInteractType.NPC || AngleToPlayer <= InteractAngle)*/; } }  // 상호작용 가능한지
 
 
     public float DistToPlayer { get { return PlayManager.GetDistToPlayer(transform.position); } }           // 플레이어와의 거리
     public float AngleToPlayer { get {
-            Vector2 dir = (Position2 - PlayManager.PlayerPos2).normalized;
+            Vector2 dir = (PlayManager.PlayerPos2 - Position2).normalized;
             float rot = FunctionDefine.VecToDeg(dir);
             Vector2 forward = new(transform.forward.x, transform.forward.z);
             float fRot = FunctionDefine.VecToDeg(forward);

@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -306,6 +305,7 @@ public static class DataImporter
         // NPC 정보
         string[] allNPCLines = File.ReadAllLines(CSVPath + NPCCSVName);
 
+        List<NPCScriptable> data = new();
 
         for (uint i = 1; i < allNPCLines.Length; i++)
         {
@@ -339,12 +339,18 @@ public static class DataImporter
             //if (prefab == null) { continue; }
             //if (!prefab.TryGetComponent<NPCScript>(out var script)) { Debug.Log(id + " 스크립트 없음"); continue; }
 
+            data.Add(scriptable);
+
             //script.SetScriptable(scriptable);
 
             //AssetDatabase.SaveAssets();
             //EditorUtility.SetDirty(scriptable);
             //EditorUtility.SetDirty(prefab);
         }
+
+        GameObject gameManager = AssetDatabase.LoadMainAssetAtPath(GameManagerPath) as GameObject;
+        StoryManager storyManager = gameManager.GetComponentInChildren<StoryManager>();
+        storyManager.SetNPCData(data);
 
         Debug.Log("NPC 정보 불러오기 완료");
     }
@@ -355,7 +361,7 @@ public static class DataImporter
         // 퀘스트 정보
         string[] allQuestLines = File.ReadAllLines(CSVPath + QuestCSVName);
 
-        List<QuestScriptable> datas = new();
+        List<QuestScriptable> data = new();
 
         for (uint i = 1; i < allQuestLines.Length; i++)
         {
@@ -378,13 +384,20 @@ public static class DataImporter
                 scriptable = ScriptableObject.CreateInstance<QuestScriptable>();
                 AssetDatabase.CreateAsset(scriptable, $"{QuestScriptablePath + id}.asset");
             }
-            datas.Add(scriptable);
+            data.Add(scriptable);
 
             scriptable.SetQuestScriptable(idx, splitQuestData);
 
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(scriptable);
         }
+
+        GameObject gameManager = AssetDatabase.LoadMainAssetAtPath(GameManagerPath) as GameObject;
+        StoryManager storyManager = gameManager.GetComponentInChildren<StoryManager>();
+        storyManager.SetQuestData(data);
+
+        AssetDatabase.SaveAssets();
+        EditorUtility.SetDirty(gameManager);
 
         Debug.Log("퀘스트 정보 불러오기 완료");
     }

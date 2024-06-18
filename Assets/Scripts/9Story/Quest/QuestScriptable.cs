@@ -6,6 +6,7 @@ public class QuestScriptable : ScriptableObject
 {
     public uint Idx;
     public string Title;              // 퀘스트 이름
+    public EQuestEnum Enum;
     public string Id;                 // 퀘스트 ID
     public string NextQuest;          // 다음 퀘스트 ID
     public EQuestType[] Types;        // 퀘스트 종류
@@ -16,9 +17,6 @@ public class QuestScriptable : ScriptableObject
     public int QuestObjectCount;      // 퀘스트 시 필요한 오브젝트 수
     public ERewardName Reward;        // 보상
     public int RewardNum;             // 보상 수 
-
-    public EQuestStatus Status;       // 퀘스트 수행 상태
-    public int CurQuestObjectCount;   // 현재 수집 / 사냥한 오브젝트 수 
 
     public string StartObject;        // 퀘스트를 주는 오브젝트
     public string EndObject;          // 퀘스트 수행 중 거치거나 완료하는 오브젝트
@@ -39,6 +37,7 @@ public class QuestScriptable : ScriptableObject
     {
         Idx = _idx;
         Id = _data[(int)EQuestAttribute.ID];
+        Enum = (EQuestEnum)Idx;
         Title = _data[(int)EQuestAttribute.TITLE];
         Types = DataManager.String2QuestTypes(_data[(int)EQuestAttribute.TYPE]);
         Description = _data[(int)EQuestAttribute.DESCRIPTION];
@@ -50,8 +49,5 @@ public class QuestScriptable : ScriptableObject
         int.TryParse(_data[(int)EQuestAttribute.OBJECTNUM], out QuestObjectCount);
         int.TryParse(_data[(int)EQuestAttribute.REWARDNUM], out RewardNum);
         float.TryParse(_data[(int)EQuestAttribute.TIMELIMIT], out TimeLimit);
-
-        Status = EQuestStatus.AVAILABLE;
-        CurQuestObjectCount = 0;
     }
 }

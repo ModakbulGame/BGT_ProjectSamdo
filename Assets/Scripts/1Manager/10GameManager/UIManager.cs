@@ -8,6 +8,8 @@ public enum ECanvasType         // Äµ¹ö½º Á¾·ù
     INGAME,
     MAIN,
     CONTROL,
+    PLAYER_INFO,
+    OPTION,
     LAST
 }
 

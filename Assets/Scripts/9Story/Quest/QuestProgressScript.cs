@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class QuestProgressScript : MonoBehaviour
 {
+    /*
     // Äù½ºÆ® ¼ö¶ô
     public void AcceptQuest(string _id)
     {
@@ -165,4 +166,5 @@ public class QuestProgressScript : MonoBehaviour
         PlayManager.ExpressCurQuestInfo();
         PlayManager.ClearImg[_idx % 4].gameObject.SetActive(false);
     }
+*/
 }
