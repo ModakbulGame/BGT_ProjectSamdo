@@ -99,12 +99,13 @@ public class GameManager : SingleTon<GameManager>
     public static GameObject GetEffectObj(EEffectName _effect) { return EffectManager.GetEffectObj(_effect); }                              // 이펙트 오브젝트 받기
 
 
-    // 근토리
+    // 스토리
     private StoryManager m_storyManager;
     private static StoryManager StoryManager { get { return Inst.m_storyManager; } }
-    public static QuestScriptable GetQeustData(EQuestEnum _quest) { return StoryManager.GetQuestData(_quest); }                             // 퀘스트 정보
     public static NPCScriptable GetNPCData(SNPC _npc) { return StoryManager.GetNPCData(_npc); }                                             // NPC 정보
-
+    public static DialogueScriptable GetDialogueData(EDialogueName _name) { return StoryManager.GetDialogueData(_name); }                   // 대화 정보
+    public static DialogueScriptable GetDialogueData(SNPC _npc, int _idx) { return StoryManager.GetDialogueData(_npc, _idx); }              // 대화 정보
+    public static QuestScriptable GetQeustData(EQuestName _quest) { return StoryManager.GetQuestData(_quest); }                             // 퀘스트 정보
 
     // UI
     private UIManager m_uiManager;

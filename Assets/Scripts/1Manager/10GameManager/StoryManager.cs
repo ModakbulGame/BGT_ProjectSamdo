@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 [Serializable]
@@ -29,21 +30,32 @@ public struct SNPC
 public class StoryManager : MonoBehaviour
 {
     [SerializeField]
-    private QuestScriptable[] m_questData;
-    [SerializeField]
     private NPCScriptable[] m_npcData;
+    [SerializeField]
+    private DialogueScriptable[] m_dialogueData;
+    [SerializeField]
+    private QuestScriptable[] m_questData;
 
-    public QuestScriptable GetQuestData(EQuestEnum _quest) { return m_questData[(int)_quest]; }
+    private Dictionary<SNPC, List<DialogueScriptable>> m_dialogueDictionary;
 
-    public void SetQuestData(List<QuestScriptable> _quest)
-    {
-        m_questData = new QuestScriptable[_quest.Count];
-        for(int i = 0; i<_quest.Count; i++) { m_questData[i] = _quest[i]; }
-    }
+    public DialogueScriptable GetDialogueData(SNPC _npc, int _idx) { return m_dialogueDictionary[_npc][_idx]; }
+    public DialogueScriptable GetDialogueData(EDialogueName _dial) { return m_dialogueData[(int)_dial]; }
+    public QuestScriptable GetQuestData(EQuestName _quest) { return m_questData[(int)_quest]; }
+
     public void SetNPCData(List<NPCScriptable> _npc)
     {
         m_npcData = new NPCScriptable[_npc.Count];
         for (int i = 0; i<_npc.Count; i++) { m_npcData[i] = _npc[i]; }
+    }
+    public void SetDialogueData(List<DialogueScriptable> _dial)
+    {
+        m_dialogueData = new DialogueScriptable[_dial.Count];
+        for (int i = 0; i<_dial.Count; i++) { m_dialogueData[i] = _dial[i]; }
+    }
+    public void SetQuestData(List<QuestScriptable> _quest)
+    {
+        m_questData = new QuestScriptable[_quest.Count];
+        for(int i = 0; i<_quest.Count; i++) { m_questData[i] = _quest[i]; }
     }
 
     public NPCScriptable GetNPCData(SNPC _npc)
@@ -61,12 +73,20 @@ public class StoryManager : MonoBehaviour
         return null;
     }
 
+
+    public static EQuestName ID2Quest(string _id)
+    {
+        if(_id == "") { return EQuestName.LAST; }
+        int.TryParse(_id[1..], out int idx);
+        return (EQuestName)(idx-1);
+    }
     public static SNPC String2NPC(string _data)     // 종류별로 9개씩만 가능
     {
         if(_data == "") { return SNPC.Null; }
         int stringLen = _data.Length - 2;
         string type = _data[..(stringLen)];
-        int.TryParse(_data[(stringLen)..], out int idx);
+        int.TryParse(_data[(stringLen)..], out int num);
+        int idx = num-1;
         return type switch
         {
             "OASIS" => new(ENPCType.OASIS, idx),
@@ -76,5 +96,22 @@ public class StoryManager : MonoBehaviour
 
             _ => SNPC.Null
         };
+    }
+
+
+    private void CreateDialogueDictionary()
+    {
+        m_dialogueDictionary = new();
+        foreach (DialogueScriptable dial in m_dialogueData)
+        {
+            SNPC npc = dial.NPC;
+            if (!m_dialogueDictionary.ContainsKey(dial.NPC)) { m_dialogueDictionary[npc] = new(); }
+            m_dialogueDictionary[npc].Add(dial);
+        }
+    }
+
+    public void SetManager()
+    {
+        CreateDialogueDictionary();
     }
 }

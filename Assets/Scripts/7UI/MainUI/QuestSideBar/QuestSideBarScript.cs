@@ -11,7 +11,7 @@ public class QuestSideBarScript : MonoBehaviour
 
 
     private readonly float ElmWidth = 448;
-    private readonly float ElmHeight = 96;
+    private readonly float ElmHeight = 64;
     private readonly float ElmSpace = 8;
 
     public void UpdateUI()
@@ -20,7 +20,7 @@ public class QuestSideBarScript : MonoBehaviour
         List<QuestInfo> infos = PlayManager.QuestInfoList;
         foreach(QuestInfo info in infos) 
         {
-            if(info.Status == EQuestStatus.ACCEPTED || info.Status == EQuestStatus.COMPLETE)
+            if(info.State == EQuestState.ACCEPTED || info.State == EQuestState.COMPLETE)
             {
                 curList.Add(info);
             }

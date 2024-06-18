@@ -1,3 +1,4 @@
+using MalbersAnimations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,11 +6,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuestAcceptUIScript : MonoBehaviour
+public class QuestAcceptUIScript : BaseUI
 {
-    private QuestObject m_curQuestObject;
-    private Button[] m_btns;
-
     // 퀘스트 정보
     [SerializeField]
     private TextMeshProUGUI m_questTitle;
@@ -18,70 +16,88 @@ public class QuestAcceptUIScript : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI m_questRewards;
 
-    private TextMeshProUGUI m_firstBtnTxt;       // 수락, 완료 버튼
-    private TextMeshProUGUI m_secondBtnTxt;      // 거절, 확인 버튼
-    private List<QuestScriptable> m_npcQuests;   // StartObject에 맞는 퀘스트들의 List
-    private int idx = 0;
+    private Button m_btn1;
+    private Button m_btn2;
 
-    public void ShowNPCQuestUI(QuestNPCScript _npc)
+    private TextMeshProUGUI m_btn1Txt;       // 수락, 완료 버튼
+    private TextMeshProUGUI m_btn2Txt;      // 거절, 확인 버튼
+
+    private QuestScriptable CurQuest { get; set; }
+    private bool IsStart { get; set; }
+    private FPointer ConfirmFunction { get; set; }
+
+    public void ShowNPCQuestUI(EQuestName _quest, bool _isStart, FPointer _confirm)
     {
-        SetNPCQuestList(_npc);
-        gameObject.SetActive(true);
+        CurQuest = GameManager.GetQeustData(_quest);
+        IsStart = _isStart;
+        ConfirmFunction = _confirm;
+        base.OpenUI();
     }
 
-    private void SetNPCQuestList(QuestNPCScript _npc)
+    public override void UpdateUI()
     {
-        m_npcQuests = _npc.NPCQuestList;
+        m_questTitle.text = CurQuest.Name;
+        m_questDescription.text = CurQuest.Description;
+        m_questRewards.text = $"보상 {CurQuest.Reward.Type} {CurQuest.Reward.Amount}개";
+        SetBtnsTxts(IsStart);
     }
 
-    public void ChangeBtnsText()
+
+    public void SetBtnsTxts(bool _isStart)
     {
-        m_firstBtnTxt.text = "완료";
-        m_secondBtnTxt.text = "확인";
+        m_btn1Txt.text = _isStart ? "수락" : "완료";
+        m_btn2Txt.text = _isStart ? "거절" : "확인";
     }
 
+    private void Btn1Function()
+    {
+        if (IsStart)
+        {
+            AcceptQuest();
+        }
+        else
+        {
+            CompleteQuest();
+        }
+        CloseUI();
+    }
     private void AcceptQuest()
     {
-        if (m_firstBtnTxt.text == "수락")
-        {
-            Debug.Log("퀘스트 수락!"); 
-
-            PlayManager.AcceptQuest(m_npcQuests[idx].Id);
-            PlayManager.ExpressCurQuestInfo();  // 퀘스트 창에 표시
-        }
-        else PlayManager.CompleteQuest(m_npcQuests[idx].Id); // 완료 버튼; 퀘스트 클리어
-        CloseNPCQuestUI();
+        PlayManager.SetQuestStatus(CurQuest.Enum, EQuestState.ACCEPTED);
+        PlayManager.UpdateQuestSidebar();
+    }
+    private void CompleteQuest()
+    {
+        PlayManager.SetQuestStatus(CurQuest.Enum, EQuestState.COMPLETE);
+        PlayManager.UpdateQuestSidebar();
     }
 
-    private void DenyQuest()
+    private void Btn2Function()
     {
-        CloseNPCQuestUI();
+        ConfirmFunction();
+        CloseUI();
     }
 
-    private void CloseNPCQuestUI()
+    public override void CloseUI()
     {
-        gameObject.SetActive(false);
-        PlayManager.CloseNPCUI();
+        PlayManager.CloseDialogueUI();
+        base.CloseUI();
     }
 
-    public void SetComps()
+
+    private void SetBtns()
     {
-        m_btns = GetComponentsInChildren<Button>();
-        m_firstBtnTxt = m_btns[0].GetComponentInChildren<TextMeshProUGUI>();
-        m_secondBtnTxt = m_btns[1].GetComponentInChildren<TextMeshProUGUI>();
-
-        m_questTitle.text = m_npcQuests[idx].Name;
-        m_questDescription.text = m_npcQuests[idx].Description;
-        m_questRewards.text = $"보상 {m_npcQuests[idx].Reward.Type} {m_npcQuests[idx].Reward.Amount}개";
-
-        for (int i = 0; i < m_npcQuests.Count; i++) Debug.Log(m_npcQuests[i]);
-
-        m_btns[0].onClick.AddListener(AcceptQuest);   // 수락, 완료 버튼
-        m_btns[1].onClick.AddListener(DenyQuest);     // 거절, 확인 버튼
+        m_btn1.onClick.AddListener(Btn1Function);       // 수락, 완료 버튼
+        m_btn2.onClick.AddListener(Btn2Function);       // 거절, 확인 버튼
     }
 
-    private void Awake()
+    public override void SetComps()
     {
-        SetComps();
+        base.SetComps();
+        Button[] btns = GetComponentsInChildren<Button>();
+        m_btn1 = btns[0]; m_btn2 = btns[1];
+        m_btn1Txt = m_btn1.GetComponentInChildren<TextMeshProUGUI>();
+        m_btn2Txt = m_btn2.GetComponentInChildren<TextMeshProUGUI>();
+        SetBtns();
     }
 }

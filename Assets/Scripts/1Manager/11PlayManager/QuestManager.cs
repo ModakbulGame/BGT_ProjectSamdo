@@ -11,30 +11,47 @@ public class QuestManager : MonoBehaviour, IHaveData
 
     private void InitQuestInfos()
     {
-        m_questInfoList  = new QuestInfo[(int)EQuestEnum.LAST];
-        for(int i=0;i<(int)EQuestEnum.LAST;i++)
+        m_questInfoList  = new QuestInfo[(int)EQuestName.LAST];
+        for(int i=0;i<(int)EQuestName.LAST;i++)
         {
-            m_questInfoList[i] = new((EQuestEnum)i);
+            m_questInfoList[i] = new((EQuestName)i);
         }
     }
 
-    public void SetQuestStatus(EQuestEnum _quest, EQuestStatus _status) 
+    public void SetQuestStatus(EQuestName _quest, EQuestState _status) 
     {
         m_questInfoList[(int)_quest].SetQuestStatus(_status);
     }
 
-    public void SetQuestProgress(EQuestEnum _quest, float _prog)
+    public void SetQuestProgress(EQuestName _quest, float _prog)
     {
         QuestInfo info = m_questInfoList[(int)_quest];
         info.SetQuestProgress(_prog);
-        if(_prog == info.QuestContent.Amount) { SetQuestStatus(_quest, EQuestStatus.COMPLETE); }
+        if(_prog == info.QuestContent.Amount) { SetQuestStatus(_quest, EQuestState.COMPLETE); }
     }
 
 
-    [SerializeField]
-    private List<QuestScriptable> m_questList;
-    public List<QuestScriptable> QuestList { get { return m_questList; } }
-    public List<QuestScriptable> CurQuestList { get; private set; }
+    public void CheckMonsterKill(EMonsterName _monster)
+    {
+        foreach (QuestInfo quest in m_questInfoList)
+        {
+            EQuestType type = quest.QuestContent.Type;
+            if(type != EQuestType.KILL) { return; }
+        }
+    }
+    public void CheckMonsterPurify(EMonsterName _monster)
+    {
+        foreach (QuestInfo quest in m_questInfoList)
+        {
+            EQuestType type = quest.QuestContent.Type;
+            if (type != EQuestType.PURIFY) { return; }
+        }
+
+    }
+
+
+
+
 
     private QuestProgressScript m_questProgress;
     private QuestBoolStatus m_questBoolStatus;
@@ -61,8 +78,8 @@ public class QuestManager : MonoBehaviour, IHaveData
 
         SaveData data = PlayManager.CurSaveData;
 
-        m_questInfoList = new QuestInfo[(int)EQuestEnum.LAST];
-        for (int i = 0; i<(int)EQuestEnum.LAST; i++)
+        m_questInfoList = new QuestInfo[(int)EQuestName.LAST];
+        for (int i = 0; i<(int)EQuestName.LAST; i++)
         {
             m_questInfoList[i] = new(data.QuestInfos[i]);
         }
@@ -72,24 +89,23 @@ public class QuestManager : MonoBehaviour, IHaveData
     {
         SaveData data = PlayManager.CurSaveData;
 
-        for (int i = 0; i<(int)EQuestEnum.LAST; i++)
+        for (int i = 0; i<(int)EQuestName.LAST; i++)
         {
             data.QuestInfos[i] = new(m_questInfoList[i]);
         }
     }
 
 
-    public static EQuestEnum String2Enum(string _id)
+    public static EQuestName String2Enum(string _id)
     {
-        if(_id == "") { return EQuestEnum.LAST; }
+        if(_id == "") { return EQuestName.LAST; }
         int.TryParse(_id[1..], out int idx);
-        return (EQuestEnum)idx;
+        return (EQuestName)idx;
     }
 
 
     public void SetManager()
     {
-        CurQuestList = new List<QuestScriptable>();
         m_questProgress = gameObject.AddComponent<QuestProgressScript>();
         m_questBoolStatus = gameObject.AddComponent<QuestBoolStatus>();
         LoadData();

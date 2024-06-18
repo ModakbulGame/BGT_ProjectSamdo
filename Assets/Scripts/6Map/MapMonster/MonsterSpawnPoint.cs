@@ -49,10 +49,6 @@ public class MonsterSpawnPoint : MonoBehaviour, IHaveData
         m_spawnedMonsters.Add(_monster);
     }
 
-    public void RemoveMonster(MonsterScript _monster)
-    {
-        m_spawnedMonsters.Remove(_monster);
-    }
 
     public readonly List<MonsterSaveData> MonsterDataCache = new();
     public void LoadData()

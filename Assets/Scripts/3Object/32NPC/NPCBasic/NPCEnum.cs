@@ -6,7 +6,8 @@ public enum ENPCAttribute
 {
     SNPC,
     NAME,
-    DIALOGUES,
+    DEFAULT_LINE,
+
     LAST
 }
 

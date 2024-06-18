@@ -39,7 +39,7 @@ public class PlayUIManager : MonoBehaviour
 
     [SerializeField]
     private QuestUIScript m_questUI;                        // 퀘스트 UI
-    public void ToggleQuestUI() { m_questUI.ToggleQuestUI(); }
+    public void ToggleQuestUI(bool _on) { if (_on) { m_questUI.OpenUI(); } else { m_questUI.CloseUI(); } }
 
 
     [SerializeField]
@@ -143,28 +143,21 @@ public class PlayUIManager : MonoBehaviour
     }
 
 
-
-
+    // NPC
     [SerializeField]
     private NPCDialogueScript m_dialogueUI;                 // NPC UI
-    public bool IsDialogueUIOpend { get { return m_dialogueUI.IsDialogueOpened; } }
-    public void OpenDialogueUI(QuestNPCScript _npc) { m_dialogueUI.OpenUI(_npc); }
+    public bool IsDialogueUIOpend { get { return m_dialogueUI.gameObject.activeSelf; } }
+    public void OpenDialogueUI(NPCScript _npc, int _idx) { m_dialogueUI.OpenUI(_npc, _idx); }
     public void CloseDialogueUI() { m_dialogueUI.CloseUI(); }
     public void ShowNextDialogue() { m_dialogueUI.ShowAllDialogue(); }
 
     [SerializeField]
-    private MiniQuestUIScript m_miniQuestUI;                // 축약된 퀘스트 UI(오른쪽에 있는 거)
-    public UnityEngine.UI.Image[] ClearImg { get { return m_miniQuestUI.ClearImg; } }
-    public void ExpressCurQuestInfo() { m_miniQuestUI.ExpressCurQuestInfo(); }
-
-    [SerializeField]
-    private QuestAcceptUIScript m_questAcceptScript;        // NPC 대화 끝에 나오는 퀘스트 창
-    public void ShowNPCQuestUI(QuestNPCScript _npc) { m_questAcceptScript.ShowNPCQuestUI(_npc); }
-    public void ChangeBtnsTxt() { m_questAcceptScript.ChangeBtnsText(); }
+    private QuestAcceptUIScript m_questAcceptUI;        // NPC 대화 끝에 나오는 퀘스트 창
+    public void ShowNPCQuestUI(EQuestName _quest, bool _isStart, FPointer _confirm) { m_questAcceptUI.ShowNPCQuestUI(_quest, _isStart, _confirm); }
 
 
 
-
+    // 맵 관련
     private Vector3 MapLB { get { return PlayManager.MapLB; } }
     private Vector3 MapRT { get { return PlayManager.MapRT; } }
 

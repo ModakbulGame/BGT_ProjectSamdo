@@ -56,7 +56,6 @@ public class MonsterSpawner : MonoBehaviour
 
     public void DespawnMonster(MonsterScript _monster)
     {
-        m_point.RemoveMonster(_monster);
         SpawnedNum--;
         StartCoroutine(RespawnCoroutine(_monster.MonsterEnum));
     }

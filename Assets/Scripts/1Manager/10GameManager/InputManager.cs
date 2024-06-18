@@ -81,7 +81,7 @@ public class InputManager : MonoBehaviour
             else if (PlayerInputs.OpenQuestUI.triggered)
             {
                 // 퀘스트 창 열기
-                PlayManager.ToggleQuestUI();
+                PlayManager.ToggleQuestUI(true);
             }
         }
         else if (CurControlMode == EControlMode.UI_CONTROL)         // UI 조작 모드일 때

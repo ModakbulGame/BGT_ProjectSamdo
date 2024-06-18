@@ -78,11 +78,6 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         m_hpBar.DestroyUI();                // HP바
         m_rigid.useGravity = false;         // 중력
         GetComponentInChildren<CapsuleCollider>().isTrigger = true;         // 트리거
-        
-        if (PlayManager.CheckRequiredQuestObject(ObjectName))
-        {
-            PlayManager.DoObjectQuest(ObjectName, 1);
-        }
     }
 
 
@@ -121,6 +116,8 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
             }
         }
 
+        CheckMonsterDeath();
+
         switch (DeathType)
         {
             case EMonsterDeathType.PURIFY:      // 성불
@@ -136,6 +133,10 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
                 break;
         }
+    }
+    private void CheckMonsterDeath()
+    {
+        PlayManager.Monsterkilled(this, DeathType);
     }
     public void DropItems()             // 아이템 드랍
     {

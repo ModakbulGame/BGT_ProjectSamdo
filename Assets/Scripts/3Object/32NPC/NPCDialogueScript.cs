@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using MalbersAnimations;
 
-public class NPCDialogueScript : MonoBehaviour
+public class NPCDialogueScript : BaseUI
 {
+    private InputSystem.UIControlActions UIInput { get { return GameManager.UIControlInputs; } }    // Input System Player 입력
+
     [SerializeField]
     private TextMeshProUGUI m_nameText;
     [SerializeField]
@@ -18,110 +18,107 @@ public class NPCDialogueScript : MonoBehaviour
 
     private Button m_btn;
 
-    private bool IsOpened { get; set; }
-    public bool IsDialogueOpened { get; private set; }
-    private bool ButtonClicked { get; set; }
-
-    private QuestNPCScript CurNPC { get; set; }
-    private string CurNPCName { get; set; }
-    private string[] CurDialogue { get; set; }
+    private NPCScript CurNPC { get; set; }
+    private string CurNPCName { get { return CurNPC.NPCName; } }
+    private DialogueScriptable CurDialogue { get; set; }
+    private DialLine[] CurLines { get { if (CurDialogue == null) { return CurNPC.DefaultLine; } return CurDialogue.Lines; } }
     private int DialogueCount { get; set; } = 0;
 
-    private bool m_isQuestStarted;
-    private bool m_isQuestEnded;
-    private int idx = 0;
+    private bool IsQuestConfirmed { get; set; }
+    private bool IsButtonClicked { get; set; }
 
-    public void SetNPC(QuestNPCScript _npc)
+
+    public override void OpenUI()
+    {
+        base.OpenUI();
+        IsButtonClicked = false;
+        DialogueCount = 0;
+        UIInput.UIInteract.performed += NextDialogue;
+    }
+
+    public void OpenUI(NPCScript _npc, int _idx)
+    {
+        OpenUI();
+        SetNPC(_npc);
+        CurDialogue = _idx >= 0 ? _npc.DialogueList[_idx] : null;
+        StartCoroutine(ProcLine(CurLines[DialogueCount]));
+    }
+
+    private void SetNPC(NPCScript _npc)
     {
         CurNPC = _npc;
 
-        CurNPCName = _npc.NPCName;
-        CurDialogue = _npc.NPCDialogues;
-        m_isQuestStarted = _npc.IsQuestStarted;
         m_nameText.text = CurNPCName;
-
-        if (PlayManager.CheckQuestCompleted("Q002"))
-        {
-            PlayManager.SetQuestEndObjectStatus("Q002");
-            m_isQuestStarted = false;
-            m_isQuestEnded = true;
-        }
-        Debug.Log($"start is {m_isQuestStarted}, end is {m_isQuestEnded}");
     }
 
-    public void OpenUI()
-    {
-        gameObject.SetActive(true);
-        IsDialogueOpened = true;
-        if (!IsOpened) { SetComps(); }
-        ButtonClicked = false;
-        DialogueCount = 0;
-    }
 
-    public void OpenUI(QuestNPCScript _npc)
-    {
-        Debug.Log(m_isQuestEnded);
-        SetNPC(_npc);
-        OpenUI();
-        StartCoroutine(Typing(CurDialogue[DialogueCount]));
-    }
-
-    public void CloseUI()
-    {
-        CurNPC.StopInteract();
-        gameObject.SetActive(false);
-        IsDialogueOpened = false;
-    }
-
-    IEnumerator Typing(string _contents)
+    IEnumerator ProcLine(DialLine _line)
     {
         m_typingText.text = "";
 
-        for (int i = 0; i < _contents.Length; i++)
+        string txt = _line.Text;
+
+        for (int i = 0; i < txt.Length; i++)
         {
-            m_typingText.text += _contents[i];
+            m_typingText.text += txt[i];
             yield return new WaitForSeconds(m_textSpeed);
 
-            if (ButtonClicked)                          // 좌클릭하면 전체 내용 한 번에 출력
+            if (IsButtonClicked)                          // 좌클릭하면 전체 내용 한 번에 출력
             {
-                m_typingText.text = _contents;
-                ButtonClicked = false;
+                m_typingText.text = txt;
+                IsButtonClicked = false;
                 break;
             }
         }
-        while (!ButtonClicked) { yield return null; }
+        IsQuestConfirmed = !_line.HasQuest;
+        if (_line.HasQuest)
+        {
+            DialQuest quest = _line.TriggerQuest;
+            PlayManager.ShowNPCQuestUI(quest.Quest, true, ConfirmQuest);
+        }
+        bool isQuestConfirmed = !_line.HasQuest;
+        while (!isQuestConfirmed)
+        {
+            yield return null;
+        }
+        while (!IsButtonClicked) { yield return null; }
         NextDialogue();
+    }
+    private void ConfirmQuest()
+    {
+        IsQuestConfirmed = true;
     }
 
     public void ShowAllDialogue()
     {
-        ButtonClicked = true;
+        IsButtonClicked = true;
     }
 
-    public void NextDialogue()                     // 다음 대사 출력
+    public void NextDialogue(InputAction.CallbackContext _action)                     // 다음 대사 출력
+    {
+        NextDialogue();
+    }
+    private void NextDialogue()
     {
         DialogueCount++;
-        if (DialogueCount < CurDialogue.Length)
-        {
-            ButtonClicked = false;
-            StartCoroutine(Typing(CurDialogue[DialogueCount]));
-            return;
-        }
-        if (m_isQuestStarted && !m_isQuestEnded)
-        {
-            PlayManager.ShowNPCQuestUI(CurNPC);
-        }
-        else if (m_isQuestEnded && !m_isQuestStarted)
-        {
-            PlayManager.ChangeBtnsTxt();
-            PlayManager.ShowNPCQuestUI(CurNPC);
-        }
-        else CloseUI();
+        if (DialogueCount == CurLines.Length) { CloseUI(); return; }
+
+        IsButtonClicked = false;
+        StartCoroutine(ProcLine(CurLines[DialogueCount]));
     }
 
-    private void SetComps()
+    public override void CloseUI()
     {
-        m_btn = GetComponentInChildren<Button>(); // 닫기 버튼\
+        CurNPC.StopInteract();
+        UIInput.UIInteract.performed -= NextDialogue;
+        base.CloseUI();
+    }
+
+
+    public override void SetComps()
+    {
+        base.SetComps();
+        m_btn = GetComponentInChildren<Button>();
         m_btn.onClick.AddListener(ShowAllDialogue);
     }
 }

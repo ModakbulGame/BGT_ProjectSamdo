@@ -146,20 +146,8 @@ public class PlayManager : MonoBehaviour
     private QuestManager m_questManager;
     private static QuestManager QuestManager { get { return Inst.m_questManager; } }
     public static List<QuestInfo> QuestInfoList { get { return QuestManager.QuestInfoList; } }
-    public static void SetQuestStatus(EQuestEnum _quest, EQuestStatus _status) { QuestManager.SetQuestStatus(_quest, _status); }
-    public static void SetQuestProgress(EQuestEnum _quest, float _prog) { QuestManager.SetQuestProgress(_quest, _prog); }
-
-    public static List<QuestScriptable> QuestList { get { return QuestManager.QuestList; } }
-    public static List<QuestScriptable> CurQuestList { get { return QuestManager.CurQuestList; } }
-    public static void AcceptQuest(string _id) { QuestManager.AcceptQuest(_id); }
-    public static void GiveUpQuest(string _id) { QuestManager.GiveUpQuest(_id); }
-    public static void ClearQuest(string _id) { QuestManager.ClearQuest(_id); }
-    public static void CompleteQuest(string _id) { QuestManager.CompleteQuest(_id); }
-    public static void DoObjectQuest(string _obj, int _amount) { QuestManager.DoObjectQuest(_obj, _amount); }
-    public static void SetQuestStartObjectStatus(string _start) { QuestManager.SetQuestStartObjectStatus(_start); }
-    public static void SetQuestEndObjectStatus(string _id) { QuestManager.SetQuestEndObjectStatus(_id); }
-    public static bool CheckQuestCompleted(string _id) { return QuestManager.CheckQuestCompleted(_id); }
-    public static bool CheckRequiredQuestObject(string _name) { return QuestManager.CheckRequiredQuestObject(_name); }
+    public static void SetQuestStatus(EQuestName _quest, EQuestState _status) { QuestManager.SetQuestStatus(_quest, _status); }
+    public static void SetQuestProgress(EQuestName _quest, float _prog) { QuestManager.SetQuestProgress(_quest, _prog); }
 
 
     // 환경
@@ -173,6 +161,7 @@ public class PlayManager : MonoBehaviour
     public static AltarNPC[] AltarList { get { return EnvironmentManager.AltarList; } }
     public static SlateNPC[] SlateList { get { return EnvironmentManager.SlateList; } }
     public static MonsterSpawnPoint[] SpawnPointList { get { return EnvironmentManager.SpawnPointList; } }
+    public static void MonsterKilled(EMonsterName _monster, EMonsterDeathType _type) { EnvironmentManager.MonsterKilled(_monster, _type); }
 
 
     // 플레이어 능력치, 권능
@@ -202,7 +191,7 @@ public class PlayManager : MonoBehaviour
     public static void UpdateInfoUI() { PlayUIManager.UpdateInfoUI(); }                                                                     // 플레이어 인포 UI 업데이트
     public static void UpdateMaterials() { PlayUIManager.UpdateMaterials(); }                                                               // 재화 업데이트
     public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                       // 맵 UI 여닫기
-    public static void ToggleQuestUI() { PlayUIManager.ToggleQuestUI(); }                                                                   // 퀘스트 창 여닫기
+    public static void ToggleQuestUI(bool _on) { PlayUIManager.ToggleQuestUI(_on); }                                                        // 퀘스트 창 여닫기
     public static void OpenOasisUI(OasisNPC _npc) { PlayUIManager.OpenOasisUI(_npc); }                                                      // 오아시스 UI 열기
     public static void CloseOasisUI() { PlayUIManager.CloseOasisUI(); }                                                                     // 오아시스 UI 닫기
 
@@ -235,15 +224,14 @@ public class PlayManager : MonoBehaviour
     public static void ShowBlindMark() { PlayUIManager.ShowBlindMark(); }                                                                   // 실명 on
     public static void HideBlindMark() { PlayUIManager.HideBlindMark(); }                                                                   // 실명 off
 
-
-    public static void ShowNPCQuestUI(QuestNPCScript _npc) { PlayUIManager.ShowNPCQuestUI(_npc); }                                          // 퀘스트 수락/거절 창 표시
-    public static void ExpressCurQuestInfo() { PlayUIManager.ExpressCurQuestInfo(); }                                                       // 현재 퀘스트 정보 표시
-    public static void ChangeBtnsTxt() { PlayUIManager.ChangeBtnsTxt(); }
-    public static Image[] ClearImg { get { return PlayUIManager.ClearImg; } }
-    public static void OpenNPCUI(QuestNPCScript _npc) { PlayUIManager.OpenDialogueUI(_npc); }                                               // NPC 대화창 열기
-    public static void CloseNPCUI() { PlayUIManager.CloseDialogueUI(); }                                                                    // NPC 대화창 닫기
+    // NPC UI
+    public static void ShowNPCQuestUI(EQuestName _quest, bool _isStart, FPointer _confirm) { PlayUIManager.ShowNPCQuestUI(_quest, _isStart, _confirm); }    // 퀘스트 수락/거절 창 표시
+    public static void OpenDialogueUI(NPCScript _npc, int _idx) { PlayUIManager.OpenDialogueUI(_npc, _idx); }                               // NPC 대화창 열기
+    public static void CloseDialogueUI() { PlayUIManager.CloseDialogueUI(); }                                                               // NPC 대화창 닫기
     public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                  // NPC 대화창 열렸는지 확인
     public static void ShowNextDialogue() { PlayUIManager.ShowNextDialogue(); }                                                             // 다음 대화 출력
+
+    // 기타
     public static Vector2 NormalizeLocation(Transform _obj) { return PlayUIManager.NormalizeLocation(_obj); }                               // 위치 정규화(3D -> 2D)
 
 
