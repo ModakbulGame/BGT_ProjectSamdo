@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,12 +18,20 @@ public class QuestAcceptUIScript : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI m_questRewards;
 
-    TextMeshProUGUI m_firstBtnTxt;
-    TextMeshProUGUI m_secondBtnTxt;
+    private TextMeshProUGUI m_firstBtnTxt;       // 수락, 완료 버튼
+    private TextMeshProUGUI m_secondBtnTxt;      // 거절, 확인 버튼
+    private List<QuestScriptable> m_npcQuests;   // StartObject에 맞는 퀘스트들의 List
+    private int idx = 0;
 
-    public void ShowNPCQuestUI()
+    public void ShowNPCQuestUI(QuestNPCScript _npc)
     {
+        SetNPCQuestList(_npc);
         gameObject.SetActive(true);
+    }
+
+    private void SetNPCQuestList(QuestNPCScript _npc)
+    {
+        m_npcQuests = _npc.NPCQuestList;
     }
 
     public void ChangeBtnsText()
@@ -37,10 +46,10 @@ public class QuestAcceptUIScript : MonoBehaviour
         {
             Debug.Log("퀘스트 수락!"); 
 
-            PlayManager.AcceptQuest("Q002");
+            PlayManager.AcceptQuest(m_npcQuests[idx].Id);
             PlayManager.ExpressCurQuestInfo();  // 퀘스트 창에 표시
         }
-        else PlayManager.CompleteQuest("Q002"); // 완료 버튼; 퀘스트 클리어
+        else PlayManager.CompleteQuest(m_npcQuests[idx].Id); // 완료 버튼; 퀘스트 클리어
         CloseNPCQuestUI();
     }
 
@@ -61,9 +70,11 @@ public class QuestAcceptUIScript : MonoBehaviour
         m_firstBtnTxt = m_btns[0].GetComponentInChildren<TextMeshProUGUI>();
         m_secondBtnTxt = m_btns[1].GetComponentInChildren<TextMeshProUGUI>();
 
-        m_questTitle.text = PlayManager.QuestList[1].Title;
-        m_questDescription.text = PlayManager.QuestList[1].Description;
-        m_questRewards.text = $"보상 {PlayManager.QuestList[1].Reward} {PlayManager.QuestList[0].RewardNum}개";
+        m_questTitle.text = m_npcQuests[idx].Title;
+        m_questDescription.text = m_npcQuests[idx].Description;
+        m_questRewards.text = $"보상 {m_npcQuests[idx].Reward} {m_npcQuests[idx].RewardNum}개";
+
+        for (int i = 0; i < m_npcQuests.Count; i++) Debug.Log(m_npcQuests[i]);
 
         m_btns[0].onClick.AddListener(AcceptQuest);   // 수락, 완료 버튼
         m_btns[1].onClick.AddListener(DenyQuest);     // 거절, 확인 버튼

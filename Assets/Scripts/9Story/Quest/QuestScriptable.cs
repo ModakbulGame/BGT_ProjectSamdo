@@ -8,7 +8,7 @@ public class QuestScriptable : ScriptableObject
     public string Title;              // 퀘스트 이름
     public string Id;                 // 퀘스트 ID
     public string NextQuest;          // 다음 퀘스트 ID
-    public EQuestType Type;           // 퀘스트 종류
+    public EQuestType[] Types;        // 퀘스트 종류
     public string Description;        // 퀘스트 설명
     public float TimeLimit;           // 제한 시간
    
@@ -23,25 +23,12 @@ public class QuestScriptable : ScriptableObject
     public string StartObject;        // 퀘스트를 주는 오브젝트
     public string EndObject;          // 퀘스트 수행 중 거치거나 완료하는 오브젝트
 
-    private EQuestType String2QuestType(string _data)
-    {
-        return _data switch
-        {
-            "TALKING" => EQuestType.TALKING,
-            "COLLECTION" => EQuestType.COLLECTION,
-            "HUNTING" => EQuestType.HUNTING,
-            "TIMELIMIT" => EQuestType.TIMELIMIT,
-
-            _ => EQuestType.LAST
-        };
-    }
-
     private ERewardName String2Reward(string _data)
     {
         return _data switch
         {
-            "SOUL" => ERewardName.SOUL,
-            "STAT" => ERewardName.STAT,
+            "영혼" => ERewardName.SOUL,
+            "스탯" => ERewardName.STAT,
             "ITEM" => ERewardName.ITEM,
 
             _ => ERewardName.LAST
@@ -51,11 +38,11 @@ public class QuestScriptable : ScriptableObject
     public void SetQuestScriptable(uint _idx, string[] _data)
     {
         Idx = _idx;
-        Title = _data[(int)EQuestAttribute.TITLE];
         Id = _data[(int)EQuestAttribute.ID];
-        NextQuest = _data[(int)EQuestAttribute.NEXTQUEST];
-        Type = String2QuestType(_data[(int)EQuestAttribute.TYPE]);
+        Title = _data[(int)EQuestAttribute.TITLE];
+        Types = DataManager.String2QuestTypes(_data[(int)EQuestAttribute.TYPE]);
         Description = _data[(int)EQuestAttribute.DESCRIPTION];
+        NextQuest = _data[(int)EQuestAttribute.NEXTQUEST];
         QuestObject = _data[(int)EQuestAttribute.QUESTOBJECT];
         Reward = String2Reward(_data[(int)EQuestAttribute.REWARD]);
         StartObject = _data[(int)EQuestAttribute.STARTOBJECT];

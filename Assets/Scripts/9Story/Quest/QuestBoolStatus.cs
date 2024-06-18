@@ -23,7 +23,7 @@ public class QuestBoolStatus : MonoBehaviour
     {
         for (int i = 0; i < PlayManager.CurQuestList.Count; i++)
         {
-            if (PlayManager.CurQuestList[i].Id == _id && PlayManager.CurQuestList[i].Type == EQuestType.TALKING && PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED  // ´ëÈ­ Äù½ºÆ®
+            if (PlayManager.CurQuestList[i].Id == _id && PlayManager.CurQuestList[i].Types[0] == EQuestType.TALKING && PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED  // ´ëÈ­ Äù½ºÆ®
                 || PlayManager.CurQuestList[i].Id == _id && PlayManager.CurQuestList[i].Status == EQuestStatus.COMPLETE)  // ±× ¿Ü Äù½ºÆ®
                     return true; 
         }

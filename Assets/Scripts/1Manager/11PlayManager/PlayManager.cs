@@ -201,7 +201,7 @@ public class PlayManager : MonoBehaviour
     public static void HideInteractInfo() { PlayUIManager.HideInteractInfo(); }
     public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                       // 맵 UI 여닫기
     public static void ToggleQuestUI() { PlayUIManager.ToggleQuestUI(); }                                                                   // 퀘스트 창 여닫기
-    public static void ShowNPCQuestUI() { PlayUIManager.ShowNPCQuestUI(); }                                                                 // 퀘스트 수락/거절 창 표시
+    public static void ShowNPCQuestUI(QuestNPCScript _npc) { PlayUIManager.ShowNPCQuestUI(_npc); }                                                                 // 퀘스트 수락/거절 창 표시
     public static void ExpressCurQuestInfo() { PlayUIManager.ExpressCurQuestInfo(); }                                                       // 현재 퀘스트 정보 표시
     public static void ChangeBtnsTxt() { PlayUIManager.ChangeBtnsTxt(); }
     public static Image[] ClearImg { get { return PlayUIManager.ClearImg; } }

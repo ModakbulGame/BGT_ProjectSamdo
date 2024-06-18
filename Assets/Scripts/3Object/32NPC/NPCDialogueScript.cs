@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using MalbersAnimations;
 
 public class NPCDialogueScript : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class NPCDialogueScript : MonoBehaviour
 
     private bool m_isQuestStarted;
     private bool m_isQuestEnded;
+    private int idx = 0;
 
     public void SetNPC(QuestNPCScript _npc)
     {
@@ -36,9 +38,15 @@ public class NPCDialogueScript : MonoBehaviour
         CurNPCName = _npc.NPCName;
         CurDialogue = _npc.NPCDialogues;
         m_isQuestStarted = _npc.IsQuestStarted;
-        m_isQuestEnded = _npc.IsQuestEnded;
-
         m_nameText.text = CurNPCName;
+
+        if (PlayManager.CheckQuestCompleted("Q002"))
+        {
+            PlayManager.SetQuestEndObjectStatus("Q002");
+            m_isQuestStarted = false;
+            m_isQuestEnded = true;
+        }
+        Debug.Log($"start is {m_isQuestStarted}, end is {m_isQuestEnded}");
     }
 
     public void OpenUI()
@@ -54,8 +62,6 @@ public class NPCDialogueScript : MonoBehaviour
     {
         Debug.Log(m_isQuestEnded);
         SetNPC(_npc);
-        if (PlayManager.CheckQuestCompleted("Q002"))
-            m_isQuestEnded = true;
         OpenUI();
         StartCoroutine(Typing(CurDialogue[DialogueCount]));
     }
@@ -103,13 +109,12 @@ public class NPCDialogueScript : MonoBehaviour
         }
         if (m_isQuestStarted && !m_isQuestEnded)
         {
-            PlayManager.ShowNPCQuestUI();
-            m_isQuestStarted = false;
+            PlayManager.ShowNPCQuestUI(CurNPC);
         }
         else if (m_isQuestEnded && !m_isQuestStarted)
         {
             PlayManager.ChangeBtnsTxt();
-            PlayManager.ShowNPCQuestUI();
+            PlayManager.ShowNPCQuestUI(CurNPC);
             m_isQuestEnded = false;
         }
         else CloseUI();

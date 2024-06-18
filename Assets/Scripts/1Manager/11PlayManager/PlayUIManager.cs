@@ -68,7 +68,7 @@ public class PlayUIManager : MonoBehaviour
 
     [SerializeField]
     private QuestAcceptUIScript m_questAcceptScript;        // NPC 대화 끝에 나오는 퀘스트 창
-    public void ShowNPCQuestUI() { m_questAcceptScript.ShowNPCQuestUI(); }
+    public void ShowNPCQuestUI(QuestNPCScript _npc) { m_questAcceptScript.ShowNPCQuestUI(_npc); }
     public void ChangeBtnsTxt() { m_questAcceptScript.ChangeBtnsText(); }
 
 

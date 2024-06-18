@@ -13,8 +13,12 @@ public class QuestProgressScript : MonoBehaviour
         {
             if (PlayManager.QuestList[i].Id == _id && PlayManager.QuestList[i].Status == EQuestStatus.AVAILABLE)
             {
-                PlayManager.QuestList[i].Status = EQuestStatus.ACCEPTED;
-                PlayManager.CurQuestList.Add(PlayManager.QuestList[i]);
+                QuestScriptable curQuest = PlayManager.QuestList[i];
+                curQuest.Status = EQuestStatus.ACCEPTED;
+                PlayManager.CurQuestList.Add(curQuest);
+
+                if (curQuest.Types.Length > 1 && curQuest.Types[1] == EQuestType.TIMELIMIT) // 시간 제한 퀘스트인 경우 Types의 길이가 2개이므로 검사
+                    StartCoroutine(QuestTimer(curQuest, curQuest.TimeLimit));               // 시간 제한 퀘스트인 경우 수락하자마자 타이머 시작   
             }
         }
     }
@@ -53,19 +57,6 @@ public class QuestProgressScript : MonoBehaviour
         }
     }
 
-    // 퀘스트 수행(시간 제한)
-    public void DoTimeLimitQuest(string _id)
-    {
-        for (int i = 0; i < PlayManager.CurQuestList.Count; i++)
-        {
-            if (PlayManager.CurQuestList[i].Id == _id && PlayManager.CurQuestList[i].Status == EQuestStatus.ACCEPTED)
-            {
-                QuestScriptable curQuest = PlayManager.CurQuestList[i];
-                StartCoroutine(QuestTimer(curQuest, PlayManager.CurQuestList[i].TimeLimit));
-            }
-        }
-    }
-
     private IEnumerator QuestTimer(QuestScriptable _curQuest, float _time)
     {
         while (_time > 0)
@@ -77,7 +68,7 @@ public class QuestProgressScript : MonoBehaviour
 
             Debug.Log(string.Format("{0}:{1}", minutes, seconds));
 
-            if (PlayManager.CheckQuestCompleted("Q002"))
+            if (PlayManager.CheckQuestCompleted("Q003"))
             {
                 // 퀘스트 완료 수행
                 ClearQuest(_curQuest.Id);
@@ -85,7 +76,7 @@ public class QuestProgressScript : MonoBehaviour
                 yield break;
             }
 
-            if (!PlayManager.CheckQuestCompleted("Q002") && _time <= 0)
+            if (!PlayManager.CheckQuestCompleted("Q003") && _time <= 0)
             {
                 // 퀘스트 실패
                 PlayManager.CurQuestList.Remove(_curQuest);

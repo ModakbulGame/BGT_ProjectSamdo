@@ -163,6 +163,29 @@ public class DataManager : MonoBehaviour
             _ => EPowerProperty.LAST
         };
     }
+    public static EQuestType[] String2QuestTypes(string _data)
+    {
+        if (_data == "") { return new EQuestType[0]; }
+        string[] datas = _data.Split('/');
+        EQuestType[] types = new EQuestType[datas.Length];
+        for (int i = 0; i < datas.Length; i++)
+        {
+            types[i] = String2QuestType(datas[i]);
+        }
+        return types;
+    }
+    private static EQuestType String2QuestType(string _data)
+    {
+        return _data switch
+        {
+            "TALKING" => EQuestType.TALKING,
+            "COLLECTION" => EQuestType.COLLECTION,
+            "HUNTING" => EQuestType.HUNTING,
+            "TIMELIMIT" => EQuestType.TIMELIMIT,
+
+            _ => EQuestType.LAST
+        };
+    }
 
 
     private void InitData()
