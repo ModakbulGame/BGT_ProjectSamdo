@@ -21,7 +21,6 @@ public partial class PlayerController
                 HitData hit = new(attack.Attacker, attack.Damage, point, attack.CCList);
                 GetHit(hit);
                 attack.AddHitObject(this);
-                m_impulseSource.GenerateImpulse(1.0f);
                 break;
             case ValueDefine.CAMERA_TAG:
                 CinemachineFreeLook targetCamera = _other.GetComponentInChildren<CinemachineFreeLook>();

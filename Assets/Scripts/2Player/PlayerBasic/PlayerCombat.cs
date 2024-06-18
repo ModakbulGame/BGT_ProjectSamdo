@@ -18,6 +18,7 @@ public partial class PlayerController
         if (!IsDead && IsGuarding && _hit.Attacker.IsMonster) { monster.HitGuardingPlayer(); }
         base.GetHit(_hit);
         monster.AttackedPlayer(_hit);
+        m_impulseSource.GenerateImpulse(1.0f);
     }
     public override void PlayHitAnim(HitData _hit)                      // 피격 애니메이션
     {
