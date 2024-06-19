@@ -137,7 +137,6 @@ public class NPCDialogueUI : BaseUI
     private void NextDialogue()
     {
         DialogueCount++;
-        Debug.Log($"{DialogueCount+1} / {CurLines.Length}");
         if (DialogueCount == CurLines.Length) { CloseUI(); return; }
 
         IsButtonClicked = false;
