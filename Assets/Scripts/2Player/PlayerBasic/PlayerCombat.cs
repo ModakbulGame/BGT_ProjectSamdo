@@ -146,7 +146,7 @@ public partial class PlayerController
     }
 
 
-    // 스킬 관련
+    // 권능 관련
     private EPowerName[] PowerSlot { get { return PlayManager.PowerSlot; } }                // 스킬 슬롯
     public int PowerIdx
     {
@@ -210,8 +210,9 @@ public partial class PlayerController
     }
     public void CreatePower()                                                               // 스킬 오브젝트 생성
     {
-        GameObject power = GameManager.GetPowerObj(PowerInHand);
         ECastType type = PowerInfoInHand.CastType;
+
+        GameObject power = GameManager.GetPowerObj(PowerInHand);
         power.transform.SetParent(transform);
 
         if (IsRaycastPower)
@@ -275,6 +276,17 @@ public partial class PlayerController
         UsingPowerIdx = -1;
         ShowWeapon();
         ChangeState(EPlayerState.IDLE);
+    }
+
+    public void PowerTrailOn()
+    {
+        if(PowerInfoInHand == null){ return; }
+        EPowerTrailType type = PowerInfoInHand.PowerData.PowerTrail;
+        CurWeapon.PowerTrailOn(type);
+    }
+    public void PowerTrailOff()
+    {
+        CurWeapon.PowerTrailOff();
     }
 
     public struct RaycastTargetInfo

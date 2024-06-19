@@ -27,6 +27,9 @@ public class PowerScriptable : ScriptableObject
     public int                  MotionIdx;
     public bool                 HideWeapon;
     public bool                 ShowCastingEffect;
+    public EPowerTrailType      PowerTrail;
+
+    public bool IsTrailOn { get { return PowerTrail > (int)EPowerTrailType.NONE; } }
 
     private ECastType Name2Type(EPowerName _powerName)
     {

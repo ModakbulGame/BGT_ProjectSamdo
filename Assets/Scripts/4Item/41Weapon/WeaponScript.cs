@@ -68,12 +68,15 @@ public class WeaponScript : AnimateAttackScript
     private void SetInfo()
     {
         m_weaponInfo.SetInfo(m_scriptable);
+        m_buffEffect.InitWeapon(WeaponType);
     }
 
 
     private WeaponTrailEffect m_trailEffect;
-    public override void AttackOn() { base.AttackOn(); m_trailEffect.SetTrail(true); }
-    public override void AttackOff() { base.AttackOff(); m_trailEffect.SetTrail(false); }
+    public override void AttackOn() { base.AttackOn(); m_trailEffect.SetNormalTrail(true); }
+    public override void AttackOff() { base.AttackOff(); m_trailEffect.SetNormalTrail(false); }
+    public void PowerTrailOn(EPowerTrailType _type) { m_trailEffect.PowerTrailOn(_type); }
+    public void PowerTrailOff() { m_trailEffect.PowerTrailOff(); }
 
 
     private WeaponBuffEffectScript m_buffEffect;
@@ -88,10 +91,6 @@ public class WeaponScript : AnimateAttackScript
         base.SetComps();
         m_buffEffect = GetComponentInChildren<WeaponBuffEffectScript>();
         m_trailEffect = GetComponentInChildren<WeaponTrailEffect>();
-    }
-    public override void Start()
-    {
-        base.Start();
-        m_buffEffect.InitWeapon(WeaponType);
+        m_trailEffect.SetComps();
     }
 }

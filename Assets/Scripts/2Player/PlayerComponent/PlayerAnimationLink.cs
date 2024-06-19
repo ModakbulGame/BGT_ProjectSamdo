@@ -50,6 +50,15 @@ public class PlayerAnimationLink : MonoBehaviour
         m_player.PowerDone();
     }
 
+    public void PowerTrailOn()
+    {
+        m_player.PowerTrailOn();
+    }
+    public void PowerTrailOff()
+    {
+        m_player.PowerTrailOff();
+    }
+
     public void StartInvincible()           // 무적 시작
     {
         m_player.StartInvincible();
