@@ -226,7 +226,7 @@ public partial class PlayerController
         {
             case ECastType.MELEE:
             case ECastType.MELEE_CC:
-                power.transform.localPosition = Vector3.zero;
+                power.transform.localPosition = PowerInfoInHand.PowerData.PowerPrefab.transform.localPosition;
                 power.transform.localEulerAngles = Vector3.zero;
                 break;
             case ECastType.RANGED:

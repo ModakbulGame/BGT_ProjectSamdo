@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class S102 : MeleePowerScript
 {
-    
+
 }

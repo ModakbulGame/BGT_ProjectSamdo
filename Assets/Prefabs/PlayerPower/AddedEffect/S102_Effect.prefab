@@ -57,14 +57,11 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 0, y: 0.55291426, z: 2.181136, w: 1}
-        m_Name: Color
-        m_Overridden: 1
-      - m_Value: {x: 0.013746898, y: 0.0039215707, z: 0.09411765, w: 0}
-        m_Name: ParticleColor
-        m_Overridden: 1
-      - m_Value: {x: 1.0081912, y: 0.46232286, z: 1.5491871, w: 0}
+      - m_Value: {x: 0.5899133, y: 0.22264083, z: 1.151216, w: 0}
         m_Name: BaseParticleColor
+        m_Overridden: 1
+      - m_Value: {x: 0.78934073, y: 0, z: 1.5384085, w: 1}
+        m_Name: Color
         m_Overridden: 1
     m_Uint:
       m_Array: []
@@ -78,21 +75,21 @@ VisualEffect:
       m_Array:
       - m_Value:
           serializedVersion: 2
-          key0: {r: 0.8260611, g: 0, b: 1.6373721, a: 0}
-          key1: {r: 0.24056602, g: 0.62950927, b: 1, a: 1}
-          key2: {r: 0, g: 0.45297647, b: 1.3518509, a: 0.87311006}
-          key3: {r: 0.034563158, g: 0, b: 0.20754719, a: 0.8}
+          key0: {r: 1, g: 1, b: 1, a: 0}
+          key1: {r: 2.2379518, g: 0.2639094, b: 1.395526, a: 1}
+          key2: {r: 0.6872205, g: 0.1585893, b: 1.6009969, a: 0.87311006}
+          key3: {r: 0.087321736, g: 0.014713242, b: 0.21509941, a: 0.8}
           key4: {r: 0.5, g: 0.5, b: 0.5, a: 0}
           key5: {r: 0.5, g: 0.5, b: 0.5, a: 0}
-          key6: {r: 0.5, g: 0.5, b: 0.5, a: 0}
+          key6: {r: 0, g: 0, b: 0, a: 0}
           key7: {r: 0, g: 0, b: 0, a: 0}
           ctime0: 0
-          ctime1: 7325
-          ctime2: 22745
+          ctime1: 6554
+          ctime2: 23323
           ctime3: 44525
           ctime4: 65535
           ctime5: 65535
-          ctime6: 65535
+          ctime6: 0
           ctime7: 0
           atime0: 0
           atime1: 6554
@@ -111,12 +108,12 @@ VisualEffect:
       - m_Value:
           serializedVersion: 2
           key0: {r: 1, g: 1, b: 1, a: 0}
-          key1: {r: 55.065445, g: 1.2987131, b: 31.933323, a: 1}
-          key2: {r: 0.035484064, g: 0.41734916, b: 2.5075452, a: 0.87311006}
+          key1: {r: 18.725948, g: 0.44164968, b: 10.861733, a: 1}
+          key2: {r: 0.4085201, g: 0.13010849, b: 0.8897742, a: 0.87311006}
           key3: {r: 0.00045008486, g: 0.00007583687, b: 0.0011086928, a: 0.8}
           key4: {r: 0.00023764996, g: 0.00023746218, b: 0.00023798038, a: 0.40374324}
           key5: {r: 0.5, g: 0.5, b: 0.5, a: 0}
-          key6: {r: 0, g: 0, b: 0, a: 0}
+          key6: {r: 0.5, g: 0.5, b: 0.5, a: 0}
           key7: {r: 0, g: 0, b: 0, a: 0}
           ctime0: 0
           ctime1: 6554
@@ -124,7 +121,7 @@ VisualEffect:
           ctime3: 44525
           ctime4: 54741
           ctime5: 65535
-          ctime6: 0
+          ctime6: 65535
           ctime7: 0
           atime0: 0
           atime1: 6554
@@ -143,9 +140,9 @@ VisualEffect:
       - m_Value:
           serializedVersion: 2
           key0: {r: 1, g: 1, b: 1, a: 0}
-          key1: {r: 1.4415033, g: 37.380142, b: 55.06544, a: 1}
-          key2: {r: 0.63918585, g: 0, b: 89.45412, a: 0.87311006}
-          key3: {r: 0, g: 0.3319096, b: 1.5111445, a: 0.8}
+          key1: {r: 35.371235, g: 0.5005355, b: 6.124837, a: 1}
+          key2: {r: 46.193954, g: 0.6536869, b: 14.2442465, a: 0.87311006}
+          key3: {r: 0.14661403, g: 0.05952299, b: 0.32356083, a: 0.8}
           key4: {r: 0.00023764996, g: 0.00023746218, b: 0.00023798038, a: 0.40374324}
           key5: {r: 0.5, g: 0.5, b: 0.5, a: 0}
           key6: {r: 0, g: 0, b: 0, a: 0}
@@ -269,7 +266,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6863ce16ebdc73f40a935f0d92df6e1a, type: 2}
+  - {fileID: 2100000, guid: b189752c314318245b57ad33c75d55a2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -371,7 +368,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6524142630909907953}
   m_Layer: 0
-  m_Name: S231
+  m_Name: S102_Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
