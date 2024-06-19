@@ -8,7 +8,8 @@ public class PlayerCameraScript : MonoBehaviour
 {
     private CinemachineFreeLook m_cameraDetail;
     public CinemachineFreeLook PlayerFreeLook { get { return m_cameraDetail; } }
-    private CinemachineIndependentImpulseListener m_impulseListener;
+
+    private string[] m_collideAgainstLayers = { "Default", "Ground" };
 
     private const float XMoveMultiplier = 120;              // 민감도 1당 X 움직임
     private const float YMoveMultiplier = 1.5f;                // 민감도 1당 Y 움직임
@@ -60,7 +61,6 @@ public class PlayerCameraScript : MonoBehaviour
     private void SetComps()
     {
         m_cameraDetail = GetComponent<CinemachineFreeLook>();
-        m_impulseListener = gameObject.AddComponent<CinemachineIndependentImpulseListener>();
     }
 
     private void Awake()
@@ -70,5 +70,14 @@ public class PlayerCameraScript : MonoBehaviour
     private void Start()
     {
         m_cameraDetail.m_XAxis.Value = PlayManager.PlayerDirection;
+
+        if (m_cameraDetail != null)
+        {
+            var collider = m_cameraDetail.GetComponent<CinemachineCollider>();
+            if (collider != null)
+            {
+                collider.m_CollideAgainst = LayerMask.GetMask(m_collideAgainstLayers);
+            }
+        }
     }
 }
