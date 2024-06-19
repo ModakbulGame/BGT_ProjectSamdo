@@ -49,7 +49,7 @@ public class DropItemScript : PooledItem, IInteractable
 
     public void GetItem()
     {
-        PlayManager.AddInventoryItem(DropItem, 1);
+        PlayManager.AddInventoryItem(DropItem, 1, true);
         //if (PlayManager.CheckRequiredQuestObject(DropItemName))
         //{
         //    PlayManager.DoObjectQuest(DropItemName, 1);

@@ -134,9 +134,9 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
                 break;
         }
     }
-    private void CheckMonsterDeath()
+    private void CheckMonsterDeath()        // 첫 킬, 퀘스트 확인
     {
-        PlayManager.Monsterkilled(this, DeathType);
+        PlayManager.MonsterKilled(MonsterEnum, DeathType);
     }
     public void DropItems()             // 아이템 드랍
     {

@@ -36,9 +36,10 @@ public enum EDialogueName
 
 public enum EDialQuestFunction
 {
-    START,          // 미션 제시
-    COMPLETE,       // 미션 조건 달성
-    FNIINSH,        // 미션 완료
+    START,              // 미션 제시
+    COMPLETE,           // 미션 조건 달성
+    FNIINSH,            // 미션 완료
+    COMPLETE_FINISH,    // 조건 달성 동시에 완료
 
     LAST
 }

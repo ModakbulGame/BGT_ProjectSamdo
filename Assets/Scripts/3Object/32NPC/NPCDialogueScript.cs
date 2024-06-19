@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using static UnityEditor.Progress;
+using System;
 
 public class NPCDialogueScript : BaseUI
 {
@@ -63,26 +65,56 @@ public class NPCDialogueScript : BaseUI
             m_typingText.text += txt[i];
             yield return new WaitForSeconds(m_textSpeed);
 
-            if (IsButtonClicked)                          // 좌클릭하면 전체 내용 한 번에 출력
+            if (IsButtonClicked)                            // 좌클릭하면 전체 내용 한 번에 출력
             {
                 m_typingText.text = txt;
                 IsButtonClicked = false;
                 break;
             }
         }
-        IsQuestConfirmed = !_line.HasQuest;
-        if (_line.HasQuest)
+        yield return new WaitForSeconds(0.5f);
+        if (_line.HasQuest)                                 // 대사별 퀘스트 진행
         {
             DialQuest quest = _line.TriggerQuest;
-            PlayManager.ShowNPCQuestUI(quest.Quest, true, ConfirmQuest);
+            switch (quest.Function)
+            {
+                case EDialQuestFunction.START:
+                    PlayManager.ShowNPCQuestUI(quest.Quest, true, ConfirmQuest);
+                    break;
+                case EDialQuestFunction.COMPLETE:
+                    CheckQuestComplete(CurNPC.NPC);
+                    break;
+                case EDialQuestFunction.FNIINSH:
+                    PlayManager.ShowNPCQuestUI(quest.Quest, false, ConfirmQuest);
+                    break;
+                case EDialQuestFunction.COMPLETE_FINISH:
+                    CheckQuestComplete(CurNPC.NPC);
+                    PlayManager.ShowNPCQuestUI(quest.Quest, false, ConfirmQuest);
+                    break;
+            }
         }
-        bool isQuestConfirmed = !_line.HasQuest;
-        while (!isQuestConfirmed)
+        IsQuestConfirmed = !_line.OpenQuestUI;
+        while (!IsQuestConfirmed)                                   // 퀘스트 UI 조작 완료 대기
         {
             yield return null;
         }
         while (!IsButtonClicked) { yield return null; }
         NextDialogue();
+    }
+    private void CheckQuestComplete(SNPC _npc)                      // 대화하기 퀘스트 확인
+    {
+        List<QuestInfo> infos = PlayManager.QuestInfoList;
+
+        EQuestType questType = EQuestType.TALK;
+        if (questType == EQuestType.LAST) { return; }
+
+        foreach (QuestInfo quest in infos)
+        {
+            if (quest.State != EQuestState.ACCEPTED || quest.QuestContent.Type != questType
+                || quest.QuestContent.NPC != _npc) { continue; }
+
+            PlayManager.SetQuestProgress(quest.QuestName, 1);
+        }
     }
     private void ConfirmQuest()
     {

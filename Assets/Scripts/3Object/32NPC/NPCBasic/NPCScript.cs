@@ -3,6 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
+public struct DialogueInfo
+{
+    public bool IsUnlocked;
+    public bool IsDone;
+    public bool CanProcess { get { return IsUnlocked && !IsDone; } }
+    public static DialogueInfo Init { get { return new(false, false); } }
+    public DialogueInfo(bool _unlokced, bool _done) { IsUnlocked = _unlokced; IsDone = _done; }
+    public DialogueInfo(DialogueInfo _other) { IsUnlocked = _other.IsUnlocked; IsDone = _other.IsDone; }
+}
+
 public class NPCScript : MonoBehaviour, IInteractable, IHaveData
 {
     [SerializeField]
@@ -17,9 +28,9 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
 
     public List<DialogueScriptable> DialogueList { get { return m_scriptable.DialogueList; } }
     private int DialCount { get { if (m_scriptable == null) { return 0; } return DialogueList.Count; } }
-    private bool[] m_dialDone;
+    private DialogueInfo[] m_dialInfos;
 
-    private int AbleDialIdx { get { for (int i = 0; i<DialCount; i++) { if (!m_dialDone[i]) return i; } return -1; } }
+    private int AbleDialIdx { get { for (int i = 0; i<DialCount; i++) { if (!m_dialInfos[i].CanProcess) return i; } return -1; } }
 
     public EInteractType InteractType { get { return EInteractType.NPC; } }
     public virtual string InfoTxt { get { return "대화"; } }            // 상호작용 UI에 띄울 말 => 말이 상황에 따라 바뀌는 경우 조건문 추가 
@@ -28,15 +39,15 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
     public void LoadData()
     {
         GameManager.RegisterData(this);
-        if (PlayManager.IsNewData) { m_dialDone = new bool[DialCount]; return; }
+        if (PlayManager.IsNewData) { m_dialInfos = new DialogueInfo[DialCount]; return; }
 
         SaveData data = PlayManager.CurSaveData;
 
         foreach (NPCSaveData save in data.NPCData)
         {
             if(save.NPC != NPC) { continue; }
-            bool[] states = save.DialDone;
-            for(int i = 0; i<states.Length; i++) { m_dialDone[i] = states[i]; }
+            DialogueInfo[] states = save.DialInfo;
+            for(int i = 0; i<states.Length; i++) { m_dialInfos[i] = new(states[i]); }
             return;
         }
     }
@@ -48,19 +59,24 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
         foreach (NPCSaveData save in data.NPCData)
         {
             if (save.NPC != NPC) { continue; }
-            bool[] states = save.DialDone;
-            for (int i = 0; i<states.Length; i++) { m_dialDone[i] = states[i]; }
+            DialogueInfo[] states = save.DialInfo;
+            for (int i = 0; i<states.Length; i++) { m_dialInfos[i] = new(states[i]); }
             return;
         }
 
-        NPCSaveData newSave = new(NPC, m_dialDone);
+        NPCSaveData newSave = new(NPC, m_dialInfos);
         data.NPCData.Add(newSave);
     }
 
+
+    public void UnlockDialogue(int _idx)
+    {
+        m_dialInfos[_idx].IsUnlocked = true;
+    }
     public virtual void StartDialogue()
     {
         PlayManager.OpenDialogueUI(this, AbleDialIdx);
-        m_dialDone[AbleDialIdx] = true;
+        m_dialInfos[AbleDialIdx].IsDone = true; ;
     }
 
 
@@ -76,8 +92,33 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
         GameManager.SetControlMode(EControlMode.THIRD_PERSON);
     }
 
+
+    private void InitDialInfos()
+    {
+        for (int i=0;i<DialCount;i++)
+        {
+            m_dialInfos[i].IsUnlocked = DialogueList[i].IsOpenAtFirst;
+        }
+    }
+
+
+    private void SetComps()
+    {
+        m_dialInfos = new DialogueInfo[DialCount];
+        for (int i = 0; i<DialCount; i++)
+        {
+            m_dialInfos[i] = new(DialogueList[i].IsOpenAtFirst, false);
+        }
+    }
+
+    private void Awake()
+    {
+        SetComps();
+    }
+
     private void Start()
     {
+        InitDialInfos();
         LoadData();
     }
 }

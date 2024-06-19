@@ -111,6 +111,7 @@ public class PlayManager : MonoBehaviour
     public static InventoryElm[] PlayerInventory { get { return InvenManager.Inventory; } }                                                     // 인벤토리 아이템 목록
     private static void InventoryEditted() { UpdateInfoUI(); }
     public static void AddInventoryItem(SItem _item, int _num) { InvenManager.AddInventoryItem(_item, _num); }                                  // 빈 인벤토리에 아이템 추가
+    public static void AddInventoryItem(SItem _item, int _num, bool _isNew) { InvenManager.AddInventoryItem(_item, _num, _isNew); }             // 빈 인벤토리에 아이템 추가 (신규)
     public static void SetInventoryItem(int _idx, SItem _item, int _num) { InvenManager.SetInventoryItem(_idx, _item, _num); }                  // 인벤토리 해당 Idx에 아이템 설정
     public static void RemoveInventoryItem(int _idx) { InvenManager.RemoveInventoryItem(_idx); }                                                // 인벤토리 해당 Idx 아이템 제거
     public static void SwapItemInven(int _idx1, int _idx2) { InvenManager.SwapItemInven(_idx1, _idx2); InventoryEditted(); }
@@ -240,7 +241,7 @@ public class PlayManager : MonoBehaviour
     {
         m_invenManager = GetComponent<InventoryManager>();
         m_invenManager.SetManager();
-        m_questManager = GetComponent<QuestManager>();
+        m_questManager = GetComponent<QuestManager>();                  // Quest가 Environment보다 위에 있어야함
         m_questManager.SetManager();
         m_environmentManager = GetComponent<EnvironmentManager>();
         m_environmentManager.SetManager();

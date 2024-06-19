@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class QuestInfo          // 퀘스트 현황
 {
     public EQuestName QuestName;        // Enum
-    public EQuestState State;         // 상태
+    public EQuestState State;           // 상태
     public float QuestProgress;         // 진행도
     public float QuestTimeCount;        // 남은 시간
     public void SetQuestStatus(EQuestState _status) { State = _status; }
@@ -41,7 +41,7 @@ public struct QuestContent      // 퀘스트 내용
     public QuestContent(EQuestType _type, SItem _item, float _amount)
     { Type = _type; Amount = _amount; Monster = EMonsterName.LAST; Item = _item; NPC = SNPC.Null; }
     public QuestContent(EQuestType _type, SNPC _npc)
-    { Type = _type; Amount = -1; Monster = EMonsterName.LAST; Item = SItem.Empty; NPC = _npc; }
+    { Type = _type; Amount = 1; Monster = EMonsterName.LAST; Item = SItem.Empty; NPC = _npc; }
 }
 
 [Serializable]

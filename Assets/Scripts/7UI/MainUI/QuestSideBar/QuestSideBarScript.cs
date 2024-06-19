@@ -41,7 +41,7 @@ public class QuestSideBarScript : MonoBehaviour
     private void SetBoxSize(int _count)
     {
         float width = ElmWidth + ElmSpace * 2;
-        float height = _count > 0 ? ElmHeight * _count + ElmSpace * (_count + 4) : 0;
+        float height = _count > 0 ? ElmHeight * _count + ElmSpace * (_count + 3) : 0;
         m_rect.sizeDelta = new(width, height);
     }
 

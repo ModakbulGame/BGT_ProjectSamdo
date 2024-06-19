@@ -309,12 +309,15 @@ public static class DataImporter
         string[] allDialogueLines = File.ReadAllLines(CSVPath + DialogueCSVName);
         List<DialogueScriptable> dialogueData = new();
 
+        string dialNPC = "";
+
         for (uint i = 1; i < allDialogueLines.Length; i++)
         {
             string si = allDialogueLines[i];
             string[] splitDialogueData = si.Split(',');
 
-            string npc = splitDialogueData[(int)EDialogueAttributes.NPC];
+            string newNPC = splitDialogueData[(int)EDialogueAttributes.NPC];
+            dialNPC = newNPC != "" ? newNPC : dialNPC;
             int.TryParse(splitDialogueData[(int)EDialogueAttributes.DIALOGUE_IDX], out int dialogueIdx);
             List<string[]> datas = new();
             while(i < allDialogueLines.Length)
@@ -326,15 +329,15 @@ public static class DataImporter
                 if (splitDialogueData[(int)EDialogueAttributes.DIALOGUE_IDX] != "") { i--; break; }
             }
 
-            string folderPath = $"{DialogueScriptablePath}/{npc}";
+            string folderPath = $"{DialogueScriptablePath}/{dialNPC}";
             // 폴더가 이미 존재하는지 확인
             if (!AssetDatabase.IsValidFolder(folderPath))
             {
-                AssetDatabase.CreateFolder(DialogueScriptablePath[..(DialogueScriptablePath.Length-1)], npc);
+                AssetDatabase.CreateFolder(DialogueScriptablePath[..(DialogueScriptablePath.Length-1)], dialNPC);
                 AssetDatabase.SaveAssets();
             }
 
-            string code = $"{npc}_{dialogueIdx+1}";
+            string code = $"{dialNPC}_{dialogueIdx+1}";
 
             DialogueScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{folderPath}/{code}.asset") as DialogueScriptable;
 
@@ -345,7 +348,7 @@ public static class DataImporter
             }
             dialogueData.Add(scriptable);
 
-            scriptable.SetScriptable(npc, datas);
+            scriptable.SetScriptable(dialNPC, datas);
 
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(scriptable);
@@ -426,7 +429,7 @@ public static class DataImporter
             }
             foreach (QuestScriptable quest in questData)
             {
-                if(quest.StartNPC == scriptable.NPC) { scriptable.AddQuest(quest); }
+                if(quest.StartDialogue.NPC == scriptable.NPC) { scriptable.AddQuest(quest); }
             }
 
             if (!IsExist)

@@ -18,14 +18,14 @@ MonoBehaviour:
   Name: "\uB300\uD654\uB97C \uD574\uBCF4\uC790"
   Content:
     Type: 1
-    Amount: -1
+    Amount: 1
     Monster: 36
     Item:
       Type: 4
       Idx: -1
     NPC:
-      Type: 1
-      Idx: 1
+      Type: 4
+      Idx: -1
   TimeLimit: 0
   NextQuest: 2
   Description: "\uB9CE\uC774 \uBA3C \uC81C\uB2E8\uACFC\uC758 \uB300\uD654"
@@ -36,9 +36,13 @@ MonoBehaviour:
     Item:
       Type: 4
       Idx: -1
-  StartNPC:
-    Type: 1
+  StartDialogue:
+    NPC:
+      Type: 1
+      Idx: 0
     Idx: 0
-  CompleteNPC:
-    Type: 1
-    Idx: 1
+  FinishDialogue:
+    NPC:
+      Type: 1
+      Idx: 1
+    Idx: 0

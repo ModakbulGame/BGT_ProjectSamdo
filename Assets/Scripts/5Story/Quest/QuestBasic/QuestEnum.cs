@@ -15,8 +15,8 @@ public enum EQuestAttribute
     REWARD_TYPE,
     REWARD_NUM,
     REWARD_DETAIL,
-    START_NPC,
-    COMPLETE_NPC,
+    START_DIALOGUE,
+    FINISH_DIALOGUE,
     LAST
 }
 
@@ -39,7 +39,7 @@ public enum EQuestState
     ACCEPTED,
     COMPLETE,
     FAIL,
-    DONE,
+    FINISH,
 
     LAST
 }

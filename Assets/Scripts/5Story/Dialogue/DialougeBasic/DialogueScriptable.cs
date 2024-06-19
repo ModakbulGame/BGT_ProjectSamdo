@@ -10,6 +10,7 @@ public struct DialLine
     public string Text;
     public DialQuest TriggerQuest;
     public bool HasQuest { get { return !TriggerQuest.IsNull; } }
+    public bool OpenQuestUI { get { return HasQuest && TriggerQuest.Function != EDialQuestFunction.COMPLETE; } }
     public DialLine(string _line) : this(_line, DialQuest.Null) { }
     public DialLine(string _line, DialQuest _quest) { Text = _line; TriggerQuest = _quest; }
 }
@@ -29,6 +30,7 @@ public class DialogueScriptable : ScriptableObject
     public int DialougeIdx;
     public int BranchIdx;
     public DialLine[] Lines;
+    public bool IsOpenAtFirst;          // 게임 시작 시 열려 있음
 
     private DialQuest Data2Quest(string _id, string _func)
     {
@@ -46,6 +48,7 @@ public class DialogueScriptable : ScriptableObject
             "START" => EDialQuestFunction.START,
             "COMPLETE" => EDialQuestFunction.COMPLETE,
             "FINISH" => EDialQuestFunction.FNIINSH,
+            "COMPLETE_FINISH" => EDialQuestFunction.COMPLETE_FINISH,
 
             _ => EDialQuestFunction.LAST
         };

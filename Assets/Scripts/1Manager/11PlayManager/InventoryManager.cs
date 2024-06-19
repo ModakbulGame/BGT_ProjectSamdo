@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class InventoryManager : MonoBehaviour, IHaveData
 {
@@ -139,11 +140,36 @@ public class InventoryManager : MonoBehaviour, IHaveData
     // 아이템 인벤토리
     private ItemInventory m_itemInven;                                                  // 아이템 인벤토리
     public InventoryElm[] Inventory { get { return m_itemInven.Inventory; } }           // 아이템 목록
-    public void AddInventoryItem(SItem _item, int _num) { m_itemInven.AddItem(_item, _num); }                           // 아이템 추가
+    public void AddInventoryItem(SItem _item, int _num) { AddInventoryItem(_item, _num, false); }                       // 아이템 추가
+    public void AddInventoryItem(SItem _item, int _num, bool _isNew)            
+    {
+        m_itemInven.AddItem(_item, _num);
+        if (_isNew) { CheckItemObtained(_item, _num); }
+    }
     public void SetInventoryItem(int _idx, SItem _item, int _num) { m_itemInven.SetItem(_idx, _item, _num); }           // idx에 아이템 설정
     public void SwapItemInven(int _idx1, int _idx2) { m_itemInven.SwapItem(_idx1, _idx2); }
     public bool ChkNUseItem(SItem _item, int _num) { return m_itemInven.ChkNUseItem(_item, _num); }                     // 아이템 확인 후 사용
     public void RemoveInventoryItem(int _idx) { m_itemInven.RemoveItem(_idx); }                                         // 아이템 제거
+
+    private void CheckItemObtained(SItem _item, int _num)                   // 아이템 획득 시 퀘스트 확인
+    {
+        List<QuestInfo> infos = PlayManager.QuestInfoList;
+
+        EQuestType questType = EQuestType.COLLECT;
+        if (questType == EQuestType.LAST) { return; }
+
+        foreach (QuestInfo quest in infos)
+        {
+            if (quest.State != EQuestState.ACCEPTED || quest.QuestContent.Type != questType
+                || quest.QuestContent.Item != _item) { continue; }
+
+            float target = quest.QuestContent.Amount;
+            float prog = quest.QuestProgress + _num;
+            if(prog > target) { prog = target; }
+            PlayManager.SetQuestProgress(quest.QuestName, prog);
+        }
+    }
+
 
 
     public void LoadData()

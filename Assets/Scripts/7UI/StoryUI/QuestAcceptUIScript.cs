@@ -57,7 +57,7 @@ public class QuestAcceptUIScript : BaseUI
         }
         else
         {
-            CompleteQuest();
+            FinishQuest();
         }
         CloseUI();
     }
@@ -66,9 +66,9 @@ public class QuestAcceptUIScript : BaseUI
         PlayManager.SetQuestStatus(CurQuest.Enum, EQuestState.ACCEPTED);
         PlayManager.UpdateQuestSidebar();
     }
-    private void CompleteQuest()
+    private void FinishQuest()
     {
-        PlayManager.SetQuestStatus(CurQuest.Enum, EQuestState.COMPLETE);
+        PlayManager.SetQuestStatus(CurQuest.Enum, EQuestState.FINISH);
         PlayManager.UpdateQuestSidebar();
     }
 

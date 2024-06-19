@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour, IHaveData
 {
+    // 퀘스트
     private QuestInfo[] m_questInfoList;
     public List<QuestInfo> QuestInfoList { get { return m_questInfoList.ToList(); } }
 
@@ -15,12 +16,14 @@ public class QuestManager : MonoBehaviour, IHaveData
         for(int i=0;i<(int)EQuestName.LAST;i++)
         {
             m_questInfoList[i] = new((EQuestName)i);
+
         }
     }
 
     public void SetQuestStatus(EQuestName _quest, EQuestState _status) 
     {
         m_questInfoList[(int)_quest].SetQuestStatus(_status);
+        if(_status == EQuestState.FINISH) { FinishQuest(_quest); }
     }
 
     public void SetQuestProgress(EQuestName _quest, float _prog)
@@ -30,45 +33,18 @@ public class QuestManager : MonoBehaviour, IHaveData
         if(_prog == info.QuestContent.Amount) { SetQuestStatus(_quest, EQuestState.COMPLETE); }
     }
 
-
-    public void CheckMonsterKill(EMonsterName _monster)
+    private void FinishQuest(EQuestName _quest)
     {
-        foreach (QuestInfo quest in m_questInfoList)
-        {
-            EQuestType type = quest.QuestContent.Type;
-            if(type != EQuestType.KILL) { return; }
-        }
-    }
-    public void CheckMonsterPurify(EMonsterName _monster)
-    {
-        foreach (QuestInfo quest in m_questInfoList)
-        {
-            EQuestType type = quest.QuestContent.Type;
-            if (type != EQuestType.PURIFY) { return; }
-        }
+        QuestScriptable data = GameManager.GetQeustData(_quest);
+        QuestReward reward = data.Reward;
+        GetReward(reward);
 
     }
 
+    private void GetReward(QuestReward _reward)
+    {
 
-
-
-
-    private QuestProgressScript m_questProgress;
-    private QuestBoolStatus m_questBoolStatus;
-
-    // 퀘스트 수행에 필요한 메소드
-    public void AcceptQuest(string _id) { /* m_questProgress.AcceptQuest(_id); */}
-    public void GiveUpQuest(string _id) { /* m_questProgress.GiveUpQuest(_id); */}
-    public void ClearQuest(string _id) { /* m_questProgress.ClearQuest(_id); */}   
-    public void CompleteQuest(string _id) { /* m_questProgress.CompleteQuest(_id); */}
-    public void DoObjectQuest(string _obj, int _amount) { /* m_questProgress.DoObjectQuest(_obj, _amount); */}
-    
-    // 이름 일치 여부 확인
-    public void SetQuestStartObjectStatus(string _start) { /* m_questBoolStatus.SetQuestStartObjectStatus(_start); */}
-    public void SetQuestEndObjectStatus(string _id) { /* m_questBoolStatus.SetQuestEndObjectStatus(_id); */}
-    public bool CheckQuestCompleted(string _id) { return false; /* return m_questBoolStatus.CheckQuestCompleted(_id); */}
-    public bool CheckRequiredQuestObject(string _name) { return false; /* return m_questBoolStatus.CheckRequiredQuestObject(_name); */}
-
+    }
 
 
     public void LoadData()
@@ -106,8 +82,6 @@ public class QuestManager : MonoBehaviour, IHaveData
 
     public void SetManager()
     {
-        m_questProgress = gameObject.AddComponent<QuestProgressScript>();
-        m_questBoolStatus = gameObject.AddComponent<QuestBoolStatus>();
         LoadData();
     }
 }
