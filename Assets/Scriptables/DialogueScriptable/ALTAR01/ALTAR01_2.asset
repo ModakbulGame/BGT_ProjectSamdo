@@ -12,22 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0836696b697458c4cace1784f8187404, type: 3}
   m_Name: ALTAR01_2
   m_EditorClassIdentifier: 
+  Idx: 1
   NPC:
     Type: 1
     Idx: 0
-  DialougeIdx: 1
+  DialogueIdx: 1
   BranchIdx: 0
   Lines:
-  - Text: "\uC81C\uB2E83\uACFC \uB300\uD654"
-    TriggerQuest:
+  - Text: "\uC798\uD588\uC2B5\uB2C8\uB2E4"
+    ResultDialogues: []
+    ResultQuest:
+      Quest: 3
+      Function: 4
+  - Text: "\uD558\uD558"
+    ResultDialogues: []
+    ResultQuest:
+      Quest: 1
+      Function: 2
+  - Text: "\uC81C\uC77C \uC67C\uCABD \uC81C\uB2E8\uACFC \uB300\uD654"
+    ResultDialogues: []
+    ResultQuest:
       Quest: 3
       Function: 4
   - Text: "\uD558\uC138\uC694"
-    TriggerQuest:
-      Quest: 3
-      Function: 4
-  - Text: ..
-    TriggerQuest:
+    ResultDialogues:
+    - NPC:
+        Type: 1
+        Idx: 2
+      Idx: 0
+    ResultQuest:
       Quest: 2
       Function: 0
-  IsOpenAtFirst: 0
+  IsOpenAtFirst: 1

@@ -9,6 +9,7 @@ public enum EDialogueAttributes
     BRANCH_IDX,
     LINE_IDX,
     LINE_TEXT,
+    RESULT_DIALOGUES,
     RESULT_QUEST,
     QUEST_FUNCTION,
 

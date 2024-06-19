@@ -1,4 +1,4 @@
-ID,Name,QuestType,QuestDetail,QuestAmount,TimeLimit,NextQuest,Description,RewardType,RewardNum,RewardDetail,StartDialogue,FinishNPC
-Q001,대화를 해보자,TALK,ALTAR02_0,,,Q002,많이 먼 제단과의 대화,SOUL,2,,ALTAR01_0,ALTAR02_0
-Q002,사냥을 해보자,KILL,M510,2,,Q003,생명 염 2마리 잡기,STAT,2,POINT,ALTAR03_0,ALTAR03_1
-Q003,대화를 해보자2,TALK,ALTAR03_0,,120,,아직 없는 제단과의 대화,SOUL,1,,ALTAR01_1,ALTAR03_1
+ID,Name,QuestType,QuestDetail,QuestAmount,TimeLimit,ResultDialogues,Description,CompleteText,RewardType,RewardNum,RewardDetail
+Q001,제단2와 대화,TALK,ALTAR02_0,,,,많이 먼 제단과 대화,,SOUL,2,
+Q002,염 죽이기,KILL,M510,1,,ALTAR01_1,염 죽이기,가까운 제단과 대화하세요.,STAT,2,POINT
+Q003,제단3과 대화,TALK,ALTAR03_0,,120,ALTAR03_0,아직 없는 제단과 대화,,SOUL,1,

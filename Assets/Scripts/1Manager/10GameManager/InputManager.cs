@@ -99,13 +99,6 @@ public class InputManager : MonoBehaviour
                     return;
                 }
             }
-            else if (UIControlInputs.UIInteract.triggered)       // NPCDialogueScript의 Update를 여기서 진행시키고자 했음   
-            {
-                if (PlayManager.IsDialogueOpend)
-                {
-                    PlayManager.ShowNextDialogue();
-                }
-            }
         }
     }
 }

@@ -48,6 +48,7 @@ public partial class PlayerController
     }
     public void StopInteract()                                                      // 상호작용 중단
     {
+        m_interactableObject = null;
         Interacting = false;
     }
 

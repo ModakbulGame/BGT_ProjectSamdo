@@ -162,8 +162,38 @@ public class ItemManager : MonoBehaviour
     {
         if (_id == "") { return SItem.Empty; }
         EItemType type = IDToItemType(_id);
-        int.TryParse(_id[1..], out int idx);
-        return new SItem(type, idx);
+        int.TryParse(_id[1..], out int code);
+        int idx = ID2Idx(type, code);
+        return idx != -1 ? new SItem(type, idx) : SItem.Empty;
+    }
+
+    private static int ID2Idx(EItemType _type, int _code)
+    {
+        int sub = _code / 100;
+        int idx = _code % 100 - 1;
+        switch (_type)
+        {
+            case EItemType.WEAPON:
+                if(sub == 1) { return idx; }
+                else if(sub == 2) { return idx - (int)EWeaponName.BASIC_SWORD; }
+                else if(sub== 3) { return idx - (int)EWeaponName.BASIC_SCEPTER; }
+                break;
+            case EItemType.PATTERN:
+                if(sub == 1) { return idx; }
+                else if(sub == 2) { return idx - (int)EPatternName.WATER; }
+                else if(sub == 3) { return idx - (int)EPatternName.GROUND; }
+                break;
+            case EItemType.THROW:
+                if(sub == 1) { return idx; }
+                else if(sub == 2) { return idx - (int)EThrowItemName.BOMB; }
+                else if(sub == 3) { return idx - (int)EThrowItemName.SLOW; }
+                else if (sub == 4) { return idx - (int)EThrowItemName.ENDER; }
+                else if (sub == 5) { return idx - (int)EThrowItemName.PURIFY; }
+                break;
+            case EItemType.OTHERS:
+                return MonsterManager.Code2Idx(sub, idx);
+        }
+        return -1;
     }
 
 

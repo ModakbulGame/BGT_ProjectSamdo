@@ -15,11 +15,11 @@ MonoBehaviour:
   Idx: 1
   Id: Q002
   Enum: 1
-  Name: "\uC0AC\uB0E5\uC744 \uD574\uBCF4\uC790"
+  Name: "\uC5FC \uC8FD\uC774\uAE30"
   Content:
     Type: 2
-    Amount: 2
-    Monster: 510
+    Amount: 1
+    Monster: 19
     Item:
       Type: 4
       Idx: -1
@@ -27,8 +27,14 @@ MonoBehaviour:
       Type: 4
       Idx: -1
   TimeLimit: 0
-  NextQuest: 3
-  Description: "\uC0DD\uBA85 \uC5FC 2\uB9C8\uB9AC \uC7A1\uAE30"
+  ResultDialogues:
+  - NPC:
+      Type: 1
+      Idx: 0
+    Idx: 1
+  ResultQuests: 
+  Description: "\uC5FC \uC8FD\uC774\uAE30"
+  CompleteInfo: "\uAC00\uAE4C\uC6B4 \uC81C\uB2E8\uACFC \uB300\uD654\uD558\uC138\uC694."
   Reward:
     Type: 2
     Amount: 2
@@ -36,13 +42,3 @@ MonoBehaviour:
     Item:
       Type: 4
       Idx: -1
-  StartDialogue:
-    NPC:
-      Type: 1
-      Idx: 2
-    Idx: 0
-  FinishDialogue:
-    NPC:
-      Type: 1
-      Idx: 2
-    Idx: 1

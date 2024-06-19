@@ -10,11 +10,16 @@ public class QuestScriptable : ScriptableObject
     public string Name;                         // 퀘스트 이름
     public QuestContent Content;                // 퀘스트 내용
     public float TimeLimit;                     // 제한 시간
-    public EQuestName NextQuest;                // 다음 퀘스트
+    public List<NPCDialogue> ResultDialogues;   // 완료 시 오픈
+    public List<EQuestName> ResultQuests;       // 완료 시 오픈
     public string Description;                  // 퀘스트 설명
+    public string CompleteInfo;                 // 완료 후 사이드바에 표시
     public QuestReward Reward;                  // 보상
-    public NPCDialogue StartDialogue;           // 퀘스트를 주는 대화
-    public NPCDialogue FinishDialogue;          // 퀘스트 완료 대화
+
+    public void AddResultQuest(EQuestName _quest)
+    {
+        ResultQuests.Add(_quest);
+    }
 
     private QuestContent String2Content(string _type, string _detail, string _amount)
     {
@@ -63,26 +68,19 @@ public class QuestScriptable : ScriptableObject
         Debug.LogError("보상 타입 잘못 입력됨");
         return QuestReward.Null;
     }
-    private NPCDialogue String2Dialogue(string _data)
-    {
-        string[] data = _data.Split('_');
-        SNPC npc = StoryManager.String2NPC(data[0]);
-        int.TryParse(data[1], out int idx);
-        return new(npc, idx);
-    }
 
     public void SetQuestScriptable(uint _idx, string[] _data)
     {
         Idx =               _idx;
-        Id =                _data[(int)EQuestAttribute.ID];
+        Id =                _data[(int)EQuestAttributes.ID];
         Enum =              (EQuestName)Idx;
-        Name =              _data[(int)EQuestAttribute.NAME];
-        Content =           String2Content(_data[(int)EQuestAttribute.QUEST_TYPE], _data[(int)EQuestAttribute.QUEST_DETAIL], _data[(int)EQuestAttribute.QUEST_AMOUNT]);
-        float.TryParse(     _data[(int)EQuestAttribute.TIME_LIMIT], out TimeLimit);
-        NextQuest =         QuestManager.String2Enum(_data[(int)EQuestAttribute.NEXT_QUEST]);
-        Description =       _data[(int)EQuestAttribute.DESCRIPTION];
-        Reward =            String2Reward(_data[(int)EQuestAttribute.REWARD_TYPE], _data[(int)EQuestAttribute.REWARD_NUM], _data[(int)EQuestAttribute.REWARD_DETAIL]);
-        StartDialogue =     String2Dialogue(_data[(int)EQuestAttribute.START_DIALOGUE]);
-        FinishDialogue =    String2Dialogue(_data[(int)EQuestAttribute.FINISH_DIALOGUE]);
+        Name =              _data[(int)EQuestAttributes.NAME];
+        Content =           String2Content(_data[(int)EQuestAttributes.QUEST_TYPE], _data[(int)EQuestAttributes.QUEST_DETAIL], _data[(int)EQuestAttributes.QUEST_AMOUNT]);
+        float.TryParse(     _data[(int)EQuestAttributes.TIME_LIMIT], out TimeLimit);
+        ResultDialogues =   StoryManager.String2Dialogues(_data[(int)EQuestAttributes.RESULT_DIALOGUES]);
+        ResultQuests = new();
+        Description =       _data[(int)EQuestAttributes.DESCRIPTION];
+        CompleteInfo =      _data[(int)EQuestAttributes.COMPLETE_INFO];
+        Reward =            String2Reward(_data[(int)EQuestAttributes.REWARD_TYPE], _data[(int)EQuestAttributes.REWARD_NUM], _data[(int)EQuestAttributes.REWARD_DETAIL]);
     }
 }

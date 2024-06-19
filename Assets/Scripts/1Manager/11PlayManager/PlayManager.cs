@@ -163,6 +163,7 @@ public class PlayManager : MonoBehaviour
     public static SlateNPC[] SlateList { get { return EnvironmentManager.SlateList; } }
     public static MonsterSpawnPoint[] SpawnPointList { get { return EnvironmentManager.SpawnPointList; } }
     public static void MonsterKilled(EMonsterName _monster, EMonsterDeathType _type) { EnvironmentManager.MonsterKilled(_monster, _type); }
+    public static void UnlockDialogue(NPCDialogue _dial) { EnvironmentManager.UnlockDialogue(_dial); }
 
 
     // 플레이어 능력치, 권능
@@ -228,9 +229,7 @@ public class PlayManager : MonoBehaviour
     // NPC UI
     public static void ShowNPCQuestUI(EQuestName _quest, bool _isStart, FPointer _confirm) { PlayUIManager.ShowNPCQuestUI(_quest, _isStart, _confirm); }    // 퀘스트 수락/거절 창 표시
     public static void OpenDialogueUI(NPCScript _npc, int _idx) { PlayUIManager.OpenDialogueUI(_npc, _idx); }                               // NPC 대화창 열기
-    public static void CloseDialogueUI() { PlayUIManager.CloseDialogueUI(); }                                                               // NPC 대화창 닫기
     public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                  // NPC 대화창 열렸는지 확인
-    public static void ShowNextDialogue() { PlayUIManager.ShowNextDialogue(); }                                                             // 다음 대화 출력
 
     // 기타
     public static Vector2 NormalizeLocation(Transform _obj) { return PlayUIManager.NormalizeLocation(_obj); }                               // 위치 정규화(3D -> 2D)

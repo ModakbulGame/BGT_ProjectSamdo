@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EQuestAttribute
+public enum EQuestAttributes
 {
     ID,
     NAME,
@@ -10,13 +10,12 @@ public enum EQuestAttribute
     QUEST_DETAIL,
     QUEST_AMOUNT,
     TIME_LIMIT,
-    NEXT_QUEST,
+    RESULT_DIALOGUES,
     DESCRIPTION,
+    COMPLETE_INFO,
     REWARD_TYPE,
     REWARD_NUM,
     REWARD_DETAIL,
-    START_DIALOGUE,
-    FINISH_DIALOGUE,
     LAST
 }
 

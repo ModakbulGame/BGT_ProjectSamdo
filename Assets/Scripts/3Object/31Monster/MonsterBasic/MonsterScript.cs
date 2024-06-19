@@ -106,7 +106,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     }
     public void DeathResult()           // 사망 원인에 따른 결과
     {
-        if(DeathType == EMonsterDeathType.PURIFY || DeathType == EMonsterDeathType.BY_PLAYER)
+        if(false && DeathType == EMonsterDeathType.PURIFY || DeathType == EMonsterDeathType.BY_PLAYER)      // 잠정 중단
         {
             DropItems();                        // 아이템 드랍
             if (!GameManager.CheckNClearMonster(MonsterEnum))

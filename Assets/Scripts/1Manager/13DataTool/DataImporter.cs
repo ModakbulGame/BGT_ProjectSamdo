@@ -72,7 +72,7 @@ public static class DataImporter
             for (int j = 0; j<4; j++)
             {
                 string item = splitDropData[(int)EDropAttribute.ITEM1 + j * 2];
-                if(item == "") { continue; }
+                if (item == "") { continue; }
                 float.TryParse(splitDropData[(int)EDropAttribute.RATE1 + j * 2], out float rate);
                 SDropItem drop = new(item, rate);
                 items.Add(drop);
@@ -166,7 +166,7 @@ public static class DataImporter
                 case ValueDefine.WEAPON_CODE:
                     type = (uint)EItemType.WEAPON;
                     scriptable = AssetDatabase.LoadMainAssetAtPath($"{ItemScriptablePaths[type] + id}.asset")as WeaponScriptable;
-                    if(scriptable == null)
+                    if (scriptable == null)
                     {
                         scriptable = ScriptableObject.CreateInstance<WeaponScriptable>();
                         AssetDatabase.CreateAsset(scriptable, $"{ItemScriptablePaths[type] + id}.asset");
@@ -311,6 +311,7 @@ public static class DataImporter
 
         string dialNPC = "";
 
+        uint dialIdx = 0;
         for (uint i = 1; i < allDialogueLines.Length; i++)
         {
             string si = allDialogueLines[i];
@@ -320,10 +321,10 @@ public static class DataImporter
             dialNPC = newNPC != "" ? newNPC : dialNPC;
             int.TryParse(splitDialogueData[(int)EDialogueAttributes.DIALOGUE_IDX], out int dialogueIdx);
             List<string[]> datas = new();
-            while(i < allDialogueLines.Length)
+            while (i < allDialogueLines.Length)
             {
                 datas.Add(splitDialogueData);
-                if(i == allDialogueLines.Length - 1) { break; }
+                if (i == allDialogueLines.Length - 1) { break; }
                 si = allDialogueLines[++i];
                 splitDialogueData = si.Split(',');
                 if (splitDialogueData[(int)EDialogueAttributes.DIALOGUE_IDX] != "") { i--; break; }
@@ -348,11 +349,12 @@ public static class DataImporter
             }
             dialogueData.Add(scriptable);
 
-            scriptable.SetScriptable(dialNPC, datas);
+            scriptable.SetScriptable(dialIdx++, dialNPC, datas);
 
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(scriptable);
         }
+
 
         // 퀘스트 정보
         string[] allQuestLines = File.ReadAllLines(CSVPath + QuestCSVName);
@@ -365,13 +367,13 @@ public static class DataImporter
             string si = allQuestLines[i];
             string[] splitQuestData = si.Split(',');
 
-            if (splitQuestData.Length != (int)EQuestAttribute.LAST)
+            if (splitQuestData.Length != (int)EQuestAttributes.LAST)
             {
-                Debug.Log(si + $"does not have {(int)EQuestAttribute.LAST} values.");
+                Debug.Log(si + $"does not have {(int)EQuestAttributes.LAST} values.");
                 return;
             }
 
-            string id = splitQuestData[(int)EQuestAttribute.ID];
+            string id = splitQuestData[(int)EQuestAttributes.ID];
 
             QuestScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{QuestScriptablePath + id}.asset") as QuestScriptable;
 
@@ -388,10 +390,57 @@ public static class DataImporter
             EditorUtility.SetDirty(scriptable);
         }
 
+        foreach (QuestScriptable quest in questData)                    // 이어지는 퀘스트 추가
+        {
+            List<NPCDialogue> questDials = quest.ResultDialogues;
+            foreach (NPCDialogue questDial in questDials)
+            {
+                DialogueScriptable curDial = null;
+                foreach (DialogueScriptable compDial in dialogueData)
+                {
+                    if (questDial == compDial.NPCDial) { curDial = compDial; break; }
+                }
+                if (curDial == null) { break; }
+                foreach (DialLine line in curDial.Lines)
+                {
+                    DialQuest dialQuest = line.ResultQuest;
+                    EQuestName dialResultQuest = dialQuest.Quest;
+                    if (line.HasQuest && dialQuest.Function == EDialQuestFunction.START && !quest.ResultQuests.Contains(dialResultQuest))
+                    {
+                        quest.AddResultQuest(dialResultQuest);
+                    }
+                }
+            }
+        }
+        foreach (DialogueScriptable dial in dialogueData)       // 최초 시작 대화 설정1
+        {
+            foreach (DialLine line in dial.Lines)
+            {
+                foreach (NPCDialogue result in line.ResultDialogues)
+                {
+                    foreach (DialogueScriptable data in dialogueData)
+                    {
+                        if (dial == data || !data.IsOpenAtFirst) { continue; }
+                        if (data.NPCDial == result) { data.DisableFirstOpen(); break; }
+                    }
+                }
+            }
+        }
+        foreach (QuestScriptable quest in questData)            // 최초 시작 대화 설정2
+        {
+            foreach (NPCDialogue result in quest.ResultDialogues)
+            {
+                foreach (DialogueScriptable data in dialogueData)
+                {
+                    if (!data.IsOpenAtFirst) { continue; }
+                    if (data.NPCDial == result) { data.DisableFirstOpen(); break; }
+                }
+            }
+        }
 
         GameObject hellMap = AssetDatabase.LoadMainAssetAtPath(HellMapPath) as GameObject;
         OasisNPC[] oasisList = hellMap.GetComponentsInChildren<OasisNPC>();
-        if(oasisList.Length != (int)EOasisName.LAST) { Debug.LogError("맵에 오아시스 개수 다름"); return; }
+        if (oasisList.Length != (int)EOasisName.LAST) { Debug.LogError("맵에 오아시스 개수 다름"); return; }
         AltarNPC[] altarList = hellMap.GetComponentsInChildren<AltarNPC>();
         if (altarList.Length != (int)EAltarName.LAST) { Debug.LogError("맵에 제단 개수 다름"); return; }
         SlateNPC[] slateList = hellMap.GetComponentsInChildren<SlateNPC>();
@@ -423,14 +472,23 @@ public static class DataImporter
 
             scriptable.SetNPCScriptable(idx, splitNPCData);
 
-            foreach (DialogueScriptable dial in dialogueData)
+            foreach (DialogueScriptable dial in dialogueData)               // 대화, 퀘스트 중 NPC에 해당하는 거 추가
             {
-                if(dial.NPC == scriptable.NPC) { scriptable.AddDialogue(dial); }
+                if (dial.NPC == scriptable.NPC)
+                {
+                    scriptable.AddDialogue(dial);
+
+                    foreach (DialLine line in dial.Lines)
+                    {
+                        DialQuest resultQuests = line.ResultQuest;
+                        if (resultQuests.Function == EDialQuestFunction.START)
+                        {
+                            scriptable.AddQuest(questData[(int)resultQuests.Quest]);
+                        }
+                    }
+                }
             }
-            foreach (QuestScriptable quest in questData)
-            {
-                if(quest.StartDialogue.NPC == scriptable.NPC) { scriptable.AddQuest(quest); }
-            }
+
 
             if (!IsExist)
             {
@@ -480,7 +538,7 @@ public static class DataImporter
         AssetDatabase.SaveAssets();
         EditorUtility.SetDirty(gameManager);
 
-        Debug.Log("NPC, 퀘스트 정보 불러오기 완료");
+        Debug.Log("스토리 정보 불러오기 완료");
     }
 }
 #endif

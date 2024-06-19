@@ -145,11 +145,9 @@ public class PlayUIManager : MonoBehaviour
 
     // NPC
     [SerializeField]
-    private NPCDialogueScript m_dialogueUI;                 // NPC UI
+    private NPCDialogueUI m_dialogueUI;                 // NPC UI
     public bool IsDialogueUIOpend { get { return m_dialogueUI.gameObject.activeSelf; } }
     public void OpenDialogueUI(NPCScript _npc, int _idx) { m_dialogueUI.OpenUI(_npc, _idx); }
-    public void CloseDialogueUI() { m_dialogueUI.CloseUI(); }
-    public void ShowNextDialogue() { m_dialogueUI.ShowAllDialogue(); }
 
     [SerializeField]
     private QuestAcceptUIScript m_questAcceptUI;        // NPC 대화 끝에 나오는 퀘스트 창

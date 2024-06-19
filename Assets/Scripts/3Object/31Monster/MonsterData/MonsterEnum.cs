@@ -36,18 +36,14 @@ public enum EMonsterName            // 몬스터 이름
     STARVED_HHM,        // 굶주린 흠
     WOLF,               // 늑대
     BLOKAN,             // 블로칸
-    LIFE_ETC,           // 생명 잡몹
 
     MISERABLE_HHM,      // 비참한 흠
     FROMETZ,            // 프로메츠
     MARMULAK,           // 마르물락 파수꾼
-    WATER_ETC,          // 물 잡몹
 
     ARROGANT_HHM,       // 거만한 흠
     BLINK_BEAK,         // 깜빡부리
     UUM,                // 움
-    CRYSTAL_ELITE,      // 광물 엘리트
-    CRYSTAL_ETC,        // 광물 잡몹
 
     BOSS,               // 최종 보스
 

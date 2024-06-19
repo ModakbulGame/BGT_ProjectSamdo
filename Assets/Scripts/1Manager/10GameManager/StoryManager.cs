@@ -29,6 +29,8 @@ public struct SNPC
 }
 public class StoryManager : MonoBehaviour
 {
+    private static StoryManager Inst;
+
     [SerializeField]
     private NPCScriptable[] m_npcData;
     [SerializeField]
@@ -98,6 +100,47 @@ public class StoryManager : MonoBehaviour
         };
     }
 
+    public static List<EQuestName> String2Quests(string _data)
+    {
+        List<EQuestName> quests = new();
+        string[] data = _data.Split('/');
+        for (int i = 0; i<data.Length; i++)
+        {
+            if (data[i] == "") { break; }
+            EQuestName cur = ID2Quest(data[i]);
+            quests.Add(cur);
+        }
+        return quests;
+    }
+    public static List<NPCDialogue> String2Dialogues(string _data)
+    {
+        List<NPCDialogue> dials = new();
+        string[] data = _data.Split('/');
+        for (int i = 0; i<data.Length; i++)
+        {
+            if (data[i] == "") { break; }
+            NPCDialogue cur = String2Dialogue(data[i]);
+            dials.Add(cur);
+        }
+        return dials;
+    }
+    private static NPCDialogue String2Dialogue(string _data)
+    {
+        string[] data = _data.Split('_');
+        SNPC npc = String2NPC(data[0]);
+        int.TryParse(data[1], out int idx);
+        return new(npc, idx);
+    }
+
+    public static DialogueScriptable Dial2Data(NPCDialogue _dial)
+    {
+        foreach (DialogueScriptable data in Inst.m_dialogueData)
+        {
+            if(data.NPCDial == _dial) { return data; }
+        }
+        return null;
+    }
+
 
     private void CreateDialogueDictionary()
     {
@@ -112,6 +155,7 @@ public class StoryManager : MonoBehaviour
 
     public void SetManager()
     {
+        Inst = this;
         CreateDialogueDictionary();
     }
 }

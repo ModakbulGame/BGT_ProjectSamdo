@@ -23,27 +23,37 @@ public class QuestManager : MonoBehaviour, IHaveData
     public void SetQuestStatus(EQuestName _quest, EQuestState _status) 
     {
         m_questInfoList[(int)_quest].SetQuestStatus(_status);
+        if(_status == EQuestState.COMPLETE) { CompleteQuest(_quest); }
         if(_status == EQuestState.FINISH) { FinishQuest(_quest); }
+        PlayManager.UpdateQuestSidebar();
     }
 
     public void SetQuestProgress(EQuestName _quest, float _prog)
     {
         QuestInfo info = m_questInfoList[(int)_quest];
         info.SetQuestProgress(_prog);
-        if(_prog == info.QuestContent.Amount) { SetQuestStatus(_quest, EQuestState.COMPLETE); }
+        if(_prog == info.QuestContent.Amount) { SetQuestStatus(_quest, EQuestState.COMPLETE); return; }
+        PlayManager.UpdateQuestSidebar();
     }
 
+    private void CompleteQuest(EQuestName _quest)
+    {
+        QuestScriptable data = GameManager.GetQeustData(_quest);
+        foreach (NPCDialogue dial in data.ResultDialogues)
+        {
+            PlayManager.UnlockDialogue(dial);
+        }
+    }
     private void FinishQuest(EQuestName _quest)
     {
         QuestScriptable data = GameManager.GetQeustData(_quest);
         QuestReward reward = data.Reward;
         GetReward(reward);
-
     }
 
     private void GetReward(QuestReward _reward)
     {
-
+        Debug.Log($"{_reward.Type} {_reward.Amount}¸¸Å­ È¹µæ!");
     }
 
 

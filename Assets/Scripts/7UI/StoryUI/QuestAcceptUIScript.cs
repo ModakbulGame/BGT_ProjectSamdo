@@ -59,6 +59,7 @@ public class QuestAcceptUIScript : BaseUI
         {
             FinishQuest();
         }
+        ConfirmFunction();
         CloseUI();
     }
     private void AcceptQuest()
@@ -76,12 +77,6 @@ public class QuestAcceptUIScript : BaseUI
     {
         ConfirmFunction();
         CloseUI();
-    }
-
-    public override void CloseUI()
-    {
-        PlayManager.CloseDialogueUI();
-        base.CloseUI();
     }
 
 

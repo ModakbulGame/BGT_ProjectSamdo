@@ -1,3 +1,4 @@
+using MalbersAnimations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -59,8 +60,23 @@ public class MonsterManager : MonoBehaviour
 
     public static EMonsterName ID2Monster(string _id)
     {
-        int.TryParse(_id[1..], out int idx);
-        return (EMonsterName)idx;
+        int.TryParse(_id[1..], out int code);
+        int area = code / 100;
+        int idx = code % 100 - 1;
+        int monsterIdx = Code2Idx(area, idx);
+        return monsterIdx > 0 ? (EMonsterName)monsterIdx : EMonsterName.LAST;
+    }
+
+    public static int Code2Idx(int _area, int _idx)
+    {
+        switch (_area)
+        {
+            case 1: return _idx;
+            case 2: return _idx + (int)EMonsterName.MISERABLE_HHM;
+            case 3: return _idx + (int)EMonsterName.ARROGANT_HHM;
+            case 5: return _idx + (int)EMonsterName.SKURRABY_LIFE;
+        }
+        return -1;
     }
 
 

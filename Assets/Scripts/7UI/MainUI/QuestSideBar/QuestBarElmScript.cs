@@ -14,8 +14,9 @@ public class QuestBarElmScript : MonoBehaviour
 
         string desc = _info.QuestData.Description;
         string prog = $"({_info.QuestProgress}/{_info.QuestData.Content.Amount})";
-        m_descTxt.text = $"{desc} {prog}";
-        m_stateTxt.text = _info.State == EQuestState.ACCEPTED ? "진행중" : "완료됨";
+        bool isAccepted = _info.State == EQuestState.ACCEPTED;
+        m_descTxt.text = isAccepted ?  $"{desc} {prog}" : _info.QuestData.CompleteInfo;
+        m_stateTxt.text = isAccepted ? "진행중" : "완료됨";
     }
 
     public void HideElm()

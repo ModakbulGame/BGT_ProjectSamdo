@@ -1,11 +1,14 @@
-NPC,DialogueIdx,BranchIdx,LineIdx,LineText,ResultQuest,QuestFunction
-ALTAR01,0,0,0,내 목숨을 아이어에!,,
-,,,1,아둔을 위하여!,,
-,,,2,작동 개시.,Q001,START
-,1,0,0,제단3과 대화,,
-,,,1,하세요,,
-,,,2,..,Q003,START
-ALTAR02,0,0,0,도적이 되고 싶은 자는 나에게…,,
-,,,1,자네는 이제부터 어쌔신이야,Q001,COMPLETE_FINISH
-ALTAR03,0,0,0,기분좋은 향기가 솔솔 피어난다,,
-,,,1,자고라스 벽을 부숴봐요,Q003,COMPLETE_FINISH
+NPC,DialogueIdx,BranchIdx,LineIdx,LineText,ResultDialogues,ResultQuest,QuestFunction
+ALTAR01,0,0,0,바로 왼쪽 제단과,,,
+,,,1,대화,,,
+,,,2,하세요,ALTAR02_0,Q001,START
+,1,0,0,잘했습니다,,,
+,,,1,하하,,Q002,FINISH
+,,,2,제일 왼쪽 제단과 대화,,,
+,,,3,하세요,ALTAR03_0,Q003,START
+ALTAR02,0,0,0,도적이 되고 싶은 자는 나에게…,,,
+,,,1,자네는 이제부터 어쌔신이야,ALTAR02_1,Q001,COMPLETE_FINISH
+,1,0,0,염을 죽여,,,
+,,,,보세요,,Q002,START
+ALTAR03,0,0,0,퀘스트,,,
+,,,1,끝,,Q003,COMPLETE_FINISH
