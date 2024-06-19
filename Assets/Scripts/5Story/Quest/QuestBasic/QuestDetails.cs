@@ -5,16 +5,16 @@ using System.Collections.Generic;
 [Serializable]
 public class QuestInfo          // 퀘스트 현황
 {
-    public EQuestEnum QuestName;        // Enum
-    public EQuestStatus Status;         // 상태
+    public EQuestName QuestName;        // Enum
+    public EQuestState State;         // 상태
     public float QuestProgress;         // 진행도
     public float QuestTimeCount;        // 남은 시간
-    public void SetQuestStatus(EQuestStatus _status) { Status = _status; }
+    public void SetQuestStatus(EQuestState _status) { State = _status; }
     public void SetQuestProgress(float _prog) { QuestProgress = _prog; }
     public QuestScriptable QuestData { get { return GameManager.GetQeustData(QuestName); } }
     public QuestContent QuestContent { get { return QuestData.Content; } }
     public float QuestTimeLimit { get { return QuestData.TimeLimit; } }
-    private void SetInfo(EQuestEnum _name, EQuestStatus _status, float _progress, float _time)
+    private void SetInfo(EQuestName _name, EQuestState _status, float _progress, float _time)
     {
         QuestName = _name;
         SetQuestStatus(_status);
@@ -22,8 +22,8 @@ public class QuestInfo          // 퀘스트 현황
         QuestTimeCount = _time;
     }
     public QuestInfo() { }
-    public QuestInfo(EQuestEnum _name) { SetInfo(_name, EQuestStatus.NOT_AVAILABLE, 0, 0); }
-    public QuestInfo(QuestInfo _other) { SetInfo(_other.QuestName, _other.Status, _other.QuestProgress, 0); }
+    public QuestInfo(EQuestName _name) { SetInfo(_name, EQuestState.LOCKED, 0, 0); }
+    public QuestInfo(QuestInfo _other) { SetInfo(_other.QuestName, _other.State, _other.QuestProgress, 0); }
 }
 
 [Serializable]

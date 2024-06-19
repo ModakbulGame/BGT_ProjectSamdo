@@ -32,10 +32,10 @@ public enum EQuestType
     LAST
 }
 
-public enum EQuestStatus
+public enum EQuestState
 {
-    NOT_AVAILABLE,
-    AVAILABLE,
+    LOCKED,
+    UNLOCKED,
     ACCEPTED,
     COMPLETE,
     FAIL,
@@ -44,7 +44,7 @@ public enum EQuestStatus
     LAST
 }
 
-public enum EQuestEnum
+public enum EQuestName
 {
     Q1,
     Q2,

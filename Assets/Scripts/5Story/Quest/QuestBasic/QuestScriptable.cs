@@ -6,11 +6,11 @@ public class QuestScriptable : ScriptableObject
 {
     public uint Idx;
     public string Id;                   // 퀘스트 ID
-    public EQuestEnum Enum;
+    public EQuestName Enum;
     public string Name;                 // 퀘스트 이름
     public QuestContent Content;        // 퀘스트 내용
     public float TimeLimit;             // 제한 시간
-    public EQuestEnum NextQuest;        // 다음 퀘스트
+    public EQuestName NextQuest;        // 다음 퀘스트
     public string Description;          // 퀘스트 설명
     public QuestReward Reward;          // 보상
     public SNPC StartNPC;               // 퀘스트를 주는 오브젝트
@@ -68,7 +68,7 @@ public class QuestScriptable : ScriptableObject
     {
         Idx =           _idx;
         Id =            _data[(int)EQuestAttribute.ID];
-        Enum =          (EQuestEnum)Idx;
+        Enum =          (EQuestName)Idx;
         Name =          _data[(int)EQuestAttribute.NAME];
         Content =       Data2Content(_data[(int)EQuestAttribute.QUEST_TYPE], _data[(int)EQuestAttribute.QUEST_DETAIL], _data[(int)EQuestAttribute.QUEST_AMOUNT]);
         float.TryParse( _data[(int)EQuestAttribute.TIME_LIMIT], out TimeLimit);

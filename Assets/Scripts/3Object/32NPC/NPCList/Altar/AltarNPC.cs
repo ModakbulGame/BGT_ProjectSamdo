@@ -12,11 +12,4 @@ public class AltarNPC : QuestNPCScript
         m_altarName = (EAltarName)_idx;
         SetScriptable(_scriptable);
     }
-
-
-    public override void StartInteract()
-    {
-        // PlayManager.OpenAlterUI(this);
-        GameManager.SetControlMode(EControlMode.UI_CONTROL);
-    }
 }

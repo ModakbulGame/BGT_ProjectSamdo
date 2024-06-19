@@ -51,7 +51,7 @@ public static class ValueDefine
     public const int MAX_REGISTER_PATTERN = 5;                      // 최대 각인 가능 문양
     public const int MAX_QUEST_NUM = 4;                             // 최대 진행 가능 퀘스트
     public const int DIE_DAMAGE = 999;
-    public const int MAX_NPC_NUM = 9;
+    public const int MAX_NPC_NUM = 99;                              // 종류별 NPC 수
 
 
     // 쉐이더

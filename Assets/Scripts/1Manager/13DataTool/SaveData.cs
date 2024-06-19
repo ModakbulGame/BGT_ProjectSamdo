@@ -31,11 +31,13 @@ public class SaveData
     public bool[] PowerObtained;
 
 
-    // 퀘스트 정보
+    // 스토리 정보
+    public List<NPCSaveData> NPCData;
     public QuestInfo[] QuestInfos;
 
 
     // 몬스터 정보
+    public bool[] MonsterKilled;
     public List<MonsterSaveData> MonsterData;
 
     public SaveData()
@@ -54,9 +56,11 @@ public class SaveData
         Inventory = new InventoryElm[ValueDefine.MAX_INVENTORY];
         for(int i = 0; i<ValueDefine.MAX_INVENTORY; i++) { Inventory[i] = new(); }
 
-        QuestInfos = new QuestInfo[(int)EQuestEnum.LAST];
-        for(int i = 0; i<(int)EQuestEnum.LAST; i++) { QuestInfos[i] = new((EQuestEnum)i); }
+        NPCData = new();
+        QuestInfos = new QuestInfo[(int)EQuestName.LAST];
+        for(int i = 0; i<(int)EQuestName.LAST; i++) { QuestInfos[i] = new((EQuestName)i); }
 
+        MonsterKilled = new bool[(int)EMonsterName.LAST];
         MonsterData = new();
     }
     public SaveData(SaveData _other)
@@ -87,9 +91,13 @@ public class SaveData
         Inventory = new InventoryElm[ValueDefine.MAX_INVENTORY];
         for(int i = 0; i<ValueDefine.MAX_INVENTORY; i++) { Inventory[i] = new(_other.Inventory[i]); }
 
-        QuestInfos = new QuestInfo[(int)EQuestEnum.LAST];
-        for(int i = 0; i<(int)EQuestEnum.LAST; i++) { QuestInfos[i] = new(_other.QuestInfos[i]); }
+        NPCData = new();
+        foreach(NPCSaveData npc in _other.NPCData) { NPCData.Add(new(npc)); }
+        QuestInfos = new QuestInfo[(int)EQuestName.LAST];
+        for(int i = 0; i<(int)EQuestName.LAST; i++) { QuestInfos[i] = new(_other.QuestInfos[i]); }
 
+        MonsterKilled = new bool[(int)EMonsterName.LAST];
+        for(int i = 0; i<(int)EMonsterName.LAST; i++) { MonsterKilled[i] = _other.MonsterKilled[i]; }
         MonsterData = new();
         foreach(MonsterSaveData monster in _other.MonsterData) { MonsterData.Add(monster); }
     }

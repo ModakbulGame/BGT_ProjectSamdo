@@ -17,6 +17,7 @@ public static class DataImporter
     private const string DropCSVName = "DropSheet.csv";
     private const string PowerCSVName = "PowerSheet.csv";
     private const string NPCCSVName = "NPCSheet.csv";
+    private const string DialogueCSVName = "DialogueSheet.csv";
     private const string QuestCSVName = "QuestSheet.csv";
 
     // 스크립터블 경로
@@ -34,6 +35,7 @@ public static class DataImporter
     private const string PowerScriptablePath = ScriptablePath + "PowerScriptable/";
     private const string NPCScriptablePath = ScriptablePath + "NPCScriptable/";
     private const string QuestScriptablePath = ScriptablePath + "QuestScriptable/";
+    private const string DialogueScriptablePath = ScriptablePath + "DialogueScriptable/";
 
     // 프리펍 경로
     private const string PrefabPath = "Assets/Prefabs/";
@@ -300,9 +302,55 @@ public static class DataImporter
         Debug.Log("권능 정보 불러오기 완료");
     }
 
-    [MenuItem("Utilities/GenerateNPCNQuest")]
-    private static void GenerateNPCData()
+    [MenuItem("Utilities/GenerateStory")]
+    private static void GenerateStory()
     {
+        // 대화 정보
+        string[] allDialogueLines = File.ReadAllLines(CSVPath + DialogueCSVName);
+        List<DialogueScriptable> dialogueData = new();
+
+        for (uint i = 1; i < allDialogueLines.Length; i++)
+        {
+            string si = allDialogueLines[i];
+            string[] splitDialogueData = si.Split(',');
+
+            string npc = splitDialogueData[(int)EDialogueAttributes.NPC];
+            int.TryParse(splitDialogueData[(int)EDialogueAttributes.DIALOGUE_IDX], out int dialogueIdx);
+            List<string[]> datas = new();
+            while(i < allDialogueLines.Length)
+            {
+                datas.Add(splitDialogueData);
+                if(i == allDialogueLines.Length - 1) { break; }
+                si = allDialogueLines[++i];
+                splitDialogueData = si.Split(',');
+                if (splitDialogueData[(int)EDialogueAttributes.DIALOGUE_IDX] != "") { i--; break; }
+            }
+
+            string folderPath = $"{DialogueScriptablePath}/{npc}";
+            // 폴더가 이미 존재하는지 확인
+            if (!AssetDatabase.IsValidFolder(folderPath))
+            {
+                AssetDatabase.CreateFolder(DialogueScriptablePath[..(DialogueScriptablePath.Length-1)], npc);
+                AssetDatabase.SaveAssets();
+            }
+
+            string code = $"{npc}_{dialogueIdx+1}";
+
+            DialogueScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{folderPath}/{code}.asset") as DialogueScriptable;
+
+            if (scriptable == null)
+            {
+                scriptable = ScriptableObject.CreateInstance<DialogueScriptable>();
+                AssetDatabase.CreateAsset(scriptable, $"{folderPath}/{code}.asset");
+            }
+            dialogueData.Add(scriptable);
+
+            scriptable.SetScriptable(npc, datas);
+
+            AssetDatabase.SaveAssets();
+            EditorUtility.SetDirty(scriptable);
+        }
+
         // 퀘스트 정보
         string[] allQuestLines = File.ReadAllLines(CSVPath + QuestCSVName);
 
@@ -349,7 +397,7 @@ public static class DataImporter
         // NPC 정보
         string[] allNPCLines = File.ReadAllLines(CSVPath + NPCCSVName);
 
-        List<NPCScriptable> data = new();
+        List<NPCScriptable> npcData = new();
 
         for (uint i = 1; i < allNPCLines.Length; i++)
         {
@@ -357,7 +405,7 @@ public static class DataImporter
             string si = allNPCLines[i];
             string[] splitNPCData = si.Split(",");
 
-            if (splitNPCData.Length < (int)ENPCAttribute.DIALOGUES - 1)
+            if (splitNPCData.Length != (int)ENPCAttribute.LAST)
             {
                 Debug.Log(si + $"NPC 데이터 줄 개수 모자람");
                 return;
@@ -371,6 +419,11 @@ public static class DataImporter
             if (!IsExist) { scriptable = ScriptableObject.CreateInstance<NPCScriptable>(); }
 
             scriptable.SetNPCScriptable(idx, splitNPCData);
+
+            foreach (DialogueScriptable dial in dialogueData)
+            {
+                if(dial.NPC == scriptable.NPC) { scriptable.AddDialogue(dial); }
+            }
             foreach (QuestScriptable quest in questData)
             {
                 if(quest.StartNPC == scriptable.NPC) { scriptable.AddQuest(quest); }
@@ -407,7 +460,7 @@ public static class DataImporter
                 //EditorUtility.SetDirty(prefab);
             }
 
-            data.Add(scriptable);
+            npcData.Add(scriptable);
 
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(scriptable);
@@ -417,8 +470,9 @@ public static class DataImporter
 
         GameObject gameManager = AssetDatabase.LoadMainAssetAtPath(GameManagerPath) as GameObject;
         StoryManager storyManager = gameManager.GetComponentInChildren<StoryManager>();
+        storyManager.SetNPCData(npcData);
+        storyManager.SetDialogueData(dialogueData);
         storyManager.SetQuestData(questData);
-        storyManager.SetNPCData(data);
 
         AssetDatabase.SaveAssets();
         EditorUtility.SetDirty(gameManager);

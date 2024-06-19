@@ -1,30 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class QuestUIScript : MonoBehaviour
+public class QuestUIScript : BaseUI
 {
-    private bool m_isQuestUIToggle = false;
 
-    public void ToggleQuestUI()
+    public override void OpenUI()
     {
-        if (!m_isQuestUIToggle)
-        {
-            gameObject.SetActive(true);
-            m_isQuestUIToggle = true;
+        base.OpenUI();
+        GameManager.SetControlMode(EControlMode.UI_CONTROL);
+    }
 
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        else
-        {
-            gameObject.SetActive(false);
-            m_isQuestUIToggle = false;
+    public override void UpdateUI()
+    {
 
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+    }
+
+    public override void CloseUI()
+    {
+        GameManager.SetControlMode(EControlMode.THIRD_PERSON);
+        base.CloseUI();
+    }
+
+    public override void SetComps()
+    {
+        base.SetComps();
+
     }
 }
