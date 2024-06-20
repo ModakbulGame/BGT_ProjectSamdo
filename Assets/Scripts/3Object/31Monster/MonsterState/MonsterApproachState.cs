@@ -25,7 +25,12 @@ public class MonsterApproachState : MonoBehaviour, IMonsterState
 
     public void Proceed()
     {
-        if(DelayCount > 0) { DelayCount -= Time.deltaTime; m_monster.LookTarget(); return; }
+        if(DelayCount > 0)
+        {
+            DelayCount -= Time.deltaTime;
+            m_monster.StopMove();
+            m_monster.LookTarget(); return;
+        }
 
         bool targetCheck = m_monster.CheckTarget();
         if (!targetCheck)

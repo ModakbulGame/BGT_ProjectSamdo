@@ -76,8 +76,8 @@ public abstract partial class MonsterScript
 
     protected int AttackIdx { get; set; }
 
-    public bool CanAttack { get { return HasTarget && TargetInAttackRange && AttackTimeCount <= 0; } }  // 공격 가능 여부
-    public float AttackTimeCount { get; set; } = 0;                                                     // 공격 쿨타임
+    public virtual bool CanAttack { get { return HasTarget && TargetInAttackRange && AttackTimeCount <= 0; } }      // 공격 가능 여부
+    public float AttackTimeCount { get; set; } = 0;                                                                 // 공격 쿨타임
 
     public override void AttackTriggerOn()
     {
@@ -194,10 +194,11 @@ public abstract partial class MonsterScript
     public bool HasPath { get; set; } = true;
     public virtual void ApproachTarget()            // 타겟에게 접근
     {
-        if (!HasTarget) { return; }
+        if (!HasTarget) { HasPath = false; return; }
         Vector2 dir = (CurTarget.Position2 - Position2);
-        if (AttackTimeCount > 0 && TargetInAttackRange) { RotateToDir(dir, ERotateSpeed.SLOW); return; }
-        if (!CanAttack && dir.magnitude < FunctionDefine.Max(0.5f, AttackRange - 2)) { m_aiPath.destination = transform.position - 0.1f * new Vector3(dir.x, 0, dir.y); }
+        if (AttackTimeCount > 0 && TargetInAttackRange) { RotateToDir(dir, ERotateSpeed.SLOW); HasPath = false; return; }
+
+        if (!CanAttack && dir.magnitude < FunctionDefine.Max(0.5f, AttackRange - 2)) { m_aiPath.destination = transform.position - 0.1f * new Vector3(dir.x, 0, dir.y); HasPath = true; }
         else if (dir.magnitude < AttackRange - 0.5f) { StopMove(); HasPath = false; }
         else { m_aiPath.destination = CurTarget.Position; HasPath = true; }
     }

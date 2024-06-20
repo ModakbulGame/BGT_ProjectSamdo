@@ -184,7 +184,5 @@ public class WolfScript : MonsterScript
         m_positionState = gameObject.AddComponent<WolfPositionState>();
         m_jabState = gameObject.AddComponent<WolfJabState>();
         ReplaceState(EMonsterState.ATTACK, gameObject.AddComponent<WolfAttackState>());
-
-        Debug.Log(m_jabState.GetType() == typeof(WolfJabState));
     }
 }
