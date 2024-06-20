@@ -6,7 +6,7 @@ public class BlokanScript : BloScript
 {
     public override bool CanPurify => AbsorbedSoul;
 
-
+    public override int AbsorbAmount => 5;
 
 
     private readonly Vector3[] NormalAttackOffsets = new Vector3[2]

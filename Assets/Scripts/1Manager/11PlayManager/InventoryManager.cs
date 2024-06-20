@@ -14,10 +14,15 @@ public class InventoryManager : MonoBehaviour, IHaveData
         GameManager.CreateSideTextAlarm($"¿µÈ¥ {_num}°³ È¹µæ!");
         PlayManager.UpdateMaterials();
     }
-    public void LooseSoul(int _num)
+    public void LooseSoul(int _num) { LooseSoul(_num, false); }
+    public void LooseSoul(int _num, bool _absorbed)
     {
         if (m_soulNum < _num) { Debug.LogError("º¸À¯ ¿µÈ¥º¸´Ù ¸¹Àº °³¼ö »ç¿ë"); return; }
         m_soulNum -= _num;
+        if (_absorbed)
+        {
+            Debug.Log($"¿µÈ¥ {_num}°³ Èí¼ö´çÇÔ.");
+        }
         PlayManager.UpdateMaterials();
     }
 

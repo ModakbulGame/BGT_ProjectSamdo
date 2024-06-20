@@ -317,7 +317,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
         CheckPurify();
 
-        if (CurTarget.IsDead)
+        if (InCombat && CurTarget != null && CurTarget.IsDead)
         {
             ChangeState(EMonsterState.IDLE);
         }

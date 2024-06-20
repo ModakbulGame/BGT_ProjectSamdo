@@ -8,9 +8,13 @@ public class BloScript : MonsterScript
 
     protected bool AbsorbedSoul { get; set; }
 
+    private MonsterSkillScript SkillObj { get { return (MonsterSkillScript)SkillList[0]; } }
+
     [SerializeField]
     private float m_rushSpeed = 6;
     public virtual int AbsorbAmount { get { return 2; } }
+    [SerializeField]
+    private float m_rushDamage = 10;
 
     private bool RushDone { get; set; }
 
@@ -23,21 +27,27 @@ public class BloScript : MonsterScript
         if (!RushDone) { RushBlo(); return; }
         base.ApproachTarget();
     }
-    public override void AttackDone()
-    {
-        if (IsRushing) { RushDone = true; ChangeState(EMonsterState.APPROACH); return; }
-        base.AttackDone();
-    }
-
     private void RushBlo()
     {
         StopMove();
         m_stateManager.ChangeState(m_rushState);
     }
-    public void StartRush()
+
+    public override void CreateAttack()
     {
-        m_anim.SetTrigger("RUSH");
-        IsRushing = true;
+        base.AttackTriggerOn(0);
+    }
+    public override void AttackDone()
+    {
+        m_anim.SetBool("IS_RUSHING", false);
+        if (!RushDone) { RushDone = true; }
+        base.AttackDone();
+    }
+    public void SetRush(bool _start)
+    {
+        m_anim.SetBool("IS_RUSHING", _start);
+        if (!_start) { AttackDone(); AttackTriggerOff(); }
+        IsRushing = _start;
     }
     public void RushToTarget()
     {
@@ -48,16 +58,46 @@ public class BloScript : MonsterScript
         m_rigid.velocity = m_rushSpeed * dir.normalized;
     }
 
+
+    public override void AttackTriggerOn()
+    {
+        if (IsRushing)
+        {
+            SkillObj.gameObject.SetActive(true);
+            SkillObj.SetDamage(this, m_rushDamage, -1);
+            SkillObj.SetReturnTransform(transform);
+            SkillObj.AttackOn();
+        }
+        else
+        {
+            base.AttackTriggerOn();
+        }
+    }
+    public override void AttackTriggerOff()
+    {
+        if (IsRushing)
+        {
+            SkillObj.gameObject.SetActive(false);
+            SkillObj.AttackOff();
+        }
+        else
+        {
+            base.AttackTriggerOff();
+        }
+    }
+
+
     public override void AttackedPlayer(HitData _hit)
     {
-        if (!IsRushing || AbsorbedSoul) { return; }
-        AbsorbSoul();
+        if (!IsRushing) { return; }
+        if (!AbsorbedSoul) { AbsorbSoul(); }
+        SetRush(false);
     }
     private void AbsorbSoul()
     {
         int soul = PlayManager.SoulNum;
         int absorb = FunctionDefine.Min(AbsorbAmount, soul);
-        PlayManager.LooseSoul(absorb);
+        PlayManager.LooseSoul(absorb, true);
         AbsorbedSoul = true;
     }
 

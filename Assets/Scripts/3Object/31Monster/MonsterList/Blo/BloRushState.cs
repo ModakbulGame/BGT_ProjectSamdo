@@ -14,7 +14,7 @@ public class BloRushState : MonoBehaviour, IMonsterState
     {
         if(m_monster == null) { m_monster = _monster; }
 
-        Blo.StartRush();
+        Blo.SetRush(true);
     }
 
     public void Proceed()

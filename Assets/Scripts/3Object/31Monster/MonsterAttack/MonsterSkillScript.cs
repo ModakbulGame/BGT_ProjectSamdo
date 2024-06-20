@@ -9,7 +9,7 @@ public class MonsterSkillScript : ObjectAttackScript
     public void SetDamage(ObjectScript _attacker, float _damage, float _time)
     {
         SetAttack(_attacker, _damage);
-        StartCoroutine(LoseDamage(_time));
+        if (_time > 0) { StartCoroutine(LoseDamage(_time)); }
     }
     public void SetReturnTransform(Transform _transform)
     {
