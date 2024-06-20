@@ -47,8 +47,10 @@ public abstract partial class MonsterScript
     public override void StopMove()                  // 움직임 초기화
     {
         base.StopMove();
+        if (!HasPath) { return; }
         m_aiPath.maxSpeed = 0;
         m_aiPath.destination = Vector3.positiveInfinity;
+        HasPath = false;
     }
 
     public virtual void LookTarget()
