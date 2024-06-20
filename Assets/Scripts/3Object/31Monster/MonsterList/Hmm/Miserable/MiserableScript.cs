@@ -11,7 +11,7 @@ public class MiserableScript : HmmScript
     public override void StartAttack()
     {
         if(IsAttackSkill) { SkillIdx = 0; }
-        AttackIdx =  Random.Range(0, 2);
+        AttackIdx =  Random.Range(0, 4);
         m_anim.SetInteger("ATTACK_IDX", AttackIdx);
         base.StartAttack();
     }
@@ -30,5 +30,10 @@ public class MiserableScript : HmmScript
     public override void AttackTriggerOff()
     {
         AttackObject.AttackOff();
+    }
+    public override void AttackDone()
+    {
+        base.AttackDone();
+        if(AttackIdx <=1) { AttackTimeCount *= 0.5f; }
     }
 }

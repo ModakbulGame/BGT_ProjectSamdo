@@ -16,7 +16,7 @@ public class MarmulakScript : RangedAttackMonster
     public override bool CanPurify => RoarTimeCount >= (RoarCooltime - PurifyTime);
 
     public EMarmulakAttack CurAttack { get; private set; } = EMarmulakAttack.NORMAL;
-    private readonly float NearAttackRange = 3;
+    private readonly float NearAttackRange = 1.5f;
 
     private bool CanRoar { get { return TargetDistance <= RoarRange && RoarTimeCount <= 0; } }
 
