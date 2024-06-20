@@ -464,11 +464,22 @@ public static class DataImporter
             }
 
             string npc = splitNPCData[(int)ENPCAttribute.SNPC];
+            ENPCType npcType = StoryManager.String2NPC(npc).Type;
 
-            NPCScriptable scriptable = AssetDatabase.LoadMainAssetAtPath($"{NPCScriptablePath + npc}.asset") as NPCScriptable;
+            NPCScriptable scriptable;
+            if (npcType == ENPCType.OASIS) { scriptable = AssetDatabase.LoadMainAssetAtPath($"{NPCScriptablePath + npc}.asset") as OasisScriptable; }
+            else { scriptable = AssetDatabase.LoadMainAssetAtPath($"{NPCScriptablePath + npc}.asset") as NPCScriptable; }
 
             bool IsExist = scriptable != null;
-            if (!IsExist) { scriptable = ScriptableObject.CreateInstance<NPCScriptable>(); }
+            if (!IsExist) 
+            {
+                if (npcType == ENPCType.OASIS) {scriptable =ScriptableObject.CreateInstance<OasisScriptable>(); }
+                else { scriptable = ScriptableObject.CreateInstance<NPCScriptable>(); }
+            }
+
+
+
+
 
             scriptable.SetNPCScriptable(idx, splitNPCData);
 
@@ -495,18 +506,17 @@ public static class DataImporter
                 AssetDatabase.CreateAsset(scriptable, $"{NPCScriptablePath + npc}.asset");
             }
 
-            ENPCType type = scriptable.NPC.Type;
-            if (type == ENPCType.OASIS)
+            if (npcType == ENPCType.OASIS)
             {
                 uint oasisIdx = idx;
                 oasisList[oasisIdx].SetOasis(oasisIdx, scriptable);
             }
-            else if (type == ENPCType.ALTAR)
+            else if (npcType == ENPCType.ALTAR)
             {
                 uint altarIdx = idx - (int)EOasisName.LAST;
                 altarList[altarIdx].SetAltar(altarIdx, scriptable);
             }
-            else if (type == ENPCType.SLATE)
+            else if (npcType == ENPCType.SLATE)
             {
                 uint slateIdx = idx - (int)EOasisName.LAST - (int)EAltarName.LAST;
                 slateList[slateIdx].SetSlate(slateIdx, scriptable);

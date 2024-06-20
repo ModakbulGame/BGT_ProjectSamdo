@@ -34,6 +34,11 @@ public enum EOasisName
     START2,
     LIFE1,
     LIFE2,
+    GOD,
+    WATER1,
+    WATER2,
+    CRYSTAL1,
+    CRYSTAL2,
 
     LAST
 }
