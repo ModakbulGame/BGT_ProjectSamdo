@@ -13,18 +13,6 @@ public enum ELifeGuardianSkill
 
 public class LifeGuardianScript : AnimatedAttackMonster
 {
-    public override void SetDestination(Vector3 _destination)
-    {
-        base.SetDestination(_destination);
-        m_anim.SetBool("IS_MOVING", true);
-    }
-    public override void StopMove()
-    {
-        base.StopMove();
-        m_anim.SetBool("IS_MOVING", false);
-    }
-
-
     private bool AttackProceed { get; set; }
     private readonly float[] AttackAngle = new float[4] { 0, 30, -30, -15 };
 

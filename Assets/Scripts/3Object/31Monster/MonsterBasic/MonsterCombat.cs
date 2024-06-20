@@ -198,7 +198,7 @@ public abstract partial class MonsterScript
         Vector2 dir = (CurTarget.Position2 - Position2);
         if (AttackTimeCount > 0 && TargetInAttackRange) { RotateToDir(dir, ERotateSpeed.SLOW); HasPath = false; return; }
 
-        if (!CanAttack && dir.magnitude < FunctionDefine.Max(0.5f, AttackRange - 2)) { m_aiPath.destination = transform.position - 0.1f * new Vector3(dir.x, 0, dir.y); HasPath = true; }
+        if (AttackTimeCount > 0 && dir.magnitude < FunctionDefine.Max(0.5f, AttackRange - 2)) { m_aiPath.destination = transform.position - 0.1f * new Vector3(dir.x, 0, dir.y); HasPath = true; }
         else if (dir.magnitude < AttackRange - 0.5f) { StopMove(); HasPath = false; }
         else { m_aiPath.destination = CurTarget.Position; HasPath = true; }
     }

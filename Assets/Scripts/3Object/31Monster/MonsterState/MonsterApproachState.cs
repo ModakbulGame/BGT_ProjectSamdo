@@ -12,8 +12,6 @@ public class MonsterApproachState : MonoBehaviour, IMonsterState
     private float DelayCount { get; set; }
     private float MissCount { get; set; }
 
-    public bool IsMoving { get { return m_monster.HasPath; } }
-
     public void ChangeTo(MonsterScript _monster)
     {
         if (m_monster == null) { m_monster = _monster; }
@@ -31,6 +29,8 @@ public class MonsterApproachState : MonoBehaviour, IMonsterState
             m_monster.StopMove();
             m_monster.LookTarget(); return;
         }
+
+        m_monster.ApplyMoveSpeed();
 
         bool targetCheck = m_monster.CheckTarget();
         if (!targetCheck)
