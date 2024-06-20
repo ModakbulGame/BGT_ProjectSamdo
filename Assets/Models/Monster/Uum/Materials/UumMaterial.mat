@@ -14,6 +14,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHAPREMULTIPLY_ON
+  - _ALPHATEST_ON
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -106,7 +107,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaClip: 0
+    - _AlphaClip: 1
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -130,6 +131,7 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
+    - _Metallic_Pow: 0
     - _Mode: 0
     - _NormalsStrength: 0.5
     - _OcclusionStrength: 1
@@ -148,6 +150,7 @@ Material:
     - _UVSec: 0
     - _UseEmissionMap: 0
     - _UseMetalicMap: 0
+    - _UseRoughnessMap: 0
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 0
@@ -158,6 +161,8 @@ Material:
     - _Dissolvecolor: {r: 7.464264, g: 4.044288, b: 0.1760439, a: 0.4666667}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _UvOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _UvTiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2416339335005733512
 MonoBehaviour:

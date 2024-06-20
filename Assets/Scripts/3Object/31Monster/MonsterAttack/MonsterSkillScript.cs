@@ -26,16 +26,9 @@ public class MonsterSkillScript : ObjectAttackScript
     public override void AttackOff()
     {
         base.AttackOff();
-        if (ReturnTransform != null)
-        {
-            transform.SetParent(ReturnTransform);
-            ReturnTransform = null;
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        if (ReturnTransform != null) { transform.SetParent(ReturnTransform); }
+        ReturnTransform = null;
+        gameObject.SetActive(false);
     }
 
     private void OnEnable() { AttackOn(); }

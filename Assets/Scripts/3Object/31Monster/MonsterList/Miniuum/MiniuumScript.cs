@@ -34,6 +34,8 @@ public class MiniuumScript : MonsterScript
 
     private readonly float DashSpeed = 5;
 
+    private readonly float MaxUpperVel = 2;
+
     private bool IsDashing { get; set; }
     private Vector2 DashDir { get; set; }
 
@@ -50,11 +52,11 @@ public class MiniuumScript : MonsterScript
         while (!IsDead && Vector2.Distance(Position2, CurTarget.Position2) > 0.5f && IsDashing)
         {
             Vector3 vel = m_rigid.velocity;
+            if(vel.y > MaxUpperVel) { vel.y =  MaxUpperVel; }
             m_rigid.velocity = DashSpeed * new Vector3(DashDir.x, vel.y, DashDir.y);
             yield return null;
         }
         m_rigid.velocity = Vector3.zero;
-        Debug.Log(Position2);
     }
 
     public override void AttackTriggerOff()

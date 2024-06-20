@@ -65,7 +65,6 @@ public class BloScript : MonsterScript
         {
             SkillObj.gameObject.SetActive(true);
             SkillObj.SetDamage(this, m_rushDamage, -1);
-            SkillObj.SetReturnTransform(transform);
             SkillObj.AttackOn();
         }
         else

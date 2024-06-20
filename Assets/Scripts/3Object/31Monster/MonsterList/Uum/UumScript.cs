@@ -24,8 +24,8 @@ public class UumScript : AnimatedAttackMonster
     private VisualEffect m_headFire;
 
     private readonly float PurifyTime = 5;
-    private float[] SkillTimer = new float[2];
 
+    public override int SkillNum => 2;
 
     private readonly float NarrowAttackMultiplier = 1.5f;
 
