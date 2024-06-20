@@ -54,7 +54,7 @@ public class BloScript : MonsterScript
         Vector3 dir = transform.forward;
         Vector3 rot = (dir + (CurTarget.Position - Position).normalized * 0.1f).normalized;
         Vector2 rot2 = new(rot.x, rot.z);
-        RotateTo(rot2);
+        RotateToDir(rot2, ERotateSpeed.DEFAULT);
         m_rigid.velocity = m_rushSpeed * dir.normalized;
     }
 

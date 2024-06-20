@@ -29,7 +29,7 @@ public class PlayerAttackState : MonoBehaviour, IPlayerState
 
     public void FixedProceed()
     {
-        m_player.RotateTo(m_player.PlayerAimDirection);     // 조준 방향 바라보기
+        m_player.LookAim();         // 조준 방향 바라보기
         if (!m_player.AttackFinished) m_player.AttackForward();
     }
 }

@@ -133,13 +133,13 @@ public class WolfScript : MonsterScript
     public override void ApproachTarget()            // 타겟에게 접근
     {
         Vector2 approach2 = CurTarget.Position2;
-        if (AttackTimeCount > 0 && TargetInAttackRange) { Vector2 dir = (approach2 - Position2); RotateTo(dir); return; }
+        if (AttackTimeCount > 0 && TargetInAttackRange) { Vector2 dir = (approach2 - Position2); RotateToDir(dir, ERotateSpeed.FAST); return; }
         m_aiPath.destination = CurTarget.Position;
     }
     public void WolfPositioning()
     {
         Vector2 approach2 = new(PositionTarget.x, PositionTarget.z);
-        if (AttackTimeCount > 0 && TargetInAttackRange) { Vector2 dir = (approach2 - Position2); RotateTo(dir); return; }
+        if (AttackTimeCount > 0 && TargetInAttackRange) { Vector2 dir = (approach2 - Position2); RotateToDir(dir, ERotateSpeed.FAST); return; }
         m_aiPath.destination = PositionTarget;
     }
     

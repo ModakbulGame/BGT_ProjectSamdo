@@ -17,9 +17,6 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
         get { return Rotation.y; }
         protected set { Vector3 rot = Rotation; rot.y = value; Rotation = rot; }
     }
-    private readonly float RotationSpeed = 0.05f;                       // 회전 속도
-    private readonly float SlowRotationSpeed = 0.3f;                    // 회전 속도
-
 
     // 현재 상태
     [SerializeField]
@@ -87,29 +84,27 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     }
 
 
+    public enum ERotateSpeed { FAST, DEFAULT, SLOW, LAST }
+    private readonly float[] SpinSpeed = new float[(int)ERotateSpeed.LAST] {0.05f, 0.5f, 1.5f};    // 회전 속도(1바퀴 기준 초)
+
+
     // 회전 관련
-    public void RotateTo(float _dir)                                    // 각도로 회전
+    public void RotateToAngle(float _deg, ERotateSpeed _speed)
     {
-        if (Direction == _dir) { return; }
-        float angle = Mathf.SmoothDampAngle(Direction, _dir, ref m_rotationRef, RotationSpeed);
+        if (Direction == _deg) { return; }
+        float gap = FunctionDefine.Abs(Direction - _deg);
+        if (gap > 360) { gap -= 360; }
+        if (gap >= 180) { gap = 360 - 180; }
+        float time = gap / 360 * SpinSpeed[(int)_speed];
+        float angle = Mathf.SmoothDampAngle(Direction, _deg, ref m_rotationRef, time);
         Direction = angle;
     }
-    public void RotateTo(Vector2 _dir)                                  // 방향으로 회전
+    public void RotateToDir(Vector2 _dir, ERotateSpeed _speed)
     {
         float deg = FunctionDefine.VecToDeg(_dir);
-        RotateTo(deg);
+        RotateToAngle(deg, _speed);
     }
-    public void SlowRotate(float _dir)                                  // 천천히 회전
-    {
-        if (Direction == _dir) { return; }
-        float angle = Mathf.SmoothDampAngle(Direction, _dir, ref m_rotationRef, SlowRotationSpeed);
-        Direction = angle;
-    }
-    public void SlowRotate(Vector2 _dir)                                  // 천천히 회전
-    {
-        float deg = FunctionDefine.VecToDeg(_dir);
-        SlowRotate(deg);
-    }
+
 
     // 전투 관련
     public virtual void CreateAttack() { }                              // 공격 생성 타이밍

@@ -17,11 +17,10 @@ public class PlayerMoveState : MonoBehaviour, IPlayerState
     private void MovePlayer()
     {
         Vector2 inputDir = m_player.InputVector;
-        Vector2 aimDir = m_player.PlayerAimDirection;
 
-        m_player.GroundMove(inputDir, m_player.MoveSpeedMultiplier);           // 이동
-        m_player.SetMoveAnimation(inputDir);        // 애니
-        m_player.RotateTo(aimDir);                  // 회전
+        m_player.GroundMove(inputDir, m_player.MoveSpeedMultiplier);        // 이동
+        m_player.SetMoveAnimation(inputDir);                                // 애니
+        m_player.LookAim();                                                 // 회전
     }
 
     public void Proceed()

@@ -18,11 +18,10 @@ public class PlayerGaurdState : MonoBehaviour, IPlayerState
     private void GuardMove()
     {
         Vector2 inputDir = m_player.InputVector;
-        Vector2 aimDir = m_player.PlayerAimDirection;
 
         m_player.GroundMove(inputDir, 0.5f);            // 이동
         m_player.SetMoveAnimation(inputDir);            // 애니
-        m_player.RotateTo(aimDir);                      // 회전
+        m_player.LookAim();                      // 회전
     }
 
     public void Proceed()

@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EWaterGuardianSkill
+{
+    SLASH,
+    DASH,
+    ICE,
+
+    LAST
+}
+
 public class WaterGuardianScript : AnimatedAttackMonster
 {
     public override void SetDestination(Vector3 _destination)
@@ -34,7 +43,7 @@ public class WaterGuardianScript : AnimatedAttackMonster
             if (rot < 0) { rot += 360; }
             dir = FunctionDefine.DegToVec(rot);
         }
-        SlowRotate(dir);
+        RotateToDir(dir, ERotateSpeed.SLOW);
     }
 
     public override void StartAttack()
@@ -84,7 +93,7 @@ public class WaterGuardianScript : AnimatedAttackMonster
 
 
     // 스킬
-    private readonly float AnySkillCooltime = 8;
+    private readonly float AnySkillCooltime = 8;                // 스킬 간 최소 간격
     private float AnySkillTimeCount { get; set; }
 
     [SerializeField]
@@ -92,8 +101,14 @@ public class WaterGuardianScript : AnimatedAttackMonster
     [SerializeField]
     private float[] m_skillCooltime = new float[3];
 
-    public override int SkillNum => 3;
-    public override bool CanSkill => AnySkillTimeCount <= 0 && HasTarget && TargetInAttackRange && CheckCurSkill != -1;
+    public int NextSkillIdx { get; set; }
+    public override int SkillNum => (int)EWaterGuardianSkill.LAST;
+    public override bool CanSkill => AnySkillTimeCount <= 0 && HasTarget && TargetInAttackRange && SkillTimeCount[NextSkillIdx] <= 0;
+    public override float AttackRange => (NextSkillIdx == IceIdx && AnySkillTimeCount <= 0 && SkillTimeCount[IceIdx] <= 0) ? base.AttackRange * 4 : base.AttackRange;
+
+    private readonly int SlashIdx = (int)EWaterGuardianSkill.SLASH;
+    private readonly int RushIdx = (int)EWaterGuardianSkill.DASH;
+    private readonly int IceIdx = (int)EWaterGuardianSkill.ICE;
 
     private ObjectAttackScript CurSkill { get; set; }
     public bool CreatedSkill { get; private set; }
@@ -105,7 +120,7 @@ public class WaterGuardianScript : AnimatedAttackMonster
 
     public override void StartSkill()
     {
-        CurSkillIdx = CheckCurSkill;
+        CurSkillIdx = NextSkillIdx;
         if (CurSkillIdx == -1) { return; }
         m_anim.SetInteger("SKILL_IDX", CurSkillIdx);
         m_anim.SetBool("IS_SKILLING", true);
@@ -114,17 +129,17 @@ public class WaterGuardianScript : AnimatedAttackMonster
     }
     public override void SkillOn()
     {
-        if (CurSkillIdx == 0)
+        if (CurSkillIdx == SlashIdx)
         {
-            CurSkill = SkillList[0];
-            CurSkill.SetAttack(this, m_skillDamage[0]);
+            CurSkill = SkillList[SlashIdx];
+            CurSkill.SetAttack(this, m_skillDamage[SlashIdx]);
             CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
         }
-        else if (CurSkillIdx == 1)
+        else if (CurSkillIdx == RushIdx)
         {
-            CurSkill = SkillList[1];
-            CurSkill.SetAttack(this, m_skillDamage[1]);
+            CurSkill = SkillList[RushIdx];
+            CurSkill.SetAttack(this, m_skillDamage[RushIdx]);
             CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
             m_rigid.velocity = DashPower * transform.forward + Vector3.up * DashUp;
@@ -133,11 +148,11 @@ public class WaterGuardianScript : AnimatedAttackMonster
     }
     public override void CreateSkill()
     {
-        if (CurSkillIdx == 2)
+        if (CurSkillIdx == IceIdx)
         {
-            CurSkill = SkillList[2];
+            CurSkill = SkillList[IceIdx];
             CurSkill.AttackOn();
-            CurSkill.SetAttack(this, m_skillDamage[2]);
+            CurSkill.SetAttack(this, m_skillDamage[IceIdx]);
 
             Vector3 pos = CurTarget.Position + new Vector3(CurTarget.Velocity2.x,0,CurTarget.Velocity2.y);
 
@@ -148,13 +163,13 @@ public class WaterGuardianScript : AnimatedAttackMonster
     }
     public override void SkillOff()
     {
-        if (CurSkillIdx == 0)
+        if (CurSkillIdx == SlashIdx)
         {
             CurSkill.AttackOff();
             CreatedSkill = true;
             IsTracing = false;
         }
-        else if (CurSkillIdx == 1)
+        else if (CurSkillIdx == RushIdx)
         {
             CurSkill.AttackOff();
             m_rigid.velocity = Vector3.zero;
@@ -168,8 +183,22 @@ public class WaterGuardianScript : AnimatedAttackMonster
 
         SkillTimeCount[CurSkillIdx] = SkillCooltime[CurSkillIdx];
         AnySkillTimeCount = AnySkillCooltime;
+
+        SetNextSkill();
     }
 
+    private void SetNextSkill()
+    {
+        int minIdx = 0;
+        float minTime = SkillTimeCount[minIdx];
+        for (int i = 1; i<SkillNum; i++)
+        {
+            float curTime = SkillTimeCount[i];
+            if (curTime < minTime) { minIdx = i; }
+            else if (curTime == minTime) { minIdx = Random.Range(0, 2) == 0 ? i : minIdx; }
+        }
+        NextSkillIdx = minIdx;
+    }
 
 
     public override void ProcCooltime()
@@ -180,6 +209,13 @@ public class WaterGuardianScript : AnimatedAttackMonster
         {
             if (SkillTimeCount[i] > 0) { SkillTimeCount[i] -= Time.deltaTime; }
         }
+    }
+
+
+    public override void OnSpawned()
+    {
+        base.OnSpawned();
+        NextSkillIdx = Random.Range(0, SkillNum);
     }
 
     public override void InitSkillInfo()

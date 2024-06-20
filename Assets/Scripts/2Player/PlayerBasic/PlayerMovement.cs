@@ -46,7 +46,11 @@ public partial class PlayerController
     public void RotateDirection(Vector2 _dir)                                               // 방향으로 회전
     {
         Vector2 move = GetMoveVector(_dir);
-        RotateTo(move);
+        RotateToDir(move, ERotateSpeed.FAST);
+    }
+    public void LookAim()
+    {
+        RotateToDir(PlayerAimDirection, ERotateSpeed.FAST);
     }
 
 

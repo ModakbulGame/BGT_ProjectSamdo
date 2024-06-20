@@ -24,7 +24,12 @@ public class HmmApproachScript : MonoBehaviour, IMonsterState
 
     public void Proceed()
     {
-        if (DelayCount > 0) { DelayCount -= Time.deltaTime; Hmm.SlowRotate(Random.Range(-10,10)); return; }
+        if (DelayCount > 0) 
+        {
+            DelayCount -= Time.deltaTime;
+            Hmm.RotateToAngle(Hmm.Direction + Random.Range(-10,10), ObjectScript.ERotateSpeed.DEFAULT);
+            return;
+        }
 
         bool targetCheck = m_monster.CheckTarget();
         if (!targetCheck)

@@ -8,9 +8,11 @@ public delegate void EventPointer(PointerEventData _data);          // 마우스 정
 
 public static class FunctionDefine
 {
-    public static int Min(int _n1, int _n2) { if (_n1 <= _n2) { return _n1; } return _n2; }
+    public static int Abs(int _n) { return (int)Abs((float)_n); }
+    public static float Abs(float _n) { if (_n >=0) { return _n; } return -_n; }
+    public static int Min(int _n1, int _n2) { return (int)Min((float)_n1, _n2); }
     public static float Min(float _n1, float _n2) { if (_n1 <= _n2) { return _n1; } return _n2; }
-    public static int Max(int _n1, int _n2) { if (_n1 >= _n2) { return _n1; } return _n2; }
+    public static int Max(int _n1, int _n2) { return (int)Max((float)_n1, _n2); }
     public static float Max(float _n1, float _n2) { if (_n1 >= _n2) { return _n1; } return _n2; }
 
     public static float Sin(float _angle) { return Mathf.Sin(_angle * Mathf.Deg2Rad); }                 // 사인 (각도로 반환)

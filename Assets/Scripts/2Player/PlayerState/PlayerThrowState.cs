@@ -20,10 +20,9 @@ public class PlayerThrowState : MonoBehaviour, IPlayerState
     private void ThrowMove()
     {
         Vector2 inputDir = m_player.InputVector;
-        Vector2 aimDir = m_player.PlayerAimDirection;
         m_player.MoveDirection(inputDir, 0.8f);                 // 이동
         m_player.SetMoveAnimation(inputDir);                    // 애니메이터 설정
-        m_player.RotateTo(aimDir);                              // 회전
+        m_player.LookAim();                                     // 회전
     }
 
     public void Proceed()

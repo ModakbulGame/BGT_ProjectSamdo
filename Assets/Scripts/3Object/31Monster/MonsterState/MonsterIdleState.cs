@@ -45,7 +45,7 @@ public class MonsterIdleState : MonoBehaviour, IMonsterState
 
     private void RotateTo()
     {
-        m_monster.SlowRotate(TargetRotation);
+        m_monster.RotateToAngle(TargetRotation, ObjectScript.ERotateSpeed.SLOW);
     }
 
     private void PauseRoaming()

@@ -56,7 +56,7 @@ public abstract partial class MonsterScript
         if(CurTarget == null) { return; }
 
         Vector2 dir = (CurTarget.Position2 - Position2);
-        RotateTo(dir);
+        RotateToDir(dir, ERotateSpeed.SLOW);
     }
     public override void StartTracing()
     {
