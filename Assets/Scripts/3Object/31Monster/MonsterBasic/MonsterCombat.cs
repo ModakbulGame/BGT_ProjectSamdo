@@ -19,7 +19,7 @@ public abstract partial class MonsterScript
     {
         if (_hit.Attacker.IsPlayer) { return false; }
         MonsterScript monster = (MonsterScript)_hit.Attacker;
-        if(!AgainstMonster && !monster.AgainstMonster) { NotTargetDamage(_hit); return true; }
+        if (!AgainstMonster && !monster.AgainstMonster) { NotTargetDamage(_hit); return true; }
         AgainstMonster = true;
         return false;
     }
@@ -29,10 +29,10 @@ public abstract partial class MonsterScript
         GetDamage(damage, _hit.Attacker);
         Debug.Log($"{_hit.Attacker.ObjectName} => {ObjectName} {damage} 데미지");
     }
-    
+
 
     // 기본 전투
-    public override void SetHP(float _hp) 
+    public override void SetHP(float _hp)
     {
         base.SetHP(_hp);
         m_hpBar.SetCurHP(CurHP);
@@ -64,7 +64,7 @@ public abstract partial class MonsterScript
 
     private void CheckPowerProp(EPowerProperty _prop)
     {
-        if(_prop == EPowerProperty.LAST) { return; }
+        if (_prop == EPowerProperty.LAST) { return; }
         GetPropHit(_prop);
     }
     public virtual void GetPropHit(EPowerProperty _prop) { }
@@ -117,11 +117,16 @@ public abstract partial class MonsterScript
     public virtual int SkillNum { get { return 0; } }
     public float[] SkillCooltime { get; protected set; }
     public float[] SkillTimeCount { get; protected set; }
-    public int CheckCurSkill { get {
+    public int CheckCurSkill
+    {
+        get
+        {
             List<int> list = new();
             for (int i = 0; i<SkillCooltime.Length; i++) { if (SkillTimeCount[i] <= 0) list.Add(i); }
-            if(list.Count > 0) { return list[UnityEngine.Random.Range(0, list.Count)]; }
-            return -1; } }
+            if (list.Count > 0) { return list[UnityEngine.Random.Range(0, list.Count)]; }
+            return -1;
+        }
+    }
 
     public virtual bool CanSkill => false;
     public int CurSkillIdx { get; protected set; }
@@ -185,12 +190,16 @@ public abstract partial class MonsterScript
     {
         CurTarget = null;
     }
+
+    public bool HasPath { get; set; } = true;
     public virtual void ApproachTarget()            // 타겟에게 접근
     {
         if (!HasTarget) { return; }
         Vector2 dir = (CurTarget.Position2 - Position2);
         if (AttackTimeCount > 0 && TargetInAttackRange) { RotateTo(dir); return; }
-        m_aiPath.destination = CurTarget.Position;
+        if (!CanAttack && dir.magnitude < FunctionDefine.Max(0.5f, AttackRange - 2)) { m_aiPath.destination = transform.position - 0.1f * new Vector3(dir.x, 0, dir.y); }
+        else if (dir.magnitude < AttackRange - 0.5f) { StopMove(); HasPath = false; }
+        else { m_aiPath.destination = CurTarget.Position; HasPath = true; }
     }
 
 
@@ -254,9 +263,9 @@ public abstract partial class MonsterScript
         {
             if (col.CompareTag(ValueDefine.MONSTER_TAG)) { continue; }
             MonsterScript monster = col.GetComponent<MonsterScript>();
-            if(monster == null || monster.IsDead || monster.IsMelancholy || targets.Contains(monster)) { continue; }
+            if (monster == null || monster.IsDead || monster.IsMelancholy || targets.Contains(monster)) { continue; }
             targets.Add(monster);
         }
-        foreach(MonsterScript monster in targets) { monster.GetMelancholy(); }
+        foreach (MonsterScript monster in targets) { monster.GetMelancholy(); }
     }
 }

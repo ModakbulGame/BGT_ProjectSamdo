@@ -19,7 +19,9 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     // ¾Ö´Ô
     private bool HasMoveAanim { get; set; }
     private int MoveHash;
-    public virtual bool IsMoving { get { return IsApproaching || (IsIdle && ((MonsterIdleState)CurState).IsMoving); } }
+    public virtual bool IsMoving { get { return IsApproachMocing || IsIdleRoaming; } }
+    private bool IsIdleRoaming { get { return IsIdle && ((MonsterIdleState)CurState).IsMoving; } }
+    private bool IsApproachMocing { get { return IsApproaching && HasPath; } }
 
     private void InitAnimHash()
     {
