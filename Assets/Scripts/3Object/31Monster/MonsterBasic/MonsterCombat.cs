@@ -191,7 +191,7 @@ public abstract partial class MonsterScript
         CurTarget = null;
     }
 
-    public bool HasPath { get; set; } = true;
+    public virtual bool HasPath { get; set; } = true;
     public virtual void ApproachTarget()            // 타겟에게 접근
     {
         if (!HasTarget) { HasPath = false; return; }

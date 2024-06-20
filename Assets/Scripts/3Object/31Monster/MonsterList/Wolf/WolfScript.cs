@@ -28,6 +28,7 @@ public class WolfScript : MonsterScript
         m_anim.SetBool("IN_COMBAT", InCombat);
     }
 
+    public override bool HasPath => true;
 
     // 늑대 스테이트
     private IMonsterState m_positionState, m_jabState;
@@ -132,8 +133,14 @@ public class WolfScript : MonsterScript
 
     public override void ApproachTarget()            // 타겟에게 접근
     {
+        if (AttackTimeCount > 0) { base.ApproachTarget(); return; }
         Vector2 approach2 = CurTarget.Position2;
-        if (AttackTimeCount > 0 && TargetInAttackRange) { Vector2 dir = (approach2 - Position2); RotateToDir(dir, ERotateSpeed.FAST); return; }
+        if (AttackTimeCount > 0 && TargetInAttackRange)
+        {
+            Vector2 dir = (approach2 - Position2);
+            RotateToDir(dir, ERotateSpeed.FAST);
+            return; 
+        }
         m_aiPath.destination = CurTarget.Position;
     }
     public void WolfPositioning()
