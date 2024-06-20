@@ -17,15 +17,27 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
 
     // 애님
-    public void StartMoveAnim() { m_anim.SetBool("IS_MOVING", true); }
-    public void StopMoveAnim() { m_anim.SetBool("IS_MOVING", false); }
+    private bool HasMoveAanim { get; set; }
+    private int MoveHash;
+    public virtual bool IsMoving { get { return IsApproaching || (IsIdle && ((MonsterIdleState)CurState).IsMoving); } }
+
+    private void InitAnimHash()
+    {
+        HasMoveAanim = FunctionDefine.CheckAnimParameter(m_anim, "IS_MOVING", AnimatorControllerParameterType.Bool);
+        if (!HasMoveAanim) { return; }
+        MoveHash = Animator.StringToHash("IS_MOVING");
+    }
+    public virtual void UpdateAnimation()
+    {
+        if (HasMoveAanim) { m_anim.SetBool(MoveHash, IsMoving); }
+    }
 
 
     // 스테이트 매니저
     protected MonsterStateManager m_stateManager;
     protected readonly IMonsterState[] m_monsterStates = new IMonsterState[(int)EMonsterState.LAST];
 
-    private IMonsterState CurState { get { return m_stateManager.CurMonsterState; } }
+    protected IMonsterState CurState { get { return m_stateManager.CurMonsterState; } }
 
     public void ChangeState(EMonsterState _state) { m_stateManager.ChangeState(m_monsterStates[(int)_state]); }
 
@@ -296,10 +308,18 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     public override void Update()
     {
         if(!IsSpawned) { return; }
+
+        UpdateAnimation();
+
         base.Update();
 
         CurState.Proceed();
 
         CheckPurify();
+
+        if (CurTarget.IsDead)
+        {
+            ChangeState(EMonsterState.IDLE);
+        }
     }
 }

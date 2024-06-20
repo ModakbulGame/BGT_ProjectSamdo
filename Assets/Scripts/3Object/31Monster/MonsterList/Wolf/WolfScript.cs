@@ -2,6 +2,7 @@ using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class WolfScript : MonsterScript
 {
@@ -10,12 +11,23 @@ public class WolfScript : MonsterScript
     private WolfPeckScript m_peck;
     public void SetPeck(WolfPeckScript _peck, int _idx) { m_peck = _peck; PeckIdx = _idx; }
 
+    public override bool IsMoving => base.IsMoving || IsPositioning;
+
+    private bool IsPositioning { get { return CurState.GetType() == typeof(WolfJabState) && ((WolfJabState)CurState).IsMoving; } }
+
     public int PeckIdx { get; private set; } = -1;
     public EWolfRole CurRole { get; private set; } = EWolfRole.MAIN;
     public void SetRole(EWolfRole _role) { CurRole = _role; }
     public void ResetRole() { if (m_peck == null) { return; } m_peck.ResetRole(); }
 
     private void JabAnimation() { m_anim.SetTrigger("JAB"); }
+
+    public override void UpdateAnimation()
+    {
+        base.UpdateAnimation();
+        m_anim.SetBool("IN_COMBAT", InCombat);
+    }
+
 
     // 늑대 스테이트
     private IMonsterState m_positionState, m_jabState;
@@ -30,10 +42,10 @@ public class WolfScript : MonsterScript
 
 
     // 늑대 수치
-    public readonly float JabDistance = 5;
+    public float JabDistance { get; set; } = 5;
     public float ApproachOffset { get; private set; } = 0.5f;
     public readonly float MaxJabOffset = 1;
-    
+
 
     // 늑대 속성
     public float PositioningDistance { get { return Vector3.Distance(Position, PositionTarget); } }
@@ -55,6 +67,14 @@ public class WolfScript : MonsterScript
                 case EWolfRole.LEFT_PUNCH:
                     Vector2 left = FunctionDefine.RotateVector2(aim2, 240);
                     Vector3 offset2 = new(left.x, 0, left.y);
+                    return target + JabDistance * offset2;
+                case EWolfRole.RIGHT_JAB:
+                    right = FunctionDefine.RotateVector2(aim2, 60);
+                    offset1 = new(right.x, 0, right.y);
+                    return target + JabDistance * offset1;
+                case EWolfRole.LEFT_JAB:
+                    left = FunctionDefine.RotateVector2(aim2, 300);
+                    offset2 = new(left.x, 0, left.y);
                     return target + JabDistance * offset2;
                 default:
                     return target;
@@ -78,8 +98,9 @@ public class WolfScript : MonsterScript
     // 늑대 기본 메소드
     public void StartPosition()
     {
+        JabDistance = Random.Range(4.5f, 5.5f);
         m_aiPath.maxSpeed = ApproachSpeed;
-        MoveAnimation();
+
     }
     public void StartJab()
     {
@@ -89,7 +110,6 @@ public class WolfScript : MonsterScript
     public override void StartApproach()
     {
         CurSpeed = ApproachSpeed;
-        MoveAnimation();
         ApproachOffset = Random.Range(0.25f, 0.5f);
         if (m_peck != null && !m_peck.Engaging)
         {
@@ -146,6 +166,16 @@ public class WolfScript : MonsterScript
 
 
 
+
+    public override void StartDissolve()
+    {
+        base.StartDissolve();
+        VisualEffect[] effects = GetComponentsInChildren<VisualEffect>();
+        foreach(VisualEffect effect in effects) { effect.Stop(); }
+    }
+
+
+
     // 늑대 초기 설정
     public override void SetStates()
     {
@@ -154,5 +184,7 @@ public class WolfScript : MonsterScript
         m_positionState = gameObject.AddComponent<WolfPositionState>();
         m_jabState = gameObject.AddComponent<WolfJabState>();
         ReplaceState(EMonsterState.ATTACK, gameObject.AddComponent<WolfAttackState>());
+
+        Debug.Log(m_jabState.GetType() == typeof(WolfJabState));
     }
 }

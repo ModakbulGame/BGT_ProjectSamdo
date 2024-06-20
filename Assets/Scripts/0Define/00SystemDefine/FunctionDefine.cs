@@ -47,6 +47,22 @@ public static class FunctionDefine
         return row;
     }
 
+
+    public static bool CheckAnimParameter(Animator _anim, string _name)                                             // 애니메이터에 특정 변수명 있는지 확인
+    {
+        return CheckAnimParameter(_anim, _name, 0);
+    }
+    public static bool CheckAnimParameter(Animator _anim, string _name, AnimatorControllerParameterType _type)      // 종류까지 확인
+    {
+        foreach (AnimatorControllerParameter parameter in _anim.parameters)
+        {
+            if ((_type == 0 || parameter.type == _type) && parameter.name == _name)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     public static void AddEvent(EventTrigger _trigger, EventTriggerType _type, EventPointer _function)  // 이벤트 트리거에 이벤트 추가
     {
         EventTrigger.Entry entry = new() { eventID = _type };

@@ -162,6 +162,7 @@ public partial class MonsterScript
         SetStates();
         InitSkillInfo();
         SetUI();
+        InitAnimHash();
     }
     public override void Start()
     {

@@ -51,7 +51,6 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
 
 
     // 애니메이션
-    public virtual void MoveAnimation() { m_anim.SetTrigger("MOVE"); }
     public virtual void AttackAnimation() { m_anim.SetTrigger("ATTACK"); }
     public virtual void HitAnimation() { m_anim.SetTrigger("HIT"); }
     public virtual void DieAnimation() { m_anim.SetTrigger("DIE"); }
