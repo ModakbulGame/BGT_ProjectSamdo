@@ -9,8 +9,8 @@ public class PlayManager : MonoBehaviour
     public static PlayManager Inst;
 
 
-    // ¸ÞÀÎ ÇÔ¼ö
-    public static bool IsPlaying { get; private set; }                // ÇÃ·¹ÀÌ ÁßÀÎÁö
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
+    public static bool IsPlaying { get; private set; }                // ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public static SaveData CurSaveData { get; private set; }
     public static bool IsNewData { get { return CurSaveData == null; } }
     private static bool IsFromTitle { get; set; }
@@ -64,87 +64,87 @@ public class PlayManager : MonoBehaviour
     }
 
 
-    // ÇÃ·¹ÀÌ¾î
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½
     private static PlayerController Player { get; set; }
-    public static void SetCurPlayer(PlayerController _player) { Player = _player; }                                                         // ÇÃ·¹ÀÌ¾î µî·Ï
-    public static bool CheckIsPlayer(ObjectScript _object) { return _object == Player; }                                                    // ÇÃ·¹ÀÌ¾îÀÎÁö È®ÀÎ
-    public static bool IsPlayerSet { get { return Player != null; } }                                                                       // ÇÃ·¹ÀÌ¾î µî·Ï ¿©ºÎ
-    public static bool IsPlayerGuarding { get { return Player.IsGuarding; } }                                                               // ÇÃ·¹ÀÌ¾î °¡µå Áß
-    public static bool IsPlayerDead { get { return Player.IsDead; } }                                                                       // ÇÃ·¹ÀÌ¾î »ç¸Á ¿©ºÎ
-    public static bool IsPlayerLightOn { get { return Player.IsLightOn; } }                                                                 // ÇÃ·¹ÀÌ¾î ´É·Â »ç¿ëÁß
-    public static Vector3 PlayerPos { get { if (IsPlayerSet) return Player.transform.position; return ValueDefine.NullVector; } }           // ÇÃ·¹ÀÌ¾î À§Ä¡
-    public static Vector2 PlayerPos2 { get { if (IsPlayerSet) return Player.Position2; return ValueDefine.NullVector; } }                   // ÇÃ·¹ÀÌ¾î Æò¸é À§Ä¡
+    public static void SetCurPlayer(PlayerController _player) { Player = _player; }                                                         // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½
+    public static bool CheckIsPlayer(ObjectScript _object) { return _object == Player; }                                                    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+    public static bool IsPlayerSet { get { return Player != null; } }                                                                       // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static bool IsPlayerGuarding { get { return Player.IsGuarding; } }                                                               // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    public static bool IsPlayerDead { get { return Player.IsDead; } }                                                                       // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static bool IsPlayerLightOn { get { return Player.IsLightOn; } }                                                                 // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½É·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+    public static Vector3 PlayerPos { get { if (IsPlayerSet) return Player.transform.position; return ValueDefine.NullVector; } }           // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ä¡
+    public static Vector2 PlayerPos2 { get { if (IsPlayerSet) return Player.Position2; return ValueDefine.NullVector; } }                   // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
     public static float PlayerDirection { get { return Player.Direction; } }
-    public static Vector2 PlayerAimDirection { get { return Player.PlayerAimDirection; } }                                                  // Ä«¸Þ¶ó Á¶ÁØ º¤ÅÍ
+    public static Vector2 PlayerAimDirection { get { return Player.PlayerAimDirection; } }                                                  // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public static Transform PlayerTransform { get { if (IsPlayerSet) return Player.transform; return null; } }
     public static Transform CameraFocusTransform { get { if (IsPlayerSet) { return Player.CameraFocus; } return null; } }
     public static PlayerStatInfo PlayerStatInfo { get { return Player.GetStatInfo(); } }
     public static void ApplyStatReset() { Player.ResetStatInfo(); }
     public static void ApplyPlayerStat() { Player.ApplyStat(); }
     public static SPlayerWeaponInfo PlayerWeaponInfo { get { return Player.CurWeaponInfo; } }
-    public static float GetDistToPlayer(Vector3 _pos) { if (!IsPlayerSet) return -1; return (PlayerPos-_pos).magnitude; }                   // ÇÃ·¹ÀÌ¾î¿ÍÀÇ °Å¸®
-    public static void SetPlayerWeapon(EWeaponName _weapon) { Player.SetCurWeapon(_weapon); }                                               // ¹«±â ¼³Á¤
-    public static void StopPlayerInteract() { Player.StopInteract(); }                                                                      // »óÈ£ÀÛ¿ë Á¾·á
+    public static float GetDistToPlayer(Vector3 _pos) { if (!IsPlayerSet) return -1; return (PlayerPos-_pos).magnitude; }                   // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½
+    public static void SetPlayerWeapon(EWeaponName _weapon) { Player.SetCurWeapon(_weapon); }                                               // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static void StopPlayerInteract() { Player.StopInteract(); }                                                                      // ï¿½ï¿½È£ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½
     public static void ResetPlayer() { Player.ResetPlayerAction(); }
     public static void TeleportPlayer(Vector3 _pos) { Player.TeleportPlayer(_pos); }
 
     public static void TempGetBuff(float _amount, float _time) { Player.GetAdj(new(EAdjType.MAX_HP, _amount, _time)); }
 
 
-    // Ä«¸Þ¶ó
+    // Ä«ï¿½Þ¶ï¿½
     [SerializeField]
     private CameraManager m_cameraManager;
     private static CameraManager CameraManager { get { return Inst.m_cameraManager; } }
     public static CinemachineFreeLook PlayerFreeLook { get { return CameraManager.PlayerFreeLook; } }
-    public static float CameraRotation { get { return CameraManager.CameraRotation; } }                                                     // Ä«¸Þ¶ó ÁÂ¿ì °¢µµ
-    public static float CameraAngle { get { return CameraManager.CameraAngle; } }                                                           // Ä«¸Þ¶ó À§¾Æ·¡ °¢µµ
-    public static void SetCameraMode(EControlMode _mode) { CameraManager.SetCameraMode(_mode); }                                            // Á¶ÀÛ ¸ðµå Àü´Þ
+    public static float CameraRotation { get { return CameraManager.CameraRotation; } }                                                     // Ä«ï¿½Þ¶ï¿½ ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static float CameraAngle { get { return CameraManager.CameraAngle; } }                                                           // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½Æ·ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static void SetCameraMode(EControlMode _mode) { CameraManager.SetCameraMode(_mode); }                                            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public static void SetNPCView() { CameraManager.SetNPCView(); }
-    public static void SetCameraSensitive(float _sensitive) { CameraManager.SetCameraSensitive(_sensitive); }                               // ¸¶¿ì½º ¹Î°¨µµ Àü´Þ
+    public static void SetCameraSensitive(float _sensitive) { CameraManager.SetCameraSensitive(_sensitive); }                               // ï¿½ï¿½ï¿½ì½º ï¿½Î°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public static void LooseCameraFocus() { CameraManager.LooseFocus(); }
-    public static void CameraSwitch(CinemachineFreeLook _targetCamera) { CameraManager.SwitchToCamera(_targetCamera); }                    // Ä«¸Þ¶ó º¯È¯
+    public static void CameraSwitch(CinemachineFreeLook _targetCamera) { CameraManager.SwitchToCamera(_targetCamera); }                    // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½È¯
 
 
-    // ÀÎº¥Åä¸®
+    // ï¿½Îºï¿½ï¿½ä¸®
     private InventoryManager m_invenManager;
     private static InventoryManager InvenManager { get { return Inst.m_invenManager; } }
-    public static InventoryElm[] PlayerInventory { get { return InvenManager.Inventory; } }                                                     // ÀÎº¥Åä¸® ¾ÆÀÌÅÛ ¸ñ·Ï
+    public static InventoryElm[] PlayerInventory { get { return InvenManager.Inventory; } }                                                     // ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     private static void InventoryEditted() { UpdateInfoUI(); }
-    public static void AddInventoryItem(SItem _item, int _num) { InvenManager.AddInventoryItem(_item, _num); }                                  // ºó ÀÎº¥Åä¸®¿¡ ¾ÆÀÌÅÛ Ãß°¡
-    public static void AddInventoryItem(SItem _item, int _num, bool _isNew) { InvenManager.AddInventoryItem(_item, _num, _isNew); }             // ºó ÀÎº¥Åä¸®¿¡ ¾ÆÀÌÅÛ Ãß°¡ (½Å±Ô)
-    public static void SetInventoryItem(int _idx, SItem _item, int _num) { InvenManager.SetInventoryItem(_idx, _item, _num); }                  // ÀÎº¥Åä¸® ÇØ´ç Idx¿¡ ¾ÆÀÌÅÛ ¼³Á¤
-    public static void RemoveInventoryItem(int _idx) { InvenManager.RemoveInventoryItem(_idx); }                                                // ÀÎº¥Åä¸® ÇØ´ç Idx ¾ÆÀÌÅÛ Á¦°Å
+    public static void AddInventoryItem(SItem _item, int _num) { InvenManager.AddInventoryItem(_item, _num); }                                  // ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+    public static void AddInventoryItem(SItem _item, int _num, bool _isNew) { InvenManager.AddInventoryItem(_item, _num, _isNew); }             // ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ (ï¿½Å±ï¿½)
+    public static void SetInventoryItem(int _idx, SItem _item, int _num) { InvenManager.SetInventoryItem(_idx, _item, _num); }                  // ï¿½Îºï¿½ï¿½ä¸® ï¿½Ø´ï¿½ Idxï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static void RemoveInventoryItem(int _idx) { InvenManager.RemoveInventoryItem(_idx); }                                                // ï¿½Îºï¿½ï¿½ä¸® ï¿½Ø´ï¿½ Idx ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public static void SwapItemInven(int _idx1, int _idx2) { InvenManager.SwapItemInven(_idx1, _idx2); InventoryEditted(); }
     public static bool[] WeaponObtained { get { return InvenManager.WeaponObatined; } }
-    public static EWeaponName CurWeapon { get { return InvenManager.CurWeapon; } }                                                              // ÀåÂø ÁßÀÎ ¹«±â
+    public static EWeaponName CurWeapon { get { return InvenManager.CurWeapon; } }                                                              // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public static void ObtainWeapon(EWeaponName _weapon) { InvenManager.ObtainWeapon(_weapon); }
-    public static void SetCurWeapon(EWeaponName _weapon) { InvenManager.SetCurWeapon(_weapon); }                                                // ¹«±â ¼³Á¤
-    public static void EquipWeapon(EWeaponName _weapon) { InvenManager.EquipWeapon(_weapon); }                                                  // ¹«±â ÀåÂø
-    public static EPatternName CurHealPattern { get { return InvenManager.CurHealPattern; } }                                                   // ÇöÀç È¸º¹ ¾ÆÀÌÅÛ
-    public static EPatternName[] HealPatternList { get { return InvenManager.HealPatternList; } }                                               // µî·ÏµÈ È¸º¹ ¾ÆÀÌÅÛ
+    public static void SetCurWeapon(EWeaponName _weapon) { InvenManager.SetCurWeapon(_weapon); }                                                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static void EquipWeapon(EWeaponName _weapon) { InvenManager.EquipWeapon(_weapon); }                                                  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static EPatternName CurHealPattern { get { return InvenManager.CurHealPattern; } }                                                   // ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public static EPatternName[] HealPatternList { get { return InvenManager.HealPatternList; } }                                               // ï¿½ï¿½Ïµï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private static void HealPatternEditted() { UpdateInfoUI(); UpdateHealItemSlot(); }
-    public static void UseHealPattern() { InvenManager.UseHealItem(); HealPatternEditted(); }                                                   // È¸º¹ ¾ÆÀÌÅÛ »ç¿ë
-    public static void RegisterHealPattern(EPatternName _pattern) { InvenManager.RegisterHealItem(_pattern); HealPatternEditted(); }            // µî·Ï
-    public static EThrowItemName CurThrowItem { get { return InvenManager.CurThrowItem; } }                                                     // ÇöÀç ´øÁö±â ¾ÆÀÌÅÛ (LAST == null)
-    public static List<EThrowItemName> ThrowItemList { get { return InvenManager.ThrowItemList; } }                                             // µî·ÏµÈ ´øÁö±â ¾ÆÀÌÅÛ
+    public static void UseHealPattern() { InvenManager.UseHealItem(); HealPatternEditted(); }                                                   // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+    public static void RegisterHealPattern(EPatternName _pattern) { InvenManager.RegisterHealItem(_pattern); HealPatternEditted(); }            // ï¿½ï¿½ï¿½
+    public static EThrowItemName CurThrowItem { get { return InvenManager.CurThrowItem; } }                                                     // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (LAST == null)
+    public static List<EThrowItemName> ThrowItemList { get { return InvenManager.ThrowItemList; } }                                             // ï¿½ï¿½Ïµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private static void ThrowItemEditted() { UpdateInfoUI(); UpdateThrowItemSlot(); }
-    public static void UseThrowItem() { InvenManager.UseThrowItem(); UpdateInfoUI(); UpdateThrowItemSlot(); }                                   // ´øÁö±â ¾ÆÀÌÅÛ »ç¿ë
-    public static void AddThrowItem(EThrowItemName _item) { InvenManager.AddThrowItem(_item); ThrowItemEditted(); }                             // ´øÁö±â ¾ÆÀÌÅÛ Ãß°¡
-    public static void SetThrowItem(int _idx, EThrowItemName _item) { InvenManager.SetThrowItem(_idx, _item); ThrowItemEditted(); }             // À§Ä¡ ÁöÁ¤
-    public static void SwapThrowItem(int _idx1, int _idx2) { InvenManager.SwapThrowItem(_idx1, _idx2); ThrowItemEditted(); }                    // ¹Ù²Ù±â
-    public static void RemoveThrowItem(int _idx) { InvenManager.RemoveThrowItem(_idx); ThrowItemEditted(); }                                    // Á¦°Å
-    public static int SoulNum { get { return InvenManager.SoulNum; } }                                                                          // ¿µÈ¥ °³¼ö
-    public static int PurifiedNum { get { return InvenManager.PurifiedNum; } }                                                                  // ¼ººÒ ¿µÈ¥ °³¼ö
-    public static int[] PatternNum { get { return InvenManager.PatternNum; } }                                                                  // ¹®¾çº° °³¼ö
-    public static void AddSoul(int _num) { InvenManager.AddSoul(_num); }                                                                        // ¿µÈ¥ Ãß°¡
-    public static void AddPurified(int _num) { InvenManager.AddPurified(_num); }                                                                // ¼ººÒ ¿µÈ¥ Ãß°¡
-    public static void AddPattern(EPatternName _type, int _num) { InvenManager.AddPattern(_type, _num); }                                       // ¹®¾ç Ãß°¡
-    public static void UseSoul(int _num) { InvenManager.LooseSoul(_num); }                                                                      // ¿µÈ¥ »ç¿ë
-    public static void LooseSoul(int _num, bool _absorbed) { InvenManager.LooseSoul(_num, _absorbed); }                                         // ¿µÈ¥ Èí¼ö ´çÇÔ
-    public static void UsePurified(int _num) { InvenManager.UsePurified(_num); }                                                                // ¼ººÒ ¿µÈ¥ »ç¿ë
-    public static void UsePattern(EPatternName _type, int _num) { InvenManager.UsePattern(_type, _num); }                                       // ¹®¾ç »ç¿ë
+    public static void UseThrowItem() { InvenManager.UseThrowItem(); UpdateInfoUI(); UpdateThrowItemSlot(); }                                   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+    public static void AddThrowItem(EThrowItemName _item) { InvenManager.AddThrowItem(_item); ThrowItemEditted(); }                             // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+    public static void SetThrowItem(int _idx, EThrowItemName _item) { InvenManager.SetThrowItem(_idx, _item); ThrowItemEditted(); }             // ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
+    public static void SwapThrowItem(int _idx1, int _idx2) { InvenManager.SwapThrowItem(_idx1, _idx2); ThrowItemEditted(); }                    // ï¿½Ù²Ù±ï¿½
+    public static void RemoveThrowItem(int _idx) { InvenManager.RemoveThrowItem(_idx); ThrowItemEditted(); }                                    // ï¿½ï¿½ï¿½ï¿½
+    public static int SoulNum { get { return InvenManager.SoulNum; } }                                                                          // ï¿½ï¿½È¥ ï¿½ï¿½ï¿½ï¿½
+    public static int PurifiedNum { get { return InvenManager.PurifiedNum; } }                                                                  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¥ ï¿½ï¿½ï¿½ï¿½
+    public static int[] PatternNum { get { return InvenManager.PatternNum; } }                                                                  // ï¿½ï¿½ï¿½çº° ï¿½ï¿½ï¿½ï¿½
+    public static void AddSoul(int _num) { InvenManager.AddSoul(_num); }                                                                        // ï¿½ï¿½È¥ ï¿½ß°ï¿½
+    public static void AddPurified(int _num) { InvenManager.AddPurified(_num); }                                                                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¥ ï¿½ß°ï¿½
+    public static void AddPattern(EPatternName _type, int _num) { InvenManager.AddPattern(_type, _num); }                                       // ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+    public static void UseSoul(int _num) { InvenManager.LooseSoul(_num); }                                                                      // ï¿½ï¿½È¥ ï¿½ï¿½ï¿½
+    public static void LooseSoul(int _num, bool _absorbed) { InvenManager.LooseSoul(_num, _absorbed); }                                         // ï¿½ï¿½È¥ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static void UsePurified(int _num) { InvenManager.UsePurified(_num); }                                                                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¥ ï¿½ï¿½ï¿½
+    public static void UsePattern(EPatternName _type, int _num) { InvenManager.UsePattern(_type, _num); }                                       // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
-    // ½ºÅä¸®
+    // ï¿½ï¿½ï¿½ä¸®
     private QuestManager m_questManager;
     private static QuestManager QuestManager { get { return Inst.m_questManager; } }
     public static List<QuestInfo> QuestInfoList { get { return QuestManager.QuestInfoList; } }
@@ -152,7 +152,7 @@ public class PlayManager : MonoBehaviour
     public static void SetQuestProgress(EQuestName _quest, float _prog) { QuestManager.SetQuestProgress(_quest, _prog); }
 
 
-    // È¯°æ
+    // È¯ï¿½ï¿½
     private EnvironmentManager m_environmentManager;
     private static EnvironmentManager EnvironmentManager { get { return Inst.m_environmentManager; } }
     public static Vector3 MapLB { get { return EnvironmentManager.MapLB; } }
@@ -166,21 +166,21 @@ public class PlayManager : MonoBehaviour
     public static void MonsterKilled(EMonsterName _monster, EMonsterDeathType _type) { EnvironmentManager.MonsterKilled(_monster, _type); }
     public static void UnlockDialogue(NPCDialogue _dial) { EnvironmentManager.UnlockDialogue(_dial); }
 
-    public static void TempSetNPCs(NPCScript[] _list) { EnvironmentManager.TempSetNPCs(_list); }                // ÀÓ½Ã ÇÔ¼ö
+    public static void TempSetNPCs(NPCScript[] _list) { EnvironmentManager.TempSetNPCs(_list); }                // ï¿½Ó½ï¿½ ï¿½Ô¼ï¿½
 
 
-    // ÇÃ·¹ÀÌ¾î ´É·ÂÄ¡, ±Ç´É
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½É·ï¿½Ä¡, ï¿½Ç´ï¿½
     private PlayerForceManager m_forceManager;
     private static PlayerForceManager ForceManager { get { return Inst.m_forceManager; } }
     public static int LeftStatPoint { get { return ForceManager.LeftStatPoint; } }
     public static int UsedStatPoint { get { return ForceManager.UsedStatPoint; } }
     public static void AddStatPoint(int _add) { ForceManager.AddStatPoint(_add); }
-    public static void UpgradeStat(int[] _point) { ForceManager.UpgradeStat(_point); }                                                                  // ½ºÅÈ ÅõÀÚ
-    public static void UpgradeStat(EStatName _stat, int _amount) { ForceManager.UpgradeStat(_stat, _amount, true); }                                    // º¸»ó ½ºÅÈ
+    public static void UpgradeStat(int[] _point) { ForceManager.UpgradeStat(_point); }                                                                  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static void UpgradeStat(EStatName _stat, int _amount) { ForceManager.UpgradeStat(_stat, _amount, true); }                                    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public static void ResetStat() { ForceManager.ResetStat(); }
     public static bool[] PowerObtained { get { return ForceManager.PowerObtained; } }
-    public static EPowerName[] PowerSlot { get { return ForceManager.PowerSlot; } }                                                                     // ½ºÅ³ ½½·Ô
-    public static void RegisterPowerSlot(EPowerName _popwer, int _idx) { ForceManager.RegisterPowerSlot(_popwer, _idx); UpdatePowerSlot(); }            // ½ºÅ³ ½½·Ô ¼³Á¤
+    public static EPowerName[] PowerSlot { get { return ForceManager.PowerSlot; } }                                                                     // ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½
+    public static void RegisterPowerSlot(EPowerName _popwer, int _idx) { ForceManager.RegisterPowerSlot(_popwer, _idx); UpdatePowerSlot(); }            // ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public static void ObtainPower(EPowerName _power) { ForceManager.ObtainPower(_power); }
 
 
@@ -188,56 +188,57 @@ public class PlayManager : MonoBehaviour
     private PlayUIManager m_playUIManager;
     private static PlayUIManager PlayUIManager { get { return Inst.m_playUIManager; } }
 
-        // ¿Â¿ÀÇÁ UI
+        // ï¿½Â¿ï¿½ï¿½ï¿½ UI
     public static bool IsOptionOpen { get { return PlayUIManager.IsOptionOpen; } }
-    public static void ToggleOptionUI(bool _on) { PlayUIManager.ToggleOptionUI(_on); }                                                                  // ¿É¼Ç UI ¿©´Ý±â
+    public static void ToggleOptionUI(bool _on) { PlayUIManager.ToggleOptionUI(_on); }                                                                  // ï¿½É¼ï¿½ UI ï¿½ï¿½ï¿½Ý±ï¿½
     public static bool IsPlayerUIOpen { get { return PlayUIManager.IsPlayerUIOpen; } }
-    public static void TogglePlayerUI(bool _on) { PlayUIManager.TogglePlayerUI(_on); }                                                                  // ÇÃ·¹ÀÌ¾î ÀÎÆ÷ UI ¿©´Ý±â
-    public static void UpdateInfoUI() { PlayUIManager.UpdateInfoUI(); }                                                                                 // ÇÃ·¹ÀÌ¾î ÀÎÆ÷ UI ¾÷µ¥ÀÌÆ®
-    public static void UpdateMaterials() { PlayUIManager.UpdateMaterials(); }                                                                           // ÀçÈ­ ¾÷µ¥ÀÌÆ®
-    public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                                   // ¸Ê UI ¿©´Ý±â
-    public static void ToggleQuestUI(bool _on) { PlayUIManager.ToggleQuestUI(_on); }                                                                    // Äù½ºÆ® Ã¢ ¿©´Ý±â
-    public static void OpenOasisUI(OasisNPC _npc) { PlayUIManager.OpenOasisUI(_npc); }                                                                  // ¿À¾Æ½Ã½º UI ¿­±â
-    public static void CloseOasisUI() { PlayUIManager.CloseOasisUI(); }                                                                                 // ¿À¾Æ½Ã½º UI ´Ý±â
+    public static void TogglePlayerUI(bool _on) { PlayUIManager.TogglePlayerUI(_on); }                                                      // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½Ý±ï¿½
+    public static void UpdateInfoUI() { PlayUIManager.UpdateInfoUI(); }                                                                     // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    public static void UpdateMaterials() { PlayUIManager.UpdateMaterials(); }                                                               // ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                       // ï¿½ï¿½ UI ï¿½ï¿½ï¿½Ý±ï¿½
+    public static bool IsQuestUIOpen { get { return PlayUIManager.IsQuestUIOpen; } }
+    public static void ToggleQuestUI(bool _on) { PlayUIManager.ToggleQuestUI(_on); }                                                        // ï¿½ï¿½ï¿½ï¿½Æ® Ã¢ ï¿½ï¿½ï¿½Ý±ï¿½
+    public static void OpenOasisUI(OasisNPC _npc) { PlayUIManager.OpenOasisUI(_npc); }                                                      // ï¿½ï¿½ï¿½Æ½Ã½ï¿½ UI ï¿½ï¿½ï¿½ï¿½
+    public static void CloseOasisUI() { PlayUIManager.CloseOasisUI(); }                                                                     // ï¿½ï¿½ï¿½Æ½Ã½ï¿½ UI ï¿½Ý±ï¿½
 
-        // ¸ÞÀÎ Äµ¹ö½º »ó½Ã UI
-    public static void SetPlayerMaxHP(float _hp) { PlayUIManager.SetMaxHP(_hp); }                                                                       // Ã¼·Â¹Ù ÃÖ´ë Ã¼·Â
-    public static void SetPlayerCurHP(float _hp) { PlayUIManager.SetCurHP(_hp); }                                                                       // Ã¼·Â¹Ù ÇöÀç Ã¼·Â
-    public static void UpdatePowerSlot() { PlayUIManager.UpdatePowerSlot(); }                                                                           // ½ºÅ³ ½½·Ô UI
-    public static void UsePowerSlot(int _idx, float _cooltime) { PlayUIManager.UsePowerSlot(_idx, _cooltime); }                                         // ½ºÅ³ ÄðÅ¸ÀÓ ÁøÇà
-    public static void UpdateThrowItemSlot() { PlayUIManager.UpdateThrowItemSlot(); }                                                                   // ´øÁö±â ¾ÆÀÌÅÛ UI
-    public static void UpdateHealItemSlot() { PlayUIManager.UpdateHealItemSlot(); }                                                                     // È¸º¹ ¾ÆÀÌÅÛ UI
-    public static void UpdateQuestSidebar() { PlayUIManager.UpdateQuestSideBar(); }                                                                     // Äù½ºÆ® ¹Ù ¾÷µ¥ÀÌÆ®
-    public static void SetMinimapScale(float _scale) { PlayUIManager.SetMinimapScale(_scale); }                                                         // ¹Ì´Ï¸Ê ÃàÃ´ ¼³Á¤
-    public static void SetStaminaRate(float _rate) { PlayUIManager.SetStaminaRate(_rate); }                                                             // ½ºÅÂ¹Ì³ª ºñÀ²
-    public static void SetLightRate(float _rate) { PlayUIManager.SetLightRate(_rate); }                                                                 // ´É·Â ºñÀ²
-    public static void SetLightState(bool _on) { PlayUIManager.SetLightState(_on); }                                                                    // °í°¥ ¼³Á¤
-    public static void ShowRaycastAim() { PlayUIManager.ShowRaycastAim(); }                                                                             // ·¹ÀÌÄ³½ºÆ® ¿¡ÀÓ on
-    public static void SetRaycastAimState(bool _on) { PlayUIManager.SetRaycastAimState(_on); }                                                          // ·¹ÀÌÄ³½ºÆ® ¿¡ÀÓ »óÅÂ
-    public static void HideRaycastAim() { PlayUIManager.HideRaycastAim(); }                                                                             // ·¹ÀÌÄ³½ºÆ® ¿¡ÀÓ off
+        // ï¿½ï¿½ï¿½ï¿½ Äµï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ UI
+    public static void SetPlayerMaxHP(float _hp) { PlayUIManager.SetMaxHP(_hp); }                                                                       // Ã¼ï¿½Â¹ï¿½ ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½
+    public static void SetPlayerCurHP(float _hp) { PlayUIManager.SetCurHP(_hp); }                                                                       // Ã¼ï¿½Â¹ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½
+    public static void UpdatePowerSlot() { PlayUIManager.UpdatePowerSlot(); }                                                                           // ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ UI
+    public static void UsePowerSlot(int _idx, float _cooltime) { PlayUIManager.UsePowerSlot(_idx, _cooltime); }                                         // ï¿½ï¿½Å³ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static void UpdateThrowItemSlot() { PlayUIManager.UpdateThrowItemSlot(); }                                                                   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UI
+    public static void UpdateHealItemSlot() { PlayUIManager.UpdateHealItemSlot(); }                                                                     // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UI
+    public static void UpdateQuestSidebar() { PlayUIManager.UpdateQuestSideBar(); }                                                                     // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    public static void SetMinimapScale(float _scale) { PlayUIManager.SetMinimapScale(_scale); }                                                         // ï¿½Ì´Ï¸ï¿½ ï¿½ï¿½Ã´ ï¿½ï¿½ï¿½ï¿½
+    public static void SetStaminaRate(float _rate) { PlayUIManager.SetStaminaRate(_rate); }                                                             // ï¿½ï¿½ï¿½Â¹Ì³ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static void SetLightRate(float _rate) { PlayUIManager.SetLightRate(_rate); }                                                                 // ï¿½É·ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static void SetLightState(bool _on) { PlayUIManager.SetLightState(_on); }                                                                    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static void ShowRaycastAim() { PlayUIManager.ShowRaycastAim(); }                                                                             // ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ on
+    public static void SetRaycastAimState(bool _on) { PlayUIManager.SetRaycastAimState(_on); }                                                          // ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public static void HideRaycastAim() { PlayUIManager.HideRaycastAim(); }                                                                             // ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ off
 
-        // ÀÎ°ÔÀÓ UI
-    public static void AddIngameAlarm(string _alarm) { PlayUIManager.AddAlarm(_alarm); }                                                                      // ÀÎ°ÔÀÓ ¾Ë¶÷
-    public static void ShowInteractInfo(string _info) { PlayUIManager.ShowInteractInfo(_info); }                                                        // »óÈ£ÀÛ¿ë Å° on
-    public static void HideInteractInfo() { PlayUIManager.HideInteractInfo(); }                                                                         // »óÈ£ÀÛ¿ë Å° off
-    public static void ShowPowerAim(Vector3 _pos, float _radius, float _range) { PlayUIManager.ShowPowerAim(_pos, _radius, _range); }                   // ±Ç´É ¿¡ÀÓ on
-    public static Vector3 TracePowerAim(Vector3 _pos, float _range) { return PlayUIManager.TracePowerAim(_pos, _range); }                               // ±Ç´É ¿¡ÀÓ À§Ä¡ ¼³Á¤
-    public static void HidePowerAim() { PlayUIManager.HidePowerAim(); }                                                                                 // ±Ç´É ¿¡ÀÓ off
-    public static void DrawThrowLine(Vector3 _force, float _mass, Vector3 _start) { PlayUIManager.DrawThrowLine(_force, _mass, _start); }               // ´øÁö±â ±ËÀû ±×¸®±â
-    public static void HideThrowLine() { PlayUIManager.HideThrowLine(); }                                                                               // ´øÁö±â ±ËÀû off
-    private static void StartBlackoutUI() { PlayUIManager.StartBlackout(); }                                                                            // fade ½ÃÀÛ
-    private static void EndBlackoutUI() { PlayUIManager.EndBlackout(); }                                                                                // fade Á¾·á
-    public static void ShowBlindMark() { PlayUIManager.ShowBlindMark(); }                                                                               // ½Ç¸í on
-    public static void HideBlindMark() { PlayUIManager.HideBlindMark(); }                                                                               // ½Ç¸í off
+        // ï¿½Î°ï¿½ï¿½ï¿½ UI
+    public static void AddIngameAlarm(string _alarm) { PlayUIManager.AddAlarm(_alarm); }                                                                      // ï¿½Î°ï¿½ï¿½ï¿½ ï¿½Ë¶ï¿½
+    public static void ShowInteractInfo(string _info) { PlayUIManager.ShowInteractInfo(_info); }                                                        // ï¿½ï¿½È£ï¿½Û¿ï¿½ Å° on
+    public static void HideInteractInfo() { PlayUIManager.HideInteractInfo(); }                                                                         // ï¿½ï¿½È£ï¿½Û¿ï¿½ Å° off
+    public static void ShowPowerAim(Vector3 _pos, float _radius, float _range) { PlayUIManager.ShowPowerAim(_pos, _radius, _range); }                   // ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ on
+    public static Vector3 TracePowerAim(Vector3 _pos, float _range) { return PlayUIManager.TracePowerAim(_pos, _range); }                               // ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
+    public static void HidePowerAim() { PlayUIManager.HidePowerAim(); }                                                                                 // ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ off
+    public static void DrawThrowLine(Vector3 _force, float _mass, Vector3 _start) { PlayUIManager.DrawThrowLine(_force, _mass, _start); }               // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½
+    public static void HideThrowLine() { PlayUIManager.HideThrowLine(); }                                                                               // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ off
+    private static void StartBlackoutUI() { PlayUIManager.StartBlackout(); }                                                                            // fade ï¿½ï¿½ï¿½ï¿½
+    private static void EndBlackoutUI() { PlayUIManager.EndBlackout(); }                                                                                // fade ï¿½ï¿½ï¿½ï¿½
+    public static void ShowBlindMark() { PlayUIManager.ShowBlindMark(); }                                                                               // ï¿½Ç¸ï¿½ on
+    public static void HideBlindMark() { PlayUIManager.HideBlindMark(); }                                                                               // ï¿½Ç¸ï¿½ off
 
     // NPC UI
-    public static void ShowNPCQuestUI(EQuestName _quest, bool _isStart, FPointer _confirm) { PlayUIManager.ShowNPCQuestUI(_quest, _isStart, _confirm); }    // Äù½ºÆ® ¼ö¶ô/°ÅÀý Ã¢ Ç¥½Ã
-    public static void OpenDialogueUI(NPCScript _npc, int _idx) { PlayUIManager.OpenDialogueUI(_npc, _idx); }                                           // NPC ´ëÈ­Ã¢ ¿­±â
+    public static void ShowNPCQuestUI(EQuestName _quest, bool _isStart, FPointer _confirm) { PlayUIManager.ShowNPCQuestUI(_quest, _isStart, _confirm); }    // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ Ã¢ Ç¥ï¿½ï¿½
+    public static void OpenDialogueUI(NPCScript _npc, int _idx) { PlayUIManager.OpenDialogueUI(_npc, _idx); }                                           // NPC ï¿½ï¿½È­Ã¢ ï¿½ï¿½ï¿½ï¿½
     public static void OpenSlateUI(SlateNPC _slate) { PlayUIManager.OpenSlateUI(_slate); }
-    public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                              // NPC ´ëÈ­Ã¢ ¿­·È´ÂÁö È®ÀÎ
+    public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                              // NPC ï¿½ï¿½È­Ã¢ ï¿½ï¿½ï¿½È´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 
-    // ±âÅ¸
-    public static Vector2 NormalizeLocation(Transform _obj) { return PlayUIManager.NormalizeLocation(_obj); }                                           // À§Ä¡ Á¤±ÔÈ­(3D -> 2D)
+    // ï¿½ï¿½Å¸
+    public static Vector2 NormalizeLocation(Transform _obj) { return PlayUIManager.NormalizeLocation(_obj); }                                           // ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½È­(3D -> 2D)
 
 
 
@@ -245,7 +246,7 @@ public class PlayManager : MonoBehaviour
     {
         m_invenManager = GetComponent<InventoryManager>();
         m_invenManager.SetManager();
-        m_questManager = GetComponent<QuestManager>();                  // Quest°¡ Environmentº¸´Ù À§¿¡ ÀÖ¾î¾ßÇÔ
+        m_questManager = GetComponent<QuestManager>();                  // Questï¿½ï¿½ Environmentï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½
         m_questManager.SetManager();
         m_environmentManager = GetComponent<EnvironmentManager>();
         m_environmentManager.SetManager();

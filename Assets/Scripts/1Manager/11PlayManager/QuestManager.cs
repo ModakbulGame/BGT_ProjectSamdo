@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour, IHaveData
 {
-    // Äù½ºÆ®
+    // ï¿½ï¿½ï¿½ï¿½Æ®
     private QuestInfo[] m_questInfoList;
     public List<QuestInfo> QuestInfoList { get { return m_questInfoList.ToList(); } }
 
@@ -34,7 +34,28 @@ public class QuestManager : MonoBehaviour, IHaveData
         if(_prog == info.QuestContent.Amount) { SetQuestStatus(_quest, EQuestState.COMPLETE); return; }
         PlayManager.UpdateQuestSidebar();
     }
+    private void GiveUpQuest(EQuestName _quest)
+    {
+        QuestInfo info = m_questInfoList[(int)_quest];
+        info.SetQuestStatus(EQuestState.UNLOCKED);
+        QuestContent content = info.QuestContent;
+        content.Amount = 0;
 
+        // questinfolistï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        m_questInfoList[(int)_quest] = null;
+        QuestInfo[] newArray = new QuestInfo[m_questInfoList.Length - 1];
+        int newIndex = 0;
+
+        for (int i = 0; i < m_questInfoList.Length; i++)
+        {
+            if (m_questInfoList[i] != null)
+            {
+                newArray[newIndex] = m_questInfoList[i];
+                newIndex++;
+            }
+        }
+        m_questInfoList = newArray;
+    }
     private void CompleteQuest(EQuestName _quest)
     {
         QuestScriptable data = GameManager.GetQeustData(_quest);
@@ -52,7 +73,7 @@ public class QuestManager : MonoBehaviour, IHaveData
 
     private void GetReward(QuestReward _reward)
     {
-        // ¸¸¾à ´ÜÀÏ º¸»ó¸¸ ÁøÇàµÈ´Ù¸é
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È´Ù¸ï¿½
         int amount = _reward.Amount;
         switch(_reward.Type)
         {

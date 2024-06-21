@@ -25,6 +25,5 @@ public class QuestUIScript : BaseUI
     public override void SetComps()
     {
         base.SetComps();
-
     }
 }
