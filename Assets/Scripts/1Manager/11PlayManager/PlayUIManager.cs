@@ -83,6 +83,11 @@ public class PlayUIManager : MonoBehaviour
 
 
     // 인게임 UI
+    private IngameAlarmUIScript m_ingameAlarm;
+    public void AddAlarm(string _alarm) { m_ingameAlarm.AddAlarm(_alarm); }
+
+
+
     private PlayerPowerAimScript m_powerAimUI;
     public void ShowPowerAim(Vector3 _pos, float _radius, float _range)       // 스킬 에임 보이기
     {
@@ -190,6 +195,7 @@ public class PlayUIManager : MonoBehaviour
         m_aimUI = MainCanvas.GetComponentInChildren<AimUIScript>();
         m_equipSlot = MainCanvas.GetComponentInChildren<EquipSlotUIScript>();
 
+        m_ingameAlarm = MainCanvas.GetComponentInChildren<IngameAlarmUIScript>();
         m_powerAimUI = GetComponentInChildren<PlayerPowerAimScript>();
         m_throwLineUI = GetComponentInChildren<PlayerThrowLineRenderer>();
 

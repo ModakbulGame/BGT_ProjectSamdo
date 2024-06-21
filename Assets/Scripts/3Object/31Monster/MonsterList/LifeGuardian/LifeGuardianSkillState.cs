@@ -19,7 +19,6 @@ public class LifeGuardianSkillState : MonoBehaviour, IMonsterState
 
     public void Proceed()
     {
-        if (!LifeGuardian.CreatedSkill) { LifeGuardian.LookTarget(); }
         if (LifeGuardian.CurSkillIdx == 2 && LifeGuardian.RushStarted)
         {
             LifeGuardian.RushForward();

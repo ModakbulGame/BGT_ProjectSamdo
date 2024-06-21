@@ -82,6 +82,8 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
             bool random = (UnityEngine.Random.Range(0, 2) == 0) ? true : false;
             m_anim.SetBool("SPEED_ATTACK", random);
         }
+
+        SetAttackCooltime();
     }
     public void StartHit()              // 피격 시작
     {
