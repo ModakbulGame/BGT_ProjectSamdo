@@ -17,6 +17,7 @@ public class AnimateAttackScript : ObjectAttackScript
     protected readonly LinkedList<BufferObject> m_trailList = new();
     protected LinkedList<BufferObject> m_trailFillerList = new();
 
+    private Collider[] ColliderCache = new Collider[128];
     private void CheckTrail()
     {
         Vector3 localScale = transform.localScale;
@@ -37,11 +38,11 @@ public class AnimateAttackScript : ObjectAttackScript
         if (m_trailList.Count > MAX_TRAIL_FRAME) { m_trailList.RemoveLast(); }
         if (m_trailList.Count > 1) { m_trailFillerList = FillTrail(m_trailList.First.Value, m_trailList.Last.Value); }
 
-        Collider[] hits = Physics.OverlapBox(col.Position, col.Size / 2, col.Rotation, ValueDefine.HITTABLE_LAYER, QueryTriggerInteraction.Collide);
+        Collider[] hits = ScanColliders(col);
         bool hit = HitObject(hits);
         foreach (BufferObject co in m_trailFillerList)
         {
-            hits = Physics.OverlapBox(co.Position, co.Size / 2, co.Rotation, ValueDefine.HITTABLE_LAYER, QueryTriggerInteraction.Collide);
+            hits = ScanColliders(co);
             hit |= HitObject(hits);
         }
         if (Attacker.IsPlayer && hit) { ((PlayerController)Attacker).HitTarget(); }
@@ -73,6 +74,22 @@ public class AnimateAttackScript : ObjectAttackScript
         }
         return fillerList;
     }
+
+    private Collider[] ScanColliders(BufferObject _col)
+    {
+        ColliderCache = new Collider[128];
+        List<Collider> list = new();
+        if (Physics.OverlapBoxNonAlloc(_col.Position, _col.Size / 2, ColliderCache, _col.Rotation, ValueDefine.HITTABLE_LAYER, QueryTriggerInteraction.Collide) > 0)
+        {
+            foreach(Collider col in ColliderCache) { list.Add(col); }
+            ColliderCache = new Collider[128];
+        }
+        if (Attacker.IsMonster && Physics.OverlapBoxNonAlloc(_col.Position, _col.Size / 2, ColliderCache, _col.Rotation, ValueDefine.HITTABLE_PLAYER_LAYER, QueryTriggerInteraction.Collide) > 0)
+        {
+            foreach (Collider col in ColliderCache) { list.Add(col); }
+        }
+        return list.ToArray();
+    }
     private bool HitObject(Collider[] _hits)
     {
         if (!IsAttacking) { return false; }
@@ -80,7 +97,7 @@ public class AnimateAttackScript : ObjectAttackScript
         bool hit = false;
         foreach (Collider collider in _hits)
         {
-            if (!collider.isTrigger) { continue; }
+            if(collider== null || !collider.isTrigger) { continue; }
             IHittable hittable = collider.GetComponentInParent<IHittable>();
             if (hittable == null) { Debug.LogError("히터블 스크립트 없음"); continue; }
             if (!CheckTarget(collider)) { continue; }

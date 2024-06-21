@@ -17,7 +17,6 @@ public class PlayerForceManager : MonoBehaviour, IHaveData
     {
         LeftStatPoint += _add;
         PlayManager.UpdateInfoUI();
-        PlayManager.AddIngameAlarm($"´É·ÂÄ¡ Á¡¼ö {_add} È¹µæ!");
     }
 
 

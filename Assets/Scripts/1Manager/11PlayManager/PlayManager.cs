@@ -187,7 +187,6 @@ public class PlayManager : MonoBehaviour
     // GUI
     private PlayUIManager m_playUIManager;
     private static PlayUIManager PlayUIManager { get { return Inst.m_playUIManager; } }
-    public static Canvas GetCanvas(ECanvasType _canvas) { return PlayUIManager.GetCanvas(_canvas); }                                                    // 캔버스
 
         // 온오프 UI
     public static bool IsOptionOpen { get { return PlayUIManager.IsOptionOpen; } }

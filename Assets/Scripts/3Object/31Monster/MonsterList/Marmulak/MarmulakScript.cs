@@ -109,7 +109,7 @@ public class MarmulakScript : RangedAttackMonster
     public void CheckNRoar()
     {
         m_roarList.Clear();
-        Collider[] targets = Physics.OverlapSphere(m_roarEffect.transform.position, RoarRange, ValueDefine.HITTABLE_LAYER);
+        Collider[] targets = Physics.OverlapSphere(m_roarEffect.transform.position, RoarRange, ValueDefine.HITTABLE_PLAYER_LAYER);
         for (int i = 0; i<targets.Length; i++)
         {
             ObjectScript obj = targets[i].GetComponentInParent<ObjectScript>();
