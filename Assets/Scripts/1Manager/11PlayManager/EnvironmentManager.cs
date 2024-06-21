@@ -94,17 +94,20 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
         }
     }
 
-
-
     private readonly int[] NPCNum = new int[(int)ENPCType.LAST] { (int)EOasisName.LAST, (int)EAltarName.LAST, (int)ESlateName.LAST, 0 };
 
-    [SerializeField]
-    private QuestNPCScript[] m_testNPCs;
-    private void RegisterSampleAltars()
+
+
+
+    public void TempSetNPCs(NPCScript[] _npcs)
     {
-        for (int i = 0; i<m_testNPCs.Length; i++)
+        int[] nums = new int[(int)ENPCType.LAST];
+
+        foreach (NPCScript npc in _npcs)
         {
-            m_npcList[(int)ENPCType.ALTAR, i] = m_testNPCs[i];
+            ENPCType type = npc.NPC.Type;
+            int idx = (int)type;
+            m_npcList[idx, nums[idx]++] = npc;
         }
     }
 
@@ -112,11 +115,6 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
     {
         m_npcList = new NPCScript[(int)ENPCType.LAST, ValueDefine.MAX_NPC_NUM];
         m_monsterKilled = new bool[(int)EMonsterName.LAST];
-
-        if (SceneManager.GetActiveScene().name == "SampleInteractScene")                // 테스트용 임시
-        {
-            RegisterSampleAltars();
-        }
 
         if (!GameManager.IsInGame) { return; }
 

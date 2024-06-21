@@ -166,6 +166,8 @@ public class PlayManager : MonoBehaviour
     public static void MonsterKilled(EMonsterName _monster, EMonsterDeathType _type) { EnvironmentManager.MonsterKilled(_monster, _type); }
     public static void UnlockDialogue(NPCDialogue _dial) { EnvironmentManager.UnlockDialogue(_dial); }
 
+    public static void TempSetNPCs(NPCScript[] _list) { EnvironmentManager.TempSetNPCs(_list); }                // 임시 함수
+
 
     // 플레이어 능력치, 권능
     private PlayerForceManager m_forceManager;

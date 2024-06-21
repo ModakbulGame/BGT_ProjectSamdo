@@ -13,5 +13,9 @@ public class SlateNPC : NPCScript
         SetScriptable(_scriptable);
     }
 
-
+    public override void NPCInteraction()
+    {
+        base.NPCInteraction();
+        PlayManager.OpenSlateUI(this);
+    }
 }
