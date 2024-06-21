@@ -54,6 +54,24 @@ public class QuestManager : MonoBehaviour, IHaveData
     private void GetReward(QuestReward _reward)
     {
         Debug.Log($"{_reward.Type} {_reward.Amount}∏∏≈≠ »πµÊ!");
+
+        switch(_reward.Type)
+        {
+            case ERewarTyoe.SOUL:
+                PlayManager.AddSoul(_reward.Amount);
+                break;
+            case ERewarTyoe.PURIFIED:
+                PlayManager.AddPurified(_reward.Amount);
+                break;
+            case ERewarTyoe.STAT:
+                PlayManager.AddStatPoint(_reward.Amount);
+                break;
+            case ERewarTyoe.ITEM:
+                // æ∆¿Ã≈€ »πµÊ
+                break;
+            default:
+                break;
+        }
     }
 
 

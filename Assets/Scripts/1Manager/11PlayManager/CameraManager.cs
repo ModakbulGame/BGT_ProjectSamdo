@@ -8,7 +8,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     private PlayerCameraScript m_playerCamera;                                  // 현재 카메라
     [SerializeField]
-    private CameraChange m_camChange;
+    private Camera m_uiCamera;
     public CinemachineFreeLook PlayerFreeLook { get { return m_playerCamera.PlayerFreeLook; } }
 
     public float CameraRotation { get { return transform.eulerAngles.y; } }     // 카메라가 좌우 각도
@@ -30,9 +30,20 @@ public class CameraManager : MonoBehaviour
     {
         m_playerCamera.LooseFocus();
     }
-
+    public void SetCameraDepth()
+    {
+        Camera playerCameraComponent = m_playerCamera.GetComponent<Camera>();
+        playerCameraComponent.depth = 0;                            // 기본 depth 설정
+        m_uiCamera.clearFlags = CameraClearFlags.Depth;             // 이전 카메라의 깊이 버퍼만 유지
+        m_uiCamera.depth = 1;                                       // PlayerCamera보다 높은 depth 설정
+    }
     public void SwitchToCamera(CinemachineFreeLook _targetCamera)
     {
-        m_camChange.SwitchToCamera(_targetCamera);
+
+    }
+
+    private void Awake()
+    {
+        SetCameraDepth();
     }
 }
