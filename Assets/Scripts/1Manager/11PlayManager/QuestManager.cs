@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour, IHaveData
 {
-    // ����Ʈ
+    // 퀘스트 목록
     private QuestInfo[] m_questInfoList;
     public List<QuestInfo> QuestInfoList { get { return m_questInfoList.ToList(); } }
 
@@ -25,6 +25,7 @@ public class QuestManager : MonoBehaviour, IHaveData
         if(_status == EQuestState.COMPLETE) { CompleteQuest(_quest); }
         if(_status == EQuestState.FINISH) { FinishQuest(_quest); }
         PlayManager.UpdateQuestSidebar();
+        // PlayManager.UPdateQuestUI();
     }
 
     public void SetQuestProgress(EQuestName _quest, float _prog)
@@ -33,28 +34,14 @@ public class QuestManager : MonoBehaviour, IHaveData
         info.SetQuestProgress(_prog);
         if(_prog == info.QuestContent.Amount) { SetQuestStatus(_quest, EQuestState.COMPLETE); return; }
         PlayManager.UpdateQuestSidebar();
+        // PlayManager.UPdateQuestUI();
     }
-    private void GiveUpQuest(EQuestName _quest)
+    public void GiveUpQuest(EQuestName _quest)
     {
         QuestInfo info = m_questInfoList[(int)_quest];
+        info.SetQuestProgress(0);
         info.SetQuestStatus(EQuestState.UNLOCKED);
-        QuestContent content = info.QuestContent;
-        content.Amount = 0;
-
-        // questinfolist���� ����Ʈ ���� �� ������
-        m_questInfoList[(int)_quest] = null;
-        QuestInfo[] newArray = new QuestInfo[m_questInfoList.Length - 1];
-        int newIndex = 0;
-
-        for (int i = 0; i < m_questInfoList.Length; i++)
-        {
-            if (m_questInfoList[i] != null)
-            {
-                newArray[newIndex] = m_questInfoList[i];
-                newIndex++;
-            }
-        }
-        m_questInfoList = newArray;
+        PlayManager.UpdateQuestSidebar();
     }
     private void CompleteQuest(EQuestName _quest)
     {
@@ -73,7 +60,6 @@ public class QuestManager : MonoBehaviour, IHaveData
 
     private void GetReward(QuestReward _reward)
     {
-        // ���� ���� ���� ����ȴٸ�
         int amount = _reward.Amount;
         switch(_reward.Type)
         {
