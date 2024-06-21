@@ -109,7 +109,7 @@ public partial class PlayerController
         AttackCreated = true;
         UseStamina(AttackStaminaUse);
 
-        PlayManager.AddSoul(2);
+        PlayManager.AddInventoryItem(new(EItemType.PATTERN, UnityEngine.Random.Range(0, (int)EPatternName.LAST)), 1);
     }
     public override void AttackTriggerOff()                             // 무기 히트 판정 off
     {

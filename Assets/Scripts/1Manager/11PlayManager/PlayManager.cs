@@ -128,6 +128,7 @@ public class PlayManager : MonoBehaviour
     public static EThrowItemName CurThrowItem { get { return InvenManager.CurThrowItem; } }                                                     // 현재 던지기 아이템 (LAST == null)
     public static List<EThrowItemName> ThrowItemList { get { return InvenManager.ThrowItemList; } }                                             // 등록된 던지기 아이템
     private static void ThrowItemEditted() { UpdateInfoUI(); UpdateThrowItemSlot(); }
+
     public static void UseThrowItem() { InvenManager.UseThrowItem(); UpdateInfoUI(); UpdateThrowItemSlot(); }                                   // 던지기 아이템 사용
     public static void AddThrowItem(EThrowItemName _item) { InvenManager.AddThrowItem(_item); ThrowItemEditted(); }                             // 던지기 아이템 추가
     public static void SetThrowItem(int _idx, EThrowItemName _item) { InvenManager.SetThrowItem(_idx, _item); ThrowItemEditted(); }             // 위치 지정
@@ -138,11 +139,9 @@ public class PlayManager : MonoBehaviour
     public static int[] PatternNum { get { return InvenManager.PatternNum; } }                                                                  // 문양별 개수
     public static void AddSoul(int _num) { InvenManager.AddSoul(_num); }                                                                        // 영혼 추가
     public static void AddPurified(int _num) { InvenManager.AddPurified(_num); }                                                                // 성불 영혼 추가
-    public static void AddPattern(EPatternName _type, int _num) { InvenManager.AddPattern(_type, _num); }                                       // 문양 추가
     public static void UseSoul(int _num) { InvenManager.LooseSoul(_num); }                                                                      // 영혼 사용
     public static void LooseSoul(int _num, bool _absorbed) { InvenManager.LooseSoul(_num, _absorbed); }                                         // 영혼 흡수 당함
     public static void UsePurified(int _num) { InvenManager.UsePurified(_num); }                                                                // 성불 영혼 사용
-    public static void UsePattern(EPatternName _type, int _num) { InvenManager.UsePattern(_type, _num); }                                       // 문양 사용
 
     // 스토리
     private QuestManager m_questManager;
