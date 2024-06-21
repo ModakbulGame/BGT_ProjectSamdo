@@ -136,8 +136,13 @@ public partial class MonsterScript
 
     public virtual void OnSpawned()
     {
+        ResetDissolve();
+        IsDead = false;
         m_aiPath.enabled = false;
         IsSpawned = false;
+        m_rigid.useGravity = true;         // ม฿ทย
+        GetComponentInChildren<CapsuleCollider>().isTrigger = false;
+        m_hpBar.ShowUI();
         base.Start();
         StartCoroutine(WaitSpawned());
     }

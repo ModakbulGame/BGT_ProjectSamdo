@@ -11,7 +11,7 @@ public class InventoryManager : MonoBehaviour, IHaveData
     public void AddSoul(int _num)
     {
         m_soulNum += _num;
-        GameManager.CreateSideTextAlarm($"¿µÈ¥ {_num}°³ È¹µæ!");
+        PlayManager.AddIngameAlarm($"¿µÈ¥ {_num}°³ È¹µæ!");
         PlayManager.UpdateMaterials();
     }
     public void LooseSoul(int _num) { LooseSoul(_num, false); }
@@ -21,7 +21,7 @@ public class InventoryManager : MonoBehaviour, IHaveData
         m_soulNum -= _num;
         if (_absorbed)
         {
-            Debug.Log($"¿µÈ¥ {_num}°³ Èí¼ö´çÇÔ.");
+            PlayManager.AddIngameAlarm($"¿µÈ¥ {_num}°³ Èí¼ö´çÇÔ.");
         }
         PlayManager.UpdateMaterials();
     }
@@ -33,7 +33,7 @@ public class InventoryManager : MonoBehaviour, IHaveData
     public void AddPurified(int _num)
     {
         m_purifiedNum += _num;
-        GameManager.CreateSideTextAlarm($"¼ººÒ ¿µÈ¥ {_num}°³ È¹µæ!");
+        PlayManager.AddIngameAlarm($"¼ººÒ ¿µÈ¥ {_num}°³ È¹µæ!");
         PlayManager.UpdateMaterials();
     }
     public void UsePurified(int _num)
@@ -49,7 +49,7 @@ public class InventoryManager : MonoBehaviour, IHaveData
     public void AddPattern(EPatternName _type, int _num)
     {
         m_patternNum[(int)_type] += _num;
-        GameManager.CreateSideTextAlarm($"¹®¾ç {_num}°³ È¹µæ!");
+        PlayManager.AddIngameAlarm($"¹®¾ç {_num}°³ È¹µæ!");
         PlayManager.UpdateMaterials();
     }
     public void UsePattern(EPatternName _type, int _num)
@@ -150,6 +150,8 @@ public class InventoryManager : MonoBehaviour, IHaveData
     {
         m_itemInven.AddItem(_item, _num);
         if (_isNew) { CheckItemObtained(_item, _num); }
+        string itemName = GameManager.GetItemData(_item).ItemName;
+        PlayManager.AddIngameAlarm($"{itemName} {_num}°³ È¹µæ!");
     }
     public void SetInventoryItem(int _idx, SItem _item, int _num) { m_itemInven.SetItem(_idx, _item, _num); }           // idx¿¡ ¾ÆÀÌÅÛ ¼³Á¤
     public void SwapItemInven(int _idx1, int _idx2) { m_itemInven.SwapItem(_idx1, _idx2); }

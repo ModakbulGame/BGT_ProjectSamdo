@@ -16,7 +16,6 @@ public class QuestManager : MonoBehaviour, IHaveData
         for(int i=0;i<(int)EQuestName.LAST;i++)
         {
             m_questInfoList[i] = new((EQuestName)i);
-
         }
     }
 

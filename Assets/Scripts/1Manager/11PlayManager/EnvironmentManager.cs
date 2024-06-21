@@ -41,23 +41,6 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
 
     public void MonsterKilled(EMonsterName _monster, EMonsterDeathType _type)           // 첫 킬, 퀘스트 확인
     {
-        #region 임시코드
-        if (_monster == EMonsterName.LAST)
-        {
-            List<QuestInfo> tempInfos = PlayManager.QuestInfoList;
-            foreach (QuestInfo quest in tempInfos)
-            {
-                if (quest.State != EQuestState.ACCEPTED || quest.QuestContent.Type != EQuestType.KILL
-                    || quest.QuestContent.Monster != _monster) { continue; }
-
-                float prog = quest.QuestProgress++;
-                PlayManager.SetQuestProgress(quest.QuestName, prog);
-            }
-            return;
-        }
-        #endregion
-
-
         int idx = (int)_monster;
         if (!m_monsterKilled[idx]) { FirstKillMonster(_monster); }
         List<QuestInfo> infos = PlayManager.QuestInfoList;
@@ -78,7 +61,12 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
     }
     private void FirstKillMonster(EMonsterName _monster)
     {
-        // 스탯 보상 획득
+        MonsterScriptable data = GameManager.GetMonsterData(_monster);
+        int point = data.FirstKillStat;
+
+        PlayManager.AddStatPoint(point);
+        PlayManager.AddIngameAlarm($"{data.MonsterName} 최초 처치로 {point} 능력치 점수 획득");
+
         m_monsterKilled[(int)_monster] = true;
     }
 

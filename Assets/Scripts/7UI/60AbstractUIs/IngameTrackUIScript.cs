@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class IngameTrackUIScript : MonoBehaviour            // 오브젝트에 달려있는 UI
 {
-    public virtual void DestroyUI()
+    public virtual void HideUI()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+    }
+    public void ShowUI()
+    {
+        gameObject.SetActive(true);
     }
 
     private void TrackCamRotation()

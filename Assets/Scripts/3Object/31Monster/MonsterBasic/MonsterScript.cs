@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.VFX;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 [RequireComponent(typeof(MonsterLighter), typeof(MonsterBattler))]
 public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
@@ -95,7 +96,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         StopMove();
         DieAnimation();                     // 애니메이션
         StartDissolve();                    // 디졸브
-        m_hpBar.DestroyUI();                // HP바
+        m_hpBar.HideUI();                // HP바
         m_rigid.useGravity = false;         // 중력
         GetComponentInChildren<CapsuleCollider>().isTrigger = true;         // 트리거
     }
@@ -128,12 +129,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     {
         if(false && DeathType == EMonsterDeathType.PURIFY || DeathType == EMonsterDeathType.BY_PLAYER)      // 잠정 중단
         {
-            DropItems();                        // 아이템 드랍
-            if (!GameManager.CheckNClearMonster(MonsterEnum))
-            {
-                int stat = m_scriptable.DropInfo.StatPoint;
-                PlayManager.AddStatPoint(stat);
-            }
+            DropItems();
         }
 
         CheckMonsterDeath();
@@ -173,6 +169,18 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
             }
         }
     }
+
+    private void ResetDissolve()
+    {
+        foreach (SkinnedMeshRenderer smr in m_skinneds)
+        {
+            Material[] mats = smr.materials;
+            for (int i = 0; i<mats.Length; i++)
+            {
+                mats[i].SetFloat("_DissolveAmount", 0);
+            }
+        }
+    }
     public virtual void StartDissolve()             // dissolve vfx 효과 재생
     {
         GameObject effect = GameManager.GetEffectObj(EEffectName.MONSTER_DISSOLVE);
@@ -180,7 +188,6 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         VisualEffect vfx = effect.GetComponent<VisualEffect>();
         foreach (SkinnedMeshRenderer smr in m_skinneds)
         {
-            /*vfx.SetSkinnedMeshRenderer("SkinnedMeshRenderer", smr);*/
             StartCoroutine(DissolveCoroutine(smr.materials));
         }
         vfx.Play();

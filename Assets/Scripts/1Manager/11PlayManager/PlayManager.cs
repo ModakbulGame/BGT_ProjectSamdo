@@ -215,7 +215,7 @@ public class PlayManager : MonoBehaviour
     public static void HideRaycastAim() { PlayUIManager.HideRaycastAim(); }                                                                 // 레이캐스트 에임 off
 
         // 인게임 UI
-    public static void AddAlarm(string _alarm) { PlayUIManager.AddAlarm(_alarm); }                                                          // 인게임 알람
+    public static void AddIngameAlarm(string _alarm) { PlayUIManager.AddAlarm(_alarm); }                                                          // 인게임 알람
     public static void ShowInteractInfo(string _info) { PlayUIManager.ShowInteractInfo(_info); }                                            // 상호작용 키 on
     public static void HideInteractInfo() { PlayUIManager.HideInteractInfo(); }                                                             // 상호작용 키 off
     public static void ShowPowerAim(Vector3 _pos, float _radius, float _range) { PlayUIManager.ShowPowerAim(_pos, _radius, _range); }       // 권능 에임 on

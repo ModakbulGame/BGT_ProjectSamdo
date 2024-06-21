@@ -7,21 +7,22 @@ public class MonsterScriptable : ScriptableObject
     public uint             Idx;
     public EMonsterName     MonsterEnum;
     public string           ID;
-    public EMonsterType     MonsterType;
+    public EMonsterType     MonsterType;            // 종류 (보통, 엘리트, 보스)
     public string           MonsterName;
     public int              MaxHP;
     public float            Attack;
     public float            MoveSpeed;
-    public float            ApproachSpeed;
-    public float            ViewAngle;
-    public float            ViewRange;
-    public float            EngageRange;
-    public float            ReturnRange;
+    public float            ApproachSpeed;          // 접근 시 속도
+    public float            ViewAngle;              // 시야각
+    public float            ViewRange;              // 시야 범위
+    public float            EngageRange;            // 뭐였지
+    public float            ReturnRange;            // 원래 위치로 돌아가는 범위
     public float            AttackRange;
     public float            AttackSpeed;
-    public float            ApproachDelay;
-    public float            FenceRange;
+    public float            ApproachDelay;          // 접근 딜레이
+    public float            FenceRange;             // 돌아다니는 범위 returnRange랑 뭐가 다름?
     public string           Description;
+    public int              FirstKillStat = 1;      // 최초 처치 시 스탯 양
     public DropInfo         DropInfo;
     public GameObject       MonsterPrefab;
     public Sprite           MonsterProfile;
