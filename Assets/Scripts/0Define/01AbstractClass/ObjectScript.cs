@@ -118,7 +118,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
         float damage = _hit.Damage * (100-Defense) * 0.01f;
         if (CurHP > damage) { GetCC(_hit); }
         GetDamage(damage, _hit.Attacker);
-        Debug.Log($"{_hit.Attacker.ObjectName} => {ObjectName} {damage} 데미지");
+        // Debug.Log($"{_hit.Attacker.ObjectName} => {ObjectName} {damage} 데미지");
         if (!IsUnstoppable) { PlayHitAnim(_hit); }
     }
     public virtual void GetDamage(float _damage, ObjectScript _attacker)    // 데미지 받음
