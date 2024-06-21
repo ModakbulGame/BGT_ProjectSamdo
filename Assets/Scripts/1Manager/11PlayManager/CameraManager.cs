@@ -32,10 +32,10 @@ public class CameraManager : MonoBehaviour
     }
     public void SetCameraDepth()
     {
-        Camera playerCameraComponent = m_playerCamera.GetComponent<Camera>();
+/*        Camera playerCameraComponent = m_playerCamera.GetComponent<Camera>();
         playerCameraComponent.depth = 0;                            // 기본 depth 설정
         m_uiCamera.clearFlags = CameraClearFlags.Depth;             // 이전 카메라의 깊이 버퍼만 유지
-        m_uiCamera.depth = 1;                                       // PlayerCamera보다 높은 depth 설정
+        m_uiCamera.depth = 1;                                       // PlayerCamera보다 높은 depth 설정*/
     }
     public void SwitchToCamera(CinemachineFreeLook _targetCamera)
     {

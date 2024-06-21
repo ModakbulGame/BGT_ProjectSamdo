@@ -79,6 +79,10 @@ public abstract partial class MonsterScript
     public virtual bool CanAttack { get { return HasTarget && TargetInAttackRange && AttackTimeCount <= 0; } }      // 공격 가능 여부
     public float AttackTimeCount { get; set; } = 0;                                                                 // 공격 쿨타임
 
+    public virtual void SetAttackCooltime()
+    {
+        AttackTimeCount = 1 / AttackSpeed;
+    }
     public override void AttackTriggerOn()
     {
         AttackTriggerOn(0);
@@ -107,7 +111,6 @@ public abstract partial class MonsterScript
             ChangeState(EMonsterState.APPROACH);
         else
             ChangeState(EMonsterState.IDLE);
-        AttackTimeCount = 1 / AttackSpeed;
     }
 
 
