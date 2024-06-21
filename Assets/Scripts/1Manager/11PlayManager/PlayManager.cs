@@ -200,13 +200,6 @@ public class PlayManager : MonoBehaviour
     public static void ToggleQuestUI(bool _on) { PlayUIManager.ToggleQuestUI(_on); }                                                        // ����Ʈ â ���ݱ�
     public static void OpenOasisUI(OasisNPC _npc) { PlayUIManager.OpenOasisUI(_npc); }                                                      // ���ƽý� UI ����
     public static void CloseOasisUI() { PlayUIManager.CloseOasisUI(); }                                                                     // ���ƽý� UI �ݱ�
-    public static void TogglePlayerUI(bool _on) { PlayUIManager.TogglePlayerUI(_on); }                                                                  // �÷��̾� ���� UI ���ݱ�
-    public static void UpdateInfoUI() { PlayUIManager.UpdateInfoUI(); }                                                                                 // �÷��̾� ���� UI ������Ʈ
-    public static void UpdateMaterials() { PlayUIManager.UpdateMaterials(); }                                                                           // ��ȭ ������Ʈ
-    public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                                   // �� UI ���ݱ�
-    public static void ToggleQuestUI(bool _on) { PlayUIManager.ToggleQuestUI(_on); }                                                                    // ����Ʈ â ���ݱ�
-    public static void OpenOasisUI(OasisNPC _npc) { PlayUIManager.OpenOasisUI(_npc); }                                                                  // ���ƽý� UI ����
-    public static void CloseOasisUI() { PlayUIManager.CloseOasisUI(); }                                                                                 // ���ƽý� UI �ݱ�
 
         // ���� ĵ���� ��� UI
     public static void SetPlayerMaxHP(float _hp) { PlayUIManager.SetMaxHP(_hp); }                                                                       // ü�¹� �ִ� ü��
