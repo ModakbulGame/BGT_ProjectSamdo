@@ -141,6 +141,12 @@ public class LifeGuardianScript : AnimatedAttackMonster
     }
     public void RushForward()
     {
+        if (!CreatedSkill)
+        {
+            Vector2 dir = (CurTarget.Position2-Position2).normalized;
+            RotateToDir(dir, ERotateSpeed.DEFAULT);
+        }
+
         m_rigid.velocity = RushSpeed * transform.forward;
     }
     public override void SkillDone()
