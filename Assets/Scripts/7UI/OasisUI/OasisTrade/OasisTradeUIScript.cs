@@ -7,20 +7,29 @@ public class OasisTradeUIScript : BaseUI, IOasisUI
 {
     private OasisUIScript m_parent;
 
+    private ProductListScript m_productList;
+
+    private OasisSoulInfoScript m_soulInfo;
+
+
+    private OasisNPC Oasis { get { return m_parent.Oasis; } }
+
     [SerializeField]
     private Button m_closeBtn;
 
     public void OpenUI(OasisUIScript _parent)
     {
+        if (m_parent == null) { m_parent = _parent; }
         base.OpenUI();
-        if(m_parent == null) { m_parent = _parent; }
     }
 
-
-    private void CancelUI()
+    public override void UpdateUI()
     {
-        CloseUI();
+        m_productList.UpdateUI(Oasis);
+
+        m_soulInfo.UpdateUI();
     }
+
 
     public override void CloseUI()
     {
@@ -29,10 +38,18 @@ public class OasisTradeUIScript : BaseUI, IOasisUI
     }
 
 
+    private void SetBtns()
+    {
+        m_closeBtn.onClick.AddListener(CloseUI);
+    }
+
     public override void SetComps()
     {
         base.SetComps();
-        m_closeBtn.onClick.AddListener(CancelUI);
+        m_productList = GetComponentInChildren<ProductListScript>();
+        m_productList.SetParent(this); m_productList.SetComps();
+        m_soulInfo = GetComponentInChildren<OasisSoulInfoScript>();
 
+        SetBtns();
     }
 }

@@ -28,7 +28,7 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
 
     public List<DialogueScriptable> DialogueList { get { return m_scriptable.DialogueList; } }
     private int DialCount { get { if (m_scriptable == null) { return 0; } return DialogueList.Count; } }
-    private DialogueInfo[] m_dialInfos;
+    protected DialogueInfo[] m_dialInfos;
 
     private int AbleDialIdx { get { for (int i = 0; i<DialCount; i++) { if (m_dialInfos[i].CanProcess) return i; } return -1; } }
 
@@ -44,7 +44,7 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
     public virtual void StartDialogue()
     {
         PlayManager.OpenDialogueUI(this, AbleDialIdx);
-        if(AbleDialIdx < 0) { return; }
+        if (AbleDialIdx < 0) { return; }
         m_dialInfos[AbleDialIdx].IsDone = true; ;
     }
 
@@ -66,19 +66,33 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
     }
 
 
+    public virtual void ApplyLoadedData(NPCSaveData _save)
+    {
+        DialogueInfo[] states = _save.DialInfo;
+        for (int i = 0; i<states.Length; i++) { m_dialInfos[i] = new(states[i]); }
+    }
+    public virtual NPCSaveData ModifiedData()
+    {
+        return new(NPC, m_dialInfos);
+    }
+
+    public virtual void InitNPCData()
+    {
+        m_dialInfos = new DialogueInfo[DialCount];
+    }
+
     // ±âº»
     public void LoadData()
     {
         GameManager.RegisterData(this);
-        if (PlayManager.IsNewData) { m_dialInfos = new DialogueInfo[DialCount]; InitDialInfos(); return; }
+        if (PlayManager.IsNewData) { InitNPCData(); InitDialInfos(); return; }
 
         SaveData data = PlayManager.CurSaveData;
 
         foreach (NPCSaveData save in data.NPCData)
         {
             if (save.NPC != NPC) { continue; }
-            DialogueInfo[] states = save.DialInfo;
-            for (int i = 0; i<states.Length; i++) { m_dialInfos[i] = new(states[i]); }
+            ApplyLoadedData(save);
             return;
         }
     }
@@ -90,8 +104,8 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
         foreach (NPCSaveData save in data.NPCData)
         {
             if (save.NPC != NPC) { continue; }
-            DialogueInfo[] states = save.DialInfo;
-            for (int i = 0; i<states.Length; i++) { m_dialInfos[i] = new(states[i]); }
+            NPCSaveData modified = ModifiedData();
+            data.NPCData.Add(modified);
             return;
         }
 

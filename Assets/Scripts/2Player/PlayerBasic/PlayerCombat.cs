@@ -108,6 +108,8 @@ public partial class PlayerController
         CurWeapon.AttackOn();
         AttackCreated = true;
         UseStamina(AttackStaminaUse);
+
+        PlayManager.AddSoul(2);
     }
     public override void AttackTriggerOff()                             // 무기 히트 판정 off
     {

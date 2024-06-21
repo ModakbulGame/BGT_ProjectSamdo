@@ -21,7 +21,7 @@ public class PowerScriptable : ScriptableObject
     public int                  StaminaCost;
     public TempAdjust           StatAdjust;
     public string               Description;
-    public int                  Price;
+    public int                  PowerPrice;
     public GameObject           PowerPrefab;
     public Sprite               PowerIcon;
     public int                  MotionIdx;
@@ -78,7 +78,7 @@ public class PowerScriptable : ScriptableObject
         if(amount == 0)     { amount = (float)DataManager.String2CC(_data[(int)EPowerAttribute.ADJ_AMOUNT]); }
         StatAdjust =        new(type, amount, time);
         Description =       _data[(int)EPowerAttribute.DESCRIPTION];
-        int.TryParse(       _data[(int)EPowerAttribute.PRICE],            out Price);
+        int.TryParse(       _data[(int)EPowerAttribute.PRICE],            out PowerPrice);
         PowerPrefab =       _prefab;
     }
 }
