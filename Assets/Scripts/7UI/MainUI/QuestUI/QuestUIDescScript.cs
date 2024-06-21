@@ -25,6 +25,5 @@ public class QuestUIDescScript : MonoBehaviour
     {
         m_btn = GetComponent<Button>();
         m_btn.onClick.AddListener(GiveUpQuest);
-
     }
 }

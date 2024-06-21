@@ -27,9 +27,9 @@ public class QuestUIScript : BaseUI
     public override void SetComps()
     {
         base.SetComps();
-        m_elms = GetComponentsInChildren<QuestUIElmScript>();
-        foreach(QuestUIElmScript elm in m_elms) elm.SetComps();
-        m_desc = GetComponentInChildren<QuestUIDescScript>();
-        m_desc.SetComps();
+        //m_elms = GetComponentsInChildren<QuestUIElmScript>();
+        //foreach(QuestUIElmScript elm in m_elms) elm.SetComps();
+        //m_desc = GetComponentInChildren<QuestUIDescScript>();
+        //m_desc.SetComps();
     }
 }
