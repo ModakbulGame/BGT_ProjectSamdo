@@ -52,9 +52,8 @@ public class QuestManager : MonoBehaviour, IHaveData
 
     private void GetReward(QuestReward _reward)
     {
-        Debug.Log($"{_reward.Type} {_reward.Amount}만큼 획득!");
-
         // 만약 단일 보상만 진행된다면
+        int amount = _reward.Amount;
         switch(_reward.Type)
         {
             case ERewarTyoe.SOUL:
@@ -64,10 +63,12 @@ public class QuestManager : MonoBehaviour, IHaveData
                 PlayManager.AddPurified(_reward.Amount);
                 break;
             case ERewarTyoe.STAT:
-                PlayManager.AddStatPoint(_reward.Amount);
+                if (_reward.IsStatPoint) { PlayManager.AddStatPoint(_reward.Amount); }
+                else { PlayManager.UpgradeStat(_reward.Stat, amount); }
                 break;
             case ERewarTyoe.ITEM:
-                // 아이템 획득
+                SItem item = _reward.Item;
+                PlayManager.AddInventoryItem(item, amount);
                 break;
             default:
                 break;

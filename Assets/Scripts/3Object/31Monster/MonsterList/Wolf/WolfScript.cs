@@ -15,6 +15,7 @@ public class WolfScript : MonsterScript
 
     private bool IsPositioning { get { return CurState.GetType() == typeof(WolfJabState) && ((WolfJabState)CurState).IsMoving; } }
 
+
     public int PeckIdx { get; private set; } = -1;
     public EWolfRole CurRole { get; private set; } = EWolfRole.MAIN;
     public void SetRole(EWolfRole _role) { CurRole = _role; }
@@ -95,6 +96,18 @@ public class WolfScript : MonsterScript
             return Mathf.Abs(gap);
         } }
 
+    private readonly float NearPeckDistance = 15;
+
+    private bool IsFarFromPeck { get { if (m_peck == null) { return false; } return Vector3.Distance(Position, m_peck.PeckCenter) > NearPeckDistance; } }
+    public override Vector3 SetRandomRoaming()
+    {
+        Vector3 destination;
+        do
+        {
+            destination = base.SetRandomRoaming();
+        } while (IsFarFromPeck && (Vector3.Distance(Position, m_peck.PeckCenter) < Vector3.Distance(destination, m_peck.PeckCenter)));
+        return destination;
+    }
 
     // 늑대 기본 메소드
     public void StartPosition()
@@ -191,5 +204,11 @@ public class WolfScript : MonsterScript
         m_positionState = gameObject.AddComponent<WolfPositionState>();
         m_jabState = gameObject.AddComponent<WolfJabState>();
         ReplaceState(EMonsterState.ATTACK, gameObject.AddComponent<WolfAttackState>());
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        Debug.Log(CurState);
     }
 }

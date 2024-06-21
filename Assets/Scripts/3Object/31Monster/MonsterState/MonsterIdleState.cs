@@ -24,12 +24,7 @@ public class MonsterIdleState : MonoBehaviour, IMonsterState
     private void StartMove()
     {
         if (!m_monster.IsSpawned) { return; }
-        Vector3 destination;
-        do
-        {
-            Vector3 offset = new(Random.Range(-5f, 5f), 0, Random.Range(-5f, 5f));
-            destination = transform.position + offset;
-        } while (m_monster.OutOfRange(destination));
+        Vector3 destination = m_monster.SetRandomRoaming();
         m_monster.SetDestination(destination);
         IsMoving = true;
         IsRotating = false;
