@@ -9,7 +9,7 @@ public class PlayerCameraScript : MonoBehaviour
     private CinemachineFreeLook m_cameraDetail;
     public CinemachineFreeLook PlayerFreeLook { get { return m_cameraDetail; } }
 
-    private string[] m_collideAgainstLayers = { "BodyPart", "Ground" };
+    private string[] m_collideAgainstLayers = { "Player", "Ground" };
 
     private const float XMoveMultiplier = 120;              // 민감도 1당 X 움직임
     private const float YMoveMultiplier = 1.5f;                // 민감도 1당 Y 움직임

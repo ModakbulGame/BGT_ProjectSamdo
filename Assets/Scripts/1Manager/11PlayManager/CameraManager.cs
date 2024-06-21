@@ -7,8 +7,6 @@ public class CameraManager : MonoBehaviour
 {
     [SerializeField]
     private PlayerCameraScript m_playerCamera;                                  // 현재 카메라
-    [SerializeField]
-    private Camera m_uiCamera;
     public CinemachineFreeLook PlayerFreeLook { get { return m_playerCamera.PlayerFreeLook; } }
 
     public float CameraRotation { get { return transform.eulerAngles.y; } }     // 카메라가 좌우 각도

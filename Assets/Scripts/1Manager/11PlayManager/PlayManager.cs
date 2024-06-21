@@ -9,8 +9,8 @@ public class PlayManager : MonoBehaviour
     public static PlayManager Inst;
 
 
-    // ���� �Լ�
-    public static bool IsPlaying { get; private set; }                // �÷��� ������
+    // 메인 함수
+    public static bool IsPlaying { get; private set; }                // 플레이 중인지
     public static SaveData CurSaveData { get; private set; }
     public static bool IsNewData { get { return CurSaveData == null; } }
     private static bool IsFromTitle { get; set; }
@@ -64,85 +64,86 @@ public class PlayManager : MonoBehaviour
     }
 
 
-    // �÷��̾�
+    // 플레이어
     private static PlayerController Player { get; set; }
-    public static void SetCurPlayer(PlayerController _player) { Player = _player; }                                                         // �÷��̾� ���
-    public static bool CheckIsPlayer(ObjectScript _object) { return _object == Player; }                                                    // �÷��̾����� Ȯ��
-    public static bool IsPlayerSet { get { return Player != null; } }                                                                       // �÷��̾� ��� ����
-    public static bool IsPlayerGuarding { get { return Player.IsGuarding; } }                                                               // �÷��̾� ���� ��
-    public static bool IsPlayerDead { get { return Player.IsDead; } }                                                                       // �÷��̾� ��� ����
-    public static bool IsPlayerLightOn { get { return Player.IsLightOn; } }                                                                 // �÷��̾� �ɷ� �����
-    public static Vector3 PlayerPos { get { if (IsPlayerSet) return Player.transform.position; return ValueDefine.NullVector; } }           // �÷��̾� ��ġ
-    public static Vector2 PlayerPos2 { get { if (IsPlayerSet) return Player.Position2; return ValueDefine.NullVector; } }                   // �÷��̾� ��� ��ġ
+    public static void SetCurPlayer(PlayerController _player) { Player = _player; }                                                         // 플레이어 등록
+    public static bool CheckIsPlayer(ObjectScript _object) { return _object == Player; }                                                    // 플레이어인지 확인
+    public static bool IsPlayerSet { get { return Player != null; } }                                                                       // 플레이어 등록 여부
+    public static bool IsPlayerGuarding { get { return Player.IsGuarding; } }                                                               // 플레이어 가드 중
+    public static bool IsPlayerDead { get { return Player.IsDead; } }                                                                       // 플레이어 사망 여부
+    public static bool IsPlayerLightOn { get { return Player.IsLightOn; } }                                                                 // 플레이어 능력 사용중
+    public static Vector3 PlayerPos { get { if (IsPlayerSet) return Player.transform.position; return ValueDefine.NullVector; } }            // 플레이어 위치
+    public static Vector2 PlayerPos2 { get { if (IsPlayerSet) return Player.Position2; return ValueDefine.NullVector; } }                   // 플레이어 평면 위치
     public static float PlayerDirection { get { return Player.Direction; } }
-    public static Vector2 PlayerAimDirection { get { return Player.PlayerAimDirection; } }                                                  // ī�޶� ���� ����
+    public static Vector2 PlayerAimDirection { get { return Player.PlayerAimDirection; } }                                                  // 카메라 조준 벡터
     public static Transform PlayerTransform { get { if (IsPlayerSet) return Player.transform; return null; } }
     public static Transform CameraFocusTransform { get { if (IsPlayerSet) { return Player.CameraFocus; } return null; } }
     public static PlayerStatInfo PlayerStatInfo { get { return Player.GetStatInfo(); } }
     public static void ApplyStatReset() { Player.ResetStatInfo(); }
     public static void ApplyPlayerStat() { Player.ApplyStat(); }
     public static SPlayerWeaponInfo PlayerWeaponInfo { get { return Player.CurWeaponInfo; } }
-    public static float GetDistToPlayer(Vector3 _pos) { if (!IsPlayerSet) return -1; return (PlayerPos-_pos).magnitude; }                   // �÷��̾���� �Ÿ�
-    public static void SetPlayerWeapon(EWeaponName _weapon) { Player.SetCurWeapon(_weapon); }                                               // ���� ����
-    public static void StopPlayerInteract() { Player.StopInteract(); }                                                                      // ��ȣ�ۿ� ����
+    public static float GetDistToPlayer(Vector3 _pos) { if (!IsPlayerSet) return -1; return (PlayerPos-_pos).magnitude; }                   // 플레이어와의 거리
+    public static void SetPlayerWeapon(EWeaponName _weapon) { Player.SetCurWeapon(_weapon); }                                               // 무기 설정
+    public static void StopPlayerInteract() { Player.StopInteract(); }                                                                      // 상호작용 종료
     public static void ResetPlayer() { Player.ResetPlayerAction(); }
     public static void TeleportPlayer(Vector3 _pos) { Player.TeleportPlayer(_pos); }
 
     public static void TempGetBuff(float _amount, float _time) { Player.GetAdj(new(EAdjType.MAX_HP, _amount, _time)); }
 
 
-    // ī�޶�
+    // 카메라
     [SerializeField]
     private CameraManager m_cameraManager;
     private static CameraManager CameraManager { get { return Inst.m_cameraManager; } }
     public static CinemachineFreeLook PlayerFreeLook { get { return CameraManager.PlayerFreeLook; } }
-    public static float CameraRotation { get { return CameraManager.CameraRotation; } }                                                     // ī�޶� �¿� ����
-    public static float CameraAngle { get { return CameraManager.CameraAngle; } }                                                           // ī�޶� ���Ʒ� ����
-    public static void SetCameraMode(EControlMode _mode) { CameraManager.SetCameraMode(_mode); }                                            // ���� ��� ����
+    public static float CameraRotation { get { return CameraManager.CameraRotation; } }                                                     // 카메라 좌우 각도
+    public static float CameraAngle { get { return CameraManager.CameraAngle; } }                                                           // 카메라 위아래 각도
+    public static void SetCameraMode(EControlMode _mode) { CameraManager.SetCameraMode(_mode); }                                            // 조작 모드 전달
     public static void SetNPCView() { CameraManager.SetNPCView(); }
-    public static void SetCameraSensitive(float _sensitive) { CameraManager.SetCameraSensitive(_sensitive); }                               // ���콺 �ΰ��� ����
+    public static void SetCameraSensitive(float _sensitive) { CameraManager.SetCameraSensitive(_sensitive); }                               // 마우스 민감도 전달
     public static void LooseCameraFocus() { CameraManager.LooseFocus(); }
-    public static void CameraSwitch(CinemachineFreeLook _targetCamera) { CameraManager.SwitchToCamera(_targetCamera); }                    // ī�޶� ��ȯ
+    public static void CameraSwitch(CinemachineFreeLook _targetCamera) { CameraManager.SwitchToCamera(_targetCamera); }                    // 카메라 변환
 
 
-    // �κ��丮
+    // 인벤토리
     private InventoryManager m_invenManager;
     private static InventoryManager InvenManager { get { return Inst.m_invenManager; } }
-    public static InventoryElm[] PlayerInventory { get { return InvenManager.Inventory; } }                                                     // �κ��丮 ������ ���
+    public static InventoryElm[] PlayerInventory { get { return InvenManager.Inventory; } }                                                     // 인벤토리 아이템 목록
     private static void InventoryEditted() { UpdateInfoUI(); }
-    public static void AddInventoryItem(SItem _item, int _num) { InvenManager.AddInventoryItem(_item, _num); }                                  // �� �κ��丮�� ������ �߰�
-    public static void AddInventoryItem(SItem _item, int _num, bool _isNew) { InvenManager.AddInventoryItem(_item, _num, _isNew); }             // �� �κ��丮�� ������ �߰� (�ű�)
-    public static void SetInventoryItem(int _idx, SItem _item, int _num) { InvenManager.SetInventoryItem(_idx, _item, _num); }                  // �κ��丮 �ش� Idx�� ������ ����
-    public static void RemoveInventoryItem(int _idx) { InvenManager.RemoveInventoryItem(_idx); }                                                // �κ��丮 �ش� Idx ������ ����
+    public static void AddInventoryItem(SItem _item, int _num) { InvenManager.AddInventoryItem(_item, _num); }                                  // 빈 인벤토리에 아이템 추가
+    public static void AddInventoryItem(SItem _item, int _num, bool _isNew) { InvenManager.AddInventoryItem(_item, _num, _isNew); }             // 빈 인벤토리에 아이템 추가 (신규)
+    public static void SetInventoryItem(int _idx, SItem _item, int _num) { InvenManager.SetInventoryItem(_idx, _item, _num); }                  // 인벤토리 해당 Idx에 아이템 설정
+    public static void RemoveInventoryItem(int _idx) { InvenManager.RemoveInventoryItem(_idx); }                                                // 인벤토리 해당 Idx 아이템 제거
     public static void SwapItemInven(int _idx1, int _idx2) { InvenManager.SwapItemInven(_idx1, _idx2); InventoryEditted(); }
     public static bool[] WeaponObtained { get { return InvenManager.WeaponObatined; } }
-    public static EWeaponName CurWeapon { get { return InvenManager.CurWeapon; } }                                                              // ���� ���� ����
+    public static EWeaponName CurWeapon { get { return InvenManager.CurWeapon; } }                                                              // 장착 중인 무기
     public static void ObtainWeapon(EWeaponName _weapon) { InvenManager.ObtainWeapon(_weapon); }
-    public static void SetCurWeapon(EWeaponName _weapon) { InvenManager.SetCurWeapon(_weapon); }                                                // ���� ����
-    public static void EquipWeapon(EWeaponName _weapon) { InvenManager.EquipWeapon(_weapon); }                                                  // ���� ����
-    public static EPatternName CurHealPattern { get { return InvenManager.CurHealPattern; } }                                                   // ���� ȸ�� ������
-    public static EPatternName[] HealPatternList { get { return InvenManager.HealPatternList; } }                                               // ��ϵ� ȸ�� ������
+    public static void SetCurWeapon(EWeaponName _weapon) { InvenManager.SetCurWeapon(_weapon); }                                                // 무기 설정
+    public static void EquipWeapon(EWeaponName _weapon) { InvenManager.EquipWeapon(_weapon); }                                                  // 무기 장착
+    public static EPatternName CurHealPattern { get { return InvenManager.CurHealPattern; } }                                                   // 현재 회복 아이템
+    public static EPatternName[] HealPatternList { get { return InvenManager.HealPatternList; } }                                               // 등록된 회복 아이템
     private static void HealPatternEditted() { UpdateInfoUI(); UpdateHealItemSlot(); }
-    public static void UseHealPattern() { InvenManager.UseHealItem(); HealPatternEditted(); }                                                   // ȸ�� ������ ���
-    public static void RegisterHealPattern(EPatternName _pattern) { InvenManager.RegisterHealItem(_pattern); HealPatternEditted(); }            // ���
-    public static EThrowItemName CurThrowItem { get { return InvenManager.CurThrowItem; } }                                                     // ���� ������ ������ (LAST == null)
-    public static List<EThrowItemName> ThrowItemList { get { return InvenManager.ThrowItemList; } }                                             // ��ϵ� ������ ������
+    public static void UseHealPattern() { InvenManager.UseHealItem(); HealPatternEditted(); }                                                   // 회복 아이템 사용
+    public static void RegisterHealPattern(EPatternName _pattern) { InvenManager.RegisterHealItem(_pattern); HealPatternEditted(); }            // 등록
+    public static EThrowItemName CurThrowItem { get { return InvenManager.CurThrowItem; } }                                                     // 현재 던지기 아이템 (LAST == null)
+    public static List<EThrowItemName> ThrowItemList { get { return InvenManager.ThrowItemList; } }                                             // 등록된 던지기 아이템
     private static void ThrowItemEditted() { UpdateInfoUI(); UpdateThrowItemSlot(); }
-    public static void UseThrowItem() { InvenManager.UseThrowItem(); UpdateInfoUI(); UpdateThrowItemSlot(); }                                   // ������ ������ ���
-    public static void AddThrowItem(EThrowItemName _item) { InvenManager.AddThrowItem(_item); ThrowItemEditted(); }                             // ������ ������ �߰�
-    public static void SetThrowItem(int _idx, EThrowItemName _item) { InvenManager.SetThrowItem(_idx, _item); ThrowItemEditted(); }             // ��ġ ����
-    public static void SwapThrowItem(int _idx1, int _idx2) { InvenManager.SwapThrowItem(_idx1, _idx2); ThrowItemEditted(); }                    // �ٲٱ�
-    public static void RemoveThrowItem(int _idx) { InvenManager.RemoveThrowItem(_idx); ThrowItemEditted(); }                                    // ����
-    public static int SoulNum { get { return InvenManager.SoulNum; } }                                                                          // ��ȥ ����
-    public static int PurifiedNum { get { return InvenManager.PurifiedNum; } }                                                                  // ���� ��ȥ ����
-    public static int[] PatternNum { get { return InvenManager.PatternNum; } }                                                                  // ���纰 ����
-    public static void AddSoul(int _num) { InvenManager.AddSoul(_num); }                                                                        // ��ȥ �߰�
-    public static void AddPurified(int _num) { InvenManager.AddPurified(_num); }                                                                // ���� ��ȥ �߰�
-    public static void UseSoul(int _num) { InvenManager.LooseSoul(_num); }                                                                      // ��ȥ ���
-    public static void LooseSoul(int _num, bool _absorbed) { InvenManager.LooseSoul(_num, _absorbed); }                                         // ��ȥ ���� ����
-    public static void UsePurified(int _num) { InvenManager.UsePurified(_num); }                                                                // ���� ��ȥ ���
 
-    // ���丮
+    public static void UseThrowItem() { InvenManager.UseThrowItem(); UpdateInfoUI(); UpdateThrowItemSlot(); }                                   // 던지기 아이템 사용
+    public static void AddThrowItem(EThrowItemName _item) { InvenManager.AddThrowItem(_item); ThrowItemEditted(); }                             // 던지기 아이템 추가
+    public static void SetThrowItem(int _idx, EThrowItemName _item) { InvenManager.SetThrowItem(_idx, _item); ThrowItemEditted(); }             // 위치 지정
+    public static void SwapThrowItem(int _idx1, int _idx2) { InvenManager.SwapThrowItem(_idx1, _idx2); ThrowItemEditted(); }                    // 바꾸기
+    public static void RemoveThrowItem(int _idx) { InvenManager.RemoveThrowItem(_idx); ThrowItemEditted(); }                                    // 제거
+    public static int SoulNum { get { return InvenManager.SoulNum; } }                                                                          // 영혼 개수
+    public static int PurifiedNum { get { return InvenManager.PurifiedNum; } }                                                                  // 성불 영혼 개수
+    public static int[] PatternNum { get { return InvenManager.PatternNum; } }                                                                  // 문양별 개수
+    public static void AddSoul(int _num) { InvenManager.AddSoul(_num); }                                                                        // 영혼 추가
+    public static void AddPurified(int _num) { InvenManager.AddPurified(_num); }                                                                // 성불 영혼 추가
+    public static void UseSoul(int _num) { InvenManager.LooseSoul(_num); }                                                                      // 영혼 사용
+    public static void LooseSoul(int _num, bool _absorbed) { InvenManager.LooseSoul(_num, _absorbed); }                                         // 영혼 흡수 당함
+    public static void UsePurified(int _num) { InvenManager.UsePurified(_num); }                                                                // 성불 영혼 사용
+
+    // 스토리
     private QuestManager m_questManager;
     private static QuestManager QuestManager { get { return Inst.m_questManager; } }
     public static List<QuestInfo> QuestInfoList { get { return QuestManager.QuestInfoList; } }
@@ -150,7 +151,7 @@ public class PlayManager : MonoBehaviour
     public static void SetQuestProgress(EQuestName _quest, float _prog) { QuestManager.SetQuestProgress(_quest, _prog); }
 
 
-    // ȯ��
+    // 환경
     private EnvironmentManager m_environmentManager;
     private static EnvironmentManager EnvironmentManager { get { return Inst.m_environmentManager; } }
     public static Vector3 MapLB { get { return EnvironmentManager.MapLB; } }
@@ -164,21 +165,21 @@ public class PlayManager : MonoBehaviour
     public static void MonsterKilled(EMonsterName _monster, EMonsterDeathType _type) { EnvironmentManager.MonsterKilled(_monster, _type); }
     public static void UnlockDialogue(NPCDialogue _dial) { EnvironmentManager.UnlockDialogue(_dial); }
 
-    public static void TempSetNPCs(NPCScript[] _list) { EnvironmentManager.TempSetNPCs(_list); }                // �ӽ� �Լ�
+    public static void TempSetNPCs(NPCScript[] _list) { EnvironmentManager.TempSetNPCs(_list); }                // 임시 NPC 설정
 
 
-    // �÷��̾� �ɷ�ġ, �Ǵ�
+    // 플레이어 능력치, 권능
     private PlayerForceManager m_forceManager;
     private static PlayerForceManager ForceManager { get { return Inst.m_forceManager; } }
     public static int LeftStatPoint { get { return ForceManager.LeftStatPoint; } }
     public static int UsedStatPoint { get { return ForceManager.UsedStatPoint; } }
     public static void AddStatPoint(int _add) { ForceManager.AddStatPoint(_add); }
-    public static void UpgradeStat(int[] _point) { ForceManager.UpgradeStat(_point); }                                                                  // ���� ����
-    public static void UpgradeStat(EStatName _stat, int _amount) { ForceManager.UpgradeStat(_stat, _amount, true); }                                    // ���� ����
+    public static void UpgradeStat(int[] _point) { ForceManager.UpgradeStat(_point); }                                                                  // 포인트 투자로 인한 업그레이드
+    public static void UpgradeStat(EStatName _stat, int _amount) { ForceManager.UpgradeStat(_stat, _amount, true); }                                    // 특정 스탯으로 업그레이드
     public static void ResetStat() { ForceManager.ResetStat(); }
     public static bool[] PowerObtained { get { return ForceManager.PowerObtained; } }
-    public static EPowerName[] PowerSlot { get { return ForceManager.PowerSlot; } }                                                                     // ��ų ����
-    public static void RegisterPowerSlot(EPowerName _popwer, int _idx) { ForceManager.RegisterPowerSlot(_popwer, _idx); UpdatePowerSlot(); }            // ��ų ���� ����
+    public static EPowerName[] PowerSlot { get { return ForceManager.PowerSlot; } }                                                                     // 권능 슬롯
+    public static void RegisterPowerSlot(EPowerName _popwer, int _idx) { ForceManager.RegisterPowerSlot(_popwer, _idx); UpdatePowerSlot(); }            // 권능 슬롯 등록
     public static void ObtainPower(EPowerName _power) { ForceManager.ObtainPower(_power); }
 
 
@@ -186,57 +187,57 @@ public class PlayManager : MonoBehaviour
     private PlayUIManager m_playUIManager;
     private static PlayUIManager PlayUIManager { get { return Inst.m_playUIManager; } }
 
-        // �¿��� UI
+    // 온오프 UI
     public static bool IsOptionOpen { get { return PlayUIManager.IsOptionOpen; } }
-    public static void ToggleOptionUI(bool _on) { PlayUIManager.ToggleOptionUI(_on); }                                                                  // �ɼ� UI ���ݱ�
+    public static void ToggleOptionUI(bool _on) { PlayUIManager.ToggleOptionUI(_on); }                                                                  // 옵션 UI 여닫기
     public static bool IsPlayerUIOpen { get { return PlayUIManager.IsPlayerUIOpen; } }
-    public static void TogglePlayerUI(bool _on) { PlayUIManager.TogglePlayerUI(_on); }                                                      // �÷��̾� ���� UI ���ݱ�
-    public static void UpdateInfoUI() { PlayUIManager.UpdateInfoUI(); }                                                                     // �÷��̾� ���� UI ������Ʈ
-    public static void UpdateMaterials() { PlayUIManager.UpdateMaterials(); }                                                               // ��ȭ ������Ʈ
-    public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                       // �� UI ���ݱ�
+    public static void TogglePlayerUI(bool _on) { PlayUIManager.TogglePlayerUI(_on); }                                                      // 플레이어 인포 UI 업데이트
+    public static void UpdateInfoUI() { PlayUIManager.UpdateInfoUI(); }                                                                     // 재화 업데이트
+    public static void UpdateMaterials() { PlayUIManager.UpdateMaterials(); }                                                               // 맵 UI 여닫기
+    public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                       // 퀘스트 창 여닫기
     public static bool IsQuestUIOpen { get { return PlayUIManager.IsQuestUIOpen; } }
-    public static void ToggleQuestUI(bool _on) { PlayUIManager.ToggleQuestUI(_on); }                                                        // ����Ʈ â ���ݱ�
-    public static void OpenOasisUI(OasisNPC _npc) { PlayUIManager.OpenOasisUI(_npc); }                                                      // ���ƽý� UI ����
-    public static void CloseOasisUI() { PlayUIManager.CloseOasisUI(); }                                                                     // ���ƽý� UI �ݱ�
+    public static void ToggleQuestUI(bool _on) { PlayUIManager.ToggleQuestUI(_on); }                                                        // 퀘스트 창 여닫기
+    public static void OpenOasisUI(OasisNPC _npc) { PlayUIManager.OpenOasisUI(_npc); }                                                      // 오아시스 UI 열기
+    public static void CloseOasisUI() { PlayUIManager.CloseOasisUI(); }                                                                     // 오아시스 UI 닫기
 
-        // ���� ĵ���� ��� UI
-    public static void SetPlayerMaxHP(float _hp) { PlayUIManager.SetMaxHP(_hp); }                                                                       // ü�¹� �ִ� ü��
-    public static void SetPlayerCurHP(float _hp) { PlayUIManager.SetCurHP(_hp); }                                                                       // ü�¹� ���� ü��
-    public static void UpdatePowerSlot() { PlayUIManager.UpdatePowerSlot(); }                                                                           // ��ų ���� UI
-    public static void UsePowerSlot(int _idx, float _cooltime) { PlayUIManager.UsePowerSlot(_idx, _cooltime); }                                         // ��ų ��Ÿ�� ����
-    public static void UpdateThrowItemSlot() { PlayUIManager.UpdateThrowItemSlot(); }                                                                   // ������ ������ UI
-    public static void UpdateHealItemSlot() { PlayUIManager.UpdateHealItemSlot(); }                                                                     // ȸ�� ������ UI
-    public static void UpdateQuestSidebar() { PlayUIManager.UpdateQuestSideBar(); }                                                                     // ����Ʈ �� ������Ʈ
-    public static void SetMinimapScale(float _scale) { PlayUIManager.SetMinimapScale(_scale); }                                                         // �̴ϸ� ��ô ����
-    public static void SetStaminaRate(float _rate) { PlayUIManager.SetStaminaRate(_rate); }                                                             // ���¹̳� ����
-    public static void SetLightRate(float _rate) { PlayUIManager.SetLightRate(_rate); }                                                                 // �ɷ� ����
-    public static void SetLightState(bool _on) { PlayUIManager.SetLightState(_on); }                                                                    // ���� ����
-    public static void ShowRaycastAim() { PlayUIManager.ShowRaycastAim(); }                                                                             // ����ĳ��Ʈ ���� on
-    public static void SetRaycastAimState(bool _on) { PlayUIManager.SetRaycastAimState(_on); }                                                          // ����ĳ��Ʈ ���� ����
-    public static void HideRaycastAim() { PlayUIManager.HideRaycastAim(); }                                                                             // ����ĳ��Ʈ ���� off
+    // 메인 캔버스 상시 UI
+    public static void SetPlayerMaxHP(float _hp) { PlayUIManager.SetMaxHP(_hp); }                                                                       // 체력바 최대 체력
+    public static void SetPlayerCurHP(float _hp) { PlayUIManager.SetCurHP(_hp); }                                                                       // 체력바 현재 체력
+    public static void UpdatePowerSlot() { PlayUIManager.UpdatePowerSlot(); }                                                                           // 스킬 슬롯 UI
+    public static void UsePowerSlot(int _idx, float _cooltime) { PlayUIManager.UsePowerSlot(_idx, _cooltime); }                                         // 스킬 쿨타임 진행
+    public static void UpdateThrowItemSlot() { PlayUIManager.UpdateThrowItemSlot(); }                                                                   // 던지기 아이템 UI
+    public static void UpdateHealItemSlot() { PlayUIManager.UpdateHealItemSlot(); }                                                                     // 회복 아이템 UI
+    public static void UpdateQuestSidebar() { PlayUIManager.UpdateQuestSideBar(); }                                                                     // 퀘스트 바 업데이트
+    public static void SetMinimapScale(float _scale) { PlayUIManager.SetMinimapScale(_scale); }                                                         // 미니맵 축척 설정
+    public static void SetStaminaRate(float _rate) { PlayUIManager.SetStaminaRate(_rate); }                                                             // 스태미나 비율
+    public static void SetLightRate(float _rate) { PlayUIManager.SetLightRate(_rate); }                                                                 // 능력 비율
+    public static void SetLightState(bool _on) { PlayUIManager.SetLightState(_on); }                                                                    // 고갈 설정
+    public static void ShowRaycastAim() { PlayUIManager.ShowRaycastAim(); }                                                                             // 레이캐스트 에임 on
+    public static void SetRaycastAimState(bool _on) { PlayUIManager.SetRaycastAimState(_on); }                                                          // 레이캐스트 에임 상태
+    public static void HideRaycastAim() { PlayUIManager.HideRaycastAim(); }                                                                             // 레이캐스트 에임 off
 
-        // �ΰ��� UI
-    public static void AddIngameAlarm(string _alarm) { PlayUIManager.AddAlarm(_alarm); }                                                                      // �ΰ��� �˶�
-    public static void ShowInteractInfo(string _info) { PlayUIManager.ShowInteractInfo(_info); }                                                        // ��ȣ�ۿ� Ű on
-    public static void HideInteractInfo() { PlayUIManager.HideInteractInfo(); }                                                                         // ��ȣ�ۿ� Ű off
-    public static void ShowPowerAim(Vector3 _pos, float _radius, float _range) { PlayUIManager.ShowPowerAim(_pos, _radius, _range); }                   // �Ǵ� ���� on
-    public static Vector3 TracePowerAim(Vector3 _pos, float _range) { return PlayUIManager.TracePowerAim(_pos, _range); }                               // �Ǵ� ���� ��ġ ����
-    public static void HidePowerAim() { PlayUIManager.HidePowerAim(); }                                                                                 // �Ǵ� ���� off
-    public static void DrawThrowLine(Vector3 _force, float _mass, Vector3 _start) { PlayUIManager.DrawThrowLine(_force, _mass, _start); }               // ������ ���� �׸���
-    public static void HideThrowLine() { PlayUIManager.HideThrowLine(); }                                                                               // ������ ���� off
-    private static void StartBlackoutUI() { PlayUIManager.StartBlackout(); }                                                                            // fade ����
-    private static void EndBlackoutUI() { PlayUIManager.EndBlackout(); }                                                                                // fade ����
-    public static void ShowBlindMark() { PlayUIManager.ShowBlindMark(); }                                                                               // �Ǹ� on
-    public static void HideBlindMark() { PlayUIManager.HideBlindMark(); }                                                                               // �Ǹ� off
+    // 인게임 UI
+    public static void AddIngameAlarm(string _alarm) { PlayUIManager.AddAlarm(_alarm); }                                                                // 인게임 알람
+    public static void ShowInteractInfo(string _info) { PlayUIManager.ShowInteractInfo(_info); }                                                        // 상호작용 키 on
+    public static void HideInteractInfo() { PlayUIManager.HideInteractInfo(); }                                                                         // 상호작용 키 off
+    public static void ShowPowerAim(Vector3 _pos, float _radius, float _range) { PlayUIManager.ShowPowerAim(_pos, _radius, _range); }                   // 권능 에임 on
+    public static Vector3 TracePowerAim(Vector3 _pos, float _range) { return PlayUIManager.TracePowerAim(_pos, _range); }                               // 권능 에임 위치 설정
+    public static void HidePowerAim() { PlayUIManager.HidePowerAim(); }                                                                                 // 권능 에임 off
+    public static void DrawThrowLine(Vector3 _force, float _mass, Vector3 _start) { PlayUIManager.DrawThrowLine(_force, _mass, _start); }               // 던지기 궤적 그리기
+    public static void HideThrowLine() { PlayUIManager.HideThrowLine(); }                                                                               // 던지기 궤적 off
+    private static void StartBlackoutUI() { PlayUIManager.StartBlackout(); }                                                                            // // fade 시작
+    private static void EndBlackoutUI() { PlayUIManager.EndBlackout(); }                                                                                // fade 종료
+    public static void ShowBlindMark() { PlayUIManager.ShowBlindMark(); }                                                                               // 실명 on
+    public static void HideBlindMark() { PlayUIManager.HideBlindMark(); }                                                                               // 실명 off
 
     // NPC UI
-    public static void ShowNPCQuestUI(EQuestName _quest, bool _isStart, FPointer _confirm) { PlayUIManager.ShowNPCQuestUI(_quest, _isStart, _confirm); }    // ����Ʈ ����/���� â ǥ��
-    public static void OpenDialogueUI(NPCScript _npc, int _idx) { PlayUIManager.OpenDialogueUI(_npc, _idx); }                                           // NPC ��ȭâ ����
+    public static void ShowNPCQuestUI(EQuestName _quest, bool _isStart, FPointer _confirm) { PlayUIManager.ShowNPCQuestUI(_quest, _isStart, _confirm); }    // 퀘스트 수락/거절 창 표시
+    public static void OpenDialogueUI(NPCScript _npc, int _idx) { PlayUIManager.OpenDialogueUI(_npc, _idx); }                                           // NPC 대화창 열기
     public static void OpenSlateUI(SlateNPC _slate) { PlayUIManager.OpenSlateUI(_slate); }
-    public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                              // NPC ��ȭâ ���ȴ��� Ȯ��
+    public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                              // NPC 대화창 열렸는지 확인
 
-    // ��Ÿ
-    public static Vector2 NormalizeLocation(Transform _obj) { return PlayUIManager.NormalizeLocation(_obj); }                                           // ��ġ ����ȭ(3D -> 2D)
+    // 기타
+    public static Vector2 NormalizeLocation(Transform _obj) { return PlayUIManager.NormalizeLocation(_obj); }                                          // 위치 정규화(3D -> 2D)
 
 
 
@@ -244,7 +245,7 @@ public class PlayManager : MonoBehaviour
     {
         m_invenManager = GetComponent<InventoryManager>();
         m_invenManager.SetManager();
-        m_questManager = GetComponent<QuestManager>();                  // Quest�� Environment���� ���� �־����
+        m_questManager = GetComponent<QuestManager>();                  // Quest가 Environment보다 위에 있어야함
         m_questManager.SetManager();
         m_environmentManager = GetComponent<EnvironmentManager>();
         m_environmentManager.SetManager();
