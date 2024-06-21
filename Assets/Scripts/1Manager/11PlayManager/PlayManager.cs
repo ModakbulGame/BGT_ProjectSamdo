@@ -149,6 +149,7 @@ public class PlayManager : MonoBehaviour
     public static List<QuestInfo> QuestInfoList { get { return QuestManager.QuestInfoList; } }
     public static void SetQuestStatus(EQuestName _quest, EQuestState _status) { QuestManager.SetQuestStatus(_quest, _status); }
     public static void SetQuestProgress(EQuestName _quest, float _prog) { QuestManager.SetQuestProgress(_quest, _prog); }
+    public static void GiveUpQuest(EQuestName _quest) { QuestManager.GiveUpQuest(_quest); }
 
 
     // 환경
