@@ -20,13 +20,13 @@ public class PlayerForceManager : MonoBehaviour, IHaveData
     }
 
 
-    public void UpgradeStat(int[] _point)
+    public void UpgradeStat(int[] _point)                   // 포인트 투자로 인한 업그레이드
     {
         for (int i = 0; i<(int)EStatName.LAST; i++)
         {
             if (_point[i] > 0)
             {
-                PlayerStatInfo.UpgradeStat((EStatName)i, _point[i]);
+                UpgradeStat((EStatName)i, _point[i], false);
                 LeftStatPoint -= _point[i];
                 UsedStatPoint += _point[i];
             }
@@ -34,6 +34,11 @@ public class PlayerForceManager : MonoBehaviour, IHaveData
         PlayManager.ApplyPlayerStat();
         if (LeftStatPoint < 0)
             Debug.LogError("스탯 오버 사용");
+    }
+    public void UpgradeStat(EStatName _stat, int _amount, bool _isReward)
+    {
+        PlayerStatInfo.UpgradeStat(_stat, _amount);
+        if (_isReward) { PlayManager.AddIngameAlarm($"{Stat2String(_stat)} {_amount} 증가"); }
     }
 
     public void ResetStat()
@@ -98,19 +103,17 @@ public class PlayerForceManager : MonoBehaviour, IHaveData
         }
     }
 
+    private readonly static string[] StatString = new string[(int)EStatName.LAST]
+        { "HEALTH", "ENDURE", "STRENGTH", "INTELLECT", "RAPID", "MENTAL" };
 
     public static EStatName String2Stat(string _data)
     {
-        return _data switch
-        {
-            "HEALTH" => EStatName.HEALTH,
-            "ENDURE" => EStatName.ENDURE,
-            "STRENGTH" => EStatName.STRENGTH,
-            "INTELLECT" => EStatName.INTELLECT,
-            "RAPID" => EStatName.RAPID,
-            "MENTAL" => EStatName.MENTAL,
-            _ => EStatName.LAST
-        };
+        for(int i = 0; i<(int)EStatName.LAST; i++) { if(_data == StatString[i]) { return (EStatName)i; } }
+        return EStatName.LAST;
+    }
+    public static string Stat2String(EStatName _stat)
+    {
+        return StatString[(int)_stat];
     }
 
 

@@ -63,7 +63,7 @@ public class ArrogantScript : HmmScript
     private readonly List<ObjectScript> m_smashList = new();
     public void CheckNSmash()
     {
-        Collider[] targets = Physics.OverlapSphere(m_smash.transform.position, SmashRange, ValueDefine.HITTABLE_LAYER);
+        Collider[] targets = Physics.OverlapSphere(m_smash.transform.position, SmashRange, ValueDefine.HITTABLE_PLAYER_LAYER);
         for (int i = 0; i<targets.Length; i++)
         {
             ObjectScript obj = targets[i].GetComponentInParent<ObjectScript>();

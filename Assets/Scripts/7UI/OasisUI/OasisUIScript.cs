@@ -20,67 +20,63 @@ public interface IOasisUI
     public void CloseUI();
 }
 
-public class OasisUIScript : MonoBehaviour
+public class OasisUIScript : BaseUI
 {
     private OasisNPC m_oasis;
     public void SetNPC(OasisNPC _oasis) { m_oasis = _oasis; }
     public OasisNPC Oasis { get { return m_oasis; } }
 
     [SerializeField]
+    private Button m_closeBtn;
+    [SerializeField]
+    private Button[] m_functionBtns;
+    [SerializeField]
     private GameObject[] m_uis = new GameObject[(int)EOasisFunctionName.LAST];
 
 
-    private Button[] m_btns;
-
-    private bool IsCompsSet { get; set; }                       // 열린 적 있는지 (처음 열리는지 확인용)
-
-    private bool ButtonClicked { get; set; }
+    private bool IsButtonClicked { get; set; }
 
 
     public void OpenUI(OasisNPC _npc)
     {
-        gameObject.SetActive(true);
-        if (!IsCompsSet) { SetComps(); }
-
-        ButtonClicked = false;
-
+        base.OpenUI();
+        IsButtonClicked = false;
         SetNPC(_npc);
     }
 
-    public void CloseUI()                       // 닫기
+    public override void CloseUI()                       // 닫기
     {
         m_oasis.StopInteract();
-        gameObject.SetActive(false);
+        base.CloseUI();
     } 
 
 
     private void ClickButton(EOasisFunctionName _function)
     {
-        if(ButtonClicked == true) { return; }
+        if(IsButtonClicked == true) { return; }
 
         GameObject ui = m_uis[(int)_function];
         ui.GetComponent<IOasisUI>().OpenUI(this);
-        ButtonClicked = true;
+        IsButtonClicked = true;
     }
     public void FunctionDone()
     {
-        ButtonClicked = false;
+        IsButtonClicked = false;
     }
 
 
-    private void SetComps()
+    public override void SetComps()
     {
-        m_btns = GetComponentsInChildren<Button>();
+        base.SetComps();
         SetBtns();
-        IsCompsSet = true;
     }
     private void SetBtns()
     {
         for (int i = 0; i<(int)EOasisFunctionName.LAST; i++)
         {
             EOasisFunctionName function = (EOasisFunctionName)i;
-            m_btns[i].onClick.AddListener(delegate { ClickButton(function); });
+            m_functionBtns[i].onClick.AddListener(delegate { ClickButton(function); });
         }
-        m_btns[(int)EOasisFunctionName.LAST].onClick.AddListener(CloseUI);
+        m_closeBtn.onClick.AddListener(CloseUI);
     }
 }

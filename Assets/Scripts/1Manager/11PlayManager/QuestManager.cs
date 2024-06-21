@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour, IHaveData
 {
-    // Äù½ºÆ®
+    // ï¿½ï¿½ï¿½ï¿½Æ®
     private QuestInfo[] m_questInfoList;
     public List<QuestInfo> QuestInfoList { get { return m_questInfoList.ToList(); } }
 
@@ -16,7 +16,6 @@ public class QuestManager : MonoBehaviour, IHaveData
         for(int i=0;i<(int)EQuestName.LAST;i++)
         {
             m_questInfoList[i] = new((EQuestName)i);
-
         }
     }
 
@@ -42,7 +41,7 @@ public class QuestManager : MonoBehaviour, IHaveData
         QuestContent content = info.QuestContent;
         content.Amount = 0;
 
-        // questinfolist¿¡¼­ Äù½ºÆ® »èÁ¦ ÈÄ ÀçÁ¤·Ä
+        // questinfolistï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         m_questInfoList[(int)_quest] = null;
         QuestInfo[] newArray = new QuestInfo[m_questInfoList.Length - 1];
         int newIndex = 0;
@@ -74,10 +73,9 @@ public class QuestManager : MonoBehaviour, IHaveData
 
     private void GetReward(QuestReward _reward)
     {
-        Debug.Log($"{_reward.Type} {_reward.Amount}¸¸Å­ È¹µæ!");
-
-        // ¸¸¾à ´ÜÀÏ º¸»ó¸¸ ÁøÇàµÈ´Ù¸é
-        switch (_reward.Type)
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È´Ù¸ï¿½
+        int amount = _reward.Amount;
+        switch(_reward.Type)
         {
             case ERewarTyoe.SOUL:
                 PlayManager.AddSoul(_reward.Amount);
@@ -86,10 +84,12 @@ public class QuestManager : MonoBehaviour, IHaveData
                 PlayManager.AddPurified(_reward.Amount);
                 break;
             case ERewarTyoe.STAT:
-                PlayManager.AddStatPoint(_reward.Amount);
+                if (_reward.IsStatPoint) { PlayManager.AddStatPoint(_reward.Amount); }
+                else { PlayManager.UpgradeStat(_reward.Stat, amount); }
                 break;
             case ERewarTyoe.ITEM:
-                PlayManager.AddInventoryItem(_reward.Item, _reward.Amount);
+                SItem item = _reward.Item;
+                PlayManager.AddInventoryItem(item, amount);
                 break;
             default:
                 break;

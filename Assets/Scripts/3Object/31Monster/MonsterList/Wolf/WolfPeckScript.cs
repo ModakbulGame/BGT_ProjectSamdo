@@ -17,6 +17,12 @@ public class WolfPeckScript : MonoBehaviour
 {
     [SerializeField]
     private List<WolfScript> m_wolfs = new();
+    public Vector3 PeckCenter { get {
+            Vector3 center = Vector3.zero;
+            foreach (WolfScript wolf in m_wolfs)
+                center += wolf.Position;
+            return center / m_wolfs.Count; } }
+
 
     public bool Engaging { get; private set; }
 

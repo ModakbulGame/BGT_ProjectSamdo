@@ -25,7 +25,7 @@ public class LifeGuardianSkill2Script : ObjectAttackScript
 
     private void CheckNAttackTarget()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, SkillRadius, ValueDefine.HITTABLE_LAYER);
+        Collider[] hits = Physics.OverlapSphere(transform.position, SkillRadius, ValueDefine.HITTABLE_PLAYER_LAYER);
         foreach (Collider col in hits)
         {
             ObjectScript script = col.GetComponentInParent<ObjectScript>();

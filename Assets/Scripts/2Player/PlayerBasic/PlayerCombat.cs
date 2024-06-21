@@ -108,8 +108,6 @@ public partial class PlayerController
         CurWeapon.AttackOn();
         AttackCreated = true;
         UseStamina(AttackStaminaUse);
-
-        PlayManager.AddAlarm("공격함");
     }
     public override void AttackTriggerOff()                             // 무기 히트 판정 off
     {

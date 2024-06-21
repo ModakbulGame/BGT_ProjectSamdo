@@ -71,11 +71,6 @@ public class ItemManager : MonoBehaviour
         if (_item.IsEmpty) { Debug.LogError("∫Û æ∆¿Ã≈€"); return null; }
         return m_itemInfo[_item];
     }
-    public ItemInfo GetItemInfo(string _id)
-    {
-        SItem item = ID2Item(_id);
-        return GetItemInfo(item);
-    }
 
 
     [SerializeField]

@@ -65,7 +65,6 @@ public class GameManager : SingleTon<GameManager>
     private static ItemManager ItemManager { get { return Inst.m_itemManager; } }
     private static GameObject[] ItemArray { get { return ItemManager.ItemArray; } }
     public static ItemInfo GetItemInfo(SItem _item) { return ItemManager.GetItemInfo(_item); }                                              // 아이템 정보
-    public static ItemInfo GetItemInfo(string _id) { return ItemManager.GetItemInfo(_id); }                                                 // 아이템 정보
     public static ItemScriptable GetItemData(SItem _item) { return ItemManager.GetItemData(_item); }                                        // 아이템 스크립터블
     public static ItemInfo GetWeaponInfo(EWeaponName _weapon) { return GetItemInfo(new SItem(EItemType.WEAPON, (int)_weapon)); }            // 무기 정보
     public static GameObject GetThorwItemPrefab(EThrowItemName _item) { return ItemManager.GetThrowItemPrefab(_item); }                     // 투척 아이템 프리펍
@@ -110,7 +109,6 @@ public class GameManager : SingleTon<GameManager>
     // UI
     private UIManager m_uiManager;
     public static UIManager UIManager { get { return Inst.m_uiManager; } }
-    public static void CreateSideTextAlarm(string _alarm) { UIManager.CreateSideTextAlarm(_alarm); }                                        // 화면 사이드 텍스트 알람 생성
     public static Sprite GetMonsterSprite(EMonsterName _monster) { return UIManager.GetMonsterSprite(_monster); }                           // 몬스터 이미지
     public static Sprite GetItemSprite(SItem _item) { return UIManager.GetItemSprite(_item); }                                              // 아이템 이미지
     public static Sprite GetPowerSprite(EPowerName _power) { return UIManager.GetPowerSprite(_power); }                                     // 스킬 이미지

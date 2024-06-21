@@ -9,6 +9,7 @@ public static class ValueDefine
     public const int GROUND_LAYER = 1 << 6;                         // 땅 레이어
     public const int INTERACT_LAYER = 1 << 7;                       // 상호작용 레이어
     public const int HITTABLE_LAYER = 1 << HITTABLE_LAYER_IDX;      // 타격 가능 레이어
+    public const int HITTABLE_PLAYER_LAYER = 1 << 10;
 
     // 레이어 인덱스
     public const int UI_LAYER_IDX = 5;                              // UI 레이어 순서

@@ -20,7 +20,6 @@ public class IngameAlarmUIScript : MonoBehaviour
         next.AlarmOn(_alarm);
         foreach (IngameAlarmElmScript elm in m_showingAlarms) { elm.PlusIdx(); }
         m_showingAlarms.Enqueue(next);
-        Debug.Log($"{m_showingAlarms.Count} / {m_hiddenAlarms.Count}");
     }
 
     private IngameAlarmElmScript GetLastElm()
@@ -35,7 +34,6 @@ public class IngameAlarmUIScript : MonoBehaviour
     {
         IngameAlarmElmScript elm = m_showingAlarms.Dequeue();
         m_hiddenAlarms.Enqueue(elm);
-        elm.transform.localPosition = Vector3.down * ElmHeight;
     }
 
 

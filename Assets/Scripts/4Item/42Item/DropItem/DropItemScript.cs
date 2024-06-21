@@ -16,8 +16,8 @@ public class DropItemScript : PooledItem, IInteractable
 
     public void SetDropItem(string _id)
     {
-        SItem item = GameManager.GetItemInfo(_id).Item;
-        DropItemName = GameManager.GetItemInfo(_id).ItemName;
+        SItem item = ItemManager.ID2Item(_id);
+        DropItemName = GameManager.GetItemInfo(item).ItemName;
         SetDropItem(item);
     }
     public void SetDropItem(SItem _item) { SetDropItem(_item, 1); }

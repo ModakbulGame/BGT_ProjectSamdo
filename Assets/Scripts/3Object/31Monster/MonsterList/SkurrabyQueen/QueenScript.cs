@@ -127,7 +127,7 @@ public class QueenScript : MonsterScript
     }
     private void SpitPoison()                                       // µ¶ ¸®¾ó »Õ±â
     {
-        Collider[] cols = Physics.OverlapSphere(Position, SpitRange, ValueDefine.HITTABLE_LAYER);
+        Collider[] cols = Physics.OverlapSphere(Position, SpitRange, ValueDefine.HITTABLE_PLAYER_LAYER);
         foreach (Collider col in cols)
         {
             PlayerController player = col.GetComponentInParent<PlayerController>();

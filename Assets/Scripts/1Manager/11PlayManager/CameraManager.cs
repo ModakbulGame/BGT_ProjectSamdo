@@ -30,21 +30,9 @@ public class CameraManager : MonoBehaviour
     {
         m_playerCamera.LooseFocus();
     }
-    // UICamera가 overlay라 굳이 설정할 필요가 있나 싶긴 함
-    public void SetCameraDepth()
-    {
-        Camera playerCameraComponent = GetComponent<Camera>();      
-        playerCameraComponent.depth = 0;                            // 기본 depth 설정
-        m_uiCamera.clearFlags = CameraClearFlags.Depth;             // 이전 카메라의 깊이 버퍼만 유지
-        m_uiCamera.depth = 1;                                       // PlayerCamera보다 높은 depth 설정
-    }
+
     public void SwitchToCamera(CinemachineFreeLook _targetCamera)
     {
 
-    }
-
-    private void Awake()
-    {
-        SetCameraDepth();
     }
 }

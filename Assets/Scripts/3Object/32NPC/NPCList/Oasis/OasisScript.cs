@@ -18,9 +18,8 @@ public class OasisNPC : NPCScript
         SetScriptable(_scriptable);
     }
 
-    public override void StartInteract()
+    public override void NPCInteraction()
     {
         PlayManager.OpenOasisUI(this);
-        base.StartInteract();
     }
 }

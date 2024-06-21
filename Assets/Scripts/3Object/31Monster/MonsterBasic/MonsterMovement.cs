@@ -18,7 +18,7 @@ public abstract partial class MonsterScript
     public SpawnerData SpawnerData { get { return m_spawnPoint.SpawnerData; } }
     public Vector3 SpawnPosition { get { if (!HasPoint) { return new(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity); } return m_spawnPoint.SpawnPosition; } }
     public float SpawnFenceRange { get { return m_combatInfo.FenceRange * m_spawnPoint.RangeMultiplier; } }
-    public bool OutOfRange(Vector3 _position) { if(!HasPoint) { return false; } return Vector3.Distance(SpawnPosition, _position) > SpawnFenceRange; }
+    protected bool OutOfRange(Vector3 _position) { if(!HasPoint) { return false; } return Vector3.Distance(SpawnPosition, _position) > SpawnFenceRange; }
 
 
     // 기본 움직임
@@ -26,6 +26,21 @@ public abstract partial class MonsterScript
 
     public override float CurSpeed { get { return m_aiPath.maxSpeed; } protected set { m_aiPath.maxSpeed = value; } }
 
+    [SerializeField]
+    private FRange m_roamingDistance = new(2.5f, 7.5f);
+
+    public virtual Vector3 SetRandomRoaming()
+    {
+        Vector3 destination;
+        do
+        {
+            float distance = m_roamingDistance.Num;
+            Vector2 dir = FunctionDefine.DegToVec(Random.Range(0, 360f));
+            Vector3 dir3 = new(dir.x, 0, dir.y);
+            destination = transform.position + distance * dir3;
+        } while (OutOfRange(destination));
+        return destination;
+    }
     public virtual void SetDestination(Vector3 _destination)
     {
         m_aiPath.destination = _destination;

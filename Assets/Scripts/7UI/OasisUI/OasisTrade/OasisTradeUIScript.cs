@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OasisTradeUIScript : MonoBehaviour, IOasisUI
+public class OasisTradeUIScript : BaseUI, IOasisUI
 {
     private OasisUIScript m_parent;
 
-    private bool IsCompsSet { get; set; }
+    [SerializeField]
+    private Button m_closeBtn;
 
     public void OpenUI(OasisUIScript _parent)
     {
-        gameObject.SetActive(true);
-        if (!IsCompsSet)
-        {
-            m_parent = _parent; SetComps();
-        }
+        base.OpenUI();
+        if(m_parent == null) { m_parent = _parent; }
     }
 
 
@@ -24,17 +22,17 @@ public class OasisTradeUIScript : MonoBehaviour, IOasisUI
         CloseUI();
     }
 
-    public void CloseUI()
+    public override void CloseUI()
     {
         m_parent.FunctionDone();
-        gameObject.SetActive(false);
+        base.CloseUI();
     }
 
 
-    private void SetComps()
+    public override void SetComps()
     {
-        Button[] btns = GetComponentsInChildren<Button>();
-        btns[0].onClick.AddListener(CancelUI);
-        IsCompsSet = true;
+        base.SetComps();
+        m_closeBtn.onClick.AddListener(CancelUI);
+
     }
 }

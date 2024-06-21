@@ -41,23 +41,6 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
 
     public void MonsterKilled(EMonsterName _monster, EMonsterDeathType _type)           // 첫 킬, 퀘스트 확인
     {
-        #region 임시코드
-        if (_monster == EMonsterName.LAST)
-        {
-            List<QuestInfo> tempInfos = PlayManager.QuestInfoList;
-            foreach (QuestInfo quest in tempInfos)
-            {
-                if (quest.State != EQuestState.ACCEPTED || quest.QuestContent.Type != EQuestType.KILL
-                    || quest.QuestContent.Monster != _monster) { continue; }
-
-                float prog = quest.QuestProgress++;
-                PlayManager.SetQuestProgress(quest.QuestName, prog);
-            }
-            return;
-        }
-        #endregion
-
-
         int idx = (int)_monster;
         if (!m_monsterKilled[idx]) { FirstKillMonster(_monster); }
         List<QuestInfo> infos = PlayManager.QuestInfoList;
@@ -78,7 +61,12 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
     }
     private void FirstKillMonster(EMonsterName _monster)
     {
-        // 스탯 보상 획득
+        MonsterScriptable data = GameManager.GetMonsterData(_monster);
+        int point = data.FirstKillStat;
+
+        PlayManager.AddStatPoint(point);
+        PlayManager.AddIngameAlarm($"{data.MonsterName} 최초 처치로 {point} 능력치 점수 획득");
+
         m_monsterKilled[(int)_monster] = true;
     }
 
@@ -106,17 +94,20 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
         }
     }
 
-
-
     private readonly int[] NPCNum = new int[(int)ENPCType.LAST] { (int)EOasisName.LAST, (int)EAltarName.LAST, (int)ESlateName.LAST, 0 };
 
-    [SerializeField]
-    private QuestNPCScript[] m_testNPCs;
-    private void RegisterSampleAltars()
+
+
+
+    public void TempSetNPCs(NPCScript[] _npcs)
     {
-        for (int i = 0; i<m_testNPCs.Length; i++)
+        int[] nums = new int[(int)ENPCType.LAST];
+
+        foreach (NPCScript npc in _npcs)
         {
-            m_npcList[(int)ENPCType.ALTAR, i] = m_testNPCs[i];
+            ENPCType type = npc.NPC.Type;
+            int idx = (int)type;
+            m_npcList[idx, nums[idx]++] = npc;
         }
     }
 
@@ -124,11 +115,6 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
     {
         m_npcList = new NPCScript[(int)ENPCType.LAST, ValueDefine.MAX_NPC_NUM];
         m_monsterKilled = new bool[(int)EMonsterName.LAST];
-
-        if (SceneManager.GetActiveScene().name == "SampleInteractScene")                // 테스트용 임시
-        {
-            RegisterSampleAltars();
-        }
 
         if (!GameManager.IsInGame) { return; }
 

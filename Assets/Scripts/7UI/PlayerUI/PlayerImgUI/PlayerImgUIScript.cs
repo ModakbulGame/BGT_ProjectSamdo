@@ -8,13 +8,10 @@ public class PlayerImgUIScript : MonoBehaviour
     private PlayerUIScript m_parent;
     public void SetParent(PlayerUIScript _parent) { m_parent = _parent; }
 
-    [SerializeField]
-    private GameObject[] m_weapons;
+
     private PlayerImgWeaponSlot m_weaponSlot;
 
     private PlayerImgPatternSlot m_healSlot;
-
-    private GameObject WeaponObject { get; set; }
 
     private SItem CurWeapon { get; set; }
 
@@ -30,10 +27,6 @@ public class PlayerImgUIScript : MonoBehaviour
     }
     public void UpdatePlayerWeapon(EWeaponName _weapon)
     {
-        if (WeaponObject != null) { WeaponObject.SetActive(false); }
-        WeaponObject = m_weapons[(int)_weapon];
-        WeaponObject.SetActive(true);
-
         CurWeapon = new(EItemType.WEAPON, (int)_weapon);
         Sprite img = GameManager.GetItemSprite(CurWeapon);
         m_weaponSlot.SetImage(img);

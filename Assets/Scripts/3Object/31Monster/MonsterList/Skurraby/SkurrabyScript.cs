@@ -91,7 +91,7 @@ public class SkurrabyScript : MonsterScript
     private void CheckFlyCollision()
     {
         if(!IsFlying || IsDead) { return; }
-        Collider[] colliders = Physics.OverlapSphere(Position + Vector3.up * ObjectHeight / 2, CollisionRadius, ValueDefine.HITTABLE_LAYER);
+        Collider[] colliders = Physics.OverlapSphere(Position + Vector3.up * ObjectHeight / 2, CollisionRadius, ValueDefine.HITTABLE_PLAYER_LAYER);
         foreach (Collider col in colliders)
         {
             IHittable hit = col.GetComponentInParent<IHittable>();

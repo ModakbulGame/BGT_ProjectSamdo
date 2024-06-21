@@ -7,15 +7,8 @@ using UnityEngine.UIElements;
 
 public class PlayUIManager : MonoBehaviour
 {
-    // 캔버스
     [SerializeField]
-    private Canvas[] m_canvases = new Canvas[(int)ECanvasType.LAST];
-    public Canvas GetCanvas(ECanvasType _canvas) { return m_canvases[(int)_canvas]; }
-
-    private Canvas MainCanvas { get { return m_canvases[(int)ECanvasType.MAIN]; } }
-    private Canvas OptionCanvas { get { return m_canvases[(int)ECanvasType.OPTION]; } }
-
-
+    private Canvas m_mainCanvas;
 
     // 온 오프 UI
     [SerializeField]
@@ -132,7 +125,7 @@ public class PlayUIManager : MonoBehaviour
     public void ShowInteractInfo(string _info) { m_interactInfoUI.ShowInteractInfo(_info); }
     public void HideInteractInfo() { m_interactInfoUI.HideInteractInfo(); }
 
-
+    [SerializeField]
     private BlackoutImageScript m_blackoutUI;
     public void StartBlackout() { m_blackoutUI.ShowImg(); }
     public void EndBlackout() { m_blackoutUI.HideImg(); }
@@ -187,21 +180,20 @@ public class PlayUIManager : MonoBehaviour
 
     public void SetManager()
     {
-        m_hpBar = MainCanvas.GetComponentInChildren<PlayerHPBarScript>();
+        m_hpBar = m_mainCanvas.GetComponentInChildren<PlayerHPBarScript>();
         m_hpBar.SetComps();
-        m_powerSlot = MainCanvas.GetComponentInChildren<PowerSlotUIScript>();
+        m_powerSlot = m_mainCanvas.GetComponentInChildren<PowerSlotUIScript>();
         m_powerSlot.SetComps();
-        m_miniMap = MainCanvas.GetComponentInChildren<MinimapScript>();
-        m_questSideBar = MainCanvas.GetComponentInChildren<QuestSideBarScript>();
-        m_aimUI = MainCanvas.GetComponentInChildren<AimUIScript>();
-        m_equipSlot = MainCanvas.GetComponentInChildren<EquipSlotUIScript>();
+        m_miniMap = m_mainCanvas.GetComponentInChildren<MinimapScript>();
+        m_questSideBar = m_mainCanvas.GetComponentInChildren<QuestSideBarScript>();
+        m_aimUI = m_mainCanvas.GetComponentInChildren<AimUIScript>();
+        m_equipSlot = m_mainCanvas.GetComponentInChildren<EquipSlotUIScript>();
 
-        m_ingameAlarm = MainCanvas.GetComponentInChildren<IngameAlarmUIScript>();
+        m_ingameAlarm = m_mainCanvas.GetComponentInChildren<IngameAlarmUIScript>();
         m_powerAimUI = GetComponentInChildren<PlayerPowerAimScript>();
         m_throwLineUI = GetComponentInChildren<PlayerThrowLineRenderer>();
 
-        m_blackoutUI = OptionCanvas.GetComponentInChildren<BlackoutImageScript>();
-        m_spitUI = MainCanvas.GetComponentInChildren<SpitPoisonUIScript>();
+        m_spitUI = m_mainCanvas.GetComponentInChildren<SpitPoisonUIScript>();
 
         UpdatePowerSlot();
         UpdateThrowItemSlot();
