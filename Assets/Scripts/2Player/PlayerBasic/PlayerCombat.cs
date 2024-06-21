@@ -7,19 +7,19 @@ using UnityEngine.InputSystem;
 
 public partial class PlayerController
 {
-    // ÀüÅõ ±âº»
-    public override bool IsUnstoppable { get { return false; } }        // °ø°Ý ¸ð¼Ç ¾È²÷±è
+    // ì „íˆ¬ ê¸°ë³¸
+    public override bool IsUnstoppable { get { return false; } }        // ê³µê²© ëª¨ì…˜ ì•ˆëŠê¹€
 
-    public override void GetHit(HitData _hit)                           // °ø°Ý ¸ÂÀ½
+    public override void GetHit(HitData _hit)                           // ê³µê²© ë§žìŒ
     {
-        if (IsInvincible && !_hit.CCList.Contains(ECCType.AIRBORNE)) { return; }    // ±¸¸£´Â ÁßÀÌ°í ¿¡¾îº»ÀÌ ¾Æ´Ï¸é
+        if (IsInvincible && !_hit.CCList.Contains(ECCType.AIRBORNE)) { return; }    // êµ¬ë¥´ëŠ” ì¤‘ì´ê³  ì—ì–´ë³¸ì´ ì•„ë‹ˆë©´
         MonsterScript monster = (MonsterScript)_hit.Attacker;
         if (!IsDead && IsGuarding && _hit.Attacker.IsMonster) { monster.HitGuardingPlayer(); }
         base.GetHit(_hit);
         monster.AttackedPlayer(_hit);
         m_impulseSource.GenerateImpulse(1.0f);
     }
-    public override void PlayHitAnim(HitData _hit)                      // ÇÇ°Ý ¾Ö´Ï¸ÞÀÌ¼Ç
+    public override void PlayHitAnim(HitData _hit)                      // í”¼ê²© ì• ë‹ˆë©”ì´ì…˜
     {
         if (IsHealing) { CancelHeal(); }
         if (!_hit.CCList.Contains(ECCType.AIRBORNE) && !_hit.CCList.Contains(ECCType.KNOCKBACK))
@@ -29,12 +29,12 @@ public partial class PlayerController
         HitAnimation();
         ChangeState(EPlayerState.HIT);
     }
-    public override void SetHP(float _hp)                               // HP ¼³Á¤
+    public override void SetHP(float _hp)                               // HP ì„¤ì •
     {
         base.SetHP(_hp);
         PlayManager.SetPlayerCurHP(_hp);
     }
-    public override void SetDead()                                      // Á×À½ ¼³Á¤
+    public override void SetDead()                                      // ì£½ìŒ ì„¤ì •
     {
         base.SetDead();
         if (IsHealing) { CancelHeal(); }
@@ -48,43 +48,43 @@ public partial class PlayerController
     }
 
 
-    // ¹«Àû °ü·Ã
-    private bool IsInvincible { get; set; }                             // ¹«Àû »óÅÂ ¿©ºÎ
+    // ë¬´ì  ê´€ë ¨
+    private bool IsInvincible { get; set; }                             // ë¬´ì  ìƒíƒœ ì—¬ë¶€
 
-    public void StartInvincible() { IsInvincible = true; }              // ¹«Àû ½ÃÀÛ
-    public void StopInvincible() { IsInvincible = false; }              // ¹«Àû Áß´Ü
+    public void StartInvincible() { IsInvincible = true; }              // ë¬´ì  ì‹œìž‘
+    public void StopInvincible() { IsInvincible = false; }              // ë¬´ì  ì¤‘ë‹¨
 
 
 
-    // °ø°Ý °ü·Ã
-    public const int MAX_ATTACK = 3;                                    // °ø°Ý ¿¬°Ý ¼ö
-    private readonly float AttackStaminaUse = 0;                        // ±âº»°ø°Ý ½ºÅ×¹Ì³ª ¼Ò¸ð
-    private readonly float[,] ForwardDist = new float[3, 3] {           // ¹«±â, ¼ø¼­ º° ÀüÁø ¼Óµµ
+    // ê³µê²© ê´€ë ¨
+    public const int MAX_ATTACK = 3;                                    // ê³µê²© ì—°ê²© ìˆ˜
+    private readonly float AttackStaminaUse = 0;                        // ê¸°ë³¸ê³µê²© ìŠ¤í…Œë¯¸ë‚˜ ì†Œëª¨
+    private readonly float[,] ForwardDist = new float[3, 3] {           // ë¬´ê¸°, ìˆœì„œ ë³„ ì „ì§„ ì†ë„
         { 1.5f, 1.5f, 2 },
         { 3, 1, 3 },
         { 1.5f, 1.5f, 2 }
     };
 
-    public int AttackStack { get; private set; }                        // ÇöÀç °ø°Ý ¼ø¼­ (1, 2, 3)
+    public int AttackStack { get; private set; }                        // í˜„ìž¬ ê³µê²© ìˆœì„œ (1, 2, 3)
     private float CurForwardDist
     {
         get
-        {                                // ¼ø¼­¿¡ µû¸¥ ÀüÁø ¼Óµµ
+        {                                // ìˆœì„œì— ë”°ë¥¸ ì „ì§„ ì†ë„
             return ForwardDist[(int)CurWeapon.WeaponType, AttackStack-1];
         }
     }
     public bool CanAttack
     {
         get
-        {                                       // °ø°Ý °¡´É
+        {                                       // ê³µê²© ê°€ëŠ¥
             return AttackTrigger && CurStamina >= AttackStaminaUse && AttackStack < 3;
         }
     }
-    public bool AttackCreated { get; private set; }                     // °ø°Ý ¿ÀºêÁ§Æ® »ý¼º (´ÙÀ½ °ø°Ý °¡´É ±âÁØ)
-    public bool AttackFinished { get; private set; }                    // °ø°Ý ¿Ï·á (°¡µå ÀÌÇà ±âÁØ)
-    private bool AttackProcing { get; set; }                            // ¿¬°Ý ÀÌ¾î°¥Áö
+    public bool AttackCreated { get; private set; }                     // ê³µê²© ì˜¤ë¸Œì íŠ¸ ìƒì„± (ë‹¤ìŒ ê³µê²© ê°€ëŠ¥ ê¸°ì¤€)
+    public bool AttackFinished { get; private set; }                    // ê³µê²© ì™„ë£Œ (ê°€ë“œ ì´í–‰ ê¸°ì¤€)
+    private bool AttackProcing { get; set; }                            // ì—°ê²© ì´ì–´ê°ˆì§€
 
-    public void StartAttack()                                           // °ø°Ý »óÅÂ ½ÃÀÛ
+    public void StartAttack()                                           // ê³µê²© ìƒíƒœ ì‹œìž‘
     {
         StopMove();
         AttackCreated = false;
@@ -95,7 +95,7 @@ public partial class PlayerController
         if (IsHealing) { CancelHeal(); }
         GuardDelayStart();
     }
-    public void ToNextAttack()                                          // ´ÙÀ½ °ø°ÝÀ¸·Î ÀÌÇà
+    public void ToNextAttack()                                          // ë‹¤ìŒ ê³µê²©ìœ¼ë¡œ ì´í–‰
     {
         if (AttackProcing) { return; }
         AttackStack++;
@@ -103,30 +103,31 @@ public partial class PlayerController
         AttackProcing = true;
         GuardDelayStart();
     }
-    public override void AttackTriggerOn()                              // ¹«±â È÷Æ® ÆÇÁ¤ on
+    public override void AttackTriggerOn()                              // ë¬´ê¸° ížˆíŠ¸ íŒì • on
     {
         CurWeapon.AttackOn();
         AttackCreated = true;
         UseStamina(AttackStaminaUse);
 
-        PlayManager.AddInventoryItem(new(EItemType.PATTERN, UnityEngine.Random.Range(0, (int)EPatternName.LAST)), 1);
+        // PlayManger.AddSoul(1);
+        // PlayManager.AddInventoryItem(new(EItemType.PATTERN, UnityEngine.Random.Range(0, (int)EPatternName.LAST)), 1);
     }
-    public override void AttackTriggerOff()                             // ¹«±â È÷Æ® ÆÇÁ¤ off
+    public override void AttackTriggerOff()                             // ë¬´ê¸° ížˆíŠ¸ íŒì • off
     {
         CurWeapon.AttackOff();
         AttackFinished = true;
     }
-    public void ChkAttackDone()                                         // °ø°Ý Á¾·á ÈÄ ¿¬°Ý or IDLE ÆÇ´Ü
+    public void ChkAttackDone()                                         // ê³µê²© ì¢…ë£Œ í›„ ì—°ê²© or IDLE íŒë‹¨
     {
         if (!AttackProcing) { AttackDone(); }
         else { AttackProcing = false; AttackFinished = false; }
     }
-    public override void AttackDone()                                   // °ø°Ý Á¾·á
+    public override void AttackDone()                                   // ê³µê²© ì¢…ë£Œ
     {
         AttackOffAnim();
         ChangeState(EPlayerState.IDLE);
     }
-    public void BreakAttack()                                           // °ø°Ý Áß´Ü
+    public void BreakAttack()                                           // ê³µê²© ì¤‘ë‹¨
     {
         AttackCreated = false;
         AttackProcing = false;
@@ -134,27 +135,27 @@ public partial class PlayerController
         AttackDone();
         ResetAnim();
     }
-    public void AttackForward()                                         // °ø°Ý ½Ã ÀüÁø
+    public void AttackForward()                                         // ê³µê²© ì‹œ ì „ì§„
     {
         Vector3 forward = transform.forward * CurForwardDist;
         Vector2 forward2 = new(forward.x, forward.z);
         ForceMove(forward2);
     }
 
-    public void HitTarget()                                             // ¸ó½ºÅÍ ¶§¸²
+    public void HitTarget()                                             // ëª¬ìŠ¤í„° ë•Œë¦¼
     {
         if (!IsOverload) { return; }
         OverloadRestoreLight();
     }
 
 
-    // ±Ç´É °ü·Ã
-    private EPowerName[] PowerSlot { get { return PlayManager.PowerSlot; } }                // ½ºÅ³ ½½·Ô
+    // ê¶ŒëŠ¥ ê´€ë ¨
+    private EPowerName[] PowerSlot { get { return PlayManager.PowerSlot; } }                // ìŠ¤í‚¬ ìŠ¬ë¡¯
     public int PowerIdx
     {
         get
         {
-            for (int i = 0; i<ValueDefine.MAX_POWER_SLOT; i++)          // ´­¸° ½ºÅ³
+            for (int i = 0; i<ValueDefine.MAX_POWER_SLOT; i++)          // ëˆŒë¦° ìŠ¤í‚¬
             { if (PowerTriggers[i]) return i; }
             return -1;
         }
@@ -163,24 +164,24 @@ public partial class PlayerController
     {
         get
         {
-            return !IsOverload && !IsOblivion && PowerIdx != -1     // ½ºÅ³ »ç¿ë °¡´É ¿©ºÎ
+            return !IsOverload && !IsOblivion && PowerIdx != -1     // ìŠ¤í‚¬ ì‚¬ìš© ê°€ëŠ¥ ì—¬ë¶€
                 && PowerSlot[PowerIdx] != EPowerName.LAST && PowerCooltime[PowerIdx] <= 0;
         }
     }
-    public EPowerName PowerInHand { get; private set; } = EPowerName.LAST;                  // »ç¿ë ÁßÀÎ ½ºÅ³
+    public EPowerName PowerInHand { get; private set; } = EPowerName.LAST;                  // ì‚¬ìš© ì¤‘ì¸ ìŠ¤í‚¬
     private PowerInfo PowerInfoInHand
     {
         get
-        {                                               // ¤¤ÀÇ Á¤º¸
+        {                                               // ã„´ì˜ ì •ë³´
             if (PowerInHand == EPowerName.LAST) return null;
             return GameManager.GetPowerInfo(PowerInHand);
         }
     }
-    public int UsingPowerIdx { get; private set; } = -1;                                    // ¤¤ÀÇ ½½·Ô ¹øÈ£
+    public int UsingPowerIdx { get; private set; } = -1;                                    // ã„´ì˜ ìŠ¬ë¡¯ ë²ˆí˜¸
 
     public bool IsRaycastPower { get { return PowerInHand == EPowerName.RANGED_KNOCKBACK1; } }
 
-    public void ReadyPower()                                                                // ½ºÅ³ »ç¿ë ÁØºñ
+    public void ReadyPower()                                                                // ìŠ¤í‚¬ ì‚¬ìš© ì¤€ë¹„
     {
         UsingPowerIdx = PowerIdx;
         PowerInHand = PowerSlot[UsingPowerIdx];
@@ -201,7 +202,7 @@ public partial class PlayerController
         }
         GuardDelayStart();
     }
-    public void FirePower()                                                                 // ½ºÅ³ »ç¿ë
+    public void FirePower()                                                                 // ìŠ¤í‚¬ ì‚¬ìš©
     {
         float coolTime = PowerInfoInHand.PowerCooltime;
         PowerCooltime[UsingPowerIdx] = coolTime;
@@ -210,7 +211,7 @@ public partial class PlayerController
         PowerFireAnim(idx);
         HidePowerAim();
     }
-    public void CreatePower()                                                               // ½ºÅ³ ¿ÀºêÁ§Æ® »ý¼º
+    public void CreatePower()                                                               // ìŠ¤í‚¬ ì˜¤ë¸Œì íŠ¸ ìƒì„±
     {
         ECastType type = PowerInfoInHand.CastType;
 
@@ -262,11 +263,11 @@ public partial class PlayerController
 
         PowerAnimDone();
     }
-    public void CancelPower()                                                               // ½ºÅ³ Ãë¼Ò
+    public void CancelPower()                                                               // ìŠ¤í‚¬ ì·¨ì†Œ
     {
         PowerAnimDone();
     }
-    public void PowerDone()                                                                 // ½ºÅ³ »ç¿ë Á¾·á
+    public void PowerDone()                                                                 // ìŠ¤í‚¬ ì‚¬ìš© ì¢…ë£Œ
     {
         if(PowerInHand == EPowerName.LAST){ return; }
         HidePowerAim();
@@ -330,7 +331,7 @@ public partial class PlayerController
         RaycastTarget.GetInstantHit(PowerInfoInHand, info.Target, this);
     }
 
-    // ¹«±â CC
+    // ë¬´ê¸° CC
     public override void GetAdj(TempAdjust _adjust)
     {
         if (_adjust.Type == EAdjType.WEAPON_CC)
@@ -365,15 +366,15 @@ public partial class PlayerController
     }
 
 
-    // °¡µå °ü·Ã
+    // ê°€ë“œ ê´€ë ¨
     private readonly float GuardDelay = 0.8f;
 
     public bool CanGaurd { get { return GuardPressing && GuardCooltime <= 0; } }
-    public void GuardStart()                                                                // °¡µå ½ÃÀÛ
+    public void GuardStart()                                                                // ê°€ë“œ ì‹œìž‘
     {
 
     }
-    public void GuardStop()                                                                 // °¡µå Áß´Ü
+    public void GuardStop()                                                                 // ê°€ë“œ ì¤‘ë‹¨
     {
 
     }
@@ -388,30 +389,30 @@ public partial class PlayerController
     }
 
 
-    // È¸º¹ °ü·Ã
-    private readonly float HealDelay = 5;                                                                           // È¸º¹ µô·¹ÀÌ
+    // íšŒë³µ ê´€ë ¨
+    private readonly float HealDelay = 5;                                                                           // íšŒë³µ ë”œë ˆì´
 
     private bool CanHeal
     {
         get
         {
-            return HealInHand != EPatternName.LAST && HealItemTrigger && !IsHealing &&         // È¸º¹ °¡´É
+            return HealInHand != EPatternName.LAST && HealItemTrigger && !IsHealing &&         // íšŒë³µ ê°€ëŠ¥
                 (IsIdle || IsMoving) && HealCooltime <= 0;
         }
     }
-    public bool IsHealing { get; private set; }                                                                     // È¸º¹ Áß    
-    private EPatternName HealInHand { get { return PlayManager.CurHealPattern; } }                                  // ÀåÂøµÈ È¸º¹ ¾ÆÀÌÅÛ
+    public bool IsHealing { get; private set; }                                                                     // íšŒë³µ ì¤‘    
+    private EPatternName HealInHand { get { return PlayManager.CurHealPattern; } }                                  // ìž¥ì°©ëœ íšŒë³µ ì•„ì´í…œ
     private float HealAmountInHand
     {
         get
         {
-            if (HealInHand == EPatternName.LAST) return -1;                          // ¤¤ÀÇ È¸º¹·®
+            if (HealInHand == EPatternName.LAST) return -1;                          // ã„´ì˜ íšŒë³µëŸ‰
             ItemInfo info = GameManager.GetItemInfo(new SItem(EItemType.PATTERN, (int)HealInHand));
             return ((PatternScriptable)info.ItemData).HealAmount;
         }
     }
 
-    public void HealUpdate()                                                                                        // È¸º¹ ¿©ºÎ È®ÀÎ
+    public void HealUpdate()                                                                                        // íšŒë³µ ì—¬ë¶€ í™•ì¸
     {
         if (CanHeal)
         {
@@ -438,23 +439,23 @@ public partial class PlayerController
         CancelHealAnim();
         IsHealing = false;
     }
-    public void HealDone()                                                                                          // È¸º¹ ¿Ï·á(¾Ö´Ï¸ÞÀÌ¼Ç)
+    public void HealDone()                                                                                          // íšŒë³µ ì™„ë£Œ(ì• ë‹ˆë©”ì´ì…˜)
     {
         HealAnimDone();
         IsHealing = false;
     }
 
 
-    // ´øÁö±â °ü·Ã
-    public readonly int ThrowPower = 60;                                                    // ´øÁö±â Èû
-    private readonly float ThrowDelay = 1.5f;                                               // ´øÁö±â µô·¹ÀÌ
+    // ë˜ì§€ê¸° ê´€ë ¨
+    public readonly int ThrowPower = 60;                                                    // ë˜ì§€ê¸° íž˜
+    private readonly float ThrowDelay = 1.5f;                                               // ë˜ì§€ê¸° ë”œë ˆì´
 
-    private readonly Vector3 TempThrowOffset = new(0.371f, 1.628f, 0.664f);                 // ÀÓ½Ã ´øÁö±â »ý¼º ¿ÀÇÁ¼Â
-    private readonly Vector3 TempThrowRotation = new(-64.449f, -30.487f, 40.266f);          // ÀÓ½Ã ´øÁö±â ¿ÀºêÁ§Æ® È¸Àü
+    private readonly Vector3 TempThrowOffset = new(0.371f, 1.628f, 0.664f);                 // ìž„ì‹œ ë˜ì§€ê¸° ìƒì„± ì˜¤í”„ì…‹
+    private readonly Vector3 TempThrowRotation = new(-64.449f, -30.487f, 40.266f);          // ìž„ì‹œ ë˜ì§€ê¸° ì˜¤ë¸Œì íŠ¸ íšŒì „
 
-    public bool CanThrow { get { return IsUpperIdleAnim && ThrowCooltime <= 0 && ThrowItemTrigger; } }     // ÅõÃ´ °¡´É ¿©ºÎ
-    private EThrowItemName ItemInHand { get; set; } = EThrowItemName.LAST;                  // ´øÁö±â ÁØºñ ÁßÀÎ ¾ÆÀÌÅÛ Enum
-    private GameObject InHandPrefab { get; set; }                                           // ¼Õ¿¡ µç ¾ÆÀÌÅÛ ¿ÀºêÁ§Æ®
+    public bool CanThrow { get { return IsUpperIdleAnim && ThrowCooltime <= 0 && ThrowItemTrigger; } }     // íˆ¬ì²™ ê°€ëŠ¥ ì—¬ë¶€
+    private EThrowItemName ItemInHand { get; set; } = EThrowItemName.LAST;                  // ë˜ì§€ê¸° ì¤€ë¹„ ì¤‘ì¸ ì•„ì´í…œ Enum
+    private GameObject InHandPrefab { get; set; }                                           // ì†ì— ë“  ì•„ì´í…œ ì˜¤ë¸Œì íŠ¸
     public Vector3 ThrowOffset
     {
         get
@@ -466,9 +467,9 @@ public partial class PlayerController
             pos += new Vector3(offset.x, TempThrowOffset.y, offset.y);
             return pos;
         }
-    }                                                          // ´øÁö±â ¿ÀÇÁ¼Â
+    }                                                          // ë˜ì§€ê¸° ì˜¤í”„ì…‹
 
-    public void ReadyThrow()                                                                // ´øÁö±â ÁØºñ
+    public void ReadyThrow()                                                                // ë˜ì§€ê¸° ì¤€ë¹„
     {
         EThrowItemName item = PlayManager.CurThrowItem;
         if (item == EThrowItemName.LAST) { return; }
@@ -477,7 +478,7 @@ public partial class PlayerController
         SetThrowItem(item);
         ChangeState(EPlayerState.THROW);
     }
-    public void SetThrowItem(EThrowItemName _item)                                          // ¾ÆÀÌÅÛ µé±â
+    public void SetThrowItem(EThrowItemName _item)                                          // ì•„ì´í…œ ë“¤ê¸°
     {
         ItemInHand = _item;
 
@@ -490,7 +491,7 @@ public partial class PlayerController
         Destroy(InHandPrefab.GetComponent<Rigidbody>());
         Destroy(InHandPrefab.GetComponent<ThrowItemScript>());
     }
-    public void CancelThrow()                                                               // ´øÁö±â Ãë¼Ò
+    public void CancelThrow()                                                               // ë˜ì§€ê¸° ì·¨ì†Œ
     {
         PlayManager.HideThrowLine();
         DestroyInHand();
@@ -501,12 +502,12 @@ public partial class PlayerController
         if (InHandPrefab == null) { return; }
         Destroy(InHandPrefab);
     }
-    public void ThrowItem()                                                                 // ¾ÆÀÌÅÛ ´øÁö±â
+    public void ThrowItem()                                                                 // ì•„ì´í…œ ë˜ì§€ê¸°
     {
         PlayManager.HideThrowLine();
         ThrowAnim();
     }
-    public void CreateThrowItem()                                                           // ´øÁú ¾ÆÀÌÅÛ »ý¼º
+    public void CreateThrowItem()                                                           // ë˜ì§ˆ ì•„ì´í…œ ìƒì„±
     {
         Vector3 force = PlayerAimVector * ThrowPower;
         GameObject item = GameManager.GetThorwItemPrefab(ItemInHand);
@@ -522,7 +523,7 @@ public partial class PlayerController
 
         ThrowCooltime = ThrowDelay;
     }
-    public void DoneThrow()                                                                 // ´øÁö±â ¿Ï·á
+    public void DoneThrow()                                                                 // ë˜ì§€ê¸° ì™„ë£Œ
     {
         ShowWeapon();
         CancelThrowAnim();
@@ -531,13 +532,13 @@ public partial class PlayerController
     }
 
 
-    // CC °ü·Ã
+    // CC ê´€ë ¨
     private IEnumerator OblivionCoroutine;
     public bool IsOblivion { get { return m_ccCount[(int)ECCType.OBLIVION] > 0; } }
     public override void GetOblivion()
     {
         m_ccCount[(int)ECCType.OBLIVION] = 10;
-        // ½ºÅ³ »ç¿ë ºÒ°¡ Ç¥½Ã
+        // ìŠ¤í‚¬ ì‚¬ìš© ë¶ˆê°€ í‘œì‹œ
         if (OblivionCoroutine == null) { OblivionCoroutine = ResetOblivion(); StartCoroutine(OblivionCoroutine); }
     }
     private IEnumerator ResetOblivion()
@@ -546,7 +547,7 @@ public partial class PlayerController
         {
             yield return null;
         }
-        // ½ºÅ³ »ç¿ë °¡´É Ç¥½Ã
+        // ìŠ¤í‚¬ ì‚¬ìš© ê°€ëŠ¥ í‘œì‹œ
     }
 
     private IEnumerator BlindCoroutine;
