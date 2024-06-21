@@ -19,7 +19,6 @@ public class SaveData
     // 아이템 정보
     public int Soul;
     public int PurifiedSoul;
-    public int[] PatternNum;
     public List<EPatternName> HealPatternList;
     public bool[] WeaponObtained;
     public EWeaponName CurWeapon;
@@ -48,7 +47,6 @@ public class SaveData
         PowerSlot = new EPowerName[ValueDefine.MAX_POWER_SLOT] { EPowerName.LAST,EPowerName.LAST,EPowerName.LAST};
         PowerObtained = new bool[(int)EPowerName.LAST];
 
-        PatternNum = new int[(int)EPatternName.LAST];
         HealPatternList = new();
         WeaponObtained = new bool[(int)EWeaponName.LAST];
         for(int i=0; i<=(int)InventoryManager.InitialWeapon; i++) { WeaponObtained[i] = true; }
@@ -79,8 +77,6 @@ public class SaveData
 
         Soul = _other.Soul;
         PurifiedSoul = _other.PurifiedSoul;
-        PatternNum = new int[(int)EPatternName.LAST];
-        for(int i = 0; i<(int)EPatternName.LAST; i++) { PatternNum[i] = _other.PatternNum[i]; }
         HealPatternList = new();
         foreach(EPatternName pattern in _other.HealPatternList) { HealPatternList.Add(pattern); }
         WeaponObtained = new bool[(int)EWeaponName.LAST];

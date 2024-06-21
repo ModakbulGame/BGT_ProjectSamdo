@@ -49,7 +49,7 @@ public static class ValueDefine
     public const int MAX_ITEM_VARIETY = 128;                        // 아이템 종류별 개수
     public const int MAX_HEAL_ITEM = 3;                             // 최대 등록 가능 회복 아이템
     public const int MAX_THROW_ITEM = 8;                            // 최대 등록 가능 투척 아이템
-    public const int MAX_REGISTER_PATTERN = 5;                      // 최대 각인 가능 문양
+    public const int MAX_REGISTER_PATTERN = 3;                      // 최대 각인 가능 문양
     public const int MAX_QUEST_NUM = 4;                             // 최대 진행 가능 퀘스트
     public const int DIE_DAMAGE = 999;
     public const int MAX_NPC_NUM = 99;                              // 종류별 NPC 수

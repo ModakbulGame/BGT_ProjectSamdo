@@ -138,11 +138,9 @@ public class PlayManager : MonoBehaviour
     public static int[] PatternNum { get { return InvenManager.PatternNum; } }                                                                  // ���纰 ����
     public static void AddSoul(int _num) { InvenManager.AddSoul(_num); }                                                                        // ��ȥ �߰�
     public static void AddPurified(int _num) { InvenManager.AddPurified(_num); }                                                                // ���� ��ȥ �߰�
-    public static void AddPattern(EPatternName _type, int _num) { InvenManager.AddPattern(_type, _num); }                                       // ���� �߰�
     public static void UseSoul(int _num) { InvenManager.LooseSoul(_num); }                                                                      // ��ȥ ���
     public static void LooseSoul(int _num, bool _absorbed) { InvenManager.LooseSoul(_num, _absorbed); }                                         // ��ȥ ���� ����
     public static void UsePurified(int _num) { InvenManager.UsePurified(_num); }                                                                // ���� ��ȥ ���
-    public static void UsePattern(EPatternName _type, int _num) { InvenManager.UsePattern(_type, _num); }                                       // ���� ���
 
     // ���丮
     private QuestManager m_questManager;

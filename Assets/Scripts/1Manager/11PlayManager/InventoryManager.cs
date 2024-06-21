@@ -44,20 +44,14 @@ public class InventoryManager : MonoBehaviour, IHaveData
     }
 
     // 문양
-    private readonly int[] m_patternNum = new int[(int)EPatternName.LAST];
-    public int[] PatternNum { get { return m_patternNum; } }
-    public void AddPattern(EPatternName _type, int _num)
-    {
-        m_patternNum[(int)_type] += _num;
-        PlayManager.AddIngameAlarm($"문양 {_num}개 획득!");
-        PlayManager.UpdateMaterials();
-    }
-    public void UsePattern(EPatternName _type, int _num)
-    {
-        if (m_patternNum[(int)_type] < _num) { Debug.LogError("보유 문양보다 많은 개수 사용"); return; }
-        m_patternNum[(int)_type] -= _num;
-        PlayManager.UpdateMaterials();
-    }
+    public int[] PatternNum { get {
+            int[] patterns = new int[(int)EPatternName.LAST];
+            for (int i = 0; i<(int)EPatternName.LAST; i++) {
+                SItem item = new(EItemType.PATTERN, i);
+                foreach (InventoryElm inven in m_itemInven.Inventory) {
+                    if(inven.Item == item) { patterns[i] += inven.Num; } } }
+            return patterns; } }
+
 
     // 회복 아이템 (각인 문양?)
     private readonly List<EPatternName> m_healPatternList = new();
@@ -188,7 +182,6 @@ public class InventoryManager : MonoBehaviour, IHaveData
 
         m_soulNum = data.Soul;
         m_purifiedNum = data.PurifiedSoul;
-        for(int i = 0; i<(int)EPatternName.LAST; i++) { m_patternNum[i] = data.PatternNum[i]; }
         foreach(EPatternName pattern in data.HealPatternList) { m_healPatternList.Add(pattern); }
         for(int i = 0; i<(int)EWeaponName.LAST; i++) { m_weaponObtained[i] = data.WeaponObtained[i]; }
         CurWeapon = data.CurWeapon;
@@ -201,7 +194,6 @@ public class InventoryManager : MonoBehaviour, IHaveData
 
         data.Soul = m_soulNum;
         data.PurifiedSoul = m_purifiedNum;
-        for (int i = 0; i<(int)EPatternName.LAST; i++) { data.PatternNum[i] = m_patternNum[i]; }
         foreach (EPatternName pattern in m_healPatternList) { data.HealPatternList.Add(pattern); }
         for(int i = 0; i<(int)EWeaponName.LAST; i++) { data.WeaponObtained[i] = m_weaponObtained[i]; }
         data.CurWeapon = CurWeapon;

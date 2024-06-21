@@ -8,7 +8,7 @@ public class OasisTradeUIScript : BaseUI, IOasisUI
     private OasisUIScript m_parent;
 
     private ProductListScript m_productList;
-
+    private PatternRegisterScript m_patternRegister;
     private OasisSoulInfoScript m_soulInfo;
 
 
@@ -26,7 +26,7 @@ public class OasisTradeUIScript : BaseUI, IOasisUI
     public override void UpdateUI()
     {
         m_productList.UpdateUI(Oasis);
-
+        m_patternRegister.UpdateUI();
         m_soulInfo.UpdateUI();
     }
 
@@ -48,6 +48,8 @@ public class OasisTradeUIScript : BaseUI, IOasisUI
         base.SetComps();
         m_productList = GetComponentInChildren<ProductListScript>();
         m_productList.SetParent(this); m_productList.SetComps();
+        m_patternRegister = GetComponentInChildren<PatternRegisterScript>();
+        m_patternRegister.SetComps();
         m_soulInfo = GetComponentInChildren<OasisSoulInfoScript>();
 
         SetBtns();
