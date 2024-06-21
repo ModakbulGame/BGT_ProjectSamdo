@@ -150,6 +150,10 @@ public class PlayUIManager : MonoBehaviour
     public void OpenDialogueUI(NPCScript _npc, int _idx) { m_dialogueUI.OpenUI(_npc, _idx); }
 
     [SerializeField]
+    // private SlateUI m_slateUI;
+    public void OpenSlateUI(SlateNPC _slate) { /*m_slateUI.OpenUI(_slate);*/ }
+
+    [SerializeField]
     private QuestAcceptUIScript m_questAcceptUI;        // NPC 대화 끝에 나오는 퀘스트 창
     public void ShowNPCQuestUI(EQuestName _quest, bool _isStart, FPointer _confirm) { m_questAcceptUI.ShowNPCQuestUI(_quest, _isStart, _confirm); }
 

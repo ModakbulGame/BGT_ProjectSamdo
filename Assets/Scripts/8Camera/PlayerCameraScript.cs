@@ -22,7 +22,6 @@ public class PlayerCameraScript : MonoBehaviour
         CurCameraMode = EControlMode.THIRD_PERSON;
         m_cameraDetail.m_Lens.FieldOfView = 40;
         m_cameraDetail.m_YAxis.Value = 0.5f;
-        //m_cameraDetail.m_XAxis.Value = 0;
         SetCinemachineSpeed(MouseSensitive);
     }
     public void ResetTrace()

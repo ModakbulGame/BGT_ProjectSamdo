@@ -230,6 +230,7 @@ public class PlayManager : MonoBehaviour
     // NPC UI
     public static void ShowNPCQuestUI(EQuestName _quest, bool _isStart, FPointer _confirm) { PlayUIManager.ShowNPCQuestUI(_quest, _isStart, _confirm); }    // 퀘스트 수락/거절 창 표시
     public static void OpenDialogueUI(NPCScript _npc, int _idx) { PlayUIManager.OpenDialogueUI(_npc, _idx); }                               // NPC 대화창 열기
+    public static void OpenSlateUI(SlateNPC _slate) { PlayUIManager.OpenSlateUI(_slate); }
     public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                  // NPC 대화창 열렸는지 확인
 
     // 기타

@@ -20,6 +20,8 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
     protected NPCScriptable m_scriptable;
     public void SetScriptable(NPCScriptable _scriptable) { m_scriptable = _scriptable; }
 
+    private SlateNPC m_slate;
+
     public Vector2 Position2 { get { return new(transform.position.x, transform.position.z); } }
 
     public SNPC NPC { get { if (m_scriptable == null) { return SNPC.Null; } return m_scriptable.NPC; } }
@@ -52,7 +54,8 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
     public virtual void StartInteract()
     {
         GameManager.SetControlMode(EControlMode.UI_CONTROL);
-        StartDialogue();
+        if (m_slate != null) PlayManager.OpenSlateUI(m_slate);
+        else StartDialogue();
     }
 
     public virtual void StopInteract()
@@ -111,6 +114,7 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
         {
             m_dialInfos[i] = new(DialogueList[i].IsOpenAtFirst, false);
         }
+        m_slate = GetComponent<SlateNPC>();
     }
 
     private void Awake()

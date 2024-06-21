@@ -55,6 +55,7 @@ public class QuestManager : MonoBehaviour, IHaveData
     {
         Debug.Log($"{_reward.Type} {_reward.Amount}만큼 획득!");
 
+        // 만약 단일 보상만 진행된다면
         switch(_reward.Type)
         {
             case ERewarTyoe.SOUL:
