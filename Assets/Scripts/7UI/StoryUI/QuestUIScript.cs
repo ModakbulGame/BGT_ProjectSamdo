@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class QuestUIScript : BaseUI
 {
+    private QuestUIElmScript[] m_elms;
+    private QuestUIDescScript m_desc;
 
     public override void OpenUI()
     {
@@ -25,5 +27,9 @@ public class QuestUIScript : BaseUI
     public override void SetComps()
     {
         base.SetComps();
+        m_elms = GetComponentsInChildren<QuestUIElmScript>();
+        foreach(QuestUIElmScript elm in m_elms) elm.SetComps();
+        m_desc = GetComponentInChildren<QuestUIDescScript>();
+        m_desc.SetComps();
     }
 }
