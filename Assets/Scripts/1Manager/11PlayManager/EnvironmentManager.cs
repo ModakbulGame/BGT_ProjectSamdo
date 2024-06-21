@@ -106,6 +106,10 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
         }
     }
 
+
+
+    private readonly int[] NPCNum = new int[(int)ENPCType.LAST] { (int)EOasisName.LAST, (int)EAltarName.LAST, (int)ESlateName.LAST, 0 };
+
     [SerializeField]
     private QuestNPCScript[] m_testNPCs;
     private void RegisterSampleAltars()
@@ -133,7 +137,9 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
         for (int i = 0; i<list.Length; i++)
         {
             ENPCType type = list[i].NPC.Type;
-            m_npcList[(int)type, cnt[(int)type++]] = list[i];
+            int idx = (int)type;
+            if (cnt[idx] > NPCNum[idx]) { continue; }
+            m_npcList[idx, cnt[idx]++] = list[i];
         }
 
         LoadData();

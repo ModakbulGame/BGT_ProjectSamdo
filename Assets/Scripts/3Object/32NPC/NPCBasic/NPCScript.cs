@@ -22,7 +22,7 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
 
     public Vector2 Position2 { get { return new(transform.position.x, transform.position.z); } }
 
-    public SNPC NPC { get { return m_scriptable.NPC; } }
+    public SNPC NPC { get { if (m_scriptable == null) { return SNPC.Null; } return m_scriptable.NPC; } }
     public string NPCName { get { return m_scriptable.NPCName; } }
     public DialLine[] DefaultLine { get { return new DialLine[1] { new(m_scriptable.DefaultLine) }; } }
 
