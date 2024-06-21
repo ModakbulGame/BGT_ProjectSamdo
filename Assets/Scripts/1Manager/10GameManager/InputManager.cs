@@ -93,9 +93,9 @@ public class InputManager : MonoBehaviour
                     PlayManager.TogglePlayerUI(false);          // PlayerUI ´Ý±â
                     return;
                 }
-                if (PlayManager.IsOptionOpen)
+                else if (PlayManager.IsQuestUIOpen)
                 {
-                    PlayManager.ToggleOptionUI(false);
+                    PlayManager.ToggleQuestUI(false);           // Äù½ºÆ® Ã¢ ´Ý±â
                     return;
                 }
             }

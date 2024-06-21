@@ -35,7 +35,28 @@ public class QuestManager : MonoBehaviour, IHaveData
         if(_prog == info.QuestContent.Amount) { SetQuestStatus(_quest, EQuestState.COMPLETE); return; }
         PlayManager.UpdateQuestSidebar();
     }
+    private void GiveUpQuest(EQuestName _quest)
+    {
+        QuestInfo info = m_questInfoList[(int)_quest];
+        info.SetQuestStatus(EQuestState.UNLOCKED);
+        QuestContent content = info.QuestContent;
+        content.Amount = 0;
 
+        // questinfolist에서 퀘스트 삭제 후 재정렬
+        m_questInfoList[(int)_quest] = null;
+        QuestInfo[] newArray = new QuestInfo[m_questInfoList.Length - 1];
+        int newIndex = 0;
+
+        for (int i = 0; i < m_questInfoList.Length; i++)
+        {
+            if (m_questInfoList[i] != null)
+            {
+                newArray[newIndex] = m_questInfoList[i];
+                newIndex++;
+            }
+        }
+        m_questInfoList = newArray;
+    }
     private void CompleteQuest(EQuestName _quest)
     {
         QuestScriptable data = GameManager.GetQeustData(_quest);
@@ -56,7 +77,7 @@ public class QuestManager : MonoBehaviour, IHaveData
         Debug.Log($"{_reward.Type} {_reward.Amount}만큼 획득!");
 
         // 만약 단일 보상만 진행된다면
-        switch(_reward.Type)
+        switch (_reward.Type)
         {
             case ERewarTyoe.SOUL:
                 PlayManager.AddSoul(_reward.Amount);
@@ -68,7 +89,7 @@ public class QuestManager : MonoBehaviour, IHaveData
                 PlayManager.AddStatPoint(_reward.Amount);
                 break;
             case ERewarTyoe.ITEM:
-                // 아이템 획득
+                PlayManager.AddInventoryItem(_reward.Item, _reward.Amount);
                 break;
             default:
                 break;
