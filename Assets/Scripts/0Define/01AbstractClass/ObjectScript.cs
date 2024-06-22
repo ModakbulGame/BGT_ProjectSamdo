@@ -155,6 +155,18 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     }
 
 
+    // 충돌
+    public virtual void OnCollisionStay(Collision _collision)
+    {
+        if (_collision.transform.CompareTag(ValueDefine.TERRAIN_TAG)) { return; }
+        Vector3 relative = _collision.relativeVelocity;
+        Vector3 correctionForce = -relative.normalized;
+        correctionForce.y = 0;
+        m_rigid.AddForce(correctionForce, ForceMode.VelocityChange);
+    }
+
+
+
     // CC기
     protected readonly float[] m_ccCount = new float[(int)ECCType.LAST];    // CC 쿨타임
 
