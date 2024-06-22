@@ -33,14 +33,14 @@ public enum EMonsterDeathType
 [Serializable]
 public class MonsterCombatInfo : ObjectCombatInfo
 {
-    public float ApproachSpeed;     // Á¢±Ù ¼Óµµ
-    public float ViewAngle;         // ½Ã¾ß°¢
-    public float ViewRange;         // ½Ã¾ß ¹üÀ§
-    public float EngageRange;       // ½Ã¾ß Á¦¿Ü °¨Áö ¹üÀ§
-    public float ReturnRange;       // Á¢±Ù Á¾·á ¹üÀ§
-    public float AttackRange;       // °ø°İ ¹üÀ§
-    public float ApproachDelay;     // °¨Áö ÈÄ Á¢±Ù µô·¹ÀÌ
-    public float FenceRange;        // È°µ¿ ¹üÀ§
+    public float ApproachSpeed;     // ì ‘ê·¼ ì†ë„
+    public float ViewAngle;         // ì‹œì•¼ê°
+    public float ViewRange;         // ì‹œì•¼ ë²”ìœ„
+    public float EngageRange;       // ì‹œì•¼ ì œì™¸ ê°ì§€ ë²”ìœ„
+    public float ReturnRange;       // ì ‘ê·¼ ì¢…ë£Œ ë²”ìœ„
+    public float AttackRange;       // ê³µê²© ë²”ìœ„
+    public float ApproachDelay;     // ê°ì§€ í›„ ì ‘ê·¼ ë”œë ˆì´
+    public float FenceRange;        // í™œë™ ë²”ìœ„
     public override void SetInfo(MonsterScriptable _monster)
     {
         base.SetInfo(_monster);
@@ -57,17 +57,17 @@ public class MonsterCombatInfo : ObjectCombatInfo
 
 public partial class MonsterScript
 {
-    // ÄÄÆ÷³ÍÆ®
-    protected SkinnedMeshRenderer[] m_skinneds;           // ¸Å½¬
+    // ì»´í¬ë„ŒíŠ¸
+    protected SkinnedMeshRenderer[] m_skinneds;           // ë§¤ì‰¬
 
 
-    // ±âº» Á¤º¸
+    // ê¸°ë³¸ ì •ë³´
     [SerializeField]
-    private MonsterScriptable m_scriptable;             // ½ºÅ©¸³ÅÍºí·Î Á¤º¸¸¦ ÀúÀåÇÕ´Ï´Ù. ¸ğµç Á¤º¸´Â ¿©±â¿¡..
+    private MonsterScriptable m_scriptable;             // ìŠ¤í¬ë¦½í„°ë¸”ë¡œ ì •ë³´ë¥¼ ì €ì¥í•©ë‹ˆë‹¤. ëª¨ë“  ì •ë³´ëŠ” ì—¬ê¸°ì—..
     public bool IsScriptableSet { get { return m_scriptable != null; } }
-    public void SetScriptable(MonsterScriptable _scriptable) { m_scriptable = _scriptable; SetInfo(); }     // ½ºÅ©¸³ÅÍºí ÀÔ·Â
+    public void SetScriptable(MonsterScriptable _scriptable) { m_scriptable = _scriptable; SetInfo(); }     // ìŠ¤í¬ë¦½í„°ë¸” ì…ë ¥
     public EMonsterName MonsterEnum { get { return m_scriptable.MonsterEnum; } }                            // enum
-    public EMonsterType MonsterType { get { return m_scriptable.MonsterType; } }                            // Å¸ÀÔ
+    public EMonsterType MonsterType { get { return m_scriptable.MonsterType; } }                            // íƒ€ì…
 
     public override void ApplyHPUI()
     {
@@ -75,32 +75,33 @@ public partial class MonsterScript
         m_hpBar.SetCurHP(CurHP);
     }
 
-    public override void SetMoveMultiplier(float _multiplier)           // ÀÌµ¿ ¼Óµµ ¹èÀ² ¼³Á¤
+    public override void SetMoveMultiplier(float _multiplier)           // ì´ë™ ì†ë„ ë°°ìœ¨ ì„¤ì •
     {
         base.SetMoveMultiplier(_multiplier);
-        m_aiPath.maxSpeed = MoveSpeed;
+        if (IsApproaching) { m_aiPath.maxSpeed = ApproachSpeed; }
+        if (IsIdle) { m_aiPath.maxSpeed = MoveSpeed; }
     }
 
 
-    // ÀüÅõ Á¤º¸
+    // ì „íˆ¬ ì •ë³´
     [SerializeField]
     private MonsterCombatInfo m_combatInfo;
-    public override ObjectCombatInfo CombatInfo { get { return m_combatInfo; } }    // ÀüÅõ °ü·Ã Á¤º¸
-    public float ApproachSpeed { get { return m_combatInfo.ApproachSpeed; } }           // Á¢±Ù ¼Óµµ
-    public float ViewAngle { get { return m_combatInfo.ViewAngle; } }                   // ½Ã¾ß°¢
-    public float ViewRange { get { return m_combatInfo.ViewRange; } }                   // ½Ã¾ß ¹üÀ§
-    public float EngageRange { get { return m_combatInfo.EngageRange; } }                // ½Ã¾ß Á¦¿Ü °¨Áö ¹üÀ§
-    public float ReturnRange { get { return m_combatInfo.ReturnRange; } }                // Á¢±Ù Á¾·á ¹üÀ§
-    public virtual float AttackRange { get { return m_combatInfo.AttackRange; } }        // °ø°İ ¹üÀ§
-    public float ApproachDelay { get { return m_combatInfo.ApproachDelay; } }            // °¨Áö ÈÄ Á¢±Ù µô·¹ÀÌ
-    public float FenceRange { get { return m_combatInfo.FenceRange; } }                  // È°µ¿ ¹üÀ§
+    public override ObjectCombatInfo CombatInfo { get { return m_combatInfo; } }                            // ì „íˆ¬ ê´€ë ¨ ì •ë³´
+    public float ApproachSpeed { get { return m_combatInfo.ApproachSpeed * MoveSpeedMultiplier; } }         // ì ‘ê·¼ ì†ë„
+    public float ViewAngle { get { return m_combatInfo.ViewAngle; } }                                       // ì‹œì•¼ê°
+    public float ViewRange { get { return m_combatInfo.ViewRange; } }                                       // ì‹œì•¼ ë²”ìœ„
+    public float EngageRange { get { return m_combatInfo.EngageRange; } }                                   // ì‹œì•¼ ì œì™¸ ê°ì§€ ë²”ìœ„
+    public float ReturnRange { get { return m_combatInfo.ReturnRange; } }                                   // ì ‘ê·¼ ì¢…ë£Œ ë²”ìœ„
+    public virtual float AttackRange { get { return m_combatInfo.AttackRange; } }                           // ê³µê²© ë²”ìœ„
+    public float ApproachDelay { get { return m_combatInfo.ApproachDelay; } }                               // ê°ì§€ í›„ ì ‘ê·¼ ë”œë ˆì´
+    public float FenceRange { get { return m_combatInfo.FenceRange; } }                                     // í™œë™ ë²”ìœ„
 
 
-    // »ó¼Ó Á¤º¸
+    // ìƒì† ì •ë³´
     public override bool IsMonster { get { return true; } }
 
-    // ÃÊ±â ¼³Á¤
-    protected void ReplaceState(EMonsterState _enum, IMonsterState _state)  // ¸ó½ºÅÍ ¼¼ºÎ »óÅÂ ¼³Á¤ (±âº» »óÅÂ Å¬·¡½º -> ¸ó½ºÅÍº° »óÅÂ Å¬·¡½º)
+    // ì´ˆê¸° ì„¤ì •
+    protected void ReplaceState(EMonsterState _enum, IMonsterState _state)  // ëª¬ìŠ¤í„° ì„¸ë¶€ ìƒíƒœ ì„¤ì • (ê¸°ë³¸ ìƒíƒœ í´ë˜ìŠ¤ -> ëª¬ìŠ¤í„°ë³„ ìƒíƒœ í´ë˜ìŠ¤)
     {
         IMonsterState origin = m_monsterStates[(int)_enum];
         Destroy((UnityEngine.Object)origin);
@@ -140,7 +141,7 @@ public partial class MonsterScript
         IsDead = false;
         m_aiPath.enabled = false;
         IsSpawned = false;
-        m_rigid.useGravity = true;         // Áß·Â
+        m_rigid.useGravity = true;         // ì¤‘ë ¥
         GetComponentInChildren<CapsuleCollider>().isTrigger = false;
         m_hpBar.ShowUI();
         base.Start();

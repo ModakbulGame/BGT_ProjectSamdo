@@ -92,6 +92,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     public void StartDie()              // 사망 시작
     {
         StopMove();
+        AllCCEffectOff();
         DieAnimation();                     // 애니메이션
         StartDissolve();                    // 디졸브
         m_hpBar.HideUI();                // HP바

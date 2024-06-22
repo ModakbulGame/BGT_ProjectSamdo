@@ -4,24 +4,24 @@ using UnityEngine;
 
 public enum EStatName
 {
-    HEALTH,     // Ã¼·Â
-    ENDURE,     // Áö±¸·Â
-    STRENGTH,   // ±Ù·Â
-    INTELLECT,  // Áö·Â
-    RAPID,      // ¼ø¹ß·Â
-    MENTAL,     // Á¤½Å·Â
+    HEALTH,     // ì²´ë ¥
+    ENDURE,     // ì§€êµ¬ë ¥
+    STRENGTH,   // ê·¼ë ¥
+    INTELLECT,  // ì§€ë ¥
+    RAPID,      // ìˆœë°œë ¥
+    MENTAL,     // ì •ì‹ ë ¥
 
     LAST
 }
 public enum ECombatInfoName
 {
-    MAX_HP,         // ÃÖ´ë HP
-    MAX_STAMINA,    // ÃÖ´ë ½ºÅ×¹Ì³ª
-    ATTACK,         // ¹°¸® °ø°Ý·Â
-    MAGIC,          // ¸¶¹ý °ø°Ý·Â
-    DEFENSE,        // ¹æ¾î·Â
-    OVERDRIVE,    // Ä¡¸íÅ¸ µ¥¹ÌÁö
-    TOLERANCE,      // ³»¼º
+    MAX_HP,         // ìµœëŒ€ HP
+    MAX_STAMINA,    // ìµœëŒ€ ìŠ¤í…Œë¯¸ë‚˜
+    ATTACK,         // ë¬¼ë¦¬ ê³µê²©ë ¥
+    MAGIC,          // ë§ˆë²• ê³µê²©ë ¥
+    DEFENSE,        // ë°©ì–´ë ¥
+    OVERDRIVE,    // ì¹˜ëª…íƒ€ ë°ë¯¸ì§€
+    TOLERANCE,      // ë‚´ì„±
     LAST
 }
 
@@ -44,18 +44,17 @@ public enum EInteractType
 
 public enum ECCType
 {
-    NONE,               // ÀÏ¹Ý(¾øÀ½)
-    FATIGUE,            // ÇÇ·Î
-    STUN,               // ±âÀý
-    MELANCHOLY,         // ¿ì¿ï
-    EXTORTION,          // °¥Ãë
-    AIRBORNE,           // ¶ç¿ò
-    KNOCKBACK,          // ¹Ð¸²
-    WEAKNESS,           // ³ª¾à
-    BIND,               // ¼Ó¹Ú
-    VOID,               // »ó½Ç
-    OBLIVION,           // ¸Á°¢
-    BLIND,              // ½Ç¸í
+    NONE,               // ì¼ë°˜(ì—†ìŒ)
+    FATIGUE,            // í”¼ë¡œ
+    MELANCHOLY,         // ìš°ìš¸
+    EXTORTION,          // ê°ˆì·¨
+    AIRBORNE,           // ë„ì›€
+    KNOCKBACK,          // ë°€ë¦¼
+    WEAKNESS,           // ë‚˜ì•½
+    BIND,               // ì†ë°•
+    VOID,               // ìƒì‹¤
+    OBLIVION,           // ë§ê°
+    BLIND,              // ì‹¤ëª…
 
     LAST
 }

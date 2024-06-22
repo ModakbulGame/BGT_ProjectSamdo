@@ -47,7 +47,6 @@ public class MiniuumScript : MonsterScript
     }
     private IEnumerator DashCoroutine()
     {
-        Debug.Log(Position2);
         IsDashing = true;
         while (!IsDead && Vector2.Distance(Position2, CurTarget.Position2) > 0.5f && IsDashing)
         {

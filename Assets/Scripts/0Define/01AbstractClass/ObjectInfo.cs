@@ -63,11 +63,11 @@ public class BuffNDebuff
 
 
 [Serializable]
-public class ObjectBaseInfo             // ±âº» Á¤º¸
+public class ObjectBaseInfo             // ê¸°ë³¸ ì •ë³´
 {
-    public string ObjectName;           // ÀÌ¸§
-    public float AttackSpeed = 1;       // °ø°İ ¼Óµµ
-    public float MoveSpeed = 5;         // ÀÌµ¿ ¼Óµµ
+    public string ObjectName;           // ì´ë¦„
+    public float AttackSpeed = 1;       // ê³µê²© ì†ë„
+    public float MoveSpeed = 5;         // ì´ë™ ì†ë„
     public void SetInfo(MonsterScriptable _monster)
     {
         ObjectName = _monster.MonsterName;
@@ -77,11 +77,11 @@ public class ObjectBaseInfo             // ±âº» Á¤º¸
 }
 
 [Serializable]
-public class ObjectCombatInfo     // ÀüÅõ Á¤º¸
+public class ObjectCombatInfo     // ì „íˆ¬ ì •ë³´
 {
-    public float MaxHP;             // ÃÖ´ë HP
-    public float Defense;           // ¹æ¾î·Â
-    public float Attack;            // ¹°¸® °ø°İ·Â
+    public float MaxHP;             // ìµœëŒ€ HP
+    public float Defense;           // ë°©ì–´ë ¥
+    public float Attack;            // ë¬¼ë¦¬ ê³µê²©ë ¥
     public virtual void SetInfo(MonsterScriptable _monster)
     {
         MaxHP = _monster.MaxHP;
@@ -106,29 +106,29 @@ public class ObjectCombatInfo     // ÀüÅõ Á¤º¸
 
 public abstract partial class ObjectScript
 {
-    // ±âº» ÄÄÆ÷³ÍÆ®
+    // ê¸°ë³¸ ì»´í¬ë„ŒíŠ¸
     protected Rigidbody m_rigid;            // Rigidbody
     protected Animator m_anim;              // Animator
 
 
-    // ±âº» Á¤º¸
+    // ê¸°ë³¸ ì •ë³´
     [SerializeField]
-    protected ObjectBaseInfo m_baseInfo = new();                // ±âº» Á¤º¸
-    public string ObjectName { get { return m_baseInfo.ObjectName; } }                      // ÀÌ¸§
-    public virtual float AttackSpeed { get { return m_baseInfo.AttackSpeed; } }             // °ø°İ ¼Óµµ
-    public float MoveSpeed { get { return m_baseInfo.MoveSpeed * MoveSpeedMultiplier; } }   // ÀÌµ¿ ¼Óµµ
-    public virtual float ObjectHeight { get { return 2; } }                                 // ¿ÀºêÁ§Æ® ³ôÀÌ
+    protected ObjectBaseInfo m_baseInfo = new();                // ê¸°ë³¸ ì •ë³´
+    public string ObjectName { get { return m_baseInfo.ObjectName; } }                      // ì´ë¦„
+    public virtual float AttackSpeed { get { return m_baseInfo.AttackSpeed; } }             // ê³µê²© ì†ë„
+    public float MoveSpeed { get { return m_baseInfo.MoveSpeed * MoveSpeedMultiplier; } }   // ì´ë™ ì†ë„
+    public virtual float ObjectHeight { get { return 2; } }                                 // ì˜¤ë¸Œì íŠ¸ ë†’ì´
 
-    public float MoveSpeedMultiplier { get; protected set; } = 1;                           // ÀÌµ¿ ¹èÀ²
+    public float MoveSpeedMultiplier { get; protected set; } = 1;                           // ì´ë™ ë°°ìœ¨
 
-    public virtual void SetMoveMultiplier(float _multiplier) { MoveSpeedMultiplier = _multiplier; }     // ÀÌµ¿ ¹èÀ² ¼³Á¤
+    public virtual void SetMoveMultiplier(float _multiplier) { MoveSpeedMultiplier = _multiplier; }     // ì´ë™ ë°°ìœ¨ ì„¤ì •
 
 
-    // ÀüÅõ Á¤º¸
-    public virtual ObjectCombatInfo CombatInfo { get; }       // ÀüÅõ Á¤º¸
-    public float MaxHP { get { return CombatInfo.MaxHP * MaxHPMultiplier; } }       // ÃÖ´ë HP
-    public virtual float Attack { get { return CombatInfo.Attack; } }               // ¹°¸® °ø°İ·Â
-    public float Defense { get { return CombatInfo.Defense; } }                     // ¹æ¾î·Â
+    // ì „íˆ¬ ì •ë³´
+    public virtual ObjectCombatInfo CombatInfo { get; }       // ì „íˆ¬ ì •ë³´
+    public float MaxHP { get { return CombatInfo.MaxHP * MaxHPMultiplier; } }       // ìµœëŒ€ HP
+    public virtual float Attack { get { return CombatInfo.Attack; } }               // ë¬¼ë¦¬ ê³µê²©ë ¥
+    public float Defense { get { return CombatInfo.Defense; } }                     // ë°©ì–´ë ¥
 
     public float MaxHPMultiplier { get; protected set; } = 1;
 
@@ -158,19 +158,19 @@ public abstract partial class ObjectScript
     public float AttackMultiplier { get; protected set; } = 1;
     public float MagicMultiplier { get; protected set; } = 1;
 
-    public virtual ObjectAttackScript AttackObject { get; set; }    // ºÎ¼Ó °ø°İ ÆÇÁ¤
+    public virtual ObjectAttackScript AttackObject { get; set; }    // ë¶€ì† ê³µê²© íŒì •
 
 
-    // »ó¼Ó Á¤º¸
+    // ìƒì† ì •ë³´
     public virtual bool IsPlayer { get { return false; } }
     public virtual bool IsMonster { get { return false; } }
 
 
-    // ¹öÇÁ µğ¹öÇÁ Á¤º¸
+    // ë²„í”„ ë””ë²„í”„ ì •ë³´
     [SerializeField]
-    protected List<BuffNDebuff> m_buffNDebuff = new();                // ¹öÇÁ, µğ¹öÇÁ ¸®½ºÆ®
+    protected List<BuffNDebuff> m_buffNDebuff = new();                // ë²„í”„, ë””ë²„í”„ ë¦¬ìŠ¤íŠ¸
 
-    public virtual void GetAdj(TempAdjust _adjust)           // ÀÓ½Ã Á¶Á¤
+    public virtual void GetAdj(TempAdjust _adjust)           // ì„ì‹œ ì¡°ì •
     {
         BuffNDebuff info = null;
         float replace;
@@ -180,7 +180,7 @@ public abstract partial class ObjectScript
         if (info != null) m_buffNDebuff.Add(info);
     }
 
-    private float GetBuffed(TempAdjust _adj)            // ¹öÇÁ, µğ¹öÇÁ ¹Ş±â
+    private float GetBuffed(TempAdjust _adj)            // ë²„í”„, ë””ë²„í”„ ë°›ê¸°
     {
         EAdjType type = _adj.Type;
         float amount = _adj.Amount;
@@ -216,7 +216,7 @@ public abstract partial class ObjectScript
         return 1;
     }
 
-    private void ResetMultiplier(EAdjType _type, bool _isBuff)          // ¹öÇÁ, µğ¹öÇÁ Á¾·á
+    private void ResetMultiplier(EAdjType _type, bool _isBuff)          // ë²„í”„, ë””ë²„í”„ ì¢…ë£Œ
     {
         float max = 1;
         for (int i = 0; i<m_buffNDebuff.Count; i++)
@@ -228,7 +228,7 @@ public abstract partial class ObjectScript
         }
         SetMultiplier(_type, max);
     }
-    private void SetMultiplier(EAdjType _type, float _multiplier)       // ¹èÀ² ¼³Á¤
+    private void SetMultiplier(EAdjType _type, float _multiplier)       // ë°°ìœ¨ ì„¤ì •
     {
         switch (_type)
         {
@@ -250,7 +250,7 @@ public abstract partial class ObjectScript
         }
     }
 
-    private void BuffNDebuffProc()                                      // ¹öÇÁ µğ¹öÇÁ ÄğÅ¸ÀÓ Àû¿ë
+    private void BuffNDebuffProc()                                      // ë²„í”„ ë””ë²„í”„ ì¿¨íƒ€ì„ ì ìš©
     {
         Queue<BuffNDebuff> removeQue = new();
         for (int i = 0; i < m_buffNDebuff.Count; i++)
@@ -262,11 +262,12 @@ public abstract partial class ObjectScript
     }
 
 
-    // ÃÊ±â ¼³Á¤
+    // ì´ˆê¸° ì„¤ì •
     public virtual void SetComps()
     {
         m_rigid = GetComponent<Rigidbody>();
         m_anim = GetComponentInChildren<Animator>();
+        m_ccEffect = GetComponentInChildren<CCEffects>();
         SetAttackObject();
     }
     public virtual void SetInfo() { }

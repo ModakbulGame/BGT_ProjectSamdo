@@ -75,7 +75,7 @@ public class DataManager : MonoBehaviour
     }
 
 
-    // NPC µ¥ÀÌÅÍ
+    // NPC ë°ì´í„°
     //public NPCScriptable GetNPCData(EnpcName _npc) { return m_dataList.GetNPCData(_npc); }
 
 
@@ -108,7 +108,6 @@ public class DataManager : MonoBehaviour
         return _data switch
         {
             "Fatigue" => ECCType.FATIGUE,
-            "Stun" => ECCType.STUN,
             "Melancholy" => ECCType.MELANCHOLY,
             "Extortion" => ECCType.EXTORTION,
             "Airborne" => ECCType.AIRBORNE,

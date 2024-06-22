@@ -537,7 +537,6 @@ public partial class PlayerController
     public bool IsOblivion { get { return m_ccCount[(int)ECCType.OBLIVION] > 0; } }
     public override void GetOblivion()
     {
-        m_ccCount[(int)ECCType.OBLIVION] = 10;
         // 스킬 사용 불가 표시
         if (OblivionCoroutine == null) { OblivionCoroutine = ResetOblivion(); StartCoroutine(OblivionCoroutine); }
     }
@@ -553,7 +552,6 @@ public partial class PlayerController
     private IEnumerator BlindCoroutine;
     public override void GetBlind()
     {
-        m_ccCount[(int)ECCType.BLIND] = 10;
         PlayManager.ShowBlindMark();
         if (BlindCoroutine == null) { BlindCoroutine = ResetBlind(); StartCoroutine(BlindCoroutine); }
     }

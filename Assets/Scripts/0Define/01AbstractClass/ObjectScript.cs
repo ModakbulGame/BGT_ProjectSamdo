@@ -85,7 +85,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
 
 
     public enum ERotateSpeed { FAST, DEFAULT, SLOW, LAST }
-    private readonly float[] SpinSpeed = new float[(int)ERotateSpeed.LAST] {0.05f, 0.5f, 1.5f};    // 회전 속도(1바퀴 기준 초)
+    private readonly float[] SpinSpeed = new float[(int)ERotateSpeed.LAST] { 0.05f, 0.5f, 1.5f };    // 회전 속도(1바퀴 기준 초)
 
 
     // 회전 관련
@@ -125,9 +125,9 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     {
         float hp = CurHP;
         hp -= _damage;
-        if (_attacker != null) 
-        { 
-            _attacker.GaveDamage(this, _damage); 
+        if (_attacker != null)
+        {
+            _attacker.GaveDamage(this, _damage);
         }
         if (hp <= 0 || CheckVoid(_damage)) { hp = 0; SetDead(); }
         if (ExtraHP > 0) { ExtraHP -= _damage; }
@@ -142,9 +142,9 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     {
         HitAnimation();
     }
-    public virtual void SetHP(float _hp) 
+    public virtual void SetHP(float _hp)
     {
-        CurHP = _hp; 
+        CurHP = _hp;
     }                   // HP 설정
     public virtual void SetDead() { IsDead = true; }                        // 죽음 설정
     public virtual void HealObj(float _heal)                                // 회복
@@ -156,20 +156,39 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
 
 
     // CC기
-    protected readonly float[] m_ccCount = new float[(int)ECCType.LAST];    // CC 쿨타임
+    private CCEffects m_ccEffect;
 
-    private void CCProc() { for (int i = 0; i<(int)ECCType.LAST; i++) { if (m_ccCount[i] > 0) { m_ccCount[i]-=Time.deltaTime; } } }
+    protected readonly float[] m_ccCount = new float[(int)ECCType.LAST];    // CC 쿨타임
+    private readonly float[] m_ccTime = new float[(int)ECCType.LAST]
+    { 0, 10, 10, 3, 0, 0, 10, 5, 10, 10, 10 };
+
+    private readonly float ExtortionDamage = 20;
+    private readonly float MelancholyDamage = 10;
+
+
+    private void CCProc() 
+    {
+        for (int i = 0; i<(int)ECCType.LAST; i++)
+        {
+            if (m_ccCount[i] > 0) 
+            {
+                m_ccCount[i]-=Time.deltaTime;
+                if (m_ccCount[i] <= 0)
+                {
+                    CCDone((ECCType)i);
+                }
+            }
+        } 
+    }
     public virtual void GetCC(HitData _hit)                                 // CC 받기
     {
         for (int i = 0; i<_hit.CCList.Length; i++)
         {
-            switch (_hit.CCList[i])
+            ECCType type = _hit.CCList[i];
+            switch (type)
             {
                 case ECCType.FATIGUE:           // 피로
                     GetFatigue();
-                    break;
-                case ECCType.STUN:              // 기절
-                    GetStun();
                     break;
                 case ECCType.MELANCHOLY:        // 우울
                     GetMelancholy(_hit);
@@ -199,33 +218,39 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
                     GetBlind();
                     break;
             }
+            m_ccCount[(int)type] = m_ccTime[(int)type];
+            SetCCEffect(type, true);
         }
     }
+    private void CCDone(ECCType _cc)
+    {
+        SetCCEffect(_cc, false);
+    }
+    private void SetCCEffect(ECCType _cc, bool _on)
+    {
+        m_ccEffect.SetCCEffect(_cc, _on);
+    }
+    protected void AllCCEffectOff() { m_ccEffect.AllOff(); }
     #region CC기 세부
     //  임시 상태 CC
     public bool IsFatigure { get { return m_ccCount[(int)ECCType.FATIGUE] > 0; } }
     private void GetFatigue()       // 피로
     {
-        TempAdjust slow = new(EAdjType.MOVE_SPEED, 0.7f, 10);
-        m_ccCount[(int)ECCType.FATIGUE] = 10;
+        TempAdjust slow = new(EAdjType.MOVE_SPEED, 0.7f, m_ccTime[(int)ECCType.FATIGUE]);
         GetAdj(slow);
     }
     private void GetWeakness()      // 나약
     {
-        TempAdjust hp = new(EAdjType.MAX_HP, 0.8f, 10);
+        TempAdjust hp = new(EAdjType.MAX_HP, 0.8f, m_ccTime[(int)ECCType.WEAKNESS]);
         GetAdj(hp);
     }
     private void GetBind()          // 속박
     {
-        TempAdjust slow = new(EAdjType.MOVE_SPEED, 0, 5);
+        TempAdjust slow = new(EAdjType.MOVE_SPEED, 0, m_ccTime[(int)ECCType.BIND]);
         GetAdj(slow);
     }
 
     // 즉발 CC
-    private void GetStun()
-    {
-        // 애니메이션?
-    }
     private void GetAirborne()
     {
         Vector3 vel = m_rigid.velocity;
@@ -242,14 +267,14 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     // 조건부 CC
     private IEnumerator DamageCoroutine(HitData _hit, ECCType _cc)
     {
-        float damage = _cc == ECCType.MELANCHOLY ? 2 : 10;
+        float damage = _cc == ECCType.MELANCHOLY ? MelancholyDamage : ExtortionDamage;
         ObjectScript attacker = _hit.Attacker;
+        yield return null;
         while (!IsDead && m_ccCount[(int)_cc] > 0)
         {
             yield return new WaitForSeconds(1);
             GetDamage(damage, attacker);
             if (_cc == ECCType.EXTORTION) { attacker.HealObj(attacker.MaxHP * 0.1f); }
-            m_ccCount[(int)_cc]--;
         }
         m_ccCount[(int)_cc] = 0;
     }
@@ -259,14 +284,12 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     {
         if(IsMelancholy) { return; }
         bool startCor = !IsMelancholy;
-        m_ccCount[(int)ECCType.MELANCHOLY] = 10;
         if (startCor) { StartCoroutine(DamageCoroutine(_hit, ECCType.MELANCHOLY)); }
     }
     public bool IsExtorted { get { return m_ccCount[(int)ECCType.EXTORTION] > 0; } }
     private void GetExtortion(HitData _hit)
     {
         bool startCor = !IsExtorted;
-        m_ccCount[(int)ECCType.EXTORTION] = 3;
         if (startCor) { StartCoroutine(DamageCoroutine(_hit, ECCType.EXTORTION)); }
     }
 
@@ -275,7 +298,6 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     private float VoidDamageCount { get; set; }
     private void GetVoid()
     {
-        m_ccCount[(int)ECCType.VOID] = 10;
         VoidDamageCount = 0;
     }
     private bool CheckVoid(float _damage)
