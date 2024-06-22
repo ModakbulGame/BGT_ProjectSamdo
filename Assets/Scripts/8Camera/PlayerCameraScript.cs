@@ -9,15 +9,15 @@ public class PlayerCameraScript : MonoBehaviour
     private CinemachineFreeLook m_cameraDetail;
     public CinemachineFreeLook PlayerFreeLook { get { return m_cameraDetail; } }
 
-    private string[] m_collideAgainstLayers = { "Player", "Ground" };
+    // private string[] m_collideAgainstLayers = { "Ground" };
 
-    private const float XMoveMultiplier = 120;              // ¹Î°¨µµ 1´ç X ¿òÁ÷ÀÓ
-    private const float YMoveMultiplier = 1.5f;                // ¹Î°¨µµ 1´ç Y ¿òÁ÷ÀÓ
+    private const float XMoveMultiplier = 120;              // ë¯¼ê°ë„ 1ë‹¹ X ì›€ì§ì„
+    private const float YMoveMultiplier = 1.5f;                // ë¯¼ê°ë„ 1ë‹¹ Y ì›€ì§ì„
 
-    private EControlMode CurCameraMode { get; set; }        // ÇöÀç Á¶ÀÛ ¸ğµå
-    private float MouseSensitive { get; set; }              // ¸¶¿ì½º ¹Î°¨µµ
+    private EControlMode CurCameraMode { get; set; }        // í˜„ì¬ ì¡°ì‘ ëª¨ë“œ
+    private float MouseSensitive { get; set; }              // ë§ˆìš°ìŠ¤ ë¯¼ê°ë„
 
-    public void SetThirdPerson()                            // 3ÀÎÄª ¸ğµå ¼³Á¤
+    public void SetThirdPerson()                            // 3ì¸ì¹­ ëª¨ë“œ ì„¤ì •
     {
         CurCameraMode = EControlMode.THIRD_PERSON;
         m_cameraDetail.m_Lens.FieldOfView = 40;
@@ -32,7 +32,7 @@ public class PlayerCameraScript : MonoBehaviour
     {
         m_cameraDetail.Follow = PlayManager.CameraFocusTransform;
     }
-    public void SetCameraSensitive(float _sensitive)        // ¸¶¿ì½º ¹Î°¨µµ ¼³Á¤
+    public void SetCameraSensitive(float _sensitive)        // ë§ˆìš°ìŠ¤ ë¯¼ê°ë„ ì„¤ì •
     {
         MouseSensitive = _sensitive;
         if (CurCameraMode == EControlMode.THIRD_PERSON)
@@ -40,7 +40,7 @@ public class PlayerCameraScript : MonoBehaviour
             SetCinemachineSpeed(MouseSensitive);
         }
     }
-    public void SetUIControl()                              // UI Á¶ÀÛ ¸ğµå ¼³Á¤
+    public void SetUIControl()                              // UI ì¡°ì‘ ëª¨ë“œ ì„¤ì •
     {
         CurCameraMode = EControlMode.UI_CONTROL;
         SetCinemachineSpeed(0);
@@ -50,7 +50,7 @@ public class PlayerCameraScript : MonoBehaviour
         m_cameraDetail.m_Lens.FieldOfView = 25;
         m_cameraDetail.m_YAxis.Value = 0.6f;
     }
-    private void SetCinemachineSpeed(float _speed)          // ½ÇÁ¦ ¹Î°¨µµ ¼³Á¤ ÇÔ¼ö
+    private void SetCinemachineSpeed(float _speed)          // ì‹¤ì œ ë¯¼ê°ë„ ì„¤ì • í•¨ìˆ˜
     {
         m_cameraDetail.m_XAxis.m_MaxSpeed = XMoveMultiplier * _speed;
         m_cameraDetail.m_YAxis.m_MaxSpeed = YMoveMultiplier * _speed;
@@ -70,13 +70,13 @@ public class PlayerCameraScript : MonoBehaviour
     {
         m_cameraDetail.m_XAxis.Value = PlayManager.PlayerDirection;
 
-        if (m_cameraDetail != null)
-        {
-            var collider = m_cameraDetail.GetComponent<CinemachineCollider>();
-            if (collider != null)
-            {
-                collider.m_CollideAgainst = LayerMask.GetMask(m_collideAgainstLayers);
-            }
-        }
+        //if (m_cameraDetail != null)
+        //{
+        //    var collider = m_cameraDetail.GetComponent<CinemachineCollider>();
+        //    if (collider != null)
+        //    {
+        //        collider.m_CollideAgainst = LayerMask.GetMask(m_collideAgainstLayers);
+        //    }
+        //}
     }
 }

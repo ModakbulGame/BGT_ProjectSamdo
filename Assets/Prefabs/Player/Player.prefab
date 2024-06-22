@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 77192237674767675}
   - component: {fileID: 5946044667005755889}
   - component: {fileID: 3046454149390476600}
-  - component: {fileID: 3948323577218590390}
+  - component: {fileID: 8152865378166965047}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -222,6 +222,7 @@ MonoBehaviour:
   m_curHP: 0
   m_curSpeed: 0
   m_uiOffset: 2
+  m_impulseCooldown: 2
   m_light: {fileID: 911734784435125238}
   m_interactableObject: {fileID: 0}
   m_cameraFocus: {fileID: 3677732072474587124}
@@ -277,7 +278,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &3948323577218590390
+--- !u!114 &8152865378166965047
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
