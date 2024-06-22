@@ -97,4 +97,8 @@ public static class ValueDefine
     public const char WEAKNESS_CODE = '7';
     public const char BIND_CODE = '8';
     public const char VOID_CODE = '9';
+
+    // 사운드
+    public const string BGMVolData = "BGMVolume";
+    public const string SEVolData = "SEVolume";
 }
