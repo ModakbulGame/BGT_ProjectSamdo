@@ -19,7 +19,7 @@ public class ExplodeScript : ObjectAttackScript
         IHittable hittable=_other.GetComponentInParent<IHittable>();
         hittable ??=_other.GetComponentInChildren<IHittable>();
         if (hittable == null) { return; }
-        if (hittable.IsPlayer) { return; } // ÀÌ ºÎºĞ »èÁ¦ÇÏ¸é Àü hittable °ø°İ °¡´ÉÇÑ script·Î º¯°æ
+        if (hittable.IsPlayer) { return; } // ì´ ë¶€ë¶„ ì‚­ì œí•˜ë©´ ì „ hittable ê³µê²© ê°€ëŠ¥í•œ scriptë¡œ ë³€ê²½
         Vector3 point = _other.ClosestPoint(transform.position);
         GiveDamage(hittable, point);
     }
@@ -43,9 +43,11 @@ public class ExplodeScript : ObjectAttackScript
     public override void GiveDamage(IHittable _hittable, Vector3 _point)
     {
         if (CheckHit(_hittable)) { return; }
-        HitData hit = new(Attacker, Damage * Attacker.MagicMultiplier * Attacker.DamageMultiplier, _point, CCList);
-        _hittable.GetHit(hit);
-        AddHitObject(_hittable);
+        HitData hit = new(Attacker, Damage * Attacker.MagicMultiplier * Attacker.DamageMultiplier, _point, m_impulseAmount, CCList);
+        if (_hittable.GetHit(hit))
+        {
+            AddHitObject(_hittable);
+        }
     }
 
     public override void AttackOff()

@@ -102,7 +102,6 @@ public class PlayManager : MonoBehaviour
     public static void SetNPCView() { CameraManager.SetNPCView(); }
     public static void SetCameraSensitive(float _sensitive) { CameraManager.SetCameraSensitive(_sensitive); }                               // 마우스 민감도 전달
     public static void LooseCameraFocus() { CameraManager.LooseFocus(); }
-    public static void CameraSwitch(CinemachineFreeLook _targetCamera) { CameraManager.SwitchToCamera(_targetCamera); }                    // 카메라 변환
 
 
     // 인벤토리

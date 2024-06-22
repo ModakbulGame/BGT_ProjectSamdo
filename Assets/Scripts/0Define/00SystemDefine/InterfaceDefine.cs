@@ -9,25 +9,25 @@ public interface IHaveData
     public void SaveData();
 }
 
-public interface IHittable          // µ¥¹ÌÁö¸¦ ÀÔÀ» ¼ö ÀÖ´Â ¿ÀºêÁ§Æ®µéÀÌ °øÅëÀûÀ¸·Î °¡Á®¾ß ÇÏ´Â ÀÎÅÍÆäÀÌ½º
+public interface IHittable          // ë°ë¯¸ì§€ë¥¼ ì…ì„ ìˆ˜ ìˆëŠ” ì˜¤ë¸Œì íŠ¸ë“¤ì´ ê³µí†µì ìœ¼ë¡œ ê°€ì ¸ì•¼ í•˜ëŠ” ì¸í„°í˜ì´ìŠ¤
 {
     public bool IsPlayer { get; }
     public bool IsMonster { get; }
-    public void GetHit(HitData _hit);   // µ¥¹ÌÁö ¹Ş±â => Å¸°İ ÁöÁ¡ÀÌ³ª ¹æÇâÀº ÃßÈÄ ÇÊ¿ä ½Ã Ãß°¡
+    public bool GetHit(HitData _hit);   // ë°ë¯¸ì§€ ë°›ê¸° => íƒ€ê²© ì§€ì ì´ë‚˜ ë°©í–¥ì€ ì¶”í›„ í•„ìš” ì‹œ ì¶”ê°€
 }
 
-public interface IHidable               // ºû ºñÃç¼­ º¯È­°¡ »ı±æ ¼ö ÀÖ´Â ¿ÀºêÁ§Æ®¿¡ ÇÊ¼ö ºÎÂø
+public interface IHidable               // ë¹› ë¹„ì¶°ì„œ ë³€í™”ê°€ ìƒê¸¸ ìˆ˜ ìˆëŠ” ì˜¤ë¸Œì íŠ¸ì— í•„ìˆ˜ ë¶€ì°©
 {
-    public void GetLight();                 // ºûÀ» ¹Ş¾ÒÀ» ¶§
-    public void LoseLight();               // ºûÀ» ±×¸¸ ¹ŞÀ» ¶§
+    public void GetLight();                 // ë¹›ì„ ë°›ì•˜ì„ ë•Œ
+    public void LoseLight();               // ë¹›ì„ ê·¸ë§Œ ë°›ì„ ë•Œ
 }
 
-public interface IInteractable          // »óÈ£ÀÛ¿ëÀÌ °¡´ÉÇÑ ¿ÀºêÁ§Æ®¿¡ ÇÊ¼ö ºÎÂø
+public interface IInteractable          // ìƒí˜¸ì‘ìš©ì´ ê°€ëŠ¥í•œ ì˜¤ë¸Œì íŠ¸ì— í•„ìˆ˜ ë¶€ì°©
 {
     public EInteractType InteractType { get; }
-    public string InfoTxt { get; }          // »óÈ£ÀÛ¿ë Á¤º¸ ÅØ½ºÆ®
-    public void StartInteract();            // »óÈ£ÀÛ¿ë ½ÃÀÛ
-    public void StopInteract();             // »óÈ£ÀÛ¿ë Áß´Ü
+    public string InfoTxt { get; }          // ìƒí˜¸ì‘ìš© ì •ë³´ í…ìŠ¤íŠ¸
+    public void StartInteract();            // ìƒí˜¸ì‘ìš© ì‹œì‘
+    public void StopInteract();             // ìƒí˜¸ì‘ìš© ì¤‘ë‹¨
 }
 
 public interface IPoolable

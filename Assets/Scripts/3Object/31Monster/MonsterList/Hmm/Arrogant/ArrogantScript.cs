@@ -69,8 +69,10 @@ public class ArrogantScript : HmmScript
             ObjectScript obj = targets[i].GetComponentInParent<ObjectScript>();
             if (obj == null || obj == this || m_smashList.Contains(obj)) { continue; }
             HitData air = new(this, Attack, Position, ECCType.AIRBORNE);
-            obj.GetHit(air);
-            m_smashList.Add(obj);
+            if (obj.GetHit(air))
+            {
+                m_smashList.Add(obj);
+            }
         }
     }
 

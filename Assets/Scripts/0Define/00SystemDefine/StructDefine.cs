@@ -25,21 +25,40 @@ public struct HitData
     public ObjectScript Attacker;
     public float Damage;
     public Vector3 Point;
+    public float Impulse;
     public ECCType[] CCList;
     public EPowerProperty Property;
     public bool IsNull { get { return Attacker == null; } }
     public static HitData Null { get { return new(null, -1, Vector3.zero); } }
+    public readonly bool HasImpulse { get { return Impulse > 0; } }
+
     public HitData(ObjectScript _attacker, float _damage, Vector3 _point) : this(_attacker, _damage, _point, ECCType.NONE) { }
-    public HitData(ObjectScript _attacker, float _damage, Vector3 _point, EPowerProperty _prop) : this(_attacker, _damage, _point, ECCType.NONE, _prop) { }
-    public HitData(ObjectScript _attacker, float _damage, Vector3 _point, ECCType _cc) : this(_attacker, _damage, _point, _cc, EPowerProperty.LAST) { }
+
+    public HitData(ObjectScript _attacker, float _damage, Vector3 _point, float _impulse) : this(_attacker, _damage, _point, _impulse, ECCType.NONE) { }
+    public HitData(ObjectScript _attacker, float _damage, Vector3 _point, ECCType _cc) : this(_attacker, _damage, _point, 0, _cc) { }
+    public HitData(ObjectScript _attacker, float _damage, Vector3 _point, ECCType[] _cc) : this(_attacker, _damage, _point, 0, _cc) { }
+    public HitData(ObjectScript _attacker, float _damage, Vector3 _point, EPowerProperty _prop) : this(_attacker, _damage, _point, 0, new ECCType[0], _prop) { }
+
+
+
+    public HitData(ObjectScript _attacker, float _damage, Vector3 _point, float _impulse, ECCType _cc)
+        : this(_attacker, _damage, _point, _impulse, new ECCType[] { _cc }, EPowerProperty.LAST) { }
+    public HitData(ObjectScript _attacker, float _damage, Vector3 _point, float _impulse, ECCType[] _cc)
+        : this(_attacker, _damage, _point, _impulse, _cc, EPowerProperty.LAST) { }
+    public HitData(ObjectScript _attacker, float _damage, Vector3 _point, float _impulse, EPowerProperty _prop)
+        : this(_attacker, _damage, _point, _impulse, new ECCType[0], _prop) { }
     public HitData(ObjectScript _attacker, float _damage, Vector3 _point, ECCType _cc, EPowerProperty _prop)
-        : this(_attacker, _damage, _point, new ECCType[] { _cc }, _prop) { }
-    public HitData(ObjectScript _attacker, float _damage, Vector3 _point, ECCType[] _cc) : this(_attacker, _damage, _point, _cc, EPowerProperty.LAST) { }
+        : this(_attacker, _damage, _point, 0, new ECCType[] { _cc }, _prop) { }
     public HitData(ObjectScript _attacker, float _damage, Vector3 _point, ECCType[] _cc, EPowerProperty _prop)
+        : this(_attacker, _damage, _point, 0, _cc, _prop) { }
+
+
+    public HitData(ObjectScript _attacker, float _damage, Vector3 _point, float _impulse, ECCType[] _cc, EPowerProperty _prop)
     {
         Attacker = _attacker;
         Damage = _damage;
         Point = _point;
+        Impulse = _impulse;
         CCList = new ECCType[_cc.Length];
         for (int i = 0; i<_cc.Length; i++) { CCList[i] = _cc[i]; }
         Property = _prop;

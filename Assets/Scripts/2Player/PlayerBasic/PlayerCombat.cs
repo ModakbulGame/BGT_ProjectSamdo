@@ -7,26 +7,20 @@ using UnityEngine.InputSystem;
 
 public partial class PlayerController
 {
-    private float m_lastImpulseTime = 0f;
-    [SerializeField]
-    private float m_impulseCooldown = 2.0f; 
+    private float ImpulseCooldown = 1f;
+    private float ImpulseTimeCount { get; set; }
 
     // 전투 기본
     public override bool IsUnstoppable { get { return false; } }        // 공격 모션 안끊김
 
-    public override void GetHit(HitData _hit)                           // 공격 맞음
+    public override bool GetHit(HitData _hit)                           // 공격 맞음
     {
-        if (IsInvincible && !_hit.CCList.Contains(ECCType.AIRBORNE)) { return; }    // 구르는 중이고 에어본이 아니면
+        if (IsInvincible && !_hit.CCList.Contains(ECCType.AIRBORNE)) { return false; }    // 구르는 중이고 에어본이 아니면
         MonsterScript monster = (MonsterScript)_hit.Attacker;
         if (!IsDead && IsGuarding && _hit.Attacker.IsMonster) { monster.HitGuardingPlayer(); }
-        base.GetHit(_hit);
+        if (!base.GetHit(_hit)) { return false; }
         monster.AttackedPlayer(_hit);
-
-        if (Time.time > m_lastImpulseTime + m_impulseCooldown)
-        {
-            m_impulseSource.GenerateImpulse(1.0f);
-            m_lastImpulseTime = Time.time;          // 마지막 충격 발생 시간 업데이트
-        }
+        return true;
     }
     public override void PlayHitAnim(HitData _hit)                      // 피격 애니메이션
     {
@@ -54,6 +48,26 @@ public partial class PlayerController
     {
         yield return new WaitForSeconds(3);
         PlayManager.PlayerDead();
+    }
+    public override void GetDamage(HitData _hit)
+    {
+        base.GetDamage(_hit);
+
+        if (_hit.HasImpulse && ImpulseTimeCount <= 0)
+        {
+            float impulse = _hit.Impulse * 0.1f;
+            m_impulseSource.GenerateImpulse(impulse);
+            ImpulseTimeCount = ImpulseCooldown;
+            StartCoroutine(ImpulseDelay());
+        }
+    }
+    private IEnumerator ImpulseDelay()
+    {
+        while (ImpulseTimeCount > 0)
+        {
+            ImpulseTimeCount -= Time.deltaTime;
+            yield return null;
+        }
     }
 
 
@@ -278,7 +292,7 @@ public partial class PlayerController
     }
     public void PowerDone()                                                                 // 스킬 사용 종료
     {
-        if(PowerInHand == EPowerName.LAST){ return; }
+        if (PowerInHand == EPowerName.LAST) { return; }
         HidePowerAim();
         if (PowerInfoInHand.ShowCastingEffect)
         {
@@ -292,7 +306,7 @@ public partial class PlayerController
 
     public void PowerTrailOn()
     {
-        if(PowerInfoInHand == null){ return; }
+        if (PowerInfoInHand == null) { return; }
         EPowerTrailType type = PowerInfoInHand.PowerData.PowerTrail;
         CurWeapon.PowerTrailOn(type);
     }

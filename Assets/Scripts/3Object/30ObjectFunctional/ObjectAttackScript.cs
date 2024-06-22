@@ -7,14 +7,19 @@ public class ObjectAttackScript : MonoBehaviour
     protected ObjectScript m_attacker;
     public ObjectScript Attacker { get { return m_attacker; } }
 
-    public virtual bool IsAttacking { get; protected set; }     // °ø°İ Áß
+    public virtual bool IsAttacking { get; protected set; }     // ê³µê²© ì¤‘
     protected readonly List<IHittable> m_hitObjects = new();
     public bool CheckHit(IHittable _object) { return m_hitObjects.Contains(_object); }
 
     [SerializeField]
     protected ECCType[] m_ccList = new ECCType[0];
+    [Range(0,1)]
+    [SerializeField]
+    protected float m_impulseAmount = 0;
+
 
     public virtual float Damage { get; private set; } = 5;
+    public float Impulse { get { return m_impulseAmount; } }
     public virtual ECCType[] CCList { get { return m_ccList; } }
 
 
@@ -25,22 +30,24 @@ public class ObjectAttackScript : MonoBehaviour
     public void ResetCCType() { SetCCType(ECCType.NONE); }
 
 
-    public virtual void AttackOn()                       // °ø°İ ½ÃÀÛ
+    public virtual void AttackOn()                       // ê³µê²© ì‹œì‘
     {
         IsAttacking = true;
     }
-    public void AddHitObject(IHittable _object)         // È÷Æ® ÆÇÁ¤ (Áßº¹ È÷Æ® ¹æÁö)
+    public void AddHitObject(IHittable _object)         // íˆíŠ¸ íŒì • (ì¤‘ë³µ íˆíŠ¸ ë°©ì§€)
     {
         m_hitObjects.Add(_object);
     }
     public virtual void GiveDamage(IHittable _hittable, Vector3 _point)
     {
         if (CheckHit(_hittable)) { return; }
-        HitData hit = new(Attacker, Damage, _point, CCList);
-        _hittable.GetHit(hit);
-        AddHitObject(_hittable);
+        HitData hit = new(Attacker, Damage, _point, Impulse, CCList);
+        if (_hittable.GetHit(hit))
+        {
+            AddHitObject(_hittable);
+        }
     }
-    public virtual void AttackOff()                        // °ø°İ Áß´Ü
+    public virtual void AttackOff()                        // ê³µê²© ì¤‘ë‹¨
     {
         IsAttacking = false;
         m_hitObjects.Clear();

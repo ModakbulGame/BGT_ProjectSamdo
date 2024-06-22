@@ -12,29 +12,15 @@ public partial class PlayerController
             case ValueDefine.WATER_TAG:
                 PlayerDrowned();
                 break;
-            case ValueDefine.MONSTER_ATTACK_TAG:            // ∏ÛΩ∫≈Õ ∞¯∞› ∏¬¿Ω
+            case ValueDefine.MONSTER_ATTACK_TAG:            // Î™¨Ïä§ÌÑ∞ Í≥µÍ≤© ÎßûÏùå
                 ObjectAttackScript attack = _other.GetComponent<ObjectAttackScript>();
-                if(attack == null) { Debug.LogError("∞¯∞› Ω∫≈©∏≥∆Æ æ¯¿Ω"); return; }
+                if(attack == null) { Debug.LogError("Í≥µÍ≤© Ïä§ÌÅ¨Î¶ΩÌä∏ ÏóÜÏùå"); return; }
                 if(!attack.IsAttacking) { return; }
                 if(IsDead || attack.CheckHit(this)) { return; }
                 Vector3 point = _other.ClosestPoint(Position);
-                HitData hit = new(attack.Attacker, attack.Damage, point, attack.CCList);
+                HitData hit = new(attack.Attacker, attack.Damage, point, attack.Impulse, attack.CCList);
                 GetHit(hit);
                 attack.AddHitObject(this);
-                break;
-            case ValueDefine.CAMERA_TAG:
-                CinemachineFreeLook targetCamera = _other.GetComponentInChildren<CinemachineFreeLook>();
-                PlayManager.CameraSwitch(targetCamera);
-                break;
-        }
-    }
-
-    private void OnTriggerExit(Collider _other)
-    {
-        switch(_other.tag)
-        {
-            case ValueDefine.CAMERA_TAG:
-                PlayManager.CameraSwitch(PlayManager.PlayerFreeLook);
                 break;
         }
     }

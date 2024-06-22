@@ -111,31 +111,35 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     public virtual void AttackTriggerOn() { if (!AttackObject) return; AttackObject.AttackOn(); }       // 공격 트리거 on
     public virtual void AttackTriggerOff() { if (!AttackObject) return; AttackObject.AttackOff(); }     // 공격 트리거 off
     public virtual void AttackDone() { }                                    // 공격 모션 끝
-    public virtual void GetHit(HitData _hit)                                // 공격 맞음
+    public virtual bool GetHit(HitData _hit)                                // 공격 맞음
     {
-        if (IsDead) { return; }
-        if (!IsGrounded && _hit.CCList.Contains(ECCType.AIRBORNE)) { return; }
+        if (IsDead) { return false; }
+        if (!IsGrounded && _hit.CCList.Contains(ECCType.AIRBORNE)) { return false; }
         float damage = _hit.Damage * (100-Defense) * 0.01f;
+        _hit.Damage = damage;
         if (CurHP > damage) { GetCC(_hit); }
-        GetDamage(damage, _hit.Attacker);
+        GetDamage(_hit);
         // Debug.Log($"{_hit.Attacker.ObjectName} => {ObjectName} {damage} 데미지");
         if (!IsUnstoppable) { PlayHitAnim(_hit); }
+        return true;
     }
-    public virtual void GetDamage(float _damage, ObjectScript _attacker)    // 데미지 받음
+    public virtual void GetDamage(HitData _hit)    // 데미지 받음
     {
+        float damage = _hit.Damage;
+        ObjectScript attacker = _hit.Attacker;
         float hp = CurHP;
-        hp -= _damage;
-        if (_attacker != null)
+        hp -= damage;
+        if (attacker != null)
         {
-            _attacker.GaveDamage(this, _damage);
+            attacker.GaveDamage(this, damage);
         }
-        if (hp <= 0 || CheckVoid(_damage)) { hp = 0; SetDead(); }
-        if (ExtraHP > 0) { ExtraHP -= _damage; }
+        if (hp <= 0 || CheckVoid(damage)) { hp = 0; SetDead(); }
+        if (ExtraHP > 0) { ExtraHP -= damage; }
         SetHP(hp);
     }
     public virtual void GetRawDamage(float _damage)
     {
-        GetDamage(_damage, null);
+        GetDamage(new(null, _damage, transform.position));
     }
     public virtual void GaveDamage(ObjectScript _target, float _damage) { }
     public virtual void PlayHitAnim(HitData _hit)                           // 피격 애니메이션 재생
@@ -268,12 +272,13 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     private IEnumerator DamageCoroutine(HitData _hit, ECCType _cc)
     {
         float damage = _cc == ECCType.MELANCHOLY ? MelancholyDamage : ExtortionDamage;
+        _hit.Damage = damage;
         ObjectScript attacker = _hit.Attacker;
         yield return null;
         while (!IsDead && m_ccCount[(int)_cc] > 0)
         {
             yield return new WaitForSeconds(1);
-            GetDamage(damage, attacker);
+            GetDamage(_hit);
             if (_cc == ECCType.EXTORTION) { attacker.HealObj(attacker.MaxHP * 0.1f); }
         }
         m_ccCount[(int)_cc] = 0;

@@ -33,7 +33,8 @@ public class LifeGuardianSkill2Script : ObjectAttackScript
             Vector3 dir = DrainForce * (transform.position - script.Position);
             script.AddForce(dir);
             if (m_hitObjects.Contains(script)) { return; }
-            script.GetDamage(Damage, Attacker);
+            HitData hit = new(Attacker, Damage, script.Position);
+            script.GetDamage(hit);
             m_hitObjects.Add(script);
         }
     }
@@ -41,9 +42,11 @@ public class LifeGuardianSkill2Script : ObjectAttackScript
     public override void GiveDamage(IHittable _hittable, Vector3 _point)
     {
         if (CheckHit(_hittable)) { return; }
-        HitData hit = new(Attacker, Damage, _point, CCList);
-        _hittable.GetHit(hit);
-        AddHitObject(_hittable);
+        HitData hit = new(Attacker, Damage, _point, m_impulseAmount, CCList);
+        if (_hittable.GetHit(hit))
+        {
+            AddHitObject(_hittable);
+        }
     }
 
     private void Awake()

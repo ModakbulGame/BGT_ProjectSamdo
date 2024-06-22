@@ -25,9 +25,8 @@ public abstract partial class MonsterScript
     }
     private void NotTargetDamage(HitData _hit)
     {
-        float damage = _hit.Damage * (100-Defense) * 0.01f;
-        GetDamage(damage, _hit.Attacker);
-        Debug.Log($"{_hit.Attacker.ObjectName} => {ObjectName} {damage} 데미지");
+        _hit.Attacker = null;
+        GetDamage(_hit);
     }
 
 
@@ -37,13 +36,14 @@ public abstract partial class MonsterScript
         base.SetHP(_hp);
         m_hpBar.SetCurHP(CurHP);
     }                   // HP 설정
-    public override void GetHit(HitData _hit)    // 맞음
+    public override bool GetHit(HitData _hit)    // 맞음
     {
-        if (CheckMonsterBattle(_hit)) { return; }
+        if (CheckMonsterBattle(_hit)) { return false; }
         SetBattleTarget(_hit.Attacker);
+        if (!base.GetHit(_hit)) { return false; }
         SetDeathType(_hit.Attacker);
-        base.GetHit(_hit);
         CheckPowerProp(_hit.Property);
+        return true;
     }
     public override void PlayHitAnim(HitData _hit)
     {
@@ -57,8 +57,7 @@ public abstract partial class MonsterScript
     }
     public void GetInstantHit(PowerInfo _skill, GameObject _part, ObjectScript _attacker)
     {
-        PowerScriptable data = _skill.PowerData;
-        GetDamage(100, _attacker);
+        GetDamage(new(_attacker, 100, _part.transform.position));
     }
     public virtual void AttackedPlayer(HitData _hit) { }
 

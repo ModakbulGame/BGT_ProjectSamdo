@@ -102,10 +102,10 @@ public class SkurrabyScript : MonsterScript
         }
     }
 
-    public override void GetHit(HitData _hit)    // ¸ÂÀ½
+    public override bool GetHit(HitData _hit)    // ë§ìŒ
     {
-        if (IsFlying) { _hit.Damage = CurHP; base.GetHit(_hit); }
-        else { base.GetHit( _hit); }
+        if (IsFlying) { _hit.Damage = CurHP; return base.GetHit(_hit); }
+        else { return base.GetHit( _hit); }
     }
 
     public override void SetStates()

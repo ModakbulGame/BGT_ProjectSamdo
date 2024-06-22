@@ -57,8 +57,10 @@ public class PlayerPowerScript : ObjectAttackScript, IPoolable
     {
         if (CheckHit(_hittable)) { return; }
         HitData hit = new(Player, ResultDamage, _point, CCList);
-        _hittable.GetHit(hit);
-        AddHitObject(_hittable);
+        if (_hittable.GetHit(hit))
+        {
+            AddHitObject(_hittable);
+        }
     }
 
     public virtual void CollideTarget() { }

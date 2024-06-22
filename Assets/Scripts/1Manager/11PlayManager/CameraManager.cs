@@ -6,20 +6,20 @@ using Cinemachine;
 public class CameraManager : MonoBehaviour
 {
     [SerializeField]
-    private PlayerCameraScript m_playerCamera;                                  // ÇöÀç Ä«¸Ş¶ó
+    private PlayerCameraScript m_playerCamera;                                  // í˜„ì¬ ì¹´ë©”ë¼
     public CinemachineFreeLook PlayerFreeLook { get { return m_playerCamera.PlayerFreeLook; } }
 
-    public float CameraRotation { get { return transform.eulerAngles.y; } }     // Ä«¸Ş¶ó°¡ ÁÂ¿ì °¢µµ
-    public float CameraAngle { get { return -transform.eulerAngles.x; } }       // Ä«¸Ş¶ó À§¾Æ·¡ °¢µµ
+    public float CameraRotation { get { return transform.eulerAngles.y; } }     // ì¹´ë©”ë¼ê°€ ì¢Œìš° ê°ë„
+    public float CameraAngle { get { return -transform.eulerAngles.x; } }       // ì¹´ë©”ë¼ ìœ„ì•„ë˜ ê°ë„
 
-    public void SetCameraMode(EControlMode _mode)                               // Á¶ÀÛ ¸ğµå Àü´Ş ¹ŞÀ½
+    public void SetCameraMode(EControlMode _mode)                               // ì¡°ì‘ ëª¨ë“œ ì „ë‹¬ ë°›ìŒ
     {
         if (_mode == EControlMode.THIRD_PERSON) { m_playerCamera.SetThirdPerson(); }
         else if (_mode == EControlMode.UI_CONTROL) { m_playerCamera.SetUIControl(); }
     }
     public void SetNPCView() { m_playerCamera.SetNPCView(); }
 
-    public void SetCameraSensitive(float _sensitive)                            // Ä«¸Ş¶ó ¹Î°¨µµ Àü´Ş ¹ŞÀ½
+    public void SetCameraSensitive(float _sensitive)                            // ì¹´ë©”ë¼ ë¯¼ê°ë„ ì „ë‹¬ ë°›ìŒ
     {
         m_playerCamera.SetCameraSensitive(_sensitive);
     }
@@ -27,10 +27,5 @@ public class CameraManager : MonoBehaviour
     public void LooseFocus()
     {
         m_playerCamera.LooseFocus();
-    }
-
-    public void SwitchToCamera(CinemachineFreeLook _targetCamera)
-    {
-
     }
 }

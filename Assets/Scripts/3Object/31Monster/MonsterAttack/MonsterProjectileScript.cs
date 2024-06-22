@@ -40,10 +40,11 @@ public class MonsterProjectileScript : ObjectAttackScript, IHittable, IPoolable
 
 
 
-    public void GetHit(HitData _hit)
+    public bool GetHit(HitData _hit)
     {
         Debug.Log("패링!");
         DestroyAttack();
+        return true;
     }
 
     private void OnTriggerEnter(Collider _other)
