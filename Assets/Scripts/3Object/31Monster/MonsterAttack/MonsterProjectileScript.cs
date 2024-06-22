@@ -35,22 +35,21 @@ public class MonsterProjectileScript : ObjectAttackScript, IHittable, IPoolable
     public virtual void SetAttack(ObjectScript _attacker, Vector3 _dir, float _damage, float _dist)
     {
         SetAttack(_attacker, _damage);
-        MoveDir = new(_dir.x, 0, _dir.z);
+        MoveDir = _dir;
     }
 
 
 
     public void GetHit(HitData _hit)
     {
-        Debug.Log("∆–∏µ!");
+        Debug.Log("Ìå®ÎßÅ!");
         DestroyAttack();
     }
 
     private void OnTriggerEnter(Collider _other)
     {
-        if (_other.includeLayers == LayerMask.NameToLayer(ValueDefine.HITTABLE_LAYER_NAME))
+        if(_other.GetComponentInParent<PlayerController>() != null)
         {
-            if(_other.GetComponentInParent<PlayerController>() == null) { return; }
             DestroyAttack();
         }
         else if (_other.CompareTag(ValueDefine.TERRAIN_TAG))
@@ -92,9 +91,7 @@ public class MonsterProjectileScript : ObjectAttackScript, IHittable, IPoolable
     public override void Start() { }
     public virtual void FixedUpdate()
     {
-        Vector3 vel = m_rigid.velocity;
         Vector3 dir = m_moveSpeed * MoveDir;
-        vel.x = dir.x; vel.z = dir.z;
-        m_rigid.velocity = vel;
+        m_rigid.velocity = dir;
     }
 }

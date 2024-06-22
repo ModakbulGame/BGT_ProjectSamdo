@@ -4,68 +4,70 @@ using UnityEngine;
 
 public static class ValueDefine
 {
-    // ·¹ÀÌ¾î
-    public const int HIDING_LAYER = 1 << HIDING_LAYER_IDX;          // ¼û±â±â ·¹ÀÌ¾î
-    public const int GROUND_LAYER = 1 << 6;                         // ¶¥ ·¹ÀÌ¾î
-    public const int INTERACT_LAYER = 1 << 7;                       // »óÈ£ÀÛ¿ë ·¹ÀÌ¾î
-    public const int HITTABLE_LAYER = 1 << HITTABLE_LAYER_IDX;      // Å¸°Ý °¡´É ·¹ÀÌ¾î
+    // ë ˆì´ì–´
+    public const int HIDING_LAYER = 1 << HIDING_LAYER_IDX;          // ìˆ¨ê¸°ê¸° ë ˆì´ì–´
+    public const int GROUND_LAYER = 1 << 6;                         // ë•… ë ˆì´ì–´
+    public const int INTERACT_LAYER = 1 << 7;                       // ìƒí˜¸ìž‘ìš© ë ˆì´ì–´
+    public const int HITTABLE_LAYER = 1 << HITTABLE_LAYER_IDX;      // íƒ€ê²© ê°€ëŠ¥ ë ˆì´ì–´
     public const int HITTABLE_PLAYER_LAYER = 1 << 10;
 
-    // ·¹ÀÌ¾î ÀÎµ¦½º
-    public const int UI_LAYER_IDX = 5;                              // UI ·¹ÀÌ¾î ¼ø¼­
-    public const int HIDING_LAYER_IDX = 3;                          // ¼û±â±â ·¹ÀÌ¾îÀÇ ¼ø¼­
+    // ë ˆì´ì–´ ì¸ë±ìŠ¤
+    public const int UI_LAYER_IDX = 5;                              // UI ë ˆì´ì–´ ìˆœì„œ
+    public const int HIDING_LAYER_IDX = 3;                          // ìˆ¨ê¸°ê¸° ë ˆì´ì–´ì˜ ìˆœì„œ
     public const int HITTABLE_LAYER_IDX = 9;
 
-    // ·¹ÀÌ¾î ´Ü¾î
+    // ë ˆì´ì–´ ë‹¨ì–´
     public const string HITTABLE_LAYER_NAME = "Hittable";
+    public const string HITTABLE_PLAYER_LAYER_NAME = "Player";
 
-    // ÅÂ±×
-    public const string PLAYER_TAG = "Player";                      // ÇÃ·¹ÀÌ¾î
-    public const string CAMERA_TAG = "Camera";                      // Ä«¸Þ¶ó
-    public const string MONSTER_TAG = "Monster";                    // ¸ó½ºÅÍ
+    // íƒœê·¸
+    public const string PLAYER_TAG = "Player";                      // í”Œë ˆì´ì–´
+    public const string CAMERA_TAG = "Camera";                      // ì¹´ë©”ë¼
+    public const string MONSTER_TAG = "Monster";                    // ëª¬ìŠ¤í„°
     public const string NPC_TAG = "NPC";                            // NPC
     public const string OASIS_TAG = "Oasis";
-    public const string PLAYER_WEAPON_TAG = "PlayerWeapon";         // ÇÃ·¹ÀÌ¾î ¹«±â
-    public const string PLAYER_POWER_TAG = "PlayerPower";           // ÇÃ·¹ÀÌ¾î ÁÖ¼ú
-    public const string MONSTER_ATTACK_TAG = "MonsterAttack";       // ¸ó½ºÅÍ °ø°Ý
-    public const string WATER_TAG = "Water";                        // ¹°
-    public const string TERRAIN_TAG = "Terrain";                    // ÁöÇü
+    public const string PLAYER_WEAPON_TAG = "PlayerWeapon";         // í”Œë ˆì´ì–´ ë¬´ê¸°
+    public const string PLAYER_POWER_TAG = "PlayerPower";           // í”Œë ˆì´ì–´ ì£¼ìˆ 
+    public const string MONSTER_ATTACK_TAG = "MonsterAttack";       // ëª¬ìŠ¤í„° ê³µê²©
+    public const string WATER_TAG = "Water";                        // ë¬¼
+    public const string TERRAIN_TAG = "Terrain";                    // ì§€í˜•
 
 
-    // ¾À ÀÎµ¦½º
+    // ì”¬ ì¸ë±ìŠ¤
     public const int LOGO_SCENE_IDX = 0;
     public const int TITLE_SCENE_IDX = 1;
     public const int LOADING_SCENE_IDX = 2;
     public const int HELL_SCENE_IDX = 3;
 
 
-    // °ª
+    // ê°’
     public const int INITIAL_STAT = 10;
     public const int MAX_SAVE = 12;
-    public const float PARABOLA_GRAVITY = 20;                       // Æ÷¹°¼± °è»ê ½Ã Áß·Â
-    public readonly static Vector3 NullVector = Vector3.up * 100;   // ¾Æ¹«°Íµµ ¾Æ´Ñ º¤ÅÍ
-    public const int MAX_POWER_SLOT = 3;                            // ÀåÂø °¡´É ½ºÅ³ ¼ö
-    public const int MAX_INVENTORY = 64;                            // ÀÎº¥Åä¸® ÃÖ´ë Å©±â
-    public const int MAX_ITEM_VARIETY = 128;                        // ¾ÆÀÌÅÛ Á¾·ùº° °³¼ö
-    public const int MAX_HEAL_ITEM = 3;                             // ÃÖ´ë µî·Ï °¡´É È¸º¹ ¾ÆÀÌÅÛ
-    public const int MAX_THROW_ITEM = 8;                            // ÃÖ´ë µî·Ï °¡´É ÅõÃ´ ¾ÆÀÌÅÛ
-    public const int MAX_REGISTER_PATTERN = 3;                      // ÃÖ´ë °¢ÀÎ °¡´É ¹®¾ç
-    public const int MAX_QUEST_NUM = 4;                             // ÃÖ´ë ÁøÇà °¡´É Äù½ºÆ®
+    public const float PARABOLA_GRAVITY = 20;                           // í¬ë¬¼ì„  ê³„ì‚° ì‹œ ì¤‘ë ¥
+    public readonly static Vector3 NULL_VECTOR = Vector3.up * 100;     // ì•„ë¬´ê²ƒë„ ì•„ë‹Œ ë²¡í„°
+    public const int MAX_POWER_SLOT = 3;                                // ìž¥ì°© ê°€ëŠ¥ ìŠ¤í‚¬ ìˆ˜
+    public const int MAX_INVENTORY = 64;                                // ì¸ë²¤í† ë¦¬ ìµœëŒ€ í¬ê¸°
+    public const int MAX_ITEM_VARIETY = 128;                            // ì•„ì´í…œ ì¢…ë¥˜ë³„ ê°œìˆ˜
+    public const int MAX_HEAL_ITEM = 3;                                 // ìµœëŒ€ ë“±ë¡ ê°€ëŠ¥ íšŒë³µ ì•„ì´í…œ
+    public const int MAX_THROW_ITEM = 8;                                // ìµœëŒ€ ë“±ë¡ ê°€ëŠ¥ íˆ¬ì²™ ì•„ì´í…œ
+    public const int MAX_REGISTER_PATTERN = 3;                          // ìµœëŒ€ ê°ì¸ ê°€ëŠ¥ ë¬¸ì–‘
+    public const int MAX_QUEST_NUM = 4;                                 // ìµœëŒ€ ì§„í–‰ ê°€ëŠ¥ í€˜ìŠ¤íŠ¸
     public const int DIE_DAMAGE = 999;
-    public const int MAX_NPC_NUM = 99;                              // Á¾·ùº° NPC ¼ö
+    public const int MAX_NPC_NUM = 99;                                  // ì¢…ë¥˜ë³„ NPC ìˆ˜
+    public readonly static Vector3 NULL_DESTINATION = new(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity);
 
 
-    // ½¦ÀÌ´õ
+    // ì‰ì´ë”
     public static Shader URP_LIT_SHADER = Shader.Find("Universal Render Pipeline/Lit");
     public static Shader DISSOLVE_SHADER = Shader.Find("Shader Graphs/DissolveShader");
 
 
-    // ¾Ö´Ï¸ÞÀÌ¼Ç (?)
-    public const string MONSTER_ATTACK_TRIGGER = "Attack";          // ¸ó½ºÅÍ °ø°Ý Æ®¸®°Å
-    public const string MONSTER_IDLE_TRIGGER = "Idle";              // ¸ó½ºÅÍ ±âº» Æ®¸®°Å
-    public const string MONSTER_MOVE_TRIGGER = "Move";              // ¸ó½ºÅÍ ÀÌµ¿ Æ®¸®°Å
-    public const string MONSTER_HIT_TRIGGER = "Hurt";              // ¸ó½ºÅÍ °ø°Ý¹ÞÀ½ Æ®¸®°Å
-    public const string MONSTER_DIE_TRIGGER = "Dead";              // ¸ó½ºÅÍ »ç¸Á Æ®¸®°Å
+    // ì• ë‹ˆë©”ì´ì…˜ (?)
+    public const string MONSTER_ATTACK_TRIGGER = "Attack";          // ëª¬ìŠ¤í„° ê³µê²© íŠ¸ë¦¬ê±°
+    public const string MONSTER_IDLE_TRIGGER = "Idle";              // ëª¬ìŠ¤í„° ê¸°ë³¸ íŠ¸ë¦¬ê±°
+    public const string MONSTER_MOVE_TRIGGER = "Move";              // ëª¬ìŠ¤í„° ì´ë™ íŠ¸ë¦¬ê±°
+    public const string MONSTER_HIT_TRIGGER = "Hurt";              // ëª¬ìŠ¤í„° ê³µê²©ë°›ìŒ íŠ¸ë¦¬ê±°
+    public const string MONSTER_DIE_TRIGGER = "Dead";              // ëª¬ìŠ¤í„° ì‚¬ë§ íŠ¸ë¦¬ê±°
 
     // ID
     public const char MONSTER_CODE = 'M';

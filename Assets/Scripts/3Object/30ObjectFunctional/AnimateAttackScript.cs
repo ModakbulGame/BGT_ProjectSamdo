@@ -99,7 +99,7 @@ public class AnimateAttackScript : ObjectAttackScript
         {
             if(collider== null || !collider.isTrigger) { continue; }
             IHittable hittable = collider.GetComponentInParent<IHittable>();
-            if (hittable == null) { Debug.LogError("È÷ÅÍºí ½ºÅ©¸³Æ® ¾øÀ½"); continue; }
+            if (hittable == null) { Debug.LogError("íˆí„°ë¸” ìŠ¤í¬ë¦½íŠ¸ ì—†ìŒ"); continue; }
             if (!CheckTarget(collider)) { continue; }
             Vector3 pos = CheckNHit(hittable);
             CreateHitEffect(hittable, pos);
@@ -110,7 +110,7 @@ public class AnimateAttackScript : ObjectAttackScript
     public virtual bool CheckTarget(Collider _collider)
     {
         ObjectScript obj = _collider.GetComponentInParent<ObjectScript>();
-        if (obj == m_attacker || obj.IsDead || CheckHit(obj)) { return false; }
+        if (obj == null || obj == m_attacker || obj.IsDead || CheckHit(obj)) { return false; }
         return true;
     }
     public virtual void CreateHitEffect(IHittable _hittable, Vector3 _pos) { }

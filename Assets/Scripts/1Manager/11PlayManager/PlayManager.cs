@@ -72,8 +72,8 @@ public class PlayManager : MonoBehaviour
     public static bool IsPlayerGuarding { get { return Player.IsGuarding; } }                                                               // 플레이어 가드 중
     public static bool IsPlayerDead { get { return Player.IsDead; } }                                                                       // 플레이어 사망 여부
     public static bool IsPlayerLightOn { get { return Player.IsLightOn; } }                                                                 // 플레이어 능력 사용중
-    public static Vector3 PlayerPos { get { if (IsPlayerSet) return Player.transform.position; return ValueDefine.NullVector; } }            // 플레이어 위치
-    public static Vector2 PlayerPos2 { get { if (IsPlayerSet) return Player.Position2; return ValueDefine.NullVector; } }                   // 플레이어 평면 위치
+    public static Vector3 PlayerPos { get { if (IsPlayerSet) return Player.transform.position; return ValueDefine.NULL_VECTOR; } }            // 플레이어 위치
+    public static Vector2 PlayerPos2 { get { if (IsPlayerSet) return Player.Position2; return ValueDefine.NULL_VECTOR; } }                   // 플레이어 평면 위치
     public static float PlayerDirection { get { return Player.Direction; } }
     public static Vector2 PlayerAimDirection { get { return Player.PlayerAimDirection; } }                                                  // 카메라 조준 벡터
     public static Transform PlayerTransform { get { if (IsPlayerSet) return Player.transform; return null; } }

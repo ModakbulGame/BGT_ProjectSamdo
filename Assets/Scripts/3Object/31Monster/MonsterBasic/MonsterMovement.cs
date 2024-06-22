@@ -64,6 +64,8 @@ public abstract partial class MonsterScript
     {
         base.StopMove();
         if (!HasPath) { return; }
+
+        m_aiPath.destination = ValueDefine.NULL_DESTINATION;
         m_aiPath.SetPath(null);
         HasPath = false;
     }

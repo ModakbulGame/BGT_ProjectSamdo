@@ -15,18 +15,34 @@ public class RangedAttackMonster : MonsterScript
 
     public virtual Vector3 AttackOffset { get { return Vector3.zero; } }
 
+
+    private bool AttackCreated { get; set; }
+
+    public override void LookTarget()
+    {
+        if(IsAttacking && AttackCreated) { return; }
+        base.LookTarget();
+    }
+
+    public override void StartAttack()
+    {
+        base.StartAttack();
+        AttackCreated = false;
+    }
     public override void CreateAttack()
     {
         GameObject attack = m_attackPool.Get();
         attack.transform.localPosition = AttackOffset;
         attack.transform.parent = null;
 
-        Vector3 dir = (CurTarget.Position - (attack.transform.position)).normalized;
-        dir.y = 0;
+        Vector3 dir = (CurTarget.Position - attack.transform.position).normalized;
+        Vector3 flatDir = (new Vector3(dir.x, 0, dir.z)).normalized;
 
         MonsterProjectileScript script = attack.GetComponent<MonsterProjectileScript>();
-        script.SetAttack(this, dir, Attack, TargetDistance);
+        script.SetAttack(this, flatDir, Attack, TargetDistance);
         script.AttackOn();
+
+        AttackCreated = true;
     }
 
     private void InitPool()
