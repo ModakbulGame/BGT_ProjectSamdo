@@ -67,7 +67,7 @@ public class CrystalGuardianScript : MonsterScript
         AttackObject.AttackOn();
         if(TargetDistance > AttackRange) { MoveForward(); }
 
-        if (SequenceCount++ >= MaxSequence) { NextAttack = (int)ENextAttack.NONE; }
+        if (++SequenceCount >= MaxSequence) { NextAttack = (int)ENextAttack.NONE; }
         else { NextAttack = Random.Range(0, (int)ENextAttack.NONE + 1); }
 
         m_anim.SetInteger("PROCEED_IDX", NextAttack);
@@ -157,8 +157,8 @@ public class CrystalGuardianScript : MonsterScript
         }
         else if (CurSkillIdx == ImpactIdx)
         {
-            SkillList[CurSkillIdx].SetAttack(this, m_skillDamage[JumpSkillIdx]);
-            SkillList[CurSkillIdx].AttackOn();
+            SkillList[2].SetAttack(this, m_skillDamage[ImpactIdx]);
+            SkillList[2].AttackOn();
             m_anim.SetBool("IS_SKILLING", false);
         }
     }
