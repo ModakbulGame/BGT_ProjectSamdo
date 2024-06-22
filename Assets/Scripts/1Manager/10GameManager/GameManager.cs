@@ -7,7 +7,7 @@ public class GameManager : SingleTon<GameManager>
 {
     public static bool IsInTitle { get { return SceneManager.GetActiveScene().buildIndex == ValueDefine.TITLE_SCENE_IDX; } }
     public static bool IsInGame { get { return SceneManager.GetActiveScene().buildIndex > ValueDefine.LOADING_SCENE_IDX
-                && SceneManager.GetActiveScene().buildIndex <= ValueDefine.HELL_SCENE_IDX; /*ÀÓ½Ã Á¶°Ç*/ } }
+                && SceneManager.GetActiveScene().buildIndex <= ValueDefine.HELL_SCENE_IDX; /*ì„ì‹œ ì¡°ê±´*/ } }
     public static void StartGame()
     {
         MoveToLoading(null);
@@ -28,90 +28,101 @@ public class GameManager : SingleTon<GameManager>
     }
 
 
-    // µ¥ÀÌÅÍ
+    // ë°ì´í„°
     private DataManager m_dataManager;
     public static DataManager DataManager { get { return Inst.m_dataManager; } }
-    public static List<SaveData> GameData { get { return DataManager.GameData; } }                                                          // ÀúÀåµÈ °Íµé
-    public static void SaveGameData(EOasisName _oasis) { DataManager.SaveCurData(_oasis); }                                            // ¿À¾Æ½Ã½º¿¡¼­ ÀúÀå
-    public static void AddGameData(SaveData _data) { DataManager.AddGameData(_data); }                                                      // ÀúÀå µ¥ÀÌÅÍ Ãß°¡
-    public static void RegisterData(IHaveData _data) { DataManager.RegisterData(_data); }                                                   // µ¥ÀÌÅÍ¿¡ µî·Ï(±â·Ï ½ÃÀÛ)
+    public static List<SaveData> GameData { get { return DataManager.GameData; } }                                                          // ì €ì¥ëœ ê²ƒë“¤
+    public static void SaveGameData(EOasisName _oasis) { DataManager.SaveCurData(_oasis); }                                            // ì˜¤ì•„ì‹œìŠ¤ì—ì„œ ì €ì¥
+    public static void AddGameData(SaveData _data) { DataManager.AddGameData(_data); }                                                      // ì €ì¥ ë°ì´í„° ì¶”ê°€
+    public static void RegisterData(IHaveData _data) { DataManager.RegisterData(_data); }                                                   // ë°ì´í„°ì— ë“±ë¡(ê¸°ë¡ ì‹œì‘)
 
 
-    // È­¸é
+    // í™”ë©´
     private DisplayManager m_displayManager;
     public static DisplayManager DisplayManager { get { return Inst.m_displayManager; } }
-    public static float WidthRatio { get { return DisplayManager.WidthRatio; } }                                                            // È­¸é ³Êºñ ºñÀ²
-    public static float HeightRatio { get { return DisplayManager.HeightRatio; } }                                                          // È­¸é ³ôÀÌ ºñÀ²
+    public static float WidthRatio { get { return DisplayManager.WidthRatio; } }                                                            // í™”ë©´ ë„ˆë¹„ ë¹„ìœ¨
+    public static float HeightRatio { get { return DisplayManager.HeightRatio; } }                                                          // í™”ë©´ ë†’ì´ ë¹„ìœ¨
 
 
-    // ¼Ò¸®
+    // ì†Œë¦¬
     private SoundManager m_soundManager;
     public static SoundManager SoundManager { get { return Inst.m_soundManager; } }
+    public static int BGMVolume { get { return SoundManager.BGMVolume; } }
+    public static int SEVolume { get { return SoundManager.SEVolume; } }
+    public static void SetBGMVolume(int _volume) { SoundManager.SetBGMVolume(_volume); }
+    public static void SetSEVolume(int _volume) { SoundManager.SetSEVolume(_volume); }
+    public static void PlayBGM(EBGM _bgm) { SoundManager.PlayBGM(_bgm); }
+    public static void StopBGM() { SoundManager.StopBGM(); }
+    public static void PlaySE(EPlaySE _se) { SoundManager.PlaySE(_se); }
+    public static void PlaySE(EPlayerSE _se) { SoundManager.PlaySE(_se); }
+    public static void PlaySE(ESkillSE _se) { SoundManager.PlaySE(_se); }
+    public static void PlaySE(EMonsterSE _se) { SoundManager.PlaySE(_se); }
+    public static void PlaySE(EUISE _se) { SoundManager.PlaySE(_se); }
 
 
-    // ÀÔ·Â
+    // ì…ë ¥
     private InputManager m_inputManager;
     public static InputManager InputManager { get { return Inst.m_inputManager; } }
-    public static InputSystem.PlayerActions PlayerInputs { get { return InputManager.PlayerInputs; } }                                      // ÇÃ·¹ÀÌ¾î Input
-    public static InputSystem.UIControlActions UIControlInputs { get { return InputManager.UIControlInputs; } }                             // UIÁ¶ÀÛ Input
-    public static EControlMode ControlMode { get { return InputManager.CurControlMode; } }                                                  // Á¶ÀÛ ¸ğµå
-    public static float MouseSensitive { get { return InputManager.MouseSensitive; } }                                                      // ¸¶¿ì½º ¹Î°¨µµ
-    public static void SetControlMode(EControlMode _mode) { InputManager.SetControlMode(_mode); }                                           // Á¶ÀÛ ¸ğµå º¯°æ
-    public static void SetMouseSensitive(float _sensitive) { InputManager.SetMouseSensitive(_sensitive); }                                  // ¸¶¿ì½º ¹Î°¨µµ ¼³Á¤
+    public static InputSystem.PlayerActions PlayerInputs { get { return InputManager.PlayerInputs; } }                                      // í”Œë ˆì´ì–´ Input
+    public static InputSystem.UIControlActions UIControlInputs { get { return InputManager.UIControlInputs; } }                             // UIì¡°ì‘ Input
+    public static EControlMode ControlMode { get { return InputManager.CurControlMode; } }                                                  // ì¡°ì‘ ëª¨ë“œ
+    public static float MouseSensitive { get { return InputManager.MouseSensitive; } }                                                      // ë§ˆìš°ìŠ¤ ë¯¼ê°ë„
+    public static void SetControlMode(EControlMode _mode) { InputManager.SetControlMode(_mode); }                                           // ì¡°ì‘ ëª¨ë“œ ë³€ê²½
+    public static void SetMouseSensitive(float _sensitive) { InputManager.SetMouseSensitive(_sensitive); }                                  // ë§ˆìš°ìŠ¤ ë¯¼ê°ë„ ì„¤ì •
 
 
-    // ¾ÆÀÌÅÛ
+    // ì•„ì´í…œ
     private ItemManager m_itemManager;
     private static ItemManager ItemManager { get { return Inst.m_itemManager; } }
     private static GameObject[] ItemArray { get { return ItemManager.ItemArray; } }
-    public static ItemInfo GetItemInfo(SItem _item) { return ItemManager.GetItemInfo(_item); }                                              // ¾ÆÀÌÅÛ Á¤º¸
-    public static ItemScriptable GetItemData(SItem _item) { return ItemManager.GetItemData(_item); }                                        // ¾ÆÀÌÅÛ ½ºÅ©¸³ÅÍºí
-    public static ItemInfo GetWeaponInfo(EWeaponName _weapon) { return GetItemInfo(new SItem(EItemType.WEAPON, (int)_weapon)); }            // ¹«±â Á¤º¸
-    public static GameObject GetThorwItemPrefab(EThrowItemName _item) { return ItemManager.GetThrowItemPrefab(_item); }                     // ÅõÃ´ ¾ÆÀÌÅÛ ÇÁ¸®Æà
-    public static GameObject GetDropItemPrefab(EItemType _item) { return ItemManager.GetDropItemPrefab(_item); }                            // µå¶ø ¾ÆÀÌÅÛ ÇÁ¸®Æà
+    public static ItemInfo GetItemInfo(SItem _item) { return ItemManager.GetItemInfo(_item); }                                              // ì•„ì´í…œ ì •ë³´
+    public static ItemScriptable GetItemData(SItem _item) { return ItemManager.GetItemData(_item); }                                        // ì•„ì´í…œ ìŠ¤í¬ë¦½í„°ë¸”
+    public static ItemInfo GetWeaponInfo(EWeaponName _weapon) { return GetItemInfo(new SItem(EItemType.WEAPON, (int)_weapon)); }            // ë¬´ê¸° ì •ë³´
+    public static GameObject GetThorwItemPrefab(EThrowItemName _item) { return ItemManager.GetThrowItemPrefab(_item); }                     // íˆ¬ì²™ ì•„ì´í…œ í”„ë¦¬í
+    public static GameObject GetDropItemPrefab(EItemType _item) { return ItemManager.GetDropItemPrefab(_item); }                            // ë“œë ì•„ì´í…œ í”„ë¦¬í
 
-    // ±Ç´É
+    // ê¶ŒëŠ¥
     private PowerManager m_powerManager;
     private static PowerManager PowerManager { get { return Inst.m_powerManager; } }
     private static GameObject[] PowerArray { get { return PowerManager.PowerArrays; } }
-    public static PowerInfo GetPowerInfo(EPowerName _power) { return PowerManager.GetPowerInfo(_power); }                                   // ½ºÅ³ Á¤º¸
-    public static PowerScriptable GetPowerData(EPowerName _power) { return PowerManager.GetPowerData(_power); }                             // ½ºÅ³ ½ºÅ©¸³ÅÍºí
-    public static GameObject GetPowerObj(EPowerName _power) { return PowerManager.GetPowerObj(_power); }                                    // ½ºÅ³ ÇÁ¸®Æà
+    public static PowerInfo GetPowerInfo(EPowerName _power) { return PowerManager.GetPowerInfo(_power); }                                   // ìŠ¤í‚¬ ì •ë³´
+    public static PowerScriptable GetPowerData(EPowerName _power) { return PowerManager.GetPowerData(_power); }                             // ìŠ¤í‚¬ ìŠ¤í¬ë¦½í„°ë¸”
+    public static GameObject GetPowerObj(EPowerName _power) { return PowerManager.GetPowerObj(_power); }                                    // ìŠ¤í‚¬ í”„ë¦¬í
 
 
-    // ¸ó½ºÅÍ
+    // ëª¬ìŠ¤í„°
     private MonsterManager m_monsterManager;
     private static MonsterManager MonsterManager { get { return Inst.m_monsterManager; } }
     public static GameObject[] MonsterArray { get { return MonsterManager.MonsterArray; } }
-    public static MonsterInfo GetMonsterInfo(EMonsterName _monster) { return MonsterManager.GetMonsterInfo(_monster); }                     // ¸ó½ºÅÍ Á¤º¸
+    public static MonsterInfo GetMonsterInfo(EMonsterName _monster) { return MonsterManager.GetMonsterInfo(_monster); }                     // ëª¬ìŠ¤í„° ì •ë³´
     public static MonsterScriptable[] MonsterData { get { return MonsterManager.MonsterData; } }
-    public static MonsterScriptable GetMonsterData(EMonsterName _monster) { return MonsterManager.GetMonsterData(_monster); }               // ¸ó½ºÅÍ ½ºÅ©¸³ÅÍºí
-    public static GameObject GetMonsterObj(EMonsterName _monster) { return MonsterManager.GetMonsterObj(_monster); }                        // ¸ó½ºÅÍ ÇÁ¸®Æà
-    public static bool CheckNClearMonster(EMonsterName _monster) { return MonsterManager.CheckNClearMonster(_monster); }                    // ÃÖÃÊ Ã³Ä¡ È®ÀÎ
+    public static MonsterScriptable GetMonsterData(EMonsterName _monster) { return MonsterManager.GetMonsterData(_monster); }               // ëª¬ìŠ¤í„° ìŠ¤í¬ë¦½í„°ë¸”
+    public static GameObject GetMonsterObj(EMonsterName _monster) { return MonsterManager.GetMonsterObj(_monster); }                        // ëª¬ìŠ¤í„° í”„ë¦¬í
+    public static bool CheckNClearMonster(EMonsterName _monster) { return MonsterManager.CheckNClearMonster(_monster); }                    // ìµœì´ˆ ì²˜ì¹˜ í™•ì¸
 
 
 
-    // ÀÌÆåÆ®
+    // ì´í™íŠ¸
     private EffectManager m_effectManager;
     private static EffectManager EffectManager { get { return Inst.m_effectManager; } }
     private static GameObject[] EffectArray { get { return EffectManager.EffectArray; } }
-    public static GameObject GetEffectObj(EEffectName _effect) { return EffectManager.GetEffectObj(_effect); }                              // ÀÌÆåÆ® ¿ÀºêÁ§Æ® ¹Ş±â
+    public static GameObject GetEffectObj(EEffectName _effect) { return EffectManager.GetEffectObj(_effect); }                              // ì´í™íŠ¸ ì˜¤ë¸Œì íŠ¸ ë°›ê¸°
 
 
-    // ½ºÅä¸®
+    // ìŠ¤í† ë¦¬
     private StoryManager m_storyManager;
     private static StoryManager StoryManager { get { return Inst.m_storyManager; } }
-    public static NPCScriptable GetNPCData(SNPC _npc) { return StoryManager.GetNPCData(_npc); }                                             // NPC Á¤º¸
-    public static DialogueScriptable GetDialogueData(EDialogueName _name) { return StoryManager.GetDialogueData(_name); }                   // ´ëÈ­ Á¤º¸
-    public static DialogueScriptable GetDialogueData(SNPC _npc, int _idx) { return StoryManager.GetDialogueData(_npc, _idx); }              // ´ëÈ­ Á¤º¸
-    public static QuestScriptable GetQeustData(EQuestName _quest) { return StoryManager.GetQuestData(_quest); }                             // Äù½ºÆ® Á¤º¸
+    public static NPCScriptable GetNPCData(SNPC _npc) { return StoryManager.GetNPCData(_npc); }                                             // NPC ì •ë³´
+    public static DialogueScriptable GetDialogueData(EDialogueName _name) { return StoryManager.GetDialogueData(_name); }                   // ëŒ€í™” ì •ë³´
+    public static DialogueScriptable GetDialogueData(SNPC _npc, int _idx) { return StoryManager.GetDialogueData(_npc, _idx); }              // ëŒ€í™” ì •ë³´
+    public static QuestScriptable GetQeustData(EQuestName _quest) { return StoryManager.GetQuestData(_quest); }                             // í€˜ìŠ¤íŠ¸ ì •ë³´
 
     // UI
     private UIManager m_uiManager;
     public static UIManager UIManager { get { return Inst.m_uiManager; } }
-    public static Sprite GetMonsterSprite(EMonsterName _monster) { return UIManager.GetMonsterSprite(_monster); }                           // ¸ó½ºÅÍ ÀÌ¹ÌÁö
-    public static Sprite GetItemSprite(SItem _item) { return UIManager.GetItemSprite(_item); }                                              // ¾ÆÀÌÅÛ ÀÌ¹ÌÁö
-    public static Sprite GetPowerSprite(EPowerName _power) { return UIManager.GetPowerSprite(_power); }                                     // ½ºÅ³ ÀÌ¹ÌÁö
+    public static Sprite GetMonsterSprite(EMonsterName _monster) { return UIManager.GetMonsterSprite(_monster); }                           // ëª¬ìŠ¤í„° ì´ë¯¸ì§€
+    public static Sprite GetItemSprite(SItem _item) { return UIManager.GetItemSprite(_item); }                                              // ì•„ì´í…œ ì´ë¯¸ì§€
+    public static Sprite GetPowerSprite(EPowerName _power) { return UIManager.GetPowerSprite(_power); }                                     // ìŠ¤í‚¬ ì´ë¯¸ì§€
 
 
     private PoolManager m_poolManager;
