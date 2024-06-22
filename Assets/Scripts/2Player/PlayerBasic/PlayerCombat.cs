@@ -7,6 +7,10 @@ using UnityEngine.InputSystem;
 
 public partial class PlayerController
 {
+    private float m_lastImpulseTime = 0f;
+    [SerializeField]
+    private float m_impulseCooldown = 2.0f; 
+
     // 전투 기본
     public override bool IsUnstoppable { get { return false; } }        // 공격 모션 안끊김
 
@@ -17,7 +21,12 @@ public partial class PlayerController
         if (!IsDead && IsGuarding && _hit.Attacker.IsMonster) { monster.HitGuardingPlayer(); }
         base.GetHit(_hit);
         monster.AttackedPlayer(_hit);
-        m_impulseSource.GenerateImpulse(1.0f);
+
+        if (Time.time > m_lastImpulseTime + m_impulseCooldown)
+        {
+            m_impulseSource.GenerateImpulse(1.0f);
+            m_lastImpulseTime = Time.time;          // 마지막 충격 발생 시간 업데이트
+        }
     }
     public override void PlayHitAnim(HitData _hit)                      // 피격 애니메이션
     {
