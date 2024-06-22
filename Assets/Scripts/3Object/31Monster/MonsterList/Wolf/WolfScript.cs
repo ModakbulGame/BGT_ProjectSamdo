@@ -31,7 +31,7 @@ public class WolfScript : MonsterScript
 
     public override bool HasPath => true;
 
-    // ´Á´ë ½ºÅ×ÀÌÆ®
+    // ëŠ‘ëŒ€ ìŠ¤í…Œì´íŠ¸
     private IMonsterState m_positionState, m_jabState;
     public void JabWolf()
     {
@@ -43,13 +43,13 @@ public class WolfScript : MonsterScript
     }
 
 
-    // ´Á´ë ¼öÄ¡
+    // ëŠ‘ëŒ€ ìˆ˜ì¹˜
     public float JabDistance { get; set; } = 5;
     public float ApproachOffset { get; private set; } = 0.5f;
     public readonly float MaxJabOffset = 1;
 
 
-    // ´Á´ë ¼Ó¼º
+    // ëŠ‘ëŒ€ ì†ì„±
     public float PositioningDistance { get { return Vector3.Distance(Position, PositionTarget); } }
     public Vector3 PositionTarget { get {
             if(CurTarget == null) { return Vector3.positiveInfinity; }
@@ -109,7 +109,7 @@ public class WolfScript : MonsterScript
         return destination;
     }
 
-    // ´Á´ë ±âº» ¸Þ¼Òµå
+    // ëŠ‘ëŒ€ ê¸°ë³¸ ë©”ì†Œë“œ
     public void StartPosition()
     {
         JabDistance = Random.Range(4.5f, 5.5f);
@@ -138,13 +138,13 @@ public class WolfScript : MonsterScript
     }
 
 
-    // ´Á´ë ¼¼ºÎ ¸Þ¼Òµå
+    // ëŠ‘ëŒ€ ì„¸ë¶€ ë©”ì†Œë“œ
     public void SetAttackTarget(ObjectScript _target)
     {
         CurTarget = _target;
     }
 
-    public override void ApproachTarget()            // Å¸°Ù¿¡°Ô Á¢±Ù
+    public override void ApproachTarget()            // íƒ€ê²Ÿì—ê²Œ ì ‘ê·¼
     {
         if (AttackTimeCount > 0) { base.ApproachTarget(); return; }
         Vector2 approach2 = CurTarget.Position2;
@@ -175,7 +175,7 @@ public class WolfScript : MonsterScript
             PositionWolf();
         else
             ChangeState(EMonsterState.IDLE);
-        AttackTimeCount = 1 / AttackSpeed;
+        SetAttackCooltime();
     }
 
     public override void SetDead()
@@ -196,7 +196,7 @@ public class WolfScript : MonsterScript
 
 
 
-    // ´Á´ë ÃÊ±â ¼³Á¤
+    // ëŠ‘ëŒ€ ì´ˆê¸° ì„¤ì •
     public override void SetStates()
     {
         base.SetStates();

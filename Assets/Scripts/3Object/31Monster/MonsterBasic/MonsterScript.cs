@@ -10,14 +10,14 @@ using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCou
 [RequireComponent(typeof(MonsterLighter), typeof(MonsterBattler))]
 public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 {
-    // Ç®
+    // í’€
     public ObjectPool<GameObject> OriginalPool { get; set; }
     public void SetPool(ObjectPool<GameObject> _pool) { OriginalPool = _pool; }
     public virtual void OnPoolGet() { OnSpawned(); }
     public virtual void ReleaseToPool() { OriginalPool.Release(gameObject); }
 
 
-    // ¾Ö´Ô
+    // ì• ë‹˜
     private bool HasMoveAanim { get; set; }
     private int MoveHash;
     public virtual bool IsMoving { get { return IsApproachMocing || IsIdleRoaming; } }
@@ -36,7 +36,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     }
 
 
-    // ½ºÅ×ÀÌÆ® ¸Å´ÏÀú
+    // ìŠ¤í…Œì´íŠ¸ ë§¤ë‹ˆì €
     protected MonsterStateManager m_stateManager;
     protected readonly IMonsterState[] m_monsterStates = new IMonsterState[(int)EMonsterState.LAST];
 
@@ -45,8 +45,8 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     public void ChangeState(EMonsterState _state) { m_stateManager.ChangeState(m_monsterStates[(int)_state]); }
 
 
-    // ¸ó½ºÅÍ »óÅÂ
-    public bool InCombat { get { return !IsIdle; } }                                            // ÀüÅõ ÁßÀÎÁö
+    // ëª¬ìŠ¤í„° ìƒíƒœ
+    public bool InCombat { get { return !IsIdle; } }                                            // ì „íˆ¬ ì¤‘ì¸ì§€
     public virtual bool IsSpawned { get; protected set; } = false;
     public bool IsIdle { get { if (!IsSpawned) { return true; } return CurState.StateEnum == EMonsterState.IDLE; } }
     public bool IsRoaming { get { return IsIdle && ((MonsterIdleState)CurState).IsMoving; } }
@@ -58,11 +58,11 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     public override bool IsVoid => MonsterType == EMonsterType.NORMAL && base.IsVoid;
 
 
-    // »óÅÂ °ü·Ã ¸Ş¼Òµå
+    // ìƒíƒœ ê´€ë ¨ ë©”ì†Œë“œ
     [SerializeField]
     private bool HasSpeedAttack = true;
 
-    public virtual void StartIdle()          // ·Î¹Ö ½ÃÀÛ
+    public virtual void StartIdle()          // ë¡œë° ì‹œì‘
     {
         CurSpeed = MoveSpeed;
     }
@@ -74,7 +74,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     {
         CurSpeed = ApproachSpeed;
     }
-    public virtual void StartAttack()   // °ø°İ ½ÃÀÛ
+    public virtual void StartAttack()   // ê³µê²© ì‹œì‘
     {
         StopMove();
         AttackAnimation();
@@ -83,35 +83,33 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
             bool random = (UnityEngine.Random.Range(0, 2) == 0) ? true : false;
             m_anim.SetBool("SPEED_ATTACK", random);
         }
-
-        SetAttackCooltime();
     }
-    public void StartHit()              // ÇÇ°İ ½ÃÀÛ
+    public void StartHit()              // í”¼ê²© ì‹œì‘
     {
         StopMove();
         HitAnimation();
     }
-    public void StartDie()              // »ç¸Á ½ÃÀÛ
+    public void StartDie()              // ì‚¬ë§ ì‹œì‘
     {
         StopMove();
-        DieAnimation();                     // ¾Ö´Ï¸ŞÀÌ¼Ç
-        StartDissolve();                    // µğÁ¹ºê
-        m_hpBar.HideUI();                // HP¹Ù
-        m_rigid.useGravity = false;         // Áß·Â
-        GetComponentInChildren<CapsuleCollider>().isTrigger = true;         // Æ®¸®°Å
+        DieAnimation();                     // ì• ë‹ˆë©”ì´ì…˜
+        StartDissolve();                    // ë””ì¡¸ë¸Œ
+        m_hpBar.HideUI();                // HPë°”
+        m_rigid.useGravity = false;         // ì¤‘ë ¥
+        GetComponentInChildren<CapsuleCollider>().isTrigger = true;         // íŠ¸ë¦¬ê±°
     }
 
 
-    // »ç¸Á °ü·Ã
+    // ì‚¬ë§ ê´€ë ¨
     private float m_dissolveTime = 2;
     [SerializeField]
     private float m_dissolveDelay = 1;
 
-    public EMonsterDeathType DeathType { get; protected set; }                                          // »ç¸Á Å¸ÀÔ
-    public virtual bool CanPurify { get; }                                                              // ¼ººÒ Á¶°Ç ¿Ï·á
-    public bool IsPurified { get { return IsGettingLight && CanPurify; } }                              // ¼ººÒ °¡´É »óÅÂ¿¡¼­ »ç¸Á
+    public EMonsterDeathType DeathType { get; protected set; }                                          // ì‚¬ë§ íƒ€ì…
+    public virtual bool CanPurify { get; }                                                              // ì„±ë¶ˆ ì¡°ê±´ ì™„ë£Œ
+    public bool IsPurified { get { return IsGettingLight && CanPurify; } }                              // ì„±ë¶ˆ ê°€ëŠ¥ ìƒíƒœì—ì„œ ì‚¬ë§
 
-    private void SetDeathType(ObjectScript _object)         // »ç¸Á ¿øÀÎ ¼³Á¤
+    private void SetDeathType(ObjectScript _object)         // ì‚¬ë§ ì›ì¸ ì„¤ì •
     {
         if(_object == null) { DeathType = EMonsterDeathType.ETC; return; }
 
@@ -125,9 +123,9 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
             DeathType = EMonsterDeathType.BY_MONSTER;
         }
     }
-    public void DeathResult()           // »ç¸Á ¿øÀÎ¿¡ µû¸¥ °á°ú
+    public void DeathResult()           // ì‚¬ë§ ì›ì¸ì— ë”°ë¥¸ ê²°ê³¼
     {
-        if(false && DeathType == EMonsterDeathType.PURIFY || DeathType == EMonsterDeathType.BY_PLAYER)      // ÀáÁ¤ Áß´Ü
+        if(false && DeathType == EMonsterDeathType.PURIFY || DeathType == EMonsterDeathType.BY_PLAYER)      // ì ì • ì¤‘ë‹¨
         {
             DropItems();
         }
@@ -136,25 +134,25 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
         switch (DeathType)
         {
-            case EMonsterDeathType.PURIFY:      // ¼ººÒ
+            case EMonsterDeathType.PURIFY:      // ì„±ë¶ˆ
                 PlayManager.AddPurified(1);
                 break;
-            case EMonsterDeathType.BY_PLAYER:   // ÇÃ·¹ÀÌ¾î
+            case EMonsterDeathType.BY_PLAYER:   // í”Œë ˆì´ì–´
                 PlayManager.AddSoul(1);
                 break;
-            case EMonsterDeathType.BY_MONSTER:  // ¸ó½ºÅÍ
+            case EMonsterDeathType.BY_MONSTER:  // ëª¬ìŠ¤í„°
 
                 break;
-            case EMonsterDeathType.ETC:         // ±âÅ¸
+            case EMonsterDeathType.ETC:         // ê¸°íƒ€
 
                 break;
         }
     }
-    private void CheckMonsterDeath()        // Ã¹ Å³, Äù½ºÆ® È®ÀÎ
+    private void CheckMonsterDeath()        // ì²« í‚¬, í€˜ìŠ¤íŠ¸ í™•ì¸
     {
         PlayManager.MonsterKilled(MonsterEnum, DeathType);
     }
-    public void DropItems()             // ¾ÆÀÌÅÛ µå¶ø
+    public void DropItems()             // ì•„ì´í…œ ë“œë
     {
         List<SDropItem> drops = m_scriptable.DropInfo.Items;
         foreach(SDropItem drop in drops)
@@ -181,7 +179,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
             }
         }
     }
-    public virtual void StartDissolve()             // dissolve vfx È¿°ú Àç»ı
+    public virtual void StartDissolve()             // dissolve vfx íš¨ê³¼ ì¬ìƒ
     {
         GameObject effect = GameManager.GetEffectObj(EEffectName.MONSTER_DISSOLVE);
         effect.transform.position = Position;
@@ -222,20 +220,20 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     }
 
 
-    // ÇÃ·¹ÀÌ¾î ´É·Â °ü·Ã
+    // í”Œë ˆì´ì–´ ëŠ¥ë ¥ ê´€ë ¨
     protected MonsterLighter m_lightReciever;
 
     protected Color DissolveColor { get; private set; }
 
     private bool IsGettingLight { get { if (m_lightReciever == null) return false; return m_lightReciever.GettingLight; } }
-    private bool IsPurifyGlowing { get; set; }                  // ºû³ª°í ÀÖ¾î
+    private bool IsPurifyGlowing { get; set; }                  // ë¹›ë‚˜ê³  ìˆì–´
 
-    public void GetLight()              // ºûÀ» ¹Ş¾ÒÀ» ¶§ ½ÇÇà
+    public void GetLight()              // ë¹›ì„ ë°›ì•˜ì„ ë•Œ ì‹¤í–‰
     {
         if (m_hpBar)
             m_hpBar.gameObject.SetActive(true);
     }
-    public void LoseLight()            // ºûÀ» ±×¸¸ ¹ŞÀ» ¶§ ½ÇÇà
+    public void LoseLight()            // ë¹›ì„ ê·¸ë§Œ ë°›ì„ ë•Œ ì‹¤í–‰
     {
         if (m_hpBar)
             m_hpBar.gameObject.SetActive(false);
@@ -293,10 +291,10 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     }
 
 
-    // UI °ü·Ã
+    // UI ê´€ë ¨
     private ObjectHPBarScript m_hpBar;
 
-    protected void SetUI()                // UI ¼³Á¤
+    protected void SetUI()                // UI ì„¤ì •
     {
         m_hpBar = GetComponentInChildren<ObjectHPBarScript>();
         m_hpBar.SetMaxHP(MaxHP);
@@ -313,7 +311,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     }
 
 
-    // ¾÷µ¥ÀÌÆ®
+    // ì—…ë°ì´íŠ¸
     public override void ProcCooltime()
     {
         base.ProcCooltime();

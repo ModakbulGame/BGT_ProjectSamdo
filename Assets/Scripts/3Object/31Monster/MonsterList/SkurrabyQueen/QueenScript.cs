@@ -25,29 +25,29 @@ public class QueenScript : MonsterScript
     private ObjectPool<GameObject> m_skurrabyPool;
 
     [SerializeField]
-    private VisualEffect m_poisonVFX;                               // µ¶ VFX
+    private VisualEffect m_poisonVFX;                               // ë… VFX
 
-    private const int MAX_SKURRABY = 3;                             // ÃÖ´ë ¼ÒÈ¯ µüÁö
-    private readonly float SkillDelay = 6;                          // ½ºÅ³ ÇÑ¹ø ¾²°í ´ÙÀ½ ½ºÅ³±îÁö
-    public readonly float EvadeRange = 3;                           // È¸ÇÇ °Å¸®
+    private const int MAX_SKURRABY = 3;                             // ìµœëŒ€ ì†Œí™˜ ë”±ì§€
+    private readonly float SkillDelay = 6;                          // ìŠ¤í‚¬ í•œë²ˆ ì“°ê³  ë‹¤ìŒ ìŠ¤í‚¬ê¹Œì§€
+    public readonly float EvadeRange = 3;                           // íšŒí”¼ ê±°ë¦¬
 
-    private readonly float SpitRange = 7.5f;                        // µ¶ »Ñ¸®±â °Å¸® ¹üÀ§
-    private readonly float SpitAngle = 60;                          // µ¶ »Ñ¸®±â °¢µµ ¹üÀ§
-    private readonly float SpitDelay = 0.5f;                        // µ¶ »Ñ¸®±â °£°İ
+    private readonly float SpitRange = 7.5f;                        // ë… ë¿Œë¦¬ê¸° ê±°ë¦¬ ë²”ìœ„
+    private readonly float SpitAngle = 60;                          // ë… ë¿Œë¦¬ê¸° ê°ë„ ë²”ìœ„
+    private readonly float SpitDelay = 0.5f;                        // ë… ë¿Œë¦¬ê¸° ê°„ê²©
 
-    private int CurSkurraby { get; set; } = 0;                      // ¼ÒÈ¯ÇÑ µüÁö ¼ö
+    private int CurSkurraby { get; set; } = 0;                      // ì†Œí™˜í•œ ë”±ì§€ ìˆ˜
     private Vector3 SkurrabyOffset = new(0, 1.5f, 2.75f);
 
-    public EQueenSkillName SkillIdx { get; private set; }           // ÇöÀç ½ºÅ³
+    public EQueenSkillName SkillIdx { get; private set; }           // í˜„ì¬ ìŠ¤í‚¬
 
     private readonly float[] m_skillCooltime = new float[] { 20, 12 };
 
     private readonly float[] SkillCoolCount = new float[(int)EQueenSkillName.LAST];
-    public bool CanUseSkill { get { return CanCreateSkurraby || CanSpitPoison; } }  // ½ºÅ³ »ç¿ë °¡´É
+    public bool CanUseSkill { get { return CanCreateSkurraby || CanSpitPoison; } }  // ìŠ¤í‚¬ ì‚¬ìš© ê°€ëŠ¥
     private bool CanCreateSkurraby { get { return SkillCoolCount[(int)EQueenSkillName.CREATE_SKURRABY] <= 0 && CurSkurraby < MAX_SKURRABY; } }
     private bool CanSpitPoison { get { return SkillCoolCount[(int)EQueenSkillName.SPIT_POISON] <= 0; } }
 
-    public bool IsSpitting { get; private set; }                    // µ¶ »Õ´Â Áß
+    public bool IsSpitting { get; private set; }                    // ë… ë¿œëŠ” ì¤‘
 
     public float AngleToPlayer
     {
@@ -64,7 +64,7 @@ public class QueenScript : MonsterScript
     }
 
 
-    public void EvadeQueen()                                        // È¸ÇÇ ±âµ¿
+    public void EvadeQueen()                                        // íšŒí”¼ ê¸°ë™
     {
         StopMove();
         LookTarget();
@@ -72,7 +72,7 @@ public class QueenScript : MonsterScript
         m_rigid.velocity = dir;
     }
 
-    public override void StartAttack()                              // °ø°İ ½ÃÀÛ
+    public override void StartAttack()                              // ê³µê²© ì‹œì‘
     {
         StopMove();
         if (CanCreateSkurraby)
@@ -90,22 +90,22 @@ public class QueenScript : MonsterScript
         SkillCoolCount[skill] = m_skillCooltime[skill];
         if (SkillCoolCount[1-skill] <= SkillDelay) { SkillCoolCount[1-skill] = SkillDelay; }
     }
-    public override void CreateAttack()                             // µüÁö ¸¸µé±â
+    public override void CreateAttack()                             // ë”±ì§€ ë§Œë“¤ê¸°
     {
         CreateSkurraby();
     }
-    public override void AttackTriggerOn()                          // µ¶ »Õ±â ½ÃÀÛ
+    public override void AttackTriggerOn()                          // ë… ë¿œê¸° ì‹œì‘
     {
         IsSpitting = true;
         m_poisonVFX.Play();
         StartCoroutine(SpittingCoroutine());
     }
-    public override void AttackTriggerOff()                         // µ¶ »Õ±â Áß´Ü
+    public override void AttackTriggerOff()                         // ë… ë¿œê¸° ì¤‘ë‹¨
     {
         IsSpitting = false;
         m_poisonVFX.Stop();
     }
-    public void CreateSkurraby()                                    // µüÁö ¸®¾ó ¸¸µé±â
+    public void CreateSkurraby()                                    // ë”±ì§€ ë¦¬ì–¼ ë§Œë“¤ê¸°
     {
         if (CurSkurraby >= MAX_SKURRABY) { return; }
         GameObject skurraby = m_skurrabyPool.Get();
@@ -116,7 +116,7 @@ public class QueenScript : MonsterScript
         skurraby.transform.SetParent(null);
         HatchCount++;
     }
-    private IEnumerator SpittingCoroutine()                         // µ¶ »Õ±â ÄÚ·çÆ¾
+    private IEnumerator SpittingCoroutine()                         // ë… ë¿œê¸° ì½”ë£¨í‹´
     {
         yield return new WaitForSeconds(SpitDelay);
         while (IsSpitting)
@@ -125,7 +125,7 @@ public class QueenScript : MonsterScript
             yield return new WaitForSeconds(SpitDelay);
         }
     }
-    private void SpitPoison()                                       // µ¶ ¸®¾ó »Õ±â
+    private void SpitPoison()                                       // ë… ë¦¬ì–¼ ë¿œê¸°
     {
         Collider[] cols = Physics.OverlapSphere(Position, SpitRange, ValueDefine.HITTABLE_PLAYER_LAYER);
         foreach (Collider col in cols)
@@ -136,11 +136,6 @@ public class QueenScript : MonsterScript
             break;
         }
     }
-    public override void AttackDone()                               // °ø°İ ¿Ï·á
-    {
-        base.AttackDone();
-    }
-
 
     public override void OnSpawned()
     {
@@ -149,7 +144,7 @@ public class QueenScript : MonsterScript
     }
 
 
-    // ÃÊ±â ¼³Á¤
+    // ì´ˆê¸° ì„¤ì •
     private void InitPool()
     {
         m_skurrabyPool = new(OnPoolCreate, OnPoolGet, OnPoolRelease, OnPoolDestroy, true, MAX_SKURRABY, MAX_SKURRABY);

@@ -19,7 +19,7 @@ public class NormalAttackScript : ObjectAttackScript
     private IEnumerator OffDelay(float _time)
     {
         yield return new WaitForSeconds(_time);
-        m_attacker.AttackTriggerOff();
+        AttackOff();
     }
     public override void AttackOff()
     {

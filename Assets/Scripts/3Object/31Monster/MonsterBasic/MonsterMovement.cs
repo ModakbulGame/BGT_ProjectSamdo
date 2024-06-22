@@ -5,23 +5,23 @@ using UnityEngine;
 
 public abstract partial class MonsterScript
 {
-    // ±æÃ£±â
+    // ê¸¸ì°¾ê¸°
     protected AIPath m_aiPath;
     public bool Arrived { get { return !m_aiPath.pathPending && m_aiPath.hasPath && m_aiPath.reachedEndOfPath; } }
 
 
-    // È°µ¿ ¹üÀ§
+    // í™œë™ ë²”ìœ„
     [SerializeField]
-    private MonsterSpawner m_spawnPoint;         // È°µ¿ ±âÁØÁ¡
-    public void SetSpawnPoint(MonsterSpawner _point) { m_spawnPoint = _point; }         // ±âÁØÁ¡ ¼³Á¤
-    public bool HasPoint { get { return m_spawnPoint != null; } }                       // ±âÁØÁ¡ Á¸Àç ¿©ºÎ
+    private MonsterSpawner m_spawnPoint;         // í™œë™ ê¸°ì¤€ì 
+    public void SetSpawnPoint(MonsterSpawner _point) { m_spawnPoint = _point; }         // ê¸°ì¤€ì  ì„¤ì •
+    public bool HasPoint { get { return m_spawnPoint != null; } }                       // ê¸°ì¤€ì  ì¡´ì¬ ì—¬ë¶€
     public SpawnerData SpawnerData { get { return m_spawnPoint.SpawnerData; } }
     public Vector3 SpawnPosition { get { if (!HasPoint) { return new(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity); } return m_spawnPoint.SpawnPosition; } }
     public float SpawnFenceRange { get { return m_combatInfo.FenceRange * m_spawnPoint.RangeMultiplier; } }
     protected bool OutOfRange(Vector3 _position) { if(!HasPoint) { return false; } return Vector3.Distance(SpawnPosition, _position) > SpawnFenceRange; }
 
 
-    // ±âº» ¿òÁ÷ÀÓ
+    // ê¸°ë³¸ ì›€ì§ì„
     protected bool IsTracing { get; set; }
 
     public override float CurSpeed { get { return m_aiPath.maxSpeed; } protected set { m_aiPath.maxSpeed = value; } }
@@ -43,6 +43,7 @@ public abstract partial class MonsterScript
     }
     public virtual void SetDestination(Vector3 _destination)
     {
+        m_aiPath.isStopped = false;
         m_aiPath.destination = _destination;
         m_aiPath.SearchPath();
         CurSpeed = MoveSpeed;
@@ -59,12 +60,11 @@ public abstract partial class MonsterScript
         }
     }
 
-    public override void StopMove()                  // ¿òÁ÷ÀÓ ÃÊ±âÈ­
+    public override void StopMove()                  // ì›€ì§ì„ ì´ˆê¸°í™”
     {
         base.StopMove();
         if (!HasPath) { return; }
-        m_aiPath.maxSpeed = 0;
-        m_aiPath.destination = Vector3.positiveInfinity;
+        m_aiPath.SetPath(null);
         HasPath = false;
     }
 

@@ -92,14 +92,14 @@ public class WaterGuardianScript : AnimatedAttackMonster
 
 
 
-    // ½ºÅ³
-    private readonly float AnySkillCooltime = 8;                // ½ºÅ³ °£ ÃÖ¼Ò °£°Ý
+    // ìŠ¤í‚¬
+    private readonly float AnySkillCooltime = 8;                // ìŠ¤í‚¬ ê°„ ìµœì†Œ ê°„ê²©
     private float AnySkillTimeCount { get; set; }
 
     [SerializeField]
-    private float[] m_skillDamage = new float[3];
+    private float[] m_skillDamage = new float[(int)EWaterGuardianSkill.LAST];
     [SerializeField]
-    private float[] m_skillCooltime = new float[3];
+    private float[] m_skillCooltime = new float[(int)EWaterGuardianSkill.LAST];
 
     public int NextSkillIdx { get; set; }
     public override int SkillNum => (int)EWaterGuardianSkill.LAST;

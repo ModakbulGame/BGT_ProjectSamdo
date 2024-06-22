@@ -6,7 +6,7 @@ using UnityEngine;
 
 public abstract partial class MonsterScript
 {
-    // ÀüÅõ ¸Å´ÏÀú
+    // ì „íˆ¬ ë§¤ë‹ˆì €
     private MonsterBattler m_battleManager;
     public bool AgainstMonster { get { return m_battleManager.AgainstMonster; } set { m_battleManager.AgainstMonster = value; } }
     private void SetBattleTarget(ObjectScript _obj)
@@ -27,17 +27,17 @@ public abstract partial class MonsterScript
     {
         float damage = _hit.Damage * (100-Defense) * 0.01f;
         GetDamage(damage, _hit.Attacker);
-        Debug.Log($"{_hit.Attacker.ObjectName} => {ObjectName} {damage} µ¥¹ÌÁö");
+        Debug.Log($"{_hit.Attacker.ObjectName} => {ObjectName} {damage} ë°ë¯¸ì§€");
     }
 
 
-    // ±âº» ÀüÅõ
+    // ê¸°ë³¸ ì „íˆ¬
     public override void SetHP(float _hp)
     {
         base.SetHP(_hp);
         m_hpBar.SetCurHP(CurHP);
-    }                   // HP ¼³Á¤
-    public override void GetHit(HitData _hit)    // ¸ÂÀ½
+    }                   // HP ì„¤ì •
+    public override void GetHit(HitData _hit)    // ë§ìŒ
     {
         if (CheckMonsterBattle(_hit)) { return; }
         SetBattleTarget(_hit.Attacker);
@@ -70,18 +70,18 @@ public abstract partial class MonsterScript
     public virtual void GetPropHit(EPowerProperty _prop) { }
 
 
-    // °ø°İ °ü·Ã
+    // ê³µê²© ê´€ë ¨
     [SerializeField]
-    protected GameObject[] m_normalAttacks;                                      // ±âº» °ø°İ ÇÁ¸®Æà
+    protected GameObject[] m_normalAttacks;                                      // ê¸°ë³¸ ê³µê²© í”„ë¦¬í
 
     protected int AttackIdx { get; set; }
 
-    public virtual bool CanAttack { get { return HasTarget && TargetInAttackRange && AttackTimeCount <= 0; } }      // °ø°İ °¡´É ¿©ºÎ
-    public float AttackTimeCount { get; set; } = 0;                                                                 // °ø°İ ÄğÅ¸ÀÓ
+    public virtual bool CanAttack { get { return HasTarget && TargetInAttackRange && AttackTimeCount <= 0; } }      // ê³µê²© ê°€ëŠ¥ ì—¬ë¶€
+    public float AttackTimeCount { get; set; } = 0;                                                                 // ê³µê²© ì¿¨íƒ€ì„
 
     public virtual void SetAttackCooltime()
     {
-        AttackTimeCount = 1 / AttackSpeed;
+        AttackTimeCount = AttackSpeed;
     }
     public override void AttackTriggerOn()
     {
@@ -107,6 +107,7 @@ public abstract partial class MonsterScript
 
     public override void AttackDone()
     {
+        SetAttackCooltime();
         if (CurTarget != null)
             ChangeState(EMonsterState.APPROACH);
         else
@@ -114,7 +115,7 @@ public abstract partial class MonsterScript
     }
 
 
-    // ½ºÅ³
+    // ìŠ¤í‚¬
     [SerializeField]
     protected ObjectAttackScript[] SkillList;
     public virtual int SkillNum { get { return 0; } }
@@ -156,22 +157,22 @@ public abstract partial class MonsterScript
 
 
 
-    // ÀüÅõ ´ë»ó °ü·Ã
+    // ì „íˆ¬ ëŒ€ìƒ ê´€ë ¨
     public readonly float MissTargetDelay = 5f;
 
-    public ObjectScript CurTarget { get; protected set; }                                               // ÇöÀç Å¸°Ù
-    public bool HasTarget { get { return (CurTarget != null && !CurTarget.IsDead); } }                  // Å¸°ÙÀ» °¡Áö°í ÀÖ´ÂÁö
-    public float TargetDistance { get { if (HasTarget) return Vector3.Distance(Position, CurTarget.Position); return -1; } }    // ¸ñÇ¥¿ÍÀÇ °Å¸®
-    public bool TargetInAttackRange { get { return TargetDistance <= AttackRange; } }                   // °ø°İ¹üÀ§ ³»ÀÎÁö
+    public ObjectScript CurTarget { get; protected set; }                                               // í˜„ì¬ íƒ€ê²Ÿ
+    public bool HasTarget { get { return (CurTarget != null && !CurTarget.IsDead); } }                  // íƒ€ê²Ÿì„ ê°€ì§€ê³  ìˆëŠ”ì§€
+    public float TargetDistance { get { if (HasTarget) return Vector3.Distance(Position, CurTarget.Position); return -1; } }    // ëª©í‘œì™€ì˜ ê±°ë¦¬
+    public bool TargetInAttackRange { get { return TargetDistance <= AttackRange; } }                   // ê³µê²©ë²”ìœ„ ë‚´ì¸ì§€
 
-    public void FindTarget()            // Å¸°Ù Å½»ö (Å¸°Ù X)
+    public void FindTarget()            // íƒ€ê²Ÿ íƒìƒ‰ (íƒ€ê²Ÿ X)
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, ViewRange);
 
         if (targets.Length == 0) return;
         foreach (Collider col in targets)
         {
-            PlayerController player = col.GetComponentInParent<PlayerController>();         // ÀÏ´Ü ÇÃ·¹ÀÌ¾î¸¸ Ã¼Å©
+            PlayerController player = col.GetComponentInParent<PlayerController>();         // ì¼ë‹¨ í”Œë ˆì´ì–´ë§Œ ì²´í¬
             if (player == null) { continue; }
             Vector3 targetPos = col.transform.position;
             Vector3 targetDir = (targetPos - transform.position).normalized;
@@ -183,19 +184,19 @@ public abstract partial class MonsterScript
             }
         }
     }
-    public bool CheckTarget()           // Å¸°Ù È®ÀÎ (Å¸°Ù O)
+    public bool CheckTarget()           // íƒ€ê²Ÿ í™•ì¸ (íƒ€ê²Ÿ O)
     {
         if (CurTarget == null) { return false; }
         if (Vector3.Distance(CurTarget.Position, Position) > ReturnRange) { return false; }
         return true;
     }
-    public void MissTarget()            // Å¸°Ù ÀÒ±â
+    public void MissTarget()            // íƒ€ê²Ÿ ìƒê¸°
     {
         CurTarget = null;
     }
 
     public virtual bool HasPath { get; set; } = true;
-    public virtual void ApproachTarget()            // Å¸°Ù¿¡°Ô Á¢±Ù
+    public virtual void ApproachTarget()            // íƒ€ê²Ÿì—ê²Œ ì ‘ê·¼
     {
         if (!HasTarget) { HasPath = false; return; }
         Vector2 dir = (CurTarget.Position2 - Position2);
@@ -207,14 +208,14 @@ public abstract partial class MonsterScript
     }
 
 
-    // ÇÇ°İ °ü·Ã
-    public readonly float StunDelay = 1f;                       // ÇÇ°İ ½Ã °æÁ÷
-    private readonly float HitGuardEndTime = 1.5f;              // °¡µå ÁßÀÎ ÇÃ·¹ÀÌ¾î Å¸°İ ÈÄ ÇÇ°İ ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı ±â°£
+    // í”¼ê²© ê´€ë ¨
+    public readonly float StunDelay = 1f;                       // í”¼ê²© ì‹œ ê²½ì§
+    private readonly float HitGuardEndTime = 1.5f;              // ê°€ë“œ ì¤‘ì¸ í”Œë ˆì´ì–´ íƒ€ê²© í›„ í”¼ê²© ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ ê¸°ê°„
 
     private float HitGuardCooltime { get; set; }
 
-    private bool HitGuarding { get; set; }                                                              // ÇÃ·¹ÀÌ¾î °¡µå Áß ¶§¸²
-    public override bool IsUnstoppable { get { return InCombat && !HitGuarding; } }                     // °ø°İ ¸ğ¼Ç Äµ½½ ºÒ°¡ÀÎÁö
+    private bool HitGuarding { get; set; }                                                              // í”Œë ˆì´ì–´ ê°€ë“œ ì¤‘ ë•Œë¦¼
+    public override bool IsUnstoppable { get { return InCombat && !HitGuarding; } }                     // ê³µê²© ëª¨ì…˜ ìº”ìŠ¬ ë¶ˆê°€ì¸ì§€
 
     public void HitGuardingPlayer()
     {

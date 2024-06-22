@@ -185,10 +185,13 @@ MonoBehaviour:
     ViewRange: 20
     EngageRange: 15
     ReturnRange: 15
-    AttackRange: 5
+    AttackRange: 2
     ApproachDelay: 2
     FenceRange: 25
   m_spawnPoint: {fileID: 0}
+  m_roamingDistance:
+    Min: 1
+    Max: 5
   HasSpeedAttack: 1
   m_dissolveDelay: 2
   m_smash: {fileID: 8668340924614356128}
