@@ -252,7 +252,7 @@ public partial class PlayerController
         }
 
 
-        m_rigid.AddForce(gravity);
+        m_rigid.AddForce(gravity, ForceMode.Acceleration);
     }
 
 
