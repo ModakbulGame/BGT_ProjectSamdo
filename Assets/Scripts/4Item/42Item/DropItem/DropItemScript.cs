@@ -6,54 +6,50 @@ using UnityEngine;
 public class DropItemScript : PooledItem, IInteractable
 {
     [SerializeField]
-    private SItem m_dropItem;
+    private List<SItem> m_dropItems;
     [SerializeField]
     private int m_itemNum;
 
-    public SItem DropItem { get { return m_dropItem; } }
-    public int ItemNum { get { return m_itemNum; } }
-    public string DropItemName { get; private set; }
+    public List<SItem> DropItem { get { return m_dropItems; } }
 
-    public void SetDropItem(string _id)
+    public void SetDropItems(List<SItem> _items)
     {
-        SItem item = ItemManager.ID2Item(_id);
-        DropItemName = GameManager.GetItemInfo(item).ItemName;
-        SetDropItem(item);
+        m_dropItems = new();
+        foreach(SItem item in _items) { m_dropItems.Add(item); }
     }
-    public void SetDropItem(SItem _item) { SetDropItem(_item, 1); }
-    public void SetDropItem(SItem _item, int _num) { m_dropItem = _item; m_itemNum = _num; }
 
-    // ------------- ¿Œ≈Õ∆‰¿ÃΩ∫ ±∏«ˆ ------------------ //
+    // ------------- Ïù∏ÌÑ∞ÌéòÏù¥Ïä§ Íµ¨ÌòÑ ------------------ //
     public EInteractType InteractType { get { return EInteractType.ITEM; } }
 
-    public float UIOffset { get { return 1.5f; } }
-    public virtual string InfoTxt { get { return "»πµÊ"; } }
+
+    public virtual string InfoTxt { get { return "ÌöçÎìù"; } }
 
     public virtual void StartInteract()
     {
         GetItem();
+        PlayManager.StopPlayerInteract();
     }
 
     public virtual void StopInteract()
     {
-
+        PlayManager.StopPlayerInteract();
     }
 
 
     public override void ReleaseToPool()
     {
         base.ReleaseToPool();
-        m_dropItem = SItem.Empty;
+        m_dropItems.Clear();
     }
 
 
     public void GetItem()
     {
-        PlayManager.AddInventoryItem(DropItem, 1, true);
-        //if (PlayManager.CheckRequiredQuestObject(DropItemName))
-        //{
-        //    PlayManager.DoObjectQuest(DropItemName, 1);
-        //}
+        foreach (SItem item in m_dropItems)
+        {
+            PlayManager.AddInventoryItem(item, 1, true);
+        }
+
         ReleaseToPool();
     }
 }

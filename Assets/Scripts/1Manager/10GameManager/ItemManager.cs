@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ¾ÆÀÌÅÛ °ü·Ã enum -> ItemEnum¿¡ ÀÖÀ½
+// ì•„ì´í…œ ê´€ë ¨ enum -> ItemEnumì— ìˆìŒ
 
 [Serializable]
-public struct SItem             // ¾ÆÀÌÅÛ ±¸Á¶Ã¼
+public struct SItem             // ì•„ì´í…œ êµ¬ì¡°ì²´
 {
     public EItemType Type;
     public int Idx;
@@ -36,18 +36,18 @@ public struct DropInfo
 }
 
 [Serializable]
-public struct SDropItem         // µå¶ø ¾ÆÀÌÅÛ ±¸Á¶Ã¼
+public struct SDropItem         // ë“œë ì•„ì´í…œ êµ¬ì¡°ì²´
 {
     public string ID;
     public float Prob;
-
+    public SItem Item { get { return ItemManager.ID2Item(ID); } }
     public SDropItem(string _id, float _prob) { ID = _id; Prob = _prob; }
 }
 
 public class ItemInfo
 {
     public ItemScriptable ItemData { get; private set; }
-    public string ItemID { get { return ItemData.ID; } }                    // °øÅë ÇÊµå
+    public string ItemID { get { return ItemData.ID; } }                    // ê³µí†µ í•„ë“œ
     public string ItemName { get { return ItemData.ItemName; } }
     public EItemType ItemType { get; private set; }
     public string ItemDescription { get { return ItemData.Description; } }
@@ -64,11 +64,11 @@ public class ItemInfo
 
 public class ItemManager : MonoBehaviour
 {
-    // ¾ÆÀÌÅÛ Á¤º¸
+    // ì•„ì´í…œ ì •ë³´
     private readonly Dictionary<SItem, ItemInfo> m_itemInfo = new();
     public ItemInfo GetItemInfo(SItem _item)
     {
-        if (_item.IsEmpty) { Debug.LogError("ºó ¾ÆÀÌÅÛ"); return null; }
+        if (_item.IsEmpty) { Debug.LogError("ë¹ˆ ì•„ì´í…œ"); return null; }
         return m_itemInfo[_item];
     }
 
@@ -109,23 +109,23 @@ public class ItemManager : MonoBehaviour
 
 
     [SerializeField]
-    private GameObject[] m_throwItemPrefabs = new GameObject[(int)EThrowItemName.LAST];     // ÅõÃ´ ¾ÆÀÌÅÛ
+    private GameObject[] m_throwItemPrefabs = new GameObject[(int)EThrowItemName.LAST];     // íˆ¬ì²™ ì•„ì´í…œ
     public GameObject GetThrowItemPrefab(EThrowItemName _item)
     {
         return PoolManager.GetObject(m_throwItemData[(int)_item].ItemPrefab);
     }
 
 
-    // ¾ÆÀÌÅÛ ÇÁ¸®Æà
+    // ì•„ì´í…œ í”„ë¦¬í
     [SerializeField]
-    private GameObject[] m_dropItemPrefabs = new GameObject[(int)EItemType.LAST];            // µå¶ø ¾ÆÀÌÅÛ
+    private GameObject[] m_dropItemPrefabs = new GameObject[(int)EItemType.LAST];            // ë“œë ì•„ì´í…œ
     public GameObject GetDropItemPrefab(EItemType _item)
     {
         return PoolManager.GetObject(m_dropItemPrefabs[(int)_item]);
     }
 
 
-    public GameObject[] ItemArray { get {                                                   // ÀüÃ¼ ¾ÆÀÌÅÛ
+    public GameObject[] ItemArray { get {                                                   // ì „ì²´ ì•„ì´í…œ
             List<GameObject> list = new();
             list.AddRange(m_dropItemPrefabs);
             list.AddRange(m_throwItemPrefabs);
@@ -194,7 +194,7 @@ public class ItemManager : MonoBehaviour
 
 
 
-    // ¾ÆÀÌÅÛ º° Á¾·ù ¼ö
+    // ì•„ì´í…œ ë³„ ì¢…ë¥˜ ìˆ˜
     private readonly uint[] ItemCounts = new uint[(int)EItemType.LAST]
     { (uint)EWeaponName.LAST, (uint)EPatternName.LAST, (uint)EThrowItemName.LAST, (uint)EOtherItemName.LAST };
 

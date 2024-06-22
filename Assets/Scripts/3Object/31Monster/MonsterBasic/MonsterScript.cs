@@ -112,7 +112,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
     private void SetDeathType(ObjectScript _object)         // 사망 원인 설정
     {
-        if(_object == null) { DeathType = EMonsterDeathType.ETC; return; }
+        if (_object == null) { DeathType = EMonsterDeathType.ETC; return; }
 
         if (PlayManager.CheckIsPlayer(_object))
         {
@@ -126,7 +126,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     }
     public void DeathResult()           // 사망 원인에 따른 결과
     {
-        if(false && DeathType == EMonsterDeathType.PURIFY || DeathType == EMonsterDeathType.BY_PLAYER)      // 잠정 중단
+        if (false && DeathType == EMonsterDeathType.PURIFY || DeathType == EMonsterDeathType.BY_PLAYER)      // 잠정 중단
         {
             DropItems();
         }
@@ -155,18 +155,20 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     }
     public void DropItems()             // 아이템 드랍
     {
-        List<SDropItem> drops = m_scriptable.DropInfo.Items;
-        foreach(SDropItem drop in drops)
+        List<SDropItem> dropInfo = m_scriptable.DropInfo.Items;
+        List<SItem> items = new();
+        foreach (SDropItem drop in dropInfo)
         {
             if (UnityEngine.Random.Range(0f, 1f) <= drop.Prob)
             {
-                EItemType type = ItemManager.IDToItemType(drop.ID);
-                GameObject item = GameManager.GetDropItemPrefab(type);
-                item.transform.position = Position;
-                DropItemScript script = item.GetComponent<DropItemScript>();
-                script.SetDropItem(drop.ID);
+                items.Add(drop.Item);
             }
         }
+        if(items.Count == 0) { return; }
+        GameObject prefab = GameManager.GetDropItemPrefab(EItemType.THROW);
+        prefab.transform.position = Position;
+        DropItemScript script = prefab.GetComponent<DropItemScript>();
+        script.SetDropItems(items);
     }
 
     private void ResetDissolve()
@@ -321,7 +323,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
 
     public override void Update()
     {
-        if(!IsSpawned) { return; }
+        if (!IsSpawned) { return; }
 
         UpdateAnimation();
 
