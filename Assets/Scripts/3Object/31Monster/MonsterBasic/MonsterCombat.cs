@@ -19,14 +19,9 @@ public abstract partial class MonsterScript
     {
         if (_hit.Attacker.IsPlayer) { return false; }
         MonsterScript monster = (MonsterScript)_hit.Attacker;
-        if (!AgainstMonster && !monster.AgainstMonster) { NotTargetDamage(_hit); return true; }
+        if (!AgainstMonster && !monster.AgainstMonster) { return false; }
         AgainstMonster = true;
         return false;
-    }
-    private void NotTargetDamage(HitData _hit)
-    {
-        _hit.Attacker = null;
-        GetDamage(_hit);
     }
 
 

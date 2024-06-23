@@ -15,7 +15,7 @@ public class ObjectAttackScript : MonoBehaviour
     protected ECCType[] m_ccList = new ECCType[0];
     [Range(0,1)]
     [SerializeField]
-    protected float m_impulseAmount = 0;
+    protected float m_impulseAmount = 0.1f;
 
 
     public virtual float Damage { get; private set; } = 5;
