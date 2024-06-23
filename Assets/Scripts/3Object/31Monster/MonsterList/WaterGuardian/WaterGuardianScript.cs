@@ -71,6 +71,10 @@ public class WaterGuardianScript : BossMonster
             Vector3 dir = (CurTarget.Position-Position).normalized;
             m_rigid.AddForce(15 * dir);
         }
+/*        else if (AttackIdx != 2)
+        {
+            AttackObject.PlayEffect();
+        }*/
     }
     public override void AttackTriggerOff()
     {
@@ -79,6 +83,11 @@ public class WaterGuardianScript : BossMonster
             AnimateAttackScript script = attack.GetComponent<AnimateAttackScript>();
             script.AttackOff();
         }
+
+/*        if (AttackIdx != 2)
+        {
+            AttackObject.StopEffect();
+        }*/
     }
     public override void AttackDone()
     {

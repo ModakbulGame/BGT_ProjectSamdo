@@ -47,17 +47,13 @@ public class GameManager : SingleTon<GameManager>
     // 소리
     private SoundManager m_soundManager;
     public static SoundManager SoundManager { get { return Inst.m_soundManager; } }
-    public static int BGMVolume { get { return SoundManager.BGMVolume; } }
-    public static int SEVolume { get { return SoundManager.SEVolume; } }
+    public static float BGMVolume { get { return SoundManager.BGMVolume; } }
+    public static float SEVolume { get { return SoundManager.SEVolume; } }
     public static void SetBGMVolume(int _volume) { SoundManager.SetBGMVolume(_volume); }
     public static void SetSEVolume(int _volume) { SoundManager.SetSEVolume(_volume); }
     public static void PlayBGM(EBGM _bgm) { SoundManager.PlayBGM(_bgm); }
     public static void StopBGM() { SoundManager.StopBGM(); }
-    public static void PlaySE(EPlaySE _se) { SoundManager.PlaySE(_se); }
-    public static void PlaySE(EPlayerSE _se) { SoundManager.PlaySE(_se); }
-    public static void PlaySE(ESkillSE _se) { SoundManager.PlaySE(_se); }
-    public static void PlaySE(EMonsterSE _se) { SoundManager.PlaySE(_se); }
-    public static void PlaySE(EUISE _se) { SoundManager.PlaySE(_se); }
+    public static void PlaySE(int _idx, Vector3 _point) { SoundManager.PlaySE(_idx, _point); }
 
 
     // 입력

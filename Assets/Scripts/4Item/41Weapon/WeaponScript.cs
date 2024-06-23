@@ -57,6 +57,8 @@ public class WeaponScript : AnimateAttackScript
             EEffectName effectName = HitType == EHitType.SLASH ? EEffectName.HIT_SLASH : EEffectName.HIT_BLOW;
             GameObject effect = GameManager.GetEffectObj(effectName);
             effect.transform.position = _pos;
+
+            GameManager.PlaySE(0, _pos);
         }
     }
 

@@ -36,8 +36,7 @@ public class OptionSettingUI : BaseUI
     }
     public void InitValues()
     {
-        SetBGMPoint(GameManager.BGMVolume);
-        SetSEPoint(GameManager.SEVolume);
+
     }
     public void SetVolume(EVolumeType _type, int _vol)
     {
