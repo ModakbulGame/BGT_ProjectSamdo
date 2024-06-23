@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_baseInfo:
     ObjectName: "\uC0DD\uBA85 \uBBF8\uB2C8\uC6C0"
-    AttackSpeed: 2
+    AttackSpeed: 1.5
     MoveSpeed: 3
   m_buffNDebuff: []
   m_curHP: 0
@@ -65,10 +65,10 @@ MonoBehaviour:
   SkillList: []
   m_scriptable: {fileID: 11400000, guid: 39e923ed386e0a643bb8ce1ccaabda2f, type: 2}
   m_combatInfo:
-    MaxHP: 100
+    MaxHP: 125
     Defense: 5
-    Attack: 5
-    ApproachSpeed: 5
+    Attack: 4
+    ApproachSpeed: 4
     ViewAngle: 120
     ViewRange: 8
     EngageRange: 8
@@ -1349,7 +1349,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   UseGluing: 1
-  MainGlueBlend: 1
+  MainGlueBlend: 0.2
   GlueRangeThreshold: 0.375
   GlueFadeInSpeed: 0.85
   AllowGlueBelowFoot: 0.2
@@ -1369,9 +1369,9 @@ MonoBehaviour:
   _Editor_EnsureCount: 0
   _Editor_OnValidateTrigger: 1
   _EditorAllowAutoUpdateFeetParams: 1
-  _EditorCategory: 0
+  _EditorCategory: 1
   _EditorSetupCategory: 0
-  _EditorMotionCategory: 0
+  _EditorMotionCategory: 2
   _EditorExtraCategory: 0
   IKHintMode: 0
   LimitLegStretch: 0.99

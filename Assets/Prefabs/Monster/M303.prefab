@@ -204,7 +204,7 @@ MonoBehaviour:
   m_baseInfo:
     ObjectName: "\uC6C0"
     AttackSpeed: 3
-    MoveSpeed: 3
+    MoveSpeed: 2
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
@@ -223,8 +223,8 @@ MonoBehaviour:
   m_combatInfo:
     MaxHP: 400
     Defense: 5
-    Attack: 5
-    ApproachSpeed: 5
+    Attack: 12
+    ApproachSpeed: 3.5
     ViewAngle: 120
     ViewRange: 15
     EngageRange: 15
@@ -408,6 +408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ccList: 
+  m_impulseAmount: 0
   m_modelMultiplier: 100
 --- !u!65 &5133798512766201723
 BoxCollider:
@@ -476,6 +477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ccList: 
+  m_impulseAmount: 0
   m_modelMultiplier: 100
 --- !u!65 &6201010859401034029
 BoxCollider:
@@ -544,6 +546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ccList: 
+  m_impulseAmount: 0
   m_modelMultiplier: 100
 --- !u!65 &6001267854791666522
 BoxCollider:

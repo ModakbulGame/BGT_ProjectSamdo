@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ccList: 
+  m_impulseAmount: 0
   m_modelMultiplier: 164.1673
 --- !u!65 &5406106366309503936
 BoxCollider:
@@ -176,7 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_baseInfo:
     ObjectName: "\uBB3C \uBB38\uC9C0\uAE30 \uACE8\uB818"
-    AttackSpeed: 2
+    AttackSpeed: 4
     MoveSpeed: 2
   m_buffNDebuff: []
   m_curHP: 0
@@ -193,13 +194,13 @@ MonoBehaviour:
   m_combatInfo:
     MaxHP: 400
     Defense: 5
-    Attack: 5
-    ApproachSpeed: 5
+    Attack: 15
+    ApproachSpeed: 3.5
     ViewAngle: 210
     ViewRange: 20
     EngageRange: 20
     ReturnRange: 15
-    AttackRange: 3.5
+    AttackRange: 5
     ApproachDelay: 1
     FenceRange: 25
   m_spawnPoint: {fileID: 0}
@@ -607,6 +608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ccList: 
+  m_impulseAmount: 0
 --- !u!136 &1922642122908557433
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1952,7 +1954,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   UseGluing: 1
-  MainGlueBlend: 1
+  MainGlueBlend: 0.5
   GlueRangeThreshold: 0.375
   GlueFadeInSpeed: 0.85
   AllowGlueBelowFoot: 0.2
@@ -1972,9 +1974,9 @@ MonoBehaviour:
   _Editor_EnsureCount: 0
   _Editor_OnValidateTrigger: 1
   _EditorAllowAutoUpdateFeetParams: 1
-  _EditorCategory: 0
+  _EditorCategory: 1
   _EditorSetupCategory: 0
-  _EditorMotionCategory: 0
+  _EditorMotionCategory: 2
   _EditorExtraCategory: 0
   IKHintMode: 0
   LimitLegStretch: 0.99
@@ -1982,8 +1984,8 @@ MonoBehaviour:
   FeetLengthAdjust: 0
   baseTransform: {fileID: 0}
   Hips: {fileID: 1440074335049637626}
-  ScaleReferenceMode: 3
-  finalScaleReference: 3.3176637
+  ScaleReferenceMode: 2
+  finalScaleReference: 0.5
   finalScaleReferenceSqrt: 0.1
   customScaleReferenceValue: 0.5
   DelayedInitialization: 0

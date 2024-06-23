@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_baseInfo:
     ObjectName: "\uC6B0\uC6B8\uD55C \uC5FC"
-    AttackSpeed: 0.4
+    AttackSpeed: 0.6
     MoveSpeed: 3
   m_buffNDebuff: []
   m_curHP: 0
@@ -65,10 +65,10 @@ MonoBehaviour:
   SkillList: []
   m_scriptable: {fileID: 11400000, guid: 6031d21b8a5dda449a706cf427ee8334, type: 2}
   m_combatInfo:
-    MaxHP: 100
+    MaxHP: 160
     Defense: 5
-    Attack: 5
-    ApproachSpeed: 5
+    Attack: 6
+    ApproachSpeed: 4.2
     ViewAngle: 120
     ViewRange: 12
     EngageRange: 12
@@ -1061,7 +1061,7 @@ MonoBehaviour:
   SpineBone: {fileID: 4521722835106748576}
   ChestBone: {fileID: 0}
   RagdolledParameter: 
-  SwingHelper: 0
+  SwingHelper: 0.005
   GluingFloorLevel: 0.05
   GluingFloorLevelUseOnMoving: 0
   GluingFloorLevelOnMoving: 0
@@ -1090,7 +1090,20 @@ MonoBehaviour:
     ModuleReference: {fileID: 11400000, guid: 7d9bd86d54a7a594cb1793f9533e2e00, type: 2}
     customStringList: []
     customObjectList: []
-    variables: []
+    variables:
+    - VariableName: Rotation Power
+      Tooltip: 
+      _value: {x: 0.4, y: 0, z: 0, w: 0}
+      _string: 
+      _curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      _uObject: {fileID: 0}
+      VariableType: 0
+      _rangeHelper: {x: 0, y: 0, z: 0, w: 0}
   ImpulsesPowerMultiplier: 1
   ImpulsesDurationMultiplier: 1
   ImpulsesDampUpPushes: 0
@@ -1284,7 +1297,7 @@ MonoBehaviour:
     AnkleYawCorrection: 0
     _FinalIKPos: {x: 0, y: 0, z: 0}
   BaseLegAnimating:
-    StepMoveDuration: 0.375
+    StepMoveDuration: 0.35
     MoveToGoalCurve:
       serializedVersion: 2
       m_Curve:
@@ -1324,34 +1337,34 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 0.6958197
-        outSlope: 0.6958197
+        inSlope: 1.25
+        outSlope: 1.25
         tangentMode: 0
         weightedMode: 3
         inWeight: 0
-        outWeight: 0.460011
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.4
-        value: 0.3
-        inSlope: -0.04204308
-        outSlope: -0.04204308
+        value: 0.5
+        inSlope: 1.25
+        outSlope: 1.25
         tangentMode: 0
         weightedMode: 3
-        inWeight: 0.333
-        outWeight: 0.3410656
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.85
         value: 0
-        inSlope: -0.2721428
-        outSlope: -0.2721428
+        inSlope: -1.111111
+        outSlope: -1.111111
         tangentMode: 0
         weightedMode: 3
-        inWeight: 0.3953607
+        inWeight: 0.33333334
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    SpherizePower: 0.3
+    SpherizePower: 0.4
     MinFootRaise: 0.1
     MaxFootRaise: 0.4
     RaiseYAxisCurve:
@@ -1484,15 +1497,15 @@ MonoBehaviour:
       m_RotationOrder: 4
   UseGluing: 1
   MainGlueBlend: 1
-  GlueRangeThreshold: 0.375
+  GlueRangeThreshold: 0.5
   GlueFadeInSpeed: 0.85
   AllowGlueBelowFoot: 0.2
   GlueFadeOutSpeed: 0.5
   UnglueOn: 30
-  AllowGlueDrag: 0.7
+  AllowGlueDrag: 0.6
   GlueMode: 2
-  SmoothSuddenSteps: 0.85
-  LegElevateBlend: 0.7
+  SmoothSuddenSteps: 0.5
+  LegElevateBlend: 0.6
   LegElevateHeightLimit: 0.6
   FootRotationBlend: 1
   FootAlignRapidity: 0.75
@@ -1504,7 +1517,7 @@ MonoBehaviour:
   _Editor_OnValidateTrigger: 1
   _EditorAllowAutoUpdateFeetParams: 1
   _EditorCategory: 0
-  _EditorSetupCategory: 0
+  _EditorSetupCategory: 2
   _EditorMotionCategory: 0
   _EditorExtraCategory: 0
   IKHintMode: 0
