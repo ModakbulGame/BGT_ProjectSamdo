@@ -31,7 +31,7 @@ public class HellcatScript : MonsterScript
 
     public void JumpAttackMove()
     {
-        if(!IsJumping) { return; }
+        if (!IsJumping) { return; }
         Vector3 dir = JumpMoveSpeed * new Vector3(JumpDir.x, 0, JumpDir.y);
         m_rigid.velocity = dir;
     }
@@ -40,8 +40,11 @@ public class HellcatScript : MonsterScript
     {
         IsJumping = true;
         HasJumped = true;
-        if(CurTarget == null) { JumpDir = Vector2.zero; return; }
+        if (CurTarget == null) { JumpDir = Vector2.zero; return; }
         JumpDir = (CurTarget.Position2 - Position2).normalized;
+
+        CurClawEffect = null;
+        foreach (CombinedEffect effect in m_clawEffects) { effect.EffectOn(); }
     }
     public void StopJump()
     {
@@ -49,9 +52,14 @@ public class HellcatScript : MonsterScript
         m_rigid.velocity = Vector3.zero;
     }
 
+
+    [SerializeField]
+    private CombinedEffect[] m_clawEffects;
+    private CombinedEffect CurClawEffect { get; set; }
+
     public override void CreateAttack()
     {
-        if (IsJumpAttack) 
+        if (IsJumpAttack)
         {
             CreateJumpAttack();
         }
@@ -68,6 +76,7 @@ public class HellcatScript : MonsterScript
             }
         }
     }
+
     public override void AttackTriggerOn(int _idx)
     {
         m_normalAttacks[_idx].SetActive(true);
@@ -75,16 +84,24 @@ public class HellcatScript : MonsterScript
         AttackObject.SetAttack(this, Attack);
         AttackObject.SetDamage(Attack);
         AttackObject.AttackOn();
-    }
-    public override void AttackTriggerOff()
-    {
-        if (!AttackObject) return;
-        AttackObject.AttackOff();
-        AttackObject.gameObject.SetActive(false);
+
+        if (_idx < 2)
+        {
+            if (_idx == 1) { CurClawEffect.EffectOff(); }
+
+            CurClawEffect = m_clawEffects[_idx];
+            CurClawEffect.EffectOn();
+        }
+        else { foreach (CombinedEffect effect in m_clawEffects) { effect.EffectOff(); } }
     }
     private void CreateJumpAttack()
     {
         AttackTriggerOn(2);
+    }
+    public override void AttackDone()
+    {
+        if (CurClawEffect != null) { CurClawEffect.EffectOff(); }
+        base.AttackDone();
     }
 
 
