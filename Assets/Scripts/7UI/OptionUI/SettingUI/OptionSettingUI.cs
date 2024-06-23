@@ -11,6 +11,7 @@ public class OptionSettingUI : BaseUI
     [SerializeField]
     private Button m_closeBtn;
 
+    private VolumeCtrlScript[] m_volumes;
 
     public override void UpdateUI()
     {
@@ -23,7 +24,27 @@ public class OptionSettingUI : BaseUI
         m_parent.PopupClosed();
     }
 
-
+    // 사운드
+    public void SetBGMPoint(int _vol)
+    {
+        // m_volumes[0].SetPoint(_vol);
+    }
+    public void SetSEPoint(int _vol)
+    {
+        // m_volumes[1].SetPoint(_vol);
+    }
+    public void InitValues()
+    {
+        SetBGMPoint(GameManager.BGMVolume);
+        SetSEPoint(GameManager.SEVolume);
+    }
+    public void SetVolume(EVolumeType _type, int _vol)
+    {
+        if (_type == EVolumeType.BGM)
+            GameManager.SetBGMVolume(_vol);
+        else if (_type == EVolumeType.SE)
+            GameManager.SetSEVolume(_vol);
+    }
 
     private void SetBtns()
     {

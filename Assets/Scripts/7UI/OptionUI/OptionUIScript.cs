@@ -51,7 +51,6 @@ public class OptionUIScript : BaseUI
         }
         CanControl = false;
     }
-
     private void OpenLoadUI()
     {
         m_loadUI.OpenUI();
@@ -81,7 +80,6 @@ public class OptionUIScript : BaseUI
         CanControl = true;
     }
 
-
     public override void SetComps()
     {
         base.SetComps();
@@ -89,6 +87,7 @@ public class OptionUIScript : BaseUI
         m_btnList.SetParent(this); m_btnList.SetComps();
         m_loadUI.SetParent(this);
         m_settingUI.SetParent(this);
+        m_settingUI.InitValues();
         m_confirmUI.SetParent(this);
     }
 }

@@ -6,10 +6,6 @@ public enum EBGM
 {
     TITLE,
     MAIN,
-    BOSS_ENTER,
-    BOSS_BATTLE,
-    GAME_OVER,
-    CLEAR,
     LAST
 }
 

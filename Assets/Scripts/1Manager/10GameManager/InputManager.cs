@@ -1,30 +1,30 @@
 using UnityEngine;
 
-public enum EControlMode            // Á¶ÀÛ ¸ğµå
+public enum EControlMode            // ì¡°ì‘ ëª¨ë“œ
 {
-    THIRD_PERSON,           // 3ÀÎÄª
-    UI_CONTROL              // UI Á¶ÀÛ
+    THIRD_PERSON,           // 3ì¸ì¹­
+    UI_CONTROL              // UI ì¡°ì‘
 }
 
 public class InputManager : MonoBehaviour
 {
-    private InputSystem m_inputSystem;                                                                  // ÀüÃ¼ Input System
-    public InputSystem.PlayerActions PlayerInputs { get { return m_inputSystem.Player; } }              // ÇÃ·¹ÀÌ¾î Á¶ÀÛ Input System
-    public InputSystem.UIControlActions UIControlInputs { get { return m_inputSystem.UIControl; } }     // UI Á¶ÀÛ Input System
+    private InputSystem m_inputSystem;                                                                  // ì „ì²´ Input System
+    public InputSystem.PlayerActions PlayerInputs { get { return m_inputSystem.Player; } }              // í”Œë ˆì´ì–´ ì¡°ì‘ Input System
+    public InputSystem.UIControlActions UIControlInputs { get { return m_inputSystem.UIControl; } }     // UI ì¡°ì‘ Input System
 
-    public EControlMode CurControlMode { get; private set; } = EControlMode.UI_CONTROL;     // ÇöÀç Á¶ÀÛ ¸ğµå
+    public EControlMode CurControlMode { get; private set; } = EControlMode.UI_CONTROL;     // í˜„ì¬ ì¡°ì‘ ëª¨ë“œ
 
-    private static float m_mouseSensitive = 1;                                              // ¸¶¿ì½º ¹Î°¨µµ
+    private static float m_mouseSensitive = 1;                                              // ë§ˆìš°ìŠ¤ ë¯¼ê°ë„
     public static float MouseSensitive { get { return m_mouseSensitive; } }
 
 
-    public void SetMouseSensitive(float _sensitive)                                         // ¸¶¿ì½º ¹Î°¨µµ ¼³Á¤
+    public void SetMouseSensitive(float _sensitive)                                         // ë§ˆìš°ìŠ¤ ë¯¼ê°ë„ ì„¤ì •
     {
         m_mouseSensitive = _sensitive;
         PlayManager.SetCameraSensitive(_sensitive);
     }
 
-    public void SetControlMode(EControlMode _mode)                                          // Á¶ÀÛ ¸ğµå ¼³Á¤
+    public void SetControlMode(EControlMode _mode)                                          // ì¡°ì‘ ëª¨ë“œ ì„¤ì •
     {
         CurControlMode = _mode;
         switch (_mode)
@@ -60,42 +60,47 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         if (!PlayManager.IsPlaying) { return; }
-        if (CurControlMode == EControlMode.THIRD_PERSON)            // ÇÃ·¹ÀÌ¾î Á¶ÀÛ ¸ğµåÀÏ ¶§
+        if (CurControlMode == EControlMode.THIRD_PERSON)            // í”Œë ˆì´ì–´ ì¡°ì‘ ëª¨ë“œì¼ ë•Œ
         {
-            if (PlayerInputs.OpenPlayUI.triggered)              // Tab ´©¸£¸é
+            if (PlayerInputs.OpenPlayUI.triggered)              // Tab ëˆ„ë¥´ë©´
             {
-                PlayManager.TogglePlayerUI(true);           // PlayerUI ¿­±â
+                PlayManager.TogglePlayerUI(true);           // PlayerUI ì—´ê¸°
                 PlayManager.ResetPlayer();
-                SetControlMode(EControlMode.UI_CONTROL);    // UI Á¶ÀÛ ¸ğµå·Î
+                SetControlMode(EControlMode.UI_CONTROL);    // UI ì¡°ì‘ ëª¨ë“œë¡œ
             }
-            else if (PlayerInputs.OpenOptionUI.triggered)       // Escape ´©¸£¸é
+            else if (PlayerInputs.OpenOptionUI.triggered)       // Escape ëˆ„ë¥´ë©´
             {
                 PlayManager.ToggleOptionUI(true);
-                SetControlMode(EControlMode.UI_CONTROL);    // UI Á¶ÀÛ ¸ğµå·Î
+                SetControlMode(EControlMode.UI_CONTROL);    // UI ì¡°ì‘ ëª¨ë“œë¡œ
             }
             else if (PlayerInputs.OpenMapUI.triggered)
             {
-                // ¸Ê ¿©´İ±â
+                // ë§µ ì—¬ë‹«ê¸°
                 PlayManager.ToggleMapUI();
             }
             else if (PlayerInputs.OpenQuestUI.triggered)
             {
-                // Äù½ºÆ® Ã¢ ¿­±â
+                // í€˜ìŠ¤íŠ¸ ì°½ ì—´ê¸°
                 PlayManager.ToggleQuestUI(true);
             }
         }
-        else if (CurControlMode == EControlMode.UI_CONTROL)         // UI Á¶ÀÛ ¸ğµåÀÏ ¶§
+        else if (CurControlMode == EControlMode.UI_CONTROL)         // UI ì¡°ì‘ ëª¨ë“œì¼ ë•Œ
         {
-            if (UIControlInputs.CloseUI.triggered)              // Escape ´©¸£¸é
+            if (UIControlInputs.CloseUI.triggered)              // Escape ëˆ„ë¥´ë©´
             {
-                if (PlayManager.IsPlayerUIOpen)
+                if(PlayManager.IsOptionOpen)
                 {
-                    PlayManager.TogglePlayerUI(false);          // PlayerUI ´İ±â
+                    PlayManager.ToggleOptionUI(false);
+                    return;
+                }
+                else if (PlayManager.IsPlayerUIOpen)
+                {
+                    PlayManager.TogglePlayerUI(false);          // PlayerUI ë‹«ê¸°
                     return;
                 }
                 else if (PlayManager.IsQuestUIOpen)
                 {
-                    PlayManager.ToggleQuestUI(false);           // Äù½ºÆ® Ã¢ ´İ±â
+                    PlayManager.ToggleQuestUI(false);           // í€˜ìŠ¤íŠ¸ ì°½ ë‹«ê¸°
                     return;
                 }
             }
