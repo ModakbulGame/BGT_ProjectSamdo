@@ -222,7 +222,6 @@ MonoBehaviour:
   m_curHP: 0
   m_curSpeed: 0
   m_uiOffset: 2
-  m_impulseCooldown: 2
   m_light: {fileID: 911734784435125238}
   m_interactableObject: {fileID: 0}
   m_cameraFocus: {fileID: 3677732072474587124}
@@ -292,7 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ImpulseDefinition:
     m_ImpulseChannel: 1
-    m_ImpulseShape: 2
+    m_ImpulseShape: 3
     m_CustomImpulseShape:
       serializedVersion: 2
       m_Curve: []
@@ -6385,6 +6384,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ccList.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720293398186643567, guid: 3c720ef347b79da46b4d85b7cf7089bf,
+        type: 3}
+      propertyPath: m_ccList.Array.data[0]
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4883761773475574090, guid: 3c720ef347b79da46b4d85b7cf7089bf,
         type: 3}
