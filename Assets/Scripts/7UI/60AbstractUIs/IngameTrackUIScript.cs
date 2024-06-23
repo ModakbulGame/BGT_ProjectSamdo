@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IngameTrackUIScript : MonoBehaviour            // ¿ÀºêÁ§Æ®¿¡ ´Ş·ÁÀÖ´Â UI
+public class IngameTrackUIScript : MonoBehaviour            // ì˜¤ë¸Œì íŠ¸ì— ë‹¬ë ¤ìˆëŠ” UI
 {
     public virtual void HideUI()
     {
@@ -10,6 +10,7 @@ public class IngameTrackUIScript : MonoBehaviour            // ¿ÀºêÁ§Æ®¿¡ ´Ş·ÁÀÖ
     }
     public void ShowUI()
     {
+        if (gameObject.activeSelf) { return; }
         gameObject.SetActive(true);
     }
 

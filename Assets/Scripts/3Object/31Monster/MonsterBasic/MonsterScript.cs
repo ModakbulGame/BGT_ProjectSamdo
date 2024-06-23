@@ -89,13 +89,13 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         StopMove();
         HitAnimation();
     }
-    public void StartDie()              // 사망 시작
+    public virtual void StartDie()              // 사망 시작
     {
         StopMove();
         AllCCEffectOff();
         DieAnimation();                     // 애니메이션
         StartDissolve();                    // 디졸브
-        m_hpBar.HideUI();                // HP바
+        HideHPUI();                         // HP바
         m_rigid.useGravity = false;         // 중력
         GetComponentInChildren<CapsuleCollider>().isTrigger = true;         // 트리거
     }
@@ -297,7 +297,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     // UI 관련
     private ObjectHPBarScript m_hpBar;
 
-    protected void SetUI()                // UI 설정
+    public virtual void SetUI()                // UI 설정
     {
         m_hpBar = GetComponentInChildren<ObjectHPBarScript>();
         m_hpBar.SetMaxHP(MaxHP);

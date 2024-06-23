@@ -11,7 +11,7 @@ public enum EWaterGuardianSkill
     LAST
 }
 
-public class WaterGuardianScript : AnimatedAttackMonster
+public class WaterGuardianScript : BossMonster
 {
     public override void SetDestination(Vector3 _destination)
     {

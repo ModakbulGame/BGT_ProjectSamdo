@@ -10,7 +10,7 @@ public class PlayUIManager : MonoBehaviour
     [SerializeField]
     private Canvas m_mainCanvas;
 
-    // ¿Â ¿ÀÇÁ UI
+    // ì˜¨ ì˜¤í”„ UI
     [SerializeField]
     private OptionUIScript m_optionUI;
     public bool IsOptionOpen { get { return m_optionUI.gameObject.activeSelf; } }
@@ -18,38 +18,38 @@ public class PlayUIManager : MonoBehaviour
 
 
     [SerializeField]
-    private PlayerUIScript m_playerUI;                      // ÇÃ·¹ÀÌ¾î Á¤º¸ UI (ÅÇ ´©¸£¸é ³ª¿À´Â°Å)
+    private PlayerUIScript m_playerUI;                      // í”Œë ˆì´ì–´ ì •ë³´ UI (íƒ­ ëˆ„ë¥´ë©´ ë‚˜ì˜¤ëŠ”ê±°)
     public bool IsPlayerUIOpen { get { return m_playerUI.gameObject.activeSelf; } }
-    public void TogglePlayerUI(bool _on) { if (_on) { m_playerUI.OpenUI(); } else { m_playerUI.CloseUI(); } } // ¿©´İ±â
-    public void UpdateMaterials() { if (m_playerUI.gameObject.activeSelf) m_playerUI.UpdateMaterials(); }   // Àç·á ¾÷µ¥ÀÌÆ®
-    public void UpdateInfoUI() { if (m_playerUI.gameObject.activeSelf) m_playerUI.UpdateInfoUI(); }         // Á¤º¸ ¾÷µ¥ÀÌÆ®
+    public void TogglePlayerUI(bool _on) { if (_on) { m_playerUI.OpenUI(); } else { m_playerUI.CloseUI(); } } // ì—¬ë‹«ê¸°
+    public void UpdateMaterials() { if (m_playerUI.gameObject.activeSelf) m_playerUI.UpdateMaterials(); }   // ì¬ë£Œ ì—…ë°ì´íŠ¸
+    public void UpdateInfoUI() { if (m_playerUI.gameObject.activeSelf) m_playerUI.UpdateInfoUI(); }         // ì •ë³´ ì—…ë°ì´íŠ¸
 
 
     [SerializeField]
-    private MapUIScript m_mapUI;                            // ¸Ê UI
+    private MapUIScript m_mapUI;                            // ë§µ UI
     public void ToggleMapUI() { m_mapUI.ToggleMapUI(); }
 
 
     [SerializeField]
-    private QuestUIScript m_questUI;                        // Äù½ºÆ® UI
+    private QuestUIScript m_questUI;                        // í€˜ìŠ¤íŠ¸ UI
     public bool IsQuestUIOpen { get { return m_questUI.gameObject.activeSelf; } }
     public void ToggleQuestUI(bool _on) { if (_on) { m_questUI.OpenUI(); } else { m_questUI.CloseUI(); } }
 
 
     [SerializeField]
-    private OasisUIScript m_oasisUI;                        // ¿À¾Æ½Ã½º UI
+    private OasisUIScript m_oasisUI;                        // ì˜¤ì•„ì‹œìŠ¤ UI
     public void OpenOasisUI(OasisNPC _npc) { m_oasisUI.OpenUI(_npc); }
     public void CloseOasisUI() { m_oasisUI.CloseUI(); }
 
 
 
-    // ¸ŞÀÎ Äµ¹ö½º »ó½Ã UI
-    private PlayerHPBarScript m_hpBar;                      // HP ¹Ù
+    // ë©”ì¸ ìº”ë²„ìŠ¤ ìƒì‹œ UI
+    private PlayerHPBarScript m_hpBar;                      // HP ë°”
     public void SetMaxHP(float _hp) { m_hpBar.SetMaxHP(_hp); }
     public void SetCurHP(float _hp) { m_hpBar.SetCurHP(_hp); }
 
 
-    private PowerSlotUIScript m_powerSlot;                  // ½ºÅ³ ½½·Ô
+    private PowerSlotUIScript m_powerSlot;                  // ìŠ¤í‚¬ ìŠ¬ë¡¯
     public void UpdatePowerSlot() { m_powerSlot.UpdateUI(); }
     public void UsePowerSlot(int _idx, float _cooltime) { m_powerSlot.UsePower(_idx, _cooltime); }
 
@@ -67,7 +67,7 @@ public class PlayUIManager : MonoBehaviour
     public void SetMinimapScale(float _scale) { m_miniMap.SetScale(_scale); }
 
 
-    private AimUIScript m_aimUI;                            // ÇÃ·¹ÀÌ¾î ¿¡ÀÓ UI
+    private AimUIScript m_aimUI;                            // í”Œë ˆì´ì–´ ì—ì„ UI
     public void SetStaminaRate(float _rate) { m_aimUI.SetStaminaRate(_rate); }
     public void SetLightRate(float _rate) { m_aimUI.SetLightRate(_rate); }
     public void SetLightState(bool _on) { m_aimUI.SetLightState(_on); }
@@ -76,14 +76,20 @@ public class PlayUIManager : MonoBehaviour
     public void HideRaycastAim() { m_aimUI.HideAimUI(); }
 
 
-    // ÀÎ°ÔÀÓ UI
+    // ì¸ê²Œì„ UI
     private IngameAlarmUIScript m_ingameAlarm;
     public void AddAlarm(string _alarm) { m_ingameAlarm.AddAlarm(_alarm); }
 
 
+    private BossHPBarScript m_bossHPBar;
+    public void ShowBossHPBar(BossMonster _boss) { m_bossHPBar.ShowHPBar(_boss); }
+    public void SetBossHP(float _hp) { m_bossHPBar.SetCurHP(_hp); }
+    public void HideBossHPBar() { m_bossHPBar.HideHPBar(); }
+
+
 
     private PlayerPowerAimScript m_powerAimUI;
-    public void ShowPowerAim(Vector3 _pos, float _radius, float _range)       // ½ºÅ³ ¿¡ÀÓ º¸ÀÌ±â
+    public void ShowPowerAim(Vector3 _pos, float _radius, float _range)       // ìŠ¤í‚¬ ì—ì„ ë³´ì´ê¸°
     {
         m_powerAimUI.ShowDrawer(_radius);
         TracePowerAim(_pos, _range);
@@ -109,15 +115,15 @@ public class PlayUIManager : MonoBehaviour
         m_powerAimUI.TraceAim(pos);
         return pos;
     }
-    public void HidePowerAim()                                  // ½ºÅ³ ¿¡ÀÓ ¼û±â±â
+    public void HidePowerAim()                                  // ìŠ¤í‚¬ ì—ì„ ìˆ¨ê¸°ê¸°
     {
         m_powerAimUI.HideDrawer();
     }
 
 
-    private PlayerThrowLineRenderer m_throwLineUI;          // ÇÃ·¹ÀÌ¾î ´øÁö±â ±ËÀû UI
-    public void DrawThrowLine(Vector3 _force, float _mass, Vector3 _start) { m_throwLineUI.DrawThrowLine(_force, _mass, _start); }      // ´øÁö±â ±ËÀû ±×¸®±â
-    public void HideThrowLine() { m_throwLineUI.HideThrowLine(); }              // ´øÁö±â ±ËÀû ¼û±â±â
+    private PlayerThrowLineRenderer m_throwLineUI;          // í”Œë ˆì´ì–´ ë˜ì§€ê¸° ê¶¤ì  UI
+    public void DrawThrowLine(Vector3 _force, float _mass, Vector3 _start) { m_throwLineUI.DrawThrowLine(_force, _mass, _start); }      // ë˜ì§€ê¸° ê¶¤ì  ê·¸ë¦¬ê¸°
+    public void HideThrowLine() { m_throwLineUI.HideThrowLine(); }              // ë˜ì§€ê¸° ê¶¤ì  ìˆ¨ê¸°ê¸°
 
 
     [SerializeField]
@@ -153,12 +159,12 @@ public class PlayUIManager : MonoBehaviour
     public void OpenSlateUI(SlateNPC _slate) { /*m_slateUI.OpenUI(_slate);*/ }
 
     [SerializeField]
-    private QuestAcceptUIScript m_questAcceptUI;        // NPC ´ëÈ­ ³¡¿¡ ³ª¿À´Â Äù½ºÆ® Ã¢
+    private QuestAcceptUIScript m_questAcceptUI;        // NPC ëŒ€í™” ëì— ë‚˜ì˜¤ëŠ” í€˜ìŠ¤íŠ¸ ì°½
     public void ShowNPCQuestUI(EQuestName _quest, bool _isStart, FPointer _confirm) { m_questAcceptUI.ShowNPCQuestUI(_quest, _isStart, _confirm); }
 
 
 
-    // ¸Ê °ü·Ã
+    // ë§µ ê´€ë ¨
     private Vector3 MapLB { get { return PlayManager.MapLB; } }
     private Vector3 MapRT { get { return PlayManager.MapRT; } }
 
@@ -186,6 +192,8 @@ public class PlayUIManager : MonoBehaviour
         m_powerSlot.SetComps();
         m_miniMap = m_mainCanvas.GetComponentInChildren<MinimapScript>();
         m_questSideBar = m_mainCanvas.GetComponentInChildren<QuestSideBarScript>();
+
+        m_bossHPBar = m_mainCanvas.GetComponentInChildren<BossHPBarScript>();
         m_aimUI = m_mainCanvas.GetComponentInChildren<AimUIScript>();
         m_equipSlot = m_mainCanvas.GetComponentInChildren<EquipSlotUIScript>();
 

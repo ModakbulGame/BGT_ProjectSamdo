@@ -11,7 +11,7 @@ public enum ELifeGuardianSkill
     LAST
 }
 
-public class LifeGuardianScript : AnimatedAttackMonster
+public class LifeGuardianScript : BossMonster
 {
     private bool AttackProceed { get; set; }
     private readonly float[] AttackAngle = new float[4] { 0, 30, -30, -15 };
@@ -57,7 +57,7 @@ public class LifeGuardianScript : AnimatedAttackMonster
     }
 
 
-    // ½ºÅ³
+    // ìŠ¤í‚¬
     private readonly float AnySkillCooltime = 8;
     private float AnySkillTimeCount { get; set; }
 

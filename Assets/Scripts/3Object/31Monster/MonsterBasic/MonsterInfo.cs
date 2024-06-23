@@ -71,8 +71,13 @@ public partial class MonsterScript
 
     public override void ApplyHPUI()
     {
+        m_hpBar.ShowUI();
         m_hpBar.SetMaxHP(MaxHP);
         m_hpBar.SetCurHP(CurHP);
+    }
+    public virtual void HideHPUI()
+    {
+        m_hpBar.HideUI();
     }
 
     public override void SetMoveMultiplier(float _multiplier)           // 이동 속도 배율 설정
@@ -143,7 +148,7 @@ public partial class MonsterScript
         IsSpawned = false;
         m_rigid.useGravity = true;         // 중력
         GetComponentInChildren<CapsuleCollider>().isTrigger = false;
-        m_hpBar.ShowUI();
+        ApplyHPUI();
         base.Start();
         StartCoroutine(WaitSpawned());
     }

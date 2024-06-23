@@ -34,7 +34,7 @@ public class LifeGuardianSkill2Script : ObjectAttackScript
             script.AddForce(dir);
             if (m_hitObjects.Contains(script)) { return; }
             HitData hit = new(Attacker, Damage, script.Position);
-            script.GetDamage(hit);
+            script.GetHit(hit);
             m_hitObjects.Add(script);
         }
     }

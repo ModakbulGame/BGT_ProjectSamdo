@@ -29,7 +29,7 @@ public abstract partial class MonsterScript
     public override void SetHP(float _hp)
     {
         base.SetHP(_hp);
-        m_hpBar.SetCurHP(CurHP);
+        ApplyHPUI();
     }                   // HP 설정
     public override bool GetHit(HitData _hit)    // 맞음
     {

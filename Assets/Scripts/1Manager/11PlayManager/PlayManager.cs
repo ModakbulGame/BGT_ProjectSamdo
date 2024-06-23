@@ -218,6 +218,9 @@ public class PlayManager : MonoBehaviour
 
     // 인게임 UI
     public static void AddIngameAlarm(string _alarm) { PlayUIManager.AddAlarm(_alarm); }                                                                // 인게임 알람
+    public static void ShowBossHPBar(BossMonster _boss) { PlayUIManager.ShowBossHPBar(_boss); }
+    public static void SetBossHP(float _hp) { PlayUIManager.SetBossHP(_hp); }
+    public static void HideBossHPBar() { PlayUIManager.HideBossHPBar(); }
     public static void ShowInteractInfo(string _info) { PlayUIManager.ShowInteractInfo(_info); }                                                        // 상호작용 키 on
     public static void HideInteractInfo() { PlayUIManager.HideInteractInfo(); }                                                                         // 상호작용 키 off
     public static void ShowPowerAim(Vector3 _pos, float _radius, float _range) { PlayUIManager.ShowPowerAim(_pos, _radius, _range); }                   // 권능 에임 on

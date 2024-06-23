@@ -22,7 +22,7 @@ public enum ECrystalGuardianSkill
     LAST
 }
 
-public class CrystalGuardianScript : MonsterScript
+public class CrystalGuardianScript : BossMonster
 {
     // 공격
     public enum ENextAttack { SWING, SPIKE, NONE };
