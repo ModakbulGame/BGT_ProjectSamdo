@@ -7,7 +7,9 @@ using UnityEngine.InputSystem;
 
 public partial class PlayerController
 {
-    private float ImpulseCooldown = 1f;
+    private readonly float ImpulseCooldown = 1f;
+    private readonly float GuardImpulseDecreaase = 0.5f;
+
     private float ImpulseTimeCount { get; set; }
 
     // 전투 기본
@@ -56,6 +58,7 @@ public partial class PlayerController
         if (_hit.HasImpulse && ImpulseTimeCount <= 0)
         {
             float impulse = _hit.Impulse * 0.1f;
+            if (IsGuarding) { impulse *= GuardImpulseDecreaase; }
             m_impulseSource.GenerateImpulse(impulse);
             ImpulseTimeCount = ImpulseCooldown;
             StartCoroutine(ImpulseDelay());
