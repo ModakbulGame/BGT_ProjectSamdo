@@ -12,6 +12,7 @@ public class OptionSettingUI : BaseUI
     private Button m_closeBtn;
 
     private VolumeCtrlScript[] m_volumes;
+    private ScreenSettingScript m_screen;
 
     public override void UpdateUI()
     {
@@ -55,5 +56,10 @@ public class OptionSettingUI : BaseUI
     {
         base.SetComps();
         SetBtns();
+
+        m_volumes = GetComponentsInChildren<VolumeCtrlScript>();
+        foreach (VolumeCtrlScript volume in m_volumes) volume.SetParent(this);
+        m_screen = GetComponentInChildren<ScreenSettingScript>();
+        m_screen.SetParent(this);
     }
 }

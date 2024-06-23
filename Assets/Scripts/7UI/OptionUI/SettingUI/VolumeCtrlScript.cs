@@ -32,7 +32,7 @@ public class VolumeCtrlScript : MonoBehaviour
 
     private void Awake()
     {
-        m_toggle = GetComponentInChildren<VolumeToggleScript>();
-        m_toggle.SetParent(this);
+        // m_toggle = GetComponentInChildren<VolumeToggleScript>();
+        // m_toggle.SetParent(this);
     }
 }
