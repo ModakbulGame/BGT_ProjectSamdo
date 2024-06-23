@@ -61,7 +61,10 @@ public partial class PlayerController : ObjectScript, IHaveData
     public bool IsThrowing { get { return CurState.StateEnum == EPlayerState.THROW; } }                             // 구르기 중
 
     public void ChangeState(EPlayerState _state) { m_stateManager.ChangeState(m_playerStates[(int)_state]); }       // 상태 변환
-
+    public void StartHit()
+    {
+        CurWeapon.PowerTrailOff();
+    }
     public void ResetPlayerAction()
     {
         if (IsPowering) { CancelPower(); }

@@ -17,6 +17,7 @@ public class PlayerHitState : MonoBehaviour, IPlayerState
 
         if (m_player.IsGuarding) { TimeCount = GuardHitDelay; }
         else { TimeCount = NormalHitDelay; }
+        m_player.StartHit();
     }
 
     public void Proceed()
