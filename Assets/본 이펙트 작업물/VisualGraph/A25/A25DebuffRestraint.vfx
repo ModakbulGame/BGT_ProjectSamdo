@@ -20,7 +20,7 @@ MonoBehaviour:
     x: -1222
     y: -193
     width: 3232
-    height: 2528
+    height: 2902
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -151,8 +151,8 @@ MonoBehaviour:
     max: Infinity
     enumValues: []
     descendantCount: 0
-  - name: SizeMultiplier
-    path: SizeMultiplier
+  - name: SizeMultiplierRestraint
+    path: SizeMultiplierRestraint
     tooltip: 
     sheetType: m_Float
     realType: Single
@@ -12915,9 +12915,9 @@ MonoBehaviour:
   m_InputSlots: []
   m_OutputSlots:
   - {fileID: 8926484042661615226}
-  m_ExposedName: SizeMultiplier
+  m_ExposedName: SizeMultiplierRestraint
   m_Exposed: 1
-  m_Order: 19
+  m_Order: 5
   m_Category: 
   m_Min:
     m_Type:
@@ -12962,7 +12962,7 @@ MonoBehaviour:
       inputSlot: {fileID: 8926484042661615273}
     - outputSlot: {fileID: 8926484042661615226}
       inputSlot: {fileID: 8926484042661615277}
-    position: {x: 426, y: 2256}
+    position: {x: -37, y: 2630}
     expandedSlots: []
     expanded: 1
 --- !u!114 &8926484042661615226
