@@ -12,7 +12,7 @@ public class PlayerAttackState : MonoBehaviour, IPlayerState
         if (m_player == null) { m_player = _player; }
 
         m_player.StartAttack();
-        GameManager.PlaySE(EPlayerSE.SLASH1);
+        // GameManager.PlaySE(EPlayerSE.SLASH1);
     }
 
     public void Proceed()

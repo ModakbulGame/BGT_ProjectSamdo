@@ -45,9 +45,9 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
-        m_soundContainer = GetComponentInChildren<SoundContainer>();
+/*        m_soundContainer = GetComponentInChildren<SoundContainer>();
 
         m_bgmVolume = PlayerPrefs.GetInt(ValueDefine.BGMVolData, 100);
-        m_seVolume = PlayerPrefs.GetInt(ValueDefine.SEVolData, 100);
+        m_seVolume = PlayerPrefs.GetInt(ValueDefine.SEVolData, 100);*/
     }
 }

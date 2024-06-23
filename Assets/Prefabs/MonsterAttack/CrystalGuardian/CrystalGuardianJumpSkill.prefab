@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 4822161555982768891}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
+  m_LocalScale: {x: 0.16666667, y: 0.16666667, z: 0.16666667}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1420060237421741891}
@@ -57,7 +57,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4822161555982768891}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 7b6577dcd48923c48bdb1ce63f992ca5, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: 329e32c78ef534f4db4d9c28a53c008e, type: 3}
   m_InitialEventName: 
   m_InitialEventNameOverriden: 1
   m_StartSeed: 0
@@ -477,7 +477,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4, y: 0, z: 1.5}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8804755442553532164}
@@ -497,6 +497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ccList: 
   m_impulseAmount: 0.1
+  m_attackEffect: {fileID: 0}
   m_effect: {fileID: 911090777164751446}
 --- !u!33 &8285548316194657569
 MeshFilter:

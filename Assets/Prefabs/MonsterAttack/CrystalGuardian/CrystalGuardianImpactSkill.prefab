@@ -57,7 +57,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 774510180639709417}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 7b6577dcd48923c48bdb1ce63f992ca5, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: fac1a8d3f4fc39e499ca5af1524ec565, type: 3}
   m_InitialEventName: 
   m_InitialEventNameOverriden: 1
   m_StartSeed: 0
@@ -415,7 +415,7 @@ VFXRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 774510180639709417}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -497,6 +497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ccList: 
   m_impulseAmount: 0.1
+  m_attackEffect: {fileID: 0}
   m_effect: {fileID: 2319356029109662356}
 --- !u!33 &5132847325369461984
 MeshFilter:

@@ -16,6 +16,8 @@ public class ObjectAttackScript : MonoBehaviour
     [Range(0,1)]
     [SerializeField]
     protected float m_impulseAmount = 0.1f;
+    [SerializeField]
+    private CombinedEffect m_attackEffect;
 
 
     public virtual float Damage { get; private set; } = 5;
@@ -52,6 +54,19 @@ public class ObjectAttackScript : MonoBehaviour
         IsAttacking = false;
         m_hitObjects.Clear();
     }
+
+
+    public void PlayEffect()
+    {
+        if(m_attackEffect == null) { return; }
+        m_attackEffect.EffectOn();
+    }
+    public void StopEffect()
+    {
+        if (m_attackEffect == null) { return; }
+        m_attackEffect.EffectOff();
+    }
+
 
 
     public virtual void Start()

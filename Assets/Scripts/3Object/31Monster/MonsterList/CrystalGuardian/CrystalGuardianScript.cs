@@ -53,7 +53,7 @@ public class CrystalGuardianScript : BossMonster
 
     public override void StartAttack()
     {
-        AttackIdx = Random.Range(0, (int)ECrystalGuardianAttack.LAST);
+        AttackIdx = 4/*Random.Range(0, (int)ECrystalGuardianAttack.LAST)*/;
         m_anim.SetInteger("ATTACK_IDX", AttackIdx);
         SequenceCount = 0;
         base.StartAttack();
@@ -86,6 +86,7 @@ public class CrystalGuardianScript : BossMonster
 
             AttackObject.SetDamage(Attack);
             AttackObject.AttackOn();
+            AttackObject.PlayEffect();
         }
     }
     public override void AttackDone()

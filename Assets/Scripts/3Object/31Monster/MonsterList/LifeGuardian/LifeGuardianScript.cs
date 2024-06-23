@@ -108,6 +108,7 @@ public class LifeGuardianScript : BossMonster
             CurSkill.SetAttack(this, m_skillDamage[DrainIdx]);
             CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
+            CurSkill.PlayEffect();
         }
         else if (CurSkillIdx == RushIdx)
         {
@@ -130,6 +131,7 @@ public class LifeGuardianScript : BossMonster
         {
             CurSkill.AttackOff();
             CurSkill.gameObject.SetActive(false);
+            CurSkill.StopEffect();
         }
         else if (CurSkillIdx == RushIdx)
         {
