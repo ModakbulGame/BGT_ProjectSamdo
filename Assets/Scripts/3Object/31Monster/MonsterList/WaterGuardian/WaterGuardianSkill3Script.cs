@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class WaterGuardianSkill3Script : ObjectAttackScript
 {
     private Rigidbody m_rigid;
+    [SerializeField]
+    private VisualEffect m_hitEffect;
 
     public override void AttackOn()
     {
@@ -16,6 +19,7 @@ public class WaterGuardianSkill3Script : ObjectAttackScript
     {
         m_rigid.velocity = Vector3.zero;
         m_rigid.constraints = RigidbodyConstraints.FreezeAll;
+        m_hitEffect.Play();
         StartCoroutine(DestroySkill());
     }
 
