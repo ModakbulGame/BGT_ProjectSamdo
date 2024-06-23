@@ -398,7 +398,7 @@ public partial class PlayerController
     public bool CanGaurd { get { return GuardPressing && GuardCooltime <= 0; } }
     public void GuardStart()                                                                // 가드 시작
     {
-
+        GameManager.PlaySE(EPlayerSE.PARRYING);
     }
     public void GuardStop()                                                                 // 가드 중단
     {

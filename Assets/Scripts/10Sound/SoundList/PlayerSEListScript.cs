@@ -4,12 +4,8 @@ using UnityEngine;
 
 public enum EPlayerSE
 {
-    DASH,
-    UPGRADE,
-    GET_SKILL,
-    HIT,
-    DIE,
-    HEAL,
+    PARRYING,
+    SLASH1,
     LAST
 }
 

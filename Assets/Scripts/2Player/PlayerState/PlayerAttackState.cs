@@ -12,6 +12,7 @@ public class PlayerAttackState : MonoBehaviour, IPlayerState
         if (m_player == null) { m_player = _player; }
 
         m_player.StartAttack();
+        GameManager.PlaySE(EPlayerSE.SLASH1);
     }
 
     public void Proceed()
@@ -29,7 +30,7 @@ public class PlayerAttackState : MonoBehaviour, IPlayerState
 
     public void FixedProceed()
     {
-        m_player.LookAim();         // ¡∂¡ÿ πÊ«‚ πŸ∂Û∫∏±‚
+        m_player.LookAim();         // Ï°∞Ï§Ä Î∞©Ìñ• Î∞îÎùºÎ≥¥Í∏∞
         if (!m_player.AttackFinished) m_player.AttackForward();
     }
 }
