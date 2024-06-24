@@ -5,8 +5,10 @@ using UnityEngine.VFX;
 
 public enum EArrogantAttack
 {
-    NORMAL,
+    RIGHT_SWING,
+    LEFT_SWING,
     SMASH,
+
     LAST
 }
 
@@ -14,9 +16,21 @@ public class ArrogantScript : HmmScript
 {
     public override bool CanPurify => IsFatigure;
 
-    public EArrogantAttack CurAttack { get; private set; } = EArrogantAttack.NORMAL;
+    public EArrogantAttack CurAttack { get; private set; } = EArrogantAttack.RIGHT_SWING;
+    
+    
+    [Tooltip("기본 공격 별 데미지 배율")]
+    [SerializeField]
+    private float[] m_normalDamageMultiplier = new float[(int)EArrogantAttack.LAST]
+    { 1, 1, 1 };
+
+    [Tooltip("내려찍기 데미지")]
+    [SerializeField]
+    private float m_smashDamage = 10;
+    [Tooltip("내려찍기 쿨타임")]
     [SerializeField]
     private float m_smashCooltime = 15;
+    [Tooltip("내려찍기 반경")]
     [SerializeField]
     public float m_smashRadius = 4;
 
@@ -29,9 +43,9 @@ public class ArrogantScript : HmmScript
     public override void StartAttack()
     {
         if (CanSmash) { StartSmash(); return; }
-        CurAttack = EArrogantAttack.NORMAL;
+        CurAttack = EArrogantAttack.RIGHT_SWING;
 
-        AttackIdx = Random.Range(0, 2);
+        AttackIdx = Random.Range(0, 2/*(int)EArrogantAttack.LAST*/);
         m_anim.SetInteger("ATTACK_IDX", AttackIdx);
         base.StartAttack();
     }
@@ -39,6 +53,8 @@ public class ArrogantScript : HmmScript
     public override void AttackTriggerOn()
     {
         AttackTriggerOn(AttackIdx);
+        float damage = Attack * m_normalDamageMultiplier[AttackIdx];
+        AttackObject.SetAttack(this, damage);
     }
 
     public void StartSmash()

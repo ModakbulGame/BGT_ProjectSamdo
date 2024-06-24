@@ -13,10 +13,12 @@ public enum EQueenSkillName
 
 public class QueenScript : MonsterScript
 {
-    public override bool CanPurify => HatchCount > PurifyHatch;
+    public override bool CanPurify => HatchCount > m_purifyHatch;
 
     private int HatchCount { get; set; }
-    private readonly int PurifyHatch = 4;
+    [Tooltip("성불에 필요한 소환 횟수")]
+    [SerializeField]
+    private int m_purifyHatch = 4;
 
 
     [SerializeField]
@@ -25,22 +27,31 @@ public class QueenScript : MonsterScript
     private ObjectPool<GameObject> m_skurrabyPool;
 
     [SerializeField]
-    private VisualEffect m_poisonVFX;                               // 독 VFX
+    private VisualEffect m_poisonVFX;                           // 독 VFX
 
-    private const int MAX_SKURRABY = 3;                             // 최대 소환 딱지
-    private readonly float SkillDelay = 6;                          // 스킬 한번 쓰고 다음 스킬까지
-    public readonly float EvadeRange = 3;                           // 회피 거리
+    private const int MAX_SKURRABY = 3;                         // 최대 소환 딱지
+    [SerializeField]
+    private float m_hatchCooltime = 6;                          // 스킬 한번 쓰고 다음 스킬까지
+    public readonly float EvadeRange = 3;                       // 회피 거리
 
-    private readonly float SpitRange = 7.5f;                        // 독 뿌리기 거리 범위
-    private readonly float SpitAngle = 60;                          // 독 뿌리기 각도 범위
-    private readonly float SpitDelay = 0.5f;                        // 독 뿌리기 간격
+    [Tooltip("독 뿌리기 거리 범위")]
+    [SerializeField]
+    private float m_spitRadius = 7.5f;                          // 독 뿌리기 거리 범위
+    [Tooltip("독 뿌리기 거리 각도")]
+    [SerializeField]
+    private float m_spitAngle = 60;                             // 독 뿌리기 각도 범위
+    [Tooltip("독 뿌리기 간격")]
+    [SerializeField]
+    private float m_spitTimeGap = 0.5f;                         // 독 뿌리기 간격
 
-    private int CurSkurraby { get; set; } = 0;                      // 소환한 딱지 수
+    private int CurSkurraby { get; set; } = 0;                  // 소환한 딱지 수
     private Vector3 SkurrabyOffset = new(0, 1.5f, 2.75f);
 
     public EQueenSkillName SkillIdx { get; private set; }           // 현재 스킬
 
-    private readonly float[] m_skillCooltime = new float[] { 20, 12 };
+    [Tooltip("스킬 쿨타임")]
+    [SerializeField]
+    private float[] m_skillCooltime = new float[(int)EQueenSkillName.LAST] { 20, 12 };
 
     private readonly float[] SkillCoolCount = new float[(int)EQueenSkillName.LAST];
     public bool CanUseSkill { get { return CanCreateSkurraby || CanSpitPoison; } }  // 스킬 사용 가능
@@ -88,7 +99,7 @@ public class QueenScript : MonsterScript
         else return;
         int skill = (int)SkillIdx;
         SkillCoolCount[skill] = m_skillCooltime[skill];
-        if (SkillCoolCount[1-skill] <= SkillDelay) { SkillCoolCount[1-skill] = SkillDelay; }
+        if (SkillCoolCount[1-skill] <= m_hatchCooltime) { SkillCoolCount[1-skill] = m_hatchCooltime; }
     }
     public override void CreateAttack()                             // 딱지 만들기
     {
@@ -118,20 +129,20 @@ public class QueenScript : MonsterScript
     }
     private IEnumerator SpittingCoroutine()                         // 독 뿜기 코루틴
     {
-        yield return new WaitForSeconds(SpitDelay);
+        yield return new WaitForSeconds(m_spitTimeGap);
         while (IsSpitting)
         {
             SpitPoison();
-            yield return new WaitForSeconds(SpitDelay);
+            yield return new WaitForSeconds(m_spitTimeGap);
         }
     }
     private void SpitPoison()                                       // 독 리얼 뿜기
     {
-        Collider[] cols = Physics.OverlapSphere(Position, SpitRange, ValueDefine.HITTABLE_PLAYER_LAYER);
+        Collider[] cols = Physics.OverlapSphere(Position, m_spitRadius, ValueDefine.HITTABLE_PLAYER_LAYER);
         foreach (Collider col in cols)
         {
             PlayerController player = col.GetComponentInParent<PlayerController>();
-            if(player == null || AngleToPlayer > SpitAngle) { continue; }
+            if(player == null || AngleToPlayer > m_spitAngle) { continue; }
             player.GetBlind();
             break;
         }

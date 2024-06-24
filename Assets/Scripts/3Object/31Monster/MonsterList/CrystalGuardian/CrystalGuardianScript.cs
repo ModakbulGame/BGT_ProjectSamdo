@@ -28,12 +28,19 @@ public class CrystalGuardianScript : BossMonster
     public enum ENextAttack { SWING, SPIKE, NONE };
     private int NextAttack { get; set; }
 
-    private readonly int MaxSequence = 5;
     private int SequenceCount { get; set; } = 0;
     private bool IsSequencing { get; set; }
 
     private readonly float[] AttackAngle = new float[(int)ECrystalGuardianAttack.LAST] { 0, 0, 22, -22, 0 };
     private readonly float[] SkillAngle = new float[(int)ECrystalGuardianSkill.LAST] { 0, 0, 0 };
+
+
+    [SerializeField]
+    private float[] m_normalDamageMultiplier = new float[(int)ELifeGuardianAttack.LAST]
+     { 1, 1, 1, 1 };
+    [SerializeField]
+    private int m_maxSequence = 5;
+
 
     public override void LookTarget()
     {
@@ -53,7 +60,7 @@ public class CrystalGuardianScript : BossMonster
 
     public override void StartAttack()
     {
-        AttackIdx = 4/*Random.Range(0, (int)ECrystalGuardianAttack.LAST)*/;
+        AttackIdx = Random.Range(0, (int)ECrystalGuardianAttack.LAST);
         m_anim.SetInteger("ATTACK_IDX", AttackIdx);
         SequenceCount = 0;
         base.StartAttack();
@@ -63,11 +70,12 @@ public class CrystalGuardianScript : BossMonster
         int objIdx = AttackIdx % 2;
         AttackObject = m_normalAttacks[objIdx].GetComponent<AnimateAttackScript>();
 
+        float damage = Attack * m_normalDamageMultiplier[AttackIdx];
         AttackObject.SetDamage(Attack);
         AttackObject.AttackOn();
         if(TargetDistance > AttackRange) { MoveForward(); }
 
-        if (++SequenceCount >= MaxSequence) { NextAttack = (int)ENextAttack.NONE; }
+        if (++SequenceCount >= m_maxSequence) { NextAttack = (int)ENextAttack.NONE; }
         else { NextAttack = Random.Range(0, (int)ENextAttack.NONE + 1); }
 
         m_anim.SetInteger("PROCEED_IDX", NextAttack);
@@ -98,13 +106,7 @@ public class CrystalGuardianScript : BossMonster
 
 
     // 스킬
-    private readonly float AnySkillCooltime = 8;                // 스킬 간 최소 간격
     private float AnySkillTimeCount { get; set; }
-
-    [SerializeField]
-    private float[] m_skillDamage = new float[(int)ECrystalGuardianSkill.LAST];
-    [SerializeField]
-    private float[] m_skillCooltime = new float[(int)ECrystalGuardianSkill.LAST];
 
     public int NextSkillIdx { get; set; }
     public override int SkillNum => (int)ECrystalGuardianSkill.LAST;
@@ -119,7 +121,8 @@ public class CrystalGuardianScript : BossMonster
     public bool CreatedSkill { get; private set; }
     private int DoubleIdx { get; set; }
 
-    private readonly float ForwardForce = 7.5f;
+    [SerializeField]
+    private float m_skillForwardForce = 7.5f;
 
     public override void StartSkill()
     {
@@ -175,8 +178,8 @@ public class CrystalGuardianScript : BossMonster
     {
         base.SkillDone();
 
-        SkillTimeCount[CurSkillIdx] = SkillCooltime[CurSkillIdx];
-        AnySkillTimeCount = AnySkillCooltime;
+        SkillTimeCount[CurSkillIdx] = m_skillCooltime[CurSkillIdx];
+        AnySkillTimeCount = m_anySkillCooltime;
 
         SetNextSkill();
     }
@@ -195,7 +198,7 @@ public class CrystalGuardianScript : BossMonster
 
     private void MoveForward()
     {
-        m_rigid.AddForce(ForwardForce * transform.forward, ForceMode.VelocityChange);
+        m_rigid.AddForce(m_skillForwardForce * transform.forward, ForceMode.VelocityChange);
     }
 
 
@@ -214,12 +217,6 @@ public class CrystalGuardianScript : BossMonster
         base.OnSpawned();
         NextSkillIdx = Random.Range(0, SkillNum);
     }
-    public override void InitSkillInfo()
-    {
-        base.InitSkillInfo();
-        SkillCooltime = new float[3] { m_skillCooltime[0], m_skillCooltime[1], m_skillCooltime[2] };
-    }
-
 
     public override void SetStates()
     {

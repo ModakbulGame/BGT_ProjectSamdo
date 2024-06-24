@@ -10,11 +10,15 @@ public class BloScript : MonsterScript
 
     private MonsterSkillScript SkillObj { get { return (MonsterSkillScript)SkillList[0]; } }
 
+    [Tooltip("돌진 속도")]
     [SerializeField]
     private float m_rushSpeed = 6;
-    public virtual int AbsorbAmount { get { return 2; } }
+    [Tooltip("돌진 데미지")]
     [SerializeField]
     private float m_rushDamage = 10;
+    [Tooltip("영혼 흡수량")]
+    [SerializeField]
+    public int AbsorbAmount = 2;
 
     private bool RushDone { get; set; }
 
@@ -22,7 +26,7 @@ public class BloScript : MonsterScript
 
     public bool IsRushing { get; private set; }
 
-    public override void ApproachTarget()   // ���� ����
+    public override void ApproachTarget()   // 공격 시작
     {
         if (!RushDone) { RushBlo(); return; }
         base.ApproachTarget();

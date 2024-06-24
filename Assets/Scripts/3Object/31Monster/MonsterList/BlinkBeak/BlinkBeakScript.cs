@@ -7,7 +7,9 @@ public class BlinkbeakScript : MonsterScript
 {
     public override bool CanPurify => EvadeTimeCount >= (EvadeCooltime - PurifyTime);
 
-    private readonly float PurifyTime = 5;
+    [Tooltip("회피 후 성불 기간")]
+    [SerializeField]
+    private float PurifyTime = 5;
 
     private IMonsterState m_evadeState;
 
@@ -111,8 +113,9 @@ public class BlinkbeakScript : MonsterScript
     }
 
 
-
-    private readonly int EvadeAttackStack = 2;
+    [Tooltip("회피에 필요한 공격 횟수")]
+    [SerializeField]
+    private int EvadeAttackStack = 2;
     private int AttackStack { get; set; }
 
     public override void AttackDone()

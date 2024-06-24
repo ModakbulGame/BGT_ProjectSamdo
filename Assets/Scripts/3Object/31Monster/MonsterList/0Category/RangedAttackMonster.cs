@@ -11,7 +11,7 @@ public class RangedAttackMonster : MonsterScript
     [SerializeField]
     private int m_attackMaxNum = 5;
     [SerializeField]
-    private int m_throwAttackIdx = 0;
+    private int m_throwAttackIdx = 0;           // 던지기 공격이 몇 번째 프리펍인지
 
     public virtual Vector3 AttackOffset { get { return Vector3.zero; } }
 

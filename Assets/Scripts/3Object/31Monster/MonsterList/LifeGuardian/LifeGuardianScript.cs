@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ELifeGuardianAttack
+{
+    RIGHT_DOWN_SWING,
+    LEFT_UP_SWING,
+    RIGHT_UP_SWING,
+    SPIKE_ATTACK,
+
+    LAST
+}
+
 public enum ELifeGuardianSkill
 {
     SPIKE,
@@ -16,6 +26,9 @@ public class LifeGuardianScript : BossMonster
     private bool AttackProceed { get; set; }
     private readonly float[] AttackAngle = new float[4] { 0, 30, -30, -15 };
 
+    [SerializeField]
+    private float[] m_normalDamageMultiplier = new float[(int)ELifeGuardianAttack.LAST]
+        { 1, 1, 1, 1 };
 
     public override void LookTarget()
     {
@@ -34,22 +47,24 @@ public class LifeGuardianScript : BossMonster
 
     public override void StartAttack()
     {
-        AttackIdx = Random.Range(0, 4);
+        AttackIdx = Random.Range(0, (int)ELifeGuardianAttack.LAST);
         m_anim.SetInteger("ATTACK_IDX", AttackIdx);
         base.StartAttack();
     }
     public override void AttackTriggerOn()
     {
         base.AttackTriggerOn();
-        AttackObject.SetDamage(Attack);
 
-        AttackProceed = AttackIdx < 2 && Random.Range(0, 2) == 0;
+        float damage = Attack * m_normalDamageMultiplier[AttackIdx];
+        AttackObject.SetDamage(damage);
+
+        AttackProceed = AttackIdx < (int)ELifeGuardianAttack.RIGHT_UP_SWING && Random.Range(0, 2) == 0;
         m_anim.SetBool("PROCEED_ATTACK", AttackProceed);
     }
     public override void AttackDone()
     {
         IsTracing = false;
-        if (AttackIdx >= 2 || !AttackProceed)
+        if (AttackIdx >= (int)ELifeGuardianAttack.RIGHT_UP_SWING || !AttackProceed)
         {
             base.AttackDone();
         }
@@ -58,14 +73,7 @@ public class LifeGuardianScript : BossMonster
 
 
     // 스킬
-    private readonly float AnySkillCooltime = 8;
     private float AnySkillTimeCount { get; set; }
-
-    [SerializeField]
-    private float[] m_skillDamage = new float[3];
-    [SerializeField]
-    private float[] m_skillCooltime = new float[3];
-
 
     private int NextSkillIdx { get; set; }
 
@@ -82,7 +90,8 @@ public class LifeGuardianScript : BossMonster
     public bool CreatedSkill { get; private set; }
     public bool RushStarted { get; private set; }
 
-    private readonly float RushSpeed = 8;
+    [SerializeField]
+    private float m_rushSpeed = 8;
 
     public override void StartSkill()
     {
@@ -149,12 +158,12 @@ public class LifeGuardianScript : BossMonster
             RotateToDir(dir, ERotateSpeed.DEFAULT);
         }
 
-        m_rigid.velocity = RushSpeed * transform.forward;
+        m_rigid.velocity = m_rushSpeed * transform.forward;
     }
     public override void SkillDone()
     {
-        SkillTimeCount[CurSkillIdx] = SkillCooltime[CurSkillIdx];
-        AnySkillTimeCount = AnySkillCooltime;
+        SkillTimeCount[CurSkillIdx] = m_skillCooltime[CurSkillIdx];
+        AnySkillTimeCount = m_anySkillCooltime;
 
         if (CurSkillIdx == DrainIdx)
         {
@@ -199,11 +208,6 @@ public class LifeGuardianScript : BossMonster
         NextSkillIdx = Random.Range(0, SkillNum);
     }
 
-    public override void InitSkillInfo()
-    {
-        base.InitSkillInfo();
-        SkillCooltime = new float[3] { m_skillCooltime[0], m_skillCooltime[1], m_skillCooltime[2] };
-    }
 
     public override void SetStates()
     {
