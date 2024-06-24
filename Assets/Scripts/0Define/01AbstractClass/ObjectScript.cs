@@ -119,7 +119,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
         _hit.Damage = damage;
         if (CurHP > damage) { GetCC(_hit); }
         GetDamage(_hit);
-        if (BattleDebugger.LogHitInfo) { Debug.Log($"{_hit.Attacker.ObjectName} => {ObjectName} {damage} 데미지"); }
+        if (!BattleDebugger.HideHitInfo) { Debug.Log($"{_hit.Attacker.ObjectName} => {ObjectName} {damage} 데미지"); }
         if (!IsUnstoppable) { PlayHitAnim(_hit); }
         return true;
     }

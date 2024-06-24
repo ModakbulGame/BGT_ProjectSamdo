@@ -9,7 +9,7 @@ public class BattleDebugger : MonoBehaviour
     [SerializeField]
     private bool m_ableDebug = true;
     [SerializeField]
-    private bool m_logHitInfo = false;
+    private bool m_hideHitInfo = false;
     [SerializeField]
     private EPowerName[] m_powerSlot = new EPowerName[ValueDefine.MAX_POWER_SLOT];
     [SerializeField]
@@ -17,7 +17,7 @@ public class BattleDebugger : MonoBehaviour
     [SerializeField]
     private MonsterSpawnPoint m_spawnPoint;
 
-    public static bool LogHitInfo { get { return Inst.m_logHitInfo; } }
+    public static bool HideHitInfo { get { if (Inst == null) { return false; } return Inst.m_hideHitInfo; } }
 
     private void DrawDebugs()                               // 오브젝트별 디버깅
     {
