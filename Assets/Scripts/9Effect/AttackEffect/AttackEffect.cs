@@ -17,6 +17,7 @@ public class AttackEffect : MonoBehaviour
     public void EffectOn(Transform _returnTrans)
     {
         ReturnTrans = _returnTrans;
+        transform.SetParent(null);
         if(m_vfx != null) { m_vfx.Play(); }
         else if(m_particle != null) { m_particle.SetActive(true); }
         StartCoroutine(WaitDone());
