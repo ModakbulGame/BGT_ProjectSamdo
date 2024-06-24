@@ -7,6 +7,7 @@ public class BloScript : MonsterScript
     public override void AddSkillState() { m_monsterStates[(int)EMonsterState.SKILL] = gameObject.AddComponent<BloRushState>(); }
 
     public override bool CanPurify => !AbsorbedSoul;
+    public override bool CanSkill => base.CanSkill && !RushDone;
 
     protected bool AbsorbedSoul { get; set; }
 
@@ -19,20 +20,7 @@ public class BloScript : MonsterScript
 
     private bool RushDone { get; set; }
 
-    private BloRushState m_rushState;
-
     public bool IsRushing { get; private set; }
-
-    public override void ApproachTarget()   // 공격 시작
-    {
-        if (!RushDone) { RushBlo(); return; }
-        base.ApproachTarget();
-    }
-    private void RushBlo()
-    {
-        StopMove();
-        m_stateManager.ChangeState(m_rushState);
-    }
 
     public override void CreateAttack()
     {
@@ -59,6 +47,11 @@ public class BloScript : MonsterScript
         m_rigid.velocity = m_rushSpeed * dir.normalized;
     }
 
+
+    public override void StartSkill()
+    {
+        base.StartSkill();
+    }
 
     public override void SkillOn()
     {
@@ -95,11 +88,5 @@ public class BloScript : MonsterScript
         base.OnSpawned();
         RushDone = false;
         AbsorbedSoul = false;
-    }
-
-    public override void SetStates()
-    {
-        base.SetStates();
-        m_rushState = gameObject.AddComponent<BloRushState>();
     }
 }

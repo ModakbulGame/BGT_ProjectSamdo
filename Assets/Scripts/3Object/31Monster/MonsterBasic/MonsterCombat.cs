@@ -119,7 +119,7 @@ public abstract partial class MonsterScript
     public int SkillNum { get { return m_skillManager.SkillNum; } }
     public float[] SkillCooltime { get { return m_skillManager.SkillCooltimes; } }
     public float[] SkillTimeCount { get { return m_skillManager.SkillTimeCount; } }
-    public bool CanSkill => HasSkill && HasTarget && m_skillManager.CanSkill;
+    public virtual bool CanSkill => HasSkill && HasTarget && m_skillManager.CanSkill;
     public bool AnySkillTimeCheck { get { return m_skillManager.AnySkillTimeCheck; } }
     public bool SkillTimeCheck { get { return m_skillManager.SkillTimeCheck; } }
     public ObjectAttackScript[] SkillList { get { return m_skillManager.SkillList; } }

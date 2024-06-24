@@ -63,6 +63,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3874918215184057590}
   - component: {fileID: 8983620310381321600}
+  - component: {fileID: 5371993181305775826}
   - component: {fileID: 5447397542428130693}
   - component: {fileID: 8348301692858743955}
   - component: {fileID: 1396191856086805860}
@@ -116,10 +117,11 @@ MonoBehaviour:
   m_normalAttacks:
   - {fileID: 4017766118834139828}
   - {fileID: 18577619863184348}
-  SkillList:
-  - {fileID: 8895031179050611432}
-  - {fileID: 8895031179050611432}
-  - {fileID: 4640376532924790063}
+  m_normalDamageMultiplier:
+  - 1
+  - 1
+  - 1
+  - 1
   m_scriptable: {fileID: 11400000, guid: 8d6407cbd69e4f842bac42ce67347b85, type: 2}
   m_combatInfo:
     MaxHP: 600
@@ -139,14 +141,34 @@ MonoBehaviour:
     Max: 5
   HasSpeedAttack: 0
   m_dissolveDelay: 2.5
-  m_skillDamage:
+  m_dashPower: 15
+  m_dashUp: 3
+  m_iceHeight: 12
+--- !u!114 &5371993181305775826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5534705623194559339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e3e46956d256df4ea605e4355c7ddfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_skillList:
+  - {fileID: 8895031179050611432}
+  - {fileID: 8895031179050611432}
+  - {fileID: 4640376532924790063}
+  m_skillDamages:
   - 20
   - 30
   - 50
-  m_skillCooltime:
+  m_skillCooltimes:
   - 10
   - 10
   - 10
+  m_anySkillCooltime: 8
 --- !u!114 &5447397542428130693
 MonoBehaviour:
   m_ObjectHideFlags: 0
