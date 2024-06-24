@@ -14,6 +14,14 @@ public class AnimateAttackScript : ObjectAttackScript
     private float m_modelMultiplier = 30.90435f;
 
 
+    public override void AttackOff()
+    {
+        base.AttackOff();
+        m_trailList.Clear();
+        m_trailFillerList.Clear();
+    }
+
+
     protected readonly LinkedList<BufferObject> m_trailList = new();
     protected LinkedList<BufferObject> m_trailFillerList = new();
 
