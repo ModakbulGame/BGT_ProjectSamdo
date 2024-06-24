@@ -239,6 +239,7 @@ public partial class PlayerController
     }
     public void CreatePower()                                                               // 스킬 오브젝트 생성
     {
+        if(PowerInfoInHand == null) { return; }
         ECastType type = PowerInfoInHand.CastType;
 
         GameObject power = GameManager.GetPowerObj(PowerInHand);
@@ -257,6 +258,8 @@ public partial class PlayerController
             case ECastType.MELEE_CC:
                 power.transform.localPosition = PowerInfoInHand.PowerData.PowerPrefab.transform.localPosition;
                 power.transform.localEulerAngles = Vector3.zero;
+                MeleePowerScript melee = power.GetComponentInChildren<MeleePowerScript>();
+                melee.SetPower(this, Attack, Magic);
                 break;
             case ECastType.RANGED:
             case ECastType.RANGED_CC:
@@ -268,6 +271,8 @@ public partial class PlayerController
             case ECastType.SUMMON:
                 power.transform.SetParent(null);
                 power.transform.position = PlayManager.TracePowerAim(Position, PowerInfoInHand.PowerCastRange);
+                PlayerPowerScript summon = power.GetComponentInChildren<PlayerPowerScript>();
+                summon.SetPower(this, Attack, Magic);
                 break;
             case ECastType.AROUND:
             case ECastType.AROUND_CC:

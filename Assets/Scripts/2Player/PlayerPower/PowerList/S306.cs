@@ -5,5 +5,5 @@ using UnityEngine.EventSystems;
 
 public class S306 : ParabolaExplodeScript
 {
-
+    
 }

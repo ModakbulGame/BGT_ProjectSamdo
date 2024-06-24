@@ -6,6 +6,9 @@ public class PlayerPowerScript : ObjectAttackScript, IPoolable
 {
     [SerializeField]
     protected PowerScriptable m_scriptable;
+
+    [SerializeField]
+    private AttackEffect m_effect;
     public bool IsScriptableSet { get { return m_scriptable != null; } }
     public void SetScriptable(PowerScriptable _scriptable) { m_scriptable = _scriptable; SetInfo(); }
 
@@ -65,6 +68,12 @@ public class PlayerPowerScript : ObjectAttackScript, IPoolable
 
     public virtual void CollideTarget() { }
 
+    public virtual void CreateEffect()
+    {
+        if (m_effect == null) { return; }
+        m_effect.EffectOn(transform);
+    }
+
 
     private IEnumerator ReleaseDelay()
     {
@@ -76,6 +85,10 @@ public class PlayerPowerScript : ObjectAttackScript, IPoolable
     {
         AttackOn();
         StartCoroutine(ReleaseDelay());
+    }
+    public override void AttackOn()
+    {
+        base.AttackOn();
     }
 
     private void SetInfo()
