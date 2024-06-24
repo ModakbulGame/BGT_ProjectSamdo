@@ -1,107 +1,134 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Collections;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public enum EUumAttackType
+public enum EUumAttack
 {
-    NORMAL1 = 0,
-    NORMAL2 = 2,
+    LEFT_SWING,
+    RIGHT_SWING,
+    SMASH,
 
-    NORMAL3 = 5,
+    LAST
+}
+public enum EUumPart
+{
+    ARM_RD,
+    ARM_RU,
+    CHEST,
+    ARM_LU,
+    ARM_LD,
+    AROUND,
 
-    SKILL2 = 6,
-    SKILL1 = 7,
+    LAST
+}
+
+public enum EUumSkill
+{
+    LEFT_SPIKE,
+    RIGHT_SPIKE,
 
     LAST
 }
 
 public class UumScript : AnimatedAttackMonster
 {
-    public override bool CanPurify => SkillTimeCount[0] > 0 || SkillTimeCount[1] > 0;
+    public override bool CanPurify => SkillTimeCheck;
 
     [SerializeField]
     private VisualEffect m_headFire;
 
-    private readonly float PurifyTime = 5;
+    [SerializeField]
+    private readonly float m_purifyTime = 5;
 
-    public override int SkillNum => 2;
 
     private readonly float NarrowAttackMultiplier = 1.5f;
 
     private readonly List<ObjectAttackScript> AttackObjects = new();
 
+    private readonly int[] RightAttackIdx = new int[] { 0, 1, 2 };
+    private readonly int[] LeftAttackIdx = new int[] { 2, 3, 4 };
+
+    [Tooltip("내려찍기 / 휩쓸기 공격 배율")]
+    [SerializeField]
+    private float[] m_skillDamageMultiplier = new float[2] { 1, 1 };
+
     public override void StartAttack()
     {
-        AttackIdx = Random.Range(0, 5);
-        m_anim.SetInteger("ATTACK_IDX", AttackIdx);
+        SetAttackIdx(Random.Range(0, (int)EUumAttack.LAST));
         AttackObjects.Clear();
         base.StartAttack();
     }
     public override void CreateAttack()
     {
-        EUumAttackType type = EUumAttackType.LAST;
-        if(AttackIdx == 2) { type = EUumAttackType.NORMAL3; }
-        else if(AttackIdx == 3) { type = EUumAttackType.SKILL2; }
-        else if (AttackIdx == 4) { type = EUumAttackType.SKILL1; }
-
-        float attack = Attack;
-        if(type == EUumAttackType.NORMAL3) { attack *= NarrowAttackMultiplier; }
-        AttackObject = m_normalAttacks[(int)type].GetComponent<ObjectAttackScript>();
-        AttackObject.SetAttack(this, attack);
+        AttackObject = m_normalAttacks[(int)EUumPart.AROUND].GetComponent<ObjectAttackScript>();
+        AttackObject.SetAttack(this, NormalDamage(AttackIdx) * NarrowAttackMultiplier);
         AttackObject.AttackOn();
     }
     public override void AttackTriggerOn()
     {
-        switch (AttackIdx)
+        int[] attackList;
+        if(AttackIdx == (int)EUumAttack.LEFT_SWING) { attackList = RightAttackIdx; }
+        else { attackList = LeftAttackIdx; }
+        foreach (int idx in attackList)
         {
-            case 0:
-            case 2:
-            case 3:
-                for(int i=(int)EUumAttackType.NORMAL1;i<=(int)EUumAttackType.NORMAL2;i++)
-                {
-                    AttackObjects.Add(m_normalAttacks[i].GetComponent<ObjectAttackScript>());
-                    AttackObjects[i].SetAttack(this, Attack);
-                    if(AttackIdx == 3) { AttackObjects[i].SetCCType(ECCType.KNOCKBACK); }
-                }
-                break;
-            case 1:
-            case 4:
-                for (int i = (int)EUumAttackType.NORMAL2; i<(int)EUumAttackType.NORMAL3; i++)
-                {
-                    int idx = i - (int)EUumAttackType.NORMAL2;
-                    AttackObjects.Add(m_normalAttacks[i].GetComponent<ObjectAttackScript>());
-                    AttackObjects[idx].SetAttack(this, Attack);
-                    if (AttackIdx == 4) { AttackObjects[idx].SetCCType(ECCType.KNOCKBACK); }
-                }
-                break;
-        }
-        foreach (ObjectAttackScript attack in AttackObjects)
-        {
+            ObjectAttackScript attack = m_normalAttacks[idx].GetComponent<ObjectAttackScript>();
+            attack.SetAttack(this, NormalDamage(AttackIdx));
             attack.AttackOn();
         }
     }
     public override void AttackTriggerOff()
     {
-        foreach (ObjectAttackScript attack in AttackObjects)
+        int[] attackList;
+        if (AttackIdx == (int)EUumAttack.LEFT_SWING) { attackList = RightAttackIdx; }
+        else { attackList = LeftAttackIdx; }
+        foreach (int idx in attackList)
         {
+            ObjectAttackScript attack = m_normalAttacks[idx].GetComponent<ObjectAttackScript>();
+            attack.SetAttack(this, NormalDamage(AttackIdx));
             attack.AttackOff();
         }
-        AttackObject?.AttackOff();
     }
-    public override void AttackDone()
+
+
+    public override void SkillOn()
     {
-        foreach (ObjectAttackScript attack in AttackObjects)
+        int[] partList;
+        if (CurSkillIdx == (int)EUumSkill.LEFT_SPIKE) { partList = RightAttackIdx; }
+        else { partList = LeftAttackIdx; }
+
+        foreach (int idx in partList)
         {
+            ObjectAttackScript attack = m_normalAttacks[idx].GetComponent<ObjectAttackScript>();
+            float damage = SkillDamages[CurSkillIdx] * m_skillDamageMultiplier[1];
+            attack.SetAttack(this, damage);
+            attack.SetCCType(ECCType.KNOCKBACK);
+            attack.AttackOn();
+        }
+    }
+    public override void CreateSkill()
+    {
+        ObjectAttackScript skill;
+        skill = SkillList[CurSkillIdx];
+        float damage = SkillDamages[CurSkillIdx] * m_skillDamageMultiplier[0];
+        skill.SetAttack(this, damage);
+        skill.AttackOn();
+        base.CreateSkill();
+    }
+    public override void SkillOff()
+    {
+        int[] partList;
+        if (CurSkillIdx == (int)EUumSkill.LEFT_SPIKE) { partList = RightAttackIdx; }
+        else { partList = LeftAttackIdx; }
+
+        foreach (int idx in partList)
+        {
+            ObjectAttackScript attack = m_normalAttacks[idx].GetComponent<ObjectAttackScript>();
+            attack.AttackOff();
             attack.ResetCCType();
         }
-        base.AttackDone();
-        if(AttackIdx == 3 || AttackIdx == 4) { SkillTimeCount[AttackIdx - 3] = PurifyTime; }
-    }
-    public override void LookTarget()
-    {
-        if(AttackIdx == 3 || AttackIdx == 4) { return; }
-        base.LookTarget();
+        base.SkillOff();
     }
 
 
@@ -109,12 +136,5 @@ public class UumScript : AnimatedAttackMonster
     {
         base.StartDissolve();
         m_headFire.Stop();
-    }
-
-    public override void ProcCooltime()
-    {
-        base.ProcCooltime();
-        if (SkillTimeCount[0] > 0) { SkillTimeCount[0] -= Time.deltaTime; }
-        if (SkillTimeCount[1] > 0) { SkillTimeCount[1] -= Time.deltaTime; }
     }
 }

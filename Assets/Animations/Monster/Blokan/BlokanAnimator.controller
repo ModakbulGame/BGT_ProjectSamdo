@@ -187,7 +187,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: IS_RUSHING
+    m_ConditionEvent: IS_SKILLING
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3614477156229746864}
@@ -328,7 +328,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: IS_RUSHING
+  - m_Name: IS_SKILLING
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -515,7 +515,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: IS_RUSHING
+    m_ConditionEvent: IS_SKILLING
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2746388881490503843}

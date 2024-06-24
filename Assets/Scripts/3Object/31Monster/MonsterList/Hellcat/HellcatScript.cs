@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum EHellcatAttack
@@ -12,6 +13,8 @@ public enum EHellcatAttack
 
 public class HellcatScript : MonsterScript
 {
+    public override void AddAttackState() { m_monsterStates[(int)EMonsterState.ATTACK] = gameObject.AddComponent<HellcatAttackState>(); }
+
     public override bool CanPurify => !HittedPlayer;
 
     private bool HittedPlayer { get; set; }
@@ -22,10 +25,7 @@ public class HellcatScript : MonsterScript
     private float m_jumpAttackDist = 1.75f;
     private readonly float JumpMoveSpeed = 3.5f;
 
-    [Tooltip("기본 공격 데미지 배율")]
-    [SerializeField]
-    private float[] m_normalDamageMultiplier = new float[(int)EHellcatAttack.LAST]
-        { 1, 1 };
+    public override bool CheckNormalCount() { return IsCorrectNormalnum((int)EHellcatAttack.LAST); }
 
 
     public bool IsJumpAttack { get; private set; }
@@ -98,9 +98,7 @@ public class HellcatScript : MonsterScript
         AttackObject = m_normalAttacks[_idx].GetComponent<NormalAttackScript>();
 
         int damageIdx = _idx == 0 ? 0 : 1;
-        float damage = Attack * m_normalDamageMultiplier[damageIdx];
-
-        AttackObject.SetAttack(this, damage);
+        AttackObject.SetAttack(this, NormalDamage(damageIdx));
         AttackObject.AttackOn();
 
         if (_idx <= 2)
@@ -132,11 +130,5 @@ public class HellcatScript : MonsterScript
     {
         base.OnSpawned();
         HittedPlayer = false;
-    }
-
-    public override void SetStates()
-    {
-        base.SetStates();
-        ReplaceState(EMonsterState.ATTACK, gameObject.AddComponent<HellcatAttackState>());
     }
 }

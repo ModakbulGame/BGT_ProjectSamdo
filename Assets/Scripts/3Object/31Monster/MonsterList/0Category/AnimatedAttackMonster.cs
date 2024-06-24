@@ -7,6 +7,11 @@ public class AnimatedAttackMonster : MonsterScript
     public override void AttackTriggerOn()
     {
         base.AttackTriggerOn();
-        AttackObject.SetDamage(Attack);
+        AttackObject.SetAttack(this, Attack);
+    }
+    public override void AttackTriggerOff()
+    {
+        base.AttackTriggerOff();
+        AttackObject.AttackOff();
     }
 }

@@ -6,6 +6,9 @@ using UnityEngine.VFX;
 
 public class WolfScript : MonsterScript
 {
+    public override void AddApproachState() { m_monsterStates[(int)EMonsterState.APPROACH] = gameObject.AddComponent<WolfApproachState>(); }
+    public override void AddAttackState() { m_monsterStates[(int)EMonsterState.ATTACK] = gameObject.AddComponent<WolfAttackState>(); }
+
     public override bool CanPurify => m_peck != null ? m_peck.CurPurifyTurn == PeckIdx : false;
 
     private WolfPeckScript m_peck;
@@ -200,10 +203,8 @@ public class WolfScript : MonsterScript
     public override void SetStates()
     {
         base.SetStates();
-        ReplaceState(EMonsterState.APPROACH, gameObject.AddComponent<WolfApproachState>());
         m_positionState = gameObject.AddComponent<WolfPositionState>();
         m_jabState = gameObject.AddComponent<WolfJabState>();
-        ReplaceState(EMonsterState.ATTACK, gameObject.AddComponent<WolfAttackState>());
     }
 
     public override void Update()

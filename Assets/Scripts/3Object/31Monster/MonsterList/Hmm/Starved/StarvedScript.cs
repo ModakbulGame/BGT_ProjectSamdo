@@ -6,6 +6,12 @@ public enum EStarvedAttack
 {
     SHORT,
     LONG,
+
+    LAST
+}
+
+public enum EStarvedSkill
+{
     BUMP,
 
     LAST
@@ -15,10 +21,7 @@ public class StarvedScript : HmmScript
 {
     public override bool CanPurify => IsExtorted;
 
-    [Tooltip("기본 공격 별 데미지 배율")]
-    [SerializeField]
-    private float[] m_normalDamageMultiplier = new float[(int)EStarvedAttack.LAST]
-        { 1, 1, 1 };
+    public override bool CheckNormalCount() { return m_normalDamageMultiplier.Length == (int)EStarvedAttack.LAST; }
 
     public override void StartAttack()
     {
@@ -28,14 +31,19 @@ public class StarvedScript : HmmScript
     }
     public override void AttackTriggerOn()
     {
-        bool isBump = AttackIdx == (int)EStarvedAttack.BUMP;
-        int idx = !isBump ? 0 : 1;
-        AttackTriggerOn(idx);
-        float damage = Attack * m_normalDamageMultiplier[AttackIdx];
-        AttackObject.SetAttack(this, damage);
+        AttackTriggerOn(0);
+        AttackObject.SetAttack(this, NormalDamage(AttackIdx));
     }
     public override void AttackTriggerOff()
     {
         AttackObject.AttackOff();
+    }
+
+    public override void CreateSkill()
+    {
+        base.CreateSkill();
+        ObjectAttackScript skill = SkillList[CurSkillIdx];
+        skill.SetAttack(this, SkillDamages[CurSkillIdx]);
+        skill.AttackOn();
     }
 }

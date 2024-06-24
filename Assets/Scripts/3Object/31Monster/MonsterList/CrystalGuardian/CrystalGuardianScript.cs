@@ -35,9 +35,7 @@ public class CrystalGuardianScript : BossMonster
     private readonly float[] SkillAngle = new float[(int)ECrystalGuardianSkill.LAST] { 0, 0, 0 };
 
 
-    [SerializeField]
-    private float[] m_normalDamageMultiplier = new float[(int)ELifeGuardianAttack.LAST]
-     { 1, 1, 1, 1 };
+    public override bool CheckNormalCount() { return IsCorrectNormalnum((int)ECrystalGuardianAttack.LAST); }
     [SerializeField]
     private int m_maxSequence = 5;
 
@@ -70,8 +68,7 @@ public class CrystalGuardianScript : BossMonster
         int objIdx = AttackIdx % 2;
         AttackObject = m_normalAttacks[objIdx].GetComponent<AnimateAttackScript>();
 
-        float damage = Attack * m_normalDamageMultiplier[AttackIdx];
-        AttackObject.SetDamage(Attack);
+        AttackObject.SetAttack(this, NormalDamage(AttackIdx));
         AttackObject.AttackOn();
         if(TargetDistance > AttackRange) { MoveForward(); }
 
@@ -92,7 +89,7 @@ public class CrystalGuardianScript : BossMonster
         {
             AttackObject = m_normalAttacks[2].GetComponent<NormalAttackScript>();
 
-            AttackObject.SetDamage(Attack);
+            AttackObject.SetAttack(this, NormalDamage(AttackIdx));
             AttackObject.AttackOn();
             AttackObject.PlayEffect();
         }
@@ -106,19 +103,12 @@ public class CrystalGuardianScript : BossMonster
 
 
     // 스킬
-    private float AnySkillTimeCount { get; set; }
-
-    public int NextSkillIdx { get; set; }
-    public override int SkillNum => (int)ECrystalGuardianSkill.LAST;
-    public override bool CanSkill => AnySkillTimeCount <= 0 && HasTarget && TargetInAttackRange && SkillTimeCount[NextSkillIdx] <= 0;
-    public override float AttackRange => (AnySkillTimeCount <= 0) ? base.AttackRange * 2 : base.AttackRange;
+    public override float AttackRange => AnySkillTimeCheck ? base.AttackRange * 2 : base.AttackRange;
 
     private readonly int DoubleSwingIdx = (int)ECrystalGuardianSkill.DOUBLE_SWING;
     private readonly int JumpSkillIdx = (int)ECrystalGuardianSkill.JUMP_SKILL;
     private readonly int ImpactIdx = (int)ECrystalGuardianSkill.IMPACT;
 
-    private ObjectAttackScript CurSkill { get; set; }
-    public bool CreatedSkill { get; private set; }
     private int DoubleIdx { get; set; }
 
     [SerializeField]
@@ -126,12 +116,7 @@ public class CrystalGuardianScript : BossMonster
 
     public override void StartSkill()
     {
-        CurSkillIdx = NextSkillIdx;
-        if (CurSkillIdx == -1) { return; }
-        m_anim.SetInteger("SKILL_IDX", CurSkillIdx);
-        m_anim.SetBool("IS_SKILLING", true);
-        StopMove();
-        CreatedSkill = false;
+        base.StartSkill();
         if(CurSkillIdx == DoubleSwingIdx) { DoubleIdx = 0; }
     }
     public override void SkillOn()
@@ -139,7 +124,7 @@ public class CrystalGuardianScript : BossMonster
         if (CurSkillIdx == DoubleSwingIdx)
         {
             CurSkill = m_normalAttacks[DoubleIdx++].GetComponent<ObjectAttackScript>();
-            CurSkill.SetAttack(this, m_skillDamage[DoubleSwingIdx]);
+            CurSkill.SetAttack(this, SkillDamages[DoubleSwingIdx]);
             CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
         }
@@ -154,14 +139,14 @@ public class CrystalGuardianScript : BossMonster
         {
             for (int i = 0; i<2; i++)
             {
-                SkillList[i].SetAttack(this, m_skillDamage[JumpSkillIdx]);
+                SkillList[i].SetAttack(this, SkillDamages[JumpSkillIdx]);
                 SkillList[i].AttackOn();
             }
             m_anim.SetBool("IS_SKILLING", false);
         }
         else if (CurSkillIdx == ImpactIdx)
         {
-            SkillList[2].SetAttack(this, m_skillDamage[ImpactIdx]);
+            SkillList[2].SetAttack(this, SkillDamages[ImpactIdx]);
             SkillList[2].AttackOn();
             m_anim.SetBool("IS_SKILLING", false);
         }
@@ -174,27 +159,6 @@ public class CrystalGuardianScript : BossMonster
             if(DoubleIdx == 2) { m_anim.SetBool("IS_SKILLING", false); }
         }
     }
-    public override void SkillDone()
-    {
-        base.SkillDone();
-
-        SkillTimeCount[CurSkillIdx] = m_skillCooltime[CurSkillIdx];
-        AnySkillTimeCount = m_anySkillCooltime;
-
-        SetNextSkill();
-    }
-    private void SetNextSkill()
-    {
-        int minIdx = 0;
-        float minTime = SkillTimeCount[minIdx];
-        for (int i = 1; i<SkillNum; i++)
-        {
-            float curTime = SkillTimeCount[i];
-            if (curTime < minTime) { minIdx = i; }
-            else if (curTime == minTime) { minIdx = Random.Range(0, 2) == 0 ? i : minIdx; }
-        }
-        NextSkillIdx = minIdx;
-    }
 
     private void MoveForward()
     {
@@ -202,32 +166,9 @@ public class CrystalGuardianScript : BossMonster
     }
 
 
-    public override void ProcCooltime()
-    {
-        base.ProcCooltime();
-        if (AnySkillTimeCount > 0) { AnySkillTimeCount -= Time.deltaTime; }
-        for (int i = 0; i<SkillNum; i++)
-        {
-            if (SkillTimeCount[i] > 0) { SkillTimeCount[i] -= Time.deltaTime; }
-        }
-    }
-
-    public override void OnSpawned()
-    {
-        base.OnSpawned();
-        NextSkillIdx = Random.Range(0, SkillNum);
-    }
-
     public override void SetStates()
     {
         base.SetStates();
         m_monsterStates[(int)EMonsterState.SKILL] = gameObject.AddComponent<CrystalGuardianSkillState>();
-    }
-
-    public override void SetAttackObject()
-    {
-        m_normalAttacks[2].GetComponent<ObjectAttackScript>().SetAttack(this, Attack);
-        SkillList[0].GetComponent<ObjectAttackScript>().SetAttack(this, m_skillDamage[1]);
-        SkillList[1].GetComponent<ObjectAttackScript>().SetAttack(this, m_skillDamage[1]);
     }
 }

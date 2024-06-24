@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5433458398054492116}
   - component: {fileID: 5023217988797211988}
+  - component: {fileID: 3013559156737583807}
   - component: {fileID: 2090501870184702522}
   - component: {fileID: 6213347851301481447}
   - component: {fileID: 2200756399401006509}
@@ -63,7 +64,9 @@ MonoBehaviour:
   m_normalAttacks:
   - {fileID: 616590143073217578}
   - {fileID: 2229222347548713600}
-  SkillList: []
+  m_normalDamageMultiplier:
+  - 1
+  - 1
   m_scriptable: {fileID: 11400000, guid: a3bb57d5b38a97143b62834462e2185f, type: 2}
   m_combatInfo:
     MaxHP: 460
@@ -83,9 +86,27 @@ MonoBehaviour:
     Max: 5
   HasSpeedAttack: 1
   m_dissolveDelay: 2
-  m_smashCooltime: 15
   m_smashRadius: 4
   m_smash: {fileID: 8668340924614356128}
+--- !u!114 &3013559156737583807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4930112960067386354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e3e46956d256df4ea605e4355c7ddfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_skillList:
+  - {fileID: 5724432074919956427}
+  m_skillDamages:
+  - 0
+  m_skillCooltimes:
+  - 8
+  m_anySkillCooltime: 0
 --- !u!114 &2090501870184702522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2287,8 +2308,34 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7366157849854708929, guid: 8790c013d2110224794e8de68772b7ba,
+        type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 5724432074919956427}
   m_SourcePrefab: {fileID: 100100000, guid: 8790c013d2110224794e8de68772b7ba, type: 3}
+--- !u!1 &646188113517867221 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7366157849854708929, guid: 8790c013d2110224794e8de68772b7ba,
+    type: 3}
+  m_PrefabInstance: {fileID: 7984425992666250260}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5724432074919956427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 646188113517867221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ede81f5b0cd6b0c40adb8d4da9538d9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ccList: 
+  m_impulseAmount: 0.1
+  m_combinedEffect: {fileID: 0}
+  m_effect: {fileID: 8668340924614356128}
 --- !u!4 &4801487878742602207 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3200985019213385163, guid: 8790c013d2110224794e8de68772b7ba,

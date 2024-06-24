@@ -13,7 +13,7 @@ public class ObjectAttackScript : MonoBehaviour
 
     [SerializeField]
     protected ECCType[] m_ccList = new ECCType[0];
-    [Range(0,1)]
+    [Range(0, 1)]
     [SerializeField]
     protected float m_impulseAmount = 0.1f;
     [SerializeField]
@@ -25,10 +25,14 @@ public class ObjectAttackScript : MonoBehaviour
     public virtual ECCType[] CCList { get { return m_ccList; } }
 
 
-    public void SetDamage(float _damage) { Damage = _damage * Attacker.DamageMultiplier * Attacker.AttackMultiplier; }
-    public void SetAttack(ObjectScript _attacker, float _damage) { m_attacker = _attacker; SetDamage(_damage); }
+    private void SetDamage(float _damage) { Damage = _damage * Attacker.DamageMultiplier * Attacker.AttackMultiplier; }
+    public void SetAttack(ObjectScript _attacker, float _damage)
+    {
+        if (m_attacker == null) { m_attacker = _attacker; }
+        SetDamage(_damage);
+    }
     public void SetCCType(ECCType _cc) { SetCCType(new ECCType[1] { _cc }); }
-    public void SetCCType(ECCType[] _ccs) { m_ccList = new ECCType[_ccs.Length]; for(int i = 0; i<_ccs.Length; i++) { m_ccList[i] = _ccs[i]; } }
+    public void SetCCType(ECCType[] _ccs) { m_ccList = new ECCType[_ccs.Length]; for (int i = 0; i<_ccs.Length; i++) { m_ccList[i] = _ccs[i]; } }
     public void ResetCCType() { SetCCType(ECCType.NONE); }
 
 
@@ -56,17 +60,16 @@ public class ObjectAttackScript : MonoBehaviour
     }
 
 
-    public void PlayEffect()
+    public virtual void PlayEffect()
     {
-        if(m_combinedEffect == null) { return; }
+        if (m_combinedEffect == null) { return; }
         m_combinedEffect.EffectOn();
     }
-    public void StopEffect()
+    public virtual void StopEffect()
     {
         if (m_combinedEffect == null) { return; }
         m_combinedEffect.EffectOff();
     }
-
 
 
     public virtual void Start()

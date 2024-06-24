@@ -5,45 +5,41 @@ using UnityEngine.VFX;
 
 public enum EMarmulakAttack
 {
-    NORMAL,
     THROW,
+    LEFT_SWING,
+    RIGHT_SWING,
+
+    LAST
+}
+
+public enum EMarmulakSkill
+{
     ROAR,
+
     LAST
 }
 
 public class MarmulakScript : RangedAttackMonster
 {
-    public override bool CanPurify => RoarTimeCount >= (m_roarCooltime - m_purifyTime);
+    public override bool CanPurify => SkillTimeCount[0] >= (m_roarCooltime - m_purifyTime);
 
-    public EMarmulakAttack CurAttack { get; private set; } = EMarmulakAttack.NORMAL;
-
-    private bool CanRoar { get { return TargetDistance <= m_roarRadius && RoarTimeCount <= 0; } }
-
-    public override float AttackRange => CanRoar ? m_roarRadius : (TargetDistance <= m_roarRadius) ? base.AttackRange : m_throwRange;
+    public override float AttackRange => SkillTimeCheck ? m_roarRadius : (TargetDistance <= m_roarRadius) ? base.AttackRange : m_throwRange;
 
 
-    [Tooltip("기본 공격 데미지 배율")]
-    [SerializeField]
-    private float[] m_normalDamageMultiplier = new float[(int)EMarmulakAttack.LAST]
-        { 1, 1, 1 };
     [Tooltip("던지기 공격 범위")]
     [SerializeField]
     private float m_throwRange = 25;
 
 
-
     public override void StartAttack()
     {
-        if (CanRoar) { StartRoar(); return; }
         if (TargetDistance <= m_roarRadius)
         {
-            CurAttack = EMarmulakAttack.NORMAL;
-            m_anim.SetInteger("ATTACK_IDX", Random.Range(0, 2));
+            SetAttackIdx(Random.Range((int)EMarmulakAttack.LEFT_SWING, (int)EMarmulakAttack.LAST));
         }
         else
         {
-            CurAttack = EMarmulakAttack.THROW;
-            m_anim.SetInteger("ATTACK_IDX", 2);
+            SetAttackIdx((int)EMarmulakAttack.THROW);
         }
         base.StartAttack();
     }
@@ -53,47 +49,14 @@ public class MarmulakScript : RangedAttackMonster
     {
         base.CreateAttack();
     }
-    public void StartRoar()
-    {
-        CurAttack = EMarmulakAttack.ROAR;
-        RoarTimeCount = m_roarCooltime;
-        StopMove();
-        m_anim.SetTrigger("SKILL");
-    }
-
     public override void CreateAttack()
     {
-        if (CurAttack == EMarmulakAttack.THROW)
-        {
-            ThrowBall();
-        }
-        else if(CurAttack == EMarmulakAttack.ROAR)
-        {
-            CheckNRoar();
-        }
+        ThrowBall();
     }
     public override void AttackTriggerOn()
     {
-        if(CurAttack == EMarmulakAttack.NORMAL)
-        {
-            base.AttackTriggerOn();
-            AttackObject.SetDamage(Attack);
-        }
-        else if (CurAttack == EMarmulakAttack.ROAR)
-        {
-            m_roarEffect.Play();
-        }
-    }
-    public override void AttackTriggerOff()
-    {
-        if(CurAttack == EMarmulakAttack.NORMAL)
-        {
-            base.AttackTriggerOff();
-        }
-        else if (CurAttack == EMarmulakAttack.ROAR)
-        {
-            m_roarEffect.Stop();
-        }
+        base.AttackTriggerOn(AttackIdx-1);
+        AttackObject.SetAttack(this, NormalDamage(AttackIdx));
     }
 
     [Tooltip("포효 쿨타임")]
@@ -106,18 +69,32 @@ public class MarmulakScript : RangedAttackMonster
     [SerializeField]
     private float m_purifyTime = 8;
 
-    private float RoarTimeCount { get; set; } = 0;
-
-    [SerializeField]
-    private MarmulakRoarEffect m_roarEffect;
-
-
 
     private readonly List<ObjectScript> m_roarList = new();
+    public override void StartSkill()
+    {
+        base.StartSkill();
+    }
+    public override void SkillOn()
+    {
+        MarmulakRoarEffect roar = SkillList[0] as MarmulakRoarEffect;
+        roar.Play();
+    }
+    public override void CreateSkill()
+    {
+        CheckNRoar();
+    }
+    public override void SkillOff()
+    {
+        MarmulakRoarEffect roar = SkillList[0] as MarmulakRoarEffect;
+        roar.Stop();
+        base.SkillOff();
+    }
+
     public void CheckNRoar()
     {
         m_roarList.Clear();
-        Collider[] targets = Physics.OverlapSphere(m_roarEffect.transform.position, m_roarRadius, ValueDefine.HITTABLE_PLAYER_LAYER);
+        Collider[] targets = Physics.OverlapSphere(SkillList[0].transform.position, m_roarRadius, ValueDefine.HITTABLE_PLAYER_LAYER);
         for (int i = 0; i<targets.Length; i++)
         {
             ObjectScript obj = targets[i].GetComponentInParent<ObjectScript>();
@@ -125,18 +102,5 @@ public class MarmulakScript : RangedAttackMonster
             Debug.Log($"{obj.ObjectName} 은(는) 공포에 떨고 있다!");
             m_roarList.Add(obj);
         }
-    }
-
-
-    public override void SetStates()
-    {
-        base.SetStates();
-        ReplaceState(EMonsterState.ATTACK, gameObject.AddComponent<MarmulakAttackScript>());
-    }
-
-    public override void ProcCooltime()
-    {
-        base.ProcCooltime();
-        if (RoarTimeCount > 0) { RoarTimeCount -= Time.deltaTime; }
     }
 }

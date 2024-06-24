@@ -156,6 +156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1597416686558710034}
   - component: {fileID: 7251340696187694582}
+  - component: {fileID: 5470785699716121087}
   - component: {fileID: 1731779084142691356}
   - component: {fileID: 6074626442056282910}
   - component: {fileID: 7194782348313730587}
@@ -215,9 +216,10 @@ MonoBehaviour:
   - {fileID: 8922410392693322427}
   - {fileID: 7546529655874491225}
   - {fileID: 3174002365771830750}
-  - {fileID: 5242295678101427111}
-  - {fileID: 8375717135982188017}
-  SkillList: []
+  m_normalDamageMultiplier:
+  - 1
+  - 1
+  - 1
   m_scriptable: {fileID: 11400000, guid: d4bdf71dbc67fe84ea819e869a6f86ac, type: 2}
   m_combatInfo:
     MaxHP: 400
@@ -238,6 +240,31 @@ MonoBehaviour:
   HasSpeedAttack: 1
   m_dissolveDelay: 1
   m_headFire: {fileID: 9024330365918619599}
+  m_skillDamageMultiplier:
+  - 1
+  - 1
+--- !u!114 &5470785699716121087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7230658163901493537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e3e46956d256df4ea605e4355c7ddfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_skillList:
+  - {fileID: 390015450978206702}
+  - {fileID: 4149357336326800824}
+  m_skillDamages:
+  - 10
+  - 10
+  m_skillCooltimes:
+  - 10
+  - 10
+  m_anySkillCooltime: 8
 --- !u!114 &1731779084142691356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -645,7 +672,7 @@ PrefabInstance:
     - target: {fileID: 4942177942955368742, guid: c37a3e1304d56284ea5b9df9b842539e,
         type: 3}
       propertyPath: m_Name
-      value: UumSkill2
+      value: UumLeftSpike
       objectReference: {fileID: 0}
     - target: {fileID: 4942177942955368742, guid: c37a3e1304d56284ea5b9df9b842539e,
         type: 3}
@@ -662,15 +689,21 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c37a3e1304d56284ea5b9df9b842539e, type: 3}
---- !u!4 &2599057727302163162 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2902554261684054107, guid: c37a3e1304d56284ea5b9df9b842539e,
+--- !u!114 &390015450978206702 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 666489310015746415, guid: c37a3e1304d56284ea5b9df9b842539e,
     type: 3}
   m_PrefabInstance: {fileID: 888973307870524033}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5242295678101427111 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4942177942955368742, guid: c37a3e1304d56284ea5b9df9b842539e,
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760f8b868c02e9249a10abdf57fad815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2599057727302163162 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2902554261684054107, guid: c37a3e1304d56284ea5b9df9b842539e,
     type: 3}
   m_PrefabInstance: {fileID: 888973307870524033}
   m_PrefabAsset: {fileID: 0}
@@ -2231,10 +2264,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4136026435265736617, guid: c37a3e1304d56284ea5b9df9b842539e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4942177942955368742, guid: c37a3e1304d56284ea5b9df9b842539e,
         type: 3}
       propertyPath: m_Name
-      value: UumSkill1
+      value: UumRightSpike
       objectReference: {fileID: 0}
     - target: {fileID: 4942177942955368742, guid: c37a3e1304d56284ea5b9df9b842539e,
         type: 3}
@@ -2257,12 +2295,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3506794464553137367}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8375717135982188017 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4942177942955368742, guid: c37a3e1304d56284ea5b9df9b842539e,
+--- !u!114 &4149357336326800824 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 666489310015746415, guid: c37a3e1304d56284ea5b9df9b842539e,
     type: 3}
   m_PrefabInstance: {fileID: 3506794464553137367}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760f8b868c02e9249a10abdf57fad815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3605596632695558641
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -67,8 +67,15 @@ public abstract partial class MonsterScript
     // 공격 관련
     [SerializeField]
     protected GameObject[] m_normalAttacks;                                      // 기본 공격 프리펍
+    [SerializeField]
+    protected float[] m_normalDamageMultiplier;
+    protected bool IsCorrectNormalnum(int _num) { return m_normalDamageMultiplier.Length == _num; }
+    public virtual bool CheckNormalCount() { return true; }
+
+
 
     protected int AttackIdx { get; set; }
+    protected float NormalDamage(int _idx) { return Attack * m_normalDamageMultiplier[_idx]; }
 
     public virtual bool CanAttack { get { return HasTarget && TargetInAttackRange && AttackTimeCount <= 0; } }      // 공격 가능 여부
     public float AttackTimeCount { get; set; } = 0;                                                                 // 공격 쿨타임
@@ -92,7 +99,6 @@ public abstract partial class MonsterScript
     public override void AttackTriggerOff()
     {
         base.AttackTriggerOff();
-        m_normalAttacks[0].SetActive(false);
     }
     public override void CreateAttack()
     {
@@ -110,39 +116,36 @@ public abstract partial class MonsterScript
 
 
     // 스킬
-    [SerializeField]
-    protected ObjectAttackScript[] SkillList;
-    public virtual int SkillNum { get { return 0; } }
-    public float[] SkillCooltime { get; protected set; }
-    public float[] SkillTimeCount { get; protected set; }
-    public int CheckCurSkill
-    {
-        get
-        {
-            List<int> list = new();
-            for (int i = 0; i<SkillCooltime.Length; i++) { if (SkillTimeCount[i] <= 0) list.Add(i); }
-            if (list.Count > 0) { return list[UnityEngine.Random.Range(0, list.Count)]; }
-            return -1;
-        }
-    }
+    public int SkillNum { get { return m_skillManager.SkillNum; } }
+    public float[] SkillCooltime { get { return m_skillManager.SkillCooltimes; } }
+    public float[] SkillTimeCount { get { return m_skillManager.SkillTimeCount; } }
+    public bool CanSkill => HasSkill && HasTarget && m_skillManager.CanSkill;
+    public bool AnySkillTimeCheck { get { return m_skillManager.AnySkillTimeCheck; } }
+    public bool SkillTimeCheck { get { return m_skillManager.SkillTimeCheck; } }
+    public ObjectAttackScript[] SkillList { get { return m_skillManager.SkillList; } }
+    public float[] SkillDamages { get { return m_skillManager.SkillDamages; } }
 
-    public virtual bool CanSkill => false;
-    public int CurSkillIdx { get; protected set; }
 
-    public virtual void InitSkillInfo()
-    {
-        SkillCooltime = new float[SkillNum];
-        SkillTimeCount = new float[SkillNum];
-    }
+    public ObjectAttackScript CurSkill { get; protected set; }
+    public int CurSkillIdx { get { return m_skillManager.CurSkillIdx; } }
+    public int NextSkillIdx { get { return m_skillManager.NextSkillIdx; } }
+    public bool CreatedSkill { get; protected set; }
+
     public virtual void StartSkill()
     {
+        m_skillManager.StartSkill();
+        if(CurSkillIdx == -1) { return; }
+        if(SkillNum > 1) { m_anim.SetInteger("SKILL_IDX", CurSkillIdx); }
+        m_anim.SetBool("IS_SKILLING", true);
         StopMove();
+        CreatedSkill = false;
     }
-    public virtual void SkillOn() { }
-    public virtual void SkillOff() { }
-    public virtual void CreateSkill() { }
+    public virtual void SkillOn() { CreatedSkill = true; }
+    public virtual void SkillOff() { m_anim.SetBool("IS_SKILLING", false); }
+    public virtual void CreateSkill() { CreatedSkill = true; m_anim.SetBool("IS_SKILLING", false); }
     public virtual void SkillDone()
     {
+        m_skillManager.SkillUsed(CurSkillIdx);
         if (CurTarget != null)
             ChangeState(EMonsterState.APPROACH);
         else

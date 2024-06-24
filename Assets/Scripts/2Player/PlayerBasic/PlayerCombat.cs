@@ -54,6 +54,7 @@ public partial class PlayerController
     public override void GetDamage(HitData _hit)
     {
         base.GetDamage(_hit);
+        CurWeapon.PowerTrailOff();
 
         if (_hit.HasImpulse && ImpulseTimeCount <= 0)
         {

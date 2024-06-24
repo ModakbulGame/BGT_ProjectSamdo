@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class FrometzScript : RangedAttackMonster
 {
+    public override void AddIdleState() { m_monsterStates[(int)EMonsterState.IDLE] = gameObject.AddComponent<FrometzIdleState>(); }
+    public override void AddApproachState() { m_monsterStates[(int)EMonsterState.APPROACH] = gameObject.AddComponent<FrometzApproachState>(); }
+
     public override bool CanPurify => PlayerDistance > 0 && PlayerDistance <= PurifyDistance;
 
     public override Vector3 AttackOffset => new(0, 1, 1.25f);
@@ -14,12 +17,4 @@ public class FrometzScript : RangedAttackMonster
 
     public override void StartIdle() { }
     public override void StartApproach() { }
-
-
-    public override void SetStates()
-    {
-        base.SetStates();
-        ReplaceState(EMonsterState.IDLE, gameObject.AddComponent<FrometzIdleState>());
-        ReplaceState(EMonsterState.APPROACH, gameObject.AddComponent<FrometzApproachState>());
-    }
 }

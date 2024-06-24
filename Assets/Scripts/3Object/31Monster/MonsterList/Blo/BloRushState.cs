@@ -6,7 +6,7 @@ public class BloRushState : MonoBehaviour, IMonsterState
 {
     private MonsterScript m_monster;
 
-    public EMonsterState StateEnum => EMonsterState.ATTACK;
+    public EMonsterState StateEnum => EMonsterState.SKILL;
 
     private BloScript Blo { get { return (BloScript)m_monster; } }
 

@@ -20,12 +20,6 @@ public class MiserableScript : HmmScript
     [Tooltip("3연격 시 전진 힘")]
     [SerializeField]
     private float m_tripleAttackForward = 8;
-    [Tooltip("기본 공격 별 데미지 배율")]
-    [SerializeField]
-    private float[] m_normalDamageMultiplier = new float[(int)EMiserableAttack.LAST]
-        { 1, 1, 1, 1 };
-
-
 
     private bool IsTripleAttack { get { return AttackIdx == (int)EMiserableAttack.TRIPLE_ATTACK; } }
     private int SkillIdx { get; set; }
@@ -46,8 +40,7 @@ public class MiserableScript : HmmScript
         if (!IsTripleAttack) { idx = 0; }
         else { idx = SkillIdx % 2 + 1; SkillIdx++; }
         AttackTriggerOn(idx);
-        float damage = Attack * m_normalDamageMultiplier[AttackIdx];
-        AttackObject.SetAttack(this, damage);
+        AttackObject.SetAttack(this, NormalDamage(AttackIdx));
     }
     public override void AttackTriggerOff()
     {

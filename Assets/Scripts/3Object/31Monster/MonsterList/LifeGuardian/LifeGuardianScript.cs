@@ -23,12 +23,10 @@ public enum ELifeGuardianSkill
 
 public class LifeGuardianScript : BossMonster
 {
+    public override void AddSkillState() { m_monsterStates[(int)EMonsterState.SKILL] = gameObject.AddComponent<LifeGuardianSkillState>(); }
+
     private bool AttackProceed { get; set; }
     private readonly float[] AttackAngle = new float[4] { 0, 30, -30, -15 };
-
-    [SerializeField]
-    private float[] m_normalDamageMultiplier = new float[(int)ELifeGuardianAttack.LAST]
-        { 1, 1, 1, 1 };
 
     public override void LookTarget()
     {
@@ -55,8 +53,7 @@ public class LifeGuardianScript : BossMonster
     {
         base.AttackTriggerOn();
 
-        float damage = Attack * m_normalDamageMultiplier[AttackIdx];
-        AttackObject.SetDamage(damage);
+        AttackObject.SetAttack(this, NormalDamage(AttackIdx));
 
         AttackProceed = AttackIdx < (int)ELifeGuardianAttack.RIGHT_UP_SWING && Random.Range(0, 2) == 0;
         m_anim.SetBool("PROCEED_ATTACK", AttackProceed);
@@ -73,21 +70,11 @@ public class LifeGuardianScript : BossMonster
 
 
     // 스킬
-    private float AnySkillTimeCount { get; set; }
-
-    private int NextSkillIdx { get; set; }
-
-    public override int SkillNum => (int)ELifeGuardianSkill.LAST;
-    public override bool CanSkill => AnySkillTimeCount <= 0 && HasTarget && TargetInAttackRange && SkillTimeCount[NextSkillIdx] <= 0;
-
-
     private readonly int SpikeIdx = (int)ELifeGuardianSkill.SPIKE;
     private readonly int DrainIdx = (int)ELifeGuardianSkill.DRAIN;
     private readonly int RushIdx = (int)ELifeGuardianSkill.RUSH;
 
 
-    private ObjectAttackScript CurSkill { get; set; }
-    public bool CreatedSkill { get; private set; }
     public bool RushStarted { get; private set; }
 
     [SerializeField]
@@ -95,26 +82,23 @@ public class LifeGuardianScript : BossMonster
 
     public override void StartSkill()
     {
-        CurSkillIdx = NextSkillIdx;
-        if(CurSkillIdx == -1) { return; }
-        m_anim.SetInteger("SKILL_IDX", CurSkillIdx);
-        m_anim.SetBool("IS_SKILLING", true);
-        StopMove();
-        CreatedSkill = false;
+        base.StartSkill();
+        RushStarted = false;
     }
     public override void SkillOn()
     {
+        base.SkillOn();
         if (CurSkillIdx == SpikeIdx)
         {
             CurSkill = SkillList[SpikeIdx];
-            CurSkill.SetAttack(this, m_skillDamage[SpikeIdx]);
+            CurSkill.SetAttack(this, SkillDamages[SpikeIdx]);
             CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
         }
         else if (CurSkillIdx == DrainIdx)
         {
             CurSkill = SkillList[DrainIdx];
-            CurSkill.SetAttack(this, m_skillDamage[DrainIdx]);
+            CurSkill.SetAttack(this, SkillDamages[DrainIdx]);
             CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
             CurSkill.PlayEffect();
@@ -122,15 +106,15 @@ public class LifeGuardianScript : BossMonster
         else if (CurSkillIdx == RushIdx)
         {
             CurSkill = SkillList[RushIdx];
-            CurSkill.SetAttack(this, m_skillDamage[RushIdx]);
+            CurSkill.SetAttack(this, SkillDamages[RushIdx]);
             CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
             RushStarted = true;
         }
-        CreatedSkill = true;
     }
     public override void SkillOff()
     {
+        base.SkillOff();
         if (CurSkillIdx == SpikeIdx)
         {
             CurSkill.AttackOff();
@@ -148,7 +132,6 @@ public class LifeGuardianScript : BossMonster
             CurSkill.gameObject.SetActive(false);
             RushStarted = false;
         }
-        m_anim.SetBool("IS_SKILLING", false);
     }
     public void RushForward()
     {
@@ -162,56 +145,14 @@ public class LifeGuardianScript : BossMonster
     }
     public override void SkillDone()
     {
-        SkillTimeCount[CurSkillIdx] = m_skillCooltime[CurSkillIdx];
-        AnySkillTimeCount = m_anySkillCooltime;
-
         if (CurSkillIdx == DrainIdx)
         {
+            m_skillManager.SkillUsed(CurSkillIdx);
             ChangeState(EMonsterState.ATTACK);
         }
         else
         {
             base.SkillDone();
         }
-
-        SetNextSkill();
-    }
-
-    private void SetNextSkill()
-    {
-        int minIdx = 0;
-        float minTime = SkillTimeCount[minIdx];
-        for (int i = 1; i<SkillNum; i++)
-        {
-            float curTime = SkillTimeCount[i];
-            if (curTime < minTime) { minIdx = i; }
-            else if (curTime == minTime) { minIdx = Random.Range(0, 2) == 0 ? i : minIdx; }
-        }
-        NextSkillIdx = minIdx;
-    }
-
-
-
-    public override void ProcCooltime()
-    {
-        base.ProcCooltime();
-        if(AnySkillTimeCount > 0) { AnySkillTimeCount -= Time.deltaTime; }
-        for (int i = 0; i<SkillNum; i++)
-        {
-            if (SkillTimeCount[i] > 0) { SkillTimeCount[i] -= Time.deltaTime; }
-        }
-    }
-
-    public override void OnSpawned()
-    {
-        base.OnSpawned();
-        NextSkillIdx = Random.Range(0, SkillNum);
-    }
-
-
-    public override void SetStates()
-    {
-        base.SetStates();
-        m_monsterStates[(int)EMonsterState.SKILL] = gameObject.AddComponent<LifeGuardianSkillState>();
     }
 }

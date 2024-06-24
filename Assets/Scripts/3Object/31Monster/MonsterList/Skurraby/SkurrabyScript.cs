@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SkurrabyScript : MonsterScript
 {
+    public override void AddAttackState() { m_monsterStates[(int)EMonsterState.ATTACK] = gameObject.AddComponent<SkurrabyAttackState>(); }
+
     private const float SkurrabyFirePower = 18;
 
     public override float ObjectHeight => 1;
@@ -74,10 +76,9 @@ public class SkurrabyScript : MonsterScript
     public void ExplodeSkurraby()
     {
         FlyDone();
-        m_skurrabyExplode.SetActive(true);
-        m_skurrabyExplode.transform.SetParent(null);
         MonsterSkillScript attack = m_skurrabyExplode.GetComponent<MonsterSkillScript>();
-        attack.SetDamage(this, 10, 1);
+        attack.SetAttack(this, 10, 1);
+        m_skurrabyExplode.transform.SetParent(null);
         attack.SetReturnTransform(transform);
         IsDead = true;
         DestroyMonster();
@@ -107,12 +108,6 @@ public class SkurrabyScript : MonsterScript
     {
         if (IsFlying) { _hit.Damage = CurHP; return base.GetHit(_hit); }
         else { return base.GetHit( _hit); }
-    }
-
-    public override void SetStates()
-    {
-        base.SetStates();
-        ReplaceState(EMonsterState.ATTACK, gameObject.AddComponent<SkurrabyAttackState>());
     }
 
     public override void FixedUpdate()

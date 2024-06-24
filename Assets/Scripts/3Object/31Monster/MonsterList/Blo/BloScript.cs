@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class BloScript : MonsterScript
 {
+    public override void AddSkillState() { m_monsterStates[(int)EMonsterState.SKILL] = gameObject.AddComponent<BloRushState>(); }
+
     public override bool CanPurify => !AbsorbedSoul;
 
     protected bool AbsorbedSoul { get; set; }
 
-    private MonsterSkillScript SkillObj { get { return (MonsterSkillScript)SkillList[0]; } }
-
     [Tooltip("돌진 속도")]
     [SerializeField]
     private float m_rushSpeed = 6;
-    [Tooltip("돌진 데미지")]
-    [SerializeField]
-    private float m_rushDamage = 10;
     [Tooltip("영혼 흡수량")]
     [SerializeField]
     public int AbsorbAmount = 2;
@@ -43,13 +40,13 @@ public class BloScript : MonsterScript
     }
     public override void AttackDone()
     {
-        m_anim.SetBool("IS_RUSHING", false);
+        m_anim.SetBool("IS_SKILLING", false);
         if (!RushDone) { RushDone = true; }
         base.AttackDone();
     }
     public void SetRush(bool _start)
     {
-        m_anim.SetBool("IS_RUSHING", _start);
+        m_anim.SetBool("IS_SKILLING", _start);
         if (!_start) { AttackDone(); AttackTriggerOff(); }
         IsRushing = _start;
     }
@@ -63,30 +60,16 @@ public class BloScript : MonsterScript
     }
 
 
-    public override void AttackTriggerOn()
+    public override void SkillOn()
     {
-        if (IsRushing)
-        {
-            SkillObj.gameObject.SetActive(true);
-            SkillObj.SetDamage(this, m_rushDamage, -1);
-            SkillObj.AttackOn();
-        }
-        else
-        {
-            base.AttackTriggerOn();
-        }
+        CurSkill = SkillList[0];
+        ((MonsterSkillScript)CurSkill).SetAttack(this, SkillDamages[0], -1);
+        CurSkill.AttackOn();
     }
-    public override void AttackTriggerOff()
+    public override void SkillOff()
     {
-        if (IsRushing)
-        {
-            SkillObj.gameObject.SetActive(false);
-            SkillObj.AttackOff();
-        }
-        else
-        {
-            base.AttackTriggerOff();
-        }
+        base.SkillOff();
+        CurSkill.AttackOff();
     }
 
 
@@ -95,6 +78,8 @@ public class BloScript : MonsterScript
         if (!IsRushing) { return; }
         if (!AbsorbedSoul) { AbsorbSoul(); }
         SetRush(false);
+        SkillOff();
+        SkillDone();
     }
     private void AbsorbSoul()
     {

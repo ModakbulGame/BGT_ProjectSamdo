@@ -13,6 +13,9 @@ public enum EQueenSkillName
 
 public class QueenScript : MonsterScript
 {
+    public override void AddApproachState() { m_monsterStates[(int)EMonsterState.APPROACH] = gameObject.AddComponent<QueenApproachState>(); }
+    public override void AddAttackState() { m_monsterStates[(int)EMonsterState.ATTACK] =  gameObject.AddComponent<QueenAttackState>(); }
+
     public override bool CanPurify => HatchCount > m_purifyHatch;
 
     private int HatchCount { get; set; }
@@ -180,12 +183,6 @@ public class QueenScript : MonsterScript
     }
     private void OnPoolDestroy(GameObject _skurraby) { Destroy(_skurraby); }
 
-    public override void SetStates()
-    {
-        base.SetStates();
-        ReplaceState(EMonsterState.APPROACH, gameObject.AddComponent<QueenApproachState>());
-        ReplaceState(EMonsterState.ATTACK, gameObject.AddComponent<QueenAttackState>());
-    }
     public override void Awake()
     {
         base.Awake();

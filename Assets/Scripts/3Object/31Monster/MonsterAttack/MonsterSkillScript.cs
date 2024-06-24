@@ -6,9 +6,10 @@ public class MonsterSkillScript : ObjectAttackScript
 {
     private Transform ReturnTransform { get; set; }
 
-    public void SetDamage(ObjectScript _attacker, float _damage, float _time)
+    public void SetAttack(ObjectScript _attacker, float _damage, float _time)
     {
         SetAttack(_attacker, _damage);
+        gameObject.SetActive(true);
         if (_time > 0) { StartCoroutine(LoseDamage(_time)); }
     }
     public void SetReturnTransform(Transform _transform)

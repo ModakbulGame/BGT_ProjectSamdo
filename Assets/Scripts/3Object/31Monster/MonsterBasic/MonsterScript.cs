@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.VFX;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 [RequireComponent(typeof(MonsterLighter), typeof(MonsterBattler))]
 public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
@@ -40,9 +39,18 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     protected MonsterStateManager m_stateManager;
     protected readonly IMonsterState[] m_monsterStates = new IMonsterState[(int)EMonsterState.LAST];
 
+    public virtual void AddIdleState() { m_monsterStates[(int)EMonsterState.IDLE] = gameObject.AddComponent<MonsterIdleState>(); }
+    public virtual void AddApproachState() { m_monsterStates[(int)EMonsterState.APPROACH] = gameObject.AddComponent<MonsterApproachState>(); }
+    public virtual void AddAttackState() { m_monsterStates[(int)EMonsterState.ATTACK] = gameObject.AddComponent<MonsterAttackState>(); }
+    public virtual void AddSkillState() { m_monsterStates[(int)EMonsterState.SKILL] = gameObject.AddComponent<MonsterSkillState>(); }
+
     protected IMonsterState CurState { get { return m_stateManager.CurMonsterState; } }
 
     public void ChangeState(EMonsterState _state) { m_stateManager.ChangeState(m_monsterStates[(int)_state]); }
+
+
+    protected MonsterSkillManager m_skillManager;
+    public bool HasSkill { get { return m_skillManager != null; } }
 
 
     // 몬스터 상태
@@ -83,6 +91,11 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
             bool random = (UnityEngine.Random.Range(0, 2) == 0) ? true : false;
             m_anim.SetBool("SPEED_ATTACK", random);
         }
+    }
+    protected void SetAttackIdx(int _idx)
+    {
+        AttackIdx = _idx;
+        m_anim.SetInteger("ATTACK_IDX", _idx);
     }
     public void StartHit()              // 피격 시작
     {

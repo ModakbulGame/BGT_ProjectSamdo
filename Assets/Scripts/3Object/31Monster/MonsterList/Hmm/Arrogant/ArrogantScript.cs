@@ -7,6 +7,12 @@ public enum EArrogantAttack
 {
     RIGHT_SWING,
     LEFT_SWING,
+
+    LAST
+}
+
+public enum EArrogantSkill
+{
     SMASH,
 
     LAST
@@ -16,63 +22,41 @@ public class ArrogantScript : HmmScript
 {
     public override bool CanPurify => IsFatigure;
 
-    public EArrogantAttack CurAttack { get; private set; } = EArrogantAttack.RIGHT_SWING;
-    
-    
-    [Tooltip("기본 공격 별 데미지 배율")]
-    [SerializeField]
-    private float[] m_normalDamageMultiplier = new float[(int)EArrogantAttack.LAST]
-    { 1, 1, 1 };
 
-    [Tooltip("내려찍기 데미지")]
-    [SerializeField]
-    private float m_smashDamage = 10;
-    [Tooltip("내려찍기 쿨타임")]
-    [SerializeField]
-    private float m_smashCooltime = 15;
     [Tooltip("내려찍기 반경")]
     [SerializeField]
     public float m_smashRadius = 4;
 
-    private bool CanSmash { get { return SmashTimeCount <= 0; } }
-
-    public override float AttackRange => CanSmash ? m_smashRadius-2 : base.AttackRange;
-
-    private float SmashTimeCount { get; set; } = 0;
+    public override float AttackRange => SkillTimeCheck ? m_smashRadius-2 : base.AttackRange;
 
     public override void StartAttack()
     {
-        if (CanSmash) { StartSmash(); return; }
-        CurAttack = EArrogantAttack.RIGHT_SWING;
-
-        AttackIdx = Random.Range(0, 2/*(int)EArrogantAttack.LAST*/);
-        m_anim.SetInteger("ATTACK_IDX", AttackIdx);
+        SetAttackIdx(Random.Range(0, (int)EArrogantAttack.LAST));
         base.StartAttack();
     }
 
     public override void AttackTriggerOn()
     {
-        AttackTriggerOn(AttackIdx);
-        float damage = Attack * m_normalDamageMultiplier[AttackIdx];
-        AttackObject.SetAttack(this, damage);
+        base.AttackTriggerOn(AttackIdx);
+        AttackObject.SetAttack(this, NormalDamage(AttackIdx));
+        AttackObject.AttackOn();
+    }
+    public override void AttackTriggerOff()
+    {
+        base.AttackTriggerOff();
+        AttackObject.AttackOff();
     }
 
-    public void StartSmash()
+    public override void StartSkill()
     {
-        CurAttack = EArrogantAttack.SMASH;
-        SmashTimeCount = m_smashCooltime;
-        StopMove();
-        m_anim.SetTrigger("SKILL");
+        base.StartSkill();
         m_smashList.Clear();
     }
-
-    public override void CreateAttack()
+    public override void CreateSkill()
     {
-        if (CurAttack == EArrogantAttack.SMASH)
-        {
-            m_smash.Play();
-            CheckNSmash();
-        }
+        ((ArrogantSmashScript)SkillList[0]).PlayEffect();
+        CheckNSmash();
+        base.CreateSkill();
     }
 
     [SerializeField]
@@ -92,18 +76,5 @@ public class ArrogantScript : HmmScript
                 m_smashList.Add(obj);
             }
         }
-    }
-
-
-    public override void SetStates()
-    {
-        base.SetStates();
-        ReplaceState(EMonsterState.ATTACK, gameObject.AddComponent<ArrogantAttackScript>());
-    }
-
-    public override void ProcCooltime()
-    {
-        base.ProcCooltime();
-        if (SmashTimeCount > 0) { SmashTimeCount -= Time.deltaTime; }
     }
 }

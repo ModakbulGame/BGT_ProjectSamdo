@@ -105,19 +105,13 @@ public partial class MonsterScript
     // 상속 정보
     public override bool IsMonster { get { return true; } }
 
-    // 초기 설정
-    protected void ReplaceState(EMonsterState _enum, IMonsterState _state)  // 몬스터 세부 상태 설정 (기본 상태 클래스 -> 몬스터별 상태 클래스)
-    {
-        IMonsterState origin = m_monsterStates[(int)_enum];
-        Destroy((UnityEngine.Object)origin);
-        m_monsterStates[(int)_enum] = _state;
-    }
-
     public override void SetComps()
     {
         base.SetComps();
         m_skinneds = GetComponentsInChildren<SkinnedMeshRenderer>();
         m_lightReciever = GetComponent<MonsterLighter>();
+        m_skillManager = GetComponent<MonsterSkillManager>();
+        if (HasSkill) { m_skillManager.SetManager(this); }
         m_battleManager = GetComponent<MonsterBattler>();
         m_aiPath = GetComponent<AIPath>();
         DissolveColor = m_skinneds[0].materials[0].GetColor("_Dissolvecolor");
@@ -126,9 +120,10 @@ public partial class MonsterScript
     public virtual void SetStates()
     {
         m_stateManager = new(this);
-        m_monsterStates[(int)EMonsterState.IDLE] = gameObject.AddComponent<MonsterIdleState>();
+        AddIdleState();
         m_monsterStates[(int)EMonsterState.APPROACH] = gameObject.AddComponent<MonsterApproachState>();
-        m_monsterStates[(int)EMonsterState.ATTACK] = gameObject.AddComponent<MonsterAttackState>();
+        AddAttackState();
+        if (HasSkill) { AddSkillState(); }
         m_monsterStates[(int)EMonsterState.HIT] = gameObject.AddComponent<MonsterHitState>();
         m_monsterStates[(int)EMonsterState.DIE] = gameObject.AddComponent<MonsterDieState>();
     }
@@ -171,7 +166,6 @@ public partial class MonsterScript
     {
         base.Awake();
         SetStates();
-        InitSkillInfo();
         SetUI();
         InitAnimHash();
     }
@@ -179,6 +173,7 @@ public partial class MonsterScript
     {
         if (m_spawnPoint == null) { OnSpawned(); }
         if (AttackObject == null) { SetAttackObject(); }
+        if (!CheckNormalCount()) { Debug.LogError($"{ObjectName} 기본 공격 배율 개수 틀림"); return; }
         base.Start();
     }
 }

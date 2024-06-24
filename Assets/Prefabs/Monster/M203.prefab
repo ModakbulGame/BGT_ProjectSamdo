@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2638701212944695576}
   - component: {fileID: 8699532927277418665}
+  - component: {fileID: 551359100193247889}
   - component: {fileID: 7815606524377398159}
   - component: {fileID: 2451940123967238420}
   - component: {fileID: 7824221907837214565}
@@ -61,9 +62,13 @@ MonoBehaviour:
   m_curSpeed: 0
   m_uiOffset: 2
   m_normalAttacks:
-  - {fileID: 8376127291140787350}
   - {fileID: 5530053198318916150, guid: 77e78430c74129246897cea529787e64, type: 3}
-  SkillList: []
+  - {fileID: 6290035870741467928}
+  - {fileID: 8376127291140787350}
+  m_normalDamageMultiplier:
+  - 1
+  - 1
+  - 1
   m_scriptable: {fileID: 11400000, guid: 5d160b7e23d06b74e836cff07f63c80e, type: 2}
   m_combatInfo:
     MaxHP: 460
@@ -75,7 +80,7 @@ MonoBehaviour:
     EngageRange: 15
     ReturnRange: 15
     AttackRange: 1.5
-    ApproachDelay: 2
+    ApproachDelay: 0.2
     FenceRange: 25
   m_spawnPoint: {fileID: 0}
   m_roamingDistance:
@@ -84,10 +89,30 @@ MonoBehaviour:
   HasSpeedAttack: 1
   m_dissolveDelay: 2
   m_attackMaxNum: 5
-  m_throwAttackIdx: 1
-  m_roarEffect: {fileID: 3091999450876525226}
+  m_throwAttackIdx: 0
+  m_throwRange: 25
   m_roarCooltime: 15
-  m_roarRange: 10
+  m_roarRadius: 10
+  m_purifyTime: 8
+--- !u!114 &551359100193247889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7586319830417130399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e3e46956d256df4ea605e4355c7ddfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_skillList:
+  - {fileID: 3091999450876525226}
+  m_skillDamages:
+  - 10
+  m_skillCooltimes:
+  - 8
+  m_anySkillCooltime: 0
 --- !u!114 &7815606524377398159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,7 +297,7 @@ PrefabInstance:
     - target: {fileID: 8982261019323586242, guid: dd43729521feb674db603a772b049098,
         type: 3}
       propertyPath: m_Name
-      value: MarmulakNormal
+      value: MarmulakNormalR
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -816,7 +841,7 @@ PrefabInstance:
     - target: {fileID: 8982261019323586242, guid: dd43729521feb674db603a772b049098,
         type: 3}
       propertyPath: m_Name
-      value: MarmulakNormal
+      value: MarmulakNormalL
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -826,6 +851,12 @@ PrefabInstance:
 --- !u!4 &1752662043026244822 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3728804936444510476, guid: dd43729521feb674db603a772b049098,
+    type: 3}
+  m_PrefabInstance: {fileID: 3165419772160263642}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6290035870741467928 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8982261019323586242, guid: dd43729521feb674db603a772b049098,
     type: 3}
   m_PrefabInstance: {fileID: 3165419772160263642}
   m_PrefabAsset: {fileID: 0}
