@@ -248,6 +248,9 @@ public partial class PlayerController
 
         if (IsRaycastPower)
         {
+            power.transform.SetParent(null);
+            PlayerPowerScript raycast= power.GetComponent<PlayerPowerScript>();
+            raycast.SetPower(this, Attack, Magic);
             RaycastDone(power);
             PowerAnimDone();
             return;
