@@ -5,15 +5,16 @@ using UnityEngine;
 public class LifeGuardianSkill2Script : ObjectAttackScript
 {
     private float SkillRadius { get; set; }
-    
-    private readonly float DamageGap = 0.2f;
-    private readonly float DrainForce = 9;
+
+    [SerializeField]
+    private float m_damageGap = 1;
 
     private float GapCount { get; set; }
 
     public override void AttackOn()
     {
         gameObject.SetActive(true);
+        GapCount = m_damageGap;
         base.AttackOn();
     }
 
@@ -30,12 +31,7 @@ public class LifeGuardianSkill2Script : ObjectAttackScript
         {
             ObjectScript script = col.GetComponentInParent<ObjectScript>();
             if(script == null ||  script.IsDead || !script.IsPlayer) { continue; }
-            Vector3 dir = DrainForce * (transform.position - script.Position);
-            script.AddForce(dir);
-            if (m_hitObjects.Contains(script)) { return; }
-            HitData hit = new(Attacker, Damage, script.Position);
-            script.GetHit(hit);
-            m_hitObjects.Add(script);
+            GiveDamage(script, script.Position);
         }
     }
 
@@ -62,7 +58,7 @@ public class LifeGuardianSkill2Script : ObjectAttackScript
             GapCount -= Time.deltaTime;
             if (GapCount <= 0)
             {
-                GapCount = DamageGap;
+                GapCount = m_damageGap;
                 m_hitObjects.Clear();
             }
         }

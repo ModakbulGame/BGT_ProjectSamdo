@@ -15,11 +15,14 @@ public class ArrogantScript : HmmScript
     public override bool CanPurify => IsFatigure;
 
     public EArrogantAttack CurAttack { get; private set; } = EArrogantAttack.NORMAL;
-    private readonly float SmashCooltime = 15;
+    [SerializeField]
+    private float m_smashCooltime = 15;
+    [SerializeField]
+    public float m_smashRadius = 4;
 
     private bool CanSmash { get { return SmashTimeCount <= 0; } }
 
-    public override float AttackRange => CanSmash ? SmashRange-2 : base.AttackRange;
+    public override float AttackRange => CanSmash ? m_smashRadius-2 : base.AttackRange;
 
     private float SmashTimeCount { get; set; } = 0;
 
@@ -41,7 +44,7 @@ public class ArrogantScript : HmmScript
     public void StartSmash()
     {
         CurAttack = EArrogantAttack.SMASH;
-        SmashTimeCount = SmashCooltime;
+        SmashTimeCount = m_smashCooltime;
         StopMove();
         m_anim.SetTrigger("SKILL");
         m_smashList.Clear();
@@ -58,12 +61,11 @@ public class ArrogantScript : HmmScript
 
     [SerializeField]
     private VisualEffect m_smash;
-    public readonly float SmashRange = 3.5f;
 
     private readonly List<ObjectScript> m_smashList = new();
     public void CheckNSmash()
     {
-        Collider[] targets = Physics.OverlapSphere(m_smash.transform.position, SmashRange, ValueDefine.HITTABLE_PLAYER_LAYER);
+        Collider[] targets = Physics.OverlapSphere(m_smash.transform.position, m_smashRadius, ValueDefine.HITTABLE_PLAYER_LAYER);
         for (int i = 0; i<targets.Length; i++)
         {
             ObjectScript obj = targets[i].GetComponentInParent<ObjectScript>();

@@ -13,15 +13,15 @@ public enum EMarmulakAttack
 
 public class MarmulakScript : RangedAttackMonster
 {
-    public override bool CanPurify => RoarTimeCount >= (RoarCooltime - PurifyTime);
+    public override bool CanPurify => RoarTimeCount >= (m_roarCooltime - PurifyTime);
 
     public EMarmulakAttack CurAttack { get; private set; } = EMarmulakAttack.NORMAL;
 
     private readonly float ThrowRange = 25;
 
-    private bool CanRoar { get { return TargetDistance <= RoarRange && RoarTimeCount <= 0; } }
+    private bool CanRoar { get { return TargetDistance <= m_roarRange && RoarTimeCount <= 0; } }
 
-    public override float AttackRange => CanRoar ? RoarRange : (TargetDistance <= RoarRange) ? base.AttackRange : ThrowRange;
+    public override float AttackRange => CanRoar ? m_roarRange : (TargetDistance <= m_roarRange) ? base.AttackRange : ThrowRange;
 
     private readonly float PurifyTime = 8;
     private float RoarTimeCount { get; set; } = 0;
@@ -29,7 +29,7 @@ public class MarmulakScript : RangedAttackMonster
     public override void StartAttack()
     {
         if (CanRoar) { StartRoar(); return; }
-        if (TargetDistance <= RoarRange)
+        if (TargetDistance <= m_roarRange)
         {
             CurAttack = EMarmulakAttack.NORMAL;
             m_anim.SetInteger("ATTACK_IDX", Random.Range(0, 2));
@@ -50,14 +50,21 @@ public class MarmulakScript : RangedAttackMonster
     public void StartRoar()
     {
         CurAttack = EMarmulakAttack.ROAR;
-        RoarTimeCount = RoarCooltime;
+        RoarTimeCount = m_roarCooltime;
         StopMove();
         m_anim.SetTrigger("SKILL");
     }
 
     public override void CreateAttack()
     {
-        ThrowBall();
+        if (CurAttack == EMarmulakAttack.THROW)
+        {
+            ThrowBall();
+        }
+        else if(CurAttack == EMarmulakAttack.ROAR)
+        {
+            CheckNRoar();
+        }
     }
     public override void AttackTriggerOn()
     {
@@ -68,11 +75,9 @@ public class MarmulakScript : RangedAttackMonster
         }
         else if (CurAttack == EMarmulakAttack.ROAR)
         {
-            IsRoaring = true;
-            StartCoroutine(RoarCoroutine());
+            m_roarEffect.Play();
         }
     }
-
     public override void AttackTriggerOff()
     {
         if(CurAttack == EMarmulakAttack.NORMAL)
@@ -81,7 +86,7 @@ public class MarmulakScript : RangedAttackMonster
         }
         else if (CurAttack == EMarmulakAttack.ROAR)
         {
-            IsRoaring = false;
+            m_roarEffect.Stop();
         }
     }
 
@@ -89,32 +94,22 @@ public class MarmulakScript : RangedAttackMonster
     [SerializeField]
     private MarmulakRoarEffect m_roarEffect;
 
-    private readonly float RoarCooltime = 15;
-    public readonly float RoarRange = 8;
-    private readonly float RoarGap = 0.4f;
+    [SerializeField]
+    private float m_roarCooltime = 15;
+    [SerializeField]
+    public float m_roarRange = 10;
 
-    private bool IsRoaring { get; set; }
 
     private readonly List<ObjectScript> m_roarList = new();
-    private IEnumerator RoarCoroutine()
-    {
-        m_roarEffect.Play();
-        while (IsRoaring && !IsDead)
-        {
-            CheckNRoar();
-            yield return new WaitForSeconds(RoarGap);
-        }
-        m_roarEffect.Stop();
-    }
     public void CheckNRoar()
     {
         m_roarList.Clear();
-        Collider[] targets = Physics.OverlapSphere(m_roarEffect.transform.position, RoarRange, ValueDefine.HITTABLE_PLAYER_LAYER);
+        Collider[] targets = Physics.OverlapSphere(m_roarEffect.transform.position, m_roarRange, ValueDefine.HITTABLE_PLAYER_LAYER);
         for (int i = 0; i<targets.Length; i++)
         {
             ObjectScript obj = targets[i].GetComponentInParent<ObjectScript>();
             if (obj == null || obj == this || m_roarList.Contains(obj)) { continue; }
-            Debug.Log($"{obj.ObjectName} ¿∫(¥¬) ∞¯∆˜ø° ∂≥∞Ì ¿÷¥Ÿ!");
+            Debug.Log($"{obj.ObjectName} ÏùÄ(Îäî) Í≥µÌè¨Ïóê Îñ®Í≥† ÏûàÎã§!");
             m_roarList.Add(obj);
         }
     }
