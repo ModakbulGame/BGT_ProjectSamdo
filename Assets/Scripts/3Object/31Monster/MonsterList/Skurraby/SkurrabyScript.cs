@@ -11,8 +11,9 @@ public class SkurrabyScript : MonsterScript
     [SerializeField]
     private GameObject m_skurrabyExplode;
 
-    public override bool CanPurify => JumpCount > PurifyJump;
-    private readonly int PurifyJump = 2;
+    public override bool CanPurify => JumpCount > m_purifyJump;
+    [SerializeField]
+    private int m_purifyJump = 2;
 
     public bool IsFlying { get; private set; }
     private int JumpCount { get; set; }

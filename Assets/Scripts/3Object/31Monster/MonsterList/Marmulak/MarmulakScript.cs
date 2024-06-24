@@ -13,23 +13,29 @@ public enum EMarmulakAttack
 
 public class MarmulakScript : RangedAttackMonster
 {
-    public override bool CanPurify => RoarTimeCount >= (m_roarCooltime - PurifyTime);
+    public override bool CanPurify => RoarTimeCount >= (m_roarCooltime - m_purifyTime);
 
     public EMarmulakAttack CurAttack { get; private set; } = EMarmulakAttack.NORMAL;
 
-    private readonly float ThrowRange = 25;
+    private bool CanRoar { get { return TargetDistance <= m_roarRadius && RoarTimeCount <= 0; } }
 
-    private bool CanRoar { get { return TargetDistance <= m_roarRange && RoarTimeCount <= 0; } }
+    public override float AttackRange => CanRoar ? m_roarRadius : (TargetDistance <= m_roarRadius) ? base.AttackRange : m_throwRange;
 
-    public override float AttackRange => CanRoar ? m_roarRange : (TargetDistance <= m_roarRange) ? base.AttackRange : ThrowRange;
 
-    private readonly float PurifyTime = 8;
-    private float RoarTimeCount { get; set; } = 0;
+    [Tooltip("기본 공격 데미지 배율")]
+    [SerializeField]
+    private float[] m_normalDamageMultiplier = new float[(int)EMarmulakAttack.LAST]
+        { 1, 1, 1 };
+    [Tooltip("던지기 공격 범위")]
+    [SerializeField]
+    private float m_throwRange = 25;
+
+
 
     public override void StartAttack()
     {
         if (CanRoar) { StartRoar(); return; }
-        if (TargetDistance <= m_roarRange)
+        if (TargetDistance <= m_roarRadius)
         {
             CurAttack = EMarmulakAttack.NORMAL;
             m_anim.SetInteger("ATTACK_IDX", Random.Range(0, 2));
@@ -90,21 +96,28 @@ public class MarmulakScript : RangedAttackMonster
         }
     }
 
+    [Tooltip("포효 쿨타임")]
+    [SerializeField]
+    private float m_roarCooltime = 15;
+    [Tooltip("포효 범위")]
+    [SerializeField]
+    public float m_roarRadius = 10;
+    [Tooltip("포효 후 성불 기간(초)")]
+    [SerializeField]
+    private float m_purifyTime = 8;
+
+    private float RoarTimeCount { get; set; } = 0;
 
     [SerializeField]
     private MarmulakRoarEffect m_roarEffect;
 
-    [SerializeField]
-    private float m_roarCooltime = 15;
-    [SerializeField]
-    public float m_roarRange = 10;
 
 
     private readonly List<ObjectScript> m_roarList = new();
     public void CheckNRoar()
     {
         m_roarList.Clear();
-        Collider[] targets = Physics.OverlapSphere(m_roarEffect.transform.position, m_roarRange, ValueDefine.HITTABLE_PLAYER_LAYER);
+        Collider[] targets = Physics.OverlapSphere(m_roarEffect.transform.position, m_roarRadius, ValueDefine.HITTABLE_PLAYER_LAYER);
         for (int i = 0; i<targets.Length; i++)
         {
             ObjectScript obj = targets[i].GetComponentInParent<ObjectScript>();

@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EHellcatAttack
+{
+    JUMP_ATTACK,
+    DOUBLE_SCRATCH,
+
+    LAST
+}
+
 public class HellcatScript : MonsterScript
 {
     public override bool CanPurify => !HittedPlayer;
@@ -9,8 +17,15 @@ public class HellcatScript : MonsterScript
     private bool HittedPlayer { get; set; }
 
 
-    private const float JumpAttackDist = 1.75f;
-    private const float JumpMoveSpeed = 3.5f;
+    [Tooltip("점프 기준 거리")]
+    [SerializeField]
+    private float m_jumpAttackDist = 1.75f;
+    private readonly float JumpMoveSpeed = 3.5f;
+
+    [Tooltip("기본 공격 데미지 배율")]
+    [SerializeField]
+    private float[] m_normalDamageMultiplier = new float[(int)EHellcatAttack.LAST]
+        { 1, 1 };
 
 
     public bool IsJumpAttack { get; private set; }
@@ -21,7 +36,7 @@ public class HellcatScript : MonsterScript
 
     public override void StartAttack()
     {
-        IsJumpAttack = TargetDistance >= JumpAttackDist;
+        IsJumpAttack = TargetDistance >= m_jumpAttackDist;
         m_anim.SetBool("JUMP_ATTACK", IsJumpAttack);
         base.StartAttack();
         AttackStack = 0;
@@ -81,11 +96,14 @@ public class HellcatScript : MonsterScript
     {
         m_normalAttacks[_idx].SetActive(true);
         AttackObject = m_normalAttacks[_idx].GetComponent<NormalAttackScript>();
-        AttackObject.SetAttack(this, Attack);
-        AttackObject.SetDamage(Attack);
+
+        int damageIdx = _idx == 0 ? 0 : 1;
+        float damage = Attack * m_normalDamageMultiplier[damageIdx];
+
+        AttackObject.SetAttack(this, damage);
         AttackObject.AttackOn();
 
-        if (_idx < 2)
+        if (_idx <= 2)
         {
             if (_idx == 1) { CurClawEffect.EffectOff(); }
 

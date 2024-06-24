@@ -5,11 +5,11 @@ using UnityEngine;
 public class EffectedNormalAttack : NormalAttackScript
 {
     [SerializeField]
-    private AttackEffect m_effect;
+    private AttackEffect m_attackEffect;
 
     public override void AttackOn()
     {
         base.AttackOn();
-        m_effect.EffectOn(transform);
+        m_attackEffect.EffectOn(transform);
     }
 }

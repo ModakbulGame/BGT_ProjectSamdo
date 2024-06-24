@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossMonster : AnimatedAttackMonster
+public class BossMonster : SkillMonster
 {
     private bool IsFightingPlayer { get; set; }
 

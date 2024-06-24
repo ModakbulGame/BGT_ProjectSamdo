@@ -21,7 +21,7 @@ public class ArrogantAttackScript : MonoBehaviour, IMonsterState
 
     public void Proceed()
     {
-        if (CurAttack == EArrogantAttack.NORMAL)
+        if (CurAttack == EArrogantAttack.RIGHT_SWING)
         {
             if (!Arrogant.HasTarget)
             {

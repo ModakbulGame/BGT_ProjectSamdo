@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EWaterGuardianAttack
+{
+    RIGHT_DOWN_SLASH,
+    RIGHT_SIDE_SLASH,
+    POINTED,
+    WIPE_UP,
+
+    LAST
+}
+
 public enum EWaterGuardianSkill
 {
     SLASH,
@@ -23,6 +33,11 @@ public class WaterGuardianScript : BossMonster
         base.StopMove();
         m_anim.SetBool("IS_MOVING", false);
     }
+
+
+    [SerializeField]
+    private float[] m_normalDamageMultiplier = new float[(int)ELifeGuardianAttack.LAST]
+     { 1, 1, 1, 1 };
 
 
     private bool AttackProceed { get; set; }
@@ -50,7 +65,7 @@ public class WaterGuardianScript : BossMonster
     {
         StopMove();
         AttackAnimation();
-        AttackIdx = Random.Range(0, 4);
+        AttackIdx = Random.Range(0, (int)EWaterGuardianAttack.LAST);
         m_anim.SetInteger("ATTACK_IDX", AttackIdx);
     }
     public override void AttackTriggerOn()
@@ -59,19 +74,21 @@ public class WaterGuardianScript : BossMonster
         {
             AnimateAttackScript script = attack.GetComponent<AnimateAttackScript>();
             script.AttackOn();
+
+            float damage = Attack * m_normalDamageMultiplier[AttackIdx];
             script.SetDamage(Attack);
         }
 
         AttackObject.SetDamage(Attack);
 
-        AttackProceed = AttackIdx < 2 && Random.Range(0, 2) == 0;
+        AttackProceed = AttackIdx < (int)EWaterGuardianAttack.POINTED && Random.Range(0, 2) == 0;
         m_anim.SetBool("PROCEED_ATTACK", AttackProceed);
-        if (AttackIdx == 2)
+        if (AttackIdx == (int)EWaterGuardianAttack.POINTED)
         {
             Vector3 dir = (CurTarget.Position-Position).normalized;
-            m_rigid.AddForce(15 * dir);
+            m_rigid.AddForce(m_dashPower * dir);
         }
-/*        else if (AttackIdx != 2)
+/*        else if (AttackIdx != (int)EWaterGuardianAttack.POINTED))
         {
             AttackObject.PlayEffect();
         }*/
@@ -84,7 +101,7 @@ public class WaterGuardianScript : BossMonster
             script.AttackOff();
         }
 
-/*        if (AttackIdx != 2)
+/*        if (AttackIdx != (int)EWaterGuardianAttack.POINTED))
         {
             AttackObject.StopEffect();
         }*/
@@ -102,13 +119,7 @@ public class WaterGuardianScript : BossMonster
 
 
     // 스킬
-    private readonly float AnySkillCooltime = 8;                // 스킬 간 최소 간격
     private float AnySkillTimeCount { get; set; }
-
-    [SerializeField]
-    private float[] m_skillDamage = new float[(int)EWaterGuardianSkill.LAST];
-    [SerializeField]
-    private float[] m_skillCooltime = new float[(int)EWaterGuardianSkill.LAST];
 
     public int NextSkillIdx { get; set; }
     public override int SkillNum => (int)EWaterGuardianSkill.LAST;
@@ -122,10 +133,18 @@ public class WaterGuardianScript : BossMonster
     private ObjectAttackScript CurSkill { get; set; }
     public bool CreatedSkill { get; private set; }
 
-    private readonly Vector3 Skill3Offset = Vector3.up * 12;
+    private Vector3 Skill3Offset { get { return Vector3.up * m_iceHeight; } }
 
-    private readonly float DashPower = 15;
-    private readonly float DashUp = 3;
+    [Tooltip("돌진 공격 힘")]
+    [SerializeField]
+    private float m_dashPower = 15;
+    [Tooltip("돌진 공격 시 상승")]
+    [SerializeField]
+    private float m_dashUp = 3;
+
+    [Tooltip("얼음 스킬 생성 위치")]
+    [SerializeField]
+    private float m_iceHeight = 12;
 
     public override void StartSkill()
     {
@@ -151,7 +170,7 @@ public class WaterGuardianScript : BossMonster
             CurSkill.SetAttack(this, m_skillDamage[RushIdx]);
             CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
-            m_rigid.velocity = DashPower * transform.forward + Vector3.up * DashUp;
+            m_rigid.velocity = m_dashPower * transform.forward + Vector3.up * m_dashUp;
             CreatedSkill = true;
         }
     }
@@ -190,8 +209,8 @@ public class WaterGuardianScript : BossMonster
     {
         base.SkillDone();
 
-        SkillTimeCount[CurSkillIdx] = SkillCooltime[CurSkillIdx];
-        AnySkillTimeCount = AnySkillCooltime;
+        SkillTimeCount[CurSkillIdx] = m_skillCooltime[CurSkillIdx];
+        AnySkillTimeCount = m_anySkillCooltime;
 
         SetNextSkill();
     }
