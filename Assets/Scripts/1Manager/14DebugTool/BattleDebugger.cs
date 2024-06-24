@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class BattleDebugger : MonoBehaviour
 {
+    private static BattleDebugger Inst;
+
     [SerializeField]
-    private bool AbleDebug = true;
+    private bool m_ableDebug = true;
     [SerializeField]
-    private EPowerName[] PowerSlot = new EPowerName[ValueDefine.MAX_POWER_SLOT];
+    private bool m_logHitInfo = false;
+    [SerializeField]
+    private EPowerName[] m_powerSlot = new EPowerName[ValueDefine.MAX_POWER_SLOT];
     [SerializeField]
     private List<MonsterScript> m_monsterList = new();
     [SerializeField]
     private MonsterSpawnPoint m_spawnPoint;
 
+    public static bool LogHitInfo { get { return Inst.m_logHitInfo; } }
 
-    private void DrawDebugs()                               // ø¿∫Í¡ß∆Æ∫∞ µπˆ±Î
+    private void DrawDebugs()                               // Ïò§Î∏åÏ†ùÌä∏Î≥Ñ ÎîîÎ≤ÑÍπÖ
     {
-        if (!AbleDebug) { return; }
+        if (!m_ableDebug) { return; }
         for (int i = 0; i<m_monsterList.Count; i++)
         {
             MonsterScript monster = m_monsterList[i];
@@ -26,7 +31,7 @@ public class BattleDebugger : MonoBehaviour
         }
     }
 
-    private void DrawView(MonsterScript _monster)             // Ω√æﬂ∞¢ «•Ω√
+    private void DrawView(MonsterScript _monster)             // ÏãúÏïºÍ∞Å ÌëúÏãú
     {
         Vector3 position = _monster.transform.position;
         float range = _monster.ViewRange;
@@ -42,9 +47,9 @@ public class BattleDebugger : MonoBehaviour
         Debug.DrawRay(position, left * range, Color.blue);
         Debug.DrawRay(position, look * range, Color.cyan);
     }
-    private void DrawTarget(MonsterScript _monster)           // ∞¯∞› ¥ÎªÛ «•Ω√
+    private void DrawTarget(MonsterScript _monster)           // Í≥µÍ≤© ÎåÄÏÉÅ ÌëúÏãú
     {
-        if (!AbleDebug) { return; }
+        if (!m_ableDebug) { return; }
         ObjectScript target = _monster.CurTarget;
         if (target == null) { return; }
 
@@ -74,7 +79,7 @@ public class BattleDebugger : MonoBehaviour
     private bool ShowingCreateMonster { get; set; }
     private void ShowCreateMonster()
     {
-        if (GUI.Button(new Rect(20, 50, 280, 50), "√Îº“"))
+        if (GUI.Button(new Rect(20, 50, 280, 50), "Ï∑®ÏÜå"))
         {
             ShowingCreateMonster = false;
         }
@@ -94,7 +99,7 @@ public class BattleDebugger : MonoBehaviour
     private void CreateMonster(int _idx)
     {
         GameObject prefab = GameManager.GetMonsterObj((EMonsterName)_idx);
-        if (prefab == null) { Debug.Log("∏ÛΩ∫≈Õ πÃøœº∫"); return; }
+        if (prefab == null) { Debug.Log("Î™¨Ïä§ÌÑ∞ ÎØ∏ÏôÑÏÑ±"); return; }
 
         Vector3 point;
         if (m_spawnPoint != null) { point = m_spawnPoint.SpawnPosition; }
@@ -105,7 +110,7 @@ public class BattleDebugger : MonoBehaviour
         prefab.transform.localEulerAngles = new(0, Random.Range(-180f, 180f), 0);
         MonsterScript script = prefab.GetComponent<MonsterScript>();
         m_monsterList.Add(script);
-        Debug.Log($"{script.ObjectName} ª˝º∫µ ");
+        Debug.Log($"{script.ObjectName} ÏÉùÏÑ±Îê®");
     }
 
 
@@ -120,7 +125,7 @@ public class BattleDebugger : MonoBehaviour
         }
         for (int i = 0; i<ValueDefine.MAX_POWER_SLOT; i++)
         {
-            PlayManager.RegisterPowerSlot(PowerSlot[i], i);
+            PlayManager.RegisterPowerSlot(m_powerSlot[i], i);
         }
     }
 
@@ -144,6 +149,7 @@ public class BattleDebugger : MonoBehaviour
 
     private void Awake()
     {
+        Inst = this;
         SetInfos();
     }
     private void Start()
@@ -162,7 +168,7 @@ public class BattleDebugger : MonoBehaviour
         }
         else
         {
-            if (GUI.Button(new Rect(20, 50, 150, 50), "∏ÛΩ∫≈Õ ª˝º∫"))
+            if (GUI.Button(new Rect(20, 50, 150, 50), "Î™¨Ïä§ÌÑ∞ ÏÉùÏÑ±"))
             {
                 ShowingCreateMonster = true;
             }
