@@ -286,8 +286,8 @@ public partial class PlayerController
                 around.SetPower(this, Attack, Magic);
                 break;
             case ECastType.BUFF:
-                TempAdjust adjust = PowerInfoInHand.PowerData.StatAdjust;
-                GetAdj(adjust);
+                AdjustInfo adjust = PowerInfoInHand.PowerData.StatAdjust;
+                GetAdjust(adjust);
                 power.transform.localPosition = Vector3.zero;
                 break;
             default:
@@ -367,37 +367,16 @@ public partial class PlayerController
     }
 
     // 무기 CC
-    public override void GetAdj(TempAdjust _adjust)
+    public override void GetAdjust(AdjustInfo _adjust)
     {
-        if (_adjust.Type == EAdjType.WEAPON_CC)
-        {
-            GetWeaponAdj(_adjust);
-            return;
-        }
-
-        base.GetAdj(_adjust);
-        CreateBuffEffect();
+        base.GetAdjust(_adjust);
+        if (_adjust.Type != EAdjType.WEAPON_CC) { CreateBuffEffect(); }
     }
+
     private void CreateBuffEffect()
     {
         GameObject effect = GameManager.GetEffectObj(EEffectName.BUFF);
         effect.transform.SetParent(transform);
-    }
-
-    private void GetWeaponAdj(TempAdjust _adjust)
-    {
-        SetWeaponCCType((ECCType)_adjust.Amount);
-        for (int i = 0; i< m_buffNDebuff.Count; i++)
-        {
-            if (m_buffNDebuff[i].AdjType == EAdjType.WEAPON_CC)
-            {
-                m_buffNDebuff[i].SetAmount(_adjust.Amount);
-                m_buffNDebuff[i].SetTimeCount(_adjust.Time);
-                return;
-            }
-        }
-        BuffNDebuff info = new(_adjust, ResetWeaponCCType);
-        m_buffNDebuff.Add(info);
     }
 
 

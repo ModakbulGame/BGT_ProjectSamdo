@@ -240,18 +240,18 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     public bool IsFatigure { get { return m_ccCount[(int)ECCType.FATIGUE] > 0; } }
     private void GetFatigue()       // 피로
     {
-        TempAdjust slow = new(EAdjType.MOVE_SPEED, 0.7f, m_ccTime[(int)ECCType.FATIGUE]);
-        GetAdj(slow);
+        AdjustInfo slow = new(EAdjType.MOVE_SPEED, 0.7f, m_ccTime[(int)ECCType.FATIGUE]);
+        GetAdjust(slow);
     }
     private void GetWeakness()      // 나약
     {
-        TempAdjust hp = new(EAdjType.MAX_HP, 0.8f, m_ccTime[(int)ECCType.WEAKNESS]);
-        GetAdj(hp);
+        AdjustInfo hp = new(EAdjType.MAX_HP, 0.8f, m_ccTime[(int)ECCType.WEAKNESS]);
+        GetAdjust(hp);
     }
     private void GetBind()          // 속박
     {
-        TempAdjust slow = new(EAdjType.MOVE_SPEED, 0, m_ccTime[(int)ECCType.BIND]);
-        GetAdj(slow);
+        AdjustInfo slow = new(EAdjType.MOVE_SPEED, 0, m_ccTime[(int)ECCType.BIND]);
+        GetAdjust(slow);
     }
 
     // 즉발 CC

@@ -19,7 +19,7 @@ public class PowerScriptable : ScriptableObject
     public float                TotalDelay;
     public float                Cooltime;
     public int                  StaminaCost;
-    public TempAdjust           StatAdjust;
+    public AdjustInfo           StatAdjust;
     public string               Description;
     public int                  PowerPrice;
     public GameObject           PowerPrefab;

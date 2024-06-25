@@ -88,8 +88,11 @@ public class PlayManager : MonoBehaviour
     public static void StopPlayerInteract(InteractScript _interact) { Player.StopInteract(_interact); }
     public static void ResetPlayer() { Player.ResetPlayerAction(); }
     public static void TeleportPlayer(Vector3 _pos) { Player.TeleportPlayer(_pos); }
+    public static void GetPlayerAdjust(AdjustInfo _adjust) { Player.GetAdjust(_adjust); }
+    public static void GetPlayerAdjust(AdjustInfo _adjust, ObjectAttackScript _attack) { Player.GetAdjust(_adjust, _attack); }
+    public static void ModifyPlayerAdjust(ObjectAttackScript _attack, float _time) { Player.ModifyAdjust(_attack, _time); }
 
-    public static void TempGetBuff(float _amount, float _time) { Player.GetAdj(new(EAdjType.MAX_HP, _amount, _time)); }
+    public static void TempGetBuff(float _amount, float _time) { Player.GetAdjust(new(EAdjType.MAX_HP, _amount, _time)); }
 
 
     // 카메라

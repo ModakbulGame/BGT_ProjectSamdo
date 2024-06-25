@@ -16,16 +16,17 @@ public enum EAdjType
 }
 
 [Serializable]
-public struct TempAdjust
+public struct AdjustInfo
 {
     public EAdjType Type;
     public float Amount;
     public float Time;
-    public bool IsNull { get { return Type == EAdjType.LAST; } }
-    public static TempAdjust Null { get { return new(EAdjType.LAST, 0, 0); } }
-    public TempAdjust(EAdjType _type, float _amount, float _time)
+    public bool IsDistinctive;
+    public readonly bool IsNull { get { return Type == EAdjType.LAST; } }
+    public static AdjustInfo Null { get { return new(EAdjType.LAST, 0, 0); } }
+    public AdjustInfo(EAdjType _type, float _amount, float _time)
     {
-        Type = _type; Amount = _amount; Time = _time;
+        Type = _type; Amount = _amount; Time = _time; IsDistinctive = false;
     }
 }
 
@@ -33,32 +34,20 @@ public struct TempAdjust
 public class BuffNDebuff
 {
     [SerializeField]
-    private TempAdjust m_adjInfo;
-    public EAdjType AdjType { get { return m_adjInfo.Type; } }
-    public float Amount { get { return m_adjInfo.Amount; } }
-    public bool IsBuff { get { return m_adjInfo.Amount > 0; } }
-    [SerializeField]
-    private float m_timeCount;
-    public float TimeCount { get { return m_timeCount; } private set { m_timeCount = value; } }
-    public void SetTimeCount(float _time) { TimeCount = _time; }
-    public void SetAmount(float _amount) { m_adjInfo.Amount = _amount; }
-    public void SetReset(FPointer _reset) { m_resetFunction = _reset; }
-    public bool ProcTime()
-    {
-        TimeCount -= Time.deltaTime;
-        if (TimeCount <= 0)
-        {
-            if(m_resetFunction != null)
-                m_resetFunction();
-            return true;
-        }
-        return false;
-    }
-    private FPointer m_resetFunction;
-    public BuffNDebuff(TempAdjust _adj, FPointer _reset)
-    {
-        m_adjInfo = _adj; m_resetFunction = _reset; SetTimeCount(_adj.Time);
-    }
+    private AdjustInfo m_adjustInfo;
+    public ObjectAttackScript Attack { get; private set; }
+    public AdjustInfo AdjustInfo { get { return m_adjustInfo; } }
+    public EAdjType Type { get { return m_adjustInfo.Type; } }
+    public float Amount { get { return m_adjustInfo.Amount; } }
+    public bool IsAttacked { get { return Attack != null; } }
+    public bool IsDistinctive { get { return m_adjustInfo.IsDistinctive; } }
+    public float TimeCount { get; private set; }
+    public bool IsDone { get { return TimeCount <= 0; } }
+    public void SetTime(float _time) { TimeCount = _time; }
+    public void ProcTime() { TimeCount -= Time.deltaTime; }
+    public BuffNDebuff(AdjustInfo _info) : this(_info, null) { }
+    public BuffNDebuff(AdjustInfo _info, ObjectAttackScript _attack) 
+    { m_adjustInfo = _info; TimeCount = _info.Time; Attack = _attack; }
 }
 
 
@@ -170,65 +159,62 @@ public abstract partial class ObjectScript
     [SerializeField]
     protected List<BuffNDebuff> m_buffNDebuff = new();                // 버프, 디버프 리스트
 
-    public virtual void GetAdj(TempAdjust _adjust)           // 임시 조정
+    public virtual void GetAdjust(AdjustInfo _adjust)           // 임시 조정
     {
-        BuffNDebuff info = null;
-        float replace;
-        replace = GetBuffed(_adjust);
-        if (replace != 0) info = new(_adjust, delegate { ResetMultiplier(_adjust.Type, _adjust.Amount > 1); });
-
-        if (info != null) m_buffNDebuff.Add(info);
+        GetAdjust(_adjust, null);
     }
-
-    private float GetBuffed(TempAdjust _adj)            // 버프, 디버프 받기
+    public bool CheckAdjusted(ObjectAttackScript _attack)
     {
-        EAdjType type = _adj.Type;
-        float amount = _adj.Amount;
-        bool isBuff = amount > 1;
-        float time = _adj.Time;
-
-        bool exist = false;
-        for (int i = 0; i<m_buffNDebuff.Count; i++)
+        foreach (BuffNDebuff adj in m_buffNDebuff)
         {
-            BuffNDebuff buff = m_buffNDebuff[i];
-            if (buff.IsBuff != isBuff) { continue; }
-            if (buff.AdjType != type) { continue; }
-            exist = true;
-
-            if (buff.Amount == amount)
-            {
-                if (buff.TimeCount < time) { buff.SetTimeCount(time); }
-                return 0;
-            }
-            else if (buff.Amount < amount)
-            {
-                SetMultiplier(type, amount);
-                if (buff.TimeCount > time) { return amount; }
-                else if (buff.TimeCount < time) { buff.SetAmount(amount); buff.SetTimeCount(time); return 0; }
-                else { buff.SetAmount(amount); return 0; }
-            }
-            else
-            {
-                if (buff.TimeCount >= time) { return 0; }
-            }
+            if (adj.IsAttacked && adj.Attack == _attack) { return true; }
         }
-        if (!exist) { SetMultiplier(type, amount); }
-        return 1;
+        return false;
     }
-
-    private void ResetMultiplier(EAdjType _type, bool _isBuff)          // 버프, 디버프 종료
+    public void GetAdjust(AdjustInfo _adjust, ObjectAttackScript _attack)
     {
-        float max = 1;
-        for (int i = 0; i<m_buffNDebuff.Count; i++)
-        {
-            if (m_buffNDebuff[i].AdjType != _type || m_buffNDebuff[i].IsBuff != _isBuff || m_buffNDebuff[i].TimeCount <= 0)
-                continue;
-            float amount = m_buffNDebuff[i].Amount;
-            if ((_isBuff && max < amount) || (!_isBuff && max > amount)) { max = m_buffNDebuff[i].Amount; }
-        }
-        SetMultiplier(_type, max);
+        BuffNDebuff info = new(_adjust, _attack);
+
+        ApplyAdjust(_adjust);
+        m_buffNDebuff.Add(info);
     }
-    private void SetMultiplier(EAdjType _type, float _multiplier)       // 배율 설정
+    public void ModifyAdjust(ObjectAttackScript _attack, float _time)
+    {
+        foreach (BuffNDebuff adj in m_buffNDebuff)
+        {
+            if (!adj.IsAttacked || adj.Attack != _attack) { continue; }
+            adj.SetTime(_time);
+        }
+    }
+    private void ApplyAdjust(AdjustInfo _adjust)
+    {
+        EAdjType type = _adjust.Type;
+        if (type != EAdjType.WEAPON_CC)
+        {
+            SetMultiplier(type);
+        }
+        else
+        {
+            ApplyWeaponCC();
+        }
+    }
+    private void SetMultiplier(EAdjType _type)
+    {
+        float multiplier = 1;
+        float plus = 1;
+        float minus = 1;
+        foreach (BuffNDebuff adj in m_buffNDebuff)
+        {
+            if (adj.IsDone) { return; }
+            if (adj.IsDistinctive) { multiplier *= 1; return; }
+            float amount = adj.Amount;
+            if (amount > 1 && amount > plus) { plus = amount; }
+            else if (amount < 1 && amount < minus) { minus = amount; }
+        }
+        multiplier *= plus * minus;
+        ApplyMultiplier(_type, multiplier);
+    }
+    private void ApplyMultiplier(EAdjType _type, float _multiplier)       // 배율 설정
     {
         switch (_type)
         {
@@ -248,18 +234,42 @@ public abstract partial class ObjectScript
                 SetMaxHPMultiplier(_multiplier);
                 break;
         }
+        if (IsPlayer) { PlayManager.UpdateInfoUI(); }
     }
 
     private void BuffNDebuffProc()                                      // 버프 디버프 쿨타임 적용
     {
-        Queue<BuffNDebuff> removeQue = new();
-        for (int i = 0; i < m_buffNDebuff.Count; i++)
+        List<BuffNDebuff> removeList = new();
+        foreach (BuffNDebuff adj in m_buffNDebuff)
         {
-            bool done = m_buffNDebuff[i].ProcTime();
-            if (done) { removeQue.Enqueue(m_buffNDebuff[i]); }
+            adj.ProcTime(); 
+            if (adj.IsDone)
+            { 
+                removeList.Add(adj);
+            }
         }
-        while (removeQue.Count > 0) { BuffNDebuff buff = removeQue.Dequeue(); m_buffNDebuff.Remove(buff); }
+        foreach (BuffNDebuff adj in removeList)
+        {
+            ApplyAdjust(adj.AdjustInfo);
+            m_buffNDebuff.Remove(adj);
+        }
     }
+
+
+    private void ApplyWeaponCC() 
+    {
+        foreach (BuffNDebuff adj in m_buffNDebuff)
+        {
+            if(adj.Type != EAdjType.WEAPON_CC) { return; }
+            ECCType cc = (ECCType)adj.Amount;
+            SetWeaponCC(cc);
+            return;
+        }
+        SetWeaponCC(ECCType.NONE);
+    }
+    public virtual void SetWeaponCC(ECCType _cc) { }
+
+
 
 
     // 초기 설정

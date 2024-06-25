@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
-public enum ECooltimeName                               // ÄğÅ¸ÀÓ Á¾·ù
+public enum ECooltimeName                               // ì¿¨íƒ€ì„ ì¢…ë¥˜
 {
     JUMP,
     ROLL,
@@ -17,7 +17,7 @@ public enum ECooltimeName                               // ÄğÅ¸ÀÓ Á¾·ù
     LAST = POWER1 + ValueDefine.MAX_POWER_SLOT
 }
 
-public struct SPlayerWeaponInfo                         // ¹«±â Á¤º¸
+public struct SPlayerWeaponInfo                         // ë¬´ê¸° ì •ë³´
 {
     public FRange WeaponAttack;
     public FRange WeaponMagic;
@@ -27,16 +27,16 @@ public struct SPlayerWeaponInfo                         // ¹«±â Á¤º¸
 
 
 [Serializable]
-public class PlayerStatInfo                             // ÇÃ·¹ÀÌ¾î ½ºÅÈ Á¤º¸
+public class PlayerStatInfo                             // í”Œë ˆì´ì–´ ìŠ¤íƒ¯ ì •ë³´
 {
-    public float m_health;          // Ã¼·Â
-    public float m_endure;          // Áö±¸·Â
-    public float m_strength;        // ±Ù·Â
-    public float m_intellect;       // Áö·Â
-    public float m_rapid;           // ¹ÎÃ¸   
-    public float m_mental;          // Á¤½Å
+    public float m_health;          // ì²´ë ¥
+    public float m_endure;          // ì§€êµ¬ë ¥
+    public float m_strength;        // ê·¼ë ¥
+    public float m_intellect;       // ì§€ë ¥
+    public float m_rapid;           // ë¯¼ì²©   
+    public float m_mental;          // ì •ì‹ 
 
-    public void SetStat(EStatName _name, float _num)      // ½ºÅÈ ¼³Á¤
+    public void SetStat(EStatName _name, float _num)      // ìŠ¤íƒ¯ ì„¤ì •
     {
         switch (_name)
         {
@@ -95,12 +95,12 @@ public class PlayerStatInfo                             // ÇÃ·¹ÀÌ¾î ½ºÅÈ Á¤º¸
 }
 
 [Serializable]
-public class PlayerCombatInfo : ObjectCombatInfo        // ÇÃ·¹ÀÌ¾î ÀüÅõ Á¤º¸
+public class PlayerCombatInfo : ObjectCombatInfo        // í”Œë ˆì´ì–´ ì „íˆ¬ ì •ë³´
 {
-    public float MaxStamina;        // ÃÖ´ë ½ºÅ×¹Ì³ª
-    public float Magic;             // ¸¶¹ı °ø°İ·Â
-    public float Overdrive;         // °ú¿­ µ¥¹ÌÁö
-    public float Tolerance;         // ³»¼º
+    public float MaxStamina;        // ìµœëŒ€ ìŠ¤í…Œë¯¸ë‚˜
+    public float Magic;             // ë§ˆë²• ê³µê²©ë ¥
+    public float Overdrive;         // ê³¼ì—´ ë°ë¯¸ì§€
+    public float Tolerance;         // ë‚´ì„±
 
     public void SetCombatInfo(PlayerStatInfo _stat)
     {
@@ -134,7 +134,7 @@ public class PlayerCombatInfo : ObjectCombatInfo        // ÇÃ·¹ÀÌ¾î ÀüÅõ Á¤º¸
 
 public partial class PlayerController
 {
-    // µ¥ÀÌÅÍ
+    // ë°ì´í„°
     public void LoadData()
     {
         GameManager.RegisterData(this);
@@ -158,15 +158,15 @@ public partial class PlayerController
     }
 
 
-    // ±âº» ÄÄÆ÷³ÍÆ®
+    // ê¸°ë³¸ ì»´í¬ë„ŒíŠ¸
     private CapsuleCollider m_collider;
     [SerializeField]
     private Transform m_cameraFocus;
     public Transform CameraFocus { get { return m_cameraFocus; } }
 
 
-    // ±âÃÊ Á¤º¸
-    public override float ObjectHeight { get { return m_collider.height; } }        // ¿ÀºêÁ§Æ® ³ôÀÌ
+    // ê¸°ì´ˆ ì •ë³´
+    public override float ObjectHeight { get { return m_collider.height; } }        // ì˜¤ë¸Œì íŠ¸ ë†’ì´
     private float HalfHeight { get { return ObjectHeight / 2; } }
     
     private CinemachineImpulseSource m_impulseSource;
@@ -188,43 +188,43 @@ public partial class PlayerController
     {
         m_impulseSource.m_ImpulseDefinition.m_ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Explosion;
 
-        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_AttackTime = m_attackTime;     // °ø°İ ½Ã°£
-        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = m_sustainTime;   // À¯Áö ½Ã°£
-        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_DecayTime = m_decayTime;       // °¨¼è ½Ã°£
+        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_AttackTime = m_attackTime;     // ê³µê²© ì‹œê°„
+        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = m_sustainTime;   // ìœ ì§€ ì‹œê°„
+        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_DecayTime = m_decayTime;       // ê°ì‡  ì‹œê°„
         m_impulseSource.m_DefaultVelocity = m_defaultVelocity;
     }
 
-    // ½ºÅÈ Á¤º¸
+    // ìŠ¤íƒ¯ ì •ë³´
     [SerializeField]
-    protected PlayerStatInfo m_statInfo;    // ½ºÅÈ Á¤º¸
-    public float Health { get { return m_statInfo.m_health; } }                     // Ã¼·Â
-    public float Endure { get { return m_statInfo.m_endure; } }                     // Áö±¸·Â
-    public float Strength { get { return m_statInfo.m_strength; } }                 // ±Ù·Â
-    public float Intellect { get { return m_statInfo.m_intellect; } }               // Áö·Â
-    public float Rapid { get { return m_statInfo.m_rapid; } }                       // ¹ÎÃ¸
-    public float Mental { get { return m_statInfo.m_mental; } }                     // Á¤½Å
+    protected PlayerStatInfo m_statInfo;    // ìŠ¤íƒ¯ ì •ë³´
+    public float Health { get { return m_statInfo.m_health; } }                     // ì²´ë ¥
+    public float Endure { get { return m_statInfo.m_endure; } }                     // ì§€êµ¬ë ¥
+    public float Strength { get { return m_statInfo.m_strength; } }                 // ê·¼ë ¥
+    public float Intellect { get { return m_statInfo.m_intellect; } }               // ì§€ë ¥
+    public float Rapid { get { return m_statInfo.m_rapid; } }                       // ë¯¼ì²©
+    public float Mental { get { return m_statInfo.m_mental; } }                     // ì •ì‹ 
     public PlayerStatInfo GetStatInfo() { return m_statInfo; }
     public void ResetStatInfo() { m_statInfo = new(); ApplyStat(); }
-    public void SetStat(EStatName _name, float _num) { m_statInfo.SetStat(_name, _num); ApplyStat(); }      // ½ºÅÈ ¼³Á¤
+    public void SetStat(EStatName _name, float _num) { m_statInfo.SetStat(_name, _num); ApplyStat(); }      // ìŠ¤íƒ¯ ì„¤ì •
 
 
-    // ÀüÅõ Á¤º¸
+    // ì „íˆ¬ ì •ë³´
     [SerializeField]
     private PlayerCombatInfo m_combatInfo;
     public override ObjectCombatInfo CombatInfo { get { return m_combatInfo; } }
-    public override float Attack => base.Attack + WeaponAttack.Num;                 // °ø°İ·Â
-    public float MaxStamina { get { return m_combatInfo.MaxStamina; } }             // ÃÖ´ë ½ºÅ×¹Ì³ª
-    public override float AttackSpeed => base.AttackSpeed * WeaponAttackSpeed;      // °ø°İ ¼Óµµ
-    public float Magic { get { return m_combatInfo.Magic + WeaponMagic.Num; } }     // ÁÖ¼ú °ø°İ·Â
-    public float Tolerance { get { return m_combatInfo.Tolerance; } }               // ³»¼º
-    public float Defence { get { return m_combatInfo.Defense; } }                   // ¹æ¾î·Â
-    public float Overdrive { get { return m_combatInfo.Overdrive; } }               // ÁõÆø
-    public void ApplyStat() { m_combatInfo.SetCombatInfo(m_statInfo); }            // ½ºÅÈ Àû¿ë
+    public override float Attack => base.Attack + WeaponAttack.Num;                 // ê³µê²©ë ¥
+    public float MaxStamina { get { return m_combatInfo.MaxStamina; } }             // ìµœëŒ€ ìŠ¤í…Œë¯¸ë‚˜
+    public override float AttackSpeed => base.AttackSpeed * WeaponAttackSpeed;      // ê³µê²© ì†ë„
+    public float Magic { get { return m_combatInfo.Magic + WeaponMagic.Num; } }     // ì£¼ìˆ  ê³µê²©ë ¥
+    public float Tolerance { get { return m_combatInfo.Tolerance; } }               // ë‚´ì„±
+    public float Defence { get { return m_combatInfo.Defense; } }                   // ë°©ì–´ë ¥
+    public float Overdrive { get { return m_combatInfo.Overdrive; } }               // ì¦í­
+    public void ApplyStat() { m_combatInfo.SetCombatInfo(m_statInfo); }            // ìŠ¤íƒ¯ ì ìš©
 
     public override float DamageMultiplier => base.DamageMultiplier * Overdrive;
 
 
-    // Àåºñ °ü·Ã
+    // ì¥ë¹„ ê´€ë ¨
     [SerializeField]
     private WeaponScript[] m_weapons;
     [SerializeField]
@@ -264,8 +264,12 @@ public partial class PlayerController
         }
         CurWeapon.gameObject.name = name;
     }
-    private void SetWeaponCCType(ECCType _cc) { CurWeapon.SetCCType(_cc); CurWeapon.BuffEffectOn(_cc); }
-    private void ResetWeaponCCType() { CurWeapon.ResetCCType(); CurWeapon.BuffEffectOff(); }
+    public override void SetWeaponCC(ECCType _cc) 
+    {
+        CurWeapon.SetCCType(_cc);
+        if (_cc == ECCType.NONE) { CurWeapon.BuffEffectOff(); }
+        else { CurWeapon.BuffEffectOn(_cc); }
+    }
 
 
 
@@ -276,11 +280,11 @@ public partial class PlayerController
 
 
 
-    // »ó¼Ó Á¤º¸
+    // ìƒì† ì •ë³´
     public override bool IsPlayer { get { return true; } }
 
 
-    // ÃÊ±â ¼³Á¤
+    // ì´ˆê¸° ì„¤ì •
     public override void SetComps()
     {
         base.SetComps();
@@ -291,7 +295,7 @@ public partial class PlayerController
         m_castingEffect = GetComponentInChildren<PowerCastingEffect>();
         m_castingEffect.SetComps();
     }
-    private void SetStates()                // »óÅÂµé Ãß°¡
+    private void SetStates()                // ìƒíƒœë“¤ ì¶”ê°€
     {
         m_stateManager = new(this);
         m_playerStates[(int)EPlayerState.IDLE] = gameObject.AddComponent<PlayerIdleState>();
@@ -324,12 +328,12 @@ public partial class PlayerController
     public override void Start()
     {
         base.Start();
-        PlayManager.SetCurPlayer(this);     // PlayerManger¿¡ ÇÃ·¹ÀÌ¾î µî·Ï
-        ChangeState(EPlayerState.IDLE);     // Idle·Î »óÅÂ ÀüÀÌ
-        PlayManager.SetPlayerMaxHP(MaxHP);  // Ã¼·Â¹Ù ¼³Á¤
-        InitStamina();                      // ½ºÅ×¹Ì³ª ¼³Á¤
-        InitLight();                        // ´É·Â ÃÊ±â ¼³Á¤
-        InitWeapon();                       // ¹«±â ¼³Á¤
-        HidePowerAim();                     // ½ºÅ³ ¿¡ÀÓ ²ô±â
+        PlayManager.SetCurPlayer(this);     // PlayerMangerì— í”Œë ˆì´ì–´ ë“±ë¡
+        ChangeState(EPlayerState.IDLE);     // Idleë¡œ ìƒíƒœ ì „ì´
+        PlayManager.SetPlayerMaxHP(MaxHP);  // ì²´ë ¥ë°” ì„¤ì •
+        InitStamina();                      // ìŠ¤í…Œë¯¸ë‚˜ ì„¤ì •
+        InitLight();                        // ëŠ¥ë ¥ ì´ˆê¸° ì„¤ì •
+        InitWeapon();                       // ë¬´ê¸° ì„¤ì •
+        HidePowerAim();                     // ìŠ¤í‚¬ ì—ì„ ë„ê¸°
     }
 }
