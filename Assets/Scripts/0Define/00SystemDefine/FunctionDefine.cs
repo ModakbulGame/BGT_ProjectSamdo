@@ -3,8 +3,8 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public delegate void FPointer();                                    // ÇÔ¼ö Æ÷ÀÎÅÍ
-public delegate void EventPointer(PointerEventData _data);          // ¸¶¿ì½º Á¤º¸ °®´Â ÇÔ¼ö Æ÷ÀÎÅÍ
+public delegate void FPointer();                                    // í•¨ìˆ˜ í¬ì¸í„°
+public delegate void EventPointer(PointerEventData _data);          // ë§ˆìš°ìŠ¤ ì •ë³´ ê°–ëŠ” í•¨ìˆ˜ í¬ì¸í„°
 
 public static class FunctionDefine
 {
@@ -15,10 +15,10 @@ public static class FunctionDefine
     public static int Max(int _n1, int _n2) { return (int)Max((float)_n1, _n2); }
     public static float Max(float _n1, float _n2) { if (_n1 >= _n2) { return _n1; } return _n2; }
 
-    public static float Sin(float _angle) { return Mathf.Sin(_angle * Mathf.Deg2Rad); }                 // »çÀÎ (°¢µµ·Î ¹ÝÈ¯)
-    public static float Cos(float _angle) { return Mathf.Cos(_angle * Mathf.Deg2Rad); }                 // ÄÚ»çÀÎ (°¢µµ·Î ¹ÝÈ¯)
+    public static float Sin(float _angle) { return Mathf.Sin(_angle * Mathf.Deg2Rad); }                 // ì‚¬ì¸ (ê°ë„ë¡œ ë°˜í™˜)
+    public static float Cos(float _angle) { return Mathf.Cos(_angle * Mathf.Deg2Rad); }                 // ì½”ì‚¬ì¸ (ê°ë„ë¡œ ë°˜í™˜)
 
-    public static float Round(float _num)                                                             // ¹Ý¿Ã¸²
+    public static float Round(float _num)                                                             // ë°˜ì˜¬ë¦¼
     {
         float unit = (float)Mathf.Round(_num);
 
@@ -49,12 +49,17 @@ public static class FunctionDefine
         return row;
     }
 
+    public static string TextRowSet(string _line)
+    {
+        return _line.Replace("\\n", "\n");
+    }
 
-    public static bool CheckAnimParameter(Animator _anim, string _name)                                             // ¾Ö´Ï¸ÞÀÌÅÍ¿¡ Æ¯Á¤ º¯¼ö¸í ÀÖ´ÂÁö È®ÀÎ
+
+    public static bool CheckAnimParameter(Animator _anim, string _name)                                             // ì• ë‹ˆë©”ì´í„°ì— íŠ¹ì • ë³€ìˆ˜ëª… ìžˆëŠ”ì§€ í™•ì¸
     {
         return CheckAnimParameter(_anim, _name, 0);
     }
-    public static bool CheckAnimParameter(Animator _anim, string _name, AnimatorControllerParameterType _type)      // Á¾·ù±îÁö È®ÀÎ
+    public static bool CheckAnimParameter(Animator _anim, string _name, AnimatorControllerParameterType _type)      // ì¢…ë¥˜ê¹Œì§€ í™•ì¸
     {
         foreach (AnimatorControllerParameter parameter in _anim.parameters)
         {
@@ -65,19 +70,19 @@ public static class FunctionDefine
         }
         return false;
     }
-    public static void AddEvent(EventTrigger _trigger, EventTriggerType _type, EventPointer _function)  // ÀÌº¥Æ® Æ®¸®°Å¿¡ ÀÌº¥Æ® Ãß°¡
+    public static void AddEvent(EventTrigger _trigger, EventTriggerType _type, EventPointer _function)  // ì´ë²¤íŠ¸ íŠ¸ë¦¬ê±°ì— ì´ë²¤íŠ¸ ì¶”ê°€
     {
         EventTrigger.Entry entry = new() { eventID = _type };
         entry.callback.AddListener(data => { _function((PointerEventData)data); });
         _trigger.triggers.Add(entry);
     }
 
-    public static float VecToDeg(Vector2 _vec)              // º¤ÅÍ=>°¢µµ º¯È¯
+    public static float VecToDeg(Vector2 _vec)              // ë²¡í„°=>ê°ë„ ë³€í™˜
     {
         float deg = 90 - Mathf.Atan2(_vec.y, _vec.x) * Mathf.Rad2Deg;
         return deg;
     }
-    public static Vector2 DegToVec(float _deg)              // °¢µµ=>º¤ÅÍ º¯È¯
+    public static Vector2 DegToVec(float _deg)              // ê°ë„=>ë²¡í„° ë³€í™˜
     {
         if (_deg == 0) return Vector2.up;
         else if (_deg < 180)
@@ -100,7 +105,7 @@ public static class FunctionDefine
     }
 
 
-    public static Vector2 RotateVector2(Vector2 _vec, float _deg)       // º¤ÅÍ È¸Àü
+    public static Vector2 RotateVector2(Vector2 _vec, float _deg)       // ë²¡í„° íšŒì „
     {
         float deg = -_deg;
         float x = _vec.x;
@@ -128,7 +133,7 @@ public static class FunctionDefine
         };
     }
 
-    public static bool CheckCurAnimation(Animator _anim, int _layer, string _name)        // ÇöÀç ¾Ö´Ï¸ÞÀÌ¼Ç È®ÀÎ
+    public static bool CheckCurAnimation(Animator _anim, int _layer, string _name)        // í˜„ìž¬ ì• ë‹ˆë©”ì´ì…˜ í™•ì¸
     {
         return _anim.GetCurrentAnimatorStateInfo(_layer).IsName(_name);
     }
@@ -136,7 +141,7 @@ public static class FunctionDefine
 
 
 
-    public static void SetTransparent(Material _mat)                    // ¸ÞÅ×¸®¾ó Transparent ¼³Á¤ (Åõ¸í °¡´É)
+    public static void SetTransparent(Material _mat)                    // ë©”í…Œë¦¬ì–¼ Transparent ì„¤ì • (íˆ¬ëª… ê°€ëŠ¥)
     {
         _mat.SetFloat("_Surface", 1f);
         _mat.SetFloat("_Blend", 0f);
@@ -149,7 +154,7 @@ public static class FunctionDefine
         _mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
         _mat.SetShaderPassEnabled("ShadowCaster", false);
     }
-    public static void SetObaque(Material _mat)                         // ¸ÞÅ×¸®¾ó Obaque ¼³Á¤ (Åõ¸í ºÒ°¡´É)
+    public static void SetObaque(Material _mat)                         // ë©”í…Œë¦¬ì–¼ Obaque ì„¤ì • (íˆ¬ëª… ë¶ˆê°€ëŠ¥)
     {
         _mat.SetFloat("_Surface", 0f);
 

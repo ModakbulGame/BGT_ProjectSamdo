@@ -55,7 +55,7 @@ public enum EAltarName
 public enum ESlateName
 {
     SLATE1,
-    SLATE2,
+/*    SLATE2,
     SLATE3,
     SLATE4,
     SLATE5,
@@ -69,7 +69,7 @@ public enum ESlateName
     SLATE13,
     SLATE14,
     SLATE15,
-    SLATE16,
+    SLATE16,*/
 
 
     LAST

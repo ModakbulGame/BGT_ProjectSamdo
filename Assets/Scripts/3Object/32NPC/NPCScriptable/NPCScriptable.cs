@@ -10,7 +10,9 @@ public class NPCScriptable : ScriptableObject
     public string NPCName;
     public List<DialogueScriptable> DialogueList;
     public List<QuestScriptable> QuestList;
+    [TextArea]
     public string DefaultLine;
+
 
     public void AddDialogue(DialogueScriptable _dial) { DialogueList.Add(_dial); }
     public void AddQuest(QuestScriptable _quest) { QuestList.Add(_quest); }
@@ -23,6 +25,6 @@ public class NPCScriptable : ScriptableObject
 
         DialogueList = new();
         QuestList = new();
-        DefaultLine =   _data[(int)ENPCAttribute.DEFAULT_LINE];
+        DefaultLine =  FunctionDefine.TextRowSet(_data[(int)ENPCAttribute.DEFAULT_LINE]);
     }
 }
