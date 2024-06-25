@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class VolumeToggleScript : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class VolumeToggleScript : MonoBehaviour
 
     private RectTransform m_rect;
 
-    private const float MaxX = 148;
+    private const float MaxX = 323;
 
     private bool Tracking { get; set; }
     private Vector2 StartPos { get; set; }
@@ -33,7 +34,7 @@ public class VolumeToggleScript : MonoBehaviour
     }
     private void OnTrack()
     {
-        Vector2 mouse = Input.mousePosition;
+        Vector2 mouse = Mouse.current.position.ReadValue();
         Vector2 offset = (mouse - StartPos) * GameManager.WidthRatio;
         CurVol = StartAnchor.x + offset.x;
         if (CurVol > MaxX)

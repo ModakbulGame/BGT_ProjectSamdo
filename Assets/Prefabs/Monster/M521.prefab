@@ -1409,7 +1409,7 @@ MonoBehaviour:
   SpineBone: {fileID: 3628791853476810565}
   ChestBone: {fileID: 0}
   RagdolledParameter: 
-  SwingHelper: 0
+  SwingHelper: 0.005
   GluingFloorLevel: 0.05
   GluingFloorLevelUseOnMoving: 0
   GluingFloorLevelOnMoving: 0
@@ -1438,7 +1438,20 @@ MonoBehaviour:
     ModuleReference: {fileID: 11400000, guid: 7d9bd86d54a7a594cb1793f9533e2e00, type: 2}
     customStringList: []
     customObjectList: []
-    variables: []
+    variables:
+    - VariableName: Rotation Power
+      Tooltip: 
+      _value: {x: 0.4, y: 0, z: 0, w: 0}
+      _string: 
+      _curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      _uObject: {fileID: 0}
+      VariableType: 0
+      _rangeHelper: {x: 0, y: 0, z: 0, w: 0}
   ImpulsesPowerMultiplier: 1
   ImpulsesDurationMultiplier: 1
   ImpulsesDampUpPushes: 0
@@ -1508,12 +1521,12 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     AlignWithDesiredMoveDirection: 0
-  UseHips: 1
-  HipsHeightStepBlend: 1
+  UseHips: 0
+  HipsHeightStepBlend: 0.5
   HipsHeightStepSpeed: 0.7
   HipsAdjustStyle: 0
   StabilizeCenterOfMass: 0.45
-  AnimationIsStablePose: 0.75
+  AnimationIsStablePose: 1
   StabilizingSpeed: 0.375
   PushHipsOnLegMove: 0.1
   NormalizePush: 0
@@ -1553,7 +1566,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   HubBackBonesElasticity: 0.1
   HipsSetup:
-    HipsElasticityBlend: 1
+    HipsElasticityBlend: 0.3
     HipsMuscle:
       DesiredPosition: {x: 0, y: 0, z: 0}
       Acceleration: 10000
@@ -1672,34 +1685,34 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 0.6958197
-        outSlope: 0.6958197
+        inSlope: 1.25
+        outSlope: 1.25
         tangentMode: 0
         weightedMode: 3
         inWeight: 0
-        outWeight: 0.460011
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.4
-        value: 0.3
-        inSlope: -0.04204308
-        outSlope: -0.04204308
+        value: 0.5
+        inSlope: 1.25
+        outSlope: 1.25
         tangentMode: 0
         weightedMode: 3
-        inWeight: 0.333
-        outWeight: 0.3410656
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.85
         value: 0
-        inSlope: -0.2721428
-        outSlope: -0.2721428
+        inSlope: -1.111111
+        outSlope: -1.111111
         tangentMode: 0
         weightedMode: 3
-        inWeight: 0.3953607
+        inWeight: 0.33333334
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    SpherizePower: 0.3
+    SpherizePower: 0.4
     MinFootRaise: 0.1
     MaxFootRaise: 0.4
     RaiseYAxisCurve:
@@ -1831,30 +1844,30 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   UseGluing: 1
-  MainGlueBlend: 0.5
-  GlueRangeThreshold: 0.375
-  GlueFadeInSpeed: 0.85
+  MainGlueBlend: 0.85
+  GlueRangeThreshold: 0.5
+  GlueFadeInSpeed: 0.3
   AllowGlueBelowFoot: 0.2
   GlueFadeOutSpeed: 0.5
   UnglueOn: 30
-  AllowGlueDrag: 0.7
+  AllowGlueDrag: 0.6
   GlueMode: 2
-  SmoothSuddenSteps: 0.85
-  LegElevateBlend: 0.7
+  SmoothSuddenSteps: 0.5
+  LegElevateBlend: 0.2
   LegElevateHeightLimit: 0.6
   FootRotationBlend: 1
   FootAlignRapidity: 0.75
   AnimateFeet: 1
-  LimitFeetYaw: 30
+  LimitFeetYaw: 50
   AnimationFloorLevel: 0.001
   _Editor_Foldout_Setup_LegsList: 1
   _Editor_EnsureCount: 0
   _Editor_OnValidateTrigger: 1
   _EditorAllowAutoUpdateFeetParams: 1
   _EditorCategory: 1
-  _EditorSetupCategory: 2
+  _EditorSetupCategory: 0
   _EditorMotionCategory: 2
-  _EditorExtraCategory: 0
+  _EditorExtraCategory: 1
   IKHintMode: 0
   LimitLegStretch: 0.99
   FeetYOffset: 0
@@ -1875,7 +1888,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   RaycastHitTrigger: 1
-  CastDistance: 1
+  CastDistance: 0.3
   RaycastStartHeight: 0
   RaycastStartHeightMul: 1
   RaycastStyle: 0
@@ -1886,7 +1899,7 @@ MonoBehaviour:
   MaxBodyStepUp: 0
   UngroundFadeSpeed: 0.1
   IsMovingFadeSpeed: 0.4
-  LegsAnimatorBlend: 1
+  LegsAnimatorBlend: 0.7
   _Editor_DefaultModuleOnStart: {fileID: 11400000, guid: 7d9bd86d54a7a594cb1793f9533e2e00,
     type: 2}
   _Editor_LegHelperModule: {fileID: 11400000, guid: 0645fbea8059aec47aa6ae9d2c93c1d4,
