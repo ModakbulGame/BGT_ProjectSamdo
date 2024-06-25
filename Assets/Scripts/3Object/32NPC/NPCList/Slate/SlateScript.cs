@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class SlateScript : NPCScript
 {
+    private Animator m_anim;
+
     [SerializeField]
     private ESlateName m_slateName;
 
     [SerializeField]
-    private SlateUIScript m_slateUI;
+    private TextMeshProUGUI m_slateUI;
 
     [SerializeField]
     private float m_displayTime = 5;
@@ -32,18 +35,29 @@ public class SlateScript : NPCScript
     {
         PlayManager.StopPlayerInteract();
         if(m_scriptable == null || ShowingSlateText) { return; }
-        ShowSlateText();
         ShowingSlateText = true;
+        m_anim.SetBool("IS_SHOWING", true);
+        StartCoroutine(DisplayCoroutine());
     }
-
-    private void ShowSlateText()
+    private IEnumerator DisplayCoroutine()
     {
-        m_slateUI.ShowSlateText(this);
+        yield return new WaitForSeconds(DisplayTime);
+        m_anim.SetBool("IS_SHOWING", false);
     }
-
     public void DisplayDone()
     {
         PlayManager.StopPlayerInteract(InteractManager);
         ShowingSlateText = false;
+    }
+
+
+    private void SetComps()
+    {
+        m_anim = GetComponent<Animator>();
+        m_slateUI.text = SlateText;
+    }
+    private void Awake()
+    {
+        SetComps();
     }
 }

@@ -6,7 +6,8 @@ public class CameraFocusScript : MonoBehaviour            // 오브젝트에 달
 {
     private void TrackCamRotation()
     {
-        transform.forward = Camera.main.transform.forward;
+        float y = Camera.main.transform.localEulerAngles.y;
+        transform.localEulerAngles = new(0, y, 0);
     }
 
     private void LateUpdate()
