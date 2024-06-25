@@ -87,7 +87,7 @@ public class PowerManager : MonoBehaviour
         char c2 = _code[1];
         if(c2 != ValueDefine.MELEE_CC_CODE && c2 != ValueDefine.RANGED_CC_CODE && c2 != ValueDefine.AROUND_CC_CODE)
         { return ECCType.NONE; }
-        return (ECCType)(_code[2] - '0');
+        return (ECCType)(_code[2] - '1');
     }
 
 
