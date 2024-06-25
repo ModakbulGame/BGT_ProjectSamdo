@@ -369,7 +369,7 @@ GameObject:
   - component: {fileID: 8510319803011367913}
   - component: {fileID: 7514556351147052556}
   - component: {fileID: 8034768515848521897}
-  - component: {fileID: 807230154861606408}
+  - component: {fileID: 2157679065115807985}
   m_Layer: 0
   m_Name: S102
   m_TagString: PlayerPower
@@ -439,8 +439,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &807230154861606408
-CapsuleCollider:
+--- !u!135 &2157679065115807985
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -457,8 +457,6 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 1
-  m_Height: 1
-  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
