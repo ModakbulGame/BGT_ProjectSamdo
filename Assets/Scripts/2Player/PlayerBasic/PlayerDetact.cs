@@ -7,27 +7,27 @@ using UnityEngine.InputSystem;
 public partial class PlayerController
 {
     [SerializeField]
-    private InteractScript m_interactableObject;                                    // »óÈ£ÀÛ¿ë ´©¸£¸é »óÈ£ÀÛ¿ë ÇÒ ´ë»ó
+    private InteractScript m_interactableObject;                                    // ìƒí˜¸ì‘ìš© ëˆ„ë¥´ë©´ ìƒí˜¸ì‘ìš© í•  ëŒ€ìƒ
 
-    private bool Interacting { get; set; }                                          // »óÈ£ÀÛ¿ë ÁßÀÎÁö
+    private bool Interacting { get; set; }                                          // ìƒí˜¸ì‘ìš© ì¤‘ì¸ì§€
 
-    private void DetactObjectsNear()                                                // ÁÖº¯ »óÈ£ÀÛ¿ë °¡´É ¿ÀºêÁ§Æ® Å½Áö
+    private void DetactObjectsNear()                                                // ì£¼ë³€ ìƒí˜¸ì‘ìš© ê°€ëŠ¥ ì˜¤ë¸Œì íŠ¸ íƒì§€
     {
-        if (Interacting) { return; } // »óÈ£ÀÛ¿ë »óÅÂÀÏ °æ¿ì
+        if (Interacting) { return; } // ìƒí˜¸ì‘ìš© ìƒíƒœì¼ ê²½ìš°
 
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit[] hits = Physics.RaycastAll(ray, 10, ValueDefine.INTERACT_LAYER);
 
-        InteractScript interact = null;         // »óÈ£ÀÛ¿ë ´ë»ó Å½»ö
-        for (int i = 0; i < hits.Length; i++)   // ±ÙÃ³ ´ë»ó È®ÀÎ
+        InteractScript interact = null;         // ìƒí˜¸ì‘ìš© ëŒ€ìƒ íƒìƒ‰
+        for (int i = 0; i < hits.Length; i++)   // ê·¼ì²˜ ëŒ€ìƒ í™•ì¸
         {
             GameObject obj = hits[i].collider.gameObject;
             InteractScript script = obj.GetComponentInParent<InteractScript>()
                 ?? obj.GetComponentInChildren<InteractScript>();
-            if (script == null || !script.CanInteract ) { continue; }               // ½ºÅ©¸³Æ®°¡ ¾ø°Å³ª »óÈ£ÀÛ¿ë ºÒ°¡´ÉÀÎ °æ¿ì
+            if (script == null || !script.CanInteract ) { continue; }               // ìŠ¤í¬ë¦½íŠ¸ê°€ ì—†ê±°ë‚˜ ìƒí˜¸ì‘ìš© ë¶ˆê°€ëŠ¥ì¸ ê²½ìš°
             interact = script;
         }
-        if (interact != null && interact != m_interactableObject)   // ´ë»óÀÌ ¹Ù²ï °æ¿ì
+        if (interact != null && interact != m_interactableObject)   // ëŒ€ìƒì´ ë°”ë€ ê²½ìš°
         {
             if (m_interactableObject != null)
                 m_interactableObject.DisableInteract();
@@ -35,24 +35,28 @@ public partial class PlayerController
             m_interactableObject = interact;
             m_interactableObject.AbleInteract();
         }
-        if (m_interactableObject != null && !m_interactableObject.CanInteract)  // ´ë»óÀÌ »ç¶óÁø °æ¿ì
+        if (m_interactableObject != null && !m_interactableObject.CanInteract)  // ëŒ€ìƒì´ ì‚¬ë¼ì§„ ê²½ìš°
         {
             m_interactableObject.DisableInteract();
             m_interactableObject = null;
         }
     }
 
-    public void StartInteract()                                                     // »óÈ£ÀÛ¿ë ½ÃÀÛ
+    public void StartInteract()                                                     // ìƒí˜¸ì‘ìš© ì‹œì‘
     {
         Interacting = true;
     }
-    public void StopInteract()                                                      // »óÈ£ÀÛ¿ë Áß´Ü
+    public void StopInteract()                                                      // ìƒí˜¸ì‘ìš© ì¤‘ë‹¨
     {
         m_interactableObject = null;
         Interacting = false;
     }
+    public void StopInteract(InteractScript _interact)
+    {
+        if(m_interactableObject != _interact) { return; }
+    }
 
-    private void PlayerDetactUpdate()                                               // Å½Áö °ü·Ã ¾÷µ¥ÀÌÆ®
+    private void PlayerDetactUpdate()                                               // íƒì§€ ê´€ë ¨ ì—…ë°ì´íŠ¸
     {
         DetactObjectsNear();
         if (m_interactableObject != null && PlayerInput.Interact.triggered)

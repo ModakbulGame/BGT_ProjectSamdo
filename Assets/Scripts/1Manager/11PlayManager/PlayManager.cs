@@ -85,6 +85,7 @@ public class PlayManager : MonoBehaviour
     public static float GetDistToPlayer(Vector3 _pos) { if (!IsPlayerSet) return -1; return (PlayerPos-_pos).magnitude; }                   // 플레이어와의 거리
     public static void SetPlayerWeapon(EWeaponName _weapon) { Player.SetCurWeapon(_weapon); }                                               // 무기 설정
     public static void StopPlayerInteract() { Player.StopInteract(); }                                                                      // 상호작용 종료
+    public static void StopPlayerInteract(InteractScript _interact) { Player.StopInteract(_interact); }
     public static void ResetPlayer() { Player.ResetPlayerAction(); }
     public static void TeleportPlayer(Vector3 _pos) { Player.TeleportPlayer(_pos); }
 
@@ -159,8 +160,8 @@ public class PlayManager : MonoBehaviour
     public static float MapWidth { get { return EnvironmentManager.MapWidth; } }
     public static float MapHeight { get { return EnvironmentManager.MapHeight; } }
     public static OasisNPC[] OasisList { get { return EnvironmentManager.OasisList; } }
-    public static AltarNPC[] AltarList { get { return EnvironmentManager.AltarList; } }
-    public static SlateNPC[] SlateList { get { return EnvironmentManager.SlateList; } }
+    public static AltarScript[] AltarList { get { return EnvironmentManager.AltarList; } }
+    public static SlateScript[] SlateList { get { return EnvironmentManager.SlateList; } }
     public static MonsterSpawnPoint[] SpawnPointList { get { return EnvironmentManager.SpawnPointList; } }
     public static void MonsterKilled(EMonsterName _monster, EMonsterDeathType _type) { EnvironmentManager.MonsterKilled(_monster, _type); }
     public static void UnlockDialogue(NPCDialogue _dial) { EnvironmentManager.UnlockDialogue(_dial); }
@@ -236,7 +237,7 @@ public class PlayManager : MonoBehaviour
     // NPC UI
     public static void ShowNPCQuestUI(EQuestName _quest, bool _isStart, FPointer _confirm) { PlayUIManager.ShowNPCQuestUI(_quest, _isStart, _confirm); }    // 퀘스트 수락/거절 창 표시
     public static void OpenDialogueUI(NPCScript _npc, int _idx) { PlayUIManager.OpenDialogueUI(_npc, _idx); }                                           // NPC 대화창 열기
-    public static void OpenSlateUI(SlateNPC _slate) { PlayUIManager.OpenSlateUI(_slate); }
+    public static void OpenSlateUI(SlateScript _slate) { PlayUIManager.OpenSlateUI(_slate); }
     public static bool IsDialogueOpend { get { return PlayUIManager.IsDialogueUIOpend; } }                                                              // NPC 대화창 열렸는지 확인
 
     // 기타

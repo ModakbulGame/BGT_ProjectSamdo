@@ -10,6 +10,11 @@ public class DropItemScript : PooledItem, IInteractable
     [SerializeField]
     private int m_itemNum;
 
+    public InteractScript InteractManager { get; private set; }
+    public void SetInteractScript(InteractScript _interact) {  InteractManager = _interact; }
+
+    public bool CanInteract => true;
+
     public List<SItem> DropItem { get { return m_dropItems; } }
 
     public void SetDropItems(List<SItem> _items)

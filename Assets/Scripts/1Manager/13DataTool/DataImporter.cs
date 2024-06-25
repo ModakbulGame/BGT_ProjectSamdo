@@ -441,9 +441,9 @@ public static class DataImporter
         GameObject hellMap = AssetDatabase.LoadMainAssetAtPath(HellMapPath) as GameObject;
         OasisNPC[] oasisList = hellMap.GetComponentsInChildren<OasisNPC>();
         if (oasisList.Length != (int)EOasisName.LAST) { Debug.LogError("맵에 오아시스 개수 다름"); return; }
-        AltarNPC[] altarList = hellMap.GetComponentsInChildren<AltarNPC>();
+        AltarScript[] altarList = hellMap.GetComponentsInChildren<AltarScript>();
         if (altarList.Length != (int)EAltarName.LAST) { Debug.LogError("맵에 제단 개수 다름"); return; }
-        SlateNPC[] slateList = hellMap.GetComponentsInChildren<SlateNPC>();
+        SlateScript[] slateList = hellMap.GetComponentsInChildren<SlateScript>();
         if (slateList.Length != (int)ESlateName.LAST) { Debug.LogError("맵에 석판 개수 다름"); return; }
 
         // NPC 정보

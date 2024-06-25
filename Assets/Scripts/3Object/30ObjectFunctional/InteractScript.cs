@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(IInteractable))]
-public class InteractScript : MonoBehaviour                 // »óÈ£ÀÛ¿ëÀÌ °¡´ÉÇÑ ¿ÀºêÁ§Æ®¿¡ ³Ö´Â ½ºÅ©¸³Æ®
+public class InteractScript : MonoBehaviour                 // ìƒí˜¸ì‘ìš©ì´ ê°€ëŠ¥í•œ ì˜¤ë¸Œì íŠ¸ì— ë„£ëŠ” ìŠ¤í¬ë¦½íŠ¸
 {
     private Vector2 Position2 { get { return new(transform.position.x, transform.position.z); } }
 
     [SerializeField]
-    private float m_canInteractDist = 2.5f;                                             // »óÈ£ÀÛ¿ë °¡´É °Å¸®
+    private float m_canInteractDist = 2.5f;                                             // ìƒí˜¸ì‘ìš© ê°€ëŠ¥ ê±°ë¦¬
     private float m_canInteractAngle = 120f;
 
-    private IInteractable m_interactable;                                               // ¿ÀºêÁ§Æ® ³» IInteractableÀ» »ó¼ÓÇÑ ¿ÀºêÁ§Æ®
+    private IInteractable m_interactable;                                               // ì˜¤ë¸Œì íŠ¸ ë‚´ IInteractableì„ ìƒì†í•œ ì˜¤ë¸Œì íŠ¸
     private QuestNPCScript m_questNPC;
 
     private float InteractAngle { get { if (m_interactable.InteractType == EInteractType.NPC) return m_canInteractAngle / 2; return m_canInteractAngle; } }
-    public bool CanInteract { get { return DistToPlayer <= m_canInteractDist/* &&
-                (m_interactable.InteractType != EInteractType.NPC || AngleToPlayer <= InteractAngle)*/; } }  // »óÈ£ÀÛ¿ë °¡´ÉÇÑÁö
+    public bool CanInteract { get { return DistToPlayer <= m_canInteractDist && CheckInteractable; } }  // ìƒí˜¸ì‘ìš© ê°€ëŠ¥í•œì§€
 
 
-    public float DistToPlayer { get { return PlayManager.GetDistToPlayer(transform.position); } }           // ÇÃ·¹ÀÌ¾î¿ÍÀÇ °Å¸®
+    public float DistToPlayer { get { return PlayManager.GetDistToPlayer(transform.position); } }           // í”Œë ˆì´ì–´ì™€ì˜ ê±°ë¦¬
     public float AngleToPlayer { get {
             Vector2 dir = (PlayManager.PlayerPos2 - Position2).normalized;
             float rot = FunctionDefine.VecToDeg(dir);
@@ -28,34 +27,36 @@ public class InteractScript : MonoBehaviour                 // »óÈ£ÀÛ¿ëÀÌ °¡´ÉÇÑ
             float gap = rot - fRot;
             if (gap <= -360) { gap += 360; } else if(gap >= 360) { gap -= 360; }
             return gap; } }
-    public Transform InteractTransform { get { return transform; } }                                        // »óÈ£ÀÛ¿ë ´ë»óÀÇ À§Ä¡
+    public Transform InteractTransform { get { return transform; } }                                        // ìƒí˜¸ì‘ìš© ëŒ€ìƒì˜ ìœ„ì¹˜
 
+    public bool CheckInteractable { get { return m_interactable.CanInteract; } }
 
-    public void AbleInteract()                 // Á¶ÀÛ Çã¿ë
+    public void AbleInteract()                 // ì¡°ì‘ í—ˆìš©
     {
+        if (!CanInteract) { return; }
         ShowToggleUI();
     }
-    public void DisableInteract()              // Á¶ÀÛ ºñÇã¿ë
+    public void DisableInteract()              // ì¡°ì‘ ë¹„í—ˆìš©
     {
         HideToggleUI();
     }
-    private void ShowToggleUI()                 // Á¶ÀÛ UI ¶ç¿ì±â
+    private void ShowToggleUI()                 // ì¡°ì‘ UI ë„ìš°ê¸°
     {
         PlayManager.ShowInteractInfo(m_interactable.InfoTxt);
     }
-    private void HideToggleUI()                 // Á¶ÀÛ UI ¼û±â±â
+    private void HideToggleUI()                 // ì¡°ì‘ UI ìˆ¨ê¸°ê¸°
     {
         PlayManager.HideInteractInfo();
     }
 
 
-    public void StartInteract()                // »óÈ£ÀÛ¿ë ½ÃÀÛ
+    public void StartInteract()                // ìƒí˜¸ì‘ìš© ì‹œì‘
     {
         m_interactable.StartInteract();
         if (m_questNPC != null) { PlayManager.SetNPCView(); }
         HideToggleUI();
     }
-    public void StopInteract()                  // »óÈ£ÀÛ¿ë Áß´Ü
+    public void StopInteract()                  // ìƒí˜¸ì‘ìš© ì¤‘ë‹¨
     {
         m_interactable.StopInteract();
         ShowToggleUI();
@@ -64,6 +65,7 @@ public class InteractScript : MonoBehaviour                 // »óÈ£ÀÛ¿ëÀÌ °¡´ÉÇÑ
     private void Awake()
     {
         m_interactable = GetComponent<IInteractable>();
+        m_interactable.SetInteractScript(this);
         m_questNPC = GetComponent<QuestNPCScript>();
     }
 }
