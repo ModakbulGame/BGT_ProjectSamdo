@@ -10,10 +10,20 @@ using StylizedWater2;
 public class MapUIScript : MinimapScript
 {
     [SerializeField]
-    private GameObject m_mapOasisImage;
-    private bool m_isMapUIToggle = false;
+    private GameObject m_oasisImage;
+    private RectTransform OasisRect
+    {
+        get
+        {
+            Image oasis = m_oasisImage.GetComponent<Image>();
+            if (oasis != null) return oasis.rectTransform;
+            return null;
+        }
+    }
 
     private OasisNPC[] OasisList { get { return PlayManager.OasisList; } }
+    private SlateScript[] SlateList { get { return PlayManager.SlateList; } }
+    private AltarScript[] AltarList { get { return PlayManager.AltarList; } }
 
 
     public void OpenUI()                                    // UI 열기
@@ -24,27 +34,30 @@ public class MapUIScript : MinimapScript
 
     public void CloseUI() { GameManager.SetControlMode(EControlMode.THIRD_PERSON); gameObject.SetActive(false); }      // 닫기
 
-    private void SynchronizeOasisLocation()
+    private void SetOasisPosition()
     {
-        for (uint i = 0; i < OasisList.Length; i++)
+        for (uint i = 0; i < 9; i++)
         {
-            GameObject OasisImage = Instantiate(m_mapOasisImage, Vector3.zero, Quaternion.identity, m_mapImg.transform);
-            Image mapOasisImage = OasisImage.GetComponent<Image>();
-            Transform mapOasisTransform = OasisList[i].transform;
-
-            mapOasisImage.rectTransform.anchoredPosition = new Vector2(m_mapImg.rectTransform.sizeDelta.x * PlayManager.NormalizeLocation(mapOasisTransform).x, 
-                m_mapImg.rectTransform.sizeDelta.y * PlayManager.NormalizeLocation(mapOasisTransform).y);
+            Vector2 oasis = OasisList[i].Position2;
+            Debug.Log(OasisList[i].Position2);
+            Vector2 oasisOffset = oasis / MapHeight;
+            OasisRect.pivot = oasisOffset;
         }
     }
 
     private void SetComps()
     {
         base.Start();
-        // SynchronizeOasisLocation();
+        for (uint i = 0; i < OasisList.Length; i++)
+        {
+            GameObject OasisImage = Instantiate(m_oasisImage, Vector3.zero, Quaternion.identity, m_mapImg.transform);
+        }
+        // SetOasisPosition();
     }
 
     protected override void Update()
     {
         base.Update();
+        // SetOasisPosition();
     }
 }

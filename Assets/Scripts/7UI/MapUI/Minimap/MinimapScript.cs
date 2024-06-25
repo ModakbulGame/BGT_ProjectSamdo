@@ -13,10 +13,10 @@ public class MinimapScript : MonoBehaviour
     protected Image m_mapImg;
     protected TextMeshProUGUI m_mapName;
 
-    private RectTransform MapRect { get { return m_mapImg.rectTransform; } }
-    private float MapImgHeight { get { return m_mapImg.sprite.rect.height; } }
+    protected RectTransform MapRect { get { return m_mapImg.rectTransform; } }
+    protected float MapImgHeight { get { return m_mapImg.sprite.rect.height; } }
 
-    private float MapHeight { get { return PlayManager.MapHeight; } }
+    protected float MapHeight { get { return PlayManager.MapHeight; } }
 
     public float MapScale { get { return m_mapScale; } private set { m_mapScale = value; } }
 

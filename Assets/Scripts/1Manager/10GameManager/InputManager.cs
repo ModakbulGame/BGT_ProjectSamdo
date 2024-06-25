@@ -83,6 +83,7 @@ public class InputManager : MonoBehaviour
             {
                 // 퀘스트 창 열기
                 PlayManager.ToggleQuestUI(true);
+                SetControlMode(EControlMode.UI_CONTROL);
             }
         }
         else if (CurControlMode == EControlMode.UI_CONTROL)         // UI 조작 모드일 때
@@ -99,16 +100,16 @@ public class InputManager : MonoBehaviour
                     PlayManager.TogglePlayerUI(false);          // PlayerUI 닫기
                     return;
                 }
-                else if (PlayManager.IsMapUIOpen)
-                {
-                    PlayManager.ToggleMapUI(false);          
-                    return;
-                }
-                else if (PlayManager.IsQuestUIOpen)
-                {
-                    PlayManager.ToggleQuestUI(false);           // 퀘스트 창 닫기
-                    return;
-                }
+            }
+            else if (PlayerInputs.OpenMapUI.triggered)
+            {
+                PlayManager.ToggleMapUI(false);
+                return;
+            }
+            else if(PlayerInputs.OpenQuestUI.triggered)
+            {
+                PlayManager.ToggleQuestUI(false);           
+                return;
             }
         }
     }

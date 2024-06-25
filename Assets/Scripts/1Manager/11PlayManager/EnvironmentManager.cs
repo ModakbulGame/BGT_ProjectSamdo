@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class EnvironmentManager : MonoBehaviour, IHaveData
 {
     [SerializeField]
-    private Transform[] m_mapPositioner = new Transform[2];     // ÃàÃ´¿ë
+    private Transform[] m_mapPositioner = new Transform[2];     // ì¶•ì²™ìš©
     public Vector3 MapLB { get { return m_mapPositioner[0].position; } }
     public Vector3 MapRT { get { return m_mapPositioner[1].position; } }
     public float MapWidth { get { return MapRT.x - MapLB.x; } }
@@ -17,7 +17,7 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
     private GameObject m_mapObject;
 
     [SerializeField]
-    private NPCScript[,] m_npcList;                             // NPC ¸ñ·Ï
+    private NPCScript[,] m_npcList;                             // NPC ëª©ë¡
 
     public OasisNPC[] OasisList { get { return FunctionDefine.GetRow<NPCScript, OasisNPC>(m_npcList, ((int)ENPCType.OASIS)); } }
     public AltarScript[] AltarList { get { return FunctionDefine.GetRow<NPCScript, AltarScript>(m_npcList, ((int)ENPCType.ALTAR)); } }
@@ -34,12 +34,12 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
 
 
     [SerializeField]
-    private MonsterSpawnPoint[] m_spawnPointList;               // ¸ó½ºÅÍ ½ºÆù Àå¼Ò
+    private MonsterSpawnPoint[] m_spawnPointList;               // ëª¬ìŠ¤í„° ìŠ¤í° ì¥ì†Œ
     public MonsterSpawnPoint[] SpawnPointList { get { return m_spawnPointList; } }
 
     private bool[] m_monsterKilled;
 
-    public void MonsterKilled(EMonsterName _monster, EMonsterDeathType _type)           // Ã¹ Å³, Äù½ºÆ® È®ÀÎ
+    public void MonsterKilled(EMonsterName _monster, EMonsterDeathType _type)           // ì²« í‚¬, í€˜ìŠ¤íŠ¸ í™•ì¸
     {
         int idx = (int)_monster;
         if (!m_monsterKilled[idx]) { FirstKillMonster(_monster); }
@@ -65,7 +65,7 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
         int point = data.FirstKillStat;
 
         PlayManager.AddStatPoint(point);
-        PlayManager.AddIngameAlarm($"{data.MonsterName} ÃÖÃÊ Ã³Ä¡·Î {point} ´É·ÂÄ¡ Á¡¼ö È¹µæ");
+        PlayManager.AddIngameAlarm($"{data.MonsterName} ìµœì´ˆ ì²˜ì¹˜ë¡œ {point} ëŠ¥ë ¥ì¹˜ ì ìˆ˜ íšë“");
 
         m_monsterKilled[(int)_monster] = true;
     }
