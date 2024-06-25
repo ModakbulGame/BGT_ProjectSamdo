@@ -244,6 +244,13 @@ public partial class PlayerController
         if(PowerInfoInHand == null) { return; }
         ECastType type = PowerInfoInHand.CastType;
 
+        if (type == ECastType.BUFF)
+        {
+            AdjustInfo adjust = PowerInfoInHand.PowerData.StatAdjust;
+            GetAdjust(adjust);
+            return;
+        }
+
         GameObject power = GameManager.GetPowerObj(PowerInHand);
         power.transform.SetParent(transform);
 
@@ -285,11 +292,6 @@ public partial class PlayerController
                 power.transform.SetParent(null);
                 AroundPowerScript around = power.GetComponentInChildren<AroundPowerScript>();
                 around.SetPower(this, Attack, Magic);
-                break;
-            case ECastType.BUFF:
-                AdjustInfo adjust = PowerInfoInHand.PowerData.StatAdjust;
-                GetAdjust(adjust);
-                power.transform.localPosition = Vector3.zero;
                 break;
             default:
                 PlayerPowerScript script = power.GetComponentInChildren<PlayerPowerScript>();
