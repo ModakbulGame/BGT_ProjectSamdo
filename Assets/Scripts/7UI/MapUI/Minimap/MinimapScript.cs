@@ -10,8 +10,9 @@ public class MinimapScript : MonoBehaviour
     [SerializeField]
     private float m_mapScale = 8;
     [SerializeField]
-    private Image m_mapImg;
-    private TextMeshProUGUI m_mapName;
+    protected Image m_mapImg;
+    protected TextMeshProUGUI m_mapName;
+
     private RectTransform MapRect { get { return m_mapImg.rectTransform; } }
     private float MapImgHeight { get { return m_mapImg.sprite.rect.height; } }
 
@@ -47,7 +48,7 @@ public class MinimapScript : MonoBehaviour
     {
         MapRect.sizeDelta = new(MapImgHeight, MapImgHeight);
     }
-    private void Start()
+    protected virtual void Start()
     {
         m_mapName = GetComponentInChildren<TextMeshProUGUI>();
         m_mapName.text = SceneManager.GetActiveScene().name;
@@ -55,7 +56,7 @@ public class MinimapScript : MonoBehaviour
         SetScale(MapScale);
         SetRotation();
     }
-    private void Update()
+    protected virtual void Update()
     {
         SetPosition();
         SetRotation();

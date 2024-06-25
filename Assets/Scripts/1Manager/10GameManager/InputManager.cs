@@ -76,7 +76,8 @@ public class InputManager : MonoBehaviour
             else if (PlayerInputs.OpenMapUI.triggered)
             {
                 // 맵 여닫기
-                PlayManager.ToggleMapUI();
+                PlayManager.ToggleMapUI(true);
+                SetControlMode(EControlMode.UI_CONTROL);
             }
             else if (PlayerInputs.OpenQuestUI.triggered)
             {
@@ -96,6 +97,11 @@ public class InputManager : MonoBehaviour
                 else if (PlayManager.IsPlayerUIOpen)
                 {
                     PlayManager.TogglePlayerUI(false);          // PlayerUI 닫기
+                    return;
+                }
+                else if (PlayManager.IsMapUIOpen)
+                {
+                    PlayManager.ToggleMapUI(false);          
                     return;
                 }
                 else if (PlayManager.IsQuestUIOpen)

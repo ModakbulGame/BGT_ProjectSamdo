@@ -27,7 +27,8 @@ public class PlayUIManager : MonoBehaviour
 
     [SerializeField]
     private MapUIScript m_mapUI;                            // 맵 UI
-    public void ToggleMapUI() { m_mapUI.ToggleMapUI(); }
+    public bool IsMapUIOpen { get { return m_mapUI.gameObject.activeSelf; } }
+    public void ToggleMapUI(bool _on) { if (_on) { m_mapUI.OpenUI(); } else { m_mapUI.CloseUI(); } }
 
 
     [SerializeField]
