@@ -8,6 +8,8 @@ public enum EPowerTrailType
 {
     NONE,
     POWER1,
+    POWER2,
+    POWER3,
 
     LAST
 }
