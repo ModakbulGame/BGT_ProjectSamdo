@@ -198,7 +198,8 @@ public class PlayManager : MonoBehaviour
     public static void TogglePlayerUI(bool _on) { PlayUIManager.TogglePlayerUI(_on); }                                                      // 플레이어 인포 UI 업데이트
     public static void UpdateInfoUI() { PlayUIManager.UpdateInfoUI(); }                                                                     // 재화 업데이트
     public static void UpdateMaterials() { PlayUIManager.UpdateMaterials(); }                                                               // 맵 UI 여닫기
-    public static void ToggleMapUI() { PlayUIManager.ToggleMapUI(); }                                                                       // 퀘스트 창 여닫기
+    public static bool IsMapUIOpen { get { return PlayUIManager.IsMapUIOpen; } }
+    public static void ToggleMapUI(bool _on) { PlayUIManager.ToggleMapUI(_on); }                                                            // 퀘스트 창 여닫기
     public static bool IsQuestUIOpen { get { return PlayUIManager.IsQuestUIOpen; } }
     public static void ToggleQuestUI(bool _on) { PlayUIManager.ToggleQuestUI(_on); }                                                        // 퀘스트 창 여닫기
     public static void OpenOasisUI(OasisNPC _npc) { PlayUIManager.OpenOasisUI(_npc); }                                                      // 오아시스 UI 열기

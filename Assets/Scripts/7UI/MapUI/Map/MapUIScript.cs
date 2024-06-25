@@ -5,104 +5,46 @@ using UnityEngine.ProBuilder;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using StylizedWater2;
 
-public class MapUIScript : MonoBehaviour
+public class MapUIScript : MinimapScript
 {
     [SerializeField]
     private GameObject m_mapOasisImage;
-
-    [SerializeField]
-    private Image m_mapPlayerImage;
-    [SerializeField]
-    private Transform m_targetPlayer;
-    [SerializeField]
-    private Image m_mapImage;
-
-    private TextMeshProUGUI m_mapName;
-    private Vector2 m_mapArea;
     private bool m_isMapUIToggle = false;
-
-    private float m_zoomIncrement = 0.1f;       // È®´ë Ãà¼Ò¸¦ À§ÇÑ º¯¼ö
-    private float m_currentZoom = 1f;
-    private float m_maxIncrement = 2.0f;
-    private float m_minIncrement = 0.4f;
 
     private OasisNPC[] OasisList { get { return PlayManager.OasisList; } }
 
 
-    public void ToggleMapUI()
+    public void OpenUI()                                    // UI ì—´ê¸°
     {
-        if (!m_isMapUIToggle)
-        {
-            gameObject.SetActive(true);
-            m_isMapUIToggle = true;
-
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        else
-        {
-            gameObject.SetActive(false);
-            m_isMapUIToggle = false;
-
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+        gameObject.SetActive(true);
+        SetComps();
     }
 
-    public void ZoomIn()
-    {
-        if (m_currentZoom < m_maxIncrement)
-        {
-            m_mapImage.rectTransform.localScale = new Vector3(m_currentZoom, m_currentZoom, 1f);
-            m_currentZoom += m_zoomIncrement;
-        }
-    }
-
-    public void ZoomOut()
-    {
-        if (m_currentZoom > m_minIncrement)
-        {
-            m_mapImage.rectTransform.localScale = new Vector3(m_currentZoom, m_currentZoom, 1f);
-            m_currentZoom -= m_zoomIncrement;
-        }
-    }
-
-    private void SynchronizePlayerLocation()
-    {
-        // Ä«¸Þ¶óÃ³·³ µû¶ó´Ù´Ï´Â °ÍÀ» ¹¦»çÇÏ±â À§ÇØ ¸Ê ÀÌ¹ÌÁö¸¦ ÇÃ·¹ÀÌ¾î ÀÌµ¿¹æÇâÀÇ ¹Ý´ë¹æÇâÀ¸·Î ¿òÁ÷ÀÌ´Â °ÍÀ¸·Î ±¸Çö
-        m_mapImage.rectTransform.anchoredPosition = new Vector2(m_mapImage.rectTransform.sizeDelta.x * PlayManager.NormalizeLocation(m_targetPlayer).x * -1,
-             m_mapImage.rectTransform.sizeDelta.y * PlayManager.NormalizeLocation(m_targetPlayer).y * -1);
-    }
+    public void CloseUI() { GameManager.SetControlMode(EControlMode.THIRD_PERSON); gameObject.SetActive(false); }      // ë‹«ê¸°
 
     private void SynchronizeOasisLocation()
     {
         for (uint i = 0; i < OasisList.Length; i++)
         {
-            GameObject OasisImage = Instantiate(m_mapOasisImage, Vector3.zero, Quaternion.identity, m_mapImage.transform);
+            GameObject OasisImage = Instantiate(m_mapOasisImage, Vector3.zero, Quaternion.identity, m_mapImg.transform);
             Image mapOasisImage = OasisImage.GetComponent<Image>();
             Transform mapOasisTransform = OasisList[i].transform;
 
-            mapOasisImage.rectTransform.anchoredPosition = new Vector2(m_mapImage.rectTransform.sizeDelta.x * PlayManager.NormalizeLocation(mapOasisTransform).x, 
-                m_mapImage.rectTransform.sizeDelta.y * PlayManager.NormalizeLocation(mapOasisTransform).y);
+            mapOasisImage.rectTransform.anchoredPosition = new Vector2(m_mapImg.rectTransform.sizeDelta.x * PlayManager.NormalizeLocation(mapOasisTransform).x, 
+                m_mapImg.rectTransform.sizeDelta.y * PlayManager.NormalizeLocation(mapOasisTransform).y);
         }
     }
 
     private void SetComps()
     {
-        SynchronizeOasisLocation();
-
-        m_mapName = GetComponentInChildren<TextMeshProUGUI>();
-        m_mapName.text = SceneManager.GetActiveScene().name;
+        base.Start();
+        // SynchronizeOasisLocation();
     }
 
-    private void Update()
+    protected override void Update()
     {
-        SynchronizePlayerLocation();
-    }
-
-    private void Start()
-    {
-        SetComps();
+        base.Update();
     }
 }
