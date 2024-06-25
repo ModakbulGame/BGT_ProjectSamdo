@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ObjectHPBarScript : IngameTrackUIScript                // ø¿∫Í¡ß∆Æ HPπŸ
+public class ObjectHPBarScript : MonoBehaviour          // Ïò§Î∏åÏ†ùÌä∏ HPÎ∞î
 {
     private Slider m_hpSlider;
 
     private bool IsCompsSet { get; set; }
+
+
+    public void ShowUI()
+    {
+        if (gameObject.activeSelf) { return; }
+        gameObject.SetActive(true);
+    }
 
     public void SetMaxHP(float _max)
     {
@@ -19,6 +26,11 @@ public class ObjectHPBarScript : IngameTrackUIScript                // ø¿∫Í¡ß∆Æ 
     public void SetCurHP(float _hp)
     {
         m_hpSlider.value = (int)_hp;
+    }
+
+    public void HideUI()
+    {
+        gameObject.SetActive(false);
     }
 
 

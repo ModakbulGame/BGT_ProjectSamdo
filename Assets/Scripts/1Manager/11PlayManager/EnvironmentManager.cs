@@ -20,8 +20,8 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
     private NPCScript[,] m_npcList;                             // NPC ¸ñ·Ï
 
     public OasisNPC[] OasisList { get { return FunctionDefine.GetRow<NPCScript, OasisNPC>(m_npcList, ((int)ENPCType.OASIS)); } }
-    public AltarNPC[] AltarList { get { return FunctionDefine.GetRow<NPCScript, AltarNPC>(m_npcList, ((int)ENPCType.ALTAR)); } }
-    public SlateNPC[] SlateList { get { return FunctionDefine.GetRow<NPCScript, SlateNPC>(m_npcList, ((int)ENPCType.SLATE)); } }
+    public AltarScript[] AltarList { get { return FunctionDefine.GetRow<NPCScript, AltarScript>(m_npcList, ((int)ENPCType.ALTAR)); } }
+    public SlateScript[] SlateList { get { return FunctionDefine.GetRow<NPCScript, SlateScript>(m_npcList, ((int)ENPCType.SLATE)); } }
 
 
     public void UnlockDialogue(NPCDialogue _dial)

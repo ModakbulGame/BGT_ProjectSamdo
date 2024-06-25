@@ -20,6 +20,9 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
     protected NPCScriptable m_scriptable;
     public void SetScriptable(NPCScriptable _scriptable) { m_scriptable = _scriptable; }
 
+    public InteractScript InteractManager { get; private set; }
+    public void SetInteractScript(InteractScript _script) { InteractManager = _script; }
+
     public Vector2 Position2 { get { return new(transform.position.x, transform.position.z); } }
 
     public SNPC NPC { get { if (m_scriptable == null) { return SNPC.Null; } return m_scriptable.NPC; } }
@@ -32,14 +35,16 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
 
     private int AbleDialIdx { get { for (int i = 0; i<DialCount; i++) { if (m_dialInfos[i].CanProcess) return i; } return -1; } }
 
+    public virtual bool CanInteract { get { return true; } }
+
     public EInteractType InteractType { get { return EInteractType.NPC; } }
-    public virtual string InfoTxt { get { return "´ëÈ­"; } }            // »óÈ£ÀÛ¿ë UI¿¡ ¶ç¿ï ¸» => ¸»ÀÌ »óÈ²¿¡ µû¶ó ¹Ù²î´Â °æ¿ì Á¶°Ç¹® Ãß°¡ 
+    public virtual string InfoTxt { get { return "ëŒ€í™”"; } }            // ìƒí˜¸ì‘ìš© UIì— ë„ìš¸ ë§ => ë§ì´ ìƒí™©ì— ë”°ë¼ ë°”ë€ŒëŠ” ê²½ìš° ì¡°ê±´ë¬¸ ì¶”ê°€ 
 
 
     public void UnlockDialogue(int _idx)
     {
         m_dialInfos[_idx].IsUnlocked = true;
-        Debug.Log($"{NPCName} {_idx+1}¹øÂ° ´ëÈ­ Àá±İ ÇØÁ¦!");
+        Debug.Log($"{NPCName} {_idx+1}ë²ˆì§¸ ëŒ€í™” ì ê¸ˆ í•´ì œ!");
     }
     public virtual void StartDialogue()
     {
@@ -49,7 +54,7 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
     }
 
 
-    public void StartInteract()
+    public virtual void StartInteract()
     {
         GameManager.SetControlMode(EControlMode.UI_CONTROL);
         NPCInteraction();
@@ -81,7 +86,7 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
         m_dialInfos = new DialogueInfo[DialCount];
     }
 
-    // ±âº»
+    // ê¸°ë³¸
     public void LoadData()
     {
         GameManager.RegisterData(this);

@@ -156,7 +156,7 @@ public class PlayUIManager : MonoBehaviour
 
     [SerializeField]
     // private SlateUI m_slateUI;
-    public void OpenSlateUI(SlateNPC _slate) { /*m_slateUI.OpenUI(_slate);*/ }
+    public void OpenSlateUI(SlateScript _slate) { /*m_slateUI.OpenUI(_slate);*/ }
 
     [SerializeField]
     private QuestAcceptUIScript m_questAcceptUI;        // NPC 대화 끝에 나오는 퀘스트 창
