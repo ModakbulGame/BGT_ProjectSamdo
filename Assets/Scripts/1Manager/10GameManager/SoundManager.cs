@@ -2,25 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ESoundListName
-{
-    BGM,                        // 배경 음악
-    PLAYSE,                     // 게임 진행 효과음
-    PLAYERSE,                   // 스킬 제외 플레이어 효과음
-    SKILLSE,                    // 플레이어 스킬 효과음
-    MONSTERSE,                  // 몬스터 효과음
-    UISE,                       // UI 효과음
-    LAST
-}
-
 public class SoundManager : MonoBehaviour
 {
-    private SoundContainer m_soundContainer;            // 소리 저장소
+    [SerializeField]
+    private AudioClip[] m_bgmList; 
+    [SerializeField]
+    private AudioClip[] m_playerSEList;                         // 여기부터 개별 프리펍에 없는 소리 (아무거나 넣지 마셈)
+    [SerializeField]
+    private AudioClip[] m_powerSEList;
+    [SerializeField]
+    private AudioClip[] m_monsterSEList;
+    [SerializeField]
+    private AudioClip[] m_environmentSEList;
+    [SerializeField]
+    private AudioClip[] m_uiSEList;                             // 여기까지
+
 
     [SerializeField]
-    private AudioClip[] m_seList;                       // 개별 프리펍에 없는 소리
-
-    private AudioSource CurBGM { get; set; }
+    private AudioSource CurBGM;
 
     [Range(0, 100)]
     private static int m_bgmVolume = 100;               // BGM 볼륨
@@ -31,33 +30,55 @@ public class SoundManager : MonoBehaviour
     public void SetBGMVolume(int _volume) { m_bgmVolume = _volume; if (CurBGM) { CurBGM.volume = _volume / 100f; } PlayerPrefs.SetInt(ValueDefine.BGMVolData, _volume); }
     public void SetSEVolume(int _volume) { m_seVolume = _volume; PlayerPrefs.SetInt(ValueDefine.SEVolData, _volume); }
 
+    private Vector3 CameraPos { get { return Camera.main.transform.position; } }
+
     public void PlayBGM(EBGM _bgm)
     {
-        StopBGM();
-        CurBGM = m_soundContainer.GetBGM(_bgm);
+        if (CurBGM.isPlaying) { StopBGM(); }
+        CurBGM.clip = m_bgmList[(int)_bgm];
         CurBGM.volume = BGMVolume;
         CurBGM.Play();
     }
-    public void StopBGM() { if (CurBGM != null) CurBGM.Stop(); }
-
-    public void PlaySE(int _idx, Vector3 _point)                        // 효과음 예시
+    public void StopBGM() 
     {
-        AudioSource.PlayClipAtPoint(m_seList[_idx], _point, SEVolume);
+        if (!CurBGM.isPlaying) { return; }
+        CurBGM.Stop();
+        CurBGM.clip = null;
     }
 
 
 
+    public void PlaySE(EPlayerSE _se) { PlaySE(_se, CameraPos); }
+    public void PlaySE(EPlayerSE _se, Vector3 _point) { PlaySE(m_playerSEList[(int)_se], _point); }
+    public void PlaySE(EMonsterSE _se) { PlaySE(_se, CameraPos); }
+    public void PlaySE(EMonsterSE _se, Vector3 _point) { PlaySE(m_monsterSEList[(int)_se], _point); }
+    public void PlaySE(EPowerSE _se) { PlaySE(_se, CameraPos); }
+    public void PlaySE(EPowerSE _se, Vector3 _point) { PlaySE(m_powerSEList[(int)_se], _point); }
+    public void PlaySE(EEnvironmentSE _se) { PlaySE(_se, CameraPos); }
+    public void PlaySE(EEnvironmentSE _se, Vector3 _point) { PlaySE(m_environmentSEList[(int)_se], _point); }
+    public void PlaySE(EUISE _se) { PlaySE(m_uiSEList[(int)_se], CameraPos); }
 
-    public void PlaySE(EPlaySE _se) { m_soundContainer.PlayPlaySE(_se); }
-    public void PlaySE(EPlayerSE _se) { m_soundContainer.PlayPlayerSE(_se); }
-    public void PlaySE(ESkillSE _se) { m_soundContainer.PlaySkillSE(_se); }
-    public void PlaySE(EMonsterSE _se) { m_soundContainer.PlayMonsterSE(_se); }
-    public void PlaySE(EUISE _se) { m_soundContainer.PlayUISE(_se); }
+    public void PlaySE(AudioClip _clip, Vector3 _point)                        // 효과음 예시
+    {
+        AudioSource.PlayClipAtPoint(_clip, _point, SEVolume);
+    }
 
 
-    private void Awake()
+
+    private void CheckSoundIntregrity()
+    {
+        if (m_bgmList.Length != (int)EBGM.LAST) { Debug.Log("BGM 개수 틀림"); return; }
+        if (m_playerSEList.Length != (int)EPlayerSE.LAST) { Debug.Log("효과음 리스트1 개수 틀림"); return; }
+        if (m_powerSEList.Length != (int)EBGM.LAST) { Debug.Log("효과음 리스트2 개수 틀림"); return; }
+        if (m_monsterSEList.Length != (int)EBGM.LAST) { Debug.Log("효과음 리스트3 개수 틀림"); return; }
+        if (m_environmentSEList.Length != (int)EBGM.LAST) { Debug.Log("효과음 리스트4 개수 틀림"); return; }
+        if (m_uiSEList.Length != (int)EBGM.LAST) { Debug.Log("효과음 리스트5 개수 틀림"); return; }
+    }
+
+    public void SetManager()
     {
         m_bgmVolume = PlayerPrefs.GetInt(ValueDefine.BGMVolData, 100);
         m_seVolume = PlayerPrefs.GetInt(ValueDefine.SEVolData, 100);
+        CheckSoundIntregrity();
     }
 }

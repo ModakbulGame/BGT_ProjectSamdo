@@ -53,7 +53,15 @@ public class GameManager : SingleTon<GameManager>
     public static void SetSEVolume(int _volume) { SoundManager.SetSEVolume(_volume); }
     public static void PlayBGM(EBGM _bgm) { SoundManager.PlayBGM(_bgm); }
     public static void StopBGM() { SoundManager.StopBGM(); }
-    public static void PlaySE(int _idx, Vector3 _point) { SoundManager.PlaySE(_idx, _point); }
+    public static void PlaySE(EPlayerSE _se) { SoundManager.PlaySE(_se); }
+    public static void PlaySE(EPlayerSE _se, Vector3 _point) { SoundManager.PlaySE(_se, _point); }
+    public static void PlaySE(EMonsterSE _se) { SoundManager.PlaySE(_se); }
+    public static void PlaySE(EMonsterSE _se, Vector3 _point) { SoundManager.PlaySE(_se, _point); }
+    public static void PlaySE(EPowerSE _se) { SoundManager.PlaySE(_se); }
+    public static void PlaySE(EPowerSE _se, Vector3 _point) { SoundManager.PlaySE(_se, _point); }
+    public static void PlaySE(EEnvironmentSE _se) { SoundManager.PlaySE(_se); }
+    public static void PlaySE(EEnvironmentSE _se, Vector3 _point) { SoundManager.PlaySE(_se, _point); }
+    public static void PlaySE(EUISE _se) { SoundManager.PlaySE(_se); }
 
 
     // 입력

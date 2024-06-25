@@ -58,9 +58,22 @@ public class WeaponScript : AnimateAttackScript
             GameObject effect = GameManager.GetEffectObj(effectName);
             effect.transform.position = _pos;
 
-            GameManager.PlaySE(0, _pos);
+            PlayWeaponHitSound(_pos);
         }
     }
+
+    private void PlayWeaponHitSound(Vector3 _pos)
+    {
+        if (HitType == EHitType.SLASH)
+        {
+            GameManager.PlaySE(EPlayerSE.SLSAH1, _pos);
+        }
+        else if (HitType == EHitType.BLOW)
+        {
+
+        }
+    }
+
 
     public void SetScriptable(WeaponScriptable _scriptable)
     { 
