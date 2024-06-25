@@ -11,8 +11,6 @@ public class S503 : SummonPowerScript
     private bool IsBuffed { get { return BuffTimeCount > 0; } }
 
     [SerializeField]
-    private float m_powerLastTime = 10;         // 권능 지속 시간
-    [SerializeField]
     private float m_effectRadius = 8;           // 영향 범위
     [SerializeField]
     private float m_buffLastTime = 5;           // 버프 개별 지속 시간
@@ -22,7 +20,8 @@ public class S503 : SummonPowerScript
     [SerializeField]
     private EAdjType m_adjType;                 // 종류
     [SerializeField]
-    private float m_adjAmount = 1;              // 배율임
+    private float m_adjAmount = 1.2f;           // 배율임
+    //     private float m_powerLastTime = 10;         // 권능 지속 시간 << 필요없다고 생각하여 삭제함
 
     private bool IsPlayerIn { get; set; }
 
