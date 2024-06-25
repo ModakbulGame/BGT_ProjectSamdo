@@ -277,7 +277,8 @@ public partial class PlayerController
     private void CastingEffectOn() { m_castingEffect.ShowEffect(); }
     private void CastingEffectOff() { m_castingEffect.HideEffect(); }
 
-
+    private BuffEffectList m_buffEffect;
+    public void SetBuffEffect(EBuffType _type, bool _on) { m_buffEffect.SetEffect(_type, _on); }
 
 
     // 상속 정보
@@ -294,6 +295,8 @@ public partial class PlayerController
         FunctionDefine.SetFriction(m_collider, FloorFriction, true);
         m_castingEffect = GetComponentInChildren<PowerCastingEffect>();
         m_castingEffect.SetComps();
+        m_buffEffect = GetComponentInChildren<BuffEffectList>();
+        m_buffEffect.SetComps();
     }
     private void SetStates()                // 상태들 추가
     {

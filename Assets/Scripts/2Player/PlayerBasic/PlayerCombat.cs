@@ -138,6 +138,7 @@ public partial class PlayerController
 
         // PlayManger.AddSoul(1);
         // PlayManager.AddInventoryItem(new(EItemType.PATTERN, UnityEngine.Random.Range(0, (int)EPatternName.LAST)), 1);
+        GetAdjust(new(EAdjType.MAX_HP, 1.1f, 10));
     }
     public override void AttackTriggerOff()                             // 무기 히트 판정 off
     {
@@ -366,17 +367,13 @@ public partial class PlayerController
         RaycastTarget.GetInstantHit(PowerInfoInHand, info.Target, this);
     }
 
-    // 무기 CC
-    public override void GetAdjust(AdjustInfo _adjust)
+    // 버프 디버프 관련
+    public override void SetAdjustEffect(EAdjType _type, float _mul) 
     {
-        base.GetAdjust(_adjust);
-        if (_adjust.Type != EAdjType.WEAPON_CC) { CreateBuffEffect(); }
-    }
+        if(_type == EAdjType.WEAPON_CC) { return; }
 
-    private void CreateBuffEffect()
-    {
-        GameObject effect = GameManager.GetEffectObj(EEffectName.BUFF);
-        effect.transform.SetParent(transform);
+        if (_type == EAdjType.MAX_HP) { SetBuffEffect(EBuffType.MAX_HP, _mul != 1); }
+        else { SetBuffEffect(EBuffType.STATUS, _mul != 1); }
     }
 
 

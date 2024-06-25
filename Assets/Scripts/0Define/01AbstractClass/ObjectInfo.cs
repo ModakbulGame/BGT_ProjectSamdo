@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum EAdjType
@@ -35,13 +36,15 @@ public class BuffNDebuff
 {
     [SerializeField]
     private AdjustInfo m_adjustInfo;
+    [SerializeField]
+    private float m_timeCount;
     public ObjectAttackScript Attack { get; private set; }
     public AdjustInfo AdjustInfo { get { return m_adjustInfo; } }
     public EAdjType Type { get { return m_adjustInfo.Type; } }
     public float Amount { get { return m_adjustInfo.Amount; } }
     public bool IsAttacked { get { return Attack != null; } }
     public bool IsDistinctive { get { return m_adjustInfo.IsDistinctive; } }
-    public float TimeCount { get; private set; }
+    public float TimeCount { get { return m_timeCount; } private set { m_timeCount = value; } }
     public bool IsDone { get { return TimeCount <= 0; } }
     public void SetTime(float _time) { TimeCount = _time; }
     public void ProcTime() { TimeCount -= Time.deltaTime; }
@@ -126,6 +129,7 @@ public abstract partial class ObjectScript
     {
         if(_multiplier == 1) { ResetMaxHP(); return; }
 
+        CurHP -= ExtraHP;
         MaxHPMultiplier = _multiplier;
         ExtraHP = MaxHP - CombatInfo.MaxHP;
         CurHP += ExtraHP;
@@ -175,8 +179,8 @@ public abstract partial class ObjectScript
     {
         BuffNDebuff info = new(_adjust, _attack);
 
-        ApplyAdjust(_adjust);
         m_buffNDebuff.Add(info);
+        ApplyAdjust(_adjust);
     }
     public void ModifyAdjust(ObjectAttackScript _attack, float _time)
     {
@@ -206,13 +210,14 @@ public abstract partial class ObjectScript
         foreach (BuffNDebuff adj in m_buffNDebuff)
         {
             if (adj.IsDone) { return; }
-            if (adj.IsDistinctive) { multiplier *= 1; return; }
             float amount = adj.Amount;
+            if (adj.IsDistinctive) { multiplier *= amount; return; }
             if (amount > 1 && amount > plus) { plus = amount; }
             else if (amount < 1 && amount < minus) { minus = amount; }
         }
         multiplier *= plus * minus;
         ApplyMultiplier(_type, multiplier);
+        SetAdjustEffect(_type, multiplier);
     }
     private void ApplyMultiplier(EAdjType _type, float _multiplier)       // 배율 설정
     {
@@ -237,22 +242,26 @@ public abstract partial class ObjectScript
         if (IsPlayer) { PlayManager.UpdateInfoUI(); }
     }
 
+    private bool[] m_changeCheck = new bool[(int)EAdjType.LAST];
     private void BuffNDebuffProc()                                      // 버프 디버프 쿨타임 적용
     {
+        for(int i = 0; i<(int)EAdjType.LAST; i++) { m_changeCheck[i] = false; }
         List<BuffNDebuff> removeList = new();
         foreach (BuffNDebuff adj in m_buffNDebuff)
         {
+            EAdjType type = adj.Type;
             adj.ProcTime(); 
             if (adj.IsDone)
             { 
                 removeList.Add(adj);
+                if (!m_changeCheck[(int)type]) { m_changeCheck[(int)type] =  true; }
             }
         }
         foreach (BuffNDebuff adj in removeList)
         {
-            ApplyAdjust(adj.AdjustInfo);
             m_buffNDebuff.Remove(adj);
         }
+        for(int i = 0; i<(int)EAdjType.LAST; i++) { if (m_changeCheck[i]) { SetMultiplier((EAdjType)i); } }
     }
 
 
@@ -268,6 +277,7 @@ public abstract partial class ObjectScript
         SetWeaponCC(ECCType.NONE);
     }
     public virtual void SetWeaponCC(ECCType _cc) { }
+    public virtual void SetAdjustEffect(EAdjType _type, float _mul) { }
 
 
 
