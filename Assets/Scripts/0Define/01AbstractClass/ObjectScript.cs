@@ -70,8 +70,9 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     }
     public virtual void StopMove()                                      // 움직임 중지
     {
-        if (m_rigid.velocity.magnitude > 0)
-            m_rigid.velocity = Vector3.zero;
+        Vector3 vel = m_rigid.velocity;
+        if (vel.magnitude < MoveSpeed + 0.1f) { m_rigid.velocity = new(0, vel.y, 0); }
+            
     }
     public virtual void StartTracing() { }
     public virtual void AddForce(Vector3 _dir)
@@ -257,9 +258,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     // 즉발 CC
     private void GetAirborne()
     {
-        Vector3 vel = m_rigid.velocity;
-        vel.y = 12;
-        m_rigid.velocity = vel;
+        m_rigid.AddForce(8 * Vector3.up, ForceMode.VelocityChange);
     }
     private void GetKnockBack(HitData _hit)
     {

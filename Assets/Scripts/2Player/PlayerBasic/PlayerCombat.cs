@@ -138,7 +138,7 @@ public partial class PlayerController
 
         // PlayManger.AddSoul(1);
         // PlayManager.AddInventoryItem(new(EItemType.PATTERN, UnityEngine.Random.Range(0, (int)EPatternName.LAST)), 1);
-        GetAdjust(new(EAdjType.MAX_HP, 1.1f, 10));
+        // GetAdjust(new(EAdjType.MAX_HP, 1.1f, 10));
     }
     public override void AttackTriggerOff()                             // 무기 히트 판정 off
     {

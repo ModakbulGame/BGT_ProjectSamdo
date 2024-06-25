@@ -19,7 +19,7 @@ public class PlayerPowerScript : ObjectAttackScript, IPoolable
 
     private PlayerController Player { get { return (PlayerController)m_attacker; } }
 
-    public override ECCType[] CCList { get { return new ECCType[1] { PowerManager.IDToCC(m_scriptable.ID) }; } }
+    public override ECCType[] CCList { get { return m_ccList ; } }
     public EPowerProperty[] PowerProps { get { return m_scriptable.PowerProps; } }
 
     public virtual void SetPower(PlayerController _player, float _attack, float _magic)
