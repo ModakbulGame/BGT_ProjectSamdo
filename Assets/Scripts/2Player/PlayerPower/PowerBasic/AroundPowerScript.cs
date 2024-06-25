@@ -4,18 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class AroundPowerScript: PlayerPowerScript
+public class AroundPowerScript : PlayerPowerScript
 {
     [SerializeField]
-    private float m_damgeTimeGet = 0.5f;
-    private Dictionary<IHittable, float> m_hitTimeCount = new();
+    private float m_damgeTimeGap = 0.5f;
+    [SerializeField]
+    private float m_leftEffectTime = 3;
+
+    private readonly Dictionary<IHittable, float> m_hitTimeCount = new();
 
     public override void GiveDamage(IHittable _hittable, Vector3 _point)
     {
         base.GiveDamage(_hittable, _point);
         if (m_hitTimeCount.ContainsKey(_hittable)) 
             return;
-        m_hitTimeCount[_hittable] = m_damgeTimeGet;
+        m_hitTimeCount[_hittable] = m_damgeTimeGap;
     }
 
     private void OnTriggerStay(Collider _other)
@@ -43,12 +46,17 @@ public class AroundPowerScript: PlayerPowerScript
         }
     }
 
-    public override void ReleaseToPool()
+
+    public override void PowerCreated()
     {
-        base.ReleaseToPool();
-        m_hitTimeCount.Clear();
+        CreateEffect();
     }
 
+    public override void ReleaseToPool()
+    {
+        m_hitTimeCount.Clear();
+        base.ReleaseToPool();
+    }
     private void Update()
     {
         CheckTime();

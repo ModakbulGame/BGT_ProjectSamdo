@@ -51,7 +51,7 @@ public class PlayUIManager : MonoBehaviour
 
 
     private PowerSlotUIScript m_powerSlot;                  // 스킬 슬롯
-    public void UpdatePowerSlot() { m_powerSlot.UpdateUI(); }
+        public void UpdatePowerSlot() { m_powerSlot.UpdateUI(); }
     public void UsePowerSlot(int _idx, float _cooltime) { m_powerSlot.UsePower(_idx, _cooltime); }
 
 

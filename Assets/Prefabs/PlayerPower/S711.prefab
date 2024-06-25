@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7347963936244606435}
-  - component: {fileID: -7455718315591560902}
+  - component: {fileID: 3901698860682528171}
   - component: {fileID: 1605281896353647444}
   - component: {fileID: 696979039264799434}
   m_Layer: 1
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 6740186028598122388}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7455718315591560902
+--- !u!114 &3901698860682528171
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,16 +44,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 451359054129125997}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 771026157f6740e4faaa7ba3ed4e1ca0, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bfe5192c7b76464792017160e6aef59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ccList: 01000000
   m_impulseAmount: 0.1
   m_combinedEffect: {fileID: 0}
   m_scriptable: {fileID: 11400000, guid: afd7ce0e3a2b14347b27b4b9762683ca, type: 2}
-  m_effect: {fileID: 0}
+  m_effect: {fileID: 1566818486742279070}
   m_lastTime: 10
-  m_damgeTimeGet: 0.5
+  m_damgeTimeGap: 0.5
+  m_leftEffectTime: 3
 --- !u!54 &1605281896353647444
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -111,6 +112,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6740186028598122388}
+  - component: {fileID: 1566818486742279070}
   - component: {fileID: 2308413178392071067}
   - component: {fileID: 3955275753275989992}
   m_Layer: 1
@@ -129,12 +131,27 @@ Transform:
   m_GameObject: {fileID: 5224542647631126548}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7347963936244606435}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1566818486742279070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5224542647631126548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36ad37c2b5c808f4c9bdcfba57379f19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_lastTime: 12
+  m_vfx: {fileID: 2308413178392071067}
+  m_particle: {fileID: 0}
 --- !u!2083052967 &2308413178392071067
 VisualEffect:
   m_ObjectHideFlags: 0
@@ -144,8 +161,8 @@ VisualEffect:
   m_GameObject: {fileID: 5224542647631126548}
   m_Enabled: 1
   m_Asset: {fileID: 8926484042661614526, guid: ebe209a0ac5de30408dc0c1244e8be81, type: 3}
-  m_InitialEventName: OnPlay
-  m_InitialEventNameOverriden: 0
+  m_InitialEventName: 
+  m_InitialEventNameOverriden: 1
   m_StartSeed: 0
   m_ResetSeedOnPlay: 1
   m_AllowInstancing: 1

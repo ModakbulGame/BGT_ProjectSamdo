@@ -12,7 +12,7 @@ public class PowerSlotElmUIScript : MonoBehaviour
 
     public void SetPower(EPowerName _power)
     {
-        Sprite powerImg = GameManager.GetPowerSprite(_power);
+        Sprite powerImg = _power != EPowerName.LAST ? GameManager.GetPowerSprite(_power) : null;
         m_powerImg.sprite = powerImg;
     }
 

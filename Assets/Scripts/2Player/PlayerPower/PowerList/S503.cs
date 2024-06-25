@@ -60,9 +60,9 @@ public class S503 : SummonPowerScript
     }
 
 
-    public override void OnEnable()
+    public override void PowerCreated()
     {
-        base.OnEnable();
+        base.PowerCreated();
         IsBuffOn = false;
         BuffTimeCount = 0;
         IsPlayerIn = false;

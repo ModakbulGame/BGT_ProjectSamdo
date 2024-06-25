@@ -11,9 +11,9 @@ public class ParabolaPowerScript : ProjectilePowerScript
     private float ForceMultiplier { get; set; } = 1;
     private float UpperForce { get { return m_upperForce * ForceMultiplier; } }
 
-    public override void OnEnable()
+    public override void PowerCreated()
     {
-        base.OnEnable();
+        base.PowerCreated();
         ForceMultiplier = m_scriptable.MoveSpeed ;
         m_rigid.velocity = Vector3.up * UpperForce / 2;
     }

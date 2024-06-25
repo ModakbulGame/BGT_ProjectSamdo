@@ -8,7 +8,7 @@ public class PlayerPowerScript : ObjectAttackScript, IPoolable
     protected PowerScriptable m_scriptable;
 
     [SerializeField]
-    private AttackEffect m_effect;
+    protected AttackEffect m_effect;
     public bool IsScriptableSet { get { return m_scriptable != null; } }
     public void SetScriptable(PowerScriptable _scriptable) { m_scriptable = _scriptable; SetInfo(); }
 
@@ -27,6 +27,7 @@ public class PlayerPowerScript : ObjectAttackScript, IPoolable
         m_attacker = _player;
         Damages[0] = _attack;
         Damages[1] = _magic;
+        PowerCreated();
     }
 
     public float ResultDamage { get { 
@@ -75,26 +76,22 @@ public class PlayerPowerScript : ObjectAttackScript, IPoolable
     }
 
 
+    public virtual void PowerCreated() 
+    {
+        AttackOn();
+        StartCoroutine(ReleaseDelay());
+    }
     private IEnumerator ReleaseDelay()
     {
         yield return new WaitForSeconds(m_lastTime);
         if (gameObject.activeSelf) { ReleaseToPool(); }
     }
 
-    public virtual void OnEnable()
-    {
-        AttackOn();
-        StartCoroutine(ReleaseDelay());
-    }
     public override void AttackOn()
     {
         base.AttackOn();
     }
 
-    private void SetInfo()
-    {
-
-    }
-
+    private void SetInfo() { }
     public override void Start() { }
 }

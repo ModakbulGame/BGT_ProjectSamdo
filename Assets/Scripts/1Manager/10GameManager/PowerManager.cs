@@ -39,6 +39,10 @@ public class PowerManager : MonoBehaviour
 
     public PowerScriptable GetPowerData(EPowerName _skill)
     {
+        if (_skill == EPowerName.LAST)
+        {
+            Debug.Log("여기");
+        }
         return m_powerData[(int)_skill];
     }
     public GameObject GetPowerObj(EPowerName _skill)

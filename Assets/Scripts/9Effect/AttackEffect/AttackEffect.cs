@@ -16,15 +16,22 @@ public class AttackEffect : MonoBehaviour
 
     public void EffectOn(Transform _returnTrans)
     {
+        transform.SetParent(null);
         ReturnTrans = _returnTrans;
         if(m_vfx != null) { m_vfx.Play(); }
         else if(m_particle != null) { m_particle.SetActive(true); }
-        StartCoroutine(WaitDone());
+        StartCoroutine(WaitDone(m_lastTime));
     }
-    private IEnumerator WaitDone()
+    private IEnumerator WaitDone(float _time)
     {
-        yield return new WaitForSeconds(m_lastTime);
+        yield return new WaitForSeconds(_time);
         EffectDone();
+    }
+    public void LeaveEffect(Transform _transform, float _delay)
+    {
+        transform.SetParent(null);
+        ReturnTrans = _transform;
+        StartCoroutine(WaitDone(_delay));
     }
     public void EffectDone()
     {
