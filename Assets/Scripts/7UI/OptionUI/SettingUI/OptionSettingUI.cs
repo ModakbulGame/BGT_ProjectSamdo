@@ -28,11 +28,11 @@ public class OptionSettingUI : BaseUI
     // 사운드
     public void SetBGMPoint(int _vol)
     {
-        // m_volumes[0].SetPoint(_vol);
+        m_volumes[0].SetPoint(_vol);
     }
     public void SetSEPoint(int _vol)
     {
-        // m_volumes[1].SetPoint(_vol);
+        m_volumes[1].SetPoint(_vol);
     }
     public void InitValues()
     {
