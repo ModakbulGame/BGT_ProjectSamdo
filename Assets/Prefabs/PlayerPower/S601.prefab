@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8340209687570004648}
   - component: {fileID: -8249178103264886337}
+  - component: {fileID: 3671458394615466530}
   m_Layer: 1
   m_Name: S601
   m_TagString: PlayerPower
@@ -52,6 +53,27 @@ MonoBehaviour:
   m_lastTime: 0.5
   m_damgeTimeGap: 0.5
   m_leftEffectTime: 3
+--- !u!135 &3671458394615466530
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306924984184218265}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6271852202817014377
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,7 +157,7 @@ VisualEffect:
   m_Enabled: 1
   m_Asset: {fileID: 8926484042661614526, guid: 3eb369b68165c4d409100576405bdcf9, type: 3}
   m_InitialEventName: 
-  m_InitialEventNameOverriden: 1
+  m_InitialEventNameOverriden: 0
   m_StartSeed: 0
   m_ResetSeedOnPlay: 1
   m_AllowInstancing: 1

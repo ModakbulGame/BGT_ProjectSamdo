@@ -96,6 +96,7 @@ public class DataManager : MonoBehaviour
             "Attack" => EAdjType.ATTACK,
             "Magic" => EAdjType.MAGIC,
             "MoveSpeed" => EAdjType.MOVE_SPEED,
+            "MaxHP" => EAdjType.MAX_HP,
             "WeaponCC" => EAdjType.WEAPON_CC,
 
             _ => EAdjType.LAST
