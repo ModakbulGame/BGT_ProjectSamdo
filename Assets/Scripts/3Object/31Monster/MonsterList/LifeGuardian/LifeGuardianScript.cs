@@ -79,6 +79,10 @@ public class LifeGuardianScript : BossMonster
 
     [SerializeField]
     private float m_rushSpeed = 8;
+    [SerializeField]
+    private float m_drainRadius = 15;
+
+    public float DrainRadius { get { return m_drainRadius; } }
 
     public override void StartSkill()
     {
@@ -99,9 +103,7 @@ public class LifeGuardianScript : BossMonster
         {
             CurSkill = SkillList[DrainIdx];
             CurSkill.SetAttack(this, SkillDamages[DrainIdx]);
-            CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
-            CurSkill.PlayEffect();
         }
         else if (CurSkillIdx == RushIdx)
         {
@@ -123,8 +125,6 @@ public class LifeGuardianScript : BossMonster
         else if (CurSkillIdx == DrainIdx)
         {
             CurSkill.AttackOff();
-            CurSkill.gameObject.SetActive(false);
-            CurSkill.StopEffect();
         }
         else if (CurSkillIdx == RushIdx)
         {

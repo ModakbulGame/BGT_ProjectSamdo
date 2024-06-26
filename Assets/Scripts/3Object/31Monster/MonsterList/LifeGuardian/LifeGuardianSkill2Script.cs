@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LifeGuardianSkill2Script : ObjectAttackScript
 {
-    private float SkillRadius { get; set; }
+    private float SkillRadius { get { return ((LifeGuardianScript)m_attacker).DrainRadius; } }
 
     [SerializeField]
     private float m_damageGap = 1;
@@ -13,15 +13,15 @@ public class LifeGuardianSkill2Script : ObjectAttackScript
 
     public override void AttackOn()
     {
-        gameObject.SetActive(true);
         GapCount = m_damageGap;
+        m_attackEffect.EffectOn();
         base.AttackOn();
     }
 
     public override void AttackOff()
     {
         base.AttackOff();
-        gameObject.SetActive(false);
+        m_attackEffect.EffectOff();
     }
 
     private void CheckNAttackTarget()
@@ -45,14 +45,12 @@ public class LifeGuardianSkill2Script : ObjectAttackScript
         }
     }
 
-    private void Awake()
-    {
-        SkillRadius = transform.localScale.x * 0.5f;
-    }
+
     public override void Start() { }
 
     private void Update()
     {
+        if (!IsAttacking) { return; }
         if (GapCount > 0)
         {
             GapCount -= Time.deltaTime;
