@@ -100,17 +100,18 @@ public class InputManager : MonoBehaviour
                     PlayManager.TogglePlayerUI(false);          // PlayerUI 닫기
                     return;
                 }
+                else if (PlayManager.IsMapUIOpen)
+                {
+                    PlayManager.ToggleMapUI(false);
+                    return;
+                }
+                else if (PlayManager.IsQuestUIOpen)
+                {
+                    PlayManager.ToggleQuestUI(false);
+                    return;
+                }
             }
-            else if (PlayerInputs.OpenMapUI.triggered)
-            {
-                PlayManager.ToggleMapUI(false);
-                return;
-            }
-            else if(PlayerInputs.OpenQuestUI.triggered)
-            {
-                PlayManager.ToggleQuestUI(false);           
-                return;
-            }
+
         }
     }
 }

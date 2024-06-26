@@ -9,9 +9,8 @@ public class MinimapScript : MonoBehaviour
 {
     [SerializeField]
     private float m_mapScale = 8;
-    [SerializeField]
-    protected Image m_mapImg;
     protected TextMeshProUGUI m_mapName;
+    public Image m_mapImg;
 
     protected RectTransform MapRect { get { return m_mapImg.rectTransform; } }
     protected float MapImgHeight { get { return m_mapImg.sprite.rect.height; } }

@@ -6,24 +6,28 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using StylizedWater2;
+using System;
 
 public class MapUIScript : MinimapScript
 {
-    [SerializeField]
-    private GameObject m_oasisImage;
-    private RectTransform OasisRect
+    private OasisIconScript[] m_oasisList;
+    public RectTransform[] OasisRect
     {
         get
         {
-            Image oasis = m_oasisImage.GetComponent<Image>();
-            if (oasis != null) return oasis.rectTransform;
+            for(int i = 0; i < (int)EOasisName.LAST; i++)
+            {
+                RectTransform[] oasisRects = m_oasisList[i].GetComponents<RectTransform>();
+                if(oasisRects != null) return oasisRects;
+            }
             return null;
         }
     }
+    private int idx = 0;
 
-    private OasisNPC[] OasisList { get { return PlayManager.OasisList; } }
-    private SlateScript[] SlateList { get { return PlayManager.SlateList; } }
-    private AltarScript[] AltarList { get { return PlayManager.AltarList; } }
+    public OasisNPC[] OasisList { get { return PlayManager.OasisList; } }
+    public SlateScript[] SlateList { get { return PlayManager.SlateList; } }
+    public AltarScript[] AltarList { get { return PlayManager.AltarList; } }
 
 
     public void OpenUI()                                    // UI 열기
@@ -32,32 +36,42 @@ public class MapUIScript : MinimapScript
         SetComps();
     }
 
-    public void CloseUI() { GameManager.SetControlMode(EControlMode.THIRD_PERSON); gameObject.SetActive(false); }      // 닫기
+    public void CloseUI() 
+    { 
+        GameManager.SetControlMode(EControlMode.THIRD_PERSON);
+        gameObject.SetActive(false);
+    }
+
+    public void InitOasisPosition(Image _oasis)
+    {
+        Transform mapOasisTransform = OasisList[idx].transform;
+
+        _oasis.rectTransform.anchoredPosition = new Vector2(m_mapImg.rectTransform.sizeDelta.x * PlayManager.NormalizeLocation(mapOasisTransform).x,
+            m_mapImg.rectTransform.sizeDelta.y * PlayManager.NormalizeLocation(mapOasisTransform).y);
+        idx++;
+    }
 
     private void SetOasisPosition()
     {
-        for (uint i = 0; i < 9; i++)
+        for (int i = 0; i < (int)EOasisName.LAST; i++)
         {
             Vector2 oasis = OasisList[i].Position2;
-            Debug.Log(OasisList[i].Position2);
             Vector2 oasisOffset = oasis / MapHeight;
-            OasisRect.pivot = oasisOffset;
+            OasisRect[i].pivot = oasisOffset;
         }
     }
+
 
     private void SetComps()
     {
         base.Start();
-        for (uint i = 0; i < OasisList.Length; i++)
-        {
-            GameObject OasisImage = Instantiate(m_oasisImage, Vector3.zero, Quaternion.identity, m_mapImg.transform);
-        }
-        // SetOasisPosition();
+        m_oasisList = GetComponentsInChildren<OasisIconScript>();
+        foreach(OasisIconScript oasis in m_oasisList) { oasis.SetParent(this); oasis.SetComps(); }
     }
 
     protected override void Update()
     {
         base.Update();
-        // SetOasisPosition();
+        SetOasisPosition();
     }
 }
