@@ -179,27 +179,17 @@ public partial class PlayerController
 
     // 권능 관련
     private EPowerName[] PowerSlot { get { return PlayManager.PowerSlot; } }                // 스킬 슬롯
-    public int PowerIdx
-    {
-        get
-        {
+    public int PowerIdx { get {
             for (int i = 0; i<ValueDefine.MAX_POWER_SLOT; i++)          // 눌린 스킬
             { if (PowerTriggers[i]) return i; }
-            return -1;
-        }
-    }
+            return -1; } }
     public bool CanUsePower { get {
             return !IsOverload && !IsOblivion && PowerIdx != -1     // 스킬 사용 가능 여부
                 && PowerSlot[PowerIdx] != EPowerName.LAST && PowerCooltime[PowerIdx] <= 0; } }
     public EPowerName PowerInHand { get; private set; } = EPowerName.LAST;                  // 사용 중인 스킬
-    private PowerInfo PowerInfoInHand
-    {
-        get
-        {                                               // ㄴ의 정보
+    private PowerInfo PowerInfoInHand { get {                                               // ㄴ의 정보
             if (PowerInHand == EPowerName.LAST) return null;
-            return GameManager.GetPowerInfo(PowerInHand);
-        }
-    }
+            return GameManager.GetPowerInfo(PowerInHand); } }
     public int UsingPowerIdx { get; private set; } = -1;                                    // ㄴ의 슬롯 번호
 
     public bool IsRaycastPower { get { return PowerInHand == EPowerName.RANGED_KNOCKBACK1; } }
@@ -314,16 +304,23 @@ public partial class PlayerController
         ChangeState(EPlayerState.IDLE);
     }
 
+    private CombinedEffect CurTrail { get; set; }
+
     public void PowerTrailOn()
     {
         if (PowerInfoInHand == null) { return; }
+        
         EPowerTrailType type = PowerInfoInHand.PowerData.PowerTrail;
-        CurWeapon.PowerTrailOn(type);
+        if (type < EPowerTrailType.HAND1) { CurWeapon.PowerTrailOn(type); }
+        else { SetHandTrail(type, true); }
     }
     public void PowerTrailOff()
     {
-        CurWeapon.PowerTrailOff();
+        EPowerTrailType type = PowerInfoInHand.PowerData.PowerTrail;
+        if (type < EPowerTrailType.HAND1) { CurWeapon.PowerTrailOff(); }
+        else { SetHandTrail(type, false); }
     }
+
 
     public struct RaycastTargetInfo
     {

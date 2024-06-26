@@ -6,11 +6,11 @@ public class PlayerAnimationLink : MonoBehaviour
 {
     private PlayerController m_player;
 
-    public void ChkAttackDone()             // °ø°İ ¾Ö´Ï¸ŞÀÌ¼Ç ¿Ï·á
+    public void ChkAttackDone()             // ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ì™„ë£Œ
     {
         m_player.ChkAttackDone();
     }
-    public void UpperAnimDone()             // »óÃ¼ ¾Ö´Ï¸ŞÀÌ¼Ç Á¾·á
+    public void UpperAnimDone()             // ìƒì²´ ì• ë‹ˆë©”ì´ì…˜ ì¢…ë£Œ
     {
         m_player.UpperAnimDone();
     }
@@ -18,7 +18,7 @@ public class PlayerAnimationLink : MonoBehaviour
     {
         m_player.GuardDone();
     }
-    public void CreateThrowItem()           // ¾ÆÀÌÅÛ ´øÁö±â Å¸ÀÌ¹Ö
+    public void CreateThrowItem()           // ì•„ì´í…œ ë˜ì§€ê¸° íƒ€ì´ë°
     {
         m_player.CreateThrowItem();
     }
@@ -59,11 +59,11 @@ public class PlayerAnimationLink : MonoBehaviour
         m_player.PowerTrailOff();
     }
 
-    public void StartInvincible()           // ¹«Àû ½ÃÀÛ
+    public void StartInvincible()           // ë¬´ì  ì‹œì‘
     {
         m_player.StartInvincible();
     }
-    public void StopInvincible()            // ¹«Àû Áß´Ü
+    public void StopInvincible()            // ë¬´ì  ì¤‘ë‹¨
     {
         m_player.StopInvincible();
     }

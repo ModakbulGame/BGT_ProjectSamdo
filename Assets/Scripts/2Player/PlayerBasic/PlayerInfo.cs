@@ -281,6 +281,18 @@ public partial class PlayerController
     public void SetBuffEffect(EBuffType _type, bool _on) { m_buffEffect.SetEffect(_type, _on); }
 
 
+
+    private PowerTrailEffectScript[] m_handTrailEffect;
+    public void SetHandTrail(EPowerTrailType _type, bool _on)
+    {
+        int idx = _type - EPowerTrailType.HAND1;
+        if(idx >= m_handTrailEffect.Length) { Debug.LogError("이상한 권능 입력"); return; }
+        if (_on) { m_handTrailEffect[idx].EffectOn(); }
+        else { m_handTrailEffect[idx].EffectOff(); }
+    }
+
+
+
     // 상속 정보
     public override bool IsPlayer { get { return true; } }
 
@@ -297,6 +309,7 @@ public partial class PlayerController
         m_castingEffect.SetComps();
         m_buffEffect = GetComponentInChildren<BuffEffectList>();
         m_buffEffect.SetComps();
+        m_handTrailEffect = GetComponentsInChildren<PowerTrailEffectScript>();
     }
     private void SetStates()                // 상태들 추가
     {

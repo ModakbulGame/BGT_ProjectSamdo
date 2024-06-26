@@ -11,6 +11,9 @@ public enum EPowerTrailType
     POWER2,
     POWER3,
 
+    HAND1,
+    HAND2,
+
     LAST
 }
 
@@ -24,7 +27,7 @@ public class WeaponTrailEffect : MonoBehaviour
     private GameObject powerObj;
 
     private TrailRenderer[] m_normalTrails;
-    private PowerTrailEffectScript[] m_powerTrails;
+    private CombinedEffect[] m_powerTrails;
 
     private int CurIdx { get; set; }
 
@@ -36,11 +39,11 @@ public class WeaponTrailEffect : MonoBehaviour
     public void PowerTrailOn(EPowerTrailType _type)
     {
         CurIdx = (int)_type - 1;
-        m_powerTrails[CurIdx].SerPowerTrail(true);
+        m_powerTrails[CurIdx].EffectOn();
     }
     public void PowerTrailOff()
     {
-        m_powerTrails[CurIdx].SerPowerTrail(false);
+        m_powerTrails[CurIdx].EffectOff();
     }
 
 
@@ -48,7 +51,6 @@ public class WeaponTrailEffect : MonoBehaviour
     {
         m_normalTrails = normalObj.GetComponentsInChildren<TrailRenderer>();
         SetNormalTrail(false);
-        m_powerTrails = powerObj.GetComponentsInChildren<PowerTrailEffectScript>();
-        foreach (PowerTrailEffectScript trail in m_powerTrails) { trail.SetComps(); }
+        m_powerTrails = powerObj.GetComponentsInChildren<CombinedEffect>();
     }
 }
