@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 840027734761600685}
-  - component: {fileID: 8792437886018181390}
   - component: {fileID: 119959609862776231}
   - component: {fileID: 9154018967887690118}
   m_Layer: 0
@@ -34,21 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7017751075671168038}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &8792437886018181390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8774432828122482637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e0ea8773eb51b14294945ba88d8f806, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_hasVfx: 1
-  m_hasParticle: 0
-  m_hasTrail: 0
 --- !u!2083052967 &119959609862776231
 VisualEffect:
   m_ObjectHideFlags: 0
@@ -58,7 +42,7 @@ VisualEffect:
   m_GameObject: {fileID: 8774432828122482637}
   m_Enabled: 1
   m_Asset: {fileID: 8926484042661614526, guid: 329e32c78ef534f4db4d9c28a53c008e, type: 3}
-  m_InitialEventName: OnPlay
+  m_InitialEventName: 
   m_InitialEventNameOverriden: 1
   m_StartSeed: 0
   m_ResetSeedOnPlay: 1
