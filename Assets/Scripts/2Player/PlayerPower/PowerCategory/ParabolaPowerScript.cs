@@ -20,14 +20,13 @@ public class ParabolaPowerScript : ProjectilePowerScript
 
     public virtual void CollideGround()
     {
-
+        CollideTarget();
     }
 
-    public override void OnTriggerEnter(Collider _other)
+    public override void OnTriggerStay(Collider _other)
     {
-        base.OnTriggerEnter( _other );
-        if (!_other.CompareTag(ValueDefine.TERRAIN_TAG)) { return; }
-        CollideGround();
+        if (_other.CompareTag(ValueDefine.TERRAIN_TAG)) { CollideGround(); return; }
+        base.OnTriggerStay(_other);
     }
 
 

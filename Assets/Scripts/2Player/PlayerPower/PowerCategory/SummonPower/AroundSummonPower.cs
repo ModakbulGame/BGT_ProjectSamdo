@@ -1,10 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class AroundPowerScript : PlayerPowerScript
+public class AroundSummonPower : SummonPowerScript
 {
     [SerializeField]
     private float m_damgeTimeGap = 0.5f;
@@ -16,7 +15,7 @@ public class AroundPowerScript : PlayerPowerScript
     public override void GiveDamage(IHittable _hittable, Vector3 _point)
     {
         base.GiveDamage(_hittable, _point);
-        if (m_hitTimeCount.ContainsKey(_hittable)) 
+        if (m_hitTimeCount.ContainsKey(_hittable))
             return;
         m_hitTimeCount[_hittable] = m_damgeTimeGap;
     }
@@ -24,7 +23,7 @@ public class AroundPowerScript : PlayerPowerScript
     private void CheckTime()
     {
         List<IHittable> removeList = new();
-        foreach(var key in m_hitTimeCount.Keys.ToList())
+        foreach (var key in m_hitTimeCount.Keys.ToList())
         {
             float hitTime = m_hitTimeCount[key];
             hitTime -= Time.deltaTime;
@@ -38,6 +37,21 @@ public class AroundPowerScript : PlayerPowerScript
         {
             m_hitObjects.Remove(removeList[i]);
             m_hitTimeCount.Remove(removeList[i]);
+        }
+    }
+
+
+    public override void PowerCreated()
+    {
+        base.PowerCreated();
+        StartCoroutine(EffectCoroutine());
+    }
+    private IEnumerator EffectCoroutine()
+    {
+        for (int i = 0; i<m_lastTime - 1; i++)
+        {
+            yield return new WaitForSeconds(1);
+            CreateEffect();
         }
     }
 

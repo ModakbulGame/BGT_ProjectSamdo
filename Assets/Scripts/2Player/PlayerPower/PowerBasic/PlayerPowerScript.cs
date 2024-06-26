@@ -44,8 +44,9 @@ public class PlayerPowerScript : ObjectAttackScript, IPoolable
         OriginalPool.Release(gameObject);
     }
 
-    public virtual void OnTriggerEnter(Collider _other)
+    public virtual void OnTriggerStay(Collider _other)
     {
+        if (!IsAttacking) { return; }
         CheckPowerTrigger(_other);
     }
     public virtual void CheckPowerTrigger(Collider _other)
