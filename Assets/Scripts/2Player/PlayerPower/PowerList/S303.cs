@@ -4,34 +4,15 @@ using UnityEngine;
 
 public class S303 : ProjectilePowerScript
 {
-    [SerializeField]
-    private GameObject m_skillExplosion;
-    private PlayerController Player { get { return (PlayerController)m_attacker; } }
-    Vector3 SkillOffset { get; set; }
-
-    private void ExplodeSkill()
+    public override void CollideTarget()
     {
-            m_skillExplosion.SetActive(true);
-            m_skillExplosion.transform.localPosition = SkillOffset;
-            m_skillExplosion.transform.SetParent(null);
-            ExplodeScript explode = m_skillExplosion.GetComponent<ExplodeScript>();
-            explode.SetDamage(m_attacker, 10, 1);
-            explode.SetReturnTransform(transform);
-    }
-
-    public override void OnDestroyObject()
-    {
-        ExplodeSkill();
-        base.OnDestroyObject();
-    }
-
-    public override void AttackOff()
-    {
-        IsAttacking = false;
+        GameObject effect = GameManager.GetEffectObj(EEffectName.HIT_POWER);
+        effect.transform.position = transform.position;
     }
 
     public override void ReleaseToPool()
     {
-        AttackOff();
+        ActiveExplodes();
+        base.ReleaseToPool();
     }
 }

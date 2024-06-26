@@ -6,9 +6,10 @@ using UnityEngine.VFX;
 
 public class ExplodeScript : ObjectAttackScript
 {
+    private Vector3 OrigianlPosition { get; set; }
     private Transform ReturnTransform { get; set; }
 
-    public void SetDamage(ObjectScript _attacker, float _damage, float _time)
+    public void SetAttack(ObjectScript _attacker, float _damage, float _time)
     {
         SetAttack(_attacker, _damage);
         StartCoroutine(LoseDamage(_time));
@@ -32,6 +33,8 @@ public class ExplodeScript : ObjectAttackScript
     public void SetReturnTransform(Transform _transform)
     {
         ReturnTransform = _transform;
+        OrigianlPosition = transform.localPosition;
+        transform.SetParent(null);
     }
 
     private IEnumerator LoseDamage(float _time)
@@ -56,7 +59,7 @@ public class ExplodeScript : ObjectAttackScript
         if (ReturnTransform != null)
         {
             transform.SetParent(ReturnTransform);
-            transform.position = ReturnTransform.position;
+            transform.localPosition = OrigianlPosition;
             ReturnTransform = null;
             gameObject.SetActive(false);
         }

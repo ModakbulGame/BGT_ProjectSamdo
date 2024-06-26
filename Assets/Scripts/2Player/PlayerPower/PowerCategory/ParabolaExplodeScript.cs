@@ -20,7 +20,7 @@ public class ParabolaExplodeScript : ParabolaPowerScript
             m_skillExplosion[i].transform.localPosition = SkillOffset[i];
             m_skillExplosion[i].transform.SetParent(null);
             ExplodeScript explode = m_skillExplosion[i].GetComponent<ExplodeScript>();
-            explode.SetDamage(m_attacker, 10, 1);
+            explode.SetAttack(m_attacker, 10, 1);
             explode.SetReturnTransform(transform);
         }
     }

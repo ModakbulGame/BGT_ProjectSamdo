@@ -11,25 +11,14 @@ public class ProjectilePowerScript : PlayerPowerScript
     public Vector3 MoveDir;
     private Vector3 StartPosition;
 
-    private void DeleteTrailOnHit()
-    {
-        TrailRenderer[] trailRenderers = GetComponentsInChildren<TrailRenderer>();
-        foreach(TrailRenderer trailRenderer in trailRenderers)
-        {
-            trailRenderer.enabled = false;
-        }
-    }
+    [SerializeField]
+    protected ExplodeScript[] m_explodeAttacks;
+
 
     public override void ReleaseToPool()
     {
         m_rigid.velocity = Vector3.zero;
         base.ReleaseToPool();
-        //DeleteTrailOnHit();
-    }
-
-    public virtual void OnDestroyObject()
-    {
-        Destroy(gameObject);
     }
 
     public virtual bool DistanceCheck(float _distanceMoved)
@@ -39,31 +28,43 @@ public class ProjectilePowerScript : PlayerPowerScript
 
     public virtual void SetPower(PlayerController _player, float _attack, float _magic, Vector2 _dir)
     {
-        SetPower(_player, _attack, _magic);
+        base.SetPower(_player, _attack, _magic);
         MoveDir = new(_dir.x,0,_dir.y);
         transform.localEulerAngles = new(0, FunctionDefine.VecToDeg(_dir), 0);
     }
 
     public override void CollideTarget()
     {
+        if (PowerEffect != null) { PowerEffect.EffectOn(transform); }
+        if(m_explodeAttacks.Length > 0) { ActiveExplodes(); }
         ReleaseToPool();
     }
 
-    public override void Start()
+    public virtual void ActiveExplodes()
     {
-        SphereCollider sphereCollider = GetComponent<SphereCollider>();
-        if(sphereCollider!= null)
+        foreach (ExplodeScript explode in m_explodeAttacks)
         {
-            sphereCollider.radius = HitRadius;
+            explode.gameObject.SetActive(true);
+            explode.SetAttack(m_attacker, 10, 1);
+            explode.SetReturnTransform(transform);
         }
-        StartPosition = transform.position;
     }
+
+
 
     private void Awake()
     {
         m_rigid = GetComponent<Rigidbody>();
     }
-
+    public override void Start()
+    {
+        SphereCollider sphereCollider = GetComponent<SphereCollider>();
+        if (sphereCollider!= null)
+        {
+            sphereCollider.radius = HitRadius;
+        }
+        StartPosition = transform.position;
+    }
     public virtual void FixedUpdate()
     {
         Vector3 vel = m_rigid.velocity;
@@ -73,7 +74,7 @@ public class ProjectilePowerScript : PlayerPowerScript
         float distanceMoved = Vector3.Distance(StartPosition, transform.position);
         if (DistanceCheck(distanceMoved))
         {
-            OnDestroyObject();
+            CollideTarget();
         }
     }
 }

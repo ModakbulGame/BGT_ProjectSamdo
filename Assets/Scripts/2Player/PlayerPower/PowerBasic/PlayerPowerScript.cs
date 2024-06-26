@@ -88,11 +88,6 @@ public class PlayerPowerScript : ObjectAttackScript, IPoolable
         if (gameObject.activeSelf) { ReleaseToPool(); }
     }
 
-    public override void AttackOn()
-    {
-        base.AttackOn();
-    }
-
     private void SetInfo() { }
     public override void Start() { }
 }
