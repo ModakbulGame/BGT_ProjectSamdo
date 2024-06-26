@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class EnvironmentManager : MonoBehaviour, IHaveData
 {
@@ -48,14 +45,14 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
         EQuestType questType = EQuestType.LAST;
         if (_type == EMonsterDeathType.BY_PLAYER) { questType = EQuestType.KILL; }
         else if (_type == EMonsterDeathType.PURIFY) { questType = EQuestType.PURIFY; }
-        if(questType == EQuestType.LAST) { return; }
+        if (questType == EQuestType.LAST) { return; }
 
         foreach (QuestInfo quest in infos)
         {
             if (quest.State != EQuestState.ACCEPTED || quest.QuestContent.Type != questType
                 || quest.QuestContent.Monster != _monster) { continue; }
 
-            float prog = quest.QuestProgress+1;
+            float prog = quest.QuestProgress + 1;
             PlayManager.SetQuestProgress(quest.QuestName, prog);
         }
     }
@@ -79,7 +76,7 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
 
         SaveData data = PlayManager.CurSaveData;
 
-        for (int i = 0; i<(int)EMonsterName.LAST; i++)
+        for (int i = 0; i < (int)EMonsterName.LAST; i++)
         {
             m_monsterKilled[i] = data.MonsterKilled[i];
         }
@@ -88,7 +85,7 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
     {
         SaveData data = PlayManager.CurSaveData;
 
-        for (int i = 0; i<(int)EMonsterName.LAST; i++)
+        for (int i = 0; i < (int)EMonsterName.LAST; i++)
         {
             data.MonsterKilled[i] = m_monsterKilled[i];
         }
@@ -120,7 +117,7 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
 
         int[] cnt = new int[(int)ENPCType.LAST];
         NPCScript[] list = m_mapObject.GetComponentsInChildren<NPCScript>();
-        for (int i = 0; i<list.Length; i++)
+        for (int i = 0; i < list.Length; i++)
         {
             ENPCType type = list[i].NPC.Type;
             int idx = (int)type;
