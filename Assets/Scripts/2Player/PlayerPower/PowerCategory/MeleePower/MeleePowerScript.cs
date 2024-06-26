@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class S221 : MeleePowerScript
+public class MeleePowerScript : PlayerPowerScript
 {
-    
+    // 쓸게 없다
 }
