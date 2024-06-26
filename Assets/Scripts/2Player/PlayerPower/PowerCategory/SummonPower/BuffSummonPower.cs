@@ -7,11 +7,9 @@ public class BuffSummonPower : SummonPowerScript
     private float AdjustTimeCount { get; set; }
     private bool IsAdjusted { get { return AdjustTimeCount > 0; } }
 
+    private AdjustInfo AdjustInfo { get { return m_scriptable.StatAdjust; } }
 
-    [SerializeField]
-    private EAdjType m_adjustType = EAdjType.DAMAGE;
-    [SerializeField]
-    private float m_adjustAmount = 1;
+
     [SerializeField]
     private float m_adjustLastTime = 5;
     [SerializeField]
@@ -38,8 +36,9 @@ public class BuffSummonPower : SummonPowerScript
     private void PlayerAdjustStart(PlayerController _player)
     {
         if (CurPlayer == null) { CurPlayer = _player; }
+        AdjustInfo info = new(AdjustInfo.Type, AdjustInfo.Amount, m_adjustLastTime);
         if (_player.CheckAdjusted(this)) { _player.ModifyAdjust(this, m_adjustLastTime); }
-        else { _player.GetAdjust(new(m_adjustType, m_adjustAmount, m_adjustLastTime), this); }
+        else { _player.GetAdjust(info, this); }
         AdjustTimeCount = m_adjustResetTime;
     }
 
