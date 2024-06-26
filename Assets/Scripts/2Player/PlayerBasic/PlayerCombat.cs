@@ -188,14 +188,9 @@ public partial class PlayerController
             return -1;
         }
     }
-    public bool CanUsePower
-    {
-        get
-        {
+    public bool CanUsePower { get {
             return !IsOverload && !IsOblivion && PowerIdx != -1     // 스킬 사용 가능 여부
-                && PowerSlot[PowerIdx] != EPowerName.LAST && PowerCooltime[PowerIdx] <= 0;
-        }
-    }
+                && PowerSlot[PowerIdx] != EPowerName.LAST && PowerCooltime[PowerIdx] <= 0; } }
     public EPowerName PowerInHand { get; private set; } = EPowerName.LAST;                  // 사용 중인 스킬
     private PowerInfo PowerInfoInHand
     {
@@ -233,7 +228,7 @@ public partial class PlayerController
     public void FirePower()                                                                 // 스킬 사용
     {
         float coolTime = PowerInfoInHand.PowerCooltime;
-        PowerCooltime[UsingPowerIdx] = coolTime;
+        SetPowerCooltime(UsingPowerIdx, coolTime);
         PlayManager.UsePowerSlot(UsingPowerIdx, coolTime);
         int idx = PowerInfoInHand.MotionIdx;
         PowerFireAnim(idx);

@@ -181,6 +181,13 @@ public partial class PlayerController : ObjectScript, IHaveData
         base.ProcCooltime();
     }
 
+    private void SetPowerCooltime(int _idx, float _time)
+    {
+        float[] times = PowerCooltime;
+        times[_idx] = _time;
+        PowerCooltime = times;
+    }
+
 
     // 버프 디버프
     private bool[] m_fieldDebuff = new bool[(int)EProperty.LAST];

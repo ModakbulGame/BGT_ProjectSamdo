@@ -7,15 +7,16 @@ public class PlayerPowerScript : ObjectAttackScript, IPoolable
     [SerializeField]
     protected PowerScriptable m_scriptable;
 
-    [SerializeField]
-    protected AttackEffect m_effect;
     public bool IsScriptableSet { get { return m_scriptable != null; } }
     public void SetScriptable(PowerScriptable _scriptable) { m_scriptable = _scriptable; SetInfo(); }
 
     [SerializeField]
-    private float m_lastTime = 10;
+    protected float m_lastTime = 10;
 
     protected readonly float[] Damages = new float[2];
+
+    protected PowerEffect PowerEffect { get { return (PowerEffect)m_attackEffect; } }
+
 
     private PlayerController Player { get { return (PlayerController)m_attacker; } }
 
@@ -71,8 +72,8 @@ public class PlayerPowerScript : ObjectAttackScript, IPoolable
 
     public virtual void CreateEffect()
     {
-        if (m_effect == null) { return; }
-        m_effect.EffectOn(transform);
+        if (m_attackEffect == null) { return; }
+        ((PowerEffect)m_attackEffect).EffectOn(transform);
     }
 
 

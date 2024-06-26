@@ -17,14 +17,14 @@ public class CombinedEffect : MonoBehaviour
     private TrailRenderer[] m_trails;
 
 
-    public void EffectOn()
+    public virtual void EffectOn()
     {
         if (m_hasVfx) { foreach(VisualEffect vfx in m_vfxs) { vfx.Play(); } }
         if (m_hasParticle) { foreach(ParticleSystem particle in m_particles) { particle.Play(); } }
         if (m_hasTrail) { foreach(TrailRenderer trail in m_trails) { trail.enabled = true; } }
     }
 
-    public void EffectOff()
+    public virtual void EffectOff()
     {
         if (m_hasVfx) { foreach (VisualEffect vfx in m_vfxs) { vfx.Stop(); } }
         if (m_hasParticle) { foreach (ParticleSystem particle in m_particles) { particle.Stop(); } }

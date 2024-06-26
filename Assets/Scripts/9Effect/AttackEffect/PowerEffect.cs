@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class AttackEffect : MonoBehaviour
+public class PowerEffect : CombinedEffect
 {
     [SerializeField]
-    private float m_lastTime;
+    private float m_lastTime = -1;
     [SerializeField]
-    private VisualEffect m_vfx;
-    [SerializeField]
-    private GameObject m_particle;
+    private float m_returnDelay = 2;
 
     private Transform ReturnTrans { get; set; }
 
@@ -18,14 +16,18 @@ public class AttackEffect : MonoBehaviour
     {
         transform.SetParent(null);
         ReturnTrans = _returnTrans;
-        if(m_vfx != null) { m_vfx.Play(); }
-        else if(m_particle != null) { m_particle.SetActive(true); }
-        StartCoroutine(WaitDone(m_lastTime));
+        base.EffectOn();
+        if(m_lastTime > 0) { StartCoroutine(WaitDone(m_lastTime)); }
+    }
+    public void EffectOn(Transform _returnTrans, float _time)
+    {
+        EffectOn(_returnTrans);
+        LeaveEffect(_returnTrans, _time);
     }
     private IEnumerator WaitDone(float _time)
     {
         yield return new WaitForSeconds(_time);
-        EffectDone();
+        EffectOff();
     }
     public void LeaveEffect(Transform _transform, float _delay)
     {
@@ -33,10 +35,14 @@ public class AttackEffect : MonoBehaviour
         ReturnTrans = _transform;
         StartCoroutine(WaitDone(_delay));
     }
-    public void EffectDone()
+    public override void EffectOff()
     {
-        if (m_vfx != null) { m_vfx.Stop(); }
-        else if (m_particle != null) { m_particle.SetActive(false); }
+        base.EffectOff();
+        StartCoroutine(ReturnDelay());
+    }
+    private IEnumerator ReturnDelay()
+    {
+        yield return new WaitForSeconds(m_returnDelay);
         transform.SetParent(ReturnTrans);
     }
 }

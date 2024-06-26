@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class EffectedNormalAttack : NormalAttackScript
 {
-    [SerializeField]
-    private AttackEffect m_attackEffect;
-
     public override void AttackOn()
     {
-        base.AttackOn();
-        m_attackEffect.EffectOn(transform);
+        if (m_attackEffect == null) { return; }
+        ((PowerEffect)m_attackEffect).EffectOn(transform);
     }
 }
