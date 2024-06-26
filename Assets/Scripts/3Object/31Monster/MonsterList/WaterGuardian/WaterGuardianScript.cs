@@ -125,6 +125,8 @@ public class WaterGuardianScript : BossMonster
     [SerializeField]
     private float m_dashUp = 3;
 
+    [SerializeField]
+    private CombinedEffect m_iceCastEffect;
     [Tooltip("얼음 스킬 생성 위치")]
     [SerializeField]
     private float m_iceHeight = 12;
@@ -147,6 +149,10 @@ public class WaterGuardianScript : BossMonster
             CurSkill.AttackOn();
             m_rigid.velocity = m_dashPower * transform.forward + Vector3.up * m_dashUp;
         }
+        else if (CurSkillIdx == IceIdx)
+        {
+            m_iceCastEffect.EffectOn();
+        }
     }
     public override void CreateSkill()
     {
@@ -161,6 +167,8 @@ public class WaterGuardianScript : BossMonster
 
             CurSkill.gameObject.transform.position = pos + Skill3Offset;
             CurSkill.gameObject.transform.SetParent(null);
+
+            m_iceCastEffect.EffectOff();
         }
     }
     public override void SkillOff()
