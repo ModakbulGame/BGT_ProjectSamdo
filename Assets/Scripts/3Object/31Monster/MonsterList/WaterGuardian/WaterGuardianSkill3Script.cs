@@ -6,9 +6,6 @@ using UnityEngine.VFX;
 public class WaterGuardianSkill3Script : ObjectAttackScript
 {
     private Rigidbody m_rigid;
-    [SerializeField]
-    private VisualEffect m_hitEffect;
-
     public override void AttackOn()
     {
         gameObject.SetActive(true);
@@ -19,7 +16,7 @@ public class WaterGuardianSkill3Script : ObjectAttackScript
     {
         m_rigid.velocity = Vector3.zero;
         m_rigid.constraints = RigidbodyConstraints.FreezeAll;
-        m_hitEffect.Play();
+        m_attackEffect.EffectOn();
         StartCoroutine(DestroySkill());
     }
 

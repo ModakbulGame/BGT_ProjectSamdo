@@ -46,9 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36ad37c2b5c808f4c9bdcfba57379f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_hasVfx: 1
+  m_hasParticle: 0
+  m_hasTrail: 0
   m_lastTime: 3
-  m_vfx: {fileID: 7754873539869121632}
-  m_particle: {fileID: 0}
+  m_returnDelay: 2
 --- !u!2083052967 &7754873539869121632
 VisualEffect:
   m_ObjectHideFlags: 0
@@ -497,8 +499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ccList: 
   m_impulseAmount: 0.1
-  m_attackEffect: {fileID: 0}
-  m_effect: {fileID: 2319356029109662356}
+  m_attackEffect: {fileID: 2319356029109662356}
 --- !u!33 &5132847325369461984
 MeshFilter:
   m_ObjectHideFlags: 0

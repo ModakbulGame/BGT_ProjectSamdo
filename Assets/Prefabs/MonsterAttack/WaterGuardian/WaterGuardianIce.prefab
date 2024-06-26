@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1783677240908801196}
+  - component: {fileID: 1890662674989102672}
   - component: {fileID: 5857561030934977034}
   - component: {fileID: 935576155972871353}
   m_Layer: 0
@@ -33,6 +34,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4096249529076988352}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &1890662674989102672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444224317721639026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e0ea8773eb51b14294945ba88d8f806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_hasVfx: 1
+  m_hasParticle: 0
+  m_hasTrail: 0
 --- !u!2083052967 &5857561030934977034
 VisualEffect:
   m_ObjectHideFlags: 0
@@ -432,7 +448,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ccList: 
   m_impulseAmount: 0.1
-  m_hitEffect: {fileID: 5857561030934977034}
+  m_attackEffect: {fileID: 1890662674989102672}
 --- !u!136 &3734005006999819129
 CapsuleCollider:
   m_ObjectHideFlags: 0
