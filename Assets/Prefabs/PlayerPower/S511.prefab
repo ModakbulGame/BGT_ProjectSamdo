@@ -109,11 +109,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ccList: 
   m_impulseAmount: 0.1
-  m_combinedEffect: {fileID: 0}
+  m_attackEffect: {fileID: 0}
   m_scriptable: {fileID: 11400000, guid: b87e169d60cf00a489d404f96a91b6da, type: 2}
-  m_effect: {fileID: 0}
   m_lastTime: 10
-  m_damgeTimeGet: 0.5
+  m_damgeTimeGap: 0.5
+  m_leftEffectTime: 3
   m_visualEffect: {fileID: 4308620587376570509}
   m_repeatDuration: 1
   m_repeatInterval: 5
@@ -222,7 +222,7 @@ PrefabInstance:
     - target: {fileID: 8901322412741548948, guid: 942d16c95fb72aa468463f2081a36a7d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 8901322412741548948, guid: 942d16c95fb72aa468463f2081a36a7d,
         type: 3}
