@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,17 +7,30 @@ using UnityEngine.UI;
 public class OasisIconScript : MonoBehaviour
 {
     private MapUIScript m_parent;
-    private Image m_oasisIcon;
+
+    private RectTransform m_rect;
+    private Image m_img;
+
+    [SerializeField]
+    private EOasisName m_pointName;
+    private EOasisName PointName { get { return m_pointName; } set { m_pointName = value; } }
 
     public void SetParent(MapUIScript _parent) { m_parent = _parent; }
-    private void InitOasisPosition(Image _oasis)
+    private void SetPosition(RectTransform _rect)
     {
-        m_parent.InitOasisPosition(_oasis);
+        float width = PlayManager.MapWidth, height = PlayManager.MapHeight;
+
+        Vector2 pos = PlayManager.OasisList[(int)PointName].Position2;
+        Vector2 mapSize = _rect.sizeDelta;
+
+        m_rect.anchoredPosition = new(mapSize.x * pos.x / width, mapSize.y * pos.y / height);
     }
 
-    public void SetComps()
+    public void SetComps(EOasisName _oasis, RectTransform _rect)
     {
-        m_oasisIcon = GetComponent<Image>();
-        InitOasisPosition(m_oasisIcon);
+        m_rect = GetComponent<RectTransform>();
+        m_img = GetComponent<Image>();
+        PointName = _oasis;
+        SetPosition(_rect);
     }
 }
