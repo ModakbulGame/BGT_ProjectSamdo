@@ -13,19 +13,19 @@ public enum ELightState
     ON
 }
 
-public class PlayerLightScript : MonoBehaviour            // ÀÓ½Ã ºÒºû ¿ÀºêÁ§Æ®
+public class PlayerLightScript : MonoBehaviour            // ì„ì‹œ ë¶ˆë¹› ì˜¤ë¸Œì íŠ¸
 {
     private static PlayerLightScript Inst;
 
     private ParticleSystem[] m_effects;
 
-    private const float MIN_SIZE = 0;                            // ÃÖ¼Ò Å©±â
-    private const float MAX_SIZE = 100;                          // ÃÖ´ë Å©±â
-    private const float CHANGE_TIME = 5;
+    private const float MIN_SIZE = 0;                            // ìµœì†Œ í¬ê¸°
+    private const float MAX_SIZE = 100;                          // ìµœëŒ€ í¬ê¸°
+    private const float CHANGE_TIME = 2;
 
     
     public static float CurSize { get; private set; }
-    public static ELightState CurState { get; private set; }    // ºÒºûÀÇ ÇöÀç »óÅÂ (static)
+    public static ELightState CurState { get; private set; }    // ë¶ˆë¹›ì˜ í˜„ì¬ ìƒíƒœ (static)
 
 
     public void LightOn()

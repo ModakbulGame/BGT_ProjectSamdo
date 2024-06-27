@@ -184,6 +184,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         script.SetDropItems(items);
     }
 
+    private string DissolveAmount { get { return ValueDefine.DISSOLVE_AMOUNT_NAME; } }
     private void ResetDissolve()
     {
         foreach (SkinnedMeshRenderer smr in m_skinneds)
@@ -191,7 +192,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
             Material[] mats = smr.materials;
             for (int i = 0; i<mats.Length; i++)
             {
-                mats[i].SetFloat("_DissolveAmount", 0);
+                mats[i].SetFloat(DissolveAmount, 0);
             }
         }
     }
@@ -212,12 +213,12 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         float counter = 0;
 
         float change = 1 / m_dissolveTime;
-        while (_mats[0].GetFloat("_DissolveAmount") < 1)
+        while (_mats[0].GetFloat(DissolveAmount) < 1)
         {
             counter += Time.deltaTime * change;
             for (int i = 0; i<_mats.Length; i++)
             {
-                _mats[i].SetFloat("_DissolveAmount", counter);
+                _mats[i].SetFloat(DissolveAmount, counter);
             }
             yield return null;
         }

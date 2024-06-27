@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class HideGimicScript : MonoBehaviour, IHidable
+{
+    [SerializeField]
+    private Collider[] m_colliders;
+
+    public virtual void GetLight()
+    {
+        SetObjectHide(false);
+    }
+
+    public virtual void LoseLight()
+    {
+        SetObjectHide(true);
+    }
+
+    private void SetObjectHide(bool _hide)
+    {
+        foreach (Collider col in m_colliders)
+        {
+            col.enabled = !_hide;
+        }
+    }
+
+
+    public virtual void SetComps()
+    {
+        m_colliders = GetComponentsInChildren<Collider>();
+    }
+
+    private void Awake()
+    {
+        SetComps();
+    }
+}

@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(IHidable))]
-public class HideScript : GetLightScript        // ºÒºû°úÀÇ »óÈ£ÀÛ¿ëÀÌ °¡´ÉÇÑ ¿ÀºêÁ§Æ®¿£ ÀÌ ½ºÅ©¸³Æ®¸¦ ³Ö¾î¾ß ÇÑ´Ù. (IHidable)À» »ó¼ÓÇÑ ½ºÅ©¸³Æ® ÇÊ¼ö
+public class HideScript : GetLightScript        // ë¶ˆë¹›ê³¼ì˜ ìƒí˜¸ì‘ìš©ì´ ê°€ëŠ¥í•œ ì˜¤ë¸Œì íŠ¸ì—” ì´ ìŠ¤í¬ë¦½íŠ¸ë¥¼ ë„£ì–´ì•¼ í•œë‹¤. (IHidable)ì„ ìƒì†í•œ ìŠ¤í¬ë¦½íŠ¸ í•„ìˆ˜
 {
-    private IHidable m_hidable;             // ¿ÀºêÁ§Æ® ³» IHidableÀ» »ó¼ÓÇÑ ½ºÅ©¸³Æ®
+    [SerializeField]
+    private bool m_useLayer = false;
 
-    private int m_layerIdx;                 // ¿ÀºêÁ§Æ®ÀÇ ¿ø·¡ layer
+    private IHidable m_hidable;                         // ì˜¤ë¸Œì íŠ¸ ë‚´ IHidableì„ ìƒì†í•œ ìŠ¤í¬ë¦½íŠ¸
+
+    private int OriginalLayer { get; set; }             // ì˜¤ë¸Œì íŠ¸ì˜ ì›ë˜ layer
 
 
-    private void ChangeLayer(int _layer)            // ¿ÀºêÁ§Æ®(ÀÚ½Ä Æ÷ÇÔ) ÀüÃ¼ ·¹ÀÌ¾î ¹Ù²Ù±â
+    private void ChangeLayer(int _layer)                // ì˜¤ë¸Œì íŠ¸(ìì‹ í¬í•¨) ì „ì²´ ë ˆì´ì–´ ë°”ê¾¸ê¸°
     {
         foreach (Transform tran in GetComponentsInChildren<Transform>())
         {
@@ -18,16 +21,16 @@ public class HideScript : GetLightScript        // ºÒºû°úÀÇ »óÈ£ÀÛ¿ëÀÌ °¡´ÉÇÑ ¿À
         }
     }
 
-    public override void GetLight()                         // ºûÀ» ¹Ş¾ÒÀ» ¶§
+    public override void GetLight()                     // ë¹›ì„ ë°›ì•˜ì„ ë•Œ
     {
         base.GetLight();
-        ChangeLayer(m_layerIdx);
+        if (m_useLayer) { ChangeLayer(OriginalLayer); }
         m_hidable.GetLight();
     }
-    public override void LoseLight()                       // ºûÀ» ±×¸¸ ¹ŞÀ» ¶§
+    public override void LoseLight()                    // ë¹›ì„ ê·¸ë§Œ ë°›ì„ ë•Œ
     {
         base.LoseLight();
-        ChangeLayer(ValueDefine.HIDING_LAYER_IDX);
+        if (m_useLayer) { ChangeLayer(ValueDefine.HIDING_LAYER_IDX); }
         m_hidable.LoseLight();
     }
 
@@ -37,6 +40,6 @@ public class HideScript : GetLightScript        // ºÒºû°úÀÇ »óÈ£ÀÛ¿ëÀÌ °¡´ÉÇÑ ¿À
     {
         base.SetComps();
         m_hidable = GetComponent<IHidable>();
-        m_layerIdx = gameObject.layer;
+        OriginalLayer = gameObject.layer;
     }
 }

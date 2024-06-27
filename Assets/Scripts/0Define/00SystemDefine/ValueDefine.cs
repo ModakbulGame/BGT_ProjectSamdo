@@ -62,6 +62,10 @@ public static class ValueDefine
     public static Shader DISSOLVE_SHADER = Shader.Find("Shader Graphs/DissolveShader");
 
 
+    // 셰이더 변수명
+    public const string DISSOLVE_AMOUNT_NAME = "_DissolveAmount";
+
+
     // 애니메이션 (?)
     public const string MONSTER_ATTACK_TRIGGER = "Attack";          // 몬스터 공격 트리거
     public const string MONSTER_IDLE_TRIGGER = "Idle";              // 몬스터 기본 트리거
