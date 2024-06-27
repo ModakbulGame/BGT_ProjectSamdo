@@ -233,6 +233,7 @@ public partial class PlayerController
         {
             AdjustInfo adjust = PowerInfoInHand.PowerData.StatAdjust;
             GetAdjust(adjust);
+            PowerAnimDone();
             return;
         }
 

@@ -33,7 +33,7 @@ public class PowerScriptable : ScriptableObject
 
     private ECastType Name2Type(EPowerName _powerName)
     {
-        if (_powerName < EPowerName.MELEE_STUN)
+        if (_powerName < EPowerName.MELEE_KNOCKBACK)
             return ECastType.MELEE;
         else if (_powerName < EPowerName.RANGED_PROJ1)
             return ECastType.MELEE_CC;

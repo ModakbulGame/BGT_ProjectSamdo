@@ -57,7 +57,7 @@ public enum EPowerName
 {
     MELEE_SLASH,
     MELEE_SOUL,
-    MELEE_STUN,
+    MELEE_KNOCKBACK,
     MELEE_MELANCHOLY,
     MELEE_EXTORTION,
     MELEE_AIRBORNE,
@@ -91,7 +91,7 @@ public enum EPowerName
     BUFF_MAXHP,
     BUFF_COMBAT,
     BUFF_FATIGUE,
-    BUFF_STUN,
+    BUFF_KNOCKBACK,
     BUFF_MELANCHOLY,
     BUFF_EXTORTION,
 
