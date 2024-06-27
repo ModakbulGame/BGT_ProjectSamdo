@@ -10,6 +10,7 @@ public class PowerBoxElmScript : MonoBehaviour
     public void SetParent(PowerBoxUIScript _parent) { m_parent = _parent; }
     public PowerBoxUIScript Box { get { return m_parent; } }
 
+    private readonly Color MissingColor = new(87/255f, 87/255f, 87/255f);
 
     private Image m_skillImg;
     private TextMeshProUGUI m_skillName;
@@ -20,11 +21,14 @@ public class PowerBoxElmScript : MonoBehaviour
 
     public void SetSkillInfo(EPowerName _skill, bool _equipped)
     {
+        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
         CurPower = _skill;
         Sprite img = GameManager.GetPowerSprite(_skill);
         PowerInfo info = GameManager.GetPowerInfo(_skill);
+        bool obtained = PlayManager.PowerObtained[(int)_skill];
 
         m_skillImg.sprite = img;
+        m_skillImg.color = obtained ? Color.white : MissingColor;
         m_skillName.text = info.PowerName;
         if(_equipped) { m_skillName.color = Color.red; }
         else { m_skillName.color = Color.black; }

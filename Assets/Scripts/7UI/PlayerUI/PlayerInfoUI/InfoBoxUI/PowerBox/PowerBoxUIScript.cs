@@ -14,10 +14,8 @@ public class PowerBoxUIScript : PlayerInfoBoxScript
 
     public RectTransform[] SlotTrans { get { return m_slot.ElmTrans; } }
 
-
-    private readonly List<EPowerName> m_obtainedList = new();
     private static int CurPage { get; set; } = 0;
-    private int MaxPage { get { if (m_obtainedList.Count == 0) return 0; return (m_obtainedList.Count - 1) / ElmPerPage; } }
+    private readonly int MaxPage = ((int)EPowerName.LAST - 1) / ElmPerPage;
     private const int ElmPerPage = 12;
 
     public override void InitUI()
@@ -44,19 +42,12 @@ public class PowerBoxUIScript : PlayerInfoBoxScript
         EPowerName[] slot = PlayManager.PowerSlot;
         m_slot.UpdateSlot(slot);
 
-        m_obtainedList.Clear();
-        for (int i = 0; i<(int)EPowerName.LAST; i++)
-        {
-            EPowerName skill = (EPowerName)i;
-            if (PlayManager.PowerObtained[i]) { m_obtainedList.Add(skill); }
-        }
         int start = CurPage * ElmPerPage;
         for (int i = 0; i<ElmPerPage; i++)
         {
             int idx = start + i;
-            if (idx >= m_obtainedList.Count) { m_elms[i].HideElm(); continue; }
-            if (!m_elms[i].gameObject.activeSelf) { m_elms[i].gameObject.SetActive(true); }
             EPowerName skill = (EPowerName)idx;
+            if(skill >= EPowerName.LAST) { m_elms[i].HideElm(); continue; }
             m_elms[i].SetSkillInfo(skill, slot.Contains(skill));
         }
 
