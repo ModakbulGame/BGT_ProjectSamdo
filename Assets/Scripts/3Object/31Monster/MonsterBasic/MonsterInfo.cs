@@ -71,7 +71,7 @@ public partial class MonsterScript
 
     public override void ApplyHPUI()
     {
-        m_hpBar.ShowUI();
+        if (!IsDead) { m_hpBar.ShowUI(); }
         m_hpBar.SetMaxHP(MaxHP);
         m_hpBar.SetCurHP(CurHP);
     }
