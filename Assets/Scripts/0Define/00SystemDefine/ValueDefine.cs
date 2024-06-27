@@ -58,7 +58,7 @@ public static class ValueDefine
 
     // CC 값
     public readonly static float[] DEFAULT_CC = new float[(int)ECCType.LAST]
-        { 0, 0.7f, 0, 0, 5, 5, 0.8f, 0, 0, 0, 0 };
+        { 0, 0.7f, 0, 0, 8, 5, 0.8f, 0, 0, 0, 0 };
 
 
     // 쉐이더
