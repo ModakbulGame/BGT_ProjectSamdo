@@ -192,7 +192,7 @@ public partial class PlayerController
             return GameManager.GetPowerInfo(PowerInHand); } }
     public int UsingPowerIdx { get; private set; } = -1;                                    // ㄴ의 슬롯 번호
 
-    public bool IsRaycastPower { get { return PowerInHand == EPowerName.RANGED_KNOCKBACK1; } }
+    public bool IsRaycastPower { get { return PowerInHand == EPowerName.RANGED_KNOCKBACK2; } }
 
     public void ReadyPower()                                                                // 스킬 사용 준비
     {

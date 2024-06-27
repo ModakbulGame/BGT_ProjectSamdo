@@ -13,7 +13,17 @@ public class WeaponBuffEffectScript : MonoBehaviour
 
     private ECCType CurCC { get; set; } = ECCType.LAST;
 
-    private int CC2Idx(ECCType _cc) { return (int)_cc - 1; }
+    private int CC2Idx(ECCType _cc)
+    {
+        if(_cc == ECCType.KNOCKBACK)
+        {
+            return (int)_cc - 4;
+        }
+        else
+        {
+            return (int)_cc - 1;
+        }
+    }
 
     public void InitWeapon(EWeaponType _type)
     {
@@ -26,7 +36,7 @@ public class WeaponBuffEffectScript : MonoBehaviour
 
     public void EffectOn(ECCType _cc)
     {
-        if(_cc == 0 || _cc > ECCType.EXTORTION) { Debug.LogError("ÀÌÆåÆ® ¾ø´Â CC ÀÔ·Â"); return; }
+        if(_cc == 0 || _cc > ECCType.KNOCKBACK) { Debug.LogError("ì´í™íŠ¸ ì—†ëŠ” CC ì…ë ¥"); return; }
         if(CurCC != ECCType.LAST && CurCC != _cc) { EffectOff(); }
         CurCC = _cc;
         VisualEffect effect = m_effects[CC2Idx(_cc)];
