@@ -83,7 +83,6 @@ public class WeaponScript : AnimateAttackScript
     private void SetInfo()
     {
         m_weaponInfo.SetInfo(m_scriptable);
-        m_buffEffect.InitWeapon(WeaponType);
     }
 
 
@@ -105,6 +104,7 @@ public class WeaponScript : AnimateAttackScript
     {
         base.SetComps();
         m_buffEffect = GetComponentInChildren<WeaponBuffEffectScript>();
+        m_buffEffect.InitWeapon(WeaponType);
         m_trailEffect = GetComponentInChildren<WeaponTrailEffect>();
         m_trailEffect.SetComps();
     }
