@@ -64,3 +64,14 @@ public struct HitData
         Property = _prop;
     }
 }
+
+public struct CCInfo
+{
+    public ECCType Type;
+    public float Amount;
+    public bool IsNull { get { return Type == ECCType.LAST; } }
+    public static CCInfo Null { get { return new(ECCType.LAST, 0); } }
+    public bool HasAmount { get { return Amount > ValueDefine.DEFAULT_CC[(int)Type]; } }
+    public CCInfo(ECCType _type) { Type = _type; Amount = ValueDefine.DEFAULT_CC[(int)_type]; }
+    public CCInfo(ECCType _type, float _amount) { Type = _type; Amount = _amount; }
+}

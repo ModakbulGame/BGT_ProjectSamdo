@@ -241,12 +241,12 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     public bool IsFatigure { get { return m_ccCount[(int)ECCType.FATIGUE] > 0; } }
     private void GetFatigue()       // 피로
     {
-        AdjustInfo slow = new(EAdjType.MOVE_SPEED, 0.7f, m_ccTime[(int)ECCType.FATIGUE]);
+        AdjustInfo slow = new(EAdjType.MOVE_SPEED, ValueDefine.DEFAULT_CC[(int)ECCType.FATIGUE], m_ccTime[(int)ECCType.FATIGUE]);
         GetAdjust(slow);
     }
     private void GetWeakness()      // 나약
     {
-        AdjustInfo hp = new(EAdjType.MAX_HP, 0.8f, m_ccTime[(int)ECCType.WEAKNESS]);
+        AdjustInfo hp = new(EAdjType.MAX_HP, ValueDefine.DEFAULT_CC[(int)ECCType.WEAKNESS], m_ccTime[(int)ECCType.WEAKNESS]);
         GetAdjust(hp);
     }
     private void GetBind()          // 속박
@@ -258,13 +258,13 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     // 즉발 CC
     private void GetAirborne()
     {
-        m_rigid.AddForce(8 * Vector3.up, ForceMode.VelocityChange);
+        m_rigid.AddForce(ValueDefine.DEFAULT_CC[(int)ECCType.AIRBORNE] * Vector3.up, ForceMode.VelocityChange);
     }
     private void GetKnockBack(HitData _hit)
     {
         Vector2 flatDir = (Position2 -_hit.Attacker.Position2).normalized;
         Vector3 dir = new(flatDir.x, 0, flatDir.y);
-        m_rigid.velocity = dir * 10;
+        m_rigid.velocity = dir * ValueDefine.DEFAULT_CC[(int)ECCType.KNOCKBACK];
     }
 
     // 조건부 CC

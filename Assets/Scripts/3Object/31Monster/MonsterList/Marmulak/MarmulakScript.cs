@@ -65,6 +65,10 @@ public class MarmulakScript : RangedAttackMonster
     [Tooltip("포효 범위")]
     [SerializeField]
     public float m_roarRadius = 10;
+    [Tooltip("포효 데미지")]
+    [SerializeField]
+    private float m_roarDamage = 10;
+
     [Tooltip("포효 후 성불 기간(초)")]
     [SerializeField]
     private float m_purifyTime = 8;
@@ -97,10 +101,11 @@ public class MarmulakScript : RangedAttackMonster
         Collider[] targets = Physics.OverlapSphere(SkillList[0].transform.position, m_roarRadius, ValueDefine.HITTABLE_PLAYER_LAYER);
         for (int i = 0; i<targets.Length; i++)
         {
-            ObjectScript obj = targets[i].GetComponentInParent<ObjectScript>();
-            if (obj == null || obj == this || m_roarList.Contains(obj)) { continue; }
-            Debug.Log($"{obj.ObjectName} 은(는) 공포에 떨고 있다!");
-            m_roarList.Add(obj);
+            PlayerController player = targets[i].GetComponentInParent<PlayerController>();
+            if (player == null || player == this || m_roarList.Contains(player)) { continue; }
+            HitData hit = new(this, m_roarDamage, player.Position, new ECCType[2] { ECCType.FATIGUE, ECCType.KNOCKBACK });
+            player.GetHit(hit);
+            m_roarList.Add(player);
         }
     }
 }

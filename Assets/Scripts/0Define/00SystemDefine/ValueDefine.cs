@@ -56,6 +56,10 @@ public static class ValueDefine
     public const int MAX_NPC_NUM = 99;                                  // 종류별 NPC 수
     public readonly static Vector3 NULL_DESTINATION = new(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity);
 
+    // CC 값
+    public readonly static float[] DEFAULT_CC = new float[(int)ECCType.LAST]
+        { 0, 0.7f, 0, 0, 5, 5, 0.8f, 0, 0, 0, 0 };
+
 
     // 쉐이더
     public static Shader URP_LIT_SHADER = Shader.Find("Universal Render Pipeline/Lit");

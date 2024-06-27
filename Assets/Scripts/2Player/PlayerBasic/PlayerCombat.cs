@@ -304,8 +304,6 @@ public partial class PlayerController
         ChangeState(EPlayerState.IDLE);
     }
 
-    private CombinedEffect CurTrail { get; set; }
-
     public void PowerTrailOn()
     {
         if (PowerInfoInHand == null) { return; }
