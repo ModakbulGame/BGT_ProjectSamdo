@@ -133,6 +133,10 @@ public class PlayUIManager : MonoBehaviour
     public void HideInteractInfo() { m_interactInfoUI.HideInteractInfo(); }
 
     [SerializeField]
+    private DeathUIScript m_deathUI;
+    public void ShowDeathUI() { m_deathUI.OpenUI(); }
+
+    [SerializeField]
     private BlackoutImageScript m_blackoutUI;
     public void StartBlackout() { m_blackoutUI.ShowImg(); }
     public void EndBlackout() { m_blackoutUI.HideImg(); }

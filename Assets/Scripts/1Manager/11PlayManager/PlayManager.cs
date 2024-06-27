@@ -17,7 +17,11 @@ public class PlayManager : MonoBehaviour
     public static void SetCurData(SaveData _data) { CurSaveData = _data; IsFromTitle = true; }
     private static void StartPlay()
     {
-        if (IsNewData && IsFromTitle) { CurSaveData = new(); GameManager.AddGameData(CurSaveData); }
+        if (IsNewData && IsFromTitle) 
+        {
+            CurSaveData = new();
+            GameManager.AddGameData(CurSaveData);
+        }
         IsPlaying = true;
         GameManager.SetControlMode(EControlMode.THIRD_PERSON);
         GameManager.SetMouseSensitive(1);
@@ -56,11 +60,12 @@ public class PlayManager : MonoBehaviour
     }
     public static void PlayerDead()
     {
-
+        GameManager.SetControlMode(EControlMode.UI_CONTROL);
+        ShowDeathUI();
     }
-    public static void RestartGame(SaveData _data)
+    public static void RestartGame()
     {
-
+        GameManager.LoadGame(0);
     }
 
 
@@ -228,6 +233,7 @@ public class PlayManager : MonoBehaviour
     public static void HideBossHPBar() { PlayUIManager.HideBossHPBar(); }
     public static void ShowInteractInfo(string _info) { PlayUIManager.ShowInteractInfo(_info); }                                                        // 상호작용 키 on
     public static void HideInteractInfo() { PlayUIManager.HideInteractInfo(); }                                                                         // 상호작용 키 off
+    public static void ShowDeathUI() { PlayUIManager.ShowDeathUI(); }
     public static void ShowPowerAim(Vector3 _pos, float _radius, float _range) { PlayUIManager.ShowPowerAim(_pos, _radius, _range); }                   // 권능 에임 on
     public static Vector3 TracePowerAim(Vector3 _pos, float _range) { return PlayUIManager.TracePowerAim(_pos, _range); }                               // 권능 에임 위치 설정
     public static void HidePowerAim() { PlayUIManager.HidePowerAim(); }                                                                                 // 권능 에임 off

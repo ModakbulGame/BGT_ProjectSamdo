@@ -332,17 +332,12 @@ public partial class PlayerController
         ApplyStat();
     }
 
-    public override void Awake()
+    public override void Start()
     {
         LoadData();
-        base.Awake();
         SetStates();
         SetAnimator();
         SetInfo();
-    }
-
-    public override void Start()
-    {
         base.Start();
         PlayManager.SetCurPlayer(this);     // PlayerManger에 플레이어 등록
         ChangeState(EPlayerState.IDLE);     // Idle로 상태 전이

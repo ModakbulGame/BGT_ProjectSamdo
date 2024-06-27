@@ -6,17 +6,17 @@ using UnityEngine;
 [Serializable]
 public class SaveData
 {
-    // ±âº» Á¤º¸
+    // ê¸°ë³¸ ì •ë³´
     public string SavedTime;
     public EOasisName OasisPoint;
 
-    // ÇÃ·¹ÀÌ¾î Á¤º¸
+    // í”Œë ˆì´ì–´ ì •ë³´
     public Vector3 PlayerRot;
     public PlayerStatInfo StatInfo;
     public int LeftStatPoint;
     public int UsedStatPoint;
 
-    // ¾ÆÀÌÅÛ Á¤º¸
+    // ì•„ì´í…œ ì •ë³´
     public int Soul;
     public int PurifiedSoul;
     public List<EPatternName> HealPatternList;
@@ -25,24 +25,26 @@ public class SaveData
     public List<EThrowItemName> ThrowItemList;
     public InventoryElm[] Inventory;
 
-    // ½ºÅ³ Á¤º¸
+    // ìŠ¤í‚¬ ì •ë³´
     public EPowerName[] PowerSlot;
     public bool[] PowerObtained;
 
 
-    // ½ºÅä¸® Á¤º¸
+    // ìŠ¤í† ë¦¬ ì •ë³´
     public List<NPCSaveData> NPCData;
     public QuestInfo[] QuestInfos;
 
 
-    // ¸ó½ºÅÍ Á¤º¸
+    // ëª¬ìŠ¤í„° ì •ë³´
     public bool[] MonsterKilled;
     public List<MonsterSaveData> MonsterData;
 
     public SaveData()
     {
         SavedTime = DateTime.Now.ToString();
+        OasisPoint = 0;
 
+        PlayerRot = new(0, 180, 0);
         StatInfo = new();
         PowerSlot = new EPowerName[ValueDefine.MAX_POWER_SLOT] { EPowerName.LAST,EPowerName.LAST,EPowerName.LAST};
         PowerObtained = new bool[(int)EPowerName.LAST];
