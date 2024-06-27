@@ -39,8 +39,8 @@ public class UumScript : AnimatedAttackMonster
     [SerializeField]
     private VisualEffect m_headFire;
 
-    [SerializeField]
-    private readonly float m_purifyTime = 5;
+/*    [SerializeField]
+    private readonly float m_purifyTime = 5;*/
 
 
     private readonly float NarrowAttackMultiplier = 1.5f;

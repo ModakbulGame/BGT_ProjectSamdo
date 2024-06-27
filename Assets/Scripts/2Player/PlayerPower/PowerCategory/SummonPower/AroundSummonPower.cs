@@ -7,8 +7,6 @@ public class AroundSummonPower : SummonPowerScript
 {
     [SerializeField]
     private float m_damgeTimeGap = 0.5f;
-    [SerializeField]
-    private float m_leftEffectTime = 3;
 
     private readonly Dictionary<IHittable, float> m_hitTimeCount = new();
 
