@@ -224,7 +224,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         }
         DestroyMonster();
     }
-    protected void DestroyMonster()
+    public void DestroyMonster()
     {
         if (OriginalPool == null)
         {

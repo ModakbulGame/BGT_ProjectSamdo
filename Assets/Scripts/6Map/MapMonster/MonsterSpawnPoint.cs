@@ -8,7 +8,7 @@ public struct SpawnerData
 {
     public int PointHash;
     public int SpawnerIdx;
-    public SpawnerData(MonsterSpawnPoint _point, int _idx) 
+    public SpawnerData(MonsterSpawnPoint _point, int _idx)
     {
         PointHash = _point.GetHashCode();
         SpawnerIdx = _idx;
@@ -34,6 +34,12 @@ public class MonsterSpawnPoint : MonoBehaviour, IHaveData
 
     private readonly float[] m_rangeMultiplier = new float[(int)EAreaType.LAST] { 1, 1.5f };
 
+    private bool IsShowingMonster { get; set; }
+    private bool IsPlayerNear { get { return PlayerDistance <= NearPlayerDist; } }
+
+    private float PlayerDistance { get { return Vector3.Distance(transform.position, PlayManager.PlayerPos); } }
+    private readonly float NearPlayerDist = 100;
+
     public float RangeMultiplier { get { return m_rangeMultiplier[(int)m_areaType]; } }
 
     public Vector3 SpawnPosition { get { return transform.position; } }
@@ -43,9 +49,9 @@ public class MonsterSpawnPoint : MonoBehaviour, IHaveData
     private List<MonsterScript> m_spawnedMonsters = new();
     public List<MonsterScript> SpawnedMonsters { get { return m_spawnedMonsters; } }
 
-    public void AddMonster(MonsterScript _monster) 
-    { 
-        if(m_spawnedMonsters.Contains(_monster)) { return; }
+    public void AddMonster(MonsterScript _monster)
+    {
+        if (m_spawnedMonsters.Contains(_monster)) { return; }
         m_spawnedMonsters.Add(_monster);
     }
 
@@ -59,24 +65,36 @@ public class MonsterSpawnPoint : MonoBehaviour, IHaveData
         MonsterDataCache.Clear();
 
         SaveData data = PlayManager.CurSaveData;
-        foreach(MonsterSaveData monster in data.MonsterData) 
+        foreach (MonsterSaveData monster in data.MonsterData)
         {
-            if(monster.SpawnerData.PointHash != GetHashCode()) { continue; }
+            if (monster.SpawnerData.PointHash != GetHashCode()) { continue; }
             MonsterDataCache.Add(monster);
         }
     }
     private void SpawnMonsters()
     {
-        for (int i=0;i<m_spawners.Length;i++)
+        for (int i = 0; i<m_spawners.Length; i++)
         {
             MonsterSpawner spawner = m_spawners[i];
             foreach (MonsterSaveData data in MonsterDataCache)
             {
-                if(data.SpawnerData.SpawnerIdx != i) { continue; }
+                if (data.SpawnerData.SpawnerIdx != i) { continue; }
                 spawner.SpawnMonster(data);
             }
             spawner.SpawnMonster();
         }
+        IsShowingMonster = true;
+    }
+    private void DespawnMonsters()
+    {
+        MonsterDataCache.Clear();
+        foreach (MonsterScript monster in m_spawnedMonsters)
+        {
+            MonsterSaveData data = new(monster);
+            MonsterDataCache.Add(data);
+            monster.DestroyMonster();
+        }
+        IsShowingMonster = false;
     }
     public void SaveData()
     {
@@ -90,10 +108,18 @@ public class MonsterSpawnPoint : MonoBehaviour, IHaveData
     }
 
 
+    private void CheckDistance()
+    {
+        if(IsShowingMonster && !IsPlayerNear) { DespawnMonsters(); }
+        else if(!IsShowingMonster && IsPlayerNear) { SpawnMonsters(); }
+    }
+
+
+
     private void SetComps()
     {
         m_spawners = GetComponentsInChildren<MonsterSpawner>();
-        for (int i=0;i<m_spawners.Length;i++)
+        for (int i = 0; i<m_spawners.Length; i++)
         {
             MonsterSpawner spawner = m_spawners[i];
             spawner.SetPoint(this, i);
@@ -107,6 +133,11 @@ public class MonsterSpawnPoint : MonoBehaviour, IHaveData
     }
     private void Start()
     {
-        SpawnMonsters();
+        if (IsPlayerNear) { SpawnMonsters(); }
+    }
+
+    private void Update()
+    {
+        CheckDistance();
     }
 }

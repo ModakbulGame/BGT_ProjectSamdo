@@ -5,7 +5,12 @@ using UnityEngine;
 public class MonsterSpawner : MonoBehaviour
 {
     private MonsterSpawnPoint m_point;
-    public void SetPoint(MonsterSpawnPoint _point, int _idx) { m_point = _point; SpawnerIdx = _idx; }
+    public void SetPoint(MonsterSpawnPoint _point, int _idx) 
+    {
+        m_point = _point;
+        SpawnerIdx = _idx;
+        GetComponent<MeshRenderer>().enabled = false;
+    }
 
     [SerializeField]
     private EMonsterName m_spawnMonster;
@@ -24,8 +29,6 @@ public class MonsterSpawner : MonoBehaviour
 
     public void SpawnMonster()
     {
-        GetComponent<MeshRenderer>().enabled = false;
-
         while (SpawnedNum < m_spawnNum)
         {
             CreateMonster(m_spawnMonster);
@@ -54,7 +57,7 @@ public class MonsterSpawner : MonoBehaviour
         return script;
     }
 
-    public void DespawnMonster(MonsterScript _monster)
+    public void MonsterDespawned(MonsterScript _monster)
     {
         SpawnedNum--;
         StartCoroutine(RespawnCoroutine(_monster.MonsterEnum));

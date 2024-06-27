@@ -158,7 +158,7 @@ public partial class MonsterScript
     private readonly float DespawnTime = 7.5f;
     public void DespawnMonster()
     {
-        m_spawnPoint.DespawnMonster(this);
+        m_spawnPoint.MonsterDespawned(this);
         DestroyMonster();
     }
 
