@@ -26,7 +26,7 @@ public class ProductListElmScript : MonoBehaviour
 
         SItem item = new(EItemType.THROW, (int)_item);
         ItemScriptable data = GameManager.GetItemData(item);
-        Sprite icon = data.ItemIcon;
+        Sprite icon = data.ItemImage;
         string name = data.ItemName;
         string desc = data.Description;
         int price = data.ItemPrice;

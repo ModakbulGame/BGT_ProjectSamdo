@@ -9,9 +9,9 @@ public class WeaponScriptable : ItemScriptable
     public FRange Magic;
     public float AttackSpeed;
 
-    public override void SetItemScriptable(uint _idx, string[] _data, GameObject _prefab)
+    public override void SetItemScriptable(uint _idx, string[] _data, GameObject _prefab, Sprite _image)
     {
-        base.SetItemScriptable(_idx, _data, _prefab);
+        base.SetItemScriptable(_idx, _data, _prefab, _image);
         WeaponEnum =    (EWeaponName)_idx;
         float min, max;
         float.TryParse( _data[(int)EItemAttribute.MIN_ATTACK],      out min);

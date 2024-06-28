@@ -41,13 +41,7 @@ public class MonsterScriptable : ScriptableObject
         };
     }
 
-    public void SetImage(Sprite _profile, Sprite _body)
-    {
-        if (_profile != null) { MonsterProfile = _profile; }
-        if (_body != null) { MonsterBodyImg = _body; }
-    }
-
-    public void SetMonsterScriptable(uint _idx, string[] _data, DropInfo _drop, GameObject _prefab)
+    public void SetMonsterScriptable(uint _idx, string[] _data, DropInfo _drop, GameObject _prefab, Sprite _profile, Sprite _body)
     {
         Idx =           _idx;
         MonsterEnum =   (EMonsterName)_idx;
@@ -69,5 +63,7 @@ public class MonsterScriptable : ScriptableObject
         Description =   _data[(int)EMonsterAttribue.DESCRIPTION];
         DropInfo =      _drop;
         MonsterPrefab = _prefab;
+        if (_profile != null) { MonsterProfile = _profile; }
+        if (_body != null) { MonsterBodyImg = _body; }
     }
 }

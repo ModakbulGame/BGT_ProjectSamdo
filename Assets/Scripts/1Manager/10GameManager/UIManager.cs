@@ -29,7 +29,7 @@ public class UIManager : MonoBehaviour
 
     public Sprite GetItemSprite(SItem _item)
     {
-        return GameManager.GetItemData(_item).ItemIcon;
+        return GameManager.GetItemData(_item).ItemImage;
     }
 
     public Sprite GetPowerSprite(EPowerName _skill)

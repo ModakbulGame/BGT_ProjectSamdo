@@ -23,7 +23,7 @@ public class PatternLeftElm : MonoBehaviour
         SItem item = new(EItemType.PATTERN, (int)CurPattern);
         ItemScriptable data = GameManager.GetItemData(item);
         m_patternName.text = data.ItemName;
-        m_patternIcon.sprite = data.ItemIcon;
+        m_patternIcon.sprite = data.ItemImage;
     }
 
 

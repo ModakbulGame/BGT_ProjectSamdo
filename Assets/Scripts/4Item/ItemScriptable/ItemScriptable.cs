@@ -11,9 +11,9 @@ public class ItemScriptable : ScriptableObject
     public float        DropRate;
     public int          ItemPrice;
     public GameObject   ItemPrefab;
-    public Sprite       ItemIcon;
+    public Sprite       ItemImage;
 
-    public virtual void SetItemScriptable(uint _idx, string[] _data, GameObject _prefab)
+    public virtual void SetItemScriptable(uint _idx, string[] _data, GameObject _prefab, Sprite _image)
     {
         Idx =           _idx;
         ID =            _data[(int)EItemAttribute.ID];
@@ -22,5 +22,6 @@ public class ItemScriptable : ScriptableObject
         float.TryParse( _data[(int)EItemAttribute.DROP_RATE],   out DropRate);
         int.TryParse(   _data[(int)EItemAttribute.PRICE],       out ItemPrice);
         ItemPrefab =    _prefab;
+        if (_image != null) { ItemImage = _image; }
     }
 }

@@ -53,8 +53,18 @@ public static class DataImporter
 
     // 이미지 경로
     private const string ImagePath = "Image/";
+    private readonly static string[] ItemImgPath = new string[(int)EItemType.LAST]
+    {
+        ImagePath + "WeaponImage/",
+        ImagePath + "PatternImage/",
+        ImagePath + "ThrowItemImage/",
+        ImagePath + "OtherItemImage/"
+    };
+
     private const string MonsterBodyImgPath = ImagePath + "MonsterBody/";
     private const string MonsterProfilePath = ImagePath + "MonsterProfile/";
+
+    private const string PowerIconPath = ImagePath + "PowerIcon/";
 
 
 
@@ -130,9 +140,7 @@ public static class DataImporter
             Sprite profile = Resources.Load<Sprite>($"{MonsterProfilePath + id}_P");
             Sprite body = Resources.Load<Sprite>($"{MonsterBodyImgPath + id}_B");
 
-            scriptable.SetImage(profile, body);
-
-            scriptable.SetMonsterScriptable(idx, splitMonsterData, dropInfos[id], prefab);
+            scriptable.SetMonsterScriptable(idx, splitMonsterData, dropInfos[id], prefab, profile, body);
 
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(scriptable);
@@ -242,7 +250,10 @@ public static class DataImporter
                 }
             }
 
-            scriptable.SetItemScriptable(idx, splitItemData, prefab);
+
+            Sprite image = Resources.Load<Sprite>($"{ItemImgPath[type] + id}");
+
+            scriptable.SetItemScriptable(idx, splitItemData, prefab, image);
 
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(scriptable);
@@ -298,7 +309,9 @@ public static class DataImporter
                 script.SetScriptable(scriptable);
             }
 
-            scriptable.SetPowerScriptable(idx, splitPowerData, prefab);
+            Sprite icon = Resources.Load<Sprite>($"{PowerIconPath + id}");
+
+            scriptable.SetPowerScriptable(idx, splitPowerData, prefab, icon);
 
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(scriptable);

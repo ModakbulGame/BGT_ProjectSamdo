@@ -56,7 +56,7 @@ public class PowerScriptable : ScriptableObject
     }
 
 
-    public void SetPowerScriptable(uint _idx, string[] _data, GameObject _prefab)
+    public void SetPowerScriptable(uint _idx, string[] _data, GameObject _prefab, Sprite _icon)
     {
         Idx =               _idx;
         PowerEnum =         (EPowerName)_idx;
@@ -81,5 +81,6 @@ public class PowerScriptable : ScriptableObject
         Description =       _data[(int)EPowerAttribute.DESCRIPTION];
         int.TryParse(       _data[(int)EPowerAttribute.PRICE],            out PowerPrice);
         PowerPrefab =       _prefab;
+        if(_icon != null) { PowerIcon = _icon; }
     }
 }
