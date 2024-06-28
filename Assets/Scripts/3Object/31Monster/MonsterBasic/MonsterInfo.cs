@@ -143,8 +143,8 @@ public partial class MonsterScript
         IsSpawned = false;
         m_rigid.useGravity = true;         // 중력
         GetComponentInChildren<CapsuleCollider>().isTrigger = false;
-        ApplyHPUI();
         base.Start();
+        HideHPBar();
         StartCoroutine(WaitSpawned());
     }
     public virtual IEnumerator WaitSpawned()
@@ -174,6 +174,5 @@ public partial class MonsterScript
         if (m_spawnPoint == null) { OnSpawned(); }
         if (AttackObject == null) { SetAttackObject(); }
         if (!CheckNormalCount()) { Debug.LogError($"{ObjectName} 기본 공격 배율 개수 틀림"); return; }
-        base.Start();
     }
 }
