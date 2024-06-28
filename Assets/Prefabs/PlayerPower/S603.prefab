@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5274003514743515562}
-  - component: {fileID: 818746077368893024}
+  - component: {fileID: 9001914433078103439}
   - component: {fileID: 6555877811337784303}
   - component: {fileID: 3823104982267024096}
   m_Layer: 1
@@ -28,14 +28,14 @@ Transform:
   m_GameObject: {fileID: 5736145402532470269}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 615490356667629109}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &818746077368893024
+--- !u!114 &9001914433078103439
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,14 +44,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5736145402532470269}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 575f7a77f07006449b5f134e5263fc46, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bfe5192c7b76464792017160e6aef59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ccList: 
   m_impulseAmount: 0.1
   m_attackEffect: {fileID: 0}
   m_scriptable: {fileID: 11400000, guid: bc0d9ea11d053104e90cfe404dd23b50, type: 2}
-  m_lastTime: 3
+  m_lastTime: 15
   m_damgeTimeGap: 1
 --- !u!54 &6555877811337784303
 Rigidbody:

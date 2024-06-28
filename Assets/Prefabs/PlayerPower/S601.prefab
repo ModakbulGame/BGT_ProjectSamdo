@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8340209687570004648}
-  - component: {fileID: -8249178103264886337}
+  - component: {fileID: 6105363319969236029}
   - component: {fileID: 3671458394615466530}
   m_Layer: 1
   m_Name: S601
@@ -27,14 +27,14 @@ Transform:
   m_GameObject: {fileID: 1306924984184218265}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1513992350285316701}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8249178103264886337
+--- !u!114 &6105363319969236029
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,15 +43,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1306924984184218265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396a291965c40194d8dda125f83ccd75, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bfe5192c7b76464792017160e6aef59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ccList: 
   m_impulseAmount: 0.1
   m_attackEffect: {fileID: 0}
   m_scriptable: {fileID: 11400000, guid: 7182a15dc297b144bb16377d80e07122, type: 2}
-  m_lastTime: 0.5
-  m_damgeTimeGap: 0.5
+  m_lastTime: 1
+  m_damgeTimeGap: 1
 --- !u!135 &3671458394615466530
 SphereCollider:
   m_ObjectHideFlags: 0

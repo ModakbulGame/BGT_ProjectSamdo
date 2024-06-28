@@ -284,7 +284,7 @@ public partial class PlayerController
                 break;
             case ECastType.AROUND:
             case ECastType.AROUND_CC:
-                power.transform.localPosition = Vector3.zero;
+                power.transform.localPosition = PowerInfoInHand.PowerData.PowerPrefab.transform.localPosition;
                 power.transform.SetParent(null);
                 AroundPowerScript around = power.GetComponentInChildren<AroundPowerScript>();
                 around.SetPower(this, Attack, Magic);
