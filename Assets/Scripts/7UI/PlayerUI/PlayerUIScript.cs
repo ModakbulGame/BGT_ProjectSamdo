@@ -15,7 +15,6 @@ public class PlayerUIScript : MonoBehaviour
     private PlayerMaterialUIScript m_materialUI;            // 플레이어 재료 UI
     [SerializeField]
     private ItemInfoUIScript m_itemInfoUI;                  // 아이템 정보 팝업 UI
-    private MonsterImgUIScript m_monsterImgUI;
 
     private bool Opened { get; set; }                       // 열린 적 있는지 (처음 열리는지 확인용)
 
@@ -59,20 +58,6 @@ public class PlayerUIScript : MonoBehaviour
     {
         m_itemInfoUI.HideUI();
     }
-    public void ShowMonsterImgUI()
-    {
-        m_monsterImgUI.gameObject.SetActive(true);
-    }
-
-    public void HideMonsterImgUI()
-    {
-        m_monsterImgUI.gameObject.SetActive(false);
-    }
-    public void SetMonsterImg(EMonsterName _name)
-    {
-        m_monsterImgUI.SetMonsterInfo(_name);
-    }
-
     public void CloseUI() { GameManager.SetControlMode(EControlMode.THIRD_PERSON); gameObject.SetActive(false); }      // 닫기
 
 
@@ -84,16 +69,12 @@ public class PlayerUIScript : MonoBehaviour
         m_imgUI = GetComponentInChildren<PlayerImgUIScript>();
         m_infoUI = GetComponentInChildren<PlayerInfoUIScript>();
         m_materialUI = GetComponentInChildren<PlayerMaterialUIScript>();
-        m_monsterImgUI = GetComponentInChildren<MonsterImgUIScript>();
+        m_materialUI.SetComps();
 
         m_imgUI.SetParent(this);
         m_imgUI.SetComps();
         m_infoUI.SetParent(this);
         m_infoUI.SetComps();
-        m_materialUI.SetComps();
-        m_monsterImgUI.SetParent(this);
-        m_monsterImgUI.SetComps();
-        m_monsterImgUI.gameObject.SetActive(false);
 
         Opened = true;
     }

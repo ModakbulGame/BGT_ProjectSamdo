@@ -5,22 +5,26 @@ using UnityEngine;
 
 public enum EAlarmType
 {
-    SIDE_TEXT,              // È­¸é »çÀÌµå ÅØ½ºÆ® ¾Ë¶÷
+    SIDE_TEXT,              // í™”ë©´ ì‚¬ì´ë“œ í…ìŠ¤íŠ¸ ì•ŒëŒ
     LAST
 }
 
 public class UIManager : MonoBehaviour
 {
-    // UI¿Í ¾Ë¶÷ Â÷ÀÌÁ¡ -> UI´Â Á¶ÀÛÀÌ³ª »óÈ£ÀÛ¿ë °¡´É, ¾Ë¶÷Àº ÇÑ¹ø ¶ç¿ì°í ³¡ (»ç½Ç ¾ÆÁ÷ Á¤È®ÇÏÁö ¾ÊÁö¸¸ Á¾·ù°¡ ¸¹¾ÆÁö¸é º¹ÀâÇØÁú °Å °°¾Æ¼­ ³ª´²µÒ)
+    // UIì™€ ì•ŒëŒ ì°¨ì´ì  -> UIëŠ” ì¡°ì‘ì´ë‚˜ ìƒí˜¸ì‘ìš© ê°€ëŠ¥, ì•ŒëŒì€ í•œë²ˆ ë„ìš°ê³  ë (ì‚¬ì‹¤ ì•„ì§ ì •í™•í•˜ì§€ ì•Šì§€ë§Œ ì¢…ë¥˜ê°€ ë§ì•„ì§€ë©´ ë³µì¡í•´ì§ˆ ê±° ê°™ì•„ì„œ ë‚˜ëˆ ë‘ )
 
     [SerializeField]
-    private GameObject[] m_alarmPrefabs = new GameObject[(int)EAlarmType.LAST];                     // ¾Ë¶÷ ÇÁ¸®Æàµé
+    private GameObject[] m_alarmPrefabs = new GameObject[(int)EAlarmType.LAST];                     // ì•ŒëŒ í”„ë¦¬íë“¤
     public GameObject GetAlarmPrefab(EAlarmType _alarm) { return m_alarmPrefabs[(int)_alarm]; }
 
 
-    public Sprite GetMonsterSprite(EMonsterName _monster)
+    public Sprite GetMonsterProfile(EMonsterName _monster)
     {
         return GameManager.GetMonsterData(_monster).MonsterProfile;
+    }
+    public Sprite GetMonsterBodyImg(EMonsterName _monster)
+    {
+        return GameManager.GetMonsterData(_monster).MonsterBodyImg;
     }
 
     public Sprite GetItemSprite(SItem _item)

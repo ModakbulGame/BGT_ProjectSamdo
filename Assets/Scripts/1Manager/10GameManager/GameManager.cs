@@ -125,7 +125,8 @@ public class GameManager : SingleTon<GameManager>
     // UI
     private UIManager m_uiManager;
     public static UIManager UIManager { get { return Inst.m_uiManager; } }
-    public static Sprite GetMonsterSprite(EMonsterName _monster) { return UIManager.GetMonsterSprite(_monster); }                           // 몬스터 이미지
+    public static Sprite GetMonsterProfile(EMonsterName _monster) { return UIManager.GetMonsterProfile(_monster); }                         // 몬스터 프로필
+    public static Sprite GetMonsterBodyImg(EMonsterName _monster) { return UIManager.GetMonsterBodyImg(_monster); }                         // 몬스터 전신
     public static Sprite GetItemSprite(SItem _item) { return UIManager.GetItemSprite(_item); }                                              // 아이템 이미지
     public static Sprite GetPowerSprite(EPowerName _power) { return UIManager.GetPowerSprite(_power); }                                     // 스킬 이미지
 

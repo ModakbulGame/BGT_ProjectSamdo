@@ -12,6 +12,7 @@ public enum EPlayerInfoType
     WEAPON,
     ITEM,
     MONSTER,
+
     LAST
 }
 
@@ -67,20 +68,6 @@ public class PlayerInfoUIScript : MonoBehaviour
     {
         m_parent.HideItemInfoUI();
     }
-    public void ShowMonterImgUI()
-    {
-        m_parent.ShowMonsterImgUI();
-    }
-    public void HideMonsterImgUI()
-    {
-        m_parent.HideMonsterImgUI();
-    }
-    public void SetMonsterImg(EMonsterName _name)
-    {
-        m_parent.SetMonsterImg(_name);
-    }
-
-
 
     private void SetBtns()
     {

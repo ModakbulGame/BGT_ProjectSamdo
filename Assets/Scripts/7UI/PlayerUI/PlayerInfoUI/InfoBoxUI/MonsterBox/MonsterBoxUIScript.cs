@@ -5,10 +5,13 @@ using UnityEngine.UI;
 
 public class MonsterBoxUIScript : PlayerInfoBoxScript
 {
+    private MonsterDetailScript m_detail;
     private MonsterBoxElmScript[] m_elms;
 
     [SerializeField]
     private Button[] m_pageBtns = new Button[2];
+
+    private static EMonsterName CurMonster { get; set; } = EMonsterName.LAST;
 
     private static int CurPage { get; set; } = 0;
     private int MaxPage { get { return ((int)EMonsterName.LAST - 1) / ElmPerPage; } }
@@ -16,15 +19,10 @@ public class MonsterBoxUIScript : PlayerInfoBoxScript
 
     public override void InitUI()
     {
-        m_parent.ShowMonterImgUI();
         UpdateUI();
+        SetMonsterDetail(CurMonster);
     }
 
-    public override void CloseUI()
-    {
-        base.CloseUI();
-        m_parent.HideMonsterImgUI();
-    }
 
     private void SetPageBtn()
     {
@@ -53,19 +51,24 @@ public class MonsterBoxUIScript : PlayerInfoBoxScript
         SetPageBtn();
     }
 
+    public void SetMonsterDetail(EMonsterName _monster)
+    {
+        CurMonster = _monster;
+        m_detail.SetMonsterDetail(_monster);
+    }
+
+
     private void SetBtns()
     {
         m_pageBtns[0].onClick.AddListener(delegate { Changepage(false); });
         m_pageBtns[1].onClick.AddListener(delegate { Changepage(true); });
     }
 
-    public void SetMonsterImg(EMonsterName _name)
-    {
-        m_parent.SetMonsterImg(_name);
-    }
 
     public override void SetComps()
     {
+        m_detail = GetComponentInChildren<MonsterDetailScript>();
+        m_detail.SetComps();
         m_elms = GetComponentsInChildren<MonsterBoxElmScript>();
         if(m_elms.Length != ElmPerPage) { Debug.LogError("UI 개수 틀림"); }
         foreach (MonsterBoxElmScript elm in m_elms) elm.SetParent(this);

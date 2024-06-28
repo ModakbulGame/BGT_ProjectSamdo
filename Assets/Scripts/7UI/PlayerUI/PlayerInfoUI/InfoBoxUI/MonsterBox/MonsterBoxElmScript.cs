@@ -6,7 +6,9 @@ using UnityEngine.UI;
 
 public class MonsterBoxElmScript : MonoBehaviour
 {
-    private Image m_monsterImg;
+    [SerializeField]
+    private Image m_mosnterProfile;
+
     private TextMeshProUGUI m_monsterNameTxt;
     private TextMeshProUGUI m_monsterStateTxt;
     private Button m_btn;
@@ -19,10 +21,10 @@ public class MonsterBoxElmScript : MonoBehaviour
     public void SetMonsterInfo(EMonsterName _monster)
     {
         m_monster = _monster;
-        Sprite img = GameManager.GetMonsterSprite(_monster);
+        Sprite img = GameManager.GetMonsterProfile(_monster);
         MonsterInfo info = GameManager.GetMonsterInfo(_monster);
 
-        m_monsterImg.sprite = img;
+        m_mosnterProfile.sprite = img;
         m_monsterNameTxt.text = info.MonsterName;
         if (info.Cleared)
             m_monsterStateTxt.text = "완료";
@@ -37,12 +39,11 @@ public class MonsterBoxElmScript : MonoBehaviour
 
     public void SetMonsterImg()
     {
-        m_parent.SetMonsterImg(m_monster);
+        m_parent.SetMonsterDetail(m_monster);
     }
 
     private void SetComps()
     {
-        m_monsterImg = GetComponentsInChildren<Image>()[1];
         m_monsterNameTxt = GetComponentsInChildren<TextMeshProUGUI>()[0];
         m_monsterStateTxt = GetComponentsInChildren<TextMeshProUGUI>()[1];
         m_btn = GetComponent<Button>(); 

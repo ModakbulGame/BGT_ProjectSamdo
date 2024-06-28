@@ -127,16 +127,10 @@ public static class DataImporter
                 script.SetScriptable(scriptable);
             }
 
+            Sprite profile = Resources.Load<Sprite>($"{MonsterProfilePath + id}_P");
             Sprite body = Resources.Load<Sprite>($"{MonsterBodyImgPath + id}_B");
 
-/*
-            Texture2D profileTx = AssetDatabase.LoadMainAssetAtPath($"{MonsterProfilePath + id}_P.png") as Texture2D;
-            Texture2D bodyTx = AssetDatabase.LoadMainAssetAtPath($"{MonsterBodyImgPath + id}_B.png") as Texture2D;
-
-            Sprite profile = FunctionDefine.Texture2Sprite(profileTx);
-            Sprite body = FunctionDefine.Texture2Sprite(bodyTx);*/
-
-            scriptable.SetImage(null, body);
+            scriptable.SetImage(profile, body);
 
             scriptable.SetMonsterScriptable(idx, splitMonsterData, dropInfos[id], prefab);
 
