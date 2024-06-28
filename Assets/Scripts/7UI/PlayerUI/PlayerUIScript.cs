@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class PlayerUIScript : MonoBehaviour
@@ -67,6 +68,10 @@ public class PlayerUIScript : MonoBehaviour
     {
         m_monsterImgUI.gameObject.SetActive(false);
     }
+    public void SetMonsterImg(EMonsterName _name)
+    {
+        m_monsterImgUI.SetMonsterInfo(_name);
+    }
 
     public void CloseUI() { GameManager.SetControlMode(EControlMode.THIRD_PERSON); gameObject.SetActive(false); }      // 닫기
 
@@ -87,7 +92,9 @@ public class PlayerUIScript : MonoBehaviour
         m_infoUI.SetComps();
         m_materialUI.SetComps();
         m_monsterImgUI.SetParent(this);
+        m_monsterImgUI.SetComps();
         m_monsterImgUI.gameObject.SetActive(false);
+
         Opened = true;
     }
 

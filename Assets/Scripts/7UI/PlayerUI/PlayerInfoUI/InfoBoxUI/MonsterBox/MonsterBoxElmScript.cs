@@ -11,9 +11,14 @@ public class MonsterBoxElmScript : MonoBehaviour
     private TextMeshProUGUI m_monsterStateTxt;
     private Button m_btn;
 
+    private EMonsterName m_monster;
+
+    private MonsterBoxUIScript m_parent;
+    public void SetParent(MonsterBoxUIScript _parent) { m_parent = _parent; }
 
     public void SetMonsterInfo(EMonsterName _monster)
     {
+        m_monster = _monster;
         Sprite img = GameManager.GetMonsterSprite(_monster);
         MonsterInfo info = GameManager.GetMonsterInfo(_monster);
 
@@ -32,7 +37,7 @@ public class MonsterBoxElmScript : MonoBehaviour
 
     public void SetMonsterImg()
     {
-        Debug.Log(1);
+        m_parent.SetMonsterImg(m_monster);
     }
 
     private void SetComps()

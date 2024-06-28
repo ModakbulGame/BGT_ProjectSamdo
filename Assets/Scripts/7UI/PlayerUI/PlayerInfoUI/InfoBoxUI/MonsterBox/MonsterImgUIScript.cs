@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class MonsterImgUIScript : MonoBehaviour
 {
     private Image m_monsterImg;
-    private TextMeshProUGUI m_monsterNameTxt;
+    private TextMeshProUGUI[] m_monsterInfoTxt;
 
     private PlayerUIScript m_parent;
     public void SetParent(PlayerUIScript _parent) { m_parent = _parent; }
@@ -18,6 +18,20 @@ public class MonsterImgUIScript : MonoBehaviour
         MonsterInfo info = GameManager.GetMonsterInfo(_monster);
 
         m_monsterImg.sprite = img;
-        m_monsterNameTxt.text = info.MonsterName;
+        m_monsterInfoTxt[0].text = info.MonsterName;    // 이름
+        m_monsterInfoTxt[1].text = info.MonsterName;    // 설명
+
+        //if (info.Cleared)
+        //{
+        //    m_monsterImg.sprite = img;
+        //    m_monsterInfoTxt[0].text = info.MonsterName;    // 이름
+        //    m_monsterInfoTxt[1].text = info.MonsterName;    // 설명
+        //}
+    }
+
+    public void SetComps()
+    {
+        m_monsterImg = GetComponentInChildren<Image>();
+        m_monsterInfoTxt = GetComponentsInChildren<TextMeshProUGUI>();
     }
 }

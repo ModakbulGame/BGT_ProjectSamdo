@@ -1,3 +1,5 @@
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,17 +53,22 @@ public class MonsterBoxUIScript : PlayerInfoBoxScript
         SetPageBtn();
     }
 
-
     private void SetBtns()
     {
         m_pageBtns[0].onClick.AddListener(delegate { Changepage(false); });
         m_pageBtns[1].onClick.AddListener(delegate { Changepage(true); });
     }
 
+    public void SetMonsterImg(EMonsterName _name)
+    {
+        m_parent.SetMonsterImg(_name);
+    }
+
     public override void SetComps()
     {
         m_elms = GetComponentsInChildren<MonsterBoxElmScript>();
         if(m_elms.Length != ElmPerPage) { Debug.LogError("UI 개수 틀림"); }
+        foreach (MonsterBoxElmScript elm in m_elms) elm.SetParent(this);
         SetBtns();
     }
 }
