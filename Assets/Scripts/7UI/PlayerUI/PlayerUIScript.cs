@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,15 +9,16 @@ public class PlayerUIScript : MonoBehaviour
     private RectTransform m_rect;
     private Canvas m_uiCanvas;
 
-    private PlayerImgUIScript m_imgUI;                      // ÇÃ·¹ÀÌ¾î ÀÌ¹ÌÁö UI
-    private PlayerInfoUIScript m_infoUI;                    // ÇÃ·¹ÀÌ¾î Á¤º¸(¾ÆÀÌÅÛ, Æ¯¼º µî) UI
-    private PlayerMaterialUIScript m_materialUI;            // ÇÃ·¹ÀÌ¾î Àç·á UI
+    private PlayerImgUIScript m_imgUI;                      // í”Œë ˆì´ì–´ ì´ë¯¸ì§€ UI
+    private PlayerInfoUIScript m_infoUI;                    // í”Œë ˆì´ì–´ ì •ë³´(ì•„ì´í…œ, íŠ¹ì„± ë“±) UI
+    private PlayerMaterialUIScript m_materialUI;            // í”Œë ˆì´ì–´ ì¬ë£Œ UI
     [SerializeField]
-    private ItemInfoUIScript m_itemInfoUI;                  // ¾ÆÀÌÅÛ Á¤º¸ ÆË¾÷ UI
+    private ItemInfoUIScript m_itemInfoUI;                  // ì•„ì´í…œ ì •ë³´ íŒì—… UI
+    private MonsterImgUIScript m_monsterImgUI;
 
-    private bool Opened { get; set; }                       // ¿­¸° Àû ÀÖ´ÂÁö (Ã³À½ ¿­¸®´ÂÁö È®ÀÎ¿ë)
+    private bool Opened { get; set; }                       // ì—´ë¦° ì  ìˆëŠ”ì§€ (ì²˜ìŒ ì—´ë¦¬ëŠ”ì§€ í™•ì¸ìš©)
 
-    public void OpenUI()                                    // UI ¿­±â
+    public void OpenUI()                                    // UI ì—´ê¸°
     {
         gameObject.SetActive(true);
         if(!Opened) { SetComps(); }
@@ -31,7 +33,7 @@ public class PlayerUIScript : MonoBehaviour
         m_infoUI.UpdateUI();
     }
 
-    public void UpdateMaterials()                           // ÀçÈ­ ¾÷µ¥ÀÌÆ®
+    public void UpdateMaterials()                           // ì¬í™” ì—…ë°ì´íŠ¸
     {
         if(!Opened) { SetComps(); }
         m_materialUI.UpdateMaterials();
@@ -56,10 +58,17 @@ public class PlayerUIScript : MonoBehaviour
     {
         m_itemInfoUI.HideUI();
     }
+    public void ShowMonsterImgUI()
+    {
+        m_monsterImgUI.gameObject.SetActive(true);
+    }
 
+    public void HideMonsterImgUI()
+    {
+        m_monsterImgUI.gameObject.SetActive(false);
+    }
 
-
-    public void CloseUI() { GameManager.SetControlMode(EControlMode.THIRD_PERSON); gameObject.SetActive(false); }      // ´İ±â
+    public void CloseUI() { GameManager.SetControlMode(EControlMode.THIRD_PERSON); gameObject.SetActive(false); }      // ë‹«ê¸°
 
 
     private void SetComps()
@@ -70,12 +79,15 @@ public class PlayerUIScript : MonoBehaviour
         m_imgUI = GetComponentInChildren<PlayerImgUIScript>();
         m_infoUI = GetComponentInChildren<PlayerInfoUIScript>();
         m_materialUI = GetComponentInChildren<PlayerMaterialUIScript>();
+        m_monsterImgUI = GetComponentInChildren<MonsterImgUIScript>();
 
         m_imgUI.SetParent(this);
         m_imgUI.SetComps();
         m_infoUI.SetParent(this);
         m_infoUI.SetComps();
         m_materialUI.SetComps();
+        m_monsterImgUI.SetParent(this);
+        m_monsterImgUI.gameObject.SetActive(false);
         Opened = true;
     }
 

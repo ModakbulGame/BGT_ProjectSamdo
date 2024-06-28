@@ -9,6 +9,7 @@ public class MonsterBoxElmScript : MonoBehaviour
     private Image m_monsterImg;
     private TextMeshProUGUI m_monsterNameTxt;
     private TextMeshProUGUI m_monsterStateTxt;
+    private Button m_btn;
 
 
     public void SetMonsterInfo(EMonsterName _monster)
@@ -19,9 +20,9 @@ public class MonsterBoxElmScript : MonoBehaviour
         m_monsterImg.sprite = img;
         m_monsterNameTxt.text = info.MonsterName;
         if (info.Cleared)
-            m_monsterStateTxt.text = "�Ϸ�";
+            m_monsterStateTxt.text = "완료";
         else
-            m_monsterStateTxt.text = "�̿Ϸ�";
+            m_monsterStateTxt.text = "미완료";
     }
 
     public void HideElm()
@@ -29,11 +30,18 @@ public class MonsterBoxElmScript : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void SetMonsterImg()
+    {
+        Debug.Log(1);
+    }
+
     private void SetComps()
     {
         m_monsterImg = GetComponentsInChildren<Image>()[1];
         m_monsterNameTxt = GetComponentsInChildren<TextMeshProUGUI>()[0];
         m_monsterStateTxt = GetComponentsInChildren<TextMeshProUGUI>()[1];
+        m_btn = GetComponent<Button>(); 
+        m_btn.onClick.AddListener(SetMonsterImg);
     }
 
     private void Awake()

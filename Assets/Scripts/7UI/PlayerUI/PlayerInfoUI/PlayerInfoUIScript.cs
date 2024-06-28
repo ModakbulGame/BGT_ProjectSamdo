@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,16 +27,16 @@ public class PlayerInfoUIScript : MonoBehaviour
     private readonly PlayerInfoBoxScript[] m_infoUIs = new PlayerInfoBoxScript[(int)EPlayerInfoType.LAST];
     private Button[] m_infoSelectBtns;
 
-    private static EPlayerInfoType m_typeSetting = EPlayerInfoType.LAST;                    // ±‚¡∏ º≥¡§µ» Ω∫≈»
-    public EPlayerInfoType CurType { get; private set; } = EPlayerInfoType.LAST;            // ∫∏ø©¡÷∞Ì ¿÷¥¬ ∞≈
+    private static EPlayerInfoType m_typeSetting = EPlayerInfoType.LAST;                    // Í∏∞Ï°¥ ÏÑ§Ï†ïÎêú Ïä§ÌÉØ
+    public EPlayerInfoType CurType { get; private set; } = EPlayerInfoType.LAST;            // Î≥¥Ïó¨Ï£ºÍ≥† ÏûàÎäî Í±∞
 
-    public void OpenUI()                                    // ø≠±‚
+    public void OpenUI()                                    // Ïó¥Í∏∞
     {
         if (m_typeSetting == EPlayerInfoType.LAST) { SetInfoBox(EPlayerInfoType.STAT); }
         else { CurType = EPlayerInfoType.LAST; SetInfoBox(m_typeSetting); }
     }
 
-    public void SetInfoBox(EPlayerInfoType _type)           // «◊∏Ò º≥¡§
+    public void SetInfoBox(EPlayerInfoType _type)           // Ìï≠Î™© ÏÑ§Ï†ï
     {
         if (CurType == _type) { return; }
         if (CurType != EPlayerInfoType.LAST) { m_infoUIs[(int)CurType].CloseUI(); }
@@ -65,6 +66,15 @@ public class PlayerInfoUIScript : MonoBehaviour
     public void HideItemInfoUI()
     {
         m_parent.HideItemInfoUI();
+    }
+    public void ShowMonterImgUI()
+    {
+        m_parent.ShowMonsterImgUI();
+    }
+
+    public void HideMonsterImgUI()
+    {
+        m_parent.HideMonsterImgUI();
     }
 
 

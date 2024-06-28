@@ -14,7 +14,14 @@ public class MonsterBoxUIScript : PlayerInfoBoxScript
 
     public override void InitUI()
     {
+        m_parent.ShowMonterImgUI();
         UpdateUI();
+    }
+
+    public override void CloseUI()
+    {
+        base.CloseUI();
+        m_parent.HideMonsterImgUI();
     }
 
     private void SetPageBtn()
@@ -54,7 +61,7 @@ public class MonsterBoxUIScript : PlayerInfoBoxScript
     public override void SetComps()
     {
         m_elms = GetComponentsInChildren<MonsterBoxElmScript>();
-        if(m_elms.Length != ElmPerPage) { Debug.LogError("UI °³¼ö Æ²¸²"); }
+        if(m_elms.Length != ElmPerPage) { Debug.LogError("UI ê°œìˆ˜ í‹€ë¦¼"); }
         SetBtns();
     }
 }
