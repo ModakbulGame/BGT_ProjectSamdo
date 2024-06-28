@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class S421 : ParabolaExplodeScript
+public class S421 : ParabolaPowerScript
 {
 
 }

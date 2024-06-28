@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuffSummonPower : SummonPowerScript
+public class BuffSummonPower : AroundSummonPower
 {
     private float AdjustTimeCount { get; set; }
     private bool IsAdjusted { get { return AdjustTimeCount > 0; } }

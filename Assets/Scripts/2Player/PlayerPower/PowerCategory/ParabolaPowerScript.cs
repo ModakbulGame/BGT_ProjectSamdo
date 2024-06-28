@@ -7,6 +7,8 @@ public class ParabolaPowerScript : ProjectilePowerScript
     [SerializeField]
     private float m_upperForce = 1;
 
+    public override float DistanceMultiplier => 2;
+
     [SerializeField]
     private float ForceMultiplier { get; set; } = 1;
     private float UpperForce { get { return m_upperForce * ForceMultiplier; } }

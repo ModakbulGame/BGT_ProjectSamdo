@@ -11,11 +11,13 @@ public class PowerEffect : CombinedEffect
     private float m_returnDelay = 2;
 
     private Transform ReturnTrans { get; set; }
+    private Vector3 OriginalPosition { get; set; }
 
     public void EffectOn(Transform _returnTrans)
     {
-        transform.SetParent(null);
         ReturnTrans = _returnTrans;
+        OriginalPosition = transform.localPosition;
+        transform.SetParent(null);
         base.EffectOn();
         if(m_lastTime > 0) { StartCoroutine(WaitDone(m_lastTime)); }
     }
@@ -44,5 +46,6 @@ public class PowerEffect : CombinedEffect
     {
         yield return new WaitForSeconds(m_returnDelay);
         transform.SetParent(ReturnTrans);
+        transform.localPosition = OriginalPosition;
     }
 }

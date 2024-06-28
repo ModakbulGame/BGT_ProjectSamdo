@@ -223,6 +223,8 @@ public partial class PlayerController
     }
     public void FirePower()                                                                 // 스킬 사용
     {
+        if(IsRaycastPower && CheckRaycast().IsNull) { CancelPower(); return; }
+
         float coolTime = PowerInfoInHand.PowerCooltime;
         SetPowerCooltime(UsingPowerIdx, coolTime);
         PlayManager.UsePowerSlot(UsingPowerIdx, coolTime);

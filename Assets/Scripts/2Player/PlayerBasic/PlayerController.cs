@@ -63,6 +63,7 @@ public partial class PlayerController : ObjectScript, IHaveData
     public void ChangeState(EPlayerState _state) { m_stateManager.ChangeState(m_playerStates[(int)_state]); }       // 상태 변환
     public void StartHit()
     {
+        ShowWeapon();
         CurWeapon.PowerTrailOff();
     }
     public void ResetPlayerAction()

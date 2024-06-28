@@ -14,6 +14,8 @@ public class ProjectilePowerScript : PlayerPowerScript
     [SerializeField]
     protected ExplodeScript[] m_explodeAttacks;
 
+    public virtual float DistanceMultiplier { get { return 1; } }
+
 
     public override void ReleaseToPool()
     {
@@ -23,7 +25,7 @@ public class ProjectilePowerScript : PlayerPowerScript
 
     public virtual bool DistanceCheck(float _distanceMoved)
     {
-        return _distanceMoved > m_scriptable.CastingRange;
+        return _distanceMoved > m_scriptable.CastingRange * DistanceMultiplier;
     }
 
     public virtual void SetPower(PlayerController _player, float _attack, float _magic, Vector2 _dir)
@@ -35,7 +37,7 @@ public class ProjectilePowerScript : PlayerPowerScript
 
     public override void CollideTarget()
     {
-        if (PowerEffect != null) { PowerEffect.EffectOn(transform); }
+        if (PowerEffect != null) { PowerEffect.EffectOn(transform, 1); }
         if(m_explodeAttacks.Length > 0) { ActiveExplodes(); }
         ReleaseToPool();
     }
