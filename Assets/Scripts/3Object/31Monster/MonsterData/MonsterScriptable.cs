@@ -1,31 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 
 public class MonsterScriptable : ScriptableObject
 {
     public uint             Idx;
     public EMonsterName     MonsterEnum;
     public string           ID;
-    public EMonsterType     MonsterType;            // Á¾·ù (º¸Åë, ¿¤¸®Æ®, º¸½º)
+    public EMonsterType     MonsterType;            // ì¢…ë¥˜ (ë³´í†µ, ì—˜ë¦¬íŠ¸, ë³´ìŠ¤)
     public string           MonsterName;
     public int              MaxHP;
     public float            Attack;
     public float            MoveSpeed;
-    public float            ApproachSpeed;          // Á¢±Ù ½Ã ¼Óµµ
-    public float            ViewAngle;              // ½Ã¾ß°¢
-    public float            ViewRange;              // ½Ã¾ß ¹üÀ§
-    public float            EngageRange;            // ¹¹¿´Áö
-    public float            ReturnRange;            // ¿ø·¡ À§Ä¡·Î µ¹¾Æ°¡´Â ¹üÀ§
+    public float            ApproachSpeed;          // ì ‘ê·¼ ì‹œ ì†ë„
+    public float            ViewAngle;              // ì‹œì•¼ê°
+    public float            ViewRange;              // ì‹œì•¼ ë²”ìœ„
+    public float            EngageRange;            // ë­ì˜€ì§€
+    public float            ReturnRange;            // ì›ëž˜ ìœ„ì¹˜ë¡œ ëŒì•„ê°€ëŠ” ë²”ìœ„
     public float            AttackRange;
     public float            AttackSpeed;
-    public float            ApproachDelay;          // Á¢±Ù µô·¹ÀÌ
-    public float            FenceRange;             // µ¹¾Æ´Ù´Ï´Â ¹üÀ§ returnRange¶û ¹¹°¡ ´Ù¸§?
+    public float            ApproachDelay;          // ì ‘ê·¼ ë”œë ˆì´
+    public float            FenceRange;             // ëŒì•„ë‹¤ë‹ˆëŠ” ë²”ìœ„ returnRangeëž‘ ë­ê°€ ë‹¤ë¦„?
     public string           Description;
-    public int              FirstKillStat = 1;      // ÃÖÃÊ Ã³Ä¡ ½Ã ½ºÅÈ ¾ç
+    public int              FirstKillStat = 1;      // ìµœì´ˆ ì²˜ì¹˜ ì‹œ ìŠ¤íƒ¯ ì–‘
     public DropInfo         DropInfo;
     public GameObject       MonsterPrefab;
     public Sprite           MonsterProfile;
+    public Sprite           MonsterBodyImg;
 
     private EMonsterType String2Type(string _data)
     {
@@ -37,6 +39,12 @@ public class MonsterScriptable : ScriptableObject
 
             _ => EMonsterType.LAST
         };
+    }
+
+    public void SetImage(Sprite _profile, Sprite _body)
+    {
+        if (_profile != null) { MonsterProfile = _profile; }
+        if (_body != null) { MonsterBodyImg = _body; }
     }
 
     public void SetMonsterScriptable(uint _idx, string[] _data, DropInfo _drop, GameObject _prefab)

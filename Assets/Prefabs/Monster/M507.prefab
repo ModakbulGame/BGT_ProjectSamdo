@@ -57,8 +57,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_baseInfo:
     ObjectName: "\uC0DD\uBA85 \uB545\uACE0\uC591\uC774"
-    AttackSpeed: 2
+    AttackSpeed: 1.3
     MoveSpeed: 3
+  m_hitSounds: []
+  m_dieSounds: []
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
@@ -67,7 +69,9 @@ MonoBehaviour:
   - {fileID: 3182551727449803534}
   - {fileID: 5379810400386613370}
   - {fileID: 8774051692207393923}
-  SkillList: []
+  m_normalDamageMultiplier:
+  - 1
+  - 0.5
   m_scriptable: {fileID: 11400000, guid: 1f95ad6ed9a82c7498d0cd231d5652ae, type: 2}
   m_combatInfo:
     MaxHP: 220
@@ -88,12 +92,10 @@ MonoBehaviour:
   HasSpeedAttack: 0
   m_dissolveDelay: 1
   m_jumpAttackDist: 1.75
-  m_normalDamageMultiplier:
-  - 1
-  - 0.5
   m_clawEffects:
   - {fileID: 1817704533673404557}
   - {fileID: 3562198491902413394}
+  m_healPercent: 0.1
 --- !u!114 &8845934459699198658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,6 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aaa794688dde2e4c8dc888d525b3bdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_useLayer: 0
   m_isHiding: 0
 --- !u!54 &7229214969447431716
 Rigidbody:
@@ -233,6 +236,8 @@ MonoBehaviour:
     ObjectName: "\uC0DD\uBA85 \uB545\uACE0\uC591\uC774"
     AttackSpeed: 1
     MoveSpeed: 3
+  m_hitSounds: []
+  m_dieSounds: []
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
@@ -241,7 +246,9 @@ MonoBehaviour:
   - {fileID: 3182551727449803534}
   - {fileID: 5379810400386613370}
   - {fileID: 8774051692207393923}
-  SkillList: []
+  m_normalDamageMultiplier:
+  - 0
+  - 0
   m_scriptable: {fileID: 11400000, guid: 1f95ad6ed9a82c7498d0cd231d5652ae, type: 2}
   m_combatInfo:
     MaxHP: 50
@@ -262,9 +269,6 @@ MonoBehaviour:
   HasSpeedAttack: 0
   m_dissolveDelay: 2
   m_jumpAttackDist: 1.75
-  m_normalDamageMultiplier:
-  - 0
-  - 0
   m_clawEffects: []
 --- !u!1001 &891634348866949445
 PrefabInstance:

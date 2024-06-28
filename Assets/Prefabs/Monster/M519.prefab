@@ -60,6 +60,8 @@ MonoBehaviour:
     ObjectName: "\uBE14\uB85C"
     AttackSpeed: 6
     MoveSpeed: 2
+  m_hitSounds: []
+  m_dieSounds: []
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
@@ -78,7 +80,7 @@ MonoBehaviour:
     ViewRange: 15
     EngageRange: 15
     ReturnRange: 15
-    AttackRange: 2.5
+    AttackRange: 2
     ApproachDelay: 1
     FenceRange: 25
   m_spawnPoint: {fileID: 0}
@@ -120,6 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aaa794688dde2e4c8dc888d525b3bdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_useLayer: 0
   m_isHiding: 0
 --- !u!54 &4848873886647825632
 Rigidbody:

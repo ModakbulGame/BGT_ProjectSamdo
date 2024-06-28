@@ -55,8 +55,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_baseInfo:
     ObjectName: "\uB9C8\uB974\uBAB0\uB77D \uD30C\uC218\uAFBC"
-    AttackSpeed: 2.2
+    AttackSpeed: 1.3
     MoveSpeed: 2
+  m_hitSounds: []
+  m_dieSounds: []
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
@@ -80,7 +82,7 @@ MonoBehaviour:
     EngageRange: 15
     ReturnRange: 15
     AttackRange: 1.5
-    ApproachDelay: 0.2
+    ApproachDelay: 2
     FenceRange: 25
   m_spawnPoint: {fileID: 0}
   m_roamingDistance:
@@ -93,6 +95,7 @@ MonoBehaviour:
   m_throwRange: 25
   m_roarCooltime: 15
   m_roarRadius: 10
+  m_roarDamage: 10
   m_purifyTime: 8
 --- !u!114 &551359100193247889
 MonoBehaviour:
@@ -125,6 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aaa794688dde2e4c8dc888d525b3bdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_useLayer: 0
   m_isHiding: 0
 --- !u!54 &2451940123967238420
 Rigidbody:

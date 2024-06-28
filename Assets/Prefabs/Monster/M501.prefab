@@ -54,15 +54,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_baseInfo:
     ObjectName: "\uC0DD\uBA85 \uD574\uACE8\uB531\uC9C0"
-    AttackSpeed: 4.5
+    AttackSpeed: 2.2
     MoveSpeed: 2.5
+  m_hitSounds: []
+  m_dieSounds: []
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
   m_uiOffset: 2
   m_normalAttacks:
   - {fileID: 0}
-  SkillList: []
+  m_normalDamageMultiplier: []
   m_scriptable: {fileID: 11400000, guid: 1bd0d9e51aec6584bbb8597d6dca989c, type: 2}
   m_combatInfo:
     MaxHP: 90
@@ -83,6 +85,7 @@ MonoBehaviour:
   HasSpeedAttack: 0
   m_dissolveDelay: 2
   m_skurrabyExplode: {fileID: 1321009547393741243}
+  m_purifyJump: 2
 --- !u!114 &8845934459699198658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aaa794688dde2e4c8dc888d525b3bdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_useLayer: 0
   m_isHiding: 0
 --- !u!54 &7229214969447431716
 Rigidbody:

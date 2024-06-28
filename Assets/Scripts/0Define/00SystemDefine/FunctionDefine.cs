@@ -2,6 +2,7 @@ using MalbersAnimations.Conditions;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
 public delegate void FPointer();                                    // 함수 포인터
 public delegate void EventPointer(PointerEventData _data);          // 마우스 정보 갖는 함수 포인터
@@ -54,6 +55,14 @@ public static class FunctionDefine
         return _line.Replace("\\n", "\n");
     }
 
+    public static Sprite Texture2Sprite(Texture2D _texture)
+    {
+        if(_texture == null) { return null; }
+        Sprite sprite = Sprite.Create(_texture, new Rect(0, 0, _texture.width, _texture.height), new Vector2(0.5f, 0.5f), 100);
+
+        sprite.name = _texture.name;
+        return sprite;
+    }
 
     public static bool CheckAnimParameter(Animator _anim, string _name)                                             // 애니메이터에 특정 변수명 있는지 확인
     {

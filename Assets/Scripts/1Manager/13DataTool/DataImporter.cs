@@ -20,7 +20,7 @@ public static class DataImporter
     private const string DialogueCSVName = "DialogueSheet.csv";
     private const string QuestCSVName = "QuestSheet.csv";
 
-    // ½ºÅ©¸³ÅÍºí °æ·Î
+    // ìŠ¤í¬ë¦½í„°ë¸” ê²½ë¡œ
     private const string ScriptablePath = "Assets/Scriptables/";
 
     private const string MonsterScriptablePath = ScriptablePath + "MonsterScriptable/";
@@ -37,7 +37,7 @@ public static class DataImporter
     private const string QuestScriptablePath = ScriptablePath + "QuestScriptable/";
     private const string DialogueScriptablePath = ScriptablePath + "DialogueScriptable/";
 
-    // ÇÁ¸®Æà °æ·Î
+    // í”„ë¦¬í ê²½ë¡œ
     private const string PrefabPath = "Assets/Prefabs/";
     private const string MonsterPrefabPath = PrefabPath + "Monster/";
     private const string ItemPrefabPath = PrefabPath + "Item/";
@@ -51,10 +51,18 @@ public static class DataImporter
     private const string NPCPrefabPath = PrefabPath + "NPC/";
 
 
+    // ì´ë¯¸ì§€ ê²½ë¡œ
+    private const string ImagePath = "Image/";
+    private const string MonsterBodyImgPath = ImagePath + "MonsterBody/";
+    private const string MonsterProfilePath = ImagePath + "MonsterProfile/";
+
+
+
+
     [MenuItem("Utilities/GenerateMonsters")]
     private static void GenerateMonsterData()
     {
-        // µå¶ø Á¤º¸
+        // ë“œë ì •ë³´
         string[] allDropLines = File.ReadAllLines(CSVPath + DropCSVName);
 
         Dictionary<string, DropInfo> dropInfos = new();
@@ -83,7 +91,7 @@ public static class DataImporter
         }
 
 
-        // ¸ó½ºÅÍ Á¤º¸
+        // ëª¬ìŠ¤í„° ì •ë³´
         string[] allMonsterLines = File.ReadAllLines(CSVPath + MonsterCSVName);
 
         List<MonsterScriptable> datas = new();
@@ -115,9 +123,20 @@ public static class DataImporter
             if (prefab != null)
             {
                 MonsterScript script = prefab.GetComponentInChildren<MonsterScript>();
-                if (script == null) { Debug.LogError("¸ó½ºÅÍ¿¡ ½ºÅ©¸³Æ® ¾øÀ½"); continue; }
+                if (script == null) { Debug.LogError("ëª¬ìŠ¤í„°ì— ìŠ¤í¬ë¦½íŠ¸ ì—†ìŒ"); continue; }
                 script.SetScriptable(scriptable);
             }
+
+            Sprite body = Resources.Load<Sprite>($"{MonsterBodyImgPath + id}_B");
+
+/*
+            Texture2D profileTx = AssetDatabase.LoadMainAssetAtPath($"{MonsterProfilePath + id}_P.png") as Texture2D;
+            Texture2D bodyTx = AssetDatabase.LoadMainAssetAtPath($"{MonsterBodyImgPath + id}_B.png") as Texture2D;
+
+            Sprite profile = FunctionDefine.Texture2Sprite(profileTx);
+            Sprite body = FunctionDefine.Texture2Sprite(bodyTx);*/
+
+            scriptable.SetImage(null, body);
 
             scriptable.SetMonsterScriptable(idx, splitMonsterData, dropInfos[id], prefab);
 
@@ -133,13 +152,13 @@ public static class DataImporter
         AssetDatabase.SaveAssets();
         EditorUtility.SetDirty(gameManager);
 
-        Debug.Log("¸ó½ºÅÍ Á¤º¸ ºÒ·¯¿À±â ¿Ï·á");
+        Debug.Log("ëª¬ìŠ¤í„° ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸° ì™„ë£Œ");
     }
 
     [MenuItem("Utilities/GenerateItems")]
     private static void GenerateItemData()
     {
-        // ¾ÆÀÌÅÛ Á¤º¸
+        // ì•„ì´í…œ ì •ë³´
         string[] allItemLines = File.ReadAllLines(CSVPath + ItemCSVName);
 
         uint[] itemCnt = new uint[(int)EItemType.LAST];
@@ -199,7 +218,7 @@ public static class DataImporter
                         AssetDatabase.CreateAsset(scriptable, $"{ItemScriptablePaths[type] + id}.asset");
                     }
                     break;
-                default: Debug.LogError("¸Â´Â ID ¾øÀ½"); return;
+                default: Debug.LogError("ë§ëŠ” ID ì—†ìŒ"); return;
             }
             uint idx = itemCnt[type]++;
             datas[type].Add(scriptable);
@@ -225,7 +244,7 @@ public static class DataImporter
                     case ValueDefine.OTHER_ITEM_CODE:
 
                         break;
-                    default: Debug.LogError("¸Â´Â ID ¾øÀ½"); return;
+                    default: Debug.LogError("ë§ëŠ” ID ì—†ìŒ"); return;
                 }
             }
 
@@ -243,13 +262,13 @@ public static class DataImporter
         AssetDatabase.SaveAssets();
         EditorUtility.SetDirty(gameManager);
 
-        Debug.Log("¾ÆÀÌÅÛ Á¤º¸ ºÒ·¯¿À±â ¿Ï·á");
+        Debug.Log("ì•„ì´í…œ ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸° ì™„ë£Œ");
     }
 
     [MenuItem("Utilities/GeneratePowers")]
     private static void GeneratePowerData()
     {
-        // ½ºÅ³ Á¤º¸
+        // ìŠ¤í‚¬ ì •ë³´
         string[] allPowerLines = File.ReadAllLines(CSVPath + PowerCSVName);
 
         List<PowerScriptable> datas = new();
@@ -281,7 +300,7 @@ public static class DataImporter
             if (prefab != null)
             {
                 PlayerPowerScript script = prefab.GetComponentInChildren<PlayerPowerScript>();
-                if (script == null) { Debug.LogError("½ºÅ³¿¡ ½ºÅ©¸³Æ® ¾øÀ½"); continue; }
+                if (script == null) { Debug.LogError("ìŠ¤í‚¬ì— ìŠ¤í¬ë¦½íŠ¸ ì—†ìŒ"); continue; }
                 script.SetScriptable(scriptable);
             }
 
@@ -299,13 +318,13 @@ public static class DataImporter
         AssetDatabase.SaveAssets();
         EditorUtility.SetDirty(gameManager);
 
-        Debug.Log("±Ç´É Á¤º¸ ºÒ·¯¿À±â ¿Ï·á");
+        Debug.Log("ê¶ŒëŠ¥ ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸° ì™„ë£Œ");
     }
 
     [MenuItem("Utilities/GenerateStory")]
     private static void GenerateStory()
     {
-        // ´ëÈ­ Á¤º¸
+        // ëŒ€í™” ì •ë³´
         string[] allDialogueLines = File.ReadAllLines(CSVPath + DialogueCSVName);
         List<DialogueScriptable> dialogueData = new();
 
@@ -331,7 +350,7 @@ public static class DataImporter
             }
 
             string folderPath = $"{DialogueScriptablePath}/{dialNPC}";
-            // Æú´õ°¡ ÀÌ¹Ì Á¸ÀçÇÏ´ÂÁö È®ÀÎ
+            // í´ë”ê°€ ì´ë¯¸ ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸
             if (!AssetDatabase.IsValidFolder(folderPath))
             {
                 AssetDatabase.CreateFolder(DialogueScriptablePath[..(DialogueScriptablePath.Length-1)], dialNPC);
@@ -356,7 +375,7 @@ public static class DataImporter
         }
 
 
-        // Äù½ºÆ® Á¤º¸
+        // í€˜ìŠ¤íŠ¸ ì •ë³´
         string[] allQuestLines = File.ReadAllLines(CSVPath + QuestCSVName);
 
         List<QuestScriptable> questData = new();
@@ -390,7 +409,7 @@ public static class DataImporter
             EditorUtility.SetDirty(scriptable);
         }
 
-        foreach (QuestScriptable quest in questData)                    // ÀÌ¾îÁö´Â Äù½ºÆ® Ãß°¡
+        foreach (QuestScriptable quest in questData)                    // ì´ì–´ì§€ëŠ” í€˜ìŠ¤íŠ¸ ì¶”ê°€
         {
             List<NPCDialogue> questDials = quest.ResultDialogues;
             foreach (NPCDialogue questDial in questDials)
@@ -412,7 +431,7 @@ public static class DataImporter
                 }
             }
         }
-        foreach (DialogueScriptable dial in dialogueData)       // ÃÖÃÊ ½ÃÀÛ ´ëÈ­ ¼³Á¤1
+        foreach (DialogueScriptable dial in dialogueData)       // ìµœì´ˆ ì‹œì‘ ëŒ€í™” ì„¤ì •1
         {
             foreach (DialLine line in dial.Lines)
             {
@@ -426,7 +445,7 @@ public static class DataImporter
                 }
             }
         }
-        foreach (QuestScriptable quest in questData)            // ÃÖÃÊ ½ÃÀÛ ´ëÈ­ ¼³Á¤2
+        foreach (QuestScriptable quest in questData)            // ìµœì´ˆ ì‹œì‘ ëŒ€í™” ì„¤ì •2
         {
             foreach (NPCDialogue result in quest.ResultDialogues)
             {
@@ -440,13 +459,13 @@ public static class DataImporter
 
         GameObject hellMap = AssetDatabase.LoadMainAssetAtPath(HellMapPath) as GameObject;
         OasisNPC[] oasisList = hellMap.GetComponentsInChildren<OasisNPC>();
-        if (oasisList.Length != (int)EOasisName.LAST) { Debug.LogError("¸Ê¿¡ ¿À¾Æ½Ã½º °³¼ö ´Ù¸§"); return; }
+        if (oasisList.Length != (int)EOasisName.LAST) { Debug.LogError("ë§µì— ì˜¤ì•„ì‹œìŠ¤ ê°œìˆ˜ ë‹¤ë¦„"); return; }
         AltarScript[] altarList = hellMap.GetComponentsInChildren<AltarScript>();
-        if (altarList.Length != (int)EAltarName.LAST) { Debug.LogError("¸Ê¿¡ Á¦´Ü °³¼ö ´Ù¸§"); return; }
+        if (altarList.Length != (int)EAltarName.LAST) { Debug.LogError("ë§µì— ì œë‹¨ ê°œìˆ˜ ë‹¤ë¦„"); return; }
         SlateScript[] slateList = hellMap.GetComponentsInChildren<SlateScript>();
-        if (slateList.Length != (int)ESlateName.LAST) { Debug.LogError("¸Ê¿¡ ¼®ÆÇ °³¼ö ´Ù¸§"); return; }
+        if (slateList.Length != (int)ESlateName.LAST) { Debug.LogError("ë§µì— ì„íŒ ê°œìˆ˜ ë‹¤ë¦„"); return; }
 
-        // NPC Á¤º¸
+        // NPC ì •ë³´
         string[] allNPCLines = File.ReadAllLines(CSVPath + NPCCSVName);
 
         List<NPCScriptable> npcData = new();
@@ -459,7 +478,7 @@ public static class DataImporter
 
             if (splitNPCData.Length != (int)ENPCAttribute.LAST)
             {
-                Debug.Log(si + $"NPC µ¥ÀÌÅÍ ÁÙ °³¼ö ¸ğÀÚ¶÷");
+                Debug.Log(si + $"NPC ë°ì´í„° ì¤„ ê°œìˆ˜ ëª¨ìëŒ");
                 return;
             }
 
@@ -483,7 +502,7 @@ public static class DataImporter
 
             scriptable.SetNPCScriptable(idx, splitNPCData);
 
-            foreach (DialogueScriptable dial in dialogueData)               // ´ëÈ­, Äù½ºÆ® Áß NPC¿¡ ÇØ´çÇÏ´Â °Å Ãß°¡
+            foreach (DialogueScriptable dial in dialogueData)               // ëŒ€í™”, í€˜ìŠ¤íŠ¸ ì¤‘ NPCì— í•´ë‹¹í•˜ëŠ” ê±° ì¶”ê°€
             {
                 if (dial.NPC == scriptable.NPC)
                 {
@@ -525,7 +544,7 @@ public static class DataImporter
             {
                 //GameObject prefab = AssetDatabase.LoadMainAssetAtPath($"{NPCPrefabPath + npc}.prefab") as GameObject;
                 //if (prefab == null) { continue; }
-                //if (!prefab.TryGetComponent<NPCScript>(out var script)) { Debug.Log(npc + " ½ºÅ©¸³Æ® ¾øÀ½"); continue; }
+                //if (!prefab.TryGetComponent<NPCScript>(out var script)) { Debug.Log(npc + " ìŠ¤í¬ë¦½íŠ¸ ì—†ìŒ"); continue; }
                 //script.SetScriptable(scriptable);
                 //AssetDatabase.SaveAssets();
                 //EditorUtility.SetDirty(prefab);
@@ -548,7 +567,7 @@ public static class DataImporter
         AssetDatabase.SaveAssets();
         EditorUtility.SetDirty(gameManager);
 
-        Debug.Log("½ºÅä¸® Á¤º¸ ºÒ·¯¿À±â ¿Ï·á");
+        Debug.Log("ìŠ¤í† ë¦¬ ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸° ì™„ë£Œ");
     }
 }
 #endif

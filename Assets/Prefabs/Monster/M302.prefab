@@ -54,15 +54,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_baseInfo:
     ObjectName: "\uAE5C\uBE61\uBD80\uB9AC"
-    AttackSpeed: 3
+    AttackSpeed: 1.5
     MoveSpeed: 3
+  m_hitSounds: []
+  m_dieSounds: []
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
   m_uiOffset: 2
   m_normalAttacks:
   - {fileID: 3059765512365830660}
-  SkillList: []
+  m_normalDamageMultiplier: []
   m_scriptable: {fileID: 11400000, guid: fbc17a791b93e9645bdf1e4c5e7773db, type: 2}
   m_combatInfo:
     MaxHP: 200
@@ -82,6 +84,8 @@ MonoBehaviour:
     Max: 5
   HasSpeedAttack: 1
   m_dissolveDelay: 2
+  PurifyTime: 5
+  EvadeAttackStack: 2
 --- !u!114 &5702747285115683768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aaa794688dde2e4c8dc888d525b3bdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_useLayer: 0
   m_isHiding: 0
 --- !u!54 &7819222220313550657
 Rigidbody:

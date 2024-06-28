@@ -53,8 +53,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_baseInfo:
     ObjectName: "\uBB3C \uBBF8\uB2C8\uC6C0"
-    AttackSpeed: 2.5
+    AttackSpeed: 1.5
     MoveSpeed: 3
+  m_hitSounds: []
+  m_dieSounds: []
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
@@ -95,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aaa794688dde2e4c8dc888d525b3bdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_useLayer: 0
   m_isHiding: 0
 --- !u!54 &2910072855049774924
 Rigidbody:
