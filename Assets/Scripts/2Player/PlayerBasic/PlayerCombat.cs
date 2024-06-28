@@ -209,6 +209,8 @@ public partial class PlayerController
         if (PowerInfoInHand.HideWeapon) { HideWeapon(); }
         if (PowerInfoInHand.ShowCastingEffect) { CastingEffectOn(); }
 
+        GameManager.PlaySE(EPlayerSE.CASTING);
+
         if (IsHealing) { CancelHeal(); }
 
         if (PowerInfoInHand.CastType == ECastType.SUMMON)
@@ -439,6 +441,7 @@ public partial class PlayerController
         HealObj(HealAmountInHand);
         PlayManager.UseHealPattern();
         CreateHealEffect();
+        GameManager.PlaySE(EPlayerSE.HEAL);
     }
     private void CreateHealEffect()
     {

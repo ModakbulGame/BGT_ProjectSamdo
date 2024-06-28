@@ -13,7 +13,14 @@ public enum EPlayerSE
 {
     STEP1,
     STEP2,
-    SLSAH1,
+    SLSAH,
+    BLOW,
+    HEAL,
+    CASTING,
+    INTERACT,
+    ITEM_GET,
+    GET_HIT,
+    DIE,
 
     LAST
 }
@@ -36,7 +43,7 @@ public enum EEnvironmentSE
     LAST
 }
 
-public enum EUISE
+public enum ESystemSE
 {
 
     LAST

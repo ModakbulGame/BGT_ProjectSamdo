@@ -43,8 +43,8 @@ public class DropItemScript : PooledItem, IInteractable
 
     public override void ReleaseToPool()
     {
-        base.ReleaseToPool();
         m_dropItems.Clear();
+        base.ReleaseToPool();
     }
 
 
@@ -55,6 +55,7 @@ public class DropItemScript : PooledItem, IInteractable
             PlayManager.AddInventoryItem(item, 1, true);
         }
 
+        GameManager.PlaySE(EPlayerSE.ITEM_GET);
         ReleaseToPool();
     }
 }

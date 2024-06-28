@@ -66,11 +66,11 @@ public class WeaponScript : AnimateAttackScript
     {
         if (HitType == EHitType.SLASH)
         {
-            GameManager.PlaySE(EPlayerSE.SLSAH1, _pos);
+            GameManager.PlaySE(EPlayerSE.SLSAH, _pos);
         }
         else if (HitType == EHitType.BLOW)
         {
-
+            GameManager.PlaySE(EPlayerSE.BLOW);
         }
     }
 

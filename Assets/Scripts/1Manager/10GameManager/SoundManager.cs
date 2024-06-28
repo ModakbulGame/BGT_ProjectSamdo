@@ -15,7 +15,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private AudioClip[] m_environmentSEList;
     [SerializeField]
-    private AudioClip[] m_uiSEList;                             // 여기까지
+    private AudioClip[] m_systemSE;                             // 여기까지
 
 
     [SerializeField]
@@ -56,7 +56,7 @@ public class SoundManager : MonoBehaviour
     public void PlaySE(EPowerSE _se, Vector3 _point) { PlaySE(m_powerSEList[(int)_se], _point); }
     public void PlaySE(EEnvironmentSE _se) { PlaySE(_se, CameraPos); }
     public void PlaySE(EEnvironmentSE _se, Vector3 _point) { PlaySE(m_environmentSEList[(int)_se], _point); }
-    public void PlaySE(EUISE _se) { PlaySE(m_uiSEList[(int)_se], CameraPos); }
+    public void PlaySE(ESystemSE _se) { PlaySE(m_systemSE[(int)_se], CameraPos); }
 
     public void PlaySE(AudioClip _clip, Vector3 _point)                        // 효과음 예시
     {
@@ -72,7 +72,7 @@ public class SoundManager : MonoBehaviour
         if (m_powerSEList.Length != (int)EBGM.LAST) { Debug.Log("효과음 리스트2 개수 틀림"); return; }
         if (m_monsterSEList.Length != (int)EBGM.LAST) { Debug.Log("효과음 리스트3 개수 틀림"); return; }
         if (m_environmentSEList.Length != (int)EBGM.LAST) { Debug.Log("효과음 리스트4 개수 틀림"); return; }
-        if (m_uiSEList.Length != (int)EBGM.LAST) { Debug.Log("효과음 리스트5 개수 틀림"); return; }
+        if (m_systemSE.Length != (int)EBGM.LAST) { Debug.Log("효과음 리스트5 개수 틀림"); return; }
     }
 
     public void SetManager()
