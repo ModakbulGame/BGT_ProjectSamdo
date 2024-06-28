@@ -45,7 +45,7 @@ public partial class PlayerController
     public void StartInteract()                                                     // 상호작용 시작
     {
         Interacting = true;
-        GameManager.PlaySE(EPlayerSE.INTERACT);
+        GameManager.PlaySE(EPlayerSE.INTERACT, transform.position);
     }
     public void StopInteract()                                                      // 상호작용 중단
     {

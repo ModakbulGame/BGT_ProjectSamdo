@@ -70,7 +70,7 @@ public class WeaponScript : AnimateAttackScript
         }
         else if (HitType == EHitType.BLOW)
         {
-            GameManager.PlaySE(EPlayerSE.BLOW);
+            GameManager.PlaySE(EPlayerSE.BLOW, _pos);
         }
     }
 

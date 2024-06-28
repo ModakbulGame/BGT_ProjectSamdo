@@ -55,7 +55,7 @@ public class DropItemScript : PooledItem, IInteractable
             PlayManager.AddInventoryItem(item, 1, true);
         }
 
-        GameManager.PlaySE(EPlayerSE.ITEM_GET);
+        GameManager.PlaySE(EPlayerSE.ITEM_GET, transform.position);
         ReleaseToPool();
     }
 }
