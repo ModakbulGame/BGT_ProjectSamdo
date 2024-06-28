@@ -74,6 +74,12 @@ public partial class PlayerController
         }
     }
 
+    public override void GetKnockBack(HitData _hit)
+    {
+        if (IsGuarding) { return; }
+        base.GetKnockBack(_hit);
+    }
+
 
     // 무적 관련
     private bool IsInvincible { get; set; }                             // 무적 상태 여부

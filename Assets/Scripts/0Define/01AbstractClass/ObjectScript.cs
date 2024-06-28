@@ -260,7 +260,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     {
         m_rigid.AddForce(ValueDefine.DEFAULT_CC[(int)ECCType.AIRBORNE] * Vector3.up, ForceMode.VelocityChange);
     }
-    private void GetKnockBack(HitData _hit)
+    public virtual void GetKnockBack(HitData _hit)
     {
         Vector2 flatDir = (Position2 -_hit.Attacker.Position2).normalized;
         Vector3 dir = new(flatDir.x, 0, flatDir.y);
