@@ -158,6 +158,21 @@ public abstract partial class ObjectScript
     public virtual bool IsPlayer { get { return false; } }
     public virtual bool IsMonster { get { return false; } }
 
+    [SerializeField]
+    private AudioClip[] m_hitSounds;
+    protected void PlayHitSound() 
+    {
+        if(m_hitSounds.Length == 0) { return; }
+        GameManager.PlaySE(m_hitSounds[UnityEngine.Random.Range(0, m_hitSounds.Length)], Position);
+    }
+    [SerializeField]
+    private AudioClip[] m_dieSounds;
+    protected void PlayDieSound()
+    {
+        if (m_hitSounds.Length == 0) { return; }
+        GameManager.PlaySE(m_dieSounds[UnityEngine.Random.Range(0, m_dieSounds.Length)], Position);
+    }
+
 
     // 버프 디버프 정보
     [SerializeField]

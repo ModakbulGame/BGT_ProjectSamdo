@@ -136,6 +136,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
         }
         if (hp <= 0 || CheckVoid(damage)) { hp = 0; SetDead(); }
         if (ExtraHP > 0) { ExtraHP -= damage; }
+        if (!IsDead) { PlayHitSound(); }
         SetHP(hp);
     }
     public virtual void GetRawDamage(float _damage)
@@ -151,7 +152,7 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     {
         CurHP = _hp;
     }                   // HP 설정
-    public virtual void SetDead() { IsDead = true; }                        // 죽음 설정
+    public virtual void SetDead() { IsDead = true; PlayDieSound(); }        // 죽음 설정
     public virtual void HealObj(float _heal)                                // 회복
     {
         float hp = CurHP + _heal;

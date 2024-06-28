@@ -62,6 +62,7 @@ public class GameManager : SingleTon<GameManager>
     public static void PlaySE(EEnvironmentSE _se) { SoundManager.PlaySE(_se); }
     public static void PlaySE(EEnvironmentSE _se, Vector3 _point) { SoundManager.PlaySE(_se, _point); }
     public static void PlaySE(ESystemSE _se) { SoundManager.PlaySE(_se); }
+    public static void PlaySE(AudioClip _clip, Vector3 _point) { SoundManager.PlaySE(_clip, _point); }
 
 
     // 입력
