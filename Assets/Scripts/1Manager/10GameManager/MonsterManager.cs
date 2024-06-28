@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-// ¸ó½ºÅÍ °ü·Ã enum -> MonsterEnum¿¡ ÀÖÀ½
+// ëª¬ìŠ¤í„° ê´€ë ¨ enum -> MonsterEnumì— ìˆìŒ
 
 public class MonsterInfo
 {
@@ -38,8 +38,6 @@ public class MonsterManager : MonoBehaviour
         m_monsterData = new MonsterScriptable[(int)EMonsterName.LAST];
         for(int i = 0; i<_mons.Count; i++) { m_monsterData[i] = _mons[i]; }
     }
-
-
     public MonsterScriptable GetMonsterData(EMonsterName _monster)
     {
         return m_monsterData[(int)_monster];
@@ -48,6 +46,15 @@ public class MonsterManager : MonoBehaviour
     {
         return PoolManager.GetObject(m_monsterData[(int)_monster].MonsterPrefab);
     }
+
+    [SerializeField]
+    private GameObject m_wolfPeckPrefab;
+    public GameObject GetWolfPeckPrefab(Vector3 _pos) 
+    {
+        GameObject peck = Instantiate(m_wolfPeckPrefab, _pos, Quaternion.identity);
+        return peck;
+    }
+
 
     public bool CheckNClearMonster(EMonsterName _monster)
     {

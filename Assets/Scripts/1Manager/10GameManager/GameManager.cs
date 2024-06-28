@@ -103,6 +103,7 @@ public class GameManager : SingleTon<GameManager>
     public static MonsterScriptable[] MonsterData { get { return MonsterManager.MonsterData; } }
     public static MonsterScriptable GetMonsterData(EMonsterName _monster) { return MonsterManager.GetMonsterData(_monster); }               // 몬스터 스크립터블
     public static GameObject GetMonsterObj(EMonsterName _monster) { return MonsterManager.GetMonsterObj(_monster); }                        // 몬스터 프리펍
+    public static GameObject GetWolfPeckPrefab(Vector3 _position) { return MonsterManager.GetWolfPeckPrefab(_position); }
     public static bool CheckNClearMonster(EMonsterName _monster) { return MonsterManager.CheckNClearMonster(_monster); }                    // 최초 처치 확인
 
 

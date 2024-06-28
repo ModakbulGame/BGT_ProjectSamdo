@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public enum EWolfRole
 {
@@ -28,7 +29,7 @@ public class WolfPeckScript : MonoBehaviour
 
     public int CurPurifyTurn { get; private set; }
 
-    public void EngageWolfs(WolfScript _wolf, ObjectScript _target) // ´Á´ë ÀüÅõ °³½Ã
+    public void EngageWolfs(WolfScript _wolf, ObjectScript _target) // ëŠ‘ëŒ€ ì „íˆ¬ ê°œì‹œ
     {
         Engaging = true;
         ResetRole();
@@ -41,7 +42,7 @@ public class WolfPeckScript : MonoBehaviour
     }
 
 
-    public void WolfGethit(WolfScript _wolf)
+    public void WolfGetHit(WolfScript _wolf)
     {
 
     }
@@ -55,8 +56,16 @@ public class WolfPeckScript : MonoBehaviour
         ResetRole();
     }
 
+    public void AddWolf(WolfScript _wolf)
+    {
+        _wolf.SetPeck(this, m_wolfs.Count);
+        m_wolfs.Add(_wolf);
+        _wolf.transform.SetParent(transform);
+        ResetRole();
+    }
 
-    public void DisengageWolfs()                // ´Á´ë ÀüÅõ ÇØÁ¦
+
+    public void DisengageWolfs()                // ëŠ‘ëŒ€ ì „íˆ¬ í•´ì œ
     {
         foreach(WolfScript wolf in m_wolfs) { wolf.ChangeState(EMonsterState.IDLE); }
         Engaging = false;

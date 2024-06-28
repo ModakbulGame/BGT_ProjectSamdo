@@ -140,6 +140,8 @@ public static class DataImporter
             Sprite profile = Resources.Load<Sprite>($"{MonsterProfilePath + id}_P");
             Sprite body = Resources.Load<Sprite>($"{MonsterBodyImgPath + id}_B");
 
+            if(idx == (int)EMonsterName.WOLF) { prefab = AssetDatabase.LoadMainAssetAtPath($"{MonsterPrefabPath}/SpecialMonster/3Wolfs.prefab") as GameObject; }
+
             scriptable.SetMonsterScriptable(idx, splitMonsterData, dropInfos[id], prefab, profile, body);
 
             AssetDatabase.SaveAssets();

@@ -26,6 +26,7 @@ public class MonsterSpawner : MonoBehaviour
     public Vector3 SpawnPosition { get { return transform.position; } }
     public float RangeMultiplier { get { return m_point.RangeMultiplier; } }
 
+    private WolfPeckScript CurPeck { get; set; }
 
     public void SpawnMonster()
     {
@@ -40,6 +41,12 @@ public class MonsterSpawner : MonoBehaviour
     }
     private MonsterScript CreateMonster(EMonsterName _monster)
     {
+        if(_monster == EMonsterName.WOLF && CurPeck == null)
+        {
+            GameObject peck = GameManager.GetWolfPeckPrefab(transform.position);
+            CurPeck = peck.GetComponent<WolfPeckScript>();
+        }
+
         GameObject monster = GameManager.GetMonsterObj(_monster);
 
         float dist = Random.Range(1.5f, 2);
@@ -51,6 +58,8 @@ public class MonsterSpawner : MonoBehaviour
         MonsterScript script = monster.GetComponent<MonsterScript>();
         m_point.AddMonster(script);
         script.SetSpawnPoint(this);
+
+        if(_monster == EMonsterName.WOLF) { CurPeck.AddWolf((WolfScript)script); }
 
         SpawnedNum++;
 
