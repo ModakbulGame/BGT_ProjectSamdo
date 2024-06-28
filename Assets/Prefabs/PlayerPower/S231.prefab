@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8510319803011367913}
   - component: {fileID: 1410451707985475524}
   - component: {fileID: 8034768515848521897}
-  - component: {fileID: 2157679065115807985}
+  - component: {fileID: 6595023969947872320}
   m_Layer: 0
   m_Name: S231
   m_TagString: PlayerPower
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3123283816119498463}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 1.25}
+  m_LocalPosition: {x: 0, y: 0.5, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86ba2c5c4cd8e0a429b8ce3e79b0a20d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ccList: 
+  m_ccList: 02000000
   m_impulseAmount: 0
   m_attackEffect: {fileID: 0}
   m_scriptable: {fileID: 11400000, guid: b0c828bbce691154f9c1571bf41028c2, type: 2}
@@ -78,8 +78,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &2157679065115807985
-SphereCollider:
+--- !u!65 &6595023969947872320
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -97,5 +97,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2
+  m_Size: {x: 7, y: 1, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
