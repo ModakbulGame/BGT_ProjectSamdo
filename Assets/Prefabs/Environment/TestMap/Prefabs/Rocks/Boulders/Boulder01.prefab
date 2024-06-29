@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 2124156628374847565}
   - component: {fileID: 7950938411137398909}
   - component: {fileID: 6289584523896217669}
-  - component: {fileID: 116326469682130614}
+  - component: {fileID: 3320955779729718086}
   m_Layer: 6
   m_Name: Boulder01_LOD0
   m_TagString: Untagged
@@ -141,8 +141,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &116326469682130614
-SphereCollider:
+--- !u!64 &3320955779729718086
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -159,9 +159,10 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.45
-  m_Center: {x: 0.002189143, y: 0.15, z: 0.011023775}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6627231211071601237, guid: 3eaad35c83134024d8521b64b109f088, type: 3}
 --- !u!1 &4723543993342586511
 GameObject:
   m_ObjectHideFlags: 0
