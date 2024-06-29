@@ -6,12 +6,16 @@ using UnityEngine.VFX;
 
 public class ExplodeScript : ObjectAttackScript
 {
+    [SerializeField]
+    private EPowerSE m_explodeSound;
+
     private Vector3 OrigianlPosition { get; set; }
     private Transform ReturnTransform { get; set; }
 
     public void SetAttack(ObjectScript _attacker, float _damage, float _time)
     {
         SetAttack(_attacker, _damage);
+        if (m_explodeSound != EPowerSE.NONE) { GameManager.PlaySE(m_explodeSound, transform.position); }
         StartCoroutine(LoseDamage(_time));
     }
 

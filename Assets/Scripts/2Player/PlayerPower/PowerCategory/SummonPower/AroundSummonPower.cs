@@ -7,6 +7,8 @@ public class AroundSummonPower : SummonPowerScript
 {
     [SerializeField]
     private float m_damgeTimeGap = 0.5f;
+    [SerializeField]
+    private EPowerSE m_effectSE;
 
     private readonly Dictionary<IHittable, float> m_hitTimeCount = new();
 
@@ -50,6 +52,7 @@ public class AroundSummonPower : SummonPowerScript
         {
             yield return new WaitForSeconds(1);
             CreateEffect();
+            if(m_effectSE != EPowerSE.NONE) { GameManager.PlaySE(m_effectSE, transform.position); }
         }
     }
 

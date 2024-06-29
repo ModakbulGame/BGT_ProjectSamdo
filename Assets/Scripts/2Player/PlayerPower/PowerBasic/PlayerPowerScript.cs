@@ -66,6 +66,7 @@ public class PlayerPowerScript : ObjectAttackScript, IPoolable
         if (_hittable.GetHit(hit))
         {
             AddHitObject(_hittable);
+            if (m_scriptable.HitSound != EPowerSE.NONE) { GameManager.PlaySE(m_scriptable.HitSound, _point); }
         }
     }
 

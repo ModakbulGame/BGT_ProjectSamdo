@@ -24,7 +24,8 @@ public class PowerScriptable : ScriptableObject
     public int                  PowerPrice;
     public GameObject           PowerPrefab;
     public Sprite               PowerIcon;
-    public EPowerSE             FireSound;
+    public EPowerSE             CreateSound = EPowerSE.LAST;
+    public EPowerSE             HitSound = EPowerSE.LAST;
     public int                  MotionIdx;
     public bool                 HideWeapon;
     public bool                 ShowCastingEffect;

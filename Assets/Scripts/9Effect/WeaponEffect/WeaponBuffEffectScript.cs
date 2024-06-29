@@ -15,14 +15,15 @@ public class WeaponBuffEffectScript : MonoBehaviour
 
     private int CC2Idx(ECCType _cc)
     {
-        if(_cc == ECCType.KNOCKBACK)
+        return _cc switch
         {
-            return (int)_cc - 4;
-        }
-        else
-        {
-            return (int)_cc - 1;
-        }
+            ECCType.FATIGUE => 0,
+            ECCType.KNOCKBACK => 1,
+            ECCType.MELANCHOLY => 2,
+            ECCType.EXTORTION => 3,
+
+            _ => -1
+        };
     }
 
     public void InitWeapon(EWeaponType _type)
@@ -36,16 +37,19 @@ public class WeaponBuffEffectScript : MonoBehaviour
 
     public void EffectOn(ECCType _cc)
     {
-        if(_cc == 0 || _cc > ECCType.KNOCKBACK) { Debug.LogError("이펙트 없는 CC 입력"); return; }
-        if(CurCC != ECCType.LAST && CurCC != _cc) { EffectOff(); }
+        int idx = CC2Idx(_cc);
+        if (idx == -1) { Debug.LogError("이펙트 없는 CC 입력"); return; }
+        if (CurCC != ECCType.LAST && CurCC != _cc) { EffectOff(); }
         CurCC = _cc;
-        VisualEffect effect = m_effects[CC2Idx(_cc)];
+        VisualEffect effect = m_effects[idx];
         effect.enabled = true;
         effect.Play();
     }
     public void EffectOff()
     {
-        VisualEffect effect = m_effects[CC2Idx(CurCC)];
+        int idx = CC2Idx(CurCC);
+        if (idx == -1) { Debug.LogError("이펙트 없는 CC 입력"); return; }
+        VisualEffect effect = m_effects[idx];
         if (!effect.enabled) { return; }
         effect.Stop();
         StartCoroutine(DisableCoroutine(effect));

@@ -53,7 +53,7 @@ public class SoundManager : MonoBehaviour
     public void PlaySE(EMonsterSE _se) { PlaySE(_se, CameraPos); }
     public void PlaySE(EMonsterSE _se, Vector3 _point) { PlaySE(m_monsterSEList[(int)_se], _point); }
     public void PlaySE(EPowerSE _se) { PlaySE(_se, CameraPos); }
-    public void PlaySE(EPowerSE _se, Vector3 _point) { PlaySE(m_powerSEList[(int)_se], _point); }
+    public void PlaySE(EPowerSE _se, Vector3 _point) { PlaySE(m_powerSEList[(int)_se - 1], _point); }
     public void PlaySE(EEnvironmentSE _se) { PlaySE(_se, CameraPos); }
     public void PlaySE(EEnvironmentSE _se, Vector3 _point) { PlaySE(m_environmentSEList[(int)_se], _point); }
     public void PlaySE(ESystemSE _se) { PlaySE(m_systemSE[(int)_se], CameraPos); }

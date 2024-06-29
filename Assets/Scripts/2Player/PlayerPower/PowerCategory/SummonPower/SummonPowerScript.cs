@@ -6,6 +6,8 @@ public class SummonPowerScript : PlayerPowerScript
 {
     [SerializeField]
     protected bool m_isInstantHit;
+    [SerializeField]
+    private EPowerSE m_summonSE;
 
     public override void PowerCreated()
     {
@@ -24,6 +26,7 @@ public class SummonPowerScript : PlayerPowerScript
     {
         base.PowerCreated();
         if (PowerEffect != null) { PowerEffect.EffectOn(); }
+        if(m_summonSE != EPowerSE.NONE) { GameManager.PlaySE(m_summonSE, transform.position); }
     }
     public override void ReleaseToPool()
     {

@@ -207,9 +207,7 @@ public partial class PlayerController
 
         PowerStartAnim();
         if (PowerInfoInHand.HideWeapon) { HideWeapon(); }
-        if (PowerInfoInHand.ShowCastingEffect) { CastingEffectOn(); }
-
-        GameManager.PlaySE(EPlayerSE.CASTING, transform.position);
+        if (PowerInfoInHand.ShowCastingEffect) { CastingEffectOn(); GameManager.PlaySE(EPlayerSE.CASTING, transform.position); }
 
         if (IsHealing) { CancelHeal(); }
 
@@ -238,6 +236,9 @@ public partial class PlayerController
     {
         if(PowerInfoInHand == null) { return; }
         ECastType type = PowerInfoInHand.CastType;
+
+        EPowerSE createSound = PowerInfoInHand.PowerData.CreateSound;
+        if(createSound != EPowerSE.NONE) { GameManager.PlaySE(createSound, transform.position); }
 
         if (type == ECastType.BUFF)
         {
@@ -386,7 +387,7 @@ public partial class PlayerController
     public bool CanGaurd { get { return GuardPressing && GuardCooltime <= 0; } }
     public void GuardStart()                                                                // 가드 시작
     {
-        // GameManager.PlaySE(EPlayerSE.PARRYING);
+
     }
     public void GuardStop()                                                                 // 가드 중단
     {
