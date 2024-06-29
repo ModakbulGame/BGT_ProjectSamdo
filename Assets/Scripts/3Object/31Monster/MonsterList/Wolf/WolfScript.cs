@@ -206,10 +206,4 @@ public class WolfScript : MonsterScript
         m_positionState = gameObject.AddComponent<WolfPositionState>();
         m_jabState = gameObject.AddComponent<WolfJabState>();
     }
-
-    public override void Update()
-    {
-        base.Update();
-        Debug.Log(CurState);
-    }
 }

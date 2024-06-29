@@ -40,6 +40,7 @@ public class BloScript : MonsterScript
     }
     public void RushToTarget()
     {
+        if(!IsRushing) { return; }
         Vector3 dir = transform.forward;
         Vector3 rot = (dir + (CurTarget.Position - Position).normalized * 0.1f).normalized;
         Vector2 rot2 = new(rot.x, rot.z);
@@ -47,11 +48,6 @@ public class BloScript : MonsterScript
         m_rigid.velocity = m_rushSpeed * dir.normalized;
     }
 
-
-    public override void StartSkill()
-    {
-        base.StartSkill();
-    }
 
     public override void SkillOn()
     {
@@ -61,8 +57,8 @@ public class BloScript : MonsterScript
     }
     public override void SkillOff()
     {
-        base.SkillOff();
         CurSkill.AttackOff();
+        IsRushing = false;
     }
 
 
@@ -81,6 +77,12 @@ public class BloScript : MonsterScript
         PlayManager.LooseSoul(absorb, true);
         AbsorbedSoul = true;
     }
+    public override void SkillDone()
+    {
+        if (!IsSkilling) { return; }
+        base.SkillOff();
+        base.SkillDone();
+    }
 
 
     public override void OnSpawned()
@@ -88,5 +90,11 @@ public class BloScript : MonsterScript
         base.OnSpawned();
         RushDone = false;
         AbsorbedSoul = false;
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        Debug.Log(CurState);
     }
 }
