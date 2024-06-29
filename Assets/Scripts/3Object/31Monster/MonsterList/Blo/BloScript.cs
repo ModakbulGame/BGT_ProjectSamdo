@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class BloScript : MonsterScript
 {
@@ -17,6 +18,9 @@ public class BloScript : MonsterScript
     [Tooltip("영혼 흡수량")]
     [SerializeField]
     public int AbsorbAmount = 2;
+    [SerializeField]
+    private VisualEffect m_abosrbEffect;
+
 
     private bool RushDone { get; set; }
 
@@ -69,6 +73,7 @@ public class BloScript : MonsterScript
         SetRush(false);
         SkillOff();
         SkillDone();
+        m_abosrbEffect.Play();
     }
     private void AbsorbSoul()
     {
