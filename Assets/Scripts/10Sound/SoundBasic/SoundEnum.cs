@@ -73,6 +73,10 @@ public enum EEnvironmentSE
 
 public enum ESystemSE
 {
+    QUEST_COMPLETE,
+    EQUIP,
+    OPEN_UI,
+    BTN_CLICK,
 
     LAST
 }

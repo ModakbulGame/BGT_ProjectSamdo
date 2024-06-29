@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class QuestAcceptUIScript : BaseUI
 {
-    // Äù½ºÆ® Á¤º¸
+    // í€˜ìŠ¤íŠ¸ ì •ë³´
     [SerializeField]
     private TextMeshProUGUI m_questTitle;
     [SerializeField]
@@ -19,8 +19,8 @@ public class QuestAcceptUIScript : BaseUI
     private Button m_btn1;
     private Button m_btn2;
 
-    private TextMeshProUGUI m_btn1Txt;       // ¼ö¶ô, ¿Ï·á ¹öÆ°
-    private TextMeshProUGUI m_btn2Txt;      // °ÅÀı, È®ÀÎ ¹öÆ°
+    private TextMeshProUGUI m_btn1Txt;       // ìˆ˜ë½, ì™„ë£Œ ë²„íŠ¼
+    private TextMeshProUGUI m_btn2Txt;      // ê±°ì ˆ, í™•ì¸ ë²„íŠ¼
 
     private QuestScriptable CurQuest { get; set; }
     private bool IsStart { get; set; }
@@ -38,15 +38,15 @@ public class QuestAcceptUIScript : BaseUI
     {
         m_questTitle.text = CurQuest.Name;
         m_questDescription.text = CurQuest.Description;
-        m_questRewards.text = $"º¸»ó {CurQuest.Reward.Type} {CurQuest.Reward.Amount}°³";
+        m_questRewards.text = $"ë³´ìƒ {CurQuest.Reward.Type} {CurQuest.Reward.Amount}ê°œ";
         SetBtnsTxts(IsStart);
     }
 
 
     public void SetBtnsTxts(bool _isStart)
     {
-        m_btn1Txt.text = _isStart ? "¼ö¶ô" : "¿Ï·á";
-        m_btn2Txt.text = _isStart ? "°ÅÀı" : "È®ÀÎ";
+        m_btn1Txt.text = _isStart ? "ìˆ˜ë½" : "ì™„ë£Œ";
+        m_btn2Txt.text = _isStart ? "ê±°ì ˆ" : "í™•ì¸";
     }
 
     private void Btn1Function()
@@ -60,6 +60,7 @@ public class QuestAcceptUIScript : BaseUI
             FinishQuest();
         }
         ConfirmFunction();
+        GameManager.PlaySE(ESystemSE.BTN_CLICK);
         CloseUI();
     }
     private void AcceptQuest()
@@ -76,14 +77,15 @@ public class QuestAcceptUIScript : BaseUI
     private void Btn2Function()
     {
         ConfirmFunction();
+        GameManager.PlaySE(ESystemSE.BTN_CLICK);
         CloseUI();
     }
 
 
     private void SetBtns()
     {
-        m_btn1.onClick.AddListener(Btn1Function);       // ¼ö¶ô, ¿Ï·á ¹öÆ°
-        m_btn2.onClick.AddListener(Btn2Function);       // °ÅÀı, È®ÀÎ ¹öÆ°
+        m_btn1.onClick.AddListener(Btn1Function);       // ìˆ˜ë½, ì™„ë£Œ ë²„íŠ¼
+        m_btn2.onClick.AddListener(Btn2Function);       // ê±°ì ˆ, í™•ì¸ ë²„íŠ¼
     }
 
     public override void SetComps()

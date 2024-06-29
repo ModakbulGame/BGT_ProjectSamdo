@@ -222,7 +222,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
             }
             yield return null;
         }
-        DestroyMonster();
+        DespawnMonster();
     }
     public void DestroyMonster()
     {

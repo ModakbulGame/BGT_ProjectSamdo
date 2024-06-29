@@ -11,6 +11,7 @@ public class QuestUIScript : BaseUI
     {
         base.OpenUI();
         GameManager.SetControlMode(EControlMode.UI_CONTROL);
+        GameManager.PlaySE(ESystemSE.OPEN_UI);
     }
 
     public override void UpdateUI()

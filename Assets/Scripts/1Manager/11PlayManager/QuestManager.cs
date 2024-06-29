@@ -46,6 +46,7 @@ public class QuestManager : MonoBehaviour, IHaveData
     private void CompleteQuest(EQuestName _quest)
     {
         QuestScriptable data = GameManager.GetQeustData(_quest);
+        GameManager.PlaySE(ESystemSE.QUEST_COMPLETE);
         foreach (NPCDialogue dial in data.ResultDialogues)
         {
             PlayManager.UnlockDialogue(dial);

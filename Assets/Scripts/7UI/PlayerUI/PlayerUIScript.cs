@@ -25,6 +25,7 @@ public class PlayerUIScript : MonoBehaviour
         m_imgUI.OpenUI();
         m_infoUI.OpenUI();
         m_materialUI.OpenUI();
+        GameManager.PlaySE(ESystemSE.OPEN_UI);
     }
 
     public void UpdateInfoUI()
