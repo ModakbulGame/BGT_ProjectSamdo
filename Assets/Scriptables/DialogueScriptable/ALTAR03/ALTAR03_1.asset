@@ -12,21 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0836696b697458c4cace1784f8187404, type: 3}
   m_Name: ALTAR03_1
   m_EditorClassIdentifier: 
-  Idx: 4
+  Idx: 13
   NPC:
     Type: 1
     Idx: 2
   DialogueIdx: 0
   BranchIdx: 0
   Lines:
-  - Text: "\uD018\uC2A4\uD2B8"
+  - Text: 1
     ResultDialogues: []
     ResultQuest:
       Quest: 3
       Function: 4
-  - Text: "\uB05D"
+  - Text: 2
     ResultDialogues: []
     ResultQuest:
-      Quest: 2
-      Function: 3
+      Quest: 3
+      Function: 4
+  - Text: last
+    ResultDialogues: []
+    ResultQuest:
+      Quest: 100
+      Function: 0
   IsOpenAtFirst: 1
