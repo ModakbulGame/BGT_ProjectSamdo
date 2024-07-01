@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 4602168716442109495}
   - component: {fileID: 5296837395338050109}
   - component: {fileID: 8028411489081456261}
-  - component: {fileID: 5020835059341038419}
   m_Layer: 0
   m_Name: M507
   m_TagString: Monster
@@ -60,18 +59,22 @@ MonoBehaviour:
     AttackSpeed: 1.3
     MoveSpeed: 3
   m_hitSounds: []
-  m_dieSounds: []
+  m_dieSounds:
+  - {fileID: 8300000, guid: 5213134a2e286234f9afded2aa056790, type: 3}
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
   m_uiOffset: 2
   m_normalAttacks:
+  - {fileID: 8774051692207393923}
   - {fileID: 3182551727449803534}
   - {fileID: 5379810400386613370}
-  - {fileID: 8774051692207393923}
   m_normalDamageMultiplier:
   - 1
   - 0.5
+  m_attackSounds:
+  - {fileID: 8300000, guid: 52123510f37ebae4d8cd63bc60b02b98, type: 3}
+  - {fileID: 8300000, guid: 6fe546e3e1ee1944eb7e5123ac8d4006, type: 3}
   m_scriptable: {fileID: 11400000, guid: 1f95ad6ed9a82c7498d0cd231d5652ae, type: 2}
   m_combatInfo:
     MaxHP: 220
@@ -220,56 +223,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_againstMonster: 0
---- !u!114 &5020835059341038419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4113875238200415537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d091059cc4d6b2c4f942132cb29a650e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_baseInfo:
-    ObjectName: "\uC0DD\uBA85 \uB545\uACE0\uC591\uC774"
-    AttackSpeed: 1
-    MoveSpeed: 3
-  m_hitSounds: []
-  m_dieSounds: []
-  m_buffNDebuff: []
-  m_curHP: 0
-  m_curSpeed: 0
-  m_uiOffset: 2
-  m_normalAttacks:
-  - {fileID: 3182551727449803534}
-  - {fileID: 5379810400386613370}
-  - {fileID: 8774051692207393923}
-  m_normalDamageMultiplier:
-  - 0
-  - 0
-  m_scriptable: {fileID: 11400000, guid: 1f95ad6ed9a82c7498d0cd231d5652ae, type: 2}
-  m_combatInfo:
-    MaxHP: 50
-    Defense: 5
-    Attack: 40
-    ApproachSpeed: 5
-    ViewAngle: 120
-    ViewRange: 20
-    EngageRange: 15
-    ReturnRange: 15
-    AttackRange: 2.5
-    ApproachDelay: 1
-    FenceRange: 25
-  m_spawnPoint: {fileID: 0}
-  m_roamingDistance:
-    Min: 1
-    Max: 5
-  HasSpeedAttack: 0
-  m_dissolveDelay: 2
-  m_jumpAttackDist: 1.75
-  m_clawEffects: []
 --- !u!1001 &891634348866949445
 PrefabInstance:
   m_ObjectHideFlags: 0

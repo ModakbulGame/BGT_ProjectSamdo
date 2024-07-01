@@ -38,6 +38,7 @@ public class HellcatScript : MonsterScript
     {
         IsJumpAttack = TargetDistance >= m_jumpAttackDist;
         m_anim.SetBool("JUMP_ATTACK", IsJumpAttack);
+        AttackIdx = IsJumpAttack ? 0 : 1;
         base.StartAttack();
         AttackStack = 0;
         IsJumping = false;
@@ -57,6 +58,8 @@ public class HellcatScript : MonsterScript
         HasJumped = true;
         if (CurTarget == null) { JumpDir = Vector2.zero; return; }
         JumpDir = (CurTarget.Position2 - Position2).normalized;
+
+        PlayAttackSound(0);
 
         CurClawEffect = null;
         foreach (CombinedEffect effect in m_clawEffects) { effect.EffectOn(); }
@@ -82,12 +85,12 @@ public class HellcatScript : MonsterScript
         {
             if (AttackStack == 0)
             {
-                AttackTriggerOn(0);
+                AttackTriggerOn(1);
                 AttackStack = 1;
             }
             else
             {
-                AttackTriggerOn(1);
+                AttackTriggerOn(2);
             }
         }
     }
@@ -101,18 +104,23 @@ public class HellcatScript : MonsterScript
         AttackObject.SetAttack(this, NormalDamage(damageIdx));
         AttackObject.AttackOn();
 
-        if (_idx <= 2)
+        if (_idx > 0)
         {
-            if (_idx == 1) { CurClawEffect.EffectOff(); }
+            if (_idx == 2) { CurClawEffect.EffectOff(); }
 
-            CurClawEffect = m_clawEffects[_idx];
+            CurClawEffect = m_clawEffects[_idx-1];
             CurClawEffect.EffectOn();
+            PlayAttackSound(1);
         }
-        else { foreach (CombinedEffect effect in m_clawEffects) { effect.EffectOff(); } }
+        else 
+        {
+            foreach (CombinedEffect effect in m_clawEffects) { effect.EffectOff(); }
+            PlayAttackSound(0);
+        }
     }
     private void CreateJumpAttack()
     {
-        AttackTriggerOn(2);
+        AttackTriggerOn(0);
     }
     public override void AttackDone()
     {
