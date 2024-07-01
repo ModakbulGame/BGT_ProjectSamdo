@@ -317,17 +317,6 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         m_hpBar.SetMaxHP(MaxHP);
     }
 
-    protected void ShowHPBar()
-    {
-        m_hpBar.gameObject.SetActive(true);
-        ApplyHPUI();
-    }
-    protected void HideHPBar()
-    {
-        m_hpBar.gameObject.SetActive(false);
-    }
-
-
     // 업데이트
     public override void ProcCooltime()
     {

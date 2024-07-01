@@ -41,9 +41,13 @@ public class BloScript : MonsterScript
     public void SetRush(bool _start)
     {
         m_anim.SetBool("IS_SKILLING", _start);
-        if (_start) { PlayAttackSound(2); }
+        if (_start) { PlayRushSound(); }
         else { AttackDone(); AttackTriggerOff(); }
         IsRushing = _start;
+    }
+    public virtual void PlayRushSound()
+    {
+        PlayAttackSound(1);
     }
 
     public void RushToTarget()

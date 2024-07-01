@@ -56,13 +56,15 @@ MonoBehaviour:
     AttackSpeed: 2
     MoveSpeed: 3
   m_hitSounds: []
-  m_dieSounds: []
+  m_dieSounds:
+  - {fileID: 8300000, guid: 6880110047ea84b498c118b7c9b2d801, type: 3}
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
   m_uiOffset: 2
   m_normalAttacks: []
   m_normalDamageMultiplier: []
+  m_attackSounds: []
   m_scriptable: {fileID: 11400000, guid: 584fb7368b0d5e245a73f84e75fc4c7e, type: 2}
   m_combatInfo:
     MaxHP: 400
@@ -83,6 +85,7 @@ MonoBehaviour:
   HasSpeedAttack: 0
   m_dissolveDelay: 2
   m_purifyHatch: 4
+  m_hatchSound: {fileID: 8300000, guid: 1d07ac6ada9677e4f9573d9b437d6f32, type: 3}
   m_skurrabyPrefab: {fileID: 4113875238200415537, guid: 3bd9ca7319a04a449bca706f2a3d7023,
     type: 3}
   m_poisonVFX: {fileID: 3188518815606664526}
@@ -90,6 +93,7 @@ MonoBehaviour:
   m_spitRadius: 7.5
   m_spitAngle: 60
   m_spitTimeGap: 0.5
+  m_spitSound: {fileID: 8300000, guid: 157edd8ad5e8adf4cb16ef05a4833219, type: 3}
   m_skillCooltime:
   - 20
   - 12

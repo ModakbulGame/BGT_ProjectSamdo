@@ -25,6 +25,10 @@ public class BlokanScript : BloScript
         base.AttackAnimation();
     }
 
+    public override void PlayRushSound()
+    {
+        PlayAttackSound(2);
+    }
     public override void CreateAttack()
     {
         base.CreateAttack();

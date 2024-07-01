@@ -28,6 +28,10 @@ public class LifeGuardianScript : BossMonster
     private bool AttackProceed { get; set; }
     private readonly float[] AttackAngle = new float[4] { 0, 30, -30, -15 };
 
+    [SerializeField]
+    private AudioClip m_spikeSound;
+
+
     public override void LookTarget()
     {
         if (CurTarget == null) { return; }
@@ -81,6 +85,10 @@ public class LifeGuardianScript : BossMonster
     private float m_rushSpeed = 8;
     [SerializeField]
     private float m_drainRadius = 15;
+    [SerializeField]
+    private AudioClip[] m_skillSounds;
+    [SerializeField]
+    private AudioClip m_rushReadySound;
 
     public float DrainRadius { get { return m_drainRadius; } }
 
@@ -88,6 +96,7 @@ public class LifeGuardianScript : BossMonster
     {
         base.StartSkill();
         RushStarted = false;
+        if(CurSkillIdx == (int)ELifeGuardianSkill.RUSH) { GameManager.PlaySE(m_rushReadySound, transform.position); }
     }
     public override void SkillOn()
     {
@@ -98,6 +107,7 @@ public class LifeGuardianScript : BossMonster
             CurSkill.SetAttack(this, SkillDamages[SpikeIdx]);
             CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
+            GameManager.PlaySE(m_skillSounds[0], CurSkill.transform.position);
         }
         else if (CurSkillIdx == DrainIdx)
         {
@@ -112,6 +122,7 @@ public class LifeGuardianScript : BossMonster
             CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
             RushStarted = true;
+            GameManager.PlaySE(m_skillSounds[2], CurSkill.transform.position);
         }
     }
     public override void SkillOff()
