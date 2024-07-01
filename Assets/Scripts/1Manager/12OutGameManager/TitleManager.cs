@@ -48,6 +48,7 @@ public class TitleManager : MonoBehaviour
     private void Start()
     {
         GameManager.SetControlMode(EControlMode.UI_CONTROL);
+        GameManager.PlayBGM(EBGM.TITLE_BGM);
         SetLoadData();
     }
 }

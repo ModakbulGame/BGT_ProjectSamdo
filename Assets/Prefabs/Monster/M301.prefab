@@ -58,7 +58,8 @@ MonoBehaviour:
     AttackSpeed: 2.2
     MoveSpeed: 2
   m_hitSounds: []
-  m_dieSounds: []
+  m_dieSounds:
+  - {fileID: 8300000, guid: 357bcccf3e8c7854aa0b1e3364757956, type: 3}
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
@@ -69,6 +70,7 @@ MonoBehaviour:
   m_normalDamageMultiplier:
   - 1
   - 1
+  m_attackSounds: []
   m_scriptable: {fileID: 11400000, guid: a3bb57d5b38a97143b62834462e2185f, type: 2}
   m_combatInfo:
     MaxHP: 460
@@ -2338,6 +2340,7 @@ MonoBehaviour:
   m_ccList: 
   m_impulseAmount: 0.1
   m_attackEffect: {fileID: 0}
+  m_hitSound: {fileID: 0}
   m_effect: {fileID: 8668340924614356128}
 --- !u!4 &4801487878742602207 stripped
 Transform:

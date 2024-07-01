@@ -18,6 +18,8 @@ public class ObjectAttackScript : MonoBehaviour
     protected float m_impulseAmount = 0.1f;
     [SerializeField]
     protected CombinedEffect m_attackEffect;
+    [SerializeField]
+    protected AudioClip m_hitSound;
 
 
     public virtual float Damage { get; private set; } = 5;

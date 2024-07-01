@@ -124,7 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebdcc7bb4ed65cd4a8c1b6484ec24b53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_bgmList: []
+  m_bgmList:
+  - {fileID: 8300000, guid: 127ab4844c34bbb4a9ebc814ec57bd0b, type: 3}
   m_playerSEList:
   - {fileID: 8300000, guid: dbc72bdfb28a762419d40395fb8e5164, type: 3}
   - {fileID: 8300000, guid: 2f7c6aef479083643852b37debbf63d2, type: 3}
@@ -480,7 +481,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
