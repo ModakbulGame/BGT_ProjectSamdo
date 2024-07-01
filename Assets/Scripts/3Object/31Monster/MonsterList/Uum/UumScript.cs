@@ -53,11 +53,18 @@ public class UumScript : AnimatedAttackMonster
     [Tooltip("내려찍기 / 휩쓸기 공격 배율")]
     [SerializeField]
     private float[] m_skillDamageMultiplier = new float[2] { 1, 1 };
+    [SerializeField]
+    private AudioClip m_smashSound;
+    [SerializeField]
+    private AudioClip m_sweepSound;
+
+    private readonly float MaxImpulseDistance = 15;
 
     public override void StartAttack()
     {
         SetAttackIdx(Random.Range(0, (int)EUumAttack.LAST));
         AttackObjects.Clear();
+        if(AttackIdx == (int)EUumAttack.SMASH) { PlayAttackSound(AttackIdx); }
         base.StartAttack();
     }
     public override void CreateAttack()
@@ -65,6 +72,7 @@ public class UumScript : AnimatedAttackMonster
         AttackObject = m_normalAttacks[(int)EUumPart.AROUND].GetComponent<ObjectAttackScript>();
         AttackObject.SetAttack(this, NormalDamage(AttackIdx) * NarrowAttackMultiplier);
         AttackObject.AttackOn();
+        GameManager.PlaySE(m_smashSound, AttackObject.transform.position);
     }
     public override void AttackTriggerOn()
     {
@@ -77,6 +85,7 @@ public class UumScript : AnimatedAttackMonster
             attack.SetAttack(this, NormalDamage(AttackIdx));
             attack.AttackOn();
         }
+        if(AttackIdx != (int)EUumAttack.SMASH) { PlayAttackSound(AttackIdx); }
     }
     public override void AttackTriggerOff()
     {
@@ -92,11 +101,19 @@ public class UumScript : AnimatedAttackMonster
     }
 
 
+    public override void StartSkill()
+    {
+        PlayAttackSound((int)EUumAttack.SMASH);
+        base.StartSkill();
+    }
+
     public override void SkillOn()
     {
         int[] partList;
         if (CurSkillIdx == (int)EUumSkill.LEFT_SPIKE) { partList = RightAttackIdx; }
         else { partList = LeftAttackIdx; }
+
+        GameManager.PlaySE(m_sweepSound, transform.position);
 
         foreach (int idx in partList)
         {
@@ -114,7 +131,16 @@ public class UumScript : AnimatedAttackMonster
         float damage = SkillDamages[CurSkillIdx] * m_skillDamageMultiplier[0];
         skill.SetAttack(this, damage);
         skill.AttackOn();
+        GameManager.PlaySE(m_smashSound, skill.transform.position);
+        CreateSmashImpulse();
+
         base.CreateSkill();
+    }
+    private void CreateSmashImpulse()
+    {
+        float distance = Vector2.Distance(PlayManager.PlayerPos2, Position2);
+        float impulse = Mathf.Sqrt(1-distance / MaxImpulseDistance) * 0.9f + 0.1f;
+        PlayManager.CreateImpulse(impulse);
     }
     public override void SkillOff()
     {

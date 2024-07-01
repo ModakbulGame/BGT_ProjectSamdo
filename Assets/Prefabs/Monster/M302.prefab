@@ -57,7 +57,8 @@ MonoBehaviour:
     AttackSpeed: 1.5
     MoveSpeed: 3
   m_hitSounds: []
-  m_dieSounds: []
+  m_dieSounds:
+  - {fileID: 8300000, guid: 64f9d8a6644e90a4d8b9ca9ab38a6574, type: 3}
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
@@ -65,6 +66,8 @@ MonoBehaviour:
   m_normalAttacks:
   - {fileID: 3059765512365830660}
   m_normalDamageMultiplier: []
+  m_attackSounds:
+  - {fileID: 8300000, guid: 5203708a2c664b340a1fcf0b65ba93d3, type: 3}
   m_scriptable: {fileID: 11400000, guid: fbc17a791b93e9645bdf1e4c5e7773db, type: 2}
   m_combatInfo:
     MaxHP: 200
@@ -85,6 +88,7 @@ MonoBehaviour:
   HasSpeedAttack: 1
   m_dissolveDelay: 2
   PurifyTime: 5
+  m_evadeSound: {fileID: 8300000, guid: 2ccbefb16b7a2cc44a6e1b7b6e94d6c2, type: 3}
   EvadeAttackStack: 2
 --- !u!114 &5702747285115683768
 MonoBehaviour:

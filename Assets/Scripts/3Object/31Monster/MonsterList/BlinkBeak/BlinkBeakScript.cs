@@ -10,6 +10,8 @@ public class BlinkbeakScript : MonsterScript
     [Tooltip("회피 후 성불 기간")]
     [SerializeField]
     private float PurifyTime = 5;
+    [SerializeField]
+    private AudioClip m_evadeSound;
 
     private IMonsterState m_evadeState;
 
@@ -38,6 +40,7 @@ public class BlinkbeakScript : MonsterScript
         SetDestination(EvadeTarget);
         CurSpeed = EvadeSpeed;
         StartEvadeDissolve();
+        GameManager.PlaySE(m_evadeSound, transform.position);
     }
 
     public void EvadeProceed()
