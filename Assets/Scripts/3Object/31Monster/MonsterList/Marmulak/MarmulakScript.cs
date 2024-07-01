@@ -72,6 +72,8 @@ public class MarmulakScript : RangedAttackMonster
     [Tooltip("포효 후 성불 기간(초)")]
     [SerializeField]
     private float m_purifyTime = 8;
+    [SerializeField]
+    private AudioClip m_roarSound;
 
 
     private readonly List<ObjectScript> m_roarList = new();
@@ -83,6 +85,7 @@ public class MarmulakScript : RangedAttackMonster
     {
         MarmulakRoarEffect roar = SkillList[0] as MarmulakRoarEffect;
         roar.Play();
+        GameManager.PlaySE(m_roarSound, SkillList[0].transform.position);
     }
     public override void CreateSkill()
     {
