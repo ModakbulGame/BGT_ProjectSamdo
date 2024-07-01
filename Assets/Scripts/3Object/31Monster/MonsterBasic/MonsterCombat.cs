@@ -69,6 +69,8 @@ public abstract partial class MonsterScript
     protected GameObject[] m_normalAttacks;                                      // 기본 공격 프리펍
     [SerializeField]
     protected float[] m_normalDamageMultiplier;
+    [SerializeField]
+    protected AudioClip[] m_attackSounds; 
     protected bool IsCorrectNormalnum(int _num) { return m_normalDamageMultiplier.Length == _num; }
     public virtual bool CheckNormalCount() { return true; }
 
@@ -94,6 +96,8 @@ public abstract partial class MonsterScript
 
         AttackObject = m_normalAttacks[_idx].GetComponent<ObjectAttackScript>();
         AttackObject.SetAttack(this, Attack);
+
+        if(m_attackSounds.Length > _idx) { GameManager.PlaySE(m_attackSounds[_idx], transform.position); }
         base.AttackTriggerOn();
     }
     public override void AttackTriggerOff()

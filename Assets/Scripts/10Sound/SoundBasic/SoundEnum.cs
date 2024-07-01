@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum EBGM                // BGM 이름
 {
-
+    TITLE_BGM,
 
     LAST
 }

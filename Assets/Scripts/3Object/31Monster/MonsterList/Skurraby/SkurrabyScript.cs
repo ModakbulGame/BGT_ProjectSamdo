@@ -12,6 +12,9 @@ public class SkurrabyScript : MonsterScript
 
     [SerializeField]
     private GameObject m_skurrabyExplode;
+    [SerializeField]
+    private AudioClip m_explodeSound;
+
 
     public override bool CanPurify => JumpCount > m_purifyJump;
     [SerializeField]
@@ -82,6 +85,7 @@ public class SkurrabyScript : MonsterScript
         attack.SetReturnTransform(transform);
         IsDead = true;
         DestroyMonster();
+        GameManager.PlaySE(m_explodeSound, transform.position);
     }
     public override void StartAttack()
     {
