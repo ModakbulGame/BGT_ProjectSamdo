@@ -45,9 +45,14 @@ public enum EOasisName
 
 public enum EAltarName
 {
-    START1,
+    GOD1,
+    GOD2,
     LIFE1,
-    TEMP1,
+    LIFE2,
+    WATER1,
+    WATER2,
+    CRYSTAL1,
+    CRYSTAL2,
 
     LAST
 }
@@ -55,7 +60,7 @@ public enum EAltarName
 public enum ESlateName
 {
     SLATE1,
-/*    SLATE2,
+    SLATE2,
     SLATE3,
     SLATE4,
     SLATE5,
@@ -68,8 +73,6 @@ public enum ESlateName
     SLATE12,
     SLATE13,
     SLATE14,
-    SLATE15,
-    SLATE16,*/
 
 
     LAST
