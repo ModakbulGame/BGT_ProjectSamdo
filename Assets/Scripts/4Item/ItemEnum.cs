@@ -5,38 +5,38 @@ using UnityEngine;
 public enum EItemAttribute
 {
     ID,                     // ID
-    TYPE,                   // Å¸ÀÔ
-    NAME,                   // ÀÌ¸§
-    DESCRIPTION,            // ¼³¸í
-    DROP_RATE,              // µå¶øÀ²
-    PRICE,                  // °¡°Ý
-    MIN_ATTACK,             // ÃÖ¼Ò ¹°¸®
-    MAX_ATTACK,             // ÃÖ´ë ¹°¸®
-    MIN_MAGIC,              // ÃÖ¼Ò ÁÖ¼ú
-    MAX_MAGIC,              // ÃÖ´ë ÁÖ¼ú
-    ATTACK_SPEED,           // ¹«±â ¼Óµµ
-    HEAL_AMOUNT,            // È¸º¹·®
-    BUFF_TIME,              // ¹öÇÁ ½Ã°£
-    THROW_DAMAGE,           // ÅõÃ´ ¾ÆÀÌÅÛ µ¥¹ÌÁö
-    THROW_SPEED,            // ÅõÃ´ ¼Óµµ
-    EXPLODE_TIME,           // Æø¹ß µô·¹ÀÌ
+    TYPE,                   // íƒ€ìž…
+    NAME,                   // ì´ë¦„
+    DESCRIPTION,            // ì„¤ëª…
+    DROP_RATE,              // ë“œëžìœ¨
+    PRICE,                  // ê°€ê²©
+    MIN_ATTACK,             // ìµœì†Œ ë¬¼ë¦¬
+    MAX_ATTACK,             // ìµœëŒ€ ë¬¼ë¦¬
+    MIN_MAGIC,              // ìµœì†Œ ì£¼ìˆ 
+    MAX_MAGIC,              // ìµœëŒ€ ì£¼ìˆ 
+    ATTACK_SPEED,           // ë¬´ê¸° ì†ë„
+    HEAL_AMOUNT,            // íšŒë³µëŸ‰
+    BUFF_TIME,              // ë²„í”„ ì‹œê°„
+    THROW_DAMAGE,           // íˆ¬ì²™ ì•„ì´í…œ ë°ë¯¸ì§€
+    THROW_SPEED,            // íˆ¬ì²™ ì†ë„
+    EXPLODE_TIME,           // í­ë°œ ë”œë ˆì´
     LAST
 }
 
 public enum EItemType
 {
-    WEAPON,                 // ¹«±â
-    PATTERN,                // ¹®¾ç
-    THROW,                  // ÅõÃ´
-    OTHERS,                 // ±âÅ¸
+    WEAPON,                 // ë¬´ê¸°
+    PATTERN,                // ë¬¸ì–‘
+    THROW,                  // íˆ¬ì²™
+    OTHERS,                 // ê¸°íƒ€
     LAST
 }
 
 public enum EWeaponType
 {
-    BLADE,                  // ´ë°Ë
-    SWORD,                  // ¼¼°Ë
-    SCEPTER,                // È¦
+    BLADE,                  // ëŒ€ê²€
+    SWORD,                  // ì„¸ê²€
+    SCEPTER,                // í™€
 
     LAST,
 }
@@ -44,10 +44,10 @@ public enum EWeaponType
 
 public enum EWeaponName
 {
-    BASIC_BLADE,            // ±âº» ´ë°Ë
-    BASIC_SWORD,            // ±âº» ¼¼°Ë
-    BASIC_SCEPTER,          // ±âº» È¦
-    GOBLIN_SCEPTER,         // °íºí¸° È¦
+    BASIC_BLADE,            // ê¸°ë³¸ ëŒ€ê²€
+    BASIC_SWORD,            // ê¸°ë³¸ ì„¸ê²€
+    BASIC_SCEPTER,          // ê¸°ë³¸ í™€
+    GOBLIN_SCEPTER,         // ê³ ë¸”ë¦° í™€
 
     LAST
 }
@@ -103,13 +103,11 @@ public enum EOtherItemName
     O517,
     O518,
     O519,
-    O520,
-    // O521,
 
     LAST
 }
 
-public enum EItemName       // ¹«±â Á¦¿Ü ¾ÆÀÌÅÛ ÀÌ¸§
+public enum EItemName       // ë¬´ê¸° ì œì™¸ ì•„ì´í…œ ì´ë¦„
 {
     ITEM1,
     ITEM2,
