@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public enum EMiserableAttack
 {
@@ -17,9 +18,15 @@ public class MiserableScript : HmmScript
     public override bool CanPurify => IsMelancholy;
 
 
+    [SerializeField]
+    private VisualEffect m_bumpEffect;
+    [SerializeField]
+    private AudioClip m_bumpSound;
     [Tooltip("3연격 시 전진 힘")]
     [SerializeField]
     private float m_tripleAttackForward = 8;
+    [SerializeField]
+    private AudioClip m_swingSound;
 
     private bool IsTripleAttack { get { return AttackIdx == (int)EMiserableAttack.TRIPLE_ATTACK; } }
     private int SkillIdx { get; set; }
@@ -32,7 +39,16 @@ public class MiserableScript : HmmScript
     }
     public override void CreateAttack()
     {
-        m_rigid.velocity = m_tripleAttackForward * transform.forward;
+        if (AttackIdx == (int)EMiserableAttack.HEAD_BUMP)
+        {
+            m_bumpEffect.Play();
+            GameManager.PlaySE(m_bumpSound, transform.position);
+        }
+        else if (AttackIdx == (int)EMiserableAttack.TRIPLE_ATTACK)
+        {
+            GameManager.PlaySE(m_swingSound, transform.position);
+            m_rigid.velocity = m_tripleAttackForward * transform.forward;
+        }
     }
     public override void AttackTriggerOn()
     {

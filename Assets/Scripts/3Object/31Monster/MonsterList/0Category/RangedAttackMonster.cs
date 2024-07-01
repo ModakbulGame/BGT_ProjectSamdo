@@ -42,6 +42,8 @@ public class RangedAttackMonster : MonsterScript
         script.SetAttack(this, flatDir, Attack, TargetDistance);
         script.AttackOn();
 
+        PlayAttackSound(0);
+
         AttackCreated = true;
     }
 
