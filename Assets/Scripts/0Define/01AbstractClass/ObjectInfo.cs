@@ -169,7 +169,7 @@ public abstract partial class ObjectScript
     private AudioClip[] m_dieSounds;
     protected void PlayDieSound()
     {
-        if (m_hitSounds.Length == 0) { return; }
+        if (m_dieSounds.Length == 0) { return; }
         GameManager.PlaySE(m_dieSounds[UnityEngine.Random.Range(0, m_dieSounds.Length)], Position);
     }
 

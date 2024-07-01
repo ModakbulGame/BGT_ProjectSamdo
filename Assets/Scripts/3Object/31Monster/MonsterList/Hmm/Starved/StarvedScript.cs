@@ -39,11 +39,14 @@ public class StarvedScript : HmmScript
         AttackObject.AttackOff();
     }
 
+    [SerializeField]
+    private AudioClip m_skillSound;
     public override void CreateSkill()
     {
         base.CreateSkill();
         ObjectAttackScript skill = SkillList[CurSkillIdx];
         skill.SetAttack(this, SkillDamages[CurSkillIdx]);
         skill.AttackOn();
+        GameManager.PlaySE(m_skillSound, transform.position);
     }
 }
