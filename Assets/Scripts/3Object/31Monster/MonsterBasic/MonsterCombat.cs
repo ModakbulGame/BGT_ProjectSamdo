@@ -97,8 +97,13 @@ public abstract partial class MonsterScript
         AttackObject = m_normalAttacks[_idx].GetComponent<ObjectAttackScript>();
         AttackObject.SetAttack(this, Attack);
 
-        if(m_attackSounds.Length > _idx) { GameManager.PlaySE(m_attackSounds[_idx], transform.position); }
+        PlayAttackSound(_idx);
         base.AttackTriggerOn();
+    }
+    protected void PlayAttackSound(int _idx)
+    {
+        if (m_attackSounds.Length <= _idx) { return; }
+        GameManager.PlaySE(m_attackSounds[_idx], transform.position);
     }
     public override void AttackTriggerOff()
     {

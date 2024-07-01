@@ -51,16 +51,28 @@ public class ArrogantScript : HmmScript
     {
         base.StartSkill();
         m_smashList.Clear();
+        PlayAttackSound(0);
     }
     public override void CreateSkill()
     {
-        ((ArrogantSmashScript)SkillList[0]).PlayEffect();
         CheckNSmash();
+        m_smash.Play();
+        GameManager.PlaySE(m_smashSound, m_smash.transform.position);
+        CreateSmashImpulse();
         base.CreateSkill();
+    }
+    private void CreateSmashImpulse()
+    {
+        float distance = Vector2.Distance(PlayManager.PlayerPos2, Position2);
+        float impulse = Mathf.Sqrt(1-distance / MaxImpulseDistance) * 0.9f + 0.1f;
+        PlayManager.CreateImpulse(impulse);
     }
 
     [SerializeField]
     private VisualEffect m_smash;
+    [SerializeField]
+    private AudioClip m_smashSound;
+    private readonly float MaxImpulseDistance = 10;
 
     private readonly List<ObjectScript> m_smashList = new();
     public void CheckNSmash()

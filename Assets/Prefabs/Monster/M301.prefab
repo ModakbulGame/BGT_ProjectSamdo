@@ -70,7 +70,9 @@ MonoBehaviour:
   m_normalDamageMultiplier:
   - 1
   - 1
-  m_attackSounds: []
+  m_attackSounds:
+  - {fileID: 8300000, guid: a158b507424c45f4ca34c934caba0b23, type: 3}
+  - {fileID: 8300000, guid: a158b507424c45f4ca34c934caba0b23, type: 3}
   m_scriptable: {fileID: 11400000, guid: a3bb57d5b38a97143b62834462e2185f, type: 2}
   m_combatInfo:
     MaxHP: 460
@@ -92,6 +94,7 @@ MonoBehaviour:
   m_dissolveDelay: 2
   m_smashRadius: 4
   m_smash: {fileID: 8668340924614356128}
+  m_smashSound: {fileID: 8300000, guid: 767538836a1e7e045ba7c83486f4a17e, type: 3}
 --- !u!114 &3013559156737583807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_skillList:
-  - {fileID: 5724432074919956427}
+  - {fileID: 0}
   m_skillDamages:
   - 0
   m_skillCooltimes:
@@ -2313,35 +2316,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7366157849854708929, guid: 8790c013d2110224794e8de68772b7ba,
-        type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 5724432074919956427}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8790c013d2110224794e8de68772b7ba, type: 3}
---- !u!1 &646188113517867221 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7366157849854708929, guid: 8790c013d2110224794e8de68772b7ba,
-    type: 3}
-  m_PrefabInstance: {fileID: 7984425992666250260}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5724432074919956427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 646188113517867221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ede81f5b0cd6b0c40adb8d4da9538d9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ccList: 
-  m_impulseAmount: 0.1
-  m_attackEffect: {fileID: 0}
-  m_hitSound: {fileID: 0}
-  m_effect: {fileID: 8668340924614356128}
 --- !u!4 &4801487878742602207 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3200985019213385163, guid: 8790c013d2110224794e8de68772b7ba,

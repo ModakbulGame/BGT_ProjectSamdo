@@ -41,6 +41,11 @@ public class StarvedScript : HmmScript
 
     [SerializeField]
     private AudioClip m_skillSound;
+    public override void StartSkill()
+    {
+        base.StartSkill();
+        PlayAttackSound(0);
+    }
     public override void CreateSkill()
     {
         base.CreateSkill();

@@ -61,7 +61,7 @@ public class MonsterSkillManager : MonoBehaviour
         SkillNum = m_skillList.Length;
         if (m_skillDamages.Length != SkillNum || m_skillCooltimes.Length != SkillNum)
         {
-            Debug.LogError($"{m_monster} 스킬 개수 설정 잘못됨"); return;
+            // Debug.LogError($"{m_monster} 스킬 개수 설정 잘못됨"); return;
         }
         SkillTimeCount = new float[SkillNum];
         NextSkillIdx = Random.Range(0, SkillNum);

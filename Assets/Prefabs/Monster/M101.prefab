@@ -69,7 +69,9 @@ MonoBehaviour:
   m_normalDamageMultiplier:
   - 1
   - 1
-  m_attackSounds: []
+  m_attackSounds:
+  - {fileID: 8300000, guid: b6a873e0078206d4cba27b8faeb10236, type: 3}
+  - {fileID: 8300000, guid: b6a873e0078206d4cba27b8faeb10236, type: 3}
   m_scriptable: {fileID: 11400000, guid: a8926a156379e4f479c2ba668c517004, type: 2}
   m_combatInfo:
     MaxHP: 400
@@ -103,7 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_skillList:
-  - {fileID: 4276903668926676823}
+  - {fileID: 6702402444058628081}
   m_skillDamages:
   - 10
   m_skillCooltimes:
@@ -241,6 +243,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2596339479462199649}
     m_Modifications:
+    - target: {fileID: 929839041068688684, guid: 6e6bb0eb0777c3244918085251b3803e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7615784766094060377, guid: 6e6bb0eb0777c3244918085251b3803e,
         type: 3}
       propertyPath: m_Name
@@ -321,16 +328,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e6bb0eb0777c3244918085251b3803e, type: 3}
---- !u!114 &4276903668926676823 stripped
+--- !u!114 &6702402444058628081 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3197574241793962722, guid: 6e6bb0eb0777c3244918085251b3803e,
+  m_CorrespondingSourceObject: {fileID: 5348370276032840260, guid: 6e6bb0eb0777c3244918085251b3803e,
     type: 3}
   m_PrefabInstance: {fileID: 1673806268317371829}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 760f8b868c02e9249a10abdf57fad815, type: 3}
+  m_Script: {fileID: 11500000, guid: 62b3650827f415146abddaa07ff5a821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &7641863522049237275 stripped

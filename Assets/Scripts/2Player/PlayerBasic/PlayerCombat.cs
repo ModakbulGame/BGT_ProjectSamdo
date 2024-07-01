@@ -60,10 +60,14 @@ public partial class PlayerController
         {
             float impulse = _hit.Impulse * 0.1f;
             if (IsGuarding) { impulse *= GuardImpulseDecreaase; }
-            m_impulseSource.GenerateImpulse(impulse);
+            GetImpulse(impulse);
             ImpulseTimeCount = ImpulseCooldown;
             StartCoroutine(ImpulseDelay());
         }
+    }
+    public void GetImpulse(float _impulse)
+    {
+        m_impulseSource.GenerateImpulse(_impulse);
     }
     private IEnumerator ImpulseDelay()
     {
