@@ -171,7 +171,8 @@ MonoBehaviour:
     AttackSpeed: 2
     MoveSpeed: 2
   m_hitSounds: []
-  m_dieSounds: []
+  m_dieSounds:
+  - {fileID: 8300000, guid: 17c4a38afa9dad24b936ebbf98f0f06e, type: 3}
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
@@ -179,6 +180,10 @@ MonoBehaviour:
   m_normalAttacks:
   - {fileID: 1839218080542238827}
   m_normalDamageMultiplier: []
+  m_attackSounds:
+  - {fileID: 8300000, guid: 9060c8074b72cd84690aef7257e8f3ee, type: 3}
+  - {fileID: 8300000, guid: 9060c8074b72cd84690aef7257e8f3ee, type: 3}
+  - {fileID: 8300000, guid: a60aa3fbca8b8f64e9249bd21663e4cb, type: 3}
   m_scriptable: {fileID: 11400000, guid: 8e3e5bc2537dc38459063d81728c8888, type: 2}
   m_combatInfo:
     MaxHP: 400
@@ -201,6 +206,7 @@ MonoBehaviour:
   m_rushSpeed: 6
   AbsorbAmount: 2
   m_abosrbEffect: {fileID: 3898148575451998886}
+  m_absorbSound: {fileID: 8300000, guid: 6050211fe43638f438bfe0185cf26c33, type: 3}
 --- !u!114 &1900657844625161710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1756,6 +1762,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8224193246923394200, guid: e88e422b724be1846bbeaf97952bc036,
+        type: 3}
+      propertyPath: m_hitSound
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

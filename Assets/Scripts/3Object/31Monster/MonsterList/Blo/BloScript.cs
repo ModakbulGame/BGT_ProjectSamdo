@@ -20,6 +20,8 @@ public class BloScript : MonsterScript
     public int AbsorbAmount = 2;
     [SerializeField]
     private VisualEffect m_abosrbEffect;
+    [SerializeField]
+    private AudioClip m_absorbSound;
 
 
     private bool RushDone { get; set; }
@@ -39,9 +41,11 @@ public class BloScript : MonsterScript
     public void SetRush(bool _start)
     {
         m_anim.SetBool("IS_SKILLING", _start);
-        if (!_start) { AttackDone(); AttackTriggerOff(); }
+        if (_start) { PlayAttackSound(2); }
+        else { AttackDone(); AttackTriggerOff(); }
         IsRushing = _start;
     }
+
     public void RushToTarget()
     {
         if(!IsRushing) { return; }
@@ -80,6 +84,7 @@ public class BloScript : MonsterScript
         int soul = PlayManager.SoulNum;
         int absorb = FunctionDefine.Min(AbsorbAmount, soul);
         PlayManager.LooseSoul(absorb, true);
+        GameManager.PlaySE(m_absorbSound, transform.position);
         AbsorbedSoul = true;
     }
     public override void SkillDone()
@@ -95,11 +100,5 @@ public class BloScript : MonsterScript
         base.OnSpawned();
         RushDone = false;
         AbsorbedSoul = false;
-    }
-
-    public override void Update()
-    {
-        base.Update();
-        Debug.Log(CurState);
     }
 }

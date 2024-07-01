@@ -6,6 +6,8 @@ public class MonsterSkillScript : ObjectAttackScript
 {
     private Transform ReturnTransform { get; set; }
 
+    public AudioClip HitSound { get { return m_hitSound; } }
+
     public void SetAttack(ObjectScript _attacker, float _damage, float _time)
     {
         SetAttack(_attacker, _damage);

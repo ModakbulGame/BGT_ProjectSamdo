@@ -24,6 +24,9 @@ public class WolfPeckScript : MonoBehaviour
                 center += wolf.Position;
             return center / m_wolfs.Count; } }
 
+    [SerializeField]
+    private AudioClip m_engageSound;
+
 
     public bool Engaging { get; private set; }
 
@@ -32,6 +35,7 @@ public class WolfPeckScript : MonoBehaviour
     public void EngageWolfs(WolfScript _wolf, ObjectScript _target) // 늑대 전투 개시
     {
         Engaging = true;
+        GameManager.PlaySE(m_engageSound, _wolf.transform.position);
         ResetRole();
         for (int i = 0; i<m_wolfs.Count; i++)
         {
