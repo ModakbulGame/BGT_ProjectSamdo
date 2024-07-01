@@ -80,6 +80,7 @@ public class PowerScriptable : ScriptableObject
         if(amount == 0)     { amount = (float)DataManager.String2CC(_data[(int)EPowerAttribute.ADJ_AMOUNT]); }
         StatAdjust =        new(type, amount, time);
         Description =       _data[(int)EPowerAttribute.DESCRIPTION];
+        Description = Description.Replace("\\n", "\n");
         int.TryParse(       _data[(int)EPowerAttribute.PRICE],            out PowerPrice);
         PowerPrefab =       _prefab;
         if(_icon != null) { PowerIcon = _icon; }

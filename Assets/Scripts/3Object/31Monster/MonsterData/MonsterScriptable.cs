@@ -61,6 +61,7 @@ public class MonsterScriptable : ScriptableObject
         float.TryParse( _data[(int)EMonsterAttribue.APPROACH_DELAY],    out ApproachDelay);
         float.TryParse( _data[(int)EMonsterAttribue.FENCE_RANGE],       out FenceRange);
         Description =   _data[(int)EMonsterAttribue.DESCRIPTION];
+        Description = Description.Replace("\\n", "\n");
         DropInfo =      _drop;
         MonsterPrefab = _prefab;
         if (_profile != null) { MonsterProfile = _profile; }

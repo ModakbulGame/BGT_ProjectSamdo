@@ -7,6 +7,8 @@ public class ItemScriptable : ScriptableObject
     public uint         Idx;
     public string       ID;
     public string       ItemName;
+
+    [TextArea]
     public string       Description;
     public float        DropRate;
     public int          ItemPrice;
@@ -19,6 +21,7 @@ public class ItemScriptable : ScriptableObject
         ID =            _data[(int)EItemAttribute.ID];
         ItemName =      _data[(int)EItemAttribute.NAME];
         Description =   _data[(int)EItemAttribute.DESCRIPTION];
+        Description = Description.Replace("\\n", "\n");
         float.TryParse( _data[(int)EItemAttribute.DROP_RATE],   out DropRate);
         int.TryParse(   _data[(int)EItemAttribute.PRICE],       out ItemPrice);
         ItemPrefab =    _prefab;
