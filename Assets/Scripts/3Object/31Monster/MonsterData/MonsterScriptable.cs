@@ -22,6 +22,7 @@ public class MonsterScriptable : ScriptableObject
     public float            AttackSpeed;
     public float            ApproachDelay;          // 접근 딜레이
     public float            FenceRange;             // 돌아다니는 범위 returnRange랑 뭐가 다름?
+    [TextArea]
     public string           Description;
     public int              FirstKillStat = 1;      // 최초 처치 시 스탯 양
     public DropInfo         DropInfo;
@@ -60,7 +61,7 @@ public class MonsterScriptable : ScriptableObject
         float.TryParse( _data[(int)EMonsterAttribue.ATTACK_SPEED],      out AttackSpeed);
         float.TryParse( _data[(int)EMonsterAttribue.APPROACH_DELAY],    out ApproachDelay);
         float.TryParse( _data[(int)EMonsterAttribue.FENCE_RANGE],       out FenceRange);
-        Description =   _data[(int)EMonsterAttribue.DESCRIPTION];
+        Description = FunctionDefine.TextRowSet(_data[(int)EMonsterAttribue.DESCRIPTION]);
         DropInfo =      _drop;
         MonsterPrefab = _prefab;
         if (_profile != null) { MonsterProfile = _profile; }
