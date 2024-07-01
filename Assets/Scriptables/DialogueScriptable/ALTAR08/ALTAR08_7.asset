@@ -12,11 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0836696b697458c4cace1784f8187404, type: 3}
   m_Name: ALTAR08_7
   m_EditorClassIdentifier: 
-  Idx: 0
+  Idx: 60
   NPC:
-    Type: 0
-    Idx: 0
-  DialogueIdx: 0
+    Type: 1
+    Idx: 7
+  DialogueIdx: 6
   BranchIdx: 0
-  Lines: []
-  IsOpenAtFirst: 0
+  Lines:
+  - Text: 1
+    ResultDialogues: []
+    ResultQuest:
+      Quest: 3
+      Function: 4
+  - Text: last
+    ResultDialogues: []
+    ResultQuest:
+      Quest: 3
+      Function: 4
+  - Text: complete
+    ResultDialogues: []
+    ResultQuest:
+      Quest: 307
+      Function: 3
+  IsOpenAtFirst: 1
