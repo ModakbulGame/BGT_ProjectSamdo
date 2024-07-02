@@ -61,7 +61,8 @@ public class MonsterScriptable : ScriptableObject
         float.TryParse( _data[(int)EMonsterAttribue.ATTACK_SPEED],      out AttackSpeed);
         float.TryParse( _data[(int)EMonsterAttribue.APPROACH_DELAY],    out ApproachDelay);
         float.TryParse( _data[(int)EMonsterAttribue.FENCE_RANGE],       out FenceRange);
-        Description = FunctionDefine.TextRowSet(_data[(int)EMonsterAttribue.DESCRIPTION]);
+        Description = FunctionDefine.ReplaceComma(_data[(int)EMonsterAttribue.DESCRIPTION]);
+        Description = FunctionDefine.TextRowSet(Description);
         DropInfo =      _drop;
         MonsterPrefab = _prefab;
         if (_profile != null) { MonsterProfile = _profile; }

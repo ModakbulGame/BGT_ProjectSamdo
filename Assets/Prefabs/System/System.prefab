@@ -9561,8 +9561,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2624982996657249999}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000003867089, y: 0.9937638, z: -0.11150594, w: 0.00000003446429}
-  m_LocalPosition: {x: 25, y: 3, z: 46.6}
+  m_LocalRotation: {x: -0, y: 0.9937638, z: -0.11150583, w: 0}
+  m_LocalPosition: {x: 497.3, y: 2.371, z: 240.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30224,8 +30224,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 250}
-  m_SizeDelta: {x: -160, y: 50}
+  m_AnchoredPosition: {x: 0, y: 270}
+  m_SizeDelta: {x: -120, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1108982243075785543
 CanvasRenderer:
@@ -30283,8 +30283,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 33
+  m_fontSizeBase: 33
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -33099,6 +33099,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ImgFrame
       objectReference: {fileID: 0}
+    - target: {fileID: 2440995612721662402, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440995612721662402, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 36
+      objectReference: {fileID: 0}
     - target: {fileID: 3238878996776115071, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
         type: 3}
       propertyPath: m_Pivot.x
@@ -33199,10 +33209,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3465768260095607321, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3465768260095607321, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: 6095475217719784817, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
         type: 3}
       propertyPath: m_Name
       value: MonsterElm
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570516164577761035, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -123
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -34425,6 +34450,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ImgFrame
       objectReference: {fileID: 0}
+    - target: {fileID: 2440995612721662402, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440995612721662402, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 36
+      objectReference: {fileID: 0}
     - target: {fileID: 3238878996776115071, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
         type: 3}
       propertyPath: m_Pivot.x
@@ -34525,10 +34560,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3465768260095607321, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3465768260095607321, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: 6095475217719784817, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
         type: 3}
       propertyPath: m_Name
       value: MonsterElm
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570516164577761035, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -123
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -36259,6 +36309,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ImgFrame
       objectReference: {fileID: 0}
+    - target: {fileID: 2440995612721662402, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440995612721662402, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 36
+      objectReference: {fileID: 0}
     - target: {fileID: 3238878996776115071, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
         type: 3}
       propertyPath: m_Pivot.x
@@ -36359,10 +36419,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3465768260095607321, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3465768260095607321, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: 6095475217719784817, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
         type: 3}
       propertyPath: m_Name
       value: MonsterElm
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570516164577761035, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -123
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -40508,6 +40583,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ImgFrame
       objectReference: {fileID: 0}
+    - target: {fileID: 2440995612721662402, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440995612721662402, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 36
+      objectReference: {fileID: 0}
     - target: {fileID: 3238878996776115071, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
         type: 3}
       propertyPath: m_Pivot.x
@@ -40608,10 +40693,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3465768260095607321, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3465768260095607321, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: 6095475217719784817, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
         type: 3}
       propertyPath: m_Name
       value: MonsterElm
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570516164577761035, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -123
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -44421,6 +44521,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ImgFrame
       objectReference: {fileID: 0}
+    - target: {fileID: 2440995612721662402, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440995612721662402, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 36
+      objectReference: {fileID: 0}
     - target: {fileID: 3238878996776115071, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
         type: 3}
       propertyPath: m_Pivot.x
@@ -44521,10 +44631,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3465768260095607321, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3465768260095607321, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: 6095475217719784817, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
         type: 3}
       propertyPath: m_Name
       value: MonsterElm
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570516164577761035, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -123
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -45142,6 +45267,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ImgFrame
       objectReference: {fileID: 0}
+    - target: {fileID: 2440995612721662402, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440995612721662402, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 36
+      objectReference: {fileID: 0}
     - target: {fileID: 3238878996776115071, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
         type: 3}
       propertyPath: m_Pivot.x
@@ -45242,10 +45377,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3465768260095607321, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3465768260095607321, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: 6095475217719784817, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
         type: 3}
       propertyPath: m_Name
       value: MonsterElm
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570516164577761035, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -123
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -46501,6 +46651,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ImgFrame
       objectReference: {fileID: 0}
+    - target: {fileID: 2440995612721662402, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440995612721662402, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 36
+      objectReference: {fileID: 0}
     - target: {fileID: 3238878996776115071, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
         type: 3}
       propertyPath: m_Pivot.x
@@ -46601,10 +46761,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3465768260095607321, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3465768260095607321, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: 6095475217719784817, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
         type: 3}
       propertyPath: m_Name
       value: MonsterElm
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570516164577761035, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -123
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -46944,6 +47119,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ImgFrame
       objectReference: {fileID: 0}
+    - target: {fileID: 2440995612721662402, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440995612721662402, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 36
+      objectReference: {fileID: 0}
     - target: {fileID: 3238878996776115071, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
         type: 3}
       propertyPath: m_Pivot.x
@@ -47044,10 +47229,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3465768260095607321, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3465768260095607321, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: 6095475217719784817, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
         type: 3}
       propertyPath: m_Name
       value: MonsterElm
+      objectReference: {fileID: 0}
+    - target: {fileID: 7570516164577761035, guid: ed3ad5d03b79b6c41b265d621dd6b5ee,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -123
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
