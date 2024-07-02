@@ -264,7 +264,7 @@ public partial class PlayerController
         }
         CurWeapon.gameObject.name = name;
     }
-    public override void SetWeaponCC(ECCType _cc) 
+    public override void SetWeaponCC(ECCType _cc)
     {
         CurWeapon.SetCCType(_cc);
         if (_cc == ECCType.NONE) { CurWeapon.BuffEffectOff(); }

@@ -282,14 +282,14 @@ public abstract partial class ObjectScript
 
     private void ApplyWeaponCC() 
     {
+        float max = -1;
+        ECCType cur = ECCType.NONE;
         foreach (BuffNDebuff adj in m_buffNDebuff)
         {
-            if(adj.Type != EAdjType.WEAPON_CC) { return; }
-            ECCType cc = (ECCType)adj.Amount;
-            SetWeaponCC(cc);
-            return;
+            if(adj.IsDone || adj.Type != EAdjType.WEAPON_CC) { return; }
+            if(adj.TimeCount > max) { max = adj.TimeCount; cur = (ECCType)adj.Amount; }
         }
-        SetWeaponCC(ECCType.NONE);
+        SetWeaponCC(cur);
     }
     public virtual void SetWeaponCC(ECCType _cc) { }
     public virtual void SetAdjustEffect(EAdjType _type, float _mul) { }
