@@ -153,10 +153,9 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
                 GameManager.PlaySE(EMonsterSE.PURIFY);
                 break;
             case EMonsterDeathType.BY_PLAYER:   // 플레이어
-                PlayManager.AddSoul(1);
+                PlayManager.AddSoul(m_scriptable.DropInfo.Soul);
                 break;
             case EMonsterDeathType.BY_MONSTER:  // 몬스터
-
                 break;
             case EMonsterDeathType.ETC:         // 기타
 
