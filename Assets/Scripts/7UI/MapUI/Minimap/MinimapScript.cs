@@ -40,8 +40,6 @@ public class MinimapScript : MonoBehaviour
         m_mapScale = _scale;
         float realScale = MapHeight / MapImgHeight * _scale;
 
-        realScale = 2.5f;
-
         m_mapImg.rectTransform.localScale = new(realScale, realScale, 1);
         SetPosition();
     }
@@ -52,6 +50,7 @@ public class MinimapScript : MonoBehaviour
     }
     protected virtual void Start()
     {
+        if (!GameManager.IsInGame) { return; }
         m_mapName = GetComponentInChildren<TextMeshProUGUI>();
         m_mapName.text = SceneManager.GetActiveScene().name;
         InitSize();
@@ -60,6 +59,7 @@ public class MinimapScript : MonoBehaviour
     }
     protected virtual void Update()
     {
+        if (!GameManager.IsInGame) { return; }
         SetPosition();
         SetRotation();
     }

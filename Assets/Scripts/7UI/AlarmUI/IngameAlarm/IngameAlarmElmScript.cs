@@ -35,22 +35,17 @@ public class IngameAlarmElmScript : MonoBehaviour
         TextAlpha = 1;
     }
 
-    public void ResetElm()
+    public void DestoryElm()
     {
-        TargetIdx = 0;
-        IsShowing = false;
-        m_rect.anchoredPosition = Vector2.down * m_parent.ElmHeight;
-        TextAlpha = 1;
-    }
-
-    public void ReturnToParent()
-    {
-        m_parent.ReturnElm();
-        ResetElm();
+        Destroy(gameObject);
     }
 
 
-    public void SetComps()
+    private void Awake()
+    {
+        SetComps();
+    }
+    private void SetComps()
     {
         m_rect = GetComponent<RectTransform>();
         m_alarmTxt = GetComponentInChildren<TextMeshProUGUI>();
@@ -62,7 +57,7 @@ public class IngameAlarmElmScript : MonoBehaviour
         else if(TextAlpha > 0) 
         {
             TextAlpha -= FadeSpeed * Time.deltaTime;
-            if(TextAlpha <= 0 && IsShowing) { ReturnToParent(); }
+            if(TextAlpha <= 0 && IsShowing) { DestoryElm(); }
         }
         if (m_rect.anchoredPosition.y < TargetPos)
         {
