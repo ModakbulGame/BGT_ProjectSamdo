@@ -18,7 +18,7 @@ public class InteractScript : MonoBehaviour                 // 상호작용이 �
     public bool CanInteract { get { return DistToPlayer <= m_canInteractDist && CheckInteractable; } }  // 상호작용 가능한지
 
 
-    public float DistToPlayer { get { return PlayManager.GetDistToPlayer(transform.position); } }           // 플레이어와의 거리
+    public float DistToPlayer { get { return PlayManager.GetDistToPlayer(Position2); } }           // 플레이어와의 거리
     public float AngleToPlayer { get {
             Vector2 dir = (PlayManager.PlayerPos2 - Position2).normalized;
             float rot = FunctionDefine.VecToDeg(dir);

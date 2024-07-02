@@ -89,7 +89,7 @@ public class PlayManager : MonoBehaviour
     public static void ApplyStatReset() { Player.ResetStatInfo(); }
     public static void ApplyPlayerStat() { Player.ApplyStat(); }
     public static SPlayerWeaponInfo PlayerWeaponInfo { get { return Player.CurWeaponInfo; } }
-    public static float GetDistToPlayer(Vector3 _pos) { if (!IsPlayerSet) return -1; return (PlayerPos-_pos).magnitude; }                   // 플레이어와의 거리
+    public static float GetDistToPlayer(Vector2 _pos) { if (!IsPlayerSet) return -1; return (PlayerPos2-_pos).magnitude; }                   // 플레이어와의 거리
     public static void SetPlayerWeapon(EWeaponName _weapon) { Player.SetCurWeapon(_weapon); }                                               // 무기 설정
     public static void StopPlayerInteract() { Player.StopInteract(); }                                                                      // 상호작용 종료
     public static void StopPlayerInteract(InteractScript _interact) { Player.StopInteract(_interact); }

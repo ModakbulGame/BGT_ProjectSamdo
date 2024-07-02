@@ -16,7 +16,7 @@ public class FrometzScript : RangedAttackMonster
     public override Vector3 AttackOffset => new(0, 1, 1.25f);
 
     private readonly float PurifyDistance = 8;
-    private float PlayerDistance { get { return PlayManager.GetDistToPlayer(Position); } }
+    private float PlayerDistance { get { return PlayManager.GetDistToPlayer(Position2); } }
 
     private bool IsLanded { get; set; }
 
