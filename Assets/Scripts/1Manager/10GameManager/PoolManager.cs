@@ -8,10 +8,10 @@ public class PoolManager : MonoBehaviour
     private static readonly Dictionary<int, ObjectPool<GameObject>> m_pools = new();
     private readonly Dictionary<int, GameObject> m_objectList = new();
 
-    private const int DEFAULT_ITEM_NUM = 3;
-    private const int DEFAULT_SKILL_NUM = 3;
-    private const int DEFAULT_MONSTER_NUM = 10;
-    private const int DEFAULT_EFFECT_NUM = 10;
+    private const int DEFAULT_ITEM_NUM = 8;
+    private const int DEFAULT_SKILL_NUM = 4;
+    private const int DEFAULT_MONSTER_NUM = 16;
+    private const int DEFAULT_EFFECT_NUM = 4;
 
 
     [SerializeField]
@@ -22,33 +22,34 @@ public class PoolManager : MonoBehaviour
     public static GameObject GetObject(GameObject _obj)
     {
         int hash = _obj.GetHashCode();
-        if (!m_pools.ContainsKey(hash)) { Debug.LogError($"Ç®¿¡ Ãß°¡µÇÁö ¾ÊÀº {_obj.name}"); return null; }
+        if (!m_pools.ContainsKey(hash)) { Debug.LogError($"í’€ì— ì¶”ê°€ë˜ì§€ ì•Šì€ {_obj.name}"); return null; }
         CurHash = hash;
-        return m_pools[hash].Get();
+        GameObject pooled = m_pools[hash].Get();
+        return pooled;
     }
 
     private void CreatePools(GameObject[] _items, GameObject[] _skills, GameObject[] _monsters, GameObject[] _effects)
     {
-        // ¾ÆÀÌÅÛ
+        // ì•„ì´í…œ
         int itemNum = (int)EItemType.LAST + (int)EThrowItemName.LAST;
         for (int i = 0; i<itemNum; i++)
         {
             if (_items[i] == null) { continue; }
             InitPool(_items[i], DEFAULT_ITEM_NUM);
         }
-        // ½ºÅ³
+        // ìŠ¤í‚¬
         for(int i = 0; i<(int)EPowerName.LAST; i++)
         {
             if (_skills[i] == null) { continue; }
             InitPool(_skills[i], DEFAULT_SKILL_NUM);
         }
-        // ¸ó½ºÅÍ
+        // ëª¬ìŠ¤í„°
         for (int i = 0; i<(int)EMonsterName.LAST; i++)
         {
             if (_monsters[i] == null) { continue; }
             InitPool(_monsters[i], DEFAULT_MONSTER_NUM);
         }
-        // ÀÌÆåÆ®
+        // ì´í™íŠ¸
         for (int i = 0; i<(int)EEffectName.LAST; i++)
         {
             if (_effects[i] == null) { continue; }

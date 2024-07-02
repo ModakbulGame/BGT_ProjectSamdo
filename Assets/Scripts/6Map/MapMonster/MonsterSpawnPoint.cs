@@ -94,6 +94,7 @@ public class MonsterSpawnPoint : MonoBehaviour, IHaveData
             MonsterDataCache.Add(data);
             monster.DestroyMonster();
         }
+        m_spawnedMonsters.Clear();
         IsShowingMonster = false;
     }
     public void MonsterDead(MonsterScript _monster)

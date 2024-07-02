@@ -44,7 +44,8 @@ public class MonsterManager : MonoBehaviour
     }
     public GameObject GetMonsterObj(EMonsterName _monster)
     {
-        return PoolManager.GetObject(m_monsterData[(int)_monster].MonsterPrefab);
+        GameObject obj = PoolManager.GetObject(m_monsterData[(int)_monster].MonsterPrefab);
+        return obj;
     }
 
     [SerializeField]

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : SingleTon<GameManager>
+public class GameManager : MonoBehaviour
 {
+    private static GameManager Inst;
+
     public static bool IsInTitle { get { return SceneManager.GetActiveScene().buildIndex == ValueDefine.TITLE_SCENE_IDX; } }
     public static bool IsInGame { get { return SceneManager.GetActiveScene().buildIndex > ValueDefine.LOADING_SCENE_IDX
                 && SceneManager.GetActiveScene().buildIndex <= ValueDefine.HELL_SCENE_IDX; /*임시 조건*/ } }
@@ -160,9 +162,13 @@ public class GameManager : SingleTon<GameManager>
         m_poolManager.SetManager(ItemArray, PowerArray, MonsterArray, EffectArray);
     }
 
-    public override void Awake()
+    private void Awake()
     {
-        base.Awake();
+        if (Inst != null) { Destroy(gameObject); return; }
+
+        Inst = this;
+        DontDestroyOnLoad(gameObject);
+
         SetSubManagers();
     }
 }
