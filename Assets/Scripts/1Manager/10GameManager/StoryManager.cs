@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 [Serializable]
@@ -69,7 +68,7 @@ public class StoryManager : MonoBehaviour
             case ENPCType.ALTAR:
                 return m_npcData[_npc.Idx + (int)EOasisName.LAST];
             case ENPCType.OTHER:
-                Debug.Log("¾ÆÁ÷ ¾ø´Â À¯Çü");
+                Debug.Log("ì•„ì§ ì—†ëŠ” ìœ í˜•");
                 break;
         }
         return null;
@@ -82,7 +81,7 @@ public class StoryManager : MonoBehaviour
         int.TryParse(_id[1..], out int idx);
         return (EQuestName)(idx-1);
     }
-    public static SNPC String2NPC(string _data)     // Á¾·ùº°·Î 9°³¾¿¸¸ °¡´É
+    public static SNPC String2NPC(string _data)     // ì¢…ë¥˜ë³„ë¡œ 9ê°œì”©ë§Œ ê°€ëŠ¥
     {
         if(_data == "") { return SNPC.Null; }
         int stringLen = _data.Length - 2;

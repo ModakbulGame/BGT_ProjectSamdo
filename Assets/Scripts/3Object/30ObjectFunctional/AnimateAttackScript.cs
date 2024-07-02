@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.Utilities;
-using static UnityEditor.PlayerSettings;
 
 [RequireComponent(typeof(BoxCollider))]
 public class AnimateAttackScript : ObjectAttackScript

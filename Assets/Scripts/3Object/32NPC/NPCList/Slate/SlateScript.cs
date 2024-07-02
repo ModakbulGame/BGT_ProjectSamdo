@@ -51,6 +51,9 @@ public class SlateScript : NPCScript
     }
 
 
+    public override void LoadData() { }
+    public override void SaveData() { }
+
     private void SetComps()
     {
         m_anim = GetComponent<Animator>();
