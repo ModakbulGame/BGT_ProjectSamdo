@@ -12,6 +12,9 @@ public class MinimapScript : MonoBehaviour
     protected TextMeshProUGUI m_mapName;
     public Image m_mapImg;
 
+    protected OasisIconScript[] m_oasisPoints;
+    protected AltarIconScript[] m_altarPoints;
+
     protected RectTransform MapRect { get { return m_mapImg.rectTransform; } }
     protected float MapImgHeight { get { return m_mapImg.sprite.rect.height; } }
 
@@ -33,6 +36,23 @@ public class MinimapScript : MonoBehaviour
         MapRect.localEulerAngles = new(0, 0, player);
     }
 
+    private void SetMapGimicPosition()
+    {
+        m_oasisPoints = GetComponentsInChildren<OasisIconScript>();
+        m_altarPoints = GetComponentsInChildren<AltarIconScript>();
+        for (int i = 0; i < m_oasisPoints.Length; i++)
+        {
+            if (i >= (int)EOasisName.LAST) { m_oasisPoints[i].gameObject.SetActive(false); continue; }
+            m_oasisPoints[i].SetParent(this);
+            m_oasisPoints[i].SetComps((EOasisName)i, m_mapImg.rectTransform);
+        }
+        for (int i = 0; i < m_altarPoints.Length; i++)
+        {
+            if (i >= (int)EAltarName.LAST) { m_altarPoints[i].gameObject.SetActive(false); continue; }
+            m_altarPoints[i].SetParent(this);
+            m_altarPoints[i].SetComps((EAltarName)i, m_mapImg.rectTransform);
+        }
+    }
 
 
     public void SetScale(float _scale)
@@ -54,6 +74,7 @@ public class MinimapScript : MonoBehaviour
         m_mapName = GetComponentInChildren<TextMeshProUGUI>();
         m_mapName.text = SceneManager.GetActiveScene().name;
         InitSize();
+        SetMapGimicPosition();
         SetScale(MapScale);
         SetRotation();
     }

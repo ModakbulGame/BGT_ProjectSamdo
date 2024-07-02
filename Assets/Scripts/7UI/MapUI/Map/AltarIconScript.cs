@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class AltarIconScript : MonoBehaviour
 {
-    private MapUIScript m_parent;
+    private MinimapScript m_parent;
 
     private RectTransform m_rect;
     private Image m_img;
@@ -15,7 +15,7 @@ public class AltarIconScript : MonoBehaviour
     private EAltarName m_pointName;
     private EAltarName PointName { get { return m_pointName; } set { m_pointName = value; } }
 
-    public void SetParent(MapUIScript _parent) { m_parent = _parent; }
+    public void SetParent(MinimapScript _parent) { m_parent = _parent; }
     private void SetPosition(RectTransform _rect)
     {
         float width = PlayManager.MapWidth, height = PlayManager.MapHeight;
