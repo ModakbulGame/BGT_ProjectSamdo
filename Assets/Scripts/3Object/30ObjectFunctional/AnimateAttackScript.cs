@@ -46,11 +46,11 @@ public class AnimateAttackScript : ObjectAttackScript
         if (m_trailList.Count > MAX_TRAIL_FRAME) { m_trailList.RemoveLast(); }
         if (m_trailList.Count > 1) { m_trailFillerList = FillTrail(m_trailList.First.Value, m_trailList.Last.Value); }
 
-        Collider[] hits = ScanColliders(col);
+        Collider[] hits = ScanColliders(col).ToArray();
         bool hit = HitObject(hits);
         foreach (BufferObject co in m_trailFillerList)
         {
-            hits = ScanColliders(co);
+            hits = ScanColliders(co).ToArray();
             hit |= HitObject(hits);
         }
         if (Attacker.IsPlayer && hit) { ((PlayerController)Attacker).HitTarget(); }
@@ -83,7 +83,7 @@ public class AnimateAttackScript : ObjectAttackScript
         return fillerList;
     }
 
-    private Collider[] ScanColliders(BufferObject _col)
+    public virtual List<Collider> ScanColliders(BufferObject _col)
     {
         ColliderCache = new Collider[128];
         List<Collider> list = new();
@@ -96,7 +96,7 @@ public class AnimateAttackScript : ObjectAttackScript
         {
             foreach (Collider col in ColliderCache) { list.Add(col); }
         }
-        return list.ToArray();
+        return list;
     }
     private bool HitObject(Collider[] _hits)
     {
@@ -112,6 +112,7 @@ public class AnimateAttackScript : ObjectAttackScript
             Vector3 pos = CheckNHit(hittable);
             CreateHitEffect(hittable, pos);
             hit |= hittable.IsMonster;
+            if(m_hitSound != null) { GameManager.PlaySE(m_hitSound, transform.position); }
         }
         return hit;
     }

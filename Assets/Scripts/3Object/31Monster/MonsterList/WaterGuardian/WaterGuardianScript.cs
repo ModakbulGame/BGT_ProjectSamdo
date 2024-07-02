@@ -79,6 +79,7 @@ public class WaterGuardianScript : BossMonster
             Vector3 dir = (CurTarget.Position-Position).normalized;
             m_rigid.AddForce(m_dashPower * dir);
         }
+        PlayAttackSound(AttackIdx);
 /*        else if (AttackIdx != (int)EWaterGuardianAttack.POINTED))
         {
             AttackObject.PlayEffect();
@@ -130,6 +131,10 @@ public class WaterGuardianScript : BossMonster
     [Tooltip("얼음 스킬 생성 위치")]
     [SerializeField]
     private float m_iceHeight = 12;
+    [SerializeField]
+    private AudioClip[] m_skillSounds;
+    [SerializeField]
+    private AudioClip m_iceReadySound;
 
     public override void SkillOn()
     {
@@ -140,6 +145,7 @@ public class WaterGuardianScript : BossMonster
             CurSkill.SetAttack(this, SkillDamages[SlashIdx]);
             CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
+            GameManager.PlaySE(m_skillSounds[SlashIdx], transform.position);
         }
         else if (CurSkillIdx == RushIdx)
         {
@@ -148,10 +154,12 @@ public class WaterGuardianScript : BossMonster
             CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
             m_rigid.velocity = m_dashPower * transform.forward + Vector3.up * m_dashUp;
+            GameManager.PlaySE(m_skillSounds[RushIdx], transform.position);
         }
         else if (CurSkillIdx == IceIdx)
         {
             m_iceCastEffect.EffectOn();
+            GameManager.PlaySE(m_iceReadySound, transform.position);
         }
     }
     public override void CreateSkill()
@@ -169,6 +177,7 @@ public class WaterGuardianScript : BossMonster
             CurSkill.gameObject.transform.SetParent(null);
 
             m_iceCastEffect.EffectOff();
+            GameManager.PlaySE(m_skillSounds[IceIdx], transform.position);
         }
     }
     public override void SkillOff()

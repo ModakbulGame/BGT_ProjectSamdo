@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [Serializable]
 public class WeaponInfo
@@ -89,16 +91,13 @@ public class WeaponScript : AnimateAttackScript
     private WeaponTrailEffect m_trailEffect;
     public override void AttackOn() { base.AttackOn(); m_trailEffect.SetNormalTrail(true); }
     public override void AttackOff() { base.AttackOff(); m_trailEffect.SetNormalTrail(false); }
-    public void PowerTrailOn(EPowerTrailType _type) { m_trailEffect.PowerTrailOn(_type); }
+    public void PowerTrailOn(EPowerTrailType _type) { if (!IsAttacking) { return; } m_trailEffect.PowerTrailOn(_type); }
     public void PowerTrailOff() { m_trailEffect.PowerTrailOff(); }
 
 
     private WeaponBuffEffectScript m_buffEffect;
     public void BuffEffectOn(ECCType _cc) { m_buffEffect.EffectOn(_cc); }
     public void BuffEffectOff() { m_buffEffect.EffectOff(); }
-
-
-
 
     public override void SetComps()
     {

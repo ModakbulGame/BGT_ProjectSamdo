@@ -5,7 +5,7 @@ using UnityEngine;
 public class HideGimicScript : MonoBehaviour, IHidable
 {
     [SerializeField]
-    private Collider[] m_colliders;
+    protected Collider[] m_colliders;
 
     public virtual void GetLight()
     {

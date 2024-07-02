@@ -42,5 +42,6 @@ public class HideBridgeScript : HideGimicScript
         base.SetComps();
         m_bridgeMaterial = GetComponent<MeshRenderer>().material;
         m_bridgeMaterial.SetFloat(DissolveAmount, 1);
+        m_colliders = GetComponentsInChildren<Collider>();
     }
 }

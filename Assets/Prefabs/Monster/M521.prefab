@@ -237,7 +237,8 @@ MonoBehaviour:
     AttackSpeed: 2.8
     MoveSpeed: 2
   m_hitSounds: []
-  m_dieSounds: []
+  m_dieSounds:
+  - {fileID: 8300000, guid: 62981315a6d83264991d84bd959257ee, type: 3}
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
@@ -250,6 +251,11 @@ MonoBehaviour:
   - 1
   - 1
   - 1
+  m_attackSounds:
+  - {fileID: 8300000, guid: 6c2ca0fe39bbbb84fa61de069df19e60, type: 3}
+  - {fileID: 8300000, guid: 6c2ca0fe39bbbb84fa61de069df19e60, type: 3}
+  - {fileID: 8300000, guid: 6c2ca0fe39bbbb84fa61de069df19e60, type: 3}
+  - {fileID: 8300000, guid: af410354c29f2f649b74095e933c74cc, type: 3}
   m_scriptable: {fileID: 11400000, guid: 8d6407cbd69e4f842bac42ce67347b85, type: 2}
   m_combatInfo:
     MaxHP: 600
@@ -273,6 +279,11 @@ MonoBehaviour:
   m_dashUp: 3
   m_iceCastEffect: {fileID: 3240609349410307876}
   m_iceHeight: 12
+  m_skillSounds:
+  - {fileID: 8300000, guid: af410354c29f2f649b74095e933c74cc, type: 3}
+  - {fileID: 8300000, guid: 418567449cdb5264b8fed8f52d3e826f, type: 3}
+  - {fileID: 8300000, guid: 62dc00b916fbf004b8fab8463d21ead6, type: 3}
+  m_iceReadySound: {fileID: 8300000, guid: a8a8c69876f435e4aa36b3029edda32e, type: 3}
 --- !u!114 &5371993181305775826
 MonoBehaviour:
   m_ObjectHideFlags: 0

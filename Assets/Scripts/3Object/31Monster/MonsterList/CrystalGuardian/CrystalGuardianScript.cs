@@ -77,6 +77,7 @@ public class CrystalGuardianScript : BossMonster
 
         m_anim.SetInteger("PROCEED_IDX", NextAttack);
         IsSequencing = NextAttack < (int)ENextAttack.NONE;
+        PlayAttackSound(AttackIdx);
     }
     public override void AttackTriggerOff()
     {
@@ -92,6 +93,8 @@ public class CrystalGuardianScript : BossMonster
             AttackObject.SetAttack(this, NormalDamage(AttackIdx));
             AttackObject.AttackOn();
             AttackObject.PlayEffect();
+            PlayAttackSound(AttackIdx);
+            CreateImpulse(15);
         }
     }
     public override void AttackDone()
@@ -113,6 +116,10 @@ public class CrystalGuardianScript : BossMonster
 
     [SerializeField]
     private float m_skillForwardForce = 7.5f;
+    [SerializeField]
+    private AudioClip[] m_skillSound;
+    private readonly float MaxImpulseDistance = 20;
+
 
     public override void StartSkill()
     {
@@ -127,6 +134,7 @@ public class CrystalGuardianScript : BossMonster
             CurSkill.SetAttack(this, SkillDamages[DoubleSwingIdx]);
             CurSkill.gameObject.SetActive(true);
             CurSkill.AttackOn();
+            GameManager.PlaySE(m_skillSound[DoubleSwingIdx], transform.position);
         }
     }
     public override void CreateSkill()
@@ -141,15 +149,25 @@ public class CrystalGuardianScript : BossMonster
             {
                 SkillList[i].SetAttack(this, SkillDamages[JumpSkillIdx]);
                 SkillList[i].AttackOn();
+                GameManager.PlaySE(m_skillSound[JumpSkillIdx], transform.position);
             }
+            CreateImpulse(20);
             m_anim.SetBool("IS_SKILLING", false);
         }
         else if (CurSkillIdx == ImpactIdx)
         {
             SkillList[2].SetAttack(this, SkillDamages[ImpactIdx]);
             SkillList[2].AttackOn();
+            GameManager.PlaySE(m_skillSound[ImpactIdx], transform.position);
+            CreateImpulse(20);
             m_anim.SetBool("IS_SKILLING", false);
         }
+    }
+    private void CreateImpulse(float _max)
+    {
+        float distance = Vector2.Distance(PlayManager.PlayerPos2, Position2);
+        float impulse = Mathf.Sqrt(1-distance / MaxImpulseDistance) * 0.9f + 0.1f;
+        PlayManager.CreateImpulse(impulse);
     }
     public override void SkillOff()
     {
