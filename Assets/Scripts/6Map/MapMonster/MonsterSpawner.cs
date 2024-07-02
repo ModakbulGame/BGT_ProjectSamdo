@@ -48,7 +48,6 @@ public class MonsterSpawner : MonoBehaviour
         }
 
         GameObject monster = GameManager.GetMonsterObj(_monster);
-        Debug.Log(monster);
 
         float dist = Random.Range(1.5f, 2);
         Vector2 dir = dist * FunctionDefine.RotateVector2(Vector2.right, Random.Range(0, 360f));
