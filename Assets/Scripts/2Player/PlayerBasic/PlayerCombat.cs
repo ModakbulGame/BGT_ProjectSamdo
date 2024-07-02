@@ -228,6 +228,7 @@ public partial class PlayerController
     public void FirePower()                                                                 // 스킬 사용
     {
         if(IsRaycastPower && CheckRaycast().IsNull) { CancelPower(); return; }
+        if (CurStamina < PowerInfoInHand.PowerData.StaminaCost) { CancelPower(); return; }
 
         float coolTime = PowerInfoInHand.PowerCooltime;
         SetPowerCooltime(UsingPowerIdx, coolTime);
