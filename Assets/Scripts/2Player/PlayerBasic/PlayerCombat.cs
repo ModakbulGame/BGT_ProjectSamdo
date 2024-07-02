@@ -234,6 +234,7 @@ public partial class PlayerController
         PlayManager.UsePowerSlot(UsingPowerIdx, coolTime);
         int idx = PowerInfoInHand.MotionIdx;
         PowerFireAnim(idx);
+        UseStamina(PowerInfoInHand.PowerData.StaminaCost);
         HidePowerAim();
     }
     public void CreatePower()                                                               // 스킬 오브젝트 생성
