@@ -96,6 +96,11 @@ public class MonsterSpawnPoint : MonoBehaviour, IHaveData
         }
         IsShowingMonster = false;
     }
+    public void MonsterDead(MonsterScript _monster)
+    {
+        m_spawnedMonsters.Remove(_monster);
+        IsShowingMonster = false;
+    }
     public void SaveData()
     {
         SaveData data = PlayManager.CurSaveData;

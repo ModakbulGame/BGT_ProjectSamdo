@@ -69,6 +69,7 @@ public class MonsterSpawner : MonoBehaviour
     public void MonsterDespawned(MonsterScript _monster)
     {
         SpawnedNum--;
+        m_point.MonsterDead(_monster);
         StartCoroutine(RespawnCoroutine(_monster.MonsterEnum));
     }
     private IEnumerator RespawnCoroutine(EMonsterName _monster)

@@ -87,7 +87,7 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
     }
 
     // 기본
-    public void LoadData()
+    public virtual void LoadData()
     {
         GameManager.RegisterData(this);
         if (PlayManager.IsNewData) { InitNPCData(); InitDialInfos(); return; }
@@ -102,7 +102,7 @@ public class NPCScript : MonoBehaviour, IInteractable, IHaveData
         }
     }
 
-    public void SaveData()
+    public virtual void SaveData()
     {
         SaveData data = PlayManager.CurSaveData;
 

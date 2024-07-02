@@ -1,49 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class InventoryManager : MonoBehaviour, IHaveData
 {
-    // ¿µÈ¥
+    // ì˜í˜¼
     private int m_soulNum = 0;
     public int SoulNum { get { return m_soulNum; } }
     public void AddSoul(int _num)
     {
         m_soulNum += _num;
-        PlayManager.AddIngameAlarm($"¿µÈ¥ {_num}°³ È¹µæ!");
+        PlayManager.AddIngameAlarm($"ì˜í˜¼ {_num}ê°œ íšë“!");
         PlayManager.UpdateMaterials();
     }
     public void LooseSoul(int _num) { LooseSoul(_num, false); }
     public void LooseSoul(int _num, bool _absorbed)
     {
-        if (m_soulNum < _num) { Debug.LogError("º¸À¯ ¿µÈ¥º¸´Ù ¸¹Àº °³¼ö »ç¿ë"); return; }
+        if (m_soulNum < _num) { Debug.LogError("ë³´ìœ  ì˜í˜¼ë³´ë‹¤ ë§ì€ ê°œìˆ˜ ì‚¬ìš©"); return; }
         m_soulNum -= _num;
         if (_absorbed)
         {
-            PlayManager.AddIngameAlarm($"¿µÈ¥ {_num}°³ Èí¼ö´çÇÔ.");
+            PlayManager.AddIngameAlarm($"ì˜í˜¼ {_num}ê°œ í¡ìˆ˜ë‹¹í•¨.");
         }
         PlayManager.UpdateMaterials();
     }
 
 
-    // ¼ººÒ ¿µÈ¥
+    // ì„±ë¶ˆ ì˜í˜¼
     private int m_purifiedNum = 0;
     public int PurifiedNum { get { return m_purifiedNum; } }
     public void AddPurified(int _num)
     {
         m_purifiedNum += _num;
-        PlayManager.AddIngameAlarm($"¼ººÒ ¿µÈ¥ {_num}°³ È¹µæ!");
+        PlayManager.AddIngameAlarm($"ì„±ë¶ˆ ì˜í˜¼ {_num}ê°œ íšë“!");
         PlayManager.UpdateMaterials();
     }
     public void UsePurified(int _num)
     {
-        if (m_purifiedNum < _num) { Debug.LogError("º¸À¯ ¼ººÒ ¿µÈ¥º¸´Ù ¸¹Àº °³¼ö »ç¿ë"); return; }
+        if (m_purifiedNum < _num) { Debug.LogError("ë³´ìœ  ì„±ë¶ˆ ì˜í˜¼ë³´ë‹¤ ë§ì€ ê°œìˆ˜ ì‚¬ìš©"); return; }
         m_purifiedNum -= _num;
         PlayManager.UpdateMaterials();
     }
 
-    // ¹®¾ç
+    // ë¬¸ì–‘
     public int[] PatternNum { get {
             int[] patterns = new int[(int)EPatternName.LAST];
             for (int i = 0; i<(int)EPatternName.LAST; i++) {
@@ -53,18 +52,18 @@ public class InventoryManager : MonoBehaviour, IHaveData
             return patterns; } }
 
 
-    // È¸º¹ ¾ÆÀÌÅÛ (°¢ÀÎ ¹®¾ç?)
+    // íšŒë³µ ì•„ì´í…œ (ê°ì¸ ë¬¸ì–‘?)
     private readonly List<EPatternName> m_healPatternList = new();
     public EPatternName CurHealPattern { get { if (m_healPatternList.Count > 0) return m_healPatternList[0]; return EPatternName.LAST; } }
     public EPatternName[] HealPatternList { get { return m_healPatternList.ToArray(); } }
     public void UseHealItem()
     {
-        if (m_healPatternList.Count == 0) { Debug.LogError("È¸º¹ ¾ÆÀÌÅÛ ¾øÀ½"); return; }
+        if (m_healPatternList.Count == 0) { Debug.LogError("íšŒë³µ ì•„ì´í…œ ì—†ìŒ"); return; }
         m_healPatternList.RemoveAt(0);
     }
     public void RegisterHealItem(EPatternName _pattern)
     {
-        if (m_healPatternList.Count >= ValueDefine.MAX_HEAL_ITEM) { Debug.Log("¸®½ºÆ® ²Ë Âü"); return; }
+        if (m_healPatternList.Count >= ValueDefine.MAX_HEAL_ITEM) { Debug.Log("ë¦¬ìŠ¤íŠ¸ ê½‰ ì°¸"); return; }
 
         if (ChkNUseItem(new(EItemType.PATTERN, (int)_pattern), 1))
         {
@@ -73,10 +72,10 @@ public class InventoryManager : MonoBehaviour, IHaveData
     }
 
 
-    // Àåºñ ÀÎº¥Åä¸®
+    // ì¥ë¹„ ì¸ë²¤í† ë¦¬
     private readonly bool[] m_weaponObtained = new bool[(int)EWeaponName.LAST];
     public bool[] WeaponObatined { get { return m_weaponObtained; } }
-    public EWeaponName CurWeapon { get; private set; } = EWeaponName.BASIC_BLADE;    // ÀåÂø ÁßÀÎ ¹«±â
+    public EWeaponName CurWeapon { get; private set; } = EWeaponName.BASIC_BLADE;    // ì¥ì°© ì¤‘ì¸ ë¬´ê¸°
 
     public readonly static EWeaponName InitialWeapon = EWeaponName.BASIC_SCEPTER;
 
@@ -85,30 +84,30 @@ public class InventoryManager : MonoBehaviour, IHaveData
     {
         m_weaponObtained[(int)_weapon] = true;
     }
-    public void SetCurWeapon(EWeaponName _weapon)               // ¹«±â ¼³Á¤
+    public void SetCurWeapon(EWeaponName _weapon)               // ë¬´ê¸° ì„¤ì •
     {
         CurWeapon = _weapon;
     }
-    public void EquipWeapon(EWeaponName _weapon)                // ¹«±â ÀåÂø
+    public void EquipWeapon(EWeaponName _weapon)                // ë¬´ê¸° ì¥ì°©
     {
-        if (!WeaponObatined[(int)_weapon]) { Debug.LogError("¹«±â ¹Ì½Àµæ"); return; }
+        if (!WeaponObatined[(int)_weapon]) { Debug.LogError("ë¬´ê¸° ë¯¸ìŠµë“"); return; }
         SetCurWeapon(_weapon);
         PlayManager.SetPlayerWeapon(_weapon);
     }
 
 
-    // ÅõÃ´ ¾ÆÀÌÅÛ
+    // íˆ¬ì²™ ì•„ì´í…œ
     private readonly List<EThrowItemName> m_throwItemList = new();
-    public EThrowItemName CurThrowItem { get { if (m_throwItemList.Count > 0) return m_throwItemList[0]; return EThrowItemName.LAST; } }    // ÇöÀç ´øÁö±â ¾ÆÀÌÅÛ
-    public List<EThrowItemName> ThrowItemList { get { return m_throwItemList; } }       // Ãß°¡µÈ ´øÁö±â ¾ÆÀÌÅÛµé
-    public void UseThrowItem()                                                          // ´øÁö±â ¾ÆÀÌÅÛ »ç¿ë
+    public EThrowItemName CurThrowItem { get { if (m_throwItemList.Count > 0) return m_throwItemList[0]; return EThrowItemName.LAST; } }    // í˜„ì¬ ë˜ì§€ê¸° ì•„ì´í…œ
+    public List<EThrowItemName> ThrowItemList { get { return m_throwItemList; } }       // ì¶”ê°€ëœ ë˜ì§€ê¸° ì•„ì´í…œë“¤
+    public void UseThrowItem()                                                          // ë˜ì§€ê¸° ì•„ì´í…œ ì‚¬ìš©
     {
-        if (m_throwItemList.Count == 0) { Debug.LogError("´øÁö±â ¾ÆÀÌÅÛ ¾øÀ½"); return; }
+        if (m_throwItemList.Count == 0) { Debug.LogError("ë˜ì§€ê¸° ì•„ì´í…œ ì—†ìŒ"); return; }
         m_throwItemList.RemoveAt(0);
     }
-    public void AddThrowItem(EThrowItemName _item)                                      // ÀÎº¥¿¡¼­ ´øÁö±â ¾ÆÀÌÅÛ Ãß°¡
+    public void AddThrowItem(EThrowItemName _item)                                      // ì¸ë²¤ì—ì„œ ë˜ì§€ê¸° ì•„ì´í…œ ì¶”ê°€
     {
-        if (m_throwItemList.Count == ValueDefine.MAX_THROW_ITEM) { Debug.Log("¸®½ºÆ® ²Ë Âü"); return; }
+        if (m_throwItemList.Count == ValueDefine.MAX_THROW_ITEM) { Debug.Log("ë¦¬ìŠ¤íŠ¸ ê½‰ ì°¸"); return; }
 
         if (ChkNUseItem(new(EItemType.THROW, (int)_item), 1))
         {
@@ -136,23 +135,23 @@ public class InventoryManager : MonoBehaviour, IHaveData
 
 
 
-    // ¾ÆÀÌÅÛ ÀÎº¥Åä¸®
-    private ItemInventory m_itemInven;                                                  // ¾ÆÀÌÅÛ ÀÎº¥Åä¸®
-    public InventoryElm[] Inventory { get { return m_itemInven.Inventory; } }           // ¾ÆÀÌÅÛ ¸ñ·Ï
-    public void AddInventoryItem(SItem _item, int _num) { AddInventoryItem(_item, _num, false); }                       // ¾ÆÀÌÅÛ Ãß°¡
+    // ì•„ì´í…œ ì¸ë²¤í† ë¦¬
+    private ItemInventory m_itemInven;                                                  // ì•„ì´í…œ ì¸ë²¤í† ë¦¬
+    public InventoryElm[] Inventory { get { return m_itemInven.Inventory; } }           // ì•„ì´í…œ ëª©ë¡
+    public void AddInventoryItem(SItem _item, int _num) { AddInventoryItem(_item, _num, false); }                       // ì•„ì´í…œ ì¶”ê°€
     public void AddInventoryItem(SItem _item, int _num, bool _isNew)            
     {
         m_itemInven.AddItem(_item, _num);
         if (_isNew) { CheckItemObtained(_item, _num); }
         string itemName = GameManager.GetItemData(_item).ItemName;
-        PlayManager.AddIngameAlarm($"{itemName} {_num}°³ È¹µæ!");
+        PlayManager.AddIngameAlarm($"{itemName} {_num}ê°œ íšë“!");
     }
-    public void SetInventoryItem(int _idx, SItem _item, int _num) { m_itemInven.SetItem(_idx, _item, _num); }           // idx¿¡ ¾ÆÀÌÅÛ ¼³Á¤
+    public void SetInventoryItem(int _idx, SItem _item, int _num) { m_itemInven.SetItem(_idx, _item, _num); }           // idxì— ì•„ì´í…œ ì„¤ì •
     public void SwapItemInven(int _idx1, int _idx2) { m_itemInven.SwapItem(_idx1, _idx2); }
-    public bool ChkNUseItem(SItem _item, int _num) { return m_itemInven.ChkNUseItem(_item, _num); }                     // ¾ÆÀÌÅÛ È®ÀÎ ÈÄ »ç¿ë
-    public void RemoveInventoryItem(int _idx) { m_itemInven.RemoveItem(_idx); }                                         // ¾ÆÀÌÅÛ Á¦°Å
+    public bool ChkNUseItem(SItem _item, int _num) { return m_itemInven.ChkNUseItem(_item, _num); }                     // ì•„ì´í…œ í™•ì¸ í›„ ì‚¬ìš©
+    public void RemoveInventoryItem(int _idx) { m_itemInven.RemoveItem(_idx); }                                         // ì•„ì´í…œ ì œê±°
 
-    private void CheckItemObtained(SItem _item, int _num)                   // ¾ÆÀÌÅÛ È¹µæ ½Ã Äù½ºÆ® È®ÀÎ
+    private void CheckItemObtained(SItem _item, int _num)                   // ì•„ì´í…œ íšë“ ì‹œ í€˜ìŠ¤íŠ¸ í™•ì¸
     {
         List<QuestInfo> infos = PlayManager.QuestInfoList;
 

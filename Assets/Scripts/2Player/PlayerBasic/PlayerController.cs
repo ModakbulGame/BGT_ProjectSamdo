@@ -77,6 +77,7 @@ public partial class PlayerController : ObjectScript, IHaveData
     public void RestorePlayer()
     {
         CurHP = MaxHP;
+        ApplyHPUI();
     }
 
     private void PlayerDrowned()
