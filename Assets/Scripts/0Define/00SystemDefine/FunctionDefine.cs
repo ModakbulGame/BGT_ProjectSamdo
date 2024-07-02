@@ -50,16 +50,6 @@ public static class FunctionDefine
         return row;
     }
 
-    public static string TextRowSet(string _line)
-    {
-        return _line.Replace("\\n", "\n");
-    }
-
-    public static string ReplaceComma(string _str)
-    {
-        return _str.Replace("0", ",");
-    }
-
 
     public static bool CheckAnimParameter(Animator _anim, string _name)                                             // 애니메이터에 특정 변수명 있는지 확인
     {

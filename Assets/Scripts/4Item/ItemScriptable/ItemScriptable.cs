@@ -19,7 +19,7 @@ public class ItemScriptable : ScriptableObject
         Idx =           _idx;
         ID =            _data[(int)EItemAttribute.ID];
         ItemName =      _data[(int)EItemAttribute.NAME];
-        Description = FunctionDefine.TextRowSet(_data[(int)EItemAttribute.DESCRIPTION]);
+        Description =   _data[(int)EItemAttribute.DESCRIPTION];
         float.TryParse( _data[(int)EItemAttribute.DROP_RATE],   out DropRate);
         int.TryParse(   _data[(int)EItemAttribute.PRICE],       out ItemPrice);
         ItemPrefab =    _prefab;

@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,3 +22,4 @@ public class InteractDebugger : MonoBehaviour
         PlayManager.TempSetNPCs(m_tempNPCs);
     }
 }
+#endif

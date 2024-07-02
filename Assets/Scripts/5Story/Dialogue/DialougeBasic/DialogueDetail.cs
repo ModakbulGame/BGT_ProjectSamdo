@@ -38,7 +38,7 @@ public struct DialLine
     public DialLine(string _line, DialQuest _quest) : this(_line, new(), _quest) { }
     public DialLine(string _line, List<NPCDialogue> _dials, DialQuest _quest)
     {
-        Text = FunctionDefine.TextRowSet(_line);
+        Text = _line;
         ResultDialogues = new();
         foreach (NPCDialogue dial in _dials) { ResultDialogues.Add(dial); }
         ResultQuest = _quest;

@@ -66,7 +66,17 @@ public static class DataImporter
 
     private const string PowerIconPath = ImagePath + "PowerIcon/";
 
+    private static string[] ModifyLines(string _line)
+    {
+        string[] lines = _line.Split(',');
+        for(int i=0;i<lines.Length;i++)
+        {
+            lines[i] = lines[i].Replace("\\n", "\n");
+            lines[i] = lines[i].Replace("\\c", ",");
+        }
 
+        return lines;
+    }
 
 
     [MenuItem("Utilities/GenerateMonsters")]
@@ -80,7 +90,7 @@ public static class DataImporter
         for (uint i = 1; i < allDropLines.Length; i++)
         {
             string si = allDropLines[i];
-            string[] splitDropData = si.Split(',');
+            string[] splitDropData = ModifyLines(si);
 
             string id = splitDropData[(int)EDropAttribute.MONSTER];
             int.TryParse(splitDropData[(int)EDropAttribute.STAT], out int stat);
@@ -110,7 +120,7 @@ public static class DataImporter
         {
             uint idx = i - 1;
             string si = allMonsterLines[i];
-            string[] splitMonsterData = si.Split(',');
+            string[] splitMonsterData = ModifyLines(si);
 
             if (splitMonsterData.Length != (int)EMonsterAttribue.LAST)
             {
@@ -170,7 +180,7 @@ public static class DataImporter
         for (uint i = 1; i<allItemLines.Length; i++)
         {
             string si = allItemLines[i];
-            string[] splitItemData = si.Split(',');
+            string[] splitItemData = ModifyLines(si);
 
             if (splitItemData.Length != (int)EItemAttribute.LAST)
             {
@@ -282,7 +292,7 @@ public static class DataImporter
         {
             uint idx = i - 1;
             string si = allPowerLines[i];
-            string[] splitPowerData = si.Split(',');
+            string[] splitPowerData = ModifyLines(si);
 
             if (splitPowerData.Length != (int)EPowerAttribute.LAST)
             {
@@ -341,7 +351,7 @@ public static class DataImporter
         for (uint i = 1; i < allDialogueLines.Length; i++)
         {
             string si = allDialogueLines[i];
-            string[] splitDialogueData = si.Split(',');
+            string[] splitDialogueData = ModifyLines(si);
 
             string newNPC = splitDialogueData[(int)EDialogueAttributes.NPC];
             dialNPC = newNPC != "" ? newNPC : dialNPC;
@@ -352,7 +362,7 @@ public static class DataImporter
                 datas.Add(splitDialogueData);
                 if (i == allDialogueLines.Length - 1) { break; }
                 si = allDialogueLines[++i];
-                splitDialogueData = si.Split(',');
+                splitDialogueData = ModifyLines(si);
                 if (splitDialogueData[(int)EDialogueAttributes.DIALOGUE_IDX] != "") { i--; break; }
             }
 
@@ -391,7 +401,7 @@ public static class DataImporter
         {
             uint idx = i - 1;
             string si = allQuestLines[i];
-            string[] splitQuestData = si.Split(',');
+            string[] splitQuestData = ModifyLines(si);
 
             if (splitQuestData.Length != (int)EQuestAttributes.LAST)
             {
@@ -481,7 +491,7 @@ public static class DataImporter
         {
             uint idx = i - 1;
             string si = allNPCLines[i];
-            string[] splitNPCData = si.Split(",");
+            string[] splitNPCData = ModifyLines(si);
 
             if (splitNPCData.Length != (int)ENPCAttribute.LAST)
             {
@@ -502,10 +512,6 @@ public static class DataImporter
                 if (npcType == ENPCType.OASIS) {scriptable =ScriptableObject.CreateInstance<OasisScriptable>(); }
                 else { scriptable = ScriptableObject.CreateInstance<NPCScriptable>(); }
             }
-
-
-
-
 
             scriptable.SetNPCScriptable(idx, splitNPCData);
 

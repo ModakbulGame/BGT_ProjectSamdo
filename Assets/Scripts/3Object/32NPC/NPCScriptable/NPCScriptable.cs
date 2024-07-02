@@ -25,6 +25,6 @@ public class NPCScriptable : ScriptableObject
 
         DialogueList = new();
         QuestList = new();
-        DefaultLine =  FunctionDefine.TextRowSet(_data[(int)ENPCAttribute.DEFAULT_LINE]);
+        DefaultLine =   _data[(int)ENPCAttribute.DEFAULT_LINE];
     }
 }
