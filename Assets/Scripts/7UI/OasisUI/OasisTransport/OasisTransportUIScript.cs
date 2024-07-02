@@ -35,6 +35,8 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
     public void SetDestination(EOasisName _point)
     {
         if(_point == m_parent.Oasis.PointName) { return; }
+
+
         if(CurDestination != EOasisName.LAST)
         {
             m_oasisPoints[(int)CurDestination].ResetDestination();
@@ -57,7 +59,7 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
     {
         if (CurOasisName == _point)
         {
-            Debug.Log("ÇöÀç À§Ä¡ÇÑ È­ÅêºÒÀÔ´Ï´Ù!");
+            Debug.Log("í˜„ìž¬ ìœ„ì¹˜í•œ ì˜¤ì•„ì‹œìŠ¤ìž…ë‹ˆë‹¤!");
             return;
         }
         else

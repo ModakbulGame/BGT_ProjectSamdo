@@ -20,11 +20,12 @@ public class OasisPointUIScript : MonoBehaviour
 
     private readonly Color IdleColor = new(246/255f, 187/255f, 187/255f);
     private readonly Color CurColor = new(38/255f, 167/255f, 245/255f);
+    private readonly Color CantColor = new(1, 1, 1, 0);
     private readonly Color SelectColor = new(1, 0, 0);
 
     public void SetDestination()
     {
-        if(m_parent.CurOasisName == PointName) { return; }
+        if(!PlayManager.OasisVisited[(int)PointName] || m_parent.CurOasisName == PointName) { return; }
         m_parent.SetDestination(PointName);
         m_img.color = SelectColor;
     }
@@ -32,9 +33,10 @@ public class OasisPointUIScript : MonoBehaviour
     public void ResetDestination()
     {
         m_img.color = IdleColor;
+        m_btn.interactable = true;
     }
 
-    private void SetPosition(RectTransform _rect)
+    private void SetOasis(RectTransform _rect)
     {
         float width = PlayManager.MapWidth, height = PlayManager.MapHeight;
 
@@ -55,8 +57,9 @@ public class OasisPointUIScript : MonoBehaviour
         m_btn = GetComponent<Button>();
         PointName = _oasis;
         SetBtns();
-        SetPosition(_rect);
-        if (_oasis == m_parent.CurOasisName) { m_img.color = CurColor; }
+        SetOasis(_rect);
+        if (_oasis == m_parent.CurOasisName) { m_img.color = CurColor; m_btn.interactable = false; }
+        else if (!PlayManager.OasisVisited[(int)_oasis]) { m_img.color = CantColor; m_btn.interactable = false; }
         else { ResetDestination(); }
     }
 }

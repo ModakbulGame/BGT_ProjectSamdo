@@ -35,6 +35,15 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
     public MonsterSpawnPoint[] SpawnPointList { get { return m_spawnPointList; } }
 
     private bool[] m_monsterKilled;
+    private bool[] m_oasisVisited;
+    
+    public bool[] OasisVisited { get { return m_oasisVisited; } }
+    public void VisitOasis(EOasisName _oasis) 
+    {
+        if (OasisVisited[(int)_oasis]) { return; } OasisVisited[(int)_oasis] = true;
+        string name = GameManager.GetNPCData(new(ENPCType.OASIS, (int)_oasis)).NPCName;
+        PlayManager.AddIngameAlarm($"{name} 방문 완료!");
+    }
 
     public void MonsterKilled(EMonsterName _monster, EMonsterDeathType _type)           // 첫 킬, 퀘스트 확인
     {
@@ -72,6 +81,7 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
     {
         GameManager.RegisterData(this);
         m_monsterKilled = new bool[(int)EMonsterName.LAST];
+        m_oasisVisited = new bool[(int)EOasisName.LAST];
         if (PlayManager.IsNewData) { return; }
 
         SaveData data = PlayManager.CurSaveData;
@@ -79,6 +89,10 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
         for (int i = 0; i < (int)EMonsterName.LAST; i++)
         {
             m_monsterKilled[i] = data.MonsterKilled[i];
+        }
+        for (int i = 0; i<(int)EOasisName.LAST; i++)
+        {
+            m_oasisVisited[i] = data.OasisVisited[i];
         }
     }
     public void SaveData()
@@ -88,6 +102,10 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
         for (int i = 0; i < (int)EMonsterName.LAST; i++)
         {
             data.MonsterKilled[i] = m_monsterKilled[i];
+        }
+        for (int i = 0; i<(int)EOasisName.LAST; i++)
+        {
+            data.OasisVisited[i] = m_oasisVisited[i];
         }
     }
 

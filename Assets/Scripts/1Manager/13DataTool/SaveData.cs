@@ -33,6 +33,7 @@ public class SaveData
     // 스토리 정보
     public List<NPCSaveData> NPCData;
     public QuestInfo[] QuestInfos;
+    public bool[] OasisVisited;
 
 
     // 몬스터 정보
@@ -59,6 +60,7 @@ public class SaveData
         NPCData = new();
         QuestInfos = new QuestInfo[(int)EQuestName.LAST];
         for(int i = 0; i<(int)EQuestName.LAST; i++) { QuestInfos[i] = new((EQuestName)i); }
+        OasisVisited = new bool[(int)EOasisName.LAST];
 
         MonsterKilled = new bool[(int)EMonsterName.LAST];
         MonsterData = new();
@@ -93,6 +95,8 @@ public class SaveData
         foreach(NPCSaveData npc in _other.NPCData) { NPCData.Add(new(npc)); }
         QuestInfos = new QuestInfo[(int)EQuestName.LAST];
         for(int i = 0; i<(int)EQuestName.LAST; i++) { QuestInfos[i] = new(_other.QuestInfos[i]); }
+        OasisVisited = new bool[(int)EOasisName.LAST];
+        for(int i = 0; i<(int)EOasisName.LAST; i++) { OasisVisited[i] = _other.OasisVisited[i]; }
 
         MonsterKilled = new bool[(int)EMonsterName.LAST];
         for(int i = 0; i<(int)EMonsterName.LAST; i++) { MonsterKilled[i] = _other.MonsterKilled[i]; }

@@ -54,12 +54,13 @@ public class OasisNPC : NPCScript
     public override void NPCInteraction()
     {
         PlayManager.OpenOasisUI(this);
+        PlayManager.VisitOasis(PointName);
     }
 
     public override void ApplyLoadedData(NPCSaveData _save)
     {
         base.ApplyLoadedData(_save);
-        if(ProductCount != _save.ProductSold.Length) { Debug.LogError("NPC ÆÇ¸Å ¼¼ÀÌºê Á¤º¸ ¿À·ù"); return; }
+        if(ProductCount != _save.ProductSold.Length) { Debug.LogError("NPC íŒë§¤ ì„¸ì´ë¸Œ ì •ë³´ ì˜¤ë¥˜"); return; }
         for (int i = 0; i<ProductCount; i++)
         {
             m_productSold[i] = _save.ProductSold[i];

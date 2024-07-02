@@ -170,9 +170,11 @@ public class PlayManager : MonoBehaviour
     public static float MapWidth { get { return EnvironmentManager.MapWidth; } }
     public static float MapHeight { get { return EnvironmentManager.MapHeight; } }
     public static OasisNPC[] OasisList { get { return EnvironmentManager.OasisList; } }
+    public static bool[] OasisVisited { get { return EnvironmentManager.OasisVisited; } }
     public static AltarScript[] AltarList { get { return EnvironmentManager.AltarList; } }
     public static SlateScript[] SlateList { get { return EnvironmentManager.SlateList; } }
     public static MonsterSpawnPoint[] SpawnPointList { get { return EnvironmentManager.SpawnPointList; } }
+    public static void VisitOasis(EOasisName _oasis) { EnvironmentManager.VisitOasis(_oasis); }
     public static void MonsterKilled(EMonsterName _monster, EMonsterDeathType _type) { EnvironmentManager.MonsterKilled(_monster, _type); }
     public static void UnlockDialogue(NPCDialogue _dial) { EnvironmentManager.UnlockDialogue(_dial); }
 
