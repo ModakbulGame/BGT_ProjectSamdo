@@ -22,6 +22,11 @@ public partial class PlayerController
                 GetHit(hit);
                 attack.AddHitObject(this);
                 break;
+            case ValueDefine.REGION_TAG:
+                RegionMarker marker = _other.GetComponent<RegionMarker>();
+                if(marker == null || CurRegion == marker.Region) { return; }
+                EnterRegion(marker.Region);
+                break;
         }
     }
 }

@@ -1,8 +1,5 @@
 using Cinemachine;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
 public enum ECooltimeName                               // 쿨타임 종류
@@ -141,7 +138,7 @@ public partial class PlayerController
     public void LoadData()
     {
         GameManager.RegisterData(this);
-        if (PlayManager.IsNewData) { m_statInfo = new(); return; }
+        if (PlayManager.IsNewData) { m_statInfo = new(); InitRegion(EOasisName.LAST); return; }
 
         SaveData data = PlayManager.CurSaveData;
 
@@ -152,6 +149,8 @@ public partial class PlayerController
         transform.localEulerAngles = data.PlayerRot;
 
         m_statInfo = new(data.StatInfo);
+
+        InitRegion(data.OasisPoint);
     }
     public void SaveData()
     {
@@ -173,31 +172,21 @@ public partial class PlayerController
     // 기초 정보
     public override float ObjectHeight { get { return m_collider.height; } }        // 오브젝트 높이
     private float HalfHeight { get { return ObjectHeight / 2; } }
-    
-    private CinemachineImpulseSource m_impulseSource;
-    [SerializeField]
-    private Vector3 m_defaultVelocity = new Vector3(1.0f, 1.0f, 1.0f);
-    [SerializeField]
-    private float m_attackTime = 0.05f;
-    [SerializeField]
-    private float m_sustainTime = 0.05f;
-    [SerializeField]
-    private float m_decayTime = 0.25f;
 
-    public override void ApplyHPUI()
+    public ERegion CurRegion { get; private set; } = ERegion.LAST;
+    private void InitRegion(EOasisName _oasis)
     {
-        PlayManager.SetPlayerMaxHP(MaxHP);
-        PlayManager.SetPlayerCurHP(CurHP);
+        ERegion region = EnvironmentManager.Oasis2Region(_oasis);
+        if(region == ERegion.LAST) { return; }
+        EnterRegion(region);
     }
-    public void SetImpulseInfo()
+    public void EnterRegion(ERegion _region)
     {
-        m_impulseSource.m_ImpulseDefinition.m_ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Explosion;
+        GameManager.PlaySE(EEnvironmentSE.REGION_ENTER);
+        CurRegion = _region;
+        PlayManager.ShowEnterRegion(_region);
+    }
 
-        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_AttackTime = m_attackTime;     // 공격 시간
-        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = m_sustainTime;   // 유지 시간
-        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_DecayTime = m_decayTime;       // 감쇠 시간
-        m_impulseSource.m_DefaultVelocity = m_defaultVelocity;
-    }
 
     // 스탯 정보
     [SerializeField]

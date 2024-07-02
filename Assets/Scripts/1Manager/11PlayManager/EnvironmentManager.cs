@@ -95,6 +95,30 @@ public class EnvironmentManager : MonoBehaviour, IHaveData
 
 
 
+    public static ERegion Oasis2Region(EOasisName _oasis)
+    {
+        if(_oasis <= EOasisName.START2) { return ERegion.START; }
+        else if(_oasis <= EOasisName.LIFE2) { return ERegion.LIFE; }
+        else if(_oasis <= EOasisName.GOD) { return ERegion.GOD; }
+        else if(_oasis <= EOasisName.WATER2) { return ERegion.WATER; }
+        else if(_oasis <= EOasisName.CRYSTAL2) { return ERegion.CRYSTAL; }
+        return ERegion.LAST;
+    }
+
+    public static string Region2String(ERegion _region)
+    {
+        return _region switch
+        {
+            ERegion.START => "저승 초입",
+            ERegion.LIFE => "스펜탐 요그누의 영역",
+            ERegion.GOD => "힘을 잃은 자의 영역",
+            ERegion.WATER => "하지르바타트의 영역",
+            ERegion.CRYSTAL => "오샤트라 바이르만의 영역",
+
+            _ => ""
+        };
+    }
+
 
     public void TempSetNPCs(NPCScript[] _npcs)
     {

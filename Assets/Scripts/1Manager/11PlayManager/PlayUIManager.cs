@@ -82,6 +82,10 @@ public class PlayUIManager : MonoBehaviour
     public void AddAlarm(string _alarm) { m_ingameAlarm.AddAlarm(_alarm); }
 
 
+    private RegionEnterUIScript m_regionEnterUI;
+    public void ShowEnterRegion(ERegion _region) { m_regionEnterUI.ShowEnterUI(_region); }
+
+
     private BossHPBarScript m_bossHPBar;
     public void ShowBossHPBar(BossMonster _boss) { m_bossHPBar.ShowHPBar(_boss); }
     public void SetBossHP(float _hp) { m_bossHPBar.SetCurHP(_hp); }
@@ -203,6 +207,7 @@ public class PlayUIManager : MonoBehaviour
         m_equipSlot = m_mainCanvas.GetComponentInChildren<EquipSlotUIScript>();
 
         m_ingameAlarm = m_mainCanvas.GetComponentInChildren<IngameAlarmUIScript>();
+        m_regionEnterUI = m_mainCanvas.GetComponentInChildren<RegionEnterUIScript>();
         m_powerAimUI = GetComponentInChildren<PlayerPowerAimScript>();
         m_throwLineUI = GetComponentInChildren<PlayerThrowLineRenderer>();
 

@@ -230,6 +230,7 @@ public class PlayManager : MonoBehaviour
 
     // 인게임 UI
     public static void AddIngameAlarm(string _alarm) { PlayUIManager.AddAlarm(_alarm); }                                                                // 인게임 알람
+    public static void ShowEnterRegion(ERegion _region) { PlayUIManager.ShowEnterRegion(_region); }
     public static void ShowBossHPBar(BossMonster _boss) { PlayUIManager.ShowBossHPBar(_boss); }
     public static void SetBossHP(float _hp) { PlayUIManager.SetBossHP(_hp); }
     public static void HideBossHPBar() { PlayUIManager.HideBossHPBar(); }

@@ -7,6 +7,8 @@ public class HideGimicScript : MonoBehaviour, IHidable
     [SerializeField]
     protected Collider[] m_colliders;
 
+    protected float PlayerDistance { get { return Vector3.Distance(transform.position, PlayManager.PlayerPos2); } }
+
     public virtual void GetLight()
     {
         SetObjectHide(false);

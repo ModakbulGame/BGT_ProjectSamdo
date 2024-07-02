@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -287,6 +288,31 @@ public partial class PlayerController : ObjectScript, IHaveData
         IsOverload = false;
         PlayManager.SetLightState(true);
     }
+
+
+    // 화면 흔들림
+    private CinemachineImpulseSource m_impulseSource;
+
+    private Vector3 m_defaultVelocity = new(1.0f, 1.0f, 1.0f);
+    private float m_attackTime = 0.05f;
+    private float m_sustainTime = 0.05f;
+    private float m_decayTime = 0.25f;
+
+    public override void ApplyHPUI()
+    {
+        PlayManager.SetPlayerMaxHP(MaxHP);
+        PlayManager.SetPlayerCurHP(CurHP);
+    }
+    public void SetImpulseInfo()
+    {
+        m_impulseSource.m_ImpulseDefinition.m_ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Explosion;
+
+        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_AttackTime = m_attackTime;     // 공격 시간
+        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = m_sustainTime;   // 유지 시간
+        m_impulseSource.m_ImpulseDefinition.m_TimeEnvelope.m_DecayTime = m_decayTime;       // 감쇠 시간
+        m_impulseSource.m_DefaultVelocity = m_defaultVelocity;
+    }
+
 
 
     // 업데이트

@@ -31,6 +31,7 @@ public static class ValueDefine
     public const string MONSTER_ATTACK_TAG = "MonsterAttack";       // 몬스터 공격
     public const string WATER_TAG = "Water";                        // 물
     public const string TERRAIN_TAG = "Terrain";                    // 지형
+    public const string REGION_TAG = "Region";                      // 지역
 
 
     // 씬 인덱스

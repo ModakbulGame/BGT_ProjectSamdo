@@ -8,13 +8,20 @@ public class HideBridgeScript : HideGimicScript
 
     private float m_changeTime = 1;
 
+    [SerializeField]
+    private float m_soundDistance = 10;
+
     private string DissolveAmount { get { return ValueDefine.DISSOLVE_AMOUNT_NAME; } }
 
     public override void GetLight()
     {
         base.GetLight();
         StartCoroutine(DissolveCoroutine(-1));
-        GameManager.PlaySE(EEnvironmentSE.BRIDGE_APPEAR, transform.position);
+
+        if (PlayerDistance < m_soundDistance)
+        {
+            GameManager.PlaySE(EEnvironmentSE.BRIDGE_APPEAR, transform.position);
+        }
     }
 
     public override void LoseLight()
