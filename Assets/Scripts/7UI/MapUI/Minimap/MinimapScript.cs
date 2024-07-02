@@ -39,6 +39,9 @@ public class MinimapScript : MonoBehaviour
     {
         m_mapScale = _scale;
         float realScale = MapHeight / MapImgHeight * _scale;
+
+        realScale = 2.5f;
+
         m_mapImg.rectTransform.localScale = new(realScale, realScale, 1);
         SetPosition();
     }
