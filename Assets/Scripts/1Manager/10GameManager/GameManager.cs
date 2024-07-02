@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     public static SoundManager SoundManager { get { return Inst.m_soundManager; } }
     public static float BGMVolume { get { return SoundManager.BGMVolume; } }
     public static float SEVolume { get { return SoundManager.SEVolume; } }
+    private static GameObject SEPrefab { get { return SoundManager.SEPrefab; } }
     public static void SetBGMVolume(int _volume) { SoundManager.SetBGMVolume(_volume); }
     public static void SetSEVolume(int _volume) { SoundManager.SetSEVolume(_volume); }
     public static void PlayBGM(EBGM _bgm) { SoundManager.PlayBGM(_bgm); }
@@ -159,7 +160,7 @@ public class GameManager : MonoBehaviour
         m_storyManager = GetComponent<StoryManager>();
         m_uiManager = GetComponent<UIManager>();
         m_poolManager = GetComponent<PoolManager>();
-        m_poolManager.SetManager(ItemArray, PowerArray, MonsterArray, EffectArray);
+        m_poolManager.SetManager(ItemArray, PowerArray, MonsterArray, EffectArray, SEPrefab);
     }
 
     private void Awake()

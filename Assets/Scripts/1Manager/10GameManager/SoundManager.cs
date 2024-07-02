@@ -20,6 +20,9 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField]
     private AudioSource CurBGM;
+    [SerializeField]
+    private GameObject m_sePrefab;
+    public GameObject SEPrefab { get { return m_sePrefab; } }
 
     [Range(0, 100)]
     private static int m_bgmVolume = 100;               // BGM 볼륨
@@ -70,7 +73,10 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySE(AudioClip _clip, Vector3 _point)                        // 효과음 예시
     {
-        AudioSource.PlayClipAtPoint(_clip, _point, SEVolume);
+        GameObject se = PoolManager.GetObject(m_sePrefab);
+        se.transform.position = _point;
+        SEPrefab script = se.GetComponent<SEPrefab>();
+        script.PlaySE(_clip, SEVolume);
     }
 
 

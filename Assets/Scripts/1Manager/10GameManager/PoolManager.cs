@@ -12,6 +12,7 @@ public class PoolManager : MonoBehaviour
     private const int DEFAULT_SKILL_NUM = 4;
     private const int DEFAULT_MONSTER_NUM = 16;
     private const int DEFAULT_EFFECT_NUM = 4;
+    private const int DEFAULT_SE_NUM = 128;
 
 
     [SerializeField]
@@ -28,7 +29,7 @@ public class PoolManager : MonoBehaviour
         return pooled;
     }
 
-    private void CreatePools(GameObject[] _items, GameObject[] _skills, GameObject[] _monsters, GameObject[] _effects)
+    private void CreatePools(GameObject[] _items, GameObject[] _skills, GameObject[] _monsters, GameObject[] _effects, GameObject _se)
     {
         // 아이템
         int itemNum = (int)EItemType.LAST + (int)EThrowItemName.LAST;
@@ -55,6 +56,8 @@ public class PoolManager : MonoBehaviour
             if (_effects[i] == null) { continue; }
             InitPool(_effects[i], DEFAULT_EFFECT_NUM);
         }
+        // 소리
+        InitPool(_se, DEFAULT_SE_NUM);
     }
 
     private void InitPool(GameObject _obj, int _num)
@@ -91,8 +94,8 @@ public class PoolManager : MonoBehaviour
     private void OnPoolDestroy(GameObject _item) { Destroy(_item); }
 
 
-    public void SetManager(GameObject[] _items, GameObject[] _skills, GameObject[] _monsters, GameObject[] _effects)
+    public void SetManager(GameObject[] _items, GameObject[] _skills, GameObject[] _monsters, GameObject[] _effects, GameObject _se)
     {
-        CreatePools(_items, _skills, _monsters, _effects);
+        CreatePools(_items, _skills, _monsters, _effects, _se);
     }
 }
