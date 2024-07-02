@@ -30,6 +30,7 @@ public class BossMonster : AnimatedAttackMonster
         if (IsFightingPlayer || !PlayManager.CheckIsPlayer(CurTarget)) { return; }
         PlayManager.ShowBossHPBar(this);
         IsFightingPlayer = true;
+        GameManager.ChangeBGM(EBGM.BOSS_BGM);
     }
 
     public override void ApplyHPUI()
@@ -45,6 +46,7 @@ public class BossMonster : AnimatedAttackMonster
     {
         if (!IsFightingPlayer) { return; }
         HideHPUI();
+        GameManager.ChangeBGM(EBGM.FIELD_BGM);
     }
 
 
