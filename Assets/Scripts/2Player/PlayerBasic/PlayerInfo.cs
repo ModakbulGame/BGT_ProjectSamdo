@@ -320,7 +320,7 @@ public partial class PlayerController
         m_playerStates[(int)EPlayerState.FALL] = gameObject.AddComponent<PlayerFallState>();
         m_playerStates[(int)EPlayerState.ATTACK] = gameObject.AddComponent<PlayerAttackState>();
         m_playerStates[(int)EPlayerState.GUARD] = gameObject.AddComponent<PlayerGaurdState>();
-        m_playerStates[(int)EPlayerState.Power] = gameObject.AddComponent<PlayerPowerState>();
+        m_playerStates[(int)EPlayerState.POWER] = gameObject.AddComponent<PlayerPowerState>();
         m_playerStates[(int)EPlayerState.ROLL] = gameObject.AddComponent<PlayerRollState>();
         m_playerStates[(int)EPlayerState.THROW] = gameObject.AddComponent<PlayerThrowState>();
         m_playerStates[(int)EPlayerState.HIT] = gameObject.AddComponent<PlayerHitState>();
@@ -346,6 +346,5 @@ public partial class PlayerController
         InitLight();                        // 능력 초기 설정
         InitWeapon();                       // 무기 설정
         HidePowerAim();                     // 스킬 에임 끄기
-        PlayManager.AddInventoryItem(new(EItemType.THROW, (int)EThrowItemName.STONE), 5);
     }
 }

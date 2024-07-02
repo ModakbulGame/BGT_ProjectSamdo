@@ -10,7 +10,7 @@ public enum EPlayerState
     FALL,
     ATTACK,
     GUARD,
-    Power,
+    POWER,
     ROLL,
     THROW,
     HIT,
@@ -20,20 +20,20 @@ public enum EPlayerState
 
 public interface IPlayerState
 {
-    public EPlayerState StateEnum { get; }                  // »óÅÂ¿¡ ´ëÇ×ÇÏ´Â Enum (ÇÊ¿äÇÑÁø ¸ğ¸£°ÚÀ½, ³ªÁß¿¡ ¾È¾²¸é ¾ø¾Öµµ µÊ)
-    public void ChangeTo(PlayerController _player);         // »óÅÂ·Î ÀüÈ¯
-    public void Proceed();                                  // ÇöÀç »óÅÂÀÏ ½Ã Update¸¶´Ù ½ÇÇà
-    public void FixedProceed();                             // Fixed Update¸¶´Ù ½ÇÇà (¹°¸® °ü·Ã)
+    public EPlayerState StateEnum { get; }                  // ìƒíƒœì— ëŒ€í•­í•˜ëŠ” Enum (í•„ìš”í•œì§„ ëª¨ë¥´ê² ìŒ, ë‚˜ì¤‘ì— ì•ˆì“°ë©´ ì—†ì• ë„ ë¨)
+    public void ChangeTo(PlayerController _player);         // ìƒíƒœë¡œ ì „í™˜
+    public void Proceed();                                  // í˜„ì¬ ìƒíƒœì¼ ì‹œ Updateë§ˆë‹¤ ì‹¤í–‰
+    public void FixedProceed();                             // Fixed Updateë§ˆë‹¤ ì‹¤í–‰ (ë¬¼ë¦¬ ê´€ë ¨)
 }
 
 public class PlayerStateManager
 {
-    private readonly PlayerController m_player;             // °ü¸®ÀÚ¸¦ °®°í ÀÖ´Â ÇÃ·¹ÀÌ¾î Å¬·¡½º
+    private readonly PlayerController m_player;             // ê´€ë¦¬ìë¥¼ ê°–ê³  ìˆëŠ” í”Œë ˆì´ì–´ í´ë˜ìŠ¤
 
 
-    public IPlayerState CurState { get; private set; }      // ÇöÀç »óÅÂ
-    public void ChangeState(IPlayerState _state) { CurState = _state; CurState.ChangeTo(m_player); }    // »óÅÂ ÀüÈ¯
+    public IPlayerState CurState { get; private set; }      // í˜„ì¬ ìƒíƒœ
+    public void ChangeState(IPlayerState _state) { CurState = _state; CurState.ChangeTo(m_player); }    // ìƒíƒœ ì „í™˜
 
 
-    public PlayerStateManager(PlayerController _player) { m_player = _player; }     // »ı¼ºÀÚ
+    public PlayerStateManager(PlayerController _player) { m_player = _player; }     // ìƒì„±ì
 }

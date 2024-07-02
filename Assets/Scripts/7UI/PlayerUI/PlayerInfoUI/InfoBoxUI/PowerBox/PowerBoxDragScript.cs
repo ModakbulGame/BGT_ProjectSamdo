@@ -17,11 +17,13 @@ public class PowerBoxDragScript : DragDropUIScript
     public override bool CheckPos()
     {
         RectTransform[] slots = Box.SlotTrans;
+        float[] dists = new float[3];
         for (int i = 0; i < ValueDefine.MAX_POWER_SLOT; i++)
         {
-            Vector3 slot = slots[i].position + Vector3.up * 0.48f;
+            Vector3 slot = slots[i].position + Vector3.up * 48f;
             float dist = Vector2.Distance(m_rect.position, slot);
-            if (dist < 0.5f)
+            dists[i] = dist;
+            if (dist < 50)
             {
                 DropIdx = i;
                 m_rect.position = slot;

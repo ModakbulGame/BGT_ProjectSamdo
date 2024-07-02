@@ -91,7 +91,7 @@ public class WeaponScript : AnimateAttackScript
     private WeaponTrailEffect m_trailEffect;
     public override void AttackOn() { base.AttackOn(); m_trailEffect.SetNormalTrail(true); }
     public override void AttackOff() { base.AttackOff(); m_trailEffect.SetNormalTrail(false); }
-    public void PowerTrailOn(EPowerTrailType _type) { if (!IsAttacking) { return; } m_trailEffect.PowerTrailOn(_type); }
+    public void PowerTrailOn(EPowerTrailType _type) { if (!Player.IsAttacking && !Player.IsPowering) { return; } m_trailEffect.PowerTrailOn(_type); }
     public void PowerTrailOff() { m_trailEffect.PowerTrailOff(); }
 
 

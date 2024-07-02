@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class IngameAlarmElmScript : MonoBehaviour
 {
-    private IngameAlarmUIScript m_parent;
-    public void SetParent(IngameAlarmUIScript _parent) { m_parent = _parent; }
-
     private RectTransform m_rect;
     private TextMeshProUGUI m_alarmTxt;
 
@@ -22,7 +19,7 @@ public class IngameAlarmElmScript : MonoBehaviour
     private float FadeTimeCount { get; set; }
     private int TargetIdx { get; set; }
 
-    private float ElmHeight { get { return m_parent.ElmHeight; } }
+    private float ElmHeight = IngameAlarmUIScript.ElmHeight;
     private float TargetPos { get { return TargetIdx * ElmHeight; } }
     public void PlusIdx() { TargetIdx++; }
 

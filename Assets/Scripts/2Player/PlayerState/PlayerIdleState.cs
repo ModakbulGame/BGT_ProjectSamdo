@@ -39,7 +39,7 @@ public class PlayerIdleState : MonoBehaviour, IPlayerState
         }
         if (m_player.CanUsePower)
         {
-            m_player.ChangeState(EPlayerState.Power);
+            m_player.ChangeState(EPlayerState.POWER);
             return;
         }
         if (m_player.CanGaurd)

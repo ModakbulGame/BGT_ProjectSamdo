@@ -55,7 +55,7 @@ public partial class PlayerController : ObjectScript, IHaveData
     public bool IsAttacking { get { return CurState.StateEnum == EPlayerState.ATTACK; } }                           // 공격 중
     public bool IsGuarding { get { return CurState.StateEnum == EPlayerState.GUARD; } }                             // 가드 중
     public bool IsHit { get { return CurState.StateEnum == EPlayerState.HIT; } }                                    // 히트 중
-    public bool IsPowering { get { return CurState.StateEnum == EPlayerState.Power; } }                             // 스킬 중
+    public bool IsPowering { get { return CurState.StateEnum == EPlayerState.POWER; } }                             // 스킬 중
     public bool IsJumping { get { return CurState.StateEnum == EPlayerState.JUMP; } }                               // 점프 중
     public bool IsRolling { get { return CurState.StateEnum == EPlayerState.ROLL; } }                               // 구르기 중
     public bool IsThrowing { get { return CurState.StateEnum == EPlayerState.THROW; } }                             // 구르기 중

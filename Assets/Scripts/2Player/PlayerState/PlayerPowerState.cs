@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerPowerState : MonoBehaviour, IPlayerState
 {
     private PlayerController m_player;
-    public EPlayerState StateEnum { get { return EPlayerState.Power; } }
+    public EPlayerState StateEnum { get { return EPlayerState.POWER; } }
 
     private bool IsReady { get; set; }
 

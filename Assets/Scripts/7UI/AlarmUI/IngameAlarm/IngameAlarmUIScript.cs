@@ -10,7 +10,7 @@ public class IngameAlarmUIScript : MonoBehaviour
     [SerializeField]
     private Transform m_boxTrans;
 
-    public readonly float ElmHeight = 72;
+    public readonly static float ElmHeight = 72;
 
     private readonly List<IngameAlarmElmScript> m_alarms = new();
 

@@ -22,7 +22,6 @@ public class PowerBoxSlotScript : MonoBehaviour
         m_slots = GetComponentsInChildren<PowerBoxSlotElmScript>();
         for(int i=0;i<ValueDefine.MAX_POWER_SLOT;i++)
         {
-            m_slots[i].SetComps();
             ElmTrans[i] = m_slots[i].GetComponent<RectTransform>();
         }
     }
