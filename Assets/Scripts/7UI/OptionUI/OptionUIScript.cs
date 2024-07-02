@@ -23,6 +23,8 @@ public class OptionUIScript : BaseUI
     private OptionSettingUI m_settingUI;
     [SerializeField]
     private OptionConfirmUIScript m_confirmUI;
+    [SerializeField]
+    private Animator m_keyInfoAnim;
 
     private bool CanControl { get; set; }
 
@@ -30,6 +32,7 @@ public class OptionUIScript : BaseUI
     {
         base.OpenUI();
         CanControl = true;
+        m_keyInfoAnim.SetTrigger("SHOW");
     }
     public override void CloseUI()
     {
