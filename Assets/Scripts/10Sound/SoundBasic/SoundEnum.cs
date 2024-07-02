@@ -5,6 +5,8 @@ using UnityEngine;
 public enum EBGM                // BGM 이름
 {
     TITLE_BGM,
+    FIELD_BGM,
+    BOSS_BGM,
 
     LAST
 }
@@ -19,8 +21,8 @@ public enum EPlayerSE
     CASTING,
     INTERACT,
     ITEM_GET,
-    GET_HIT,
-    DIE,
+    LIGHT_ON,
+    LIGHT_OFF,
 
     LAST
 }
@@ -61,22 +63,30 @@ public enum EPowerSE
 
 public enum EMonsterSE
 {
+    PURIFY,
 
     LAST
 }
 
 public enum EEnvironmentSE
 {
+    REST,
+    TRANSPORT,
+    REGION_ENTER,
+    BRIDGE_APPEAR,
 
     LAST
 }
 
 public enum ESystemSE
 {
-    QUEST_COMPLETE,
-    EQUIP,
     OPEN_UI,
     BTN_CLICK,
+    EQUIP,
+    QUEST_ACCEPT,
+    QUEST_COMPLETE,
+    QUEST_FINISH,
+    GAME_OVER,
 
     LAST
 }

@@ -22,8 +22,9 @@ public class QuestManager : MonoBehaviour, IHaveData
     public void SetQuestStatus(EQuestName _quest, EQuestState _status) 
     {
         m_questInfoList[(int)_quest].SetQuestStatus(_status);
-        if(_status == EQuestState.COMPLETE) { CompleteQuest(_quest); }
-        if(_status == EQuestState.FINISH) { FinishQuest(_quest); }
+        if(_status == EQuestState.ACCEPTED) { GameManager.PlaySE(ESystemSE.QUEST_ACCEPT); }
+        if(_status == EQuestState.COMPLETE) { CompleteQuest(_quest); GameManager.PlaySE(ESystemSE.QUEST_COMPLETE); }
+        if(_status == EQuestState.FINISH) { FinishQuest(_quest); GameManager.PlaySE(ESystemSE.QUEST_FINISH); }
         PlayManager.UpdateQuestSidebar();
         // PlayManager.UPdateQuestUI();
     }

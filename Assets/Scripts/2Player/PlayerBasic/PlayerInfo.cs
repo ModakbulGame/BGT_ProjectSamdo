@@ -346,5 +346,6 @@ public partial class PlayerController
         InitLight();                        // 능력 초기 설정
         InitWeapon();                       // 무기 설정
         HidePowerAim();                     // 스킬 에임 끄기
+        PlayManager.AddInventoryItem(new(EItemType.THROW, (int)EThrowItemName.STONE), 5);
     }
 }

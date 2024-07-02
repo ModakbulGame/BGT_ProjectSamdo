@@ -217,11 +217,13 @@ public partial class PlayerController : ObjectScript, IHaveData
     {
         m_light.LightOn();
         IsLightOn = true;
+        GameManager.PlaySE(EPlayerSE.LIGHT_ON);
     }
     public void LightOff()                                                          // 능력 중단
     {
         m_light.LightOff();
         CanRestoreLight = false;
+        GameManager.PlaySE(EPlayerSE.LIGHT_OFF);
         StartCoroutine(LightRestoreCoolTime());
         IsLightOn = false;
     }

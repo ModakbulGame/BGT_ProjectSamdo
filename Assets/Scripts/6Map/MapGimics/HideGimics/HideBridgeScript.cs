@@ -14,6 +14,7 @@ public class HideBridgeScript : HideGimicScript
     {
         base.GetLight();
         StartCoroutine(DissolveCoroutine(-1));
+        GameManager.PlaySE(EEnvironmentSE.BRIDGE_APPEAR, transform.position);
     }
 
     public override void LoseLight()

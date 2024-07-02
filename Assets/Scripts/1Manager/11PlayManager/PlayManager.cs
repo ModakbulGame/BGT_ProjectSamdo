@@ -35,6 +35,7 @@ public class PlayManager : MonoBehaviour
     {
         StartBlackoutUI();
         Player.RestAnimation();
+        GameManager.PlaySE(EEnvironmentSE.REST);
         Inst.StartCoroutine(Inst.RestDoneCoroutine(_oasis));
     }
     private IEnumerator RestDoneCoroutine(OasisNPC _oasis)
@@ -49,6 +50,7 @@ public class PlayManager : MonoBehaviour
     public static void TransportToOasis(EOasisName _target)
     {
         StartBlackoutUI();
+        GameManager.PlaySE(EEnvironmentSE.TRANSPORT);
         Inst.StartCoroutine(Inst.TransportCoroutine(_target));
     }
     private IEnumerator TransportCoroutine(EOasisName _oasis)
@@ -278,5 +280,6 @@ public class PlayManager : MonoBehaviour
     private void Start()
     {
         StartPlay();
+        GameManager.PlayBGM(EBGM.FIELD_BGM);
     }
 }
