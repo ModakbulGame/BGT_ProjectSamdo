@@ -132,7 +132,7 @@ public class PlayerCombatInfo : ObjectCombatInfo        // 플레이어 전투 �
 public partial class PlayerController
 {
     // 최초 스폰 위치
-    private readonly Vector3 InitialPos = new(497.3f, -0.629f, 234.2f);
+    private readonly Vector3 InitialPos = new(496.01f, -0.644f, 244.86f);
 
     // 데이터
     public void LoadData()

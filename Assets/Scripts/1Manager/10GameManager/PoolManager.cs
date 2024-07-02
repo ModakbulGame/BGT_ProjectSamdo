@@ -87,7 +87,7 @@ public class PoolManager : MonoBehaviour
         _item.GetComponent<IPoolable>().OnPoolGet();
     }
     private void OnPoolRelease(GameObject _item) 
-    { 
+    {
         _item.transform.SetParent(m_poolListTransform);
         _item.SetActive(false); 
     }

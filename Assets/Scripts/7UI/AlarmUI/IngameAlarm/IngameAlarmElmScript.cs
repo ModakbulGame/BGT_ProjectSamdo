@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Pool;
 
-public class IngameAlarmElmScript : MonoBehaviour
+public class IngameAlarmElmScript : MonoBehaviour, IPoolable
 {
+    private IngameAlarmUIScript m_parent;
+    public void SetParent(IngameAlarmUIScript _parent) { m_parent = _parent; }
+
     private RectTransform m_rect;
     private TextMeshProUGUI m_alarmTxt;
 
@@ -19,8 +23,22 @@ public class IngameAlarmElmScript : MonoBehaviour
     private float FadeTimeCount { get; set; }
     private int TargetIdx { get; set; }
 
-    private float ElmHeight = IngameAlarmUIScript.ElmHeight;
+    private readonly float ElmHeight = IngameAlarmUIScript.ElmHeight;
     private float TargetPos { get { return TargetIdx * ElmHeight; } }
+
+    public ObjectPool<GameObject> OriginalPool { get; private set; }
+    public void SetPool(ObjectPool<GameObject> _pool)
+    {
+        OriginalPool = _pool;
+    }
+    public void OnPoolGet() { }
+    public void ReleaseToPool()
+    {
+        m_parent.AlarmDestroyed(this);
+        m_rect.anchoredPosition = new(0, -72);
+        OriginalPool.Release(gameObject);
+    }
+
     public void PlusIdx() { TargetIdx++; }
 
     public void AlarmOn(string _alarm)
@@ -30,6 +48,7 @@ public class IngameAlarmElmScript : MonoBehaviour
         IsShowing = true;
         FadeTimeCount = FadeDelay;
         TextAlpha = 1;
+        m_rect.anchoredPosition = new(0, -72);
     }
 
     public void DestoryElm()
