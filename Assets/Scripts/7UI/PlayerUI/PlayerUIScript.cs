@@ -33,6 +33,11 @@ public class PlayerUIScript : MonoBehaviour
         m_imgUI.UpdateUI();
         m_infoUI.UpdateUI();
     }
+    public void InfoBoxSet(EPlayerInfoType _type)
+    {
+        bool show = _type != EPlayerInfoType.MONSTER;
+        if (m_imgUI.gameObject.activeSelf != show) { m_imgUI.gameObject.SetActive(show); }
+    }
 
     public void UpdateMaterials()                           // 재화 업데이트
     {

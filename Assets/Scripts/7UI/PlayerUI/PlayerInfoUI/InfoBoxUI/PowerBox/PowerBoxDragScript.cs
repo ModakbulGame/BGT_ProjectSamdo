@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PowerBoxDragScript : DragDropUIScript
 {
@@ -10,6 +11,8 @@ public class PowerBoxDragScript : DragDropUIScript
     private EPowerName Power { get { return m_parent.CurPower; } }
     private PowerBoxUIScript Box { get { return m_parent.Box; } }
     public override Transform MoveTrans => Box.transform;
+
+    public override bool CanControl => m_parent.IsObtained && !m_parent.IsEquipped;
 
     private int DropIdx { get; set; }
 

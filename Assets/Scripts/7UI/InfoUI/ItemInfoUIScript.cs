@@ -13,7 +13,7 @@ public class ItemInfoUIScript : MonoBehaviour
 
     private bool IsCompsSet { get; set; }
 
-    private readonly float[] UIHeight = new float[4] { 275, 275, 220, 180 };
+    private readonly float[] UIHeight = new float[4] { 310, 310, 270, 238 };
     private readonly float UIWidth = 360;
 
     public void ShowUI(SItem _item)

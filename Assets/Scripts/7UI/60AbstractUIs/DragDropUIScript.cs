@@ -18,12 +18,13 @@ public class DragDropUIScript : MonoBehaviour
     private bool ParentChanged { get; set; }
     protected int SiblingIdx { get; set; }
 
+    public virtual bool CanControl => true;
     public bool Dragging { get; private set; }
 
 
     public virtual void StartDrag(PointerEventData _data)
     {
-        if(_data.button == PointerEventData.InputButton.Right) { return; }
+        if(!CanControl || _data.button == PointerEventData.InputButton.Right) { return; }
         ParentTrans = m_rect.parent;
         SiblingIdx = transform.GetSiblingIndex();
         m_rect.SetParent(MoveTrans);
@@ -34,7 +35,7 @@ public class DragDropUIScript : MonoBehaviour
 
     public virtual void OnDrag(PointerEventData _data)
     {
-        if (_data.button == PointerEventData.InputButton.Right) { return; }
+        if (!CanControl || _data.button == PointerEventData.InputButton.Right) { return; }
         Vector2 mouse = Mouse.current.position.ReadValue();
         Vector2 move = mouse - MouseStart;
         move.x *= GameManager.WidthRatio; move.y *= GameManager.HeightRatio;
@@ -44,7 +45,7 @@ public class DragDropUIScript : MonoBehaviour
 
     public virtual void EndDrag(PointerEventData _data)
     {
-        if (_data.button == PointerEventData.InputButton.Right) { return; }
+        if (!CanControl || _data.button == PointerEventData.InputButton.Right) { return; }
         if (CheckPos())
         {
             DropAction();
@@ -60,7 +61,7 @@ public class DragDropUIScript : MonoBehaviour
     {
         return false;
     }
-    public virtual void DropAction() 
+    public virtual void DropAction()
     {
         
     }

@@ -12,7 +12,10 @@ public class PlayerImgPatternElm : DragMouseOverInfoUI
 
 
     public EPatternName CurPattern { get; private set; }
-
+    private bool HasPattern { get { return CurPattern != EPatternName.LAST; } }
+    
+    
+    
     public void SetPattern(EPatternName _pattern)
     {
         CurPattern = _pattern;
@@ -25,15 +28,17 @@ public class PlayerImgPatternElm : DragMouseOverInfoUI
 
     public override void ShowInfo()
     {
-        if(CurPattern == EPatternName.LAST) { return; }
+        if(!HasPattern) { return; }
         m_parent.ShowInfo(CurPattern);
     }
     public override void HideInfo()
     {
+        if (!HasPattern) { return; }
         m_parent.HideInfo();
     }
     public override void SetInfoPos(Vector2 _pos)
     {
+        if (!HasPattern) { return; }
         m_parent.SetInfoPos(_pos);
     }
 

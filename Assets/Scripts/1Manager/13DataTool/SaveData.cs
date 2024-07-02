@@ -42,7 +42,7 @@ public class SaveData
     public SaveData()
     {
         SavedTime = DateTime.Now.ToString();
-        OasisPoint = 0;
+        OasisPoint = EOasisName.LAST;
 
         PlayerRot = new(0, 180, 0);
         StatInfo = new();

@@ -134,6 +134,9 @@ public class PlayerCombatInfo : ObjectCombatInfo        // 플레이어 전투 �
 
 public partial class PlayerController
 {
+    // 최초 스폰 위치
+    private readonly Vector3 InitialPos = new(497.3f, -0.629f, 234.2f);
+
     // 데이터
     public void LoadData()
     {
@@ -141,9 +144,11 @@ public partial class PlayerController
         if (PlayManager.IsNewData) { m_statInfo = new(); return; }
 
         SaveData data = PlayManager.CurSaveData;
-        OasisNPC oasis = PlayManager.OasisList[(int)data.OasisPoint];
 
-        transform.position = oasis.RespawnPoint;
+        Vector3 spawnPos = data.OasisPoint == EOasisName.LAST ? InitialPos
+            : PlayManager.OasisList[(int)data.OasisPoint].RespawnPoint;
+
+        transform.position = spawnPos;
         transform.localEulerAngles = data.PlayerRot;
 
         m_statInfo = new(data.StatInfo);

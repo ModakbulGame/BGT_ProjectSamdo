@@ -18,6 +18,8 @@ public class PowerBoxElmScript : MonoBehaviour
     private PowerBoxDragScript m_drag;
 
     public EPowerName CurPower { get; private set; }
+    public bool IsObtained { get; private set; }
+    public bool IsEquipped { get; private set; }
 
     public void SetSkillInfo(EPowerName _skill, bool _equipped)
     {
@@ -25,12 +27,13 @@ public class PowerBoxElmScript : MonoBehaviour
         CurPower = _skill;
         Sprite img = GameManager.GetPowerSprite(_skill);
         PowerInfo info = GameManager.GetPowerInfo(_skill);
-        bool obtained = PlayManager.PowerObtained[(int)_skill];
+        IsObtained = PlayManager.PowerObtained[(int)_skill];
+        IsEquipped = _equipped;
 
         m_skillImg.sprite = img;
-        m_skillImg.color = obtained ? Color.white : MissingColor;
+        m_skillImg.color = IsObtained ? Color.white : MissingColor;
         m_skillName.text = info.PowerName;
-        if(_equipped) { m_skillName.color = Color.red; }
+        if(IsEquipped) { m_skillName.color = Color.red; }
         else { m_skillName.color = Color.black; }
     }
 

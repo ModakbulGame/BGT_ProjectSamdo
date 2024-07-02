@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerForceManager : MonoBehaviour, IHaveData
 {
-    // ÇÃ·¹ÀÌ¾î ´É·ÂÄ¡
+    // í”Œë ˆì´ì–´ ëŠ¥ë ¥ì¹˜
     private PlayerStatInfo PlayerStatInfo { get { return PlayManager.PlayerStatInfo; } }
 
     public readonly static int InitialStatPoint = 2;
@@ -20,7 +20,7 @@ public class PlayerForceManager : MonoBehaviour, IHaveData
     }
 
 
-    public void UpgradeStat(int[] _point)                   // Æ÷ÀÎÆ® ÅõÀÚ·Î ÀÎÇÑ ¾÷±×·¹ÀÌµå
+    public void UpgradeStat(int[] _point)                   // í¬ì¸íŠ¸ íˆ¬ìë¡œ ì¸í•œ ì—…ê·¸ë ˆì´ë“œ
     {
         for (int i = 0; i<(int)EStatName.LAST; i++)
         {
@@ -33,12 +33,12 @@ public class PlayerForceManager : MonoBehaviour, IHaveData
         }
         PlayManager.ApplyPlayerStat();
         if (LeftStatPoint < 0)
-            Debug.LogError("½ºÅÈ ¿À¹ö »ç¿ë");
+            Debug.LogError("ìŠ¤íƒ¯ ì˜¤ë²„ ì‚¬ìš©");
     }
     public void UpgradeStat(EStatName _stat, int _amount, bool _isReward)
     {
         PlayerStatInfo.UpgradeStat(_stat, _amount);
-        if (_isReward) { PlayManager.AddIngameAlarm($"{Stat2String(_stat)} {_amount} Áõ°¡"); }
+        if (_isReward) { PlayManager.AddIngameAlarm($"{Stat2String(_stat)} {_amount} ì¦ê°€"); }
     }
 
     public void ResetStat()
@@ -50,7 +50,7 @@ public class PlayerForceManager : MonoBehaviour, IHaveData
     }
 
 
-    // ÇÃ·¹ÀÌ¾î ±Ç´É
+    // í”Œë ˆì´ì–´ ê¶ŒëŠ¥
     private readonly bool[] m_powerObtained = new bool[(int)EPowerName.LAST];
     public bool[] PowerObtained { get { return m_powerObtained; } }
 
@@ -62,7 +62,7 @@ public class PlayerForceManager : MonoBehaviour, IHaveData
     public void ObtainPower(EPowerName _skill)
     {
         int idx = (int)_skill;
-        if (PowerObtained[idx]) { Debug.Log("ÀÌ¹Ì È¹µæÇÑ ½ºÅ³"); return; }
+        if (PowerObtained[idx]) { Debug.Log("ì´ë¯¸ íšë“í•œ ìŠ¤í‚¬"); return; }
         PowerObtained[idx] = true;
     }
 

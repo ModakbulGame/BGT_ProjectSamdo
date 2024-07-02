@@ -21,7 +21,7 @@ public class QuestAcceptUIScript : BaseUI
     // private Button m_btn2;
 
     private TextMeshProUGUI m_btn1Txt;       // 수락, 완료 버튼
-    private TextMeshProUGUI m_btn2Txt;      // 거절, 확인 버튼
+    // private TextMeshProUGUI m_btn2Txt;      // 거절, 확인 버튼
 
     private QuestScriptable CurQuest { get; set; }
     private bool IsStart { get; set; }
@@ -47,7 +47,7 @@ public class QuestAcceptUIScript : BaseUI
     public void SetBtnsTxts(bool _isStart)
     {
         m_btn1Txt.text = _isStart ? "수락" : "완료";
-        m_btn2Txt.text = _isStart ? "거절" : "확인";
+        // m_btn2Txt.text = _isStart ? "거절" : "확인";
     }
 
     private void AcceptOrFinish()

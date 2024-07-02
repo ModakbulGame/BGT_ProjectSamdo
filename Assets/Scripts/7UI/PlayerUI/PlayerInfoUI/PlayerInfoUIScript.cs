@@ -44,6 +44,7 @@ public class PlayerInfoUIScript : MonoBehaviour
         CurType = _type;
         m_typeSetting = _type;
         m_infoUIs[(int)CurType].OpenUI();
+        m_parent.InfoBoxSet(_type);
     }
 
     public void UpdatePlayerModelWeapon()

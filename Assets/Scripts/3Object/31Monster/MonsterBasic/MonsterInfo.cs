@@ -159,6 +159,7 @@ public partial class MonsterScript
     public void DespawnMonster()
     {
         if (m_spawnPoint != null) { m_spawnPoint.MonsterDespawned(this); }
+        m_aiPath.enabled = false;
         DestroyMonster();
     }
 
