@@ -43,7 +43,7 @@ public class LifeGuardianSkill2Script : ObjectAttackScript
     private void PlayDrainSound()
     {
         GameManager.PlaySE(m_drainSound, transform.position);
-        SoundCount += 1;
+        SoundCount += SoundGap;
     }
 
     public override void GiveDamage(IHittable _hittable, Vector3 _point)

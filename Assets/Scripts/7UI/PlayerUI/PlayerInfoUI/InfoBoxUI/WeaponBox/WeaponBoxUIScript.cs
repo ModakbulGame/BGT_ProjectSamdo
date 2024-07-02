@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class WeaponBoxUIScript : PlayerInfoBoxScript
 {
+    public Transform ParentTrans { get { return m_parent.transform; } }
+
     private WeaponBoxElmScript[] m_elms;
 
     [SerializeField]
@@ -82,7 +84,7 @@ public class WeaponBoxUIScript : PlayerInfoBoxScript
     public override void SetComps()
     {
         m_elms = GetComponentsInChildren<WeaponBoxElmScript>();
-        if (m_elms.Length != ElmPerPage) { Debug.LogError("UI °³¼ö Æ²¸²"); }
+        if (m_elms.Length != ElmPerPage) { Debug.LogError("UI ê°œìˆ˜ í‹€ë¦¼"); }
         foreach (WeaponBoxElmScript elm in m_elms) { elm.SetParent(this); }
         SetBtns();
 

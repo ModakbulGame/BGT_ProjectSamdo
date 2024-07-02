@@ -8,18 +8,19 @@ public class WeaponBoxElmScript : MonoBehaviour
 {
     private WeaponBoxUIScript m_parent;
     public void SetParent(WeaponBoxUIScript _parent) { m_parent = _parent; }
+    private Transform ParentTrans { get { return m_parent.ParentTrans; } }
 
     private WeaponImgScript m_img;
 
-    private EWeaponName ElmWeapon { get; set; }     // ÇÒ´çµÈ ¹«±â
-    private bool IsCurWeapon { get; set; }          // ÇÃ·¹ÀÌ¾î°¡ ÀåÂø ÁßÀÎ ¹«±âÀÎÁö
+    private EWeaponName ElmWeapon { get; set; }     // í• ë‹¹ëœ ë¬´ê¸°
+    private bool IsCurWeapon { get; set; }          // í”Œë ˆì´ì–´ê°€ ì¥ì°© ì¤‘ì¸ ë¬´ê¸°ì¸ì§€
 
-    private Image m_weaponImg;                      // ¹«±â ÀÌ¹ÌÁö      
-    private Button m_equipBtn;                      // ÀåÂø ¹öÆ°
+    private Image m_weaponImg;                      // ë¬´ê¸° ì´ë¯¸ì§€      
+    private Button m_equipBtn;                      // ì¥ì°© ë²„íŠ¼
 
-    private TextMeshProUGUI m_weaponNameTxt;         // ¹«±â ÀÌ¸§
+    private TextMeshProUGUI m_weaponNameTxt;         // ë¬´ê¸° ì´ë¦„
 
-    public void SetWeaponInfo(int _weapon)          // Á¤º¸ ¼³Á¤
+    public void SetWeaponInfo(int _weapon)          // ì •ë³´ ì„¤ì •
     {
         EWeaponName weapon = (EWeaponName)_weapon;
         ElmWeapon = weapon;
@@ -36,20 +37,20 @@ public class WeaponBoxElmScript : MonoBehaviour
         SetBtnState(obtained);
     }
 
-    private void SetBtnState(bool _obtained)        // ¹öÆ° »óÅÂ ¼³Á¤
+    private void SetBtnState(bool _obtained)        // ë²„íŠ¼ ìƒíƒœ ì„¤ì •
     {
-        if (IsCurWeapon) { SetBtnTxt("ÀåÂø Áß"); }
-        else { SetBtnTxt("ÀåÂø"); }
+        if (IsCurWeapon) { SetBtnTxt("ì¥ì°© ì¤‘"); }
+        else { SetBtnTxt("ì¥ì°©"); }
 
         if (_obtained) { m_equipBtn.interactable = true; }
         else { m_equipBtn.interactable = false; }
     }
-    private void SetBtnTxt(string _txt)             // ¹öÆ° ÅØ½ºÆ® ¼³Á¤
+    private void SetBtnTxt(string _txt)             // ë²„íŠ¼ í…ìŠ¤íŠ¸ ì„¤ì •
     {
         m_equipBtn.GetComponentInChildren<TextMeshProUGUI>().text = _txt;
     }
 
-    public void HideElm()                           // ¼û±â±â
+    public void HideElm()                           // ìˆ¨ê¸°ê¸°
     {
         gameObject.SetActive(false);
     }
@@ -69,7 +70,7 @@ public class WeaponBoxElmScript : MonoBehaviour
     }
 
 
-    private void EquipWeapon()                      // ÇÒ´çµÈ ¹«±â ÀåÂø
+    private void EquipWeapon()                      // í• ë‹¹ëœ ë¬´ê¸° ì¥ì°©
     {
         if(IsCurWeapon) { return; }
         m_parent.EquipWeapon(ElmWeapon);
