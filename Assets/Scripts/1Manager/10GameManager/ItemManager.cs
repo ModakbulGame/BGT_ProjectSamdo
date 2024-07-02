@@ -170,28 +170,26 @@ public class ItemManager : MonoBehaviour
         {
             case EItemType.WEAPON:
                 if(sub == 1) { return idx; }
-                else if(sub == 2) { return idx - (int)EWeaponName.BASIC_SWORD; }
-                else if(sub== 3) { return idx - (int)EWeaponName.BASIC_SCEPTER; }
+                else if(sub == 2) { return idx + (int)EWeaponName.BASIC_SWORD; }
+                else if(sub== 3) { return idx + (int)EWeaponName.BASIC_SCEPTER; }
                 break;
             case EItemType.PATTERN:
                 if(sub == 1) { return idx; }
-                else if(sub == 2) { return idx - (int)EPatternName.WATER; }
-                else if(sub == 3) { return idx - (int)EPatternName.GROUND; }
+                else if(sub == 2) { return idx + (int)EPatternName.WATER; }
+                else if(sub == 3) { return idx + (int)EPatternName.GROUND; }
                 break;
             case EItemType.THROW:
                 if(sub == 1) { return idx; }
-                else if(sub == 2) { return idx - (int)EThrowItemName.BOMB; }
-                else if(sub == 3) { return idx - (int)EThrowItemName.SLOW; }
-                else if (sub == 4) { return idx - (int)EThrowItemName.ENDER; }
-                else if (sub == 5) { return idx - (int)EThrowItemName.PURIFY; }
+                else if(sub == 2) { return idx + (int)EThrowItemName.BOMB; }
+                else if(sub == 3) { return idx + (int)EThrowItemName.SLOW; }
+                else if (sub == 4) { return idx + (int)EThrowItemName.ENDER; }
+                else if (sub == 5) { return idx + (int)EThrowItemName.PURIFY; }
                 break;
             case EItemType.OTHERS:
                 return MonsterManager.Code2Idx(sub, idx);
         }
         return -1;
     }
-
-
 
 
     // 아이템 별 종류 수
@@ -204,7 +202,7 @@ public class ItemManager : MonoBehaviour
         {
             EItemType type = (EItemType)i;
             uint cnt = ItemCounts[i];
-            for (int j = 0; j < cnt; j++)                         
+            for (int j = 0; j < cnt; j++)
             {
                 SItem item = new(type, j);
                 ItemScriptable scriptable = GameManager.GetItemData(item);
