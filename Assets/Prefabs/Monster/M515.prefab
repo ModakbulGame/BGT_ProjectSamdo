@@ -56,7 +56,8 @@ MonoBehaviour:
     AttackSpeed: 1.2
     MoveSpeed: 3
   m_hitSounds: []
-  m_dieSounds: []
+  m_dieSounds:
+  - {fileID: 8300000, guid: 649052b57d754064a99968b940966f75, type: 3}
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
@@ -65,6 +66,8 @@ MonoBehaviour:
   - {fileID: 3976179779066982568, guid: 28f8e8e4d396c4f44bbc36111b081b81, type: 3}
   m_normalDamageMultiplier:
   - 1
+  m_attackSounds:
+  - {fileID: 8300000, guid: 5fbb2fcad53a0f5469b72adce0a47111, type: 3}
   m_scriptable: {fileID: 11400000, guid: f92fdb7e3dbf43f46b3fde5810c35cb2, type: 2}
   m_combatInfo:
     MaxHP: 160
@@ -77,7 +80,7 @@ MonoBehaviour:
     ReturnRange: 10
     AttackRange: 6
     ApproachDelay: 1
-    FenceRange: 25
+    FenceRange: 17
   m_spawnPoint: {fileID: 0}
   m_roamingDistance:
     Min: 1

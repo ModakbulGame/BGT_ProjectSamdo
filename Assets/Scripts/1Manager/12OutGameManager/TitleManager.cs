@@ -10,6 +10,8 @@ public class TitleManager : MonoBehaviour
     [SerializeField]
     private Button m_loadBtn;
     [SerializeField]
+    private Button m_exitBtn;
+    [SerializeField]
     private LoadListScript m_loadingList;
 
 
@@ -30,10 +32,17 @@ public class TitleManager : MonoBehaviour
         m_loadBtn.interactable = hasData;
     }
 
+    private void ExitGame()
+    {
+        Application.Quit();
+    }
+
+
     private void SetBtns()
     {
         m_newBtn.onClick.AddListener(StartGame);
         m_loadBtn.onClick.AddListener(OpenLoad);
+        m_exitBtn.onClick.AddListener(ExitGame);
     }
 
     private void SetComps()

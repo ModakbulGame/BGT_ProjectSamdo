@@ -144,7 +144,7 @@ public partial class MonsterScript
         m_rigid.useGravity = true;         // 중력
         GetComponentInChildren<CapsuleCollider>().isTrigger = false;
         base.Start();
-        HideHPBar();
+        HideHPUI();
         StartCoroutine(WaitSpawned());
     }
     public virtual IEnumerator WaitSpawned()

@@ -39,6 +39,16 @@ public class SoundManager : MonoBehaviour
         CurBGM.volume = BGMVolume;
         CurBGM.Play();
     }
+    public void ChangeBGM(EBGM _bgm)
+    {
+        StartCoroutine(ChangingBGM(_bgm));
+    }
+    private IEnumerator ChangingBGM(EBGM _bgm)
+    {
+        while (CurBGM.volume > 0) { CurBGM.volume -= Time.deltaTime; yield return null; }
+        CurBGM.clip = m_bgmList[(int)_bgm];
+        while(CurBGM.volume < BGMVolume) { CurBGM.volume += Time.deltaTime; yield return null; }
+    }
     public void StopBGM() 
     {
         if (!CurBGM.isPlaying) { return; }

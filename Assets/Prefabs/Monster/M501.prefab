@@ -53,11 +53,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_baseInfo:
-    ObjectName: "\uC0DD\uBA85 \uD574\uACE8\uB531\uC9C0"
+    ObjectName: "\uD574\uACE8\uB531\uC9C0"
     AttackSpeed: 2.2
     MoveSpeed: 2.5
   m_hitSounds: []
-  m_dieSounds: []
+  m_dieSounds:
+  - {fileID: 8300000, guid: 1f78b2134c596814c866d91329665e12, type: 3}
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
@@ -65,6 +66,7 @@ MonoBehaviour:
   m_normalAttacks:
   - {fileID: 0}
   m_normalDamageMultiplier: []
+  m_attackSounds: []
   m_scriptable: {fileID: 11400000, guid: 1bd0d9e51aec6584bbb8597d6dca989c, type: 2}
   m_combatInfo:
     MaxHP: 90
@@ -77,7 +79,7 @@ MonoBehaviour:
     ReturnRange: 8
     AttackRange: 4.5
     ApproachDelay: 1
-    FenceRange: 25
+    FenceRange: 17
   m_spawnPoint: {fileID: 0}
   m_roamingDistance:
     Min: 1

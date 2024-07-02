@@ -55,9 +55,9 @@ public partial class PlayerController
 
 
     // 점프 관련
-    private readonly float JumpPower = 9;                                                   // 점프 파워
+    private readonly float JumpPower = 10;                                                  // 점프 파워
     private readonly float JumpDelay = 0.25f;                                               // 점프 간격
-    public readonly float JumpStaminaUse = 1.5f;                                            // 점프 스테미나 소모
+    public readonly float JumpStaminaUse = 10f;                                             // 점프 스테미나 소모
 
     public Vector2 JumpRollDirection { get; set; }                                          // 점프 or 구르기 방향
     public bool CanJump { get { return IsGrounded && ((IsOnSlope && CurSurfaceAngle <= m_maxSlopeAngle) || !IsOnSlope)      // 점프 가능 여부
@@ -79,7 +79,7 @@ public partial class PlayerController
     private readonly float RollDelay = 0.25f;                                               // 구르기 간격
     public readonly float RollMultiplier = 10/7f;                                           // 구르기 / 걷기 속도 배율
     public readonly float RollingTime = 0.85f;                                              // 구르기 진행 시간
-    public readonly float RollStaminaUse = 2.5f;                                            // 구르기 스테미나 소모
+    public readonly float RollStaminaUse = 15f;                                             // 구르기 스테미나 소모
 
     public bool CanRoll { get {                                                             // 구르기 가능 여부
             return (IsGrounded || IsOnSlope) && RollCooltime <= 0 && RollPressing

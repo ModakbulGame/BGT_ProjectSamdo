@@ -20,6 +20,7 @@ public class PowerScriptable : ScriptableObject
     public float                Cooltime;
     public int                  StaminaCost;
     public AdjustInfo           StatAdjust;
+    [TextArea]
     public string               Description;
     public int                  PowerPrice;
     public GameObject           PowerPrefab;
@@ -79,7 +80,7 @@ public class PowerScriptable : ScriptableObject
         float.TryParse(     _data[(int)EPowerAttribute.ADJ_TIME], out float time);
         if(amount == 0)     { amount = (float)DataManager.String2CC(_data[(int)EPowerAttribute.ADJ_AMOUNT]); }
         StatAdjust =        new(type, amount, time);
-        Description =       _data[(int)EPowerAttribute.DESCRIPTION];
+        Description = FunctionDefine.TextRowSet(_data[(int)EPowerAttribute.DESCRIPTION]);
         int.TryParse(       _data[(int)EPowerAttribute.PRICE],            out PowerPrice);
         PowerPrefab =       _prefab;
         if(_icon != null) { PowerIcon = _icon; }

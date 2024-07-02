@@ -16,7 +16,7 @@ MonoBehaviour:
   MonsterEnum: 9
   ID: M501
   MonsterType: 0
-  MonsterName: "\uC0DD\uBA85 \uD574\uACE8\uB531\uC9C0"
+  MonsterName: "\uD574\uACE8\uB531\uC9C0"
   MaxHP: 90
   Attack: 20
   MoveSpeed: 2.5
@@ -28,18 +28,24 @@ MonoBehaviour:
   AttackRange: 4.5
   AttackSpeed: 2.2
   ApproachDelay: 1
-  FenceRange: 25
-  Description: "\uC0DD\uBA85 \uD574\uACE8\uB531\uC9C0"
+  FenceRange: 17
+  Description: "\uC11C\uC2DD\uC9C0 : \uC2A4\uD39C\uD0D0 \uC694\uADF8\uB204\uC758
+    \uC601\uC5ED\n\uD3EC\uC720\uB958\uC758 \uB450\uAC1C\uACE8\uC744 \uBA38\uB9AC\uC5D0
+    \uC4F0\uACE0 \uC788\uB294 \uACE4\uCDA9\uD615 \uAC1C\uCCB4.\n\uD488\uACE0 \uC788\uB294
+    \uD575\uC740 \uC778\uD654\uC131 \uBB3C\uC9C8\uB85C \uCC44\uC6CC\uC838 \uC788\uB2E4.\n\uC801\uC774\uB77C\uACE0
+    \uC0DD\uAC01\uB418\uBA74 \uB2E4\uC9DC\uACE0\uC9DC \uB6F0\uC5B4\uB4E4\uC5B4 \uD3ED\uBC1C\uD55C\uB2E4."
   FirstKillStat: 1
   DropInfo:
     Items:
     - ID: O501
-      Prob: 0.5
+      Prob: 0.6
     - ID: P101
       Prob: 0.2
+    - ID: P102
+      Prob: 0.1
     StatPoint: 2
     Soul: 10
-    Purified: 10
+    Purified: 5
   MonsterPrefab: {fileID: 4113875238200415537, guid: 4c37827638c089a48b0150454cfe1e18,
     type: 3}
   MonsterProfile: {fileID: 21300000, guid: e291fc51626bbe4478e45d5fb11eb93e, type: 3}

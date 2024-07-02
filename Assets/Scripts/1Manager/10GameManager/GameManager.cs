@@ -52,6 +52,7 @@ public class GameManager : SingleTon<GameManager>
     public static void SetBGMVolume(int _volume) { SoundManager.SetBGMVolume(_volume); }
     public static void SetSEVolume(int _volume) { SoundManager.SetSEVolume(_volume); }
     public static void PlayBGM(EBGM _bgm) { SoundManager.PlayBGM(_bgm); }
+    public static void ChangeBGM(EBGM _bgm) { SoundManager.ChangeBGM(_bgm); }
     public static void StopBGM() { SoundManager.StopBGM(); }
     public static void PlaySE(EPlayerSE _se) { SoundManager.PlaySE(_se); }
     public static void PlaySE(EPlayerSE _se, Vector3 _point) { SoundManager.PlaySE(_se, _point); }

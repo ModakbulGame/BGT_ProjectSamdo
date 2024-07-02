@@ -13,6 +13,9 @@ public class ItemInfoUIScript : MonoBehaviour
 
     private bool IsCompsSet { get; set; }
 
+    private readonly float[] UIHeight = new float[4] { 275, 275, 220, 180 };
+    private readonly float UIWidth = 360;
+
     public void ShowUI(SItem _item)
     {
         if (!IsCompsSet) { SetComps(); }
@@ -21,6 +24,7 @@ public class ItemInfoUIScript : MonoBehaviour
         m_nameTxt.text = info.ItemName;
         m_descTxt.text = info.ItemDescription;
         m_elseTxt.text = SetItemInfo(info);
+        SetUIHeight(info.ItemType);
     }
     public string SetItemInfo(ItemInfo _info)
     {
@@ -30,23 +34,27 @@ public class ItemInfoUIScript : MonoBehaviour
         {
             case EItemType.WEAPON:
                 WeaponScriptable weapon = _info.ItemData as WeaponScriptable;
-                itemTxt = $"°ø°İ·Â : {weapon.Attack.Min} ~ {weapon.Attack.Max}\n¸¶¹ı °ø°İ·Â : {weapon.Magic.Min} ~ {weapon.Magic.Max}\n°ø°İ¼Óµµ : {weapon.AttackSpeed}";
+                itemTxt = $"ê³µê²©ë ¥ : {weapon.Attack.Min} ~ {weapon.Attack.Max}\nì£¼ìˆ ë ¥ : {weapon.Magic.Min} ~ {weapon.Magic.Max}\nê³µê²©ì†ë„ : {weapon.AttackSpeed}";
                 break;
             case EItemType.THROW:
                 ThrowItemScriptable throwItem = _info.ItemData as ThrowItemScriptable;
-                itemTxt = $"µ¥¹ÌÁö : {throwItem.ThrowDamage}\nºñÇà¼Óµµ : {throwItem.ThrowSpeed}\nÆø¹ß µô·¹ÀÌ : {throwItem.ExplodeTime}";
+                itemTxt = $"ë°ë¯¸ì§€ : {throwItem.ThrowDamage}\në¹„í–‰ì†ë„ : {throwItem.ThrowSpeed}\ní­ë°œ ë”œë ˆì´ : {throwItem.ExplodeTime}";
                 break;
             case EItemType.PATTERN:
                 PatternScriptable pattern = _info.ItemData as PatternScriptable;
-
+                itemTxt = $"íšŒë³µëŸ‰  : {pattern.HealAmount}";
                 break;
             case EItemType.OTHERS:
                 OtherItemScriptable other = _info.ItemData as OtherItemScriptable;
-
+                itemTxt = "";
                 break;
         }
 
         return itemTxt;
+    }
+    private void SetUIHeight(EItemType _type)
+    {
+        m_rect.sizeDelta = new(UIWidth, UIHeight[(int)_type]);
     }
     public void SetPos(Vector2 _pos)
     {

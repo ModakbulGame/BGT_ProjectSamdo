@@ -34,7 +34,7 @@ public class MiniuumScript : MonsterScript
 
     private readonly float DashSpeed = 5;
 
-    private readonly float MaxUpperVel = 2;
+    private readonly float MaxUpperVel = 0.5f;
 
     private bool IsDashing { get; set; }
     private Vector2 DashDir { get; set; }

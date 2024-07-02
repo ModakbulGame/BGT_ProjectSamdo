@@ -14,6 +14,7 @@ public class HideBridgeScript : HideGimicScript
     {
         base.GetLight();
         StartCoroutine(DissolveCoroutine(-1));
+        GameManager.PlaySE(EEnvironmentSE.BRIDGE_APPEAR, transform.position);
     }
 
     public override void LoseLight()
@@ -42,5 +43,6 @@ public class HideBridgeScript : HideGimicScript
         base.SetComps();
         m_bridgeMaterial = GetComponent<MeshRenderer>().material;
         m_bridgeMaterial.SetFloat(DissolveAmount, 1);
+        m_colliders = GetComponentsInChildren<Collider>();
     }
 }

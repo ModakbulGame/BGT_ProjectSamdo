@@ -139,7 +139,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
     }
     public void DeathResult()           // 사망 원인에 따른 결과
     {
-        if (false && DeathType == EMonsterDeathType.PURIFY || DeathType == EMonsterDeathType.BY_PLAYER)      // 잠정 중단
+        if (DeathType == EMonsterDeathType.PURIFY || DeathType == EMonsterDeathType.BY_PLAYER)      // 잠정 중단
         {
             DropItems();
         }
@@ -150,6 +150,7 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         {
             case EMonsterDeathType.PURIFY:      // 성불
                 PlayManager.AddPurified(1);
+                GameManager.PlaySE(EMonsterSE.PURIFY);
                 break;
             case EMonsterDeathType.BY_PLAYER:   // 플레이어
                 PlayManager.AddSoul(1);
@@ -316,17 +317,6 @@ public abstract partial class MonsterScript : ObjectScript, IHidable, IPoolable
         m_hpBar = GetComponentInChildren<ObjectHPBarScript>();
         m_hpBar.SetMaxHP(MaxHP);
     }
-
-    protected void ShowHPBar()
-    {
-        m_hpBar.gameObject.SetActive(true);
-        ApplyHPUI();
-    }
-    protected void HideHPBar()
-    {
-        m_hpBar.gameObject.SetActive(false);
-    }
-
 
     // 업데이트
     public override void ProcCooltime()

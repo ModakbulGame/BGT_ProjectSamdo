@@ -264,7 +264,7 @@ public partial class PlayerController
         }
         CurWeapon.gameObject.name = name;
     }
-    public override void SetWeaponCC(ECCType _cc) 
+    public override void SetWeaponCC(ECCType _cc)
     {
         CurWeapon.SetCCType(_cc);
         if (_cc == ECCType.NONE) { CurWeapon.BuffEffectOff(); }
@@ -346,5 +346,6 @@ public partial class PlayerController
         InitLight();                        // 능력 초기 설정
         InitWeapon();                       // 무기 설정
         HidePowerAim();                     // 스킬 에임 끄기
+        PlayManager.AddInventoryItem(new(EItemType.THROW, (int)EThrowItemName.STONE), 5);
     }
 }

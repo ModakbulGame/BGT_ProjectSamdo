@@ -52,7 +52,7 @@ public class PlayerUIScript : MonoBehaviour
     }
     public void SetItemInfoUIPos(Vector2 _pos)
     {
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(m_rect, _pos, m_uiCanvas.worldCamera, out Vector2 pos);
+        Vector2 pos = _pos - new Vector2(DisplayManager.CANVAS_WIDTH * 0.5f, DisplayManager.CANVAS_HEIGHT * 0.5f);
         m_itemInfoUI.SetPos(pos);
     }
     public void HideItemInfoUI()

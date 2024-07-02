@@ -111,11 +111,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_baseInfo:
-    ObjectName: "\uAD11\uBB3C \uBB38\uC9C0\uAE30 \uACE8\uB818"
+    ObjectName: "\uC624\uC0E4\uD2B8\uB77C \uBC14\uC774\uB974\uB9CC\uC758 \uC2DC\uB828"
     AttackSpeed: 2.8
     MoveSpeed: 2
   m_hitSounds: []
-  m_dieSounds: []
+  m_dieSounds:
+  - {fileID: 8300000, guid: b44373af644e086428e8f54a726c6437, type: 3}
   m_buffNDebuff: []
   m_curHP: 0
   m_curSpeed: 0
@@ -130,6 +131,12 @@ MonoBehaviour:
   - 1
   - 1
   - 1
+  m_attackSounds:
+  - {fileID: 8300000, guid: 4ec5200a09d5dbf4782a313c534a7ce0, type: 3}
+  - {fileID: 8300000, guid: 4ec5200a09d5dbf4782a313c534a7ce0, type: 3}
+  - {fileID: 8300000, guid: 4ec5200a09d5dbf4782a313c534a7ce0, type: 3}
+  - {fileID: 8300000, guid: 4ec5200a09d5dbf4782a313c534a7ce0, type: 3}
+  - {fileID: 8300000, guid: 2edf6e19d3a333944922ef42d21a8fb3, type: 3}
   m_scriptable: {fileID: 11400000, guid: 829225895a53f79428daa04645edb217, type: 2}
   m_combatInfo:
     MaxHP: 600
@@ -142,7 +149,7 @@ MonoBehaviour:
     ReturnRange: 15
     AttackRange: 3
     ApproachDelay: 1
-    FenceRange: 25
+    FenceRange: 17
   m_spawnPoint: {fileID: 0}
   m_roamingDistance:
     Min: 1
@@ -151,6 +158,10 @@ MonoBehaviour:
   m_dissolveDelay: 1
   m_maxSequence: 5
   m_skillForwardForce: 7.5
+  m_skillSound:
+  - {fileID: 8300000, guid: 4ec5200a09d5dbf4782a313c534a7ce0, type: 3}
+  - {fileID: 8300000, guid: c2ab2449ed3db984ab017b4f06f800c8, type: 3}
+  - {fileID: 8300000, guid: 4d86ba960c75ba14a81818ff0606814f, type: 3}
 --- !u!114 &8343280722717223999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2142,6 +2153,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CrystalGuadrianNormalL
       objectReference: {fileID: 0}
+    - target: {fileID: 2945179007260122290, guid: 3d746f7b5be91c44eba37cb1b4b2a682,
+        type: 3}
+      propertyPath: m_hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 981cff077176da9419b65162c865a657, type: 3}
     - target: {fileID: 4815777823617947364, guid: 3d746f7b5be91c44eba37cb1b4b2a682,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2222,6 +2238,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CrystalGuadrianNormalR
       objectReference: {fileID: 0}
+    - target: {fileID: 2945179007260122290, guid: 3d746f7b5be91c44eba37cb1b4b2a682,
+        type: 3}
+      propertyPath: m_hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 981cff077176da9419b65162c865a657, type: 3}
     - target: {fileID: 4815777823617947364, guid: 3d746f7b5be91c44eba37cb1b4b2a682,
         type: 3}
       propertyPath: m_LocalPosition.x

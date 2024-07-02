@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using UnityEngine.VFX;
 
 public class WaterGuardianSkill3Script : ObjectAttackScript
 {
     private Rigidbody m_rigid;
+
+    [SerializeField]
+    private AudioClip m_iceSound;
+    private readonly float MaxImpulseDistance = 5;
+
     public override void AttackOn()
     {
         gameObject.SetActive(true);
@@ -17,9 +23,16 @@ public class WaterGuardianSkill3Script : ObjectAttackScript
         m_rigid.velocity = Vector3.zero;
         m_rigid.constraints = RigidbodyConstraints.FreezeAll;
         m_attackEffect.EffectOn();
+        GameManager.PlaySE(m_iceSound, transform.position);
         StartCoroutine(DestroySkill());
     }
 
+    private void CreateSkillImpulse()
+    {
+        float distance = Vector2.Distance(PlayManager.PlayerPos, transform.position);
+        float impulse = Mathf.Sqrt(1-distance / MaxImpulseDistance) * 0.9f + 0.1f;
+        PlayManager.CreateImpulse(impulse);
+    }
     private IEnumerator DestroySkill()
     {
         yield return new WaitForSeconds(0.5f);

@@ -57,7 +57,7 @@ public class BlinkbeakScript : MonsterScript
 
     private void StartEvadeDissolve()
     {
-        HideHPBar();
+        HideHPUI();
         foreach (SkinnedMeshRenderer smr in m_skinneds)
         {
             StartCoroutine(EvadeDissolve(smr.materials, true));
@@ -100,7 +100,7 @@ public class BlinkbeakScript : MonsterScript
             for (int i = 0; i<_mats.Length; i++)
             {
                 _mats[i].SetColor("_Dissolvecolor", DissolveColor);
-                ShowHPBar();
+                ApplyHPUI();
             }
         }
     }

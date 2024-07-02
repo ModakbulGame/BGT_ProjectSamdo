@@ -22,6 +22,8 @@ public class QueenScript : MonsterScript
     [Tooltip("성불에 필요한 소환 횟수")]
     [SerializeField]
     private int m_purifyHatch = 4;
+    [SerializeField]
+    private AudioClip m_hatchSound;
 
 
     [SerializeField]
@@ -46,6 +48,8 @@ public class QueenScript : MonsterScript
     [Tooltip("독 뿌리기 간격")]
     [SerializeField]
     private float m_spitTimeGap = 0.5f;                         // 독 뿌리기 간격
+    [SerializeField]
+    private AudioClip m_spitSound;
 
     private int CurSkurraby { get; set; } = 0;                  // 소환한 딱지 수
     private Vector3 SkurrabyOffset = new(0, 1.5f, 2.75f);
@@ -107,11 +111,13 @@ public class QueenScript : MonsterScript
     public override void CreateAttack()                             // 딱지 만들기
     {
         CreateSkurraby();
+        GameManager.PlaySE(m_hatchSound, transform.position);
     }
     public override void AttackTriggerOn()                          // 독 뿜기 시작
     {
         IsSpitting = true;
         m_poisonVFX.Play();
+        GameManager.PlaySE(m_spitSound, transform.position);
         StartCoroutine(SpittingCoroutine());
     }
     public override void AttackTriggerOff()                         // 독 뿜기 중단

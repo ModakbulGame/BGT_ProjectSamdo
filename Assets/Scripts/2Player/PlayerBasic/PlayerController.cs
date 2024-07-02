@@ -116,7 +116,7 @@ public partial class PlayerController : ObjectScript, IHaveData
     
     // 스테미나
     public float CurStamina { get; protected set; }                                                                 // 현재 스테미나
-    private float StaminaRestoreRate = 1.5f;                                                                        // 초당 스테미나 회복
+    private float StaminaRestoreRate = 10;                                                                          // 초당 스테미나 회복
 
     private void InitStamina() { CurStamina = MaxStamina; SetStaminaRate(); }                                       // 스테미나 초기 설정
     public void UseStamina(float _use)                                                                              // 스테미나 사용
@@ -217,11 +217,13 @@ public partial class PlayerController : ObjectScript, IHaveData
     {
         m_light.LightOn();
         IsLightOn = true;
+        GameManager.PlaySE(EPlayerSE.LIGHT_ON);
     }
     public void LightOff()                                                          // 능력 중단
     {
         m_light.LightOff();
         CanRestoreLight = false;
+        GameManager.PlaySE(EPlayerSE.LIGHT_OFF);
         StartCoroutine(LightRestoreCoolTime());
         IsLightOn = false;
     }
