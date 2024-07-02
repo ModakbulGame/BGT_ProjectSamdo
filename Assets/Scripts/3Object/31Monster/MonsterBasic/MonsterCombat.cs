@@ -35,9 +35,9 @@ public abstract partial class MonsterScript
     {
         if (CheckMonsterBattle(_hit)) { return false; }
         SetBattleTarget(_hit.Attacker);
-        if (!base.GetHit(_hit)) { return false; }
         SetDeathType(_hit.Attacker);
         CheckPowerProp(_hit.Property);
+        if (!base.GetHit(_hit)) { return false; }
         return true;
     }
     public override void PlayHitAnim(HitData _hit)
