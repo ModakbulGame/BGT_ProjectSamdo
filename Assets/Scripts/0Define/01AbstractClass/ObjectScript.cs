@@ -170,8 +170,8 @@ public abstract partial class ObjectScript : MonoBehaviour, IHittable
     private readonly float[] m_ccTime = new float[(int)ECCType.LAST]
     { 0, 10, 10, 3, 0, 0, 10, 5, 10, 10, 10 };
 
-    private readonly float ExtortionDamage = 20;
-    private readonly float MelancholyDamage = 10;
+    private readonly float ExtortionDamage = 5;
+    private readonly float MelancholyDamage = 2;
 
 
     private void CCProc() 
