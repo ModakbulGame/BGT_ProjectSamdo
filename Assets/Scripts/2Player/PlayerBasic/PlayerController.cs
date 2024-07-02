@@ -77,6 +77,9 @@ public partial class PlayerController : ObjectScript, IHaveData
     public void RestorePlayer()
     {
         CurHP = MaxHP;
+        CurLightGage = MaxLightGage;
+        SetLightRate();
+        PlayManager.SetLightState(true);
         ApplyHPUI();
     }
 
