@@ -97,7 +97,7 @@ public partial class PlayerController
 
     // 공격 관련
     public const int MAX_ATTACK = 3;                                    // 공격 연격 수
-    private readonly float AttackStaminaUse = 20;                       // 기본공격 스테미나 소모
+    private readonly float AttackStaminaUse = 12;                       // 기본공격 스테미나 소모
     private readonly float[,] ForwardDist = new float[3, 3] {           // 무기, 순서 별 전진 속도
         { 1.5f, 1.5f, 2 },
         { 3, 1, 3 },
