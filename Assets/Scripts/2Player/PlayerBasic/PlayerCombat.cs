@@ -27,8 +27,8 @@ public partial class PlayerController
     public override void PlayHitAnim(HitData _hit)                      // 피격 애니메이션
     {
         if (IsHealing) { CancelHeal(); }
-        PowerAnimDone();
-        AttackOffAnim();
+        if (IsPowering) { PowerAnimDone(); CurWeapon.PowerTrailOff(); }
+        if (IsAttacking) { AttackOffAnim(); CurWeapon.AttackOff(); }
         if (!_hit.CCList.Contains(ECCType.AIRBORNE) && !_hit.CCList.Contains(ECCType.KNOCKBACK))
         {
             StopMove();
