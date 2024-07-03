@@ -8,7 +8,7 @@ public class PlayerCameraScript : MonoBehaviour
 
     // private string[] m_collideAgainstLayers = { "Ground" };
 
-    private const float XMoveMultiplier = 100;              // 민감도 1당 X 움직임
+    private const float XMoveMultiplier = 120;              // 민감도 1당 X 움직임
     private const float YMoveMultiplier = 1.5f;                // 민감도 1당 Y 움직임
 
     private EControlMode CurCameraMode { get; set; }        // 현재 조작 모드
