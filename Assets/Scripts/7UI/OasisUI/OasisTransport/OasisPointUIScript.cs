@@ -36,11 +36,10 @@ public class OasisPointUIScript : MonoBehaviour
         m_btn.interactable = true;
     }
 
-    public void SetOasis(EOasisName _oasis)
+    public void UpdateOasis()
     {
-        PointName = _oasis;
-        if (_oasis == m_parent.CurOasisName) { m_img.color = CurColor; m_btn.interactable = true; }
-        else if (!PlayManager.OasisVisited[(int)_oasis]) { m_img.color = CantColor; m_btn.interactable = false; }
+        if (PointName == m_parent.CurOasisName) { m_img.color = CurColor; m_btn.interactable = true; }
+        else if (!PlayManager.OasisVisited[(int)PointName]) { m_img.color = CantColor; m_btn.interactable = false; }
         else { ResetDestination(); }
     }
 
@@ -55,9 +54,10 @@ public class OasisPointUIScript : MonoBehaviour
         m_btn = GetComponent<Button>();
         SetBtns();
 
+        PointName = _oasis;
         float width = PlayManager.MapWidth, height = PlayManager.MapHeight;
 
-        Vector2 pos = PlayManager.OasisList[(int)PointName].Position2;
+        Vector2 pos = PlayManager.OasisList[(int)_oasis].Position2;
         Vector2 mapSize = _rect.sizeDelta;
 
         m_rect.anchoredPosition = new(mapSize.x * pos.x / width, mapSize.y * pos.y / height);

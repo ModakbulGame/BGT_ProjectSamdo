@@ -147,12 +147,6 @@ public partial class PlayerController
         CurWeapon.AttackOn();
         AttackCreated = true;
         UseStamina(AttackStaminaUse);
-#if UNITY_EDITOR
-        PlayManager.AddSoul(1);
-        PlayManager.AddInventoryItem(new(EItemType.PATTERN, UnityEngine.Random.Range(0, (int)EPatternName.LAST)), 1);
-        // GetAdjust(new(EAdjType.MAX_HP, 1.1f, 10));
-        // PlayManager.AddIngameAlarm("얍얍얍얍얍ㅇ");
-#endif
     }
     public override void AttackTriggerOff()                             // 무기 히트 판정 off
     {

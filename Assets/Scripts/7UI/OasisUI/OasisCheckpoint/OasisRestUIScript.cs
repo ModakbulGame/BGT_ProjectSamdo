@@ -1,23 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 
-public class OasisRestUIScript : MonoBehaviour, IOasisUI
+public class OasisRestUIScript : OasisSubUI
 {
-    private OasisUIScript m_parent;
-
-    private bool IsCompsSet { get; set; }
-
-    public void OpenUI(OasisUIScript _parent)
+    public override void OpenUI()
     {
-        gameObject.SetActive(true);
-        if (!IsCompsSet)
-        {
-            m_parent = _parent;
-            SetComps();
-        }
-        GameManager.UIControlInputs.CloseUI.started += delegate { CloseUI(); };
+        base.OpenUI();
         GameManager.UIControlInputs.UIConfirm.started += delegate { RestInPeace(); };
     }
 
@@ -34,20 +21,18 @@ public class OasisRestUIScript : MonoBehaviour, IOasisUI
         CloseUI();
     }
 
-    public void CloseUI()
+    public override void CloseUI()
     {
-        GameManager.UIControlInputs.CloseUI.started -= delegate { CloseUI(); };
         GameManager.UIControlInputs.UIConfirm.started -= delegate { RestInPeace(); };
-        m_parent.FunctionDone();
-        gameObject.SetActive(false);
+        base.CloseUI();
     }
 
 
-    private void SetComps()
+    public override void SetComps()
     {
+        base.SetComps();
         Button[] btns = GetComponentsInChildren<Button>();
         btns[0].onClick.AddListener(RestInPeace);
         btns[1].onClick.AddListener(CancelUI);
-        IsCompsSet = true;
     }
 }

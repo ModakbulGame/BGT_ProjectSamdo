@@ -1,40 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OasisResetUIScript : MonoBehaviour, IOasisUI
+public class OasisResetUIScript : OasisSubUI
 {
-    private OasisUIScript m_parent;
-
-    private bool IsCompsSet { get; set; }
-
-    public void OpenUI(OasisUIScript _parent)
-    {
-        gameObject.SetActive(true);
-        if (!IsCompsSet) { m_parent = _parent; SetComps(); }
-        UpdateUI();
-        GameManager.UIControlInputs.CloseUI.started += delegate { CloseUI(); };
-    }
-
     [SerializeField]
     private Button m_cancelBtn;
 
     private OasisStatResetUI m_statResetUI;
     private OasisTraitResetUI m_traitResetUI;
 
-    public void UpdateUI()
+    public override void UpdateUI()
     {
         m_statResetUI.UpdateUI();
         m_traitResetUI.UpdateUI();
-    }
-
-
-    public void CloseUI()
-    {
-        GameManager.UIControlInputs.CloseUI.started -= delegate { CloseUI(); };
-        m_parent.FunctionDone();
-        gameObject.SetActive(false);
     }
 
 
@@ -43,8 +21,9 @@ public class OasisResetUIScript : MonoBehaviour, IOasisUI
         m_cancelBtn.onClick.AddListener(CloseUI);
     }
 
-    private void SetComps()
+    public override void SetComps()
     {
+        base.SetComps();
         m_statResetUI = GetComponentInChildren<OasisStatResetUI>();
         m_statResetUI.SetParent(this); m_statResetUI.SetComps();
         m_traitResetUI = GetComponentInChildren<OasisTraitResetUI>();

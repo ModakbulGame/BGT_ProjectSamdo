@@ -53,14 +53,21 @@ public class OasisNPC : NPCScript
 
     public override void NPCInteraction()
     {
-        PlayManager.OpenOasisUI(this);
         PlayManager.VisitOasis(PointName);
+        PlayManager.OpenOasisUI(this);
+    }
+
+    public override void LoadData()
+    {
+        m_productSold = new bool[ProductCount];
+        base.LoadData();
     }
 
     public override void ApplyLoadedData(NPCSaveData _save)
     {
         base.ApplyLoadedData(_save);
         if(ProductCount != _save.ProductSold.Length) { Debug.LogError("NPC 판매 세이브 정보 오류"); return; }
+        m_productSold = new bool[ProductCount];
         for (int i = 0; i<ProductCount; i++)
         {
             m_productSold[i] = _save.ProductSold[i];
@@ -69,11 +76,5 @@ public class OasisNPC : NPCScript
     public override NPCSaveData ModifiedData()
     {
         return new(NPC, m_dialInfos, m_productSold);
-    }
-
-    public override void InitNPCData()
-    {
-        base.InitNPCData();
-        m_productSold = new bool[ProductCount];
     }
 }

@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public enum EOasisFunctionName
@@ -12,12 +8,6 @@ public enum EOasisFunctionName
     TRADE,
     RESET,
     LAST
-}
-
-public interface IOasisUI
-{
-    public void OpenUI(OasisUIScript _parent);
-    public void CloseUI();
 }
 
 public class OasisUIScript : BaseUI
@@ -31,7 +21,7 @@ public class OasisUIScript : BaseUI
     [SerializeField]
     private Button[] m_functionBtns;
     [SerializeField]
-    private GameObject[] m_uis = new GameObject[(int)EOasisFunctionName.LAST];
+    private OasisSubUI[] m_uis = new OasisSubUI[(int)EOasisFunctionName.LAST];
 
 
     private bool IsButtonClicked { get; set; }
@@ -58,8 +48,7 @@ public class OasisUIScript : BaseUI
     {
         if(IsButtonClicked) { return; }
 
-        GameObject ui = m_uis[(int)_function];
-        ui.GetComponent<IOasisUI>().OpenUI(this);
+        m_uis[(int)_function].OpenUI();
         IsButtonClicked = true;
     }
     public void FunctionDone()
@@ -71,6 +60,7 @@ public class OasisUIScript : BaseUI
     public override void SetComps()
     {
         base.SetComps();
+        foreach(OasisSubUI ui in m_uis) { ui.SetParent(this); }
         SetBtns();
     }
     private void SetBtns()

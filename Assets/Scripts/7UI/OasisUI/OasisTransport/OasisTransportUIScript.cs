@@ -1,25 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OasisTransportUIScript : MonoBehaviour, IOasisUI
+public class OasisTransportUIScript : OasisSubUI
 {
-    private OasisUIScript m_parent;
-
-    private bool IsCompsSet { get; set; }
-
-    public void OpenUI(OasisUIScript _parent) 
-    {
-        gameObject.SetActive(true);
-        if (!IsCompsSet)
-        {
-            m_parent = _parent;
-            SetComps();
-        }
-        GameManager.UIControlInputs.CloseUI.started += delegate { CloseUI(); };
-        GameManager.UIControlInputs.UIConfirm.started += delegate { TransportTo(); };
-        SetOasisList();
-    }
-
     [SerializeField]
     private RectTransform m_mapImg;
     [SerializeField]
@@ -30,6 +13,18 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
 
     public EOasisName CurOasisName { get { return m_parent.Oasis.PointName; } }
     private EOasisName CurDestination { get; set; } = EOasisName.LAST;
+
+
+    public override void OpenUI()
+    {
+        base.OpenUI();
+        GameManager.UIControlInputs.UIConfirm.started += delegate { TransportTo(); };
+    }
+
+    public override void UpdateUI()
+    {
+        UpdateOasis();
+    }
 
 
     public void SetDestination(EOasisName _point)
@@ -66,6 +61,7 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
         {
             PlayManager.TransportToOasis(_point);
             CloseUI();
+            m_parent.CloseUI();
         }
     }
 
@@ -74,22 +70,16 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
         CloseUI();
     }
 
-    public void CloseUI()
+    public override void CloseUI()
     {
-        GameManager.UIControlInputs.CloseUI.started -= delegate { CloseUI(); };
         GameManager.UIControlInputs.UIConfirm.started -= delegate { TransportTo(); };
-        m_parent.FunctionDone();
-        gameObject.SetActive(false);
+        base.CloseUI();
     }
     
 
-    private void SetOasisList()
+    private void UpdateOasis()
     {
-        for (int i = 0; i<m_oasisPoints.Length; i++)
-        {
-            if (i >= (int)EOasisName.LAST) { m_oasisPoints[i].gameObject.SetActive(false); continue; }
-            m_oasisPoints[i].SetOasis((EOasisName)i);
-        }
+        foreach(OasisPointUIScript point in m_oasisPoints) { if (!point.gameObject.activeSelf) { continue; } point.UpdateOasis(); }
     }
 
     private void SetBtns()
@@ -97,16 +87,16 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
         m_transportBtn.onClick.AddListener(TransportTo);
         m_cancelBtn.onClick.AddListener(CancelUI);
     }
-    private void SetComps()
+    public override void SetComps()
     {
+        base.SetComps();
         m_oasisPoints = GetComponentsInChildren<OasisPointUIScript>();
-        SetBtns();
         for (int i = 0; i<m_oasisPoints.Length; i++)
         {
             if (i >= (int)EOasisName.LAST) { m_oasisPoints[i].gameObject.SetActive(false); continue; }
             m_oasisPoints[i].SetParent(this);
             m_oasisPoints[i].SetComps((EOasisName)i, m_mapImg);
         }
-        IsCompsSet = true;
+        SetBtns();
     }
 }
