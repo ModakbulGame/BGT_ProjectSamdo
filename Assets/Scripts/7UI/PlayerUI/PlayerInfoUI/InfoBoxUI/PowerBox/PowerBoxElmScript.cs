@@ -34,7 +34,7 @@ public class PowerBoxElmScript : MonoBehaviour
         m_skillImg.color = IsObtained ? Color.white : MissingColor;
         m_skillName.text = info.PowerName;
         if(IsEquipped) { m_skillName.color = Color.red; }
-        else { m_skillName.color = Color.black; }
+        else { m_skillName.color = Color.white; }
     }
 
 

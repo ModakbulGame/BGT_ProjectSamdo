@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,6 +18,7 @@ public class MinimapScript : MonoBehaviour
     protected RectTransform MapRect { get { return m_mapImg.rectTransform; } }
     protected float MapImgHeight { get { return m_mapImg.sprite.rect.height; } }
 
+    private Vector2 MapImgSize { get { return new(MapImgHeight, MapImgHeight); } }
     protected float MapHeight { get { return PlayManager.MapHeight; } }
 
     public float MapScale { get { return m_mapScale; } private set { m_mapScale = value; } }
@@ -35,24 +37,39 @@ public class MinimapScript : MonoBehaviour
     {
         float player = PlayManager.CameraRotation;
         MapRect.localEulerAngles = new(0, 0, player);
+
+        float gimic = 360 - player;
+        foreach (OasisIconScript oasis in m_oasisPoints)
+        {
+            oasis.SetRotation(gimic);
+        }
+        foreach (AltarIconScript altar in m_altarPoints)
+        {
+            altar.SetRotation(gimic);
+        }
     }
 
     private void SetMapGimicPosition()
     {
-        m_oasisPoints = GetComponentsInChildren<OasisIconScript>();
-        m_altarPoints = GetComponentsInChildren<AltarIconScript>();
-        for (int i = 0; i < m_oasisPoints.Length; i++)
+        OasisNPC[] oasisList = PlayManager.OasisList;
+        for (int i=0;i<(int)EOasisName.LAST;i++)
         {
-            if (i >= (int)EOasisName.LAST) { m_oasisPoints[i].gameObject.SetActive(false); continue; }
-            m_oasisPoints[i].SetParent(this);
-            m_oasisPoints[i].SetComps((EOasisName)i, m_mapImg.rectTransform);
+            Vector2 pos = NormalizePos(oasisList[i].Position2);
+            m_oasisPoints[i].SetPosition(pos);
         }
-        for (int i = 0; i < m_altarPoints.Length; i++)
+        AltarScript[] altarList = PlayManager.AltarList;
+        for (int i = 0; i<(int)EAltarName.LAST; i++)
         {
-            if (i >= (int)EAltarName.LAST) { m_altarPoints[i].gameObject.SetActive(false); continue; }
-            m_altarPoints[i].SetParent(this);
-            m_altarPoints[i].SetComps((EAltarName)i, m_mapImg.rectTransform);
+            Vector2 pos = NormalizePos(altarList[i].Position2);
+            m_altarPoints[i].SetPosition(pos);
         }
+    }
+    private Vector2 NormalizePos(Vector2 _pos)
+    {
+        Vector2 mapSize = m_mapImg.GetComponent<RectTransform>().sizeDelta;
+        Vector2 offset = new(mapSize.x * _pos.x / MapHeight, mapSize.y * _pos.y / MapHeight);
+        offset = offset * 0.5f + MapImgSize * 0.25f;
+        return offset;
     }
 
 
@@ -68,6 +85,20 @@ public class MinimapScript : MonoBehaviour
     private void InitSize()
     {
         MapRect.sizeDelta = new(MapImgHeight, MapImgHeight);
+    }
+
+
+    private void SetComps()
+    {
+        m_oasisPoints = GetComponentsInChildren<OasisIconScript>();
+        foreach (OasisIconScript oasis in m_oasisPoints) { oasis.SetComps(); }
+        m_altarPoints = GetComponentsInChildren<AltarIconScript>();
+        foreach (AltarIconScript altar in m_altarPoints) { altar.SetComps(); }
+    }
+
+    private void Awake()
+    {
+        SetComps();
     }
     protected virtual void Start()
     {

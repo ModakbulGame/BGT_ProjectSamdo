@@ -445,6 +445,15 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CloseMapUI"",
+                    ""type"": ""Button"",
+                    ""id"": ""ba219049-8d71-40da-acca-0d75bc538cb6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -478,6 +487,17 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""UIInteract"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""79c2ace0-02f8-4e33-a3ba-1d4567ddfdf3"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseMapUI"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -527,6 +547,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         m_UIControl_CloseUI = m_UIControl.FindAction("CloseUI", throwIfNotFound: true);
         m_UIControl_ClosePlayerUI = m_UIControl.FindAction("ClosePlayerUI", throwIfNotFound: true);
         m_UIControl_UIInteract = m_UIControl.FindAction("UIInteract", throwIfNotFound: true);
+        m_UIControl_CloseMapUI = m_UIControl.FindAction("CloseMapUI", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -765,6 +786,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_UIControl_CloseUI;
     private readonly InputAction m_UIControl_ClosePlayerUI;
     private readonly InputAction m_UIControl_UIInteract;
+    private readonly InputAction m_UIControl_CloseMapUI;
     public struct UIControlActions
     {
         private @InputSystem m_Wrapper;
@@ -772,6 +794,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         public InputAction @CloseUI => m_Wrapper.m_UIControl_CloseUI;
         public InputAction @ClosePlayerUI => m_Wrapper.m_UIControl_ClosePlayerUI;
         public InputAction @UIInteract => m_Wrapper.m_UIControl_UIInteract;
+        public InputAction @CloseMapUI => m_Wrapper.m_UIControl_CloseMapUI;
         public InputActionMap Get() { return m_Wrapper.m_UIControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -790,6 +813,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @UIInteract.started += instance.OnUIInteract;
             @UIInteract.performed += instance.OnUIInteract;
             @UIInteract.canceled += instance.OnUIInteract;
+            @CloseMapUI.started += instance.OnCloseMapUI;
+            @CloseMapUI.performed += instance.OnCloseMapUI;
+            @CloseMapUI.canceled += instance.OnCloseMapUI;
         }
 
         private void UnregisterCallbacks(IUIControlActions instance)
@@ -803,6 +829,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @UIInteract.started -= instance.OnUIInteract;
             @UIInteract.performed -= instance.OnUIInteract;
             @UIInteract.canceled -= instance.OnUIInteract;
+            @CloseMapUI.started -= instance.OnCloseMapUI;
+            @CloseMapUI.performed -= instance.OnCloseMapUI;
+            @CloseMapUI.canceled -= instance.OnCloseMapUI;
         }
 
         public void RemoveCallbacks(IUIControlActions instance)
@@ -854,5 +883,6 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         void OnCloseUI(InputAction.CallbackContext context);
         void OnClosePlayerUI(InputAction.CallbackContext context);
         void OnUIInteract(InputAction.CallbackContext context);
+        void OnCloseMapUI(InputAction.CallbackContext context);
     }
 }

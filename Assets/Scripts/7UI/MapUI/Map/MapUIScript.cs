@@ -1,38 +1,72 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.ProBuilder;
 using UnityEngine.UI;
-using TMPro;
-using UnityEngine.SceneManagement;
-using StylizedWater2;
-using System;
-using Pathfinding;
 
-public class MapUIScript : MinimapScript
+public class MapUIScript : BaseUI
 {
     [SerializeField]
-    private RectTransform m_mapImage;
+    private Image m_mapImg;
+    [SerializeField]
+    private RectTransform m_mapTrans;
+    [SerializeField]
+    private RectTransform m_player;
+    [SerializeField]
+    private RectTransform[] m_oasisList;
+    [SerializeField]
+    private RectTransform[] m_altartList;
 
-    public void OpenUI()                                    // UI 열기
+    protected Vector2 MapImgSize { get { return m_mapTrans.sizeDelta; } }
+    protected float MapHeight { get { return PlayManager.MapHeight; } }
+
+    public override void OpenUI()
     {
-        gameObject.SetActive(true);
-        SetComps();
+        base.OpenUI();
+        GameManager.SetControlMode(EControlMode.UI_CONTROL);
     }
 
-    public void CloseUI() 
-    { 
+    private void SetPlayerPos()
+    {
+        Vector2 pos = PlayManager.PlayerPos2;
+        Vector2 offset = NormalizePos(pos);
+        m_player.anchoredPosition = offset;
+    }
+    private void SetNPCPos()
+    {
+        OasisNPC[] oasisList = PlayManager.OasisList;
+        for (int i = 0; i<(int)EOasisName.LAST; i++)
+        {
+            Vector2 pos = NormalizePos(oasisList[i].Position2);
+            m_oasisList[i].anchoredPosition = pos;
+        }
+        AltarScript[] altarList = PlayManager.AltarList;
+        for (int i = 0; i<(int)EAltarName.LAST; i++)
+        {
+            Vector2 pos = NormalizePos(altarList[i].Position2);
+            m_altartList[i].anchoredPosition = pos;
+        }
+    }
+
+    private Vector2 NormalizePos(Vector2 _pos)
+    {
+        Vector2 offset = new(MapImgSize.x * _pos.x / MapHeight, MapImgSize.y * _pos.y / MapHeight);
+        offset = offset * 0.5f + MapImgSize * 0.25f;
+        return offset;
+    }
+
+
+    public override void CloseUI()
+    {
         GameManager.SetControlMode(EControlMode.THIRD_PERSON);
-        gameObject.SetActive(false);
+        base.CloseUI();
     }
 
-    private void SetComps()
+    public override void SetComps()
     {
-        base.Start();
+        GameManager.UIControlInputs.CloseMapUI.started += delegate { CloseUI(); };
+        SetNPCPos();
+        SetPlayerPos();
     }
-
-    protected override void Update()
+    private void Update()
     {
-        base.Update();
+        SetPlayerPos();
     }
 }

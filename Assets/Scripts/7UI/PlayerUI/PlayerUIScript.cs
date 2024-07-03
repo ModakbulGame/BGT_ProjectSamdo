@@ -1,15 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
 
 public class PlayerUIScript : MonoBehaviour
 {
-    private RectTransform m_rect;
-    private Canvas m_uiCanvas;
-
     private PlayerImgUIScript m_imgUI;                      // 플레이어 이미지 UI
     private PlayerInfoUIScript m_infoUI;                    // 플레이어 정보(아이템, 특성 등) UI
     private PlayerMaterialUIScript m_materialUI;            // 플레이어 재료 UI
@@ -69,9 +61,6 @@ public class PlayerUIScript : MonoBehaviour
 
     private void SetComps()
     {
-        m_rect = GetComponent<RectTransform>();
-        m_uiCanvas = GetComponentInParent<Canvas>();
-
         m_imgUI = GetComponentInChildren<PlayerImgUIScript>();
         m_infoUI = GetComponentInChildren<PlayerInfoUIScript>();
         m_materialUI = GetComponentInChildren<PlayerMaterialUIScript>();
