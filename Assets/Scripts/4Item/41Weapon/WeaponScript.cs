@@ -51,6 +51,9 @@ public class WeaponScript : AnimateAttackScript
 
     public override float Damage => Player.Attack * Player.AttackMultiplier * Player.DamageMultiplier;
 
+    [SerializeField]
+    private AudioClip m_swingSound;
+
 
     public override void CreateHitEffect(IHittable _hittable, Vector3 _pos)
     {
@@ -89,7 +92,7 @@ public class WeaponScript : AnimateAttackScript
 
 
     private WeaponTrailEffect m_trailEffect;
-    public override void AttackOn() { base.AttackOn(); m_trailEffect.SetNormalTrail(true); }
+    public override void AttackOn() { base.AttackOn(); m_trailEffect.SetNormalTrail(true); GameManager.PlaySE(m_swingSound, transform.position); }
     public override void AttackOff() { base.AttackOff(); m_trailEffect.SetNormalTrail(false); }
     public void PowerTrailOn(EPowerTrailType _type) { if (!Player.IsAttacking && !Player.IsPowering) { return; } m_trailEffect.PowerTrailOn(_type); }
     public void PowerTrailOff() { m_trailEffect.PowerTrailOff(); }
