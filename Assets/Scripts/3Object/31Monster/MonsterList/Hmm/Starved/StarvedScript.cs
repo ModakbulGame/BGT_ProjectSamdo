@@ -51,7 +51,7 @@ public class StarvedScript : HmmScript
         base.CreateSkill();
         ObjectAttackScript skill = SkillList[CurSkillIdx];
         skill.SetAttack(this, SkillDamages[CurSkillIdx]);
-        skill.AttackOn();
+        ((EffectedNormalAttack)skill).AttackOn(1);
         GameManager.PlaySE(m_skillSound, transform.position);
     }
 }
