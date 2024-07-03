@@ -9,7 +9,6 @@ public class MinimapScript : MonoBehaviour
 {
     [SerializeField]
     private float m_mapScale = 8;
-    protected TextMeshProUGUI m_mapName;
     public Image m_mapImg;
 
     protected OasisIconScript[] m_oasisPoints;
@@ -27,7 +26,9 @@ public class MinimapScript : MonoBehaviour
     {
         Vector2 player = PlayManager.PlayerPos2;
         Vector2 playerOffset = player / MapHeight;
-        MapRect.pivot = playerOffset;
+
+        Vector2 pivot = playerOffset * 0.5f + new Vector2(0.25f, 0.25f);
+        MapRect.pivot = pivot;
     }
 
     private void SetRotation()
@@ -71,8 +72,6 @@ public class MinimapScript : MonoBehaviour
     protected virtual void Start()
     {
         if (!GameManager.IsInGame) { return; }
-        m_mapName = GetComponentInChildren<TextMeshProUGUI>();
-        m_mapName.text = SceneManager.GetActiveScene().name;
         InitSize();
         SetMapGimicPosition();
         SetScale(MapScale);
