@@ -17,6 +17,8 @@ public class OasisRestUIScript : MonoBehaviour, IOasisUI
             m_parent = _parent;
             SetComps();
         }
+        GameManager.UIControlInputs.CloseUI.started += delegate { CloseUI(); };
+        GameManager.UIControlInputs.UIConfirm.started += delegate { RestInPeace(); };
     }
 
 
@@ -24,6 +26,7 @@ public class OasisRestUIScript : MonoBehaviour, IOasisUI
     {
         PlayManager.RestAtPoint(m_parent.Oasis);
         CloseUI();
+        m_parent.CloseUI();
     }
 
     private void CancelUI()
@@ -33,8 +36,9 @@ public class OasisRestUIScript : MonoBehaviour, IOasisUI
 
     public void CloseUI()
     {
+        GameManager.UIControlInputs.CloseUI.started -= delegate { CloseUI(); };
+        GameManager.UIControlInputs.UIConfirm.started -= delegate { RestInPeace(); };
         m_parent.FunctionDone();
-        m_parent.CloseUI();
         gameObject.SetActive(false);
     }
 

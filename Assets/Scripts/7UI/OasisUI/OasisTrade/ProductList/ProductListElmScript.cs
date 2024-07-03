@@ -56,10 +56,10 @@ public class ProductListElmScript : MonoBehaviour
         bool hasSoul = _price <= PlayManager.SoulNum;
         if (!_sold)
         {
-            m_productPrice.text = $"¿µÈ¥ {_price}°³";
-            m_productPrice.color = hasSoul ? Color.black : Color.red;
+            m_productPrice.text = $"ì˜í˜¼ {_price}ê°œ";
+            m_productPrice.color = hasSoul ? Color.white : Color.red;
         }
-        m_controlTxt.text = _sold ? "±¸¸ÅÇÔ" : _bought ? "º¸À¯Áß" : "±¸¸Å";
+        m_controlTxt.text = _sold ? "êµ¬ë§¤í•¨" : _bought ? "ë³´ìœ ì¤‘" : "êµ¬ë§¤";
 
         CanBuy = !_sold && hasSoul;
         m_controlBtn.interactable = CanBuy;

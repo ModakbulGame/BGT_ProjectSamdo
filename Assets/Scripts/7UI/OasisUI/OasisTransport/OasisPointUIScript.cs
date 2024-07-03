@@ -18,7 +18,7 @@ public class OasisPointUIScript : MonoBehaviour
     private EOasisName m_pointName;
     private EOasisName PointName { get { return m_pointName; } set { m_pointName = value; } }
 
-    private readonly Color IdleColor = new(246/255f, 187/255f, 187/255f);
+    private readonly Color IdleColor = new(1, 1, 1);
     private readonly Color CurColor = new(38/255f, 167/255f, 245/255f);
     private readonly Color CantColor = new(1, 1, 1, 0);
     private readonly Color SelectColor = new(1, 0, 0);
@@ -36,14 +36,12 @@ public class OasisPointUIScript : MonoBehaviour
         m_btn.interactable = true;
     }
 
-    private void SetOasis(RectTransform _rect)
+    public void SetOasis(EOasisName _oasis)
     {
-        float width = PlayManager.MapWidth, height = PlayManager.MapHeight;
-
-        Vector2 pos = PlayManager.OasisList[(int)PointName].Position2;
-        Vector2 mapSize = _rect.sizeDelta;
-
-        m_rect.anchoredPosition = new(mapSize.x * pos.x / width, mapSize.y * pos.y / height);
+        PointName = _oasis;
+        if (_oasis == m_parent.CurOasisName) { m_img.color = CurColor; m_btn.interactable = true; }
+        else if (!PlayManager.OasisVisited[(int)_oasis]) { m_img.color = CantColor; m_btn.interactable = false; }
+        else { ResetDestination(); }
     }
 
     private void SetBtns()
@@ -55,11 +53,14 @@ public class OasisPointUIScript : MonoBehaviour
         m_rect = GetComponent<RectTransform>();
         m_img = GetComponent<Image>();
         m_btn = GetComponent<Button>();
-        PointName = _oasis;
         SetBtns();
-        SetOasis(_rect);
-        if (_oasis == m_parent.CurOasisName) { m_img.color = CurColor; m_btn.interactable = false; }
-        else if (!PlayManager.OasisVisited[(int)_oasis]) { m_img.color = CantColor; m_btn.interactable = false; }
-        else { ResetDestination(); }
+
+        float width = PlayManager.MapWidth, height = PlayManager.MapHeight;
+
+        Vector2 pos = PlayManager.OasisList[(int)PointName].Position2;
+        Vector2 mapSize = _rect.sizeDelta;
+
+        m_rect.anchoredPosition = new(mapSize.x * pos.x / width, mapSize.y * pos.y / height);
+
     }
 }

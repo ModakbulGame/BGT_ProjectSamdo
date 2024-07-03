@@ -42,10 +42,13 @@ public class OasisUIScript : BaseUI
         base.OpenUI();
         IsButtonClicked = false;
         SetNPC(_npc);
+        GameManager.UIControlInputs.CloseUI.started += delegate { CloseUI(); };
     }
 
-    public override void CloseUI()                       // ´Ý±â
+    public override void CloseUI()                       // ë‹«ê¸°
     {
+        if (IsButtonClicked) { return; }
+        GameManager.UIControlInputs.CloseUI.started -= delegate { CloseUI(); };
         m_oasis.StopInteract();
         base.CloseUI();
     } 
@@ -53,7 +56,7 @@ public class OasisUIScript : BaseUI
 
     private void ClickButton(EOasisFunctionName _function)
     {
-        if(IsButtonClicked == true) { return; }
+        if(IsButtonClicked) { return; }
 
         GameObject ui = m_uis[(int)_function];
         ui.GetComponent<IOasisUI>().OpenUI(this);

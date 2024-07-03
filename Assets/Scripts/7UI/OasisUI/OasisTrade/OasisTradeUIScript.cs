@@ -21,6 +21,7 @@ public class OasisTradeUIScript : BaseUI, IOasisUI
     {
         if (m_parent == null) { m_parent = _parent; }
         base.OpenUI();
+        GameManager.UIControlInputs.CloseUI.started += delegate { CloseUI(); };
     }
 
     public override void UpdateUI()
@@ -33,6 +34,7 @@ public class OasisTradeUIScript : BaseUI, IOasisUI
 
     public override void CloseUI()
     {
+        GameManager.UIControlInputs.CloseUI.started -= delegate { CloseUI(); };
         m_parent.FunctionDone();
         base.CloseUI();
     }

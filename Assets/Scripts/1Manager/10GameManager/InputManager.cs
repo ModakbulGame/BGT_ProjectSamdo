@@ -79,12 +79,6 @@ public class InputManager : MonoBehaviour
                 PlayManager.ToggleMapUI(true);
                 SetControlMode(EControlMode.UI_CONTROL);
             }
-            else if (PlayerInputs.OpenQuestUI.triggered)
-            {
-                // 퀘스트 창 열기
-                PlayManager.ToggleQuestUI(true);
-                SetControlMode(EControlMode.UI_CONTROL);
-            }
         }
         else if (CurControlMode == EControlMode.UI_CONTROL)         // UI 조작 모드일 때
         {
@@ -103,11 +97,6 @@ public class InputManager : MonoBehaviour
                 else if (PlayManager.IsMapUIOpen)
                 {
                     PlayManager.ToggleMapUI(false);
-                    return;
-                }
-                else if (PlayManager.IsQuestUIOpen)
-                {
-                    PlayManager.ToggleQuestUI(false);
                     return;
                 }
             }

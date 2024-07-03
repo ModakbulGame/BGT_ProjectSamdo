@@ -15,6 +15,9 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
             m_parent = _parent;
             SetComps();
         }
+        GameManager.UIControlInputs.CloseUI.started += delegate { CloseUI(); };
+        GameManager.UIControlInputs.UIConfirm.started += delegate { TransportTo(); };
+        SetOasisList();
     }
 
     [SerializeField]
@@ -73,11 +76,21 @@ public class OasisTransportUIScript : MonoBehaviour, IOasisUI
 
     public void CloseUI()
     {
+        GameManager.UIControlInputs.CloseUI.started -= delegate { CloseUI(); };
+        GameManager.UIControlInputs.UIConfirm.started -= delegate { TransportTo(); };
         m_parent.FunctionDone();
         gameObject.SetActive(false);
-        m_parent.CloseUI();
     }
     
+
+    private void SetOasisList()
+    {
+        for (int i = 0; i<m_oasisPoints.Length; i++)
+        {
+            if (i >= (int)EOasisName.LAST) { m_oasisPoints[i].gameObject.SetActive(false); continue; }
+            m_oasisPoints[i].SetOasis((EOasisName)i);
+        }
+    }
 
     private void SetBtns()
     {

@@ -454,6 +454,15 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UIConfirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""f65939f2-5563-4186-bf63-dbbd64ef10b4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -498,6 +507,28 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""CloseMapUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f36b15b9-fbb7-4bd1-8281-8d6d6655a168"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UIConfirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1a6d715f-7699-4a9f-8efe-64ece60a474c"",
+                    ""path"": ""<Keyboard>/numpadEnter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UIConfirm"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -548,6 +579,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         m_UIControl_ClosePlayerUI = m_UIControl.FindAction("ClosePlayerUI", throwIfNotFound: true);
         m_UIControl_UIInteract = m_UIControl.FindAction("UIInteract", throwIfNotFound: true);
         m_UIControl_CloseMapUI = m_UIControl.FindAction("CloseMapUI", throwIfNotFound: true);
+        m_UIControl_UIConfirm = m_UIControl.FindAction("UIConfirm", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -787,6 +819,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_UIControl_ClosePlayerUI;
     private readonly InputAction m_UIControl_UIInteract;
     private readonly InputAction m_UIControl_CloseMapUI;
+    private readonly InputAction m_UIControl_UIConfirm;
     public struct UIControlActions
     {
         private @InputSystem m_Wrapper;
@@ -795,6 +828,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         public InputAction @ClosePlayerUI => m_Wrapper.m_UIControl_ClosePlayerUI;
         public InputAction @UIInteract => m_Wrapper.m_UIControl_UIInteract;
         public InputAction @CloseMapUI => m_Wrapper.m_UIControl_CloseMapUI;
+        public InputAction @UIConfirm => m_Wrapper.m_UIControl_UIConfirm;
         public InputActionMap Get() { return m_Wrapper.m_UIControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -816,6 +850,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @CloseMapUI.started += instance.OnCloseMapUI;
             @CloseMapUI.performed += instance.OnCloseMapUI;
             @CloseMapUI.canceled += instance.OnCloseMapUI;
+            @UIConfirm.started += instance.OnUIConfirm;
+            @UIConfirm.performed += instance.OnUIConfirm;
+            @UIConfirm.canceled += instance.OnUIConfirm;
         }
 
         private void UnregisterCallbacks(IUIControlActions instance)
@@ -832,6 +869,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @CloseMapUI.started -= instance.OnCloseMapUI;
             @CloseMapUI.performed -= instance.OnCloseMapUI;
             @CloseMapUI.canceled -= instance.OnCloseMapUI;
+            @UIConfirm.started -= instance.OnUIConfirm;
+            @UIConfirm.performed -= instance.OnUIConfirm;
+            @UIConfirm.canceled -= instance.OnUIConfirm;
         }
 
         public void RemoveCallbacks(IUIControlActions instance)
@@ -884,5 +924,6 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         void OnClosePlayerUI(InputAction.CallbackContext context);
         void OnUIInteract(InputAction.CallbackContext context);
         void OnCloseMapUI(InputAction.CallbackContext context);
+        void OnUIConfirm(InputAction.CallbackContext context);
     }
 }

@@ -18,6 +18,7 @@ public class PlayerUIScript : MonoBehaviour
         m_infoUI.OpenUI();
         m_materialUI.OpenUI();
         GameManager.PlaySE(ESystemSE.OPEN_UI);
+        GameManager.UIControlInputs.ClosePlayerUI.started += delegate { CloseUI(); };
     }
 
     public void UpdateInfoUI()
@@ -56,7 +57,11 @@ public class PlayerUIScript : MonoBehaviour
     {
         m_itemInfoUI.HideUI();
     }
-    public void CloseUI() { GameManager.SetControlMode(EControlMode.THIRD_PERSON); gameObject.SetActive(false); }      // 닫기
+    public void CloseUI()
+    {
+        GameManager.UIControlInputs.ClosePlayerUI.started -= delegate { CloseUI(); };
+        GameManager.SetControlMode(EControlMode.THIRD_PERSON); gameObject.SetActive(false);
+    }      // 닫기
 
 
     private void SetComps()
@@ -76,7 +81,6 @@ public class PlayerUIScript : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.UIControlInputs.ClosePlayerUI.started += delegate { CloseUI(); };
     }
 
     private void Start()

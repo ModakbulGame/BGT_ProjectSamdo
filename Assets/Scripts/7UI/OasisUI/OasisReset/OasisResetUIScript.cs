@@ -14,6 +14,7 @@ public class OasisResetUIScript : MonoBehaviour, IOasisUI
         gameObject.SetActive(true);
         if (!IsCompsSet) { m_parent = _parent; SetComps(); }
         UpdateUI();
+        GameManager.UIControlInputs.CloseUI.started += delegate { CloseUI(); };
     }
 
     [SerializeField]
@@ -31,6 +32,7 @@ public class OasisResetUIScript : MonoBehaviour, IOasisUI
 
     public void CloseUI()
     {
+        GameManager.UIControlInputs.CloseUI.started -= delegate { CloseUI(); };
         m_parent.FunctionDone();
         gameObject.SetActive(false);
     }

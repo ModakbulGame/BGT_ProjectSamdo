@@ -432,6 +432,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "UIConfirm",
+                    "type": "Button",
+                    "id": "f65939f2-5563-4186-bf63-dbbd64ef10b4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -476,6 +485,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "CloseMapUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f36b15b9-fbb7-4bd1-8281-8d6d6655a168",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UIConfirm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1a6d715f-7699-4a9f-8efe-64ece60a474c",
+                    "path": "<Keyboard>/numpadEnter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UIConfirm",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

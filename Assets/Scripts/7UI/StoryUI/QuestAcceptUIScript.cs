@@ -23,12 +23,18 @@ public class QuestAcceptUIScript : BaseUI
     private bool IsStart { get; set; }
     private FPointer ConfirmFunction { get; set; }
 
+    public override void OpenUI()
+    {
+        base.OpenUI();
+        GameManager.UIControlInputs.UIConfirm.started += delegate { AcceptOrFinish(); };
+    }
+
     public void ShowNPCQuestUI(EQuestName _quest, bool _isStart, FPointer _confirm)
     {
         CurQuest = GameManager.GetQeustData(_quest);
         IsStart = _isStart;
         ConfirmFunction = _confirm;
-        base.OpenUI();
+        OpenUI();
     }
 
     public override void UpdateUI()
@@ -58,6 +64,7 @@ public class QuestAcceptUIScript : BaseUI
         }
         ConfirmFunction();
         GameManager.PlaySE(ESystemSE.BTN_CLICK);
+        GameManager.UIControlInputs.UIConfirm.started -= delegate { AcceptOrFinish(); };
         CloseUI();
     }
     private void AcceptQuest()

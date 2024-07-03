@@ -148,8 +148,8 @@ public partial class PlayerController
         AttackCreated = true;
         UseStamina(AttackStaminaUse);
 #if UNITY_EDITOR
-        // PlayManger.AddSoul(1);
-        // PlayManager.AddInventoryItem(new(EItemType.PATTERN, UnityEngine.Random.Range(0, (int)EPatternName.LAST)), 1);
+        PlayManager.AddSoul(1);
+        PlayManager.AddInventoryItem(new(EItemType.PATTERN, UnityEngine.Random.Range(0, (int)EPatternName.LAST)), 1);
         // GetAdjust(new(EAdjType.MAX_HP, 1.1f, 10));
         // PlayManager.AddIngameAlarm("얍얍얍얍얍ㅇ");
 #endif

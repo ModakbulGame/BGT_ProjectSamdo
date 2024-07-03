@@ -32,12 +32,6 @@ public class PlayUIManager : MonoBehaviour
 
 
     [SerializeField]
-    private QuestUIScript m_questUI;                        // 퀘스트 UI
-    public bool IsQuestUIOpen { get { return m_questUI.gameObject.activeSelf; } }
-    public void ToggleQuestUI(bool _on) { if (_on) { m_questUI.OpenUI(); } else { m_questUI.CloseUI(); } }
-
-
-    [SerializeField]
     private OasisUIScript m_oasisUI;                        // 오아시스 UI
     public void OpenOasisUI(OasisNPC _npc) { m_oasisUI.OpenUI(_npc); }
     public void CloseOasisUI() { m_oasisUI.CloseUI(); }

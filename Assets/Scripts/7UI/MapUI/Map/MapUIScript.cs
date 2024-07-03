@@ -21,6 +21,7 @@ public class MapUIScript : BaseUI
     {
         base.OpenUI();
         GameManager.SetControlMode(EControlMode.UI_CONTROL);
+        GameManager.UIControlInputs.CloseMapUI.started += delegate { CloseUI(); };
     }
 
     private void SetPlayerPos()
@@ -55,13 +56,13 @@ public class MapUIScript : BaseUI
 
     public override void CloseUI()
     {
+        GameManager.UIControlInputs.CloseMapUI.started -= delegate { CloseUI(); };
         GameManager.SetControlMode(EControlMode.THIRD_PERSON);
         base.CloseUI();
     }
 
     public override void SetComps()
     {
-        GameManager.UIControlInputs.CloseMapUI.started += delegate { CloseUI(); };
         SetNPCPos();
         SetPlayerPos();
     }
