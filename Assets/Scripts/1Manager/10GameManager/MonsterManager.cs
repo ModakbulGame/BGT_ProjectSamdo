@@ -1,10 +1,5 @@
-using MalbersAnimations;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-
-// 몬스터 관련 enum -> MonsterEnum에 있음
 
 public class MonsterInfo
 {

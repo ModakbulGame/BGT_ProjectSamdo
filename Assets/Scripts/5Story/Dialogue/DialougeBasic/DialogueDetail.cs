@@ -8,6 +8,8 @@ public struct NPCDialogue
 {
     public SNPC NPC;
     public int Idx;
+    public static NPCDialogue Null { get { return new(SNPC.Null, -1); } }
+    public bool IsNull { get { return NPC.IsNull; } }
     public static bool operator ==(NPCDialogue _d1, NPCDialogue _d2) { return _d1.NPC == _d2.NPC && _d1.Idx == _d2.Idx; }
     public static bool operator !=(NPCDialogue _d1, NPCDialogue _d2) { return !(_d1 == _d2); }
     public NPCDialogue(SNPC _npc, int _idx) { NPC = _npc; Idx = _idx; }

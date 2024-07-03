@@ -30,7 +30,8 @@ public class MonsterSpawner : MonoBehaviour
 
     public void SpawnMonster()
     {
-        while (SpawnedNum < m_spawnNum)
+        int need = m_spawnNum - SpawnedNum;
+        for(int i=0;i<need;i++)
         {
             CreateMonster(m_spawnMonster);
         }
@@ -66,6 +67,10 @@ public class MonsterSpawner : MonoBehaviour
         return script;
     }
 
+    public void TooFar()
+    {
+        if (CurPeck != null) { CurPeck.ReleaseWolfs(); }
+    }
     public void MonsterDespawned(MonsterScript _monster)
     {
         SpawnedNum--;
