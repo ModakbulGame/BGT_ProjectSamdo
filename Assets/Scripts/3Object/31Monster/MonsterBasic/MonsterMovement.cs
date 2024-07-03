@@ -32,7 +32,7 @@ public abstract partial class MonsterScript
     public virtual Vector3 SetRandomRoaming()
     {
         Vector3 destination = Position;
-        for(int i=0;i<64;i++)
+        for(int i=0;i<32;i++)
         {
             float distance = m_roamingDistance.Num;
             Vector2 dir = FunctionDefine.DegToVec(Random.Range(0, 360f));

@@ -104,11 +104,12 @@ public class WolfScript : MonsterScript
     private bool IsFarFromPeck { get { if (m_peck == null) { return false; } return Vector3.Distance(Position, m_peck.PeckCenter) > NearPeckDistance; } }
     public override Vector3 SetRandomRoaming()
     {
-        Vector3 destination;
-        do
+        Vector3 destination = m_peck.PeckCenter;
+        for (int i = 0; i<32; i++)
         {
             destination = base.SetRandomRoaming();
-        } while (IsFarFromPeck && (Vector3.Distance(Position, m_peck.PeckCenter) < Vector3.Distance(destination, m_peck.PeckCenter)));
+            if(!IsFarFromPeck && (Vector3.Distance(Position, m_peck.PeckCenter) > Vector3.Distance(destination, m_peck.PeckCenter))) { break; }
+        }
         return destination;
     }
 

@@ -88,6 +88,7 @@ public class MonsterSpawnPoint : MonoBehaviour, IHaveData
     private void DespawnMonsters()
     {
         MonsterDataCache.Clear();
+        foreach(MonsterSpawner spawner in m_spawners) { spawner.TooFar(); }
         foreach (MonsterScript monster in m_spawnedMonsters)
         {
             MonsterSaveData data = new(monster);

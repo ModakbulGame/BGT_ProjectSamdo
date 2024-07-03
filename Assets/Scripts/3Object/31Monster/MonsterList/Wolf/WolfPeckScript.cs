@@ -51,6 +51,7 @@ public class WolfPeckScript : MonoBehaviour
         if(_wolf.PeckIdx != CurPurifyTurn) { CurPurifyTurn = -1; }
         else { CurPurifyTurn++; }
         m_wolfs.Remove(_wolf);
+        if(m_wolfs.Count == 0) { Destroy(gameObject); return; }
         ResetRole();
     }
 

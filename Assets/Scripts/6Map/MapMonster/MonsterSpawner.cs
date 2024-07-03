@@ -67,6 +67,10 @@ public class MonsterSpawner : MonoBehaviour
         return script;
     }
 
+    public void TooFar()
+    {
+        if (CurPeck != null) { CurPeck.ReleaseWolfs(); }
+    }
     public void MonsterDespawned(MonsterScript _monster)
     {
         SpawnedNum--;
