@@ -126,6 +126,7 @@ public class StoryManager : MonoBehaviour
     private static NPCDialogue String2Dialogue(string _data)
     {
         string[] data = _data.Split('_');
+        if(data.Length < 2) { Debug.LogError($"{_data} 오류"); return NPCDialogue.Null; }
         SNPC npc = String2NPC(data[0]);
         int.TryParse(data[1], out int idx);
         return new(npc, idx);
