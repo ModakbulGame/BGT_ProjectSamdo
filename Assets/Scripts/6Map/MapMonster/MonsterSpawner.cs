@@ -17,7 +17,7 @@ public class MonsterSpawner : MonoBehaviour
     [SerializeField]
     private int m_spawnNum = 1;
     [SerializeField]
-    private float m_respawnTime = 10;
+    private float m_respawnTime = 150;
 
     private int SpawnedNum { get; set; } = 0;
     public SpawnerData SpawnerData { get { return new(m_point, SpawnerIdx); } }
@@ -80,6 +80,6 @@ public class MonsterSpawner : MonoBehaviour
     private IEnumerator RespawnCoroutine(EMonsterName _monster)
     {
         yield return new WaitForSeconds(m_respawnTime);
-        CreateMonster(_monster);
+        if (m_point.IsPlayerNear) { CreateMonster(_monster); }
     }
 }

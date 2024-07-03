@@ -54,7 +54,7 @@ public abstract partial class MonsterScript
     {
         while (m_aiPath.pathPending) { yield return null; }
         float time = DespawnTime;
-        while (IsRoaming && time > 0 && !m_aiPath.reachedDestination)
+        while (IsRoaming && time > 0 && m_aiPath.endReachedDistance > 1 && !m_aiPath.reachedDestination)
         {
             time -= Time.deltaTime;
             if(time <= 0) { DespawnMonster(); }

@@ -35,7 +35,7 @@ public class MonsterSpawnPoint : MonoBehaviour, IHaveData
     private readonly float[] m_rangeMultiplier = new float[(int)EAreaType.LAST] { 1, 1.5f };
 
     private bool IsShowingMonster { get; set; }
-    private bool IsPlayerNear { get { return PlayerDistance <= NearPlayerDist; } }
+    public bool IsPlayerNear { get { return PlayerDistance <= NearPlayerDist; } }
 
     private float PlayerDistance { get { return Vector3.Distance(transform.position, PlayManager.PlayerPos); } }
     private readonly float NearPlayerDist = 100;
@@ -101,7 +101,6 @@ public class MonsterSpawnPoint : MonoBehaviour, IHaveData
     public void MonsterDead(MonsterScript _monster)
     {
         m_spawnedMonsters.Remove(_monster);
-        IsShowingMonster = false;
     }
     public void SaveData()
     {
