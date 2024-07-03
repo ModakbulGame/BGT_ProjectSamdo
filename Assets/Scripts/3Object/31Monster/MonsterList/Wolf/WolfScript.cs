@@ -112,6 +112,19 @@ public class WolfScript : MonsterScript
         return destination;
     }
 
+
+    public override void StartIdle()
+    {
+        base.StartIdle();
+        m_peck.DisengageWolfs();
+    }
+    public override void DespawnMonster()
+    {
+        m_peck.ReleaseWolfs();
+        base.DespawnMonster();
+    }
+
+
     // 늑대 기본 메소드
     public void StartPosition()
     {

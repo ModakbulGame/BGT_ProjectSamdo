@@ -156,10 +156,11 @@ public partial class MonsterScript
     }
 
     private readonly float DespawnTime = 7.5f;
-    public void DespawnMonster()
+    public virtual void DespawnMonster()
     {
-        if (m_spawnPoint != null) { m_spawnPoint.MonsterDespawned(this); }
+        StopMove();
         m_aiPath.enabled = false;
+        if (m_spawnPoint != null) { m_spawnPoint.MonsterDespawned(this); }
         DestroyMonster();
     }
 

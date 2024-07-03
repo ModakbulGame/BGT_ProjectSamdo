@@ -46,12 +46,6 @@ public class WolfPeckScript : MonoBehaviour
     }
 
 
-    public void WolfGetHit(WolfScript _wolf)
-    {
-
-    }
-
-
     public void WolfDead(WolfScript _wolf)
     {
         if(_wolf.PeckIdx != CurPurifyTurn) { CurPurifyTurn = -1; }
@@ -71,10 +65,20 @@ public class WolfPeckScript : MonoBehaviour
 
     public void DisengageWolfs()                // 늑대 전투 해제
     {
-        foreach(WolfScript wolf in m_wolfs) { wolf.ChangeState(EMonsterState.IDLE); }
+        foreach(WolfScript wolf in m_wolfs) 
+        {
+            if (wolf.IsIdle) { continue; }
+            wolf.ChangeState(EMonsterState.IDLE);
+        }
         Engaging = false;
     }
 
+    public void ReleaseWolfs()
+    {
+        foreach(WolfScript wolf in m_wolfs) { wolf.transform.SetParent(null); }
+        m_wolfs.Clear();
+        Destroy(gameObject);
+    }
 
     public void ResetRole()
     {

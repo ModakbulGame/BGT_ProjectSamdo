@@ -31,14 +31,15 @@ public abstract partial class MonsterScript
 
     public virtual Vector3 SetRandomRoaming()
     {
-        Vector3 destination;
-        do
+        Vector3 destination = Position;
+        for(int i=0;i<64;i++)
         {
             float distance = m_roamingDistance.Num;
             Vector2 dir = FunctionDefine.DegToVec(Random.Range(0, 360f));
             Vector3 dir3 = new(dir.x, 0, dir.y);
             destination = transform.position + distance * dir3;
-        } while (OutOfRange(destination));
+            if (!OutOfRange(destination)) { break; }
+        }
         return destination;
     }
     public virtual void SetDestination(Vector3 _destination)
@@ -51,6 +52,7 @@ public abstract partial class MonsterScript
     }
     private IEnumerator CheckDespawn()
     {
+        while (m_aiPath.pathPending) { yield return null; }
         float time = DespawnTime;
         while (IsRoaming && time > 0 && !m_aiPath.reachedDestination)
         {

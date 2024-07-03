@@ -1,6 +1,3 @@
-using MalbersAnimations;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -10,7 +7,7 @@ public class PlayerPowerAimScript : MonoBehaviour
 
     public void ShowDrawer(float _radius)
     {
-        if (!m_projector.enabled) { m_projector.SetEnable(true); }
+        if (!m_projector.enabled) { m_projector.enabled = true; }
 
         Vector3 size = m_projector.size;
         m_projector.size = new(_radius, _radius, size.z);
@@ -24,7 +21,7 @@ public class PlayerPowerAimScript : MonoBehaviour
     public void HideDrawer()
     {
         if (!m_projector.enabled) { return; }
-        m_projector.SetEnable(false);
+        m_projector.enabled = false;
     }
 
 

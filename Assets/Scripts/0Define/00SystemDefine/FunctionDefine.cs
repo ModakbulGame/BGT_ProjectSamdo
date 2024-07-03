@@ -1,8 +1,5 @@
-using MalbersAnimations.Conditions;
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Rendering;
 
 public delegate void FPointer();                                    // 함수 포인터
 public delegate void EventPointer(PointerEventData _data);          // 마우스 정보 갖는 함수 포인터

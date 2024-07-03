@@ -30,7 +30,8 @@ public class MonsterSpawner : MonoBehaviour
 
     public void SpawnMonster()
     {
-        while (SpawnedNum < m_spawnNum)
+        int need = m_spawnNum - SpawnedNum;
+        for(int i=0;i<need;i++)
         {
             CreateMonster(m_spawnMonster);
         }
