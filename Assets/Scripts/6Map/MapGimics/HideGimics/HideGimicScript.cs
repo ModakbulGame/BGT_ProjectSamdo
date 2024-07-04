@@ -36,5 +36,6 @@ public class HideGimicScript : MonoBehaviour, IHidable
     private void Awake()
     {
         SetComps();
+        LoseLight();
     }
 }

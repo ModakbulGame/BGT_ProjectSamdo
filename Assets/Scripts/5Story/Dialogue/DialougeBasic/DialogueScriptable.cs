@@ -55,6 +55,5 @@ public class DialogueScriptable : ScriptableObject
         string[] firstData = _data[0];
         int.TryParse(firstData[(int)EDialogueAttributes.DIALOGUE_IDX], out DialogueIdx);
         int.TryParse(firstData[(int)EDialogueAttributes.BRANCH_IDX], out BranchIdx);
-        IsOpenAtFirst = true;
     }
 }
